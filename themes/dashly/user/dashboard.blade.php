@@ -464,9 +464,20 @@
                                 ],
                                 "isTransparent": true,
                                 "colorTheme": "light",
-                                "locale": "en"
+                                "locale": "en",
+                                "showChart": true,
+                                "backgroundColor": "#ffffff",
+                                "gridColor": "#E1E5E9",
+                                "textColor": "#191919",
+                                "upColor": "#26a69a",
+                                "downColor": "#ef5350",
+                                "borderColor": "#E1E5E9",
+                                "bidAskColor": "#191919",
+                                "prevCloseColor": "#808080",
+                                "priceColor": "#191919",
+                                "dateFormat": "DD MMM YYYY"
                             }
-                        </script>
+                            }
                     </div>
                     <!-- TradingView Widget END -->
                 </div>

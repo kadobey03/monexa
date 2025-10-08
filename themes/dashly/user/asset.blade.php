@@ -382,6 +382,10 @@
             "hide_side_toolbar": false,
             "allow_symbol_change": true,
             "calendar": false,
+            "hide_volume": false,
+            "hide_legend": false,
+            "range": "1M",
+            "save_image": true,
             "studies": [
                 "BB@tv-basicstudies"
             ],
