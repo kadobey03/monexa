@@ -570,7 +570,7 @@
                         "pointerEvents": "auto",
                         "userSelect": "text",
                         "resize": "none",
-                        "scrollBehavior": "smooth"
+                        "scrollBehavior": "smooth",
                         "tabs": [
                             {
                                 "title": "Endeksler",
