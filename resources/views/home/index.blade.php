@@ -1,7 +1,7 @@
 
 @extends('layouts.base')
 
-@section('title', 'Home')
+@section('title', 'Ana Sayfa')
 
 @inject('content', 'App\Http\Controllers\FrontController')
 @section('content')
@@ -47,21 +47,21 @@
                     class="space-y-6 h-full flex flex-col justify-center py-8"
                 >
                     <div class="inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider text-primary uppercase bg-blue-900 bg-opacity-30 rounded-full self-start">
-                        Innovative Trading Platform
+                        Yenilikçi Ticaret Platformu
                     </div>
                     <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
-                        <span class="block">Trade Global Markets</span>
-                        <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">With Confidence</span>
+                        <span class="block">Küresel Piyasaları Ticaret Edin</span>
+                        <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Güvenle</span>
                     </h1>
                     <p class="max-w-lg mt-5 text-xl text-gray-300">
-                        Access advanced trading tools for Forex, Cryptocurrencies, Commodities, Indices, and more with competitive spreads and lightning-fast execution.
+                        Forex, Kripto Paralar, Emtialar, Endeksler ve daha fazlası için gelişmiş ticaret araçlarına rekabetçi spreadler ve yıldırım hızında uygulama ile erişin.
                     </p>
                     <div class="flex flex-wrap gap-4 mt-8">
                         <a href="register" class="px-8 py-3 text-lg font-medium text-white transition-all duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-gray-900">
-                            Create Account
+                            Hesap Oluştur
                         </a>
                         <a href="login" class="px-8 py-3 text-lg font-medium text-gray-200 transition-all duration-200 bg-dark-200 border border-gray-700 rounded-lg hover:bg-dark-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                          Login
+                          Giriş Yap
                         </a>
                     </div>
 
@@ -82,14 +82,14 @@
                             <div class="flex items-center space-x-3">
                                 <div class="flex items-center space-x-2">
                                     <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                    <span class="text-sm font-semibold text-green-400">PROFESSIONAL TRADING</span>
+                                    <span class="text-sm font-semibold text-green-400">PROFESYONEL TİCARET</span>
                                 </div>
                                 <div class="text-xs text-gray-400">
                                     <span x-data="{ time: '' }" x-init="setInterval(() => { time = new Date().toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit', second:'2-digit'}) }, 1000)" x-text="time"></span>
                                 </div>
                             </div>
                             <div class="text-xs text-emerald-400 font-medium">
-                                Advanced Platform
+                                Gelişmiş Platform
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                         <div class="bg-gray-900 bg-opacity-50 rounded-xl p-4">
                             <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
                                 <i class="fas fa-cogs text-emerald-400 mr-2"></i>
-                                Platform Features
+                                Platform Özellikleri
                             </h3>
                             <div class="space-y-3">
                                 <div class="flex items-center justify-between bg-gray-800 rounded-lg p-3 hover:bg-gray-700 transition-colors">
@@ -111,8 +111,8 @@
                                             <i class="fas fa-bolt text-white text-sm"></i>
                                         </div>
                                         <div>
-                                            <span class="text-white font-medium">Lightning Fast Execution</span>
-                                            <div class="text-xs text-gray-400">Ultra-low latency trading</div>
+                                            <span class="text-white font-medium">Yıldırım Hızında Yürütme</span>
+                                            <div class="text-xs text-gray-400">Ultra düşük gecikme ile ticaret</div>
                                         </div>
                                     </div>
                                     <div class="text-emerald-400 text-sm font-semibold">
@@ -125,7 +125,7 @@
                                             <i class="fas fa-shield-alt text-white text-sm"></i>
                                         </div>
                                         <div>
-                                            <span class="text-white font-medium">Advanced Risk Management</span>
+                                            <span class="text-white font-medium">Gelişmiş Risk Yönetimi</span>
                                             {{-- <div class="text-xs text-gray-400">Stop Loss & Take Profit</div> --}}
                                         </div>
                                     </div>
@@ -139,8 +139,8 @@
                                             <i class="fas fa-chart-area text-white text-sm"></i>
                                         </div>
                                         <div>
-                                            <span class="text-white font-medium">Real-Time Analytics</span>
-                                            <div class="text-xs text-gray-400">Live market data & charts</div>
+                                            <span class="text-white font-medium">Gerçek Zamanlı Analitik</span>
+                                            <div class="text-xs text-gray-400">Canlı piyasa verileri ve grafikleri</div>
                                         </div>
                                     </div>
                                     <div class="text-emerald-400 text-sm font-semibold">
@@ -156,14 +156,14 @@
                         <div class="pt-4 space-y-3">
                             <a href="register" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2 shadow-lg">
                                 <i class="fas fa-rocket"></i>
-                                <span>Start Trading Today</span>
+                                <span>Bugün Ticarete Başlayın</span>
                             </a>
                             <a href="login" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2">
                                 <i class="fas fa-sign-in-alt"></i>
-                                <span>Access Your Account</span>
+                                <span>Hesabınıza Erişin</span>
                             </a>
                             <div class="text-center pt-2">
-                                <span class="text-xs text-gray-400">Regulated • Secure • Professional</span>
+                                <span class="text-xs text-gray-400">Düzenlenmiş • Güvenli • Profesyonel</span>
                             </div>
                         </div>
                     </div>
@@ -340,8 +340,8 @@
 <section class="py-12 bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 text-center">
-            <h2 class="text-3xl font-bold text-white">Why Trade With Us</h2>
-            <p class="mt-2 text-gray-400">Everything you need for successful trading</p>
+            <h2 class="text-3xl font-bold text-white">Neden Bizimle Ticaret Yapmalısınız</h2>
+            <p class="mt-2 text-gray-400">Başarılı ticaret için ihtiyacınız olan her şey</p>
         </div>
 
         <!-- Features Grid -->
@@ -351,8 +351,8 @@
                 <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 shadow-lg">
                     <i class="fas fa-chart-line text-white text-2xl"></i>
                 </div>
-                <h3 class="mb-2 text-xl font-bold text-white text-center">Trading Tools</h3>
-                <p class="text-gray-400 text-center">Plan your trades effectively with our wide range of free professional trading tools</p>
+                <h3 class="mb-2 text-xl font-bold text-white text-center">Ticaret Araçları</h3>
+                <p class="text-gray-400 text-center">Ücretsiz profesyonel ticaret araçlarımızla işlemlerinizi etkili şekilde planlayın</p>
             </div>
 
             <!-- Feature 2 -->
@@ -360,8 +360,8 @@
                 <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-green-500 to-green-700 shadow-lg">
                     <i class="fas fa-layer-group text-white text-2xl"></i>
                 </div>
-                <h3 class="mb-2 text-xl font-bold text-white text-center">Trading Products</h3>
-                <p class="text-gray-400 text-center">Diverse opportunities to optimize your trading portfolio across multiple markets</p>
+                <h3 class="mb-2 text-xl font-bold text-white text-center">Ticaret Ürünleri</h3>
+                <p class="text-gray-400 text-center">Çoklu piyasalarda ticaret portföyünüzü optimize etmek için çeşitli fırsatlar</p>
             </div>
 
             <!-- Feature 3 -->
@@ -369,8 +369,8 @@
                 <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 shadow-lg">
                     <i class="fas fa-desktop text-white text-2xl"></i>
                 </div>
-                <h3 class="mb-2 text-xl font-bold text-white text-center">Trading Platforms</h3>
-                <p class="text-gray-400 text-center">Powerful platforms to suit all trading styles and needs on any device</p>
+                <h3 class="mb-2 text-xl font-bold text-white text-center">Ticaret Platformları</h3>
+                <p class="text-gray-400 text-center">Herhangi bir cihazda tüm ticaret tarzlarına ve ihtiyaçlara uygun güçlü platformlar</p>
             </div>
 
             <!-- Feature 4 -->
@@ -378,8 +378,8 @@
                 <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-700 shadow-lg">
                     <i class="fas fa-wallet text-white text-2xl"></i>
                 </div>
-                <h3 class="mb-2 text-xl font-bold text-white text-center">Funding Methods</h3>
-                <p class="text-gray-400 text-center">Multiple quick, easy and secure methods to fund your trading account</p>
+                <h3 class="mb-2 text-xl font-bold text-white text-center">Finansman Yöntemleri</h3>
+                <p class="text-gray-400 text-center">Ticaret hesabınızı finanse etmek için birden fazla hızlı, kolay ve güvenli yöntem</p>
             </div>
         </div>
     </div>
@@ -393,16 +393,16 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 text-center">
             <span class="inline-block px-4 py-1 text-sm font-semibold tracking-wider text-emerald-400 uppercase bg-gradient-to-r from-emerald-900 to-teal-900 bg-opacity-70 rounded-full shadow-lg">
-                Real-Time Intelligence
+                Gerçek Zamanlı İstihbarat
             </span>
-            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400">Market Analysis & Insights</h2>
-            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Stay ahead with real-time market data, AI-powered insights, and expert analysis</p>
+            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400">Piyasa Analizi ve İçgörüler</h2>
+            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Gerçek zamanlı piyasa verileri, yapay zeka destekli içgörüler ve uzman analizleri ile önde kalın</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <!-- Market Overview Chart -->
             <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-lg hover:border-blue-500 transition-all duration-300">
-                <h3 class="mb-4 text-xl font-semibold text-white">Live Market Overview</h3>
+                <h3 class="mb-4 text-xl font-semibold text-white">Canlı Piyasa Genel Görünümü</h3>
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
@@ -558,7 +558,7 @@
             <!-- Expert Analysis Content -->
             <div class="space-y-6">
                 <div class="bg-gray-800 bg-opacity-80 p-6 rounded-xl border border-gray-700 hover:border-emerald-500 shadow-lg transition duration-300">
-                    <h3 class="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400 mb-4">Expert Market Analysis</h3>
+                    <h3 class="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400 mb-4">Uzman Piyasa Analizi</h3>
 
                     <div class="space-y-6">
                         <!-- Analysis Card 1 -->
@@ -960,7 +960,7 @@
             <div class="bg-dark-300 rounded-xl p-5 border border-gray-800 shadow-lg">
                 <h3 class="text-xl font-semibold text-white mb-4">Live Market Overview</h3>
 
-                <!-- TradingView Widget BEGIN -->
+                <!-- TradingView Widget BAŞLANGIÇ -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
@@ -983,7 +983,7 @@
                     }
                     </script>
                 </div>
-                <!-- TradingView Widget END -->
+                <!-- TradingView Widget BİTTİ -->
             </div>
         </div>
     </div>
