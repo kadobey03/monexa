@@ -6,7 +6,7 @@
         <div class="content">
             <div class="page-inner">
                 <div class="mt-2 mb-4">
-                    <h3 class="fw-bold mb-3">About Remedy Technology</h3>
+                    <h3 class="fw-bold mb-3">About Remedy Technologsy</h3>
                     <p class="text-muted">Professional PHP Script Development & Support Services</p>
                 </div>
 
