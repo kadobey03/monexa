@@ -182,12 +182,12 @@
         {
         "symbols": [
             {
-            "proName": "BIST:XU100",
-            "title": "BIST 100"
+            "proName": "SPX500",
+            "title": "S&P 500"
             },
             {
-            "proName": "BIST:XU030",
-            "title": "BIST 30"
+            "proName": "NDX",
+            "title": "NASDAQ 100"
             },
             {
             "proName": "FX:USDTRY",
@@ -432,28 +432,28 @@
                         "title": "Endeksler",
                         "symbols": [
                             {
-                            "s": "BIST:XU100",
-                            "d": "BIST 100"
+                            "s": "SPX500",
+                            "d": "S&P 500"
                             },
                             {
-                            "s": "BIST:XU030",
-                            "d": "BIST 30"
+                            "s": "NDX",
+                            "d": "NASDAQ 100"
                             },
                             {
-                            "s": "BIST:XU050",
-                            "d": "BIST 50"
+                            "s": "DJI",
+                            "d": "Dow Jones"
                             },
                             {
-                            "s": "BIST:XUTEK",
-                            "d": "BIST TEKNOLOJİ"
+                            "s": "UKX",
+                            "d": "FTSE 100"
                             },
                             {
-                            "s": "BIST:XUSIN",
-                            "d": "BIST SINAİ"
+                            "s": "CAC40",
+                            "d": "CAC 40"
                             },
                             {
-                            "s": "BIST:XUHIZ",
-                            "d": "BIST HİZMETLER"
+                            "s": "DAX",
+                            "d": "DAX 40"
                             }
                         ],
                         "originalTitle": "Endeksler"
