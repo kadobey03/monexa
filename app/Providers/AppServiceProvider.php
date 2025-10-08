@@ -5,6 +5,8 @@ namespace App\Providers;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Sftp\SftpAdapter;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\App;
 use App\Models\Settings;
 use App\Models\SettingsCont;
 use App\Models\TermsPrivacy;
@@ -47,5 +49,9 @@ class AppServiceProvider extends ServiceProvider
         View::share('terms', $terms);
         View::share('moresettings', $moreset);
         View::share('mod', $settings->modules);
+
+        if (Session::has('locale')) {
+            App::setLocale(Session::get('locale'));
+        }
     }
 }
