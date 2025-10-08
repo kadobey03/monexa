@@ -989,56 +989,6 @@
     </div>
 </section>
 
-<!-- Copy Trading Section -->
-<section class="py-12 bg-dark-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-10 text-center">
-            <span class="inline-block px-3 py-1 text-sm font-semibold tracking-wider text-green-400 uppercase bg-green-900 bg-opacity-30 rounded-full">
-                Social Trading
-            </span>
-            <h2 class="mt-2 text-3xl font-bold text-white">Copy Professional Traders</h2>
-            <p class="mt-2 text-gray-400 max-w-2xl mx-auto">Gelişmiş kopya ticaret sistemimizle deneyimli tüccarlar sizin için çalışsın</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Strategy 1 -->
-            <div class="bg-dark-400 rounded-xl p-6 border border-gray-800 hover:border-green-500 transition duration-300 transform hover:-translate-y-1">
-                <div class="w-14 h-14 bg-green-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
-                    <i class="fas fa-copy text-green-400 text-xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3">Copy 400+ Strategies</h3>
-                <p class="text-gray-400">7 varlık sınıfında 1000'den fazla enstrüman için yüzlerce stratejiye erişin.</p>
-            </div>
-
-            <!-- Strategy 2 -->
-            <div class="bg-dark-400 rounded-xl p-6 border border-gray-800 hover:border-green-500 transition duration-300 transform hover:-translate-y-1">
-                <div class="w-14 h-14 bg-green-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
-                    <i class="fas fa-chart-line text-green-400 text-xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3">Select Top Performers</h3>
-                <p class="text-gray-400">Performanslarına göre stratejileri sıralamak ve durumunuza en uygun olanı seçmek için raporlama araçlarımızı kullanın.</p>
-            </div>
-
-            <!-- Strategy 3 -->
-            <div class="bg-dark-400 rounded-xl p-6 border border-gray-800 hover:border-green-500 transition duration-300 transform hover:-translate-y-1">
-                <div class="w-14 h-14 bg-green-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
-                    <i class="fas fa-shield-alt text-green-400 text-xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3">Stay Protected</h3>
-                <p class="text-gray-400">Sistem, hesabınız için maruziyetinizi optimal seviyede tutmak için gelişmiş hesaplamalar kullanır.</p>
-            </div>
-
-            <!-- Strategy 4 -->
-            <div class="bg-dark-400 rounded-xl p-6 border border-gray-800 hover:border-green-500 transition duration-300 transform hover:-translate-y-1">
-                <div class="w-14 h-14 bg-green-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
-                    <i class="fas fa-sliders-h text-green-400 text-xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-white mb-3">Combine Methods</h3>
-                <p class="text-gray-400">Entegre platformumuz, tercihinize bağlı olarak kopyalama işlemini manuel ve otomatik ticaret ile birleştirmenize olanak tanır.</p>
-            </div>
-        </div>
-    </div>
-</section>
 
 
 
