@@ -242,7 +242,7 @@
         }
     });
 
-    // Re-initialize icons after Alpine updates
+    // Alpine güncellemelerinden sonra ikonları yeniden başlat
     document.addEventListener('alpine:updated', () => {
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
