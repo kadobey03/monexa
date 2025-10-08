@@ -718,9 +718,9 @@
                         <i class="fas fa-globe text-blue-400 text-xl"></i>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2">Forex</h3>
-                    <p class="text-gray-400 mb-4">Trade 70+ major, minor & exotic currency pairs with competitive spreads and conditions</p>
+                    <p class="text-gray-400 mb-4">70+ ana, ikincil ve egzotik döviz çiftiyle rekabetçi spreadler ve koşullarla ticaret yapın</p>
                     <a href="forex" class="text-blue-400 hover:text-blue-300 flex items-center text-sm font-medium">
-                        Explore Forex
+                        Forex'i Keşfedin
                         <i class="fas fa-arrow-right ml-1 text-xs"></i>
                     </a>
                 </div>
@@ -733,10 +733,10 @@
                     <div class="w-12 h-12 bg-green-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
                         <i class="fas fa-chart-line text-green-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Shares</h3>
-                    <p class="text-gray-400 mb-4">Access hundreds of public companies from the US, UK, Germany and more markets</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Hisse Senetleri</h3>
+                    <p class="text-gray-400 mb-4">ABD, İngiltere, Almanya ve daha fazla piyasadan yüzlerce halka açık şirkete erişin</p>
                     <a href="shares" class="text-green-400 hover:text-green-300 flex items-center text-sm font-medium">
-                        Explore Shares
+                        Hisse Senetlerini Keşfedin
                         <i class="fas fa-arrow-right ml-1 text-xs"></i>
                     </a>
                 </div>
@@ -749,10 +749,10 @@
                     <div class="w-12 h-12 bg-yellow-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
                         <i class="fas fa-fire text-yellow-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Energies</h3>
-                    <p class="text-gray-400 mb-4">Discover opportunities on UK & US Crude Oil as well as Natural Gas with tight spreads</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Enerjiler</h3>
+                    <p class="text-gray-400 mb-4">İngiltere ve ABD Ham Petrolü ile doğal gazda fırsatları sıkı spreadlerle keşfedin</p>
                     <a href="commodities" class="text-yellow-400 hover:text-yellow-300 flex items-center text-sm font-medium">
-                        Explore Energies
+                        Enerjileri Keşfedin
                         <i class="fas fa-arrow-right ml-1 text-xs"></i>
                     </a>
                 </div>
@@ -765,10 +765,10 @@
                     <div class="w-12 h-12 bg-blue-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
                         <i class="fas fa-landmark text-blue-400 text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Indices</h3>
-                    <p class="text-gray-400 mb-4">Trade major and minor Index CFDs from around the globe with competitive conditions</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Endeksler</h3>
+                    <p class="text-gray-400 mb-4">Dünyanın her yerinden ana ve ikincil Endeks CFD'lerinde rekabetçi koşullarla ticaret yapın</p>
                     <a href="indices" class="text-blue-400 hover:text-blue-300 flex items-center text-sm font-medium">
-                        Explore Indices
+                        Endeksleri Keşfedin
                         <i class="fas fa-arrow-right ml-1 text-xs"></i>
                     </a>
                 </div>
@@ -1389,13 +1389,13 @@
                                 <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
                             </svg>
                         </div>
-                        <p class="text-gray-300 leading-relaxed text-sm">{{$settings->site_name}} kullanmaya başladıktan beri daha önce hiç olmadığı kadar kazanç elde ediyorum. Sizler en iyi sinyallere sahipsiniz.</p>
+                        <p class="text-gray-300 leading-relaxed text-sm">Monexa Finans kullanmaya başladıktan beri daha önce hiç olmadığı kadar kazanç elde ediyorum. Sizler en iyi sinyallere sahipsiniz.</p>
                     </div>
                     <div class="flex items-center">
-                        <img src="temp/custom/imge2.jpg" alt="Malcom47" class="w-10 h-10 rounded-full object-cover border-2 border-blue-500">
+                        <img src="temp/custom/imge2.jpg" alt="Ahmet Yılmaz" class="w-10 h-10 rounded-full object-cover border-2 border-blue-500">
                         <div class="ml-3">
-                            <h4 class="text-white font-semibold text-sm">Malcom47</h4>
-                            <p class="text-blue-400 text-xs">Verified Trader</p>
+                            <h4 class="text-white font-semibold text-sm">Ahmet Yılmaz</h4>
+                            <p class="text-blue-400 text-xs">Doğrulanmış Tüccar</p>
                         </div>
                     </div>
                 </div>
@@ -1432,13 +1432,13 @@
                                 <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
                             </svg>
                         </div>
-                        <p class="text-gray-300 leading-relaxed text-sm">{{$settings->site_name}} ile yatırım yaparak bir ay içinde 200.000 $'dan fazla kazandım. Yakında tekrar yatırım yapacağım.</p>
+                        <p class="text-gray-300 leading-relaxed text-sm">Monexa Finans ile yatırım yaparak bir ay içinde 200.000 $'dan fazla kazandım. Yakında tekrar yatırım yapacağım.</p>
                     </div>
                     <div class="flex items-center">
-                        <img src="temp/custom/imge1.jpg" alt="Christy" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500">
+                        <img src="temp/custom/imge1.jpg" alt="Mehmet Kaya" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500">
                         <div class="ml-3">
-                            <h4 class="text-white font-semibold text-sm">Christy</h4>
-                            <p class="text-emerald-400 text-xs">Elite Investor</p>
+                            <h4 class="text-white font-semibold text-sm">Mehmet Kaya</h4>
+                            <p class="text-emerald-400 text-xs">Elit Yatırımcı</p>
                         </div>
                     </div>
                 </div>
@@ -1478,10 +1478,10 @@
                         <p class="text-gray-300 leading-relaxed text-sm">Karıma 30.000 $ ek kazanç sağlayabildim. Harika, sizler en iyisiniz, devam edin.</p>
                     </div>
                     <div class="flex items-center">
-                        <img src="temp/custom/imge3.jpg" alt="Linday8" class="w-10 h-10 rounded-full object-cover border-2 border-blue-500">
+                        <img src="temp/custom/imge3.jpg" alt="Ayşe Demir" class="w-10 h-10 rounded-full object-cover border-2 border-blue-500">
                         <div class="ml-3">
-                            <h4 class="text-white font-semibold text-sm">Linday8</h4>
-                            <p class="text-blue-400 text-xs">Professional Trader</p>
+                            <h4 class="text-white font-semibold text-sm">Ayşe Demir</h4>
+                            <p class="text-blue-400 text-xs">Profesyonel Tüccar</p>
                         </div>
                     </div>
                 </div>
@@ -1518,13 +1518,13 @@
                                 <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
                             </svg>
                         </div>
-                        <p class="text-gray-300 leading-relaxed text-sm">Bu çok kolay bir süreçti ve fonlarımı ihtiyaç duyduğum kadar hızlı aldım! {{$settings->site_name}}'yi şiddetle tavsiye ederim.</p>
+                        <p class="text-gray-300 leading-relaxed text-sm">Bu çok kolay bir süreçti ve fonlarımı ihtiyaç duyduğum kadar hızlı aldım! Monexa Finans'yi şiddetle tavsiye ederim.</p>
                     </div>
                     <div class="flex items-center">
-                        <img src="temp/custom/imge4.jpg" alt="Crian" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500">
+                        <img src="temp/custom/imge4.jpg" alt="Fatma Öz" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500">
                         <div class="ml-3">
-                            <h4 class="text-white font-semibold text-sm">Crian</h4>
-                            <p class="text-emerald-400 text-xs">Active Trader</p>
+                            <h4 class="text-white font-semibold text-sm">Fatma Öz</h4>
+                            <p class="text-emerald-400 text-xs">Aktif Tüccar</p>
                         </div>
                     </div>
                 </div>
@@ -1639,6 +1639,7 @@
                     </svg>
                 </button>
             </div>
+            <p class="text-center text-gray-400 text-sm mt-4">Resimler gizlilik gereği gerçek değildir.</p>
         </div>
     </div>
 </section>

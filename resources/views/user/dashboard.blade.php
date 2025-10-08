@@ -17,28 +17,28 @@
 
 @if ($secondsSinceCreated <= 90)
     <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-        Welcome, {{ Auth::user()->name }}!
+        Merhaba, {{ Auth::user()->name }}!
     </h1>
 @else
     <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-        Welcome back, {{ Auth::user()->name }}!
+        Tekrar hoş geldin, {{ Auth::user()->name }}!
     </h1>
 @endif
 
-            <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 mt-1">Your investment dashboard overview</p>
+            <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 mt-1">Yatırım kontrol paneli genel bakışınız</p>
         </div>
         <div class="hidden sm:flex flex-col sm:flex-row gap-2 sm:gap-3">
             @if($settings->wallet_status == "on")
                 <a href="{{ route('connect_wallet') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg shadow hover:from-indigo-700 transition animate-pulse text-sm sm:text-base">
-                    <i data-lucide="link" class="w-4 h-4 sm:w-5 sm:h-5"></i> Connect Wallet
+                    <i data-lucide="link" class="w-4 h-4 sm:w-5 sm:h-5"></i> Cüzdanı Bağla
                 </a>
             @else
                 <div class="inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg text-sm sm:text-base">
-                    <i data-lucide="check-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i> Wallet Connected
+                    <i data-lucide="check-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i> Cüzdan Bağlandı
                 </div>
             @endif
             <a href="{{ route('mplans') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition text-sm sm:text-base">
-                <i data-lucide="trending-up" class="w-4 h-4 sm:w-5 sm:h-5"></i> Invest Now
+                <i data-lucide="trending-up" class="w-4 h-4 sm:w-5 sm:h-5"></i> Şimdi Yatırım Yap
             </a>
         </div>
     </div>
@@ -57,15 +57,15 @@
 
             if ($signalStrength < 25) {
                 $signalColor = 'from-red-500 to-red-600';
-                $signalText = 'Weak Signal';
+                $signalText = 'Zayıf Sinyal';
                 $signalIcon = 'signal-low';
             } elseif ($signalStrength >= 25 && $signalStrength < 50) {
                 $signalColor = 'from-yellow-500 to-orange-500';
-                $signalText = 'Moderate Signal';
+                $signalText = 'Orta Sinyal';
                 $signalIcon = 'signal-medium';
             } else {
                 $signalColor = 'from-green-500 to-emerald-600';
-                $signalText = 'Strong Signal';
+                $signalText = 'Güçlü Sinyal';
                 $signalIcon = 'signal-high';
             }
         @endphp
@@ -74,7 +74,7 @@
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2">
                     <i data-lucide="{{ $signalIcon }}" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>
-                    <h2 class="text-sm sm:text-base font-semibold text-gray-800 dark:text-gray-100">Trading Signal Strength</h2>
+                    <h2 class="text-sm sm:text-base font-semibold text-gray-800 dark:text-gray-100">Ticaret Sinyal Gücü</h2>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">{{ $signalStrength }}%</span>
@@ -95,18 +95,18 @@
             </div>
 
             <div class="flex justify-between items-center mt-2 text-xs text-gray-500 dark:text-gray-400">
-                <span>0% Weak</span>
-                <span>25% Moderate</span>
-                <span>50%+ Strong</span>
+                <span>0% Zayıf</span>
+                <span>25% Orta</span>
+                <span>50%+ Güçlü</span>
             </div>
 
             <p class="text-xs text-gray-600 dark:text-gray-400 mt-3 text-center">
                 @if($signalStrength < 25)
-                    ⚠️ Signal strength is low. Consider waiting for better market conditions.
+                    ⚠️ Sinyal gücü düşük. Daha iyi piyasa koşulları için beklemeyi düşünün.
                 @elseif($signalStrength < 50)
-                    ⚡ Moderate signal detected. Proceed with caution and proper risk management.
+                    ⚡ Orta sinyal tespit edildi. Dikkatli ilerleyin ve uygun risk yönetimine dikkat edin.
                 @else
-                    🚀 Strong signal strength! Optimal conditions for trading opportunities.
+                    🚀 Güçlü sinyal gücü! Ticaret fırsatları için optimum koşullar.
                 @endif
             </p>
         </div>
@@ -124,18 +124,18 @@
                         <i data-lucide="graduation-cap" class="w-6 h-6 sm:w-8 sm:h-8 text-white"></i>
                     </div>
                     <div class="text-center sm:text-left">
-                        <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Start Demo Trading!</h3>
-                        <p class="text-sm sm:text-base text-green-100">Practice with $100,000 virtual money - Risk-free learning!</p>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Demo Ticaretine Başlayın!</h3>
+                        <p class="text-sm sm:text-base text-green-100">100.000$ sanal para ile pratik yapın - Risksiz öğrenme!</p>
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <a href="{{ route('demo.dashboard') }}" class="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white text-green-600 rounded-lg shadow hover:bg-green-50 transition-all duration-300 font-medium text-sm sm:text-base min-w-[120px] group">
                         <i data-lucide="play" class="w-4 h-4 group-hover:scale-110 transition-transform duration-300"></i>
-                        Start Demo
+                        Demo Başlat
                     </a>
                     <a href="{{ route('mplans') }}" class="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-green-800/50 text-white rounded-lg shadow hover:bg-green-800/70 transition-all duration-300 font-medium text-sm sm:text-base min-w-[120px] backdrop-blur-sm">
                         <i data-lucide="trending-up" class="w-4 h-4"></i>
-                        Go Live
+                        Canlıya Geç
                     </a>
                 </div>
             </div>
@@ -151,14 +151,14 @@
                         <i data-lucide="graduation-cap" class="w-6 h-6 sm:w-8 sm:h-8 text-white"></i>
                     </div>
                     <div class="text-center sm:text-left">
-                        <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Demo Account Active</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Demo Hesap Aktif</h3>
                         <p class="text-sm sm:text-base text-blue-100">Demo Balance: {{ Auth::user()->currency }}{{ number_format(Auth::user()->demo_balance, 2, '.', ',') }}</p>
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <a href="{{ route('demo.dashboard') }}" class="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white text-blue-600 rounded-lg shadow hover:bg-blue-50 transition-all duration-300 font-medium text-sm sm:text-base min-w-[120px] group">
                         <i data-lucide="play" class="w-4 h-4 group-hover:scale-110 transition-transform duration-300"></i>
-                        Switch to Demo Trading
+                        Demo Ticaretine Geç
                     </a>
                 </div>
             </div>
@@ -175,9 +175,9 @@
             <div class="text-center sm:text-left w-full sm:w-auto">
                 <h2 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-white flex items-center justify-center sm:justify-start">
                     <i data-lucide="wallet" class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500 dark:text-gray-300"></i>
-                    Account Balance
+                    Hesap Bakiyesi
                 </h2>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Your available funds</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Kullanılabilir fonlarınız</p>
             </div>
             {{-- <button id="toggleBalanceVisibility" class="text-gray-400 hover:text-gray-700 dark:hover:text-white">
                 <i data-lucide="eye" class="h-5 w-5" id="visibilityIcon"></i>
@@ -212,7 +212,7 @@
             @endif
 
             <div class="inline-flex items-center px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 mb-4 w-fit mx-auto sm:mx-0">
-                <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i> Available for Withdrawal
+                <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i> Çekim için Kullanılabilir
             </div>
 
             @if(isset($settings->enable_kyc) && $settings->enable_kyc === 'yes')
@@ -221,30 +221,30 @@
                     @if(Auth::user()->account_verify === 'Verified')
                         <div class="inline-flex items-center px-2 py-1 text-xs rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse">
                             <i data-lucide="shield-check" class="w-3 h-3 mr-1"></i>
-                            <span class="font-medium">Verified Account</span>
+                            <span class="font-medium">Doğrulanmış Hesap</span>
                         </div>
                     @elseif(Auth::user()->account_verify === 'Under review')
                         <div class="inline-flex items-center px-2 py-1 text-xs rounded-full bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 animate-pulse">
                             <i data-lucide="clock" class="w-3 h-3 mr-1"></i>
-                            <span class="font-medium">Under Review</span>
+                            <span class="font-medium">İncelemede</span>
                         </div>
                     @else
                         <div class="inline-flex items-center px-2 py-1 text-xs rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 animate-pulse">
                             <i data-lucide="alert-circle" class="w-3 h-3 mr-1"></i>
-                            <span class="font-medium">Unverified</span>
+                            <span class="font-medium">Doğrulanmamış</span>
                         </div>
                     @endif
                 </div>
             @endif
 
-            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 text-center sm:text-left">Last updated: {{ now()->format('M d, Y h:i A') }}</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 text-center sm:text-left">Son güncelleme: {{ now()->format('M d, Y h:i A') }}</p>
 
             <div class="mt-auto flex flex-col sm:flex-row gap-2">
                 <a href="{{ route('deposits') }}" class="flex items-center justify-center w-full gap-1 text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-white transition">
-                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Deposit
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Yatırım
                 </a>
                 <a href="{{ route('withdrawalsdeposits') }}" class="flex items-center justify-center w-full gap-1 text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-white transition">
-                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i> Withdraw
+                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i> Çekim
                 </a>
             </div>
         </div>
@@ -276,7 +276,7 @@
 
                 <div class="text-xs text-gray-500 dark:text-gray-400 mt-auto flex items-center gap-1">
                     <i data-lucide="calendar" class="w-3 h-3"></i>
-                    <span>{{ $card['label'] === 'Total Profit' ? 'Last period' : 'All time' }}</span>
+                    <span>{{ $card['label'] === 'Total Profit' ? 'Son dönem' : 'Tüm zaman' }}</span>
                 </div>
             </div>
         @endforeach
@@ -298,14 +298,14 @@
                         </div>
                         <div class="flex-1 text-center sm:text-left">
                             <h3 class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-1">
-                                Account Verified
+                                Hesap Doğrulandı
                             </h3>
                             <p class="text-gray-500 dark:text-gray-400 text-sm">
-                                Your identity has been verified. All features are now available.
+                                Kimliğiniz doğrulandı. Tüm özellikler artık kullanılabilir.
                             </p>
                         </div>
                         <div class="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">
-                            Verified
+                            Doğrulandı
                         </div>
                     </div>
                 </div>
@@ -321,10 +321,10 @@
                                 </div>
                                 <div>
                                     <h3 class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-1">
-                                        Identity Verification
+                                        Kimlik Doğrulama
                                     </h3>
                                     <p class="text-gray-500 dark:text-gray-400 text-sm">
-                                        Complete verification to access all features
+                                        Tüm özelliklere erişmek için doğrulamayı tamamlayın
                                     </p>
                                 </div>
                             </div>
@@ -333,7 +333,7 @@
                             <button @click="kycDropdownOpen = !kycDropdownOpen"
                                     class="w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                                 <span class="flex items-center justify-center gap-2">
-                                    <span>View Details</span>
+                                    <span>Detayları Görüntüle</span>
                                     <i data-lucide="chevron-down"
                                        :class="kycDropdownOpen ? 'rotate-180' : 'rotate-0'"
                                        class="w-4 h-4 transition-transform"></i>
@@ -360,19 +360,19 @@
                                 </div>
                                 <div>
                                     <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                                        Under Review
+                                        İncelemede
                                     </h4>
                                     <p class="text-gray-500 dark:text-gray-400 text-sm max-w-md mx-auto">
-                                        Your documents are being reviewed. We'll notify you once the verification is complete.
+                                        Belgeleriniz inceleniyor. Doğrulama tamamlanır tamamlandıktan sonra size bildireceğiz.
                                     </p>
                                 </div>
 
                                 <!-- Simple Progress -->
                                 <div class="max-w-xs mx-auto">
                                     <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
-                                        <span>Submitted</span>
-                                        <span>Review</span>
-                                        <span>Complete</span>
+                                        <span>Gönderildi</span>
+                                        <span>İncelemede</span>
+                                        <span>Tamamlandı</span>
                                     </div>
                                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
                                         <div class="bg-yellow-500 h-1.5 rounded-full w-2/3"></div>
@@ -388,10 +388,10 @@
 
                                 <div>
                                     <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                                        Complete Your Verification
+                                        Doğrulamanızı Tamamlayın
                                     </h4>
                                     <p class="text-gray-500 dark:text-gray-400 text-sm max-w-md mx-auto mb-6">
-                                        Verify your identity to unlock higher limits and enhanced security features.
+                                        Daha yüksek limitler ve gelişmiş güvenlik özelliklerini açmak için kimliğinizi doğrulayın.
                                     </p>
                                 </div>
 
@@ -399,11 +399,11 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-sm mx-auto mb-6">
                                     <div class="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                                         <i data-lucide="shield" class="w-5 h-5 mx-auto mb-2 text-gray-600 dark:text-gray-400"></i>
-                                        <span class="text-xs text-gray-600 dark:text-gray-400">Enhanced Security</span>
+                                        <span class="text-xs text-gray-600 dark:text-gray-400">Gelişmiş Güvenlik</span>
                                     </div>
                                     <div class="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                                         <i data-lucide="trending-up" class="w-5 h-5 mx-auto mb-2 text-gray-600 dark:text-gray-400"></i>
-                                        <span class="text-xs text-gray-600 dark:text-gray-400">Higher Limits</span>
+                                        <span class="text-xs text-gray-600 dark:text-gray-400">Daha Yüksek Limitler</span>
                                     </div>
                                 </div>
 
@@ -411,7 +411,7 @@
                                 <a href="{{ route('account.verify') }}"
                                    class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                                     <i data-lucide="user-check" class="w-4 h-4"></i>
-                                    <span>Start Verification</span>
+                                    <span>Doğrulamayı Başlat</span>
                                 </a>
                             </div>
                         @endif
@@ -430,15 +430,15 @@
                         <i data-lucide="wallet" class="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600 dark:text-indigo-400"></i>
                     </div>
                     <div class="flex-1 text-center sm:text-left">
-                        <h3 class="text-base sm:text-lg font-semibold text-indigo-900 dark:text-indigo-100 mb-2">Connect Your Wallet to Start Earning</h3>
+                        <h3 class="text-base sm:text-lg font-semibold text-indigo-900 dark:text-indigo-100 mb-2">Kazanç Elde Etmek İçin Cüzdanınızı Bağlayın</h3>
                         <p class="text-indigo-700 dark:text-indigo-300 text-sm mb-4">
-                            Connect your cryptocurrency wallet to unlock daily earning opportunities of up to
-                            <span class="font-semibold">{{ Auth::user()->currency }}{{ $settings->min_return ?? '0' }}</span> per day.
+                            Günlük kazanç fırsatlarını açmak için kripto para cüzdanınızı bağlayın, günde en fazla
+                            <span class="font-semibold">{{ Auth::user()->currency }}{{ $settings->min_return ?? '0' }}</span> kadar.
                         </p>
                         <a href="{{ route('connect_wallet') }}"
                            class="inline-flex items-center gap-2 px-4 py-2 sm:py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02] text-sm sm:text-base">
                             <i data-lucide="plus" class="w-4 h-4"></i>
-                            Connect Wallet Now
+                            Cüzdanı Şimdi Bağla
                         </a>
                     </div>
                     <button onclick="this.parentElement.parentElement.parentElement.style.display='none'"
@@ -458,26 +458,26 @@
         <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-green-500/10 dark:bg-green-400/10 mb-1 group-hover:scale-110 transition-transform duration-300">
             <i data-lucide="graduation-cap" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
         </span>
-        <span class="font-medium text-xs text-green-800 dark:text-green-200">Demo Trade</span>
+        <span class="font-medium text-xs text-green-800 dark:text-green-200">Demo Ticaret</span>
         <span class="absolute top-1 right-1 px-1.5 py-0.5 text-[10px] font-bold text-white bg-green-500 rounded-full">FREE</span>
     </a>
     <a href="{{ route('deposits') }}" class="flex flex-col items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-sm group py-3 px-2">
         <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 mb-1">
             <i data-lucide="plus-circle" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>
         </span>
-        <span class="font-medium text-xs text-gray-800 dark:text-gray-200">Deposit</span>
+        <span class="font-medium text-xs text-gray-800 dark:text-gray-200">Yatırım</span>
     </a>
     <a href="{{ route('withdrawalsdeposits') }}" class="flex flex-col items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-sm group py-3 px-2">
         <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 mb-1">
             <i data-lucide="arrow-up-right" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>
         </span>
-        <span class="font-medium text-xs text-gray-800 dark:text-gray-200">Withdraw</span>
+        <span class="font-medium text-xs text-gray-800 dark:text-gray-200">Çekim</span>
     </a>
     <a href="{{ route('mplans') }}" class="flex flex-col items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-sm group py-3 px-2">
         <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 mb-1">
             <i data-lucide="trending-up" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>
         </span>
-        <span class="font-medium text-xs text-gray-800 dark:text-gray-200">Invest</span>
+        <span class="font-medium text-xs text-gray-800 dark:text-gray-200">Yatırım</span>
     </a>
 </div>
 
@@ -491,8 +491,8 @@
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <div class="xl:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow p-4 sm:p-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
-                <h3 class="font-semibold text-base sm:text-lg text-gray-900 dark:text-white">Market Overview</h3>
-                <a href="{{ route('tradinghistory') }}" class="text-blue-600 hover:underline text-sm text-center sm:text-left">View History</a>
+                <h3 class="font-semibold text-base sm:text-lg text-gray-900 dark:text-white">Pazar Genel Bakışı</h3>
+                <a href="{{ route('tradinghistory') }}" class="text-blue-600 hover:underline text-sm text-center sm:text-left">Geçmişi Görüntüle</a>
             </div>
             <!-- Asset Tickers -->
             <div class="mb-4">
@@ -579,8 +579,8 @@
         <div class="xl:col-span-1 flex flex-col gap-4 sm:gap-6">
             <div class="bg-gradient-to-br from-indigo-600 to-blue-500 text-white rounded-xl shadow p-4 sm:p-6 text-center flex flex-col items-center justify-center min-h-[120px]">
                 <i data-lucide="zap" class="w-8 h-8 sm:w-10 sm:h-10 mb-2"></i>
-                <h3 class="text-base sm:text-lg font-semibold mb-1">Quick Trade</h3>
-                <p class="text-xs sm:text-sm mb-3">Start a new trade instantly or explore investment plans.</p>
+                <h3 class="text-base sm:text-lg font-semibold mb-1">Hızlı Ticaret</h3>
+                <p class="text-xs sm:text-sm mb-3">Yeni bir işlem başlatın veya yatırım planlarını keşfedin.</p>
                 {{-- <a href="{{ route('mplans') }}" class="inline-block bg-white dark:bg-gray-900 text-indigo-600 dark:text-indigo-300 font-semibold px-4 py-2 rounded-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition">Start Trading</a> --}}
             </div>
 <form method="POST" action="{{ route('joinplan') }}" id="createTrade"
@@ -588,22 +588,22 @@
     @csrf
     <h4 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
         <i data-lucide="bar-chart-3" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400"></i>
-        Place a Trade
+        İşlem Yerleştir
     </h4>
     <div id="notifiAlert"></div>
     <!-- Asset Select -->
     <div>
-        <label for="select_assetss" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Asset</label>
+        <label for="select_assetss" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Varlık</label>
         <select id="select_assetss" name="asset" required
             class="block w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
             @if(isset($instruments) && $instruments->count() > 0)
                 @php
                     $typeLabels = [
-                        'forex' => 'Currency',
-                        'crypto' => 'Crypto-Currency',
-                        'stock' => 'Stocks',
-                        'commodity' => 'Commodities',
-                        'index' => 'Indices'
+                        'forex' => 'Döviz',
+                        'crypto' => 'Kripto Para',
+                        'stock' => 'Hisseler',
+                        'commodity' => 'Emtialar',
+                        'index' => 'Endeksler'
                     ];
                 @endphp
                 @foreach($instruments as $type => $typeInstruments)
@@ -620,7 +620,7 @@
                 @endforeach
             @else
                 <!-- Fallback to hardcoded options if no instruments found -->
-                <optgroup label="Currency">
+                <optgroup label="Döviz">
                     <option selected>EURUSD</option>
                     <option>EURJPY</option>
                     <option>USDJPY</option>
@@ -632,7 +632,7 @@
                     <option>GBPJPY</option>
                     <option>USDCHF</option>
                 </optgroup>
-                <optgroup label="Crypto-Currency">
+                <optgroup label="Kripto Para">
                     <option>BTCUSD</option>
                     <option>ETHUSD</option>
                     <option>BCHUSD</option>
@@ -640,7 +640,7 @@
                     <option>LTCUSD</option>
                     <option>ETHBTC</option>
                 </optgroup>
-                <optgroup label="Stocks">
+                <optgroup label="Hisseler">
                     <option>CITI</option>
                     <option>SNAP</option>
                     <option>EA</option>
@@ -651,13 +651,13 @@
                     <option>SBUX</option>
                     <option>INTC</option>
                 </optgroup>
-                <optgroup label="Indices">
+                <optgroup label="Endeksler">
                     <option>SPX500USD</option>
                     <option>MXX</option>
                     <option>XAX</option>
                     <option>INDEX:STI</option>
                 </optgroup>
-                <optgroup label="Commodities">
+                <optgroup label="Emtialar">
                     <option>GOLD</option>
                     <option>RB1!</option>
                     <option>USOIL</option>
@@ -668,24 +668,24 @@
     </div>
     <!-- Amount -->
     <div>
-        <label for="IAmount" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Amount</label>
+        <label for="IAmount" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Miktar</label>
         <div class="flex rounded-lg shadow-sm overflow-hidden ring-1 ring-gray-300 dark:ring-gray-600 bg-gray-50 dark:bg-gray-800">
             <span class="px-3 sm:px-4 inline-flex items-center text-xs sm:text-sm text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-700">
                 {{ $settings->s_currency }}
             </span>
-            <input type="number" name="amount" id="IAmount" placeholder="Invest Amount (0.00)" min="50" max="500000"
+            <input type="number" name="amount" id="IAmount" placeholder="Yatırım Miktarı (0.00)" min="50" max="500000"
                 class="w-full bg-transparent focus:outline-none px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-900 dark:text-white"
                 required>
         </div>
-        <span class="text-xs text-gray-400 mt-1 block">Min: 50, Max: 500,000</span>
+        <span class="text-xs text-gray-400 mt-1 block">En Az: 50, En Çok: 500.000</span>
     </div>
     <!-- Leverage & Expiration -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <div>
-            <label for="leverage" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Leverage</label>
+            <label for="leverage" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kaldıraç</label>
             <select name="leverage" id="leverage" required
                 class="block w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
-                <option disabled selected value="">Leverage</option>
+                <option disabled selected value="">Kaldıraç</option>
                 <option value="10">1:10</option>
                 <option value="20">1:20</option>
                 <option value="30">1:30</option>
@@ -699,19 +699,19 @@
             </select>
         </div>
         <div>
-            <label for="expire" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Expiration</label>
+            <label for="expire" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Son Kullanma</label>
             <select name="expire" id="expire" required
                 class="block w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
-                <option disabled selected value="">Expiration</option>
-                <option value="1 Minutes">1 Minute</option>
-                <option value="5 Minutes">5 Minutes</option>
-                <option value="15 Minutes">15 Minutes</option>
-                <option value="30 Minutes">30 Minutes</option>
-                <option value="60 Minutes">1 Hour</option>
-                <option value="4 Hours">4 Hours</option>
-                <option value="1 Days">1 Day</option>
-                <option value="2 Days">2 Days</option>
-                <option value="7 Days">7 Days</option>
+                <option disabled selected value="">Son Kullanma</option>
+                <option value="1 Minutes">1 Dakika</option>
+                <option value="5 Minutes">5 Dakika</option>
+                <option value="15 Minutes">15 Dakika</option>
+                <option value="30 Minutes">30 Dakika</option>
+                <option value="60 Minutes">1 Saat</option>
+                <option value="4 Hours">4 Saat</option>
+                <option value="1 Days">1 Gün</option>
+                <option value="2 Days">2 Gün</option>
+                <option value="7 Days">7 Gün</option>
             </select>
         </div>
     </div>
