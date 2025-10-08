@@ -719,11 +719,11 @@
     <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
         <button type="submit" name="order_type" value="Buy"
             class="flex-1 bg-gradient-to-br from-green-500 to-emerald-600 text-white py-2 sm:py-3 rounded-xl shadow hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm sm:text-base font-semibold">
-            <i data-lucide="arrow-up-right" class="w-4 h-4"></i> BUY
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i> SATIN AL
         </button>
         <button type="submit" name="order_type" value="Sell"
             class="flex-1 bg-gradient-to-br from-red-500 to-pink-600 text-white py-2 sm:py-3 rounded-xl shadow hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm sm:text-base font-semibold">
-            <i data-lucide="arrow-down-right" class="w-4 h-4"></i> SELL
+            <i data-lucide="arrow-down-right" class="w-4 h-4"></i> SAT
         </button>
     </div>
 </form>
@@ -733,14 +733,14 @@
     <!-- Latest Trades & Referrals -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 sm:p-6">
-            <h4 class="font-semibold text-base sm:text-lg mb-3 text-gray-900 dark:text-white">Latest Trades</h4>
+            <h4 class="font-semibold text-base sm:text-lg mb-3 text-gray-900 dark:text-white">Son İşlemler</h4>
             <div class="overflow-x-auto">
                 <table class="min-w-full text-xs sm:text-sm">
                     <thead class="text-gray-700 dark:text-gray-200">
                         <tr>
-                            <th class="px-2 sm:px-4 py-2 text-left">Details</th>
-                            <th class="px-2 sm:px-4 py-2">Amount</th>
-                            <th class="px-2 sm:px-4 py-2">Status</th>
+                            <th class="px-2 sm:px-4 py-2 text-left">Detaylar</th>
+                            <th class="px-2 sm:px-4 py-2">Miktar</th>
+                            <th class="px-2 sm:px-4 py-2">Durum</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -764,12 +764,12 @@
                             <!-- Status/Leverage -->
                             <td class="py-3 px-2 sm:px-4 align-top">
                                 @if($history->type == 'WIN')
-                                    <span class="inline-flex items-center px-2 py-1 rounded bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 text-xs font-medium">WIN +{{ $history->leverage }}%</span>
+                                    <span class="inline-flex items-center px-2 py-1 rounded bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400 text-xs font-medium">KAZANÇ +{{ $history->leverage }}%</span>
                                 @elseif($history->type == 'LOSE')
-                                    <span class="inline-flex items-center px-2 py-1 rounded bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400 text-xs font-medium">LOSE -{{ $history->leverage }}%</span>
+                                    <span class="inline-flex items-center px-2 py-1 rounded bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400 text-xs font-medium">KAYIP -{{ $history->leverage }}%</span>
                                 @else
                                     <span class="inline-flex items-center px-2 py-1 rounded bg-blue-100 text-red-700 dark:bg-blue-900/20 dark:text-red-400 text-xs font-medium">{{ $history->type }}</span>
-                                    <span class="text-xs ml-1 hidden sm:inline">Leverage: 1:{{ $history->leverage }}</span>
+                                    <span class="text-xs ml-1 hidden sm:inline">Kaldıraç: 1:{{ $history->leverage }}</span>
                                 @endif
                                 <div class="text-xs text-gray-400 mt-1 hidden sm:block">{{ $history->created_at->toDayDateTimeString() }}</div>
                             </td>
@@ -778,22 +778,22 @@
                     </tbody>
                 </table>
             </div>
-            <a href="{{ route('tradinghistory') }}" class="block text-center mt-4 text-blue-600 font-semibold">View All</a>
+            <a href="{{ route('tradinghistory') }}" class="block text-center mt-4 text-blue-600 font-semibold">Tümünü Görüntüle</a>
         </div>
 
 
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-6 flex flex-col justify-between">
             <div>
-                <h4 class="font-semibold text-lg mb-2 text-gray-900 dark:text-white">Referrals</h4>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Present our project to your network and enjoy financial benefits. You don’t need an active deposit to earn affiliate commissions.</p>
-                <a href="{{ route('referuser') }}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Learn More</a>
+                <h4 class="font-semibold text-lg mb-2 text-gray-900 dark:text-white">Referanslar</h4>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Projemizi ağınıza sunun ve finansal avantajlardan yararlanın. Ortaklık komisyonları kazanmak için aktif bir yatırıma ihtiyacınız yok.</p>
+                <a href="{{ route('referuser') }}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">Daha Fazla Öğrenin</a>
              <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 sm:p-6 mt-4">
-                <h4 class="font-semibold mb-2 text-gray-900 dark:text-white text-sm sm:text-base">Personal Referral Link</h4>
+                <h4 class="font-semibold mb-2 text-gray-900 dark:text-white text-sm sm:text-base">Kişisel Referans Bağlantısı</h4>
                 <div class="flex flex-col sm:flex-row items-stretch gap-2">
                     <input type="text" class="form-input flex-1 rounded border-gray-300 dark:bg-gray-900 dark:border-gray-700 text-white text-xs sm:text-sm min-w-0" value="{{ Auth::user()->ref_link }}" readonly>
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-xs sm:text-sm whitespace-nowrap" x-on:click="navigator.clipboard.writeText('{{ Auth::user()->ref_link }}'); showCopied = true">Copy</button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-xs sm:text-sm whitespace-nowrap" x-on:click="navigator.clipboard.writeText('{{ Auth::user()->ref_link }}'); showCopied = true">Kopyala</button>
                 </div>
-                <p x-show="showCopied" class="text-xs sm:text-sm text-green-500 mt-1">Copied to clipboard!</p>
+                <p x-show="showCopied" class="text-xs sm:text-sm text-green-500 mt-1">Panoya kopyalandı!</p>
             </div>
 
             </div>

@@ -705,8 +705,8 @@
 <section class="py-16 bg-dark-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 text-center">
-            <h2 class="text-3xl font-bold text-white">Diverse Trading Products</h2>
-            <p class="mt-2 text-gray-400">Access global markets with competitive conditions</p>
+            <h2 class="text-3xl font-bold text-white">Çeşitli Ticaret Ürünleri</h2>
+            <p class="mt-2 text-gray-400">Rekabetçi koşullar ile küresel piyasalara erişin</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -785,10 +785,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 text-center">
             <div class="inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider text-secondary uppercase bg-green-900 bg-opacity-30 rounded-full">
-                Popular Asset Class
+                Popüler Varlık Sınıfı
             </div>
-            <h2 class="text-3xl font-bold text-white">Cryptocurrency Trading</h2>
-            <p class="mt-2 text-gray-400 max-w-2xl mx-auto">Trade the world's most popular digital assets with competitive spreads and advanced tools</p>
+            <h2 class="text-3xl font-bold text-white">Kripto Para Ticareti</h2>
+            <p class="mt-2 text-gray-400 max-w-2xl mx-auto">Dünyanın en popüler dijital varlıklarını rekabetçi spreadler ve gelişmiş araçlarla ticaret edin</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -879,7 +879,7 @@
 
         <div class="mt-10 text-center">
             <a href="cryptocurrencies" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition duration-150">
-                View all cryptocurrencies
+                Tüm kripto paraları görüntüle
                 <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
@@ -907,10 +907,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 text-center">
             <span class="inline-block px-3 py-1 text-sm font-semibold tracking-wider text-primary uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Superior Trading Experience
+                Üstün Ticaret Deneyimi
             </span>
-            <h2 class="mt-2 text-3xl font-bold text-white">Tighter Spreads. Faster Execution.</h2>
-            <p class="mt-2 text-gray-400 max-w-2xl mx-auto">Experience institutional-grade trading conditions designed for professional traders</p>
+            <h2 class="mt-2 text-3xl font-bold text-white">Daha Dar Spreadler. Daha Hızlı Yürütme.</h2>
+            <p class="mt-2 text-gray-400 max-w-2xl mx-auto">Profesyonel tüccarlar için tasarlanmış kurumsal sınıf ticaret koşullarını yaşayın</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -967,7 +967,7 @@
 
                     <div class="mt-8">
                         <a href="login" class="inline-flex items-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-blue-700 transition duration-150">
-                            View detailed conditions
+                            Detaylı koşulları görüntüle
                             <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -1025,9 +1025,9 @@
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-10 text-center">
             <span class="inline-block px-3 py-1 text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Our Story
+                Hikayemiz
             </span>
-            <h2 class="mt-2 text-3xl font-bold text-white">About Us</h2>
+            <h2 class="mt-2 text-3xl font-bold text-white">Hakkımızda</h2>
             <div class="h-1 w-20 bg-primary mx-auto my-4"></div>
         </div>
 
@@ -1044,7 +1044,7 @@
                 <div class="bg-dark-300 bg-opacity-60 p-4 rounded-lg">
                     <h3 class="text-white font-semibold flex items-center">
                         <i class="fas fa-check-circle text-primary mr-2"></i>
-                        Personalized Trading
+                        Kişiselleştirilmiş Ticaret
                     </h3>
                     <p class="text-gray-400 mt-2">
                         Biraz mı yoksa çok mu risk almak istiyorsunuz? Kısa vadede mi yoksa uzun vadede mi kazanç istiyorsunuz? Günlük tüccar mı, swing tüccarı mı yoksa scalper mı olmak istiyorsunuz?
@@ -1054,7 +1054,7 @@
                 <div class="bg-dark-300 bg-opacity-60 p-4 rounded-lg">
                     <h3 class="text-white font-semibold flex items-center">
                         <i class="fas fa-check-circle text-primary mr-2"></i>
-                        Complete Control
+                        Tam Kontrol
                     </h3>
                     <p class="text-gray-400 mt-2">
                         Doğru araçlar, bilgiler ve dünyanın tüm para birimlerine erişim ile {{$settings->site_name}}, yaptığınız işlemlerin kontrolünü size verir.
@@ -1064,7 +1064,7 @@
 
             <div class="mt-8 text-center">
                 <a href="about" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-blue-700 transition duration-150">
-                    Learn more about us
+                    Hakkımızda daha fazla bilgi edinin
                     <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
@@ -1109,26 +1109,26 @@
                 <div>
                     <h2 class="text-2xl font-bold text-white mb-2 flex items-center">
                         <i class="fas fa-headset text-primary mr-3"></i>
-                        STAY UP TO DATE WITH OUR EXPERTS
+                        UZMANLARIMIZLA GÜNCEL KALIN
                     </h2>
                     <div class="h-1 w-20 bg-primary my-4"></div>
                     <p class="text-gray-300 leading-relaxed">
-                        Our local and international teams are here to support you on a 24/5 basis in more than 20 languages, while our wide range of payment methods gives you greater flexibility when it comes to deposits and withdrawals.
+                        Yerel ve uluslararası ekiplerimiz, 20'den fazla dilde 24/5 bazında sizi desteklemek için burada. Aynı zamanda geniş ödeme yöntemleri yelpazemiz, yatırımlar ve çekimler konusunda size daha fazla esneklik sağlıyor.
                     </p>
                 </div>
 
                 <div class="bg-dark-300 rounded-lg p-6 border border-gray-800">
                     <h2 class="text-xl font-bold text-white mb-3 flex items-center">
                         <i class="fas fa-star text-yellow-400 mr-3"></i>
-                        Experience More Than Trading
+                        Ticaretten Daha Fazla Deneyim Yaşam
                     </h2>
                     <p class="text-gray-300 leading-relaxed">
-                        Our success is centred around a number of core values. They include providing competitive brokerage fees through tight spreads, ensuring lightning-fast execution, access to advanced trading platforms with a wide range of products, and exceptional customer service.
+                        Başarımız bir dizi temel değer etrafında toplanır. Bunlar arasında sıkı spreadler aracılığıyla rekabetçi brokeraj ücretleri sağlama, yıldırım hızında yürütme sağlama, geniş ürün yelpazesi ile gelişmiş ticaret platformlarına erişim ve istisnai müşteri hizmetleri yer alır.
                     </p>
 
                     <div class="mt-6">
                         <a href="login" class="inline-flex items-center px-5 py-2 border border-gray-700 text-base font-medium rounded-md text-gray-300 hover:text-white hover:border-primary transition duration-150">
-                            Learn about our commissions
+                            Komisyonlarımızı öğrenin
                             <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -1145,10 +1145,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 text-center">
             <span class="inline-block px-4 py-1 text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-70 rounded-full shadow-lg">
-                Platform Features
+                Platform Özellikleri
             </span>
-            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-400">Advanced Trading Tools</h2>
-            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Our platform provides everything you need for successful trading in one powerful interface</p>
+            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-400">Gelişmiş Ticaret Araçları</h2>
+            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Platformumuz, başarılı ticaret için ihtiyacınız olan her şeyi güçlü bir arayüzde sağlar</p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -1157,9 +1157,9 @@
                 <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-full flex items-center justify-center mb-4 shadow-lg">
                     <i class="fas fa-bolt text-white text-xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Reliable <span class="text-blue-400">Execution</span></h3>
+                <h3 class="text-xl font-bold text-white mb-3">Güvenilir <span class="text-blue-400">Yürütme</span></h3>
                 <p class="text-gray-300">
-                    Featuring the market's sharpest execution, {{$settings->site_name}} cTrader fills your orders in milliseconds without any requotes or price manipulation.
+                    Piyasanın en keskin yürütmesi ile, {{$settings->site_name}} cTrader, herhangi bir requote veya fiyat manipülasyonu olmadan siparişlerinizi milisaniyeler içinde doldurur.
                 </p>
             </div>
 
@@ -1168,9 +1168,9 @@
                 <div class="w-16 h-16 bg-gradient-to-br from-indigo-600 to-blue-700 rounded-full flex items-center justify-center mb-4 shadow-lg">
                     <i class="fas fa-chart-line text-white text-xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Intelligent <span class="text-indigo-400">Analysis</span></h3>
+                <h3 class="text-xl font-bold text-white mb-3">Akıllı <span class="text-indigo-400">Analiz</span></h3>
                 <p class="text-gray-300">
-                    Make informed decisions with smart market analysis tools, Live Sentiment data and in-platform market insights from Trading Central.
+                    Trading Central'den akıllı piyasa analizi araçları, Canlı Duygu verileri ve platform içi piyasa içgörüleri ile bilinçli kararlar alın.
                 </p>
             </div>
 
@@ -1179,9 +1179,9 @@
                 <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
                     <i class="fas fa-search-dollar text-white text-xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Transparent <span class="text-cyan-400">Reporting</span></h3>
+                <h3 class="text-xl font-bold text-white mb-3">Şeffaf <span class="text-cyan-400">Raporlama</span></h3>
                 <p class="text-gray-300">
-                    Access transaction statistics, equity charts and detailed history of your deals for a crystal clear understanding of your performance.
+                    Performansınızın kristal kadar net şekilde anlaşılması için işlem istatistiklerine, öz sermaye grafikleri ve işlemlerinizin detaylı geçmişine erişin.
                 </p>
             </div>
 
@@ -1190,9 +1190,9 @@
                 <div class="w-16 h-16 bg-gradient-to-br from-teal-600 to-green-700 rounded-full flex items-center justify-center mb-4 shadow-lg">
                     <i class="fas fa-desktop text-white text-xl"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Intuitive <span class="text-teal-400">Interface</span></h3>
+                <h3 class="text-xl font-bold text-white mb-3">Sezgisel <span class="text-teal-400">Arayüz</span></h3>
                 <p class="text-gray-300">
-                    Easy to use and navigate, {{$settings->site_name}} cTrader was built with real traders' needs in mind. Trade with {{$settings->site_name}} cTrader and experience its distinct advantage.
+                    Kolay kullanım ve navigasyon, {{$settings->site_name}} cTrader gerçek tüccarların ihtiyaçları göz önünde bulundurularak inşa edildi. {{$settings->site_name}} cTrader ile ticaret yapın ve belirgin avantajını deneyimleyin.
                 </p>
             </div>
         </div>
@@ -1218,10 +1218,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 text-center">
             <span class="inline-block px-4 py-1 text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-70 rounded-full shadow-lg">
-                Simple Process
+                Basit Süreç
             </span>
-            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">How It Works</h2>
-            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Get started with trading in three simple steps</p>
+            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">Nasıl Çalışır</h2>
+            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Üç basit adımda ticaret yapmaya başlayın</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -1350,10 +1350,10 @@
         <!-- Section Header -->
         <div class="mb-12 text-center">
             <span class="inline-block px-4 py-1 text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-70 rounded-full shadow-lg">
-                Success Stories
+                Başarı Hikayeleri
             </span>
-            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-400">Client Testimonials</h2>
-            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Hear from our satisfied clients who have achieved impressive results with our platform</p>
+            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-400">Müşteri Görüşleri</h2>
+            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Platformumuzla etkileyici sonuçlar elde eden memnun müşterilerimizden duyun</p>
         </div>
 
         <!-- Testimonials Grid -->
@@ -1389,7 +1389,7 @@
                                 <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
                             </svg>
                         </div>
-                        <p class="text-gray-300 leading-relaxed text-sm">Since I started using {{$settings->site_name}}, I have been earning like never before. You guys have the best signals.</p>
+                        <p class="text-gray-300 leading-relaxed text-sm">{{$settings->site_name}} kullanmaya başladıktan beri daha önce hiç olmadığı kadar kazanç elde ediyorum. Sizler en iyi sinyallere sahipsiniz.</p>
                     </div>
                     <div class="flex items-center">
                         <img src="temp/custom/imge2.jpg" alt="Malcom47" class="w-10 h-10 rounded-full object-cover border-2 border-blue-500">
@@ -1432,7 +1432,7 @@
                                 <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
                             </svg>
                         </div>
-                        <p class="text-gray-300 leading-relaxed text-sm">I already got more than $200,000 within a month investing with {{$settings->site_name}}. Will again invest soon.</p>
+                        <p class="text-gray-300 leading-relaxed text-sm">{{$settings->site_name}} ile yatırım yaparak bir ay içinde 200.000 $'dan fazla kazandım. Yakında tekrar yatırım yapacağım.</p>
                     </div>
                     <div class="flex items-center">
                         <img src="temp/custom/imge1.jpg" alt="Christy" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500">
@@ -1475,7 +1475,7 @@
                                 <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
                             </svg>
                         </div>
-                        <p class="text-gray-300 leading-relaxed text-sm">I was able to earn additional $30,000 to my profit. It's amazing, you guys are the best, keep it up.</p>
+                        <p class="text-gray-300 leading-relaxed text-sm">Karıma 30.000 $ ek kazanç sağlayabildim. Harika, sizler en iyisiniz, devam edin.</p>
                     </div>
                     <div class="flex items-center">
                         <img src="temp/custom/imge3.jpg" alt="Linday8" class="w-10 h-10 rounded-full object-cover border-2 border-blue-500">
@@ -1518,7 +1518,7 @@
                                 <path d="M10 8c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4zm12 0c-3.3 0-6 2.7-6 6v10h6V14h-4c0-2.2 1.8-4 4-4z"/>
                             </svg>
                         </div>
-                        <p class="text-gray-300 leading-relaxed text-sm">This was a very easy process and I received my funds quickly as I needed them! Highly recommend {{$settings->site_name}}.</p>
+                        <p class="text-gray-300 leading-relaxed text-sm">Bu çok kolay bir süreçti ve fonlarımı ihtiyaç duyduğum kadar hızlı aldım! {{$settings->site_name}}'yi şiddetle tavsiye ederim.</p>
                     </div>
                     <div class="flex items-center">
                         <img src="temp/custom/imge4.jpg" alt="Crian" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500">
@@ -1548,7 +1548,7 @@
                                     <!-- More stars... -->
                                 </div>
                             </div>
-                            <p class="text-gray-300 leading-relaxed text-sm">I rate {{$settings->site_name}} five stars because of the service, you register online, upload ID and you deposit and withdraw after trades. This is so lovely.</p>
+                            <p class="text-gray-300 leading-relaxed text-sm">{{$settings->site_name}}'ye hizmet nedeniyle beş yıldız veriyorum, çünkü çevrimiçi kayıt oluyorsunuz, kimlik yükleyip ticaret sonrasında yatırma ve çekme yapıyorsunuz. Bu çok hoş.</p>
                         </div>
                         <div class="flex items-center">
                             <img src="temp/custom/imge5.jpg" alt="Claudia" class="w-10 h-10 rounded-full object-cover border-2 border-blue-500">
@@ -1570,7 +1570,7 @@
                                     <!-- More stars... -->
                                 </div>
                             </div>
-                            <p class="text-gray-300 leading-relaxed text-sm">I am very pleased with the customer service. Also online service is great and easy thank you {{$settings->site_name}} team.</p>
+                            <p class="text-gray-300 leading-relaxed text-sm">Müşteri hizmetinden çok memnunum. Ayrıca çevrimiçi hizmet harika ve kolay, teşekkür ederim {{$settings->site_name}} ekibi.</p>
                         </div>
                         <div class="flex items-center">
                             <img src="temp/custom/jenny.jpg" alt="Jenny" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500">
@@ -1592,7 +1592,7 @@
                                     <!-- More stars... -->
                                 </div>
                             </div>
-                            <p class="text-gray-300 leading-relaxed text-sm">I'm happy, that in difficult times there are people that will support you and help you make more money, thank you {{$settings->site_name}} for giving me a chance.</p>
+                            <p class="text-gray-300 leading-relaxed text-sm">Mutluyum ki zor zamanlarda sizi destekleyecek ve daha fazla para kazanmanıza yardımcı olacak insanlar var, bana şans verdiğiniz için teşekkür ederim {{$settings->site_name}}.</p>
                         </div>
                         <div class="flex items-center">
                             <img src="temp/custom/mike.jpg" alt="Mike" class="w-10 h-10 rounded-full object-cover border-2 border-blue-500">
@@ -1614,7 +1614,7 @@
                                     <!-- More stars... -->
                                 </div>
                             </div>
-                            <p class="text-gray-300 leading-relaxed text-sm">I've invested with {{$settings->site_name}} several times, always paid back on time. The entire trade process is complete in just a few days. Very impressed and satisfied.</p>
+                            <p class="text-gray-300 leading-relaxed text-sm">{{$settings->site_name}} ile birkaç kez yatırım yaptım, her zaman zamanında geri ödedim. Tüm ticaret süreci sadece birkaç günde tamamlandı. Çok etkilendim ve memnunum.</p>
                         </div>
                         <div class="flex items-center">
                             <img src="temp/custom/kathy.jpg" alt="Kathy" class="w-10 h-10 rounded-full object-cover border-2 border-emerald-500">
