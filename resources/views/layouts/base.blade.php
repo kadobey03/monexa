@@ -132,15 +132,15 @@
         }
     </style>
 
-    <title>{{$settings->site_name}} | CFD Trading — Trading on Stocks, Gold, Oil, Indices</title>
+    <title>{{$settings->site_name}} | CFD Ticareti — Hisse Senetleri, Altın, Petrol, Endeksler</title>
     <link rel="manifest" href="./">
     <meta name="theme-color" content="#111827">    <meta property="x-session-id" content="ghJjEOrjZ3KUPun1UQksVUbvK88y21dgIhKtb8GT">
     <meta property="og:site_name" content="{{$settings->site_name}}">
-    <meta property="og:description" content="CFD Trading with {{$settings->site_name}}. Trading on Stocks, Gold, Oil, Indices with ultra-fast execution &amp; spreads from 0.0 pips. News, articles and training materials for experienced and novice traders.">
-    <meta name="description" content="CFD Trading with {{$settings->site_name}}. Trading on Stocks, Gold, Oil, Indices with ultra-fast execution &amp; spreads from 0.0 pips. News, articles and training materials for experienced and novice traders.">
-    <meta name="keywords" content="forex, CFDs, CFD, Bitcoin trading, crypto trading, online trading, Forex trading, Oil trading, Gold trading, trading indexes, shares trading, commodities trading, trading platform, Cryptocurrencies day trading">
+    <meta property="og:description" content="{{$settings->site_name}} ile CFD Ticareti. Ultra hızlı execution ve 0.0 pipten başlayan spreadlerle Hisse Senetleri, Altın, Petrol, Endeksler'de işlem yapın. Tecrübeli ve yeni başlayan traderlar için haberler, makaleler ve eğitim materyalleri.">
+    <meta name="description" content="{{$settings->site_name}} ile CFD Ticareti. Ultra hızlı execution ve 0.0 pipten başlayan spreadlerle Hisse Senetleri, Altın, Petrol, Endeksler'de işlem yapın. Tecrübeli ve yeni başlayan traderlar için haberler, makaleler ve eğitim materyalleri.">
+    <meta name="keywords" content="döviz, CFDler, CFD, Bitcoin ticareti, kripto ticareti, online işlem yaparak, Döviz ticareti, Petrol ticareti, Altın ticareti, endeks ticareti, hisse ticareti, emtia ticareti, işlem yaparak platformu, Kripto paralar günlük ticareti">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="CFD Trading — Trading on Stocks, Gold, Oil, Indices | {{$settings->site_name}}">
+    <meta property="og:title" content="CFD Ticareti — Hisse Senetleri, Altın, Petrol, Endeksler | {{$settings->site_name}}">
     <meta property="og:image" content="img/share.jpg">
 
     <!-- Favicon -->
@@ -266,9 +266,9 @@
                             </svg>
                         </button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-300 ring-1 ring-black ring-opacity-5 z-50" style="display: none;">
-                            <a href="trade" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Trade</a>
-                            <a href="copy" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Copy Trading</a>
-                            <a href="automate" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Automated Trading</a>
+                            <a href="trade" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Ticaret</a>
+                            <a href="copy" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Kopya Ticaret</a>
+                            <a href="automate" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Otomatik Ticaret</a>
                         </div>
                     </div>
 
@@ -280,10 +280,10 @@
                             </svg>
                         </button>
                         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-300 ring-1 ring-black ring-opacity-5 z-50" style="display: none;">
-                            <a href="about" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">About Us</a>
-                            <a href="why-us" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Why Us</a>
-                            <a href="faq" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">FAQ</a>
-                            <a href="regulation" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Legal & Regulation</a>
+                            <a href="about" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Hakkımızda</a>
+                            <a href="why-us" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Neden Biz</a>
+                            <a href="faq" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">SSS</a>
+                            <a href="regulation" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Yasal ve Düzenlemeler</a>
                         </div>
                     </div>
 
@@ -386,9 +386,9 @@
                         </svg>
                     </button>
                     <div x-show="open" class="pl-4">
-                        <a href="trade" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Trade</a>
-                        <a href="copy" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Copy Trading</a>
-                        <a href="automate" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Automated Trading</a>
+                        <a href="trade" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Ticaret</a>
+                        <a href="copy" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Kopya Ticaret</a>
+                        <a href="automate" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Otomatik Ticaret</a>
                     </div>
                 </div>
 
@@ -400,10 +400,10 @@
                         </svg>
                     </button>
                     <div x-show="open" class="pl-4">
-                        <a href="about" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">About Us</a>
-                        <a href="why-us" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Why Us</a>
-                        <a href="faq" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">FAQ</a>
-                        <a href="regulation" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Legal & Regulation</a>
+                        <a href="about" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Hakkımızda</a>
+                        <a href="why-us" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Neden Biz</a>
+                        <a href="faq" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">SSS</a>
+                        <a href="regulation" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Yasal ve Düzenlemeler</a>
                     </div>
                 </div>
 
@@ -478,7 +478,7 @@
                             </a>
                         </div>
                         <p class="text-sm text-gray-400 mb-6">
-                            {{$settings->site_name}} offers CFD trading on stocks, forex, indices, commodities, and cryptocurrencies with competitive spreads and advanced trading tools.
+                            {{$settings->site_name}} offers CFD işlem yaparak on stocks, forex, indices, commodities, and cryptocurrencies with competitive spreads and advanced işlem yaparak tools.
                         </p>
                         <div class="flex space-x-4">
                             <a href="#" class="text-gray-400 hover:text-white">
@@ -496,12 +496,12 @@
                         </div>
                     </div>
 
-                    <!-- Quick Links -->
+                    <!-- Hızlı Bağlantılar -->
                     <div>
-                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Quick Links</h3>
+                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Hızlı Bağlantılar</h3>
                         <ul class="space-y-3">
-                            <li><a href="about" class="text-sm text-gray-400 hover:text-white transition">About Us</a></li>
-                            <li><a href="why-us" class="text-sm text-gray-400 hover:text-white transition">Why Choose Us</a></li>
+                            <li><a href="about" class="text-sm text-gray-400 hover:text-white transition">Hakkımızda</a></li>
+                            <li><a href="why-us" class="text-sm text-gray-400 hover:text-white transition">Neden Bizi Seçmelisiniz</a></li>
                             <li><a href="for-traders" class="text-sm text-gray-400 hover:text-white transition">Education</a></li>
                             <li><a href="contacts" class="text-sm text-gray-400 hover:text-white transition">Contact</a></li>
                         </ul>
@@ -511,21 +511,21 @@
                     <div>
                         <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Trading</h3>
                         <ul class="space-y-3">
-                            <li><a href="cryptocurrencies" class="text-sm text-gray-400 hover:text-white transition">Cryptocurrencies</a></li>
-                            <li><a href="forex" class="text-sm text-gray-400 hover:text-white transition">Forex</a></li>
-                            <li><a href="shares" class="text-sm text-gray-400 hover:text-white transition">Shares</a></li>
-                            <li><a href="indices" class="text-sm text-gray-400 hover:text-white transition">Indices</a></li>
+                            <li><a href="cryptocurrencies" class="text-sm text-gray-400 hover:text-white transition">Kripto Paralar</a></li>
+                            <li><a href="forex" class="text-sm text-gray-400 hover:text-white transition">Döviz</a></li>
+                            <li><a href="shares" class="text-sm text-gray-400 hover:text-white transition">Hisseler</a></li>
+                            <li><a href="indices" class="text-sm text-gray-400 hover:text-white transition">Endeksler</a></li>
                         </ul>
                     </div>
 
                     <!-- Account -->
                     <div>
-                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Your Account</h3>
+                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Hesabınız</h3>
                         <ul class="space-y-3">
-                            <li><a href="login" class="text-sm text-gray-400 hover:text-white transition">Log In</a></li>
-                            <li><a href="register" class="text-sm text-gray-400 hover:text-white transition">Create Account</a></li>
-                            <li><a href="login" class="text-sm text-gray-400 hover:text-white transition">Demo Account</a></li>
-                            <li><a href="contact" class="text-sm text-gray-400 hover:text-white transition">Help Center</a></li>
+                            <li><a href="login" class="text-sm text-gray-400 hover:text-white transition">Giriş Yap</a></li>
+                            <li><a href="register" class="text-sm text-gray-400 hover:text-white transition">Hesap Oluştur</a></li>
+                            <li><a href="login" class="text-sm text-gray-400 hover:text-white transition">Demo Hesap</a></li>
+                            <li><a href="contact" class="text-sm text-gray-400 hover:text-white transition">Yardım Merkezi</a></li>
                         </ul>
                     </div>
                 </div>
@@ -539,7 +539,7 @@
             <div class="py-6">
                 <div class="flex flex-col md:flex-row items-center justify-between">
                     <div class="mb-4 md:mb-0">
-                        <h4 class="text-sm font-semibold text-white">Available On</h4>
+                        <h4 class="text-sm font-semibold text-white">Uygun Platformlar</h4>
                     </div>
                     <div class="flex items-center space-x-6">
                         <a href="#" class="flex items-center text-gray-400 hover:text-white" aria-label="Web Platform">
@@ -570,14 +570,14 @@
             <div class="py-6">
                 <div class="text-xs text-gray-400">
                     <p class="mb-4 leading-relaxed">
-                        <span class="font-semibold text-gray-300">RISK WARNING:</span> The Financial Products offered by the company include Contracts for Difference ('CFDs') and other complex financial products. Trading CFDs carries a high level of risk since leverage can work both to your advantage and disadvantage. As a result, CFDs may not be suitable for all investors because it is possible to lose all of your invested capital. You should never invest money that you cannot afford to lose. Before trading in the complex financial products offered, please ensure you understand the risks involved.
+                        <span class="font-semibold text-gray-300">RİSK UYARISI:</span> The Financial Products offered by the company include Fark Sözleşmeleri ('CFD'ler') and other complex financial products. Trading CFD'ler carries a high level of risk since leverage can work both to your advantage and disadvantage. As a result, CFD'ler may not be suitable for all investors because it is possible to lose all of your invested capital. You should never invest money that you cannot afford to lose. Before işlem yaparak in the complex financial products offered, please ensure you understand the risks involved.
                     </p>
                     <div class="flex flex-wrap gap-4 mb-4">
-                        <a href="terms" class="text-blue-400 hover:text-blue-300 transition">Terms & Conditions</a>
-                        <a href="privacy" class="text-blue-400 hover:text-blue-300 transition">Privacy Policy</a>
-                        <a href="regulation" class="text-blue-400 hover:text-blue-300 transition">Legal Documents</a>
+                        <a href="terms" class="text-blue-400 hover:text-blue-300 transition">Şartlar ve Koşullar</a>
+                        <a href="privacy" class="text-blue-400 hover:text-blue-300 transition">Gizlilik Politikası</a>
+                        <a href="regulation" class="text-blue-400 hover:text-blue-300 transition">Yasal Belgeler</a>
                     </div>
-                    <p>© <script>document.write(new Date().getFullYear())</script> {{$settings->site_name}}. All Rights Reserved.</p>
+                    <p>© <script>document.write(new Date().getFullYear())</script> {{$settings->site_name}}. Tüm Hakları Saklıdır.</p>
                 </div>
             </div>
         </div>
@@ -746,12 +746,12 @@
         }
     </style>
 
-    <div class="notification-popup" id="tradingNotification" style="display: none;">
+    <div class="notification-popup" id="işlem yaparakNotification" style="display: none;">
         <div class="notification-header">
             <div class="notification-icon">
                 <i class="fas fa-chart-line"></i>
             </div>
-            <div class="notification-title">Live Trading Activity</div>
+            <div class="notification-title">Canlı Ticaret Aktivitesi</div>
             <button class="notification-close ml-auto" onclick="closeNotification()">
                 <i class="fas fa-times"></i>
             </button>
@@ -759,7 +759,7 @@
         <div class="notification-content" id="notificationText"></div>
         <div class="notification-footer">
             <span class="notification-time" id="notificationTime"></span>
-            <span style="font-size: 10px;">🟢 Live</span>
+            <span style="font-size: 10px;">🟢 Canlı</span>
         </div>
         <div class="progress-bar" id="progressBar"></div>
     </div>    <script data-cfasync="false" src="#"></script>
@@ -845,13 +845,13 @@
 
                 switch(transaction.action) {
                     case 'invested':
-                        message = `Trader from <b>${country}</b> just <b>invested</b> <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> in ${instrument}`;
+                        message = `Ticaretr from <b>${country}</b> just <b>invested</b> <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> in ${instrument}`;
                         break;
                     case 'withdrawn':
-                        message = `Trader from <b>${country}</b> successfully <b>withdrew</b> <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> from their account`;
+                        message = `Ticaretr from <b>${country}</b> successfully <b>withdrew</b> <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> hesabından`;
                         break;
                     case 'earned':
-                        message = `Trader from <b>${country}</b> just <b>earned</b> <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> trading ${instrument}`;
+                        message = `Ticaretr from <b>${country}</b> just <b>earned</b> <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> işlem yaparak ${instrument}`;
                         break;
                 }
 
@@ -861,7 +861,7 @@
             showNotification() {
                 if (!this.isActive) return;
 
-                const notification = document.getElementById('tradingNotification');
+                const notification = document.getElementById('işlem yaparakNotification');
                 const textElement = document.getElementById('notificationText');
                 const timeElement = document.getElementById('notificationTime');
                 const progressBar = document.getElementById('progressBar');
@@ -901,7 +901,7 @@
             }
 
             hideNotification() {
-                const notification = document.getElementById('tradingNotification');
+                const notification = document.getElementById('işlem yaparakNotification');
                 const progressBar = document.getElementById('progressBar');
 
                 if (!notification) return;
@@ -966,7 +966,7 @@
 
             destroy() {
                 this.pause();
-                const notification = document.getElementById('tradingNotification');
+                const notification = document.getElementById('işlem yaparakNotification');
                 if (notification) {
                     notification.style.display = 'none';
                 }
@@ -975,20 +975,20 @@
 
         // Global functions for notification control
         function closeNotification() {
-            if (window.tradingNotificationManager) {
-                window.tradingNotificationManager.hideNotification();
+            if (window.işlem yaparakNotificationManager) {
+                window.işlem yaparakNotificationManager.hideNotification();
             }
         }
 
         function pauseNotifications() {
-            if (window.tradingNotificationManager) {
-                window.tradingNotificationManager.pause();
+            if (window.işlem yaparakNotificationManager) {
+                window.işlem yaparakNotificationManager.pause();
             }
         }
 
         function resumeNotifications() {
-            if (window.tradingNotificationManager) {
-                window.tradingNotificationManager.resume();
+            if (window.işlem yaparakNotificationManager) {
+                window.işlem yaparakNotificationManager.resume();
             }
         }
 
@@ -996,7 +996,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Small delay to ensure everything is loaded
             setTimeout(() => {
-                window.tradingNotificationManager = new TradingNotificationManager();
+                window.işlem yaparakNotificationManager = new TradingNotificationManager();
             }, 500); // Reduced from 2000ms to 500ms
         });
 
@@ -1004,7 +1004,7 @@
         let userActiveTimeout;
         function resetUserActiveTimer() {
             clearTimeout(userActiveTimeout);
-            if (window.tradingNotificationManager && !window.tradingNotificationManager.isActive) {
+            if (window.işlem yaparakNotificationManager && !window.işlem yaparakNotificationManager.isActive) {
                 resumeNotifications();
             }
 
@@ -1091,7 +1091,7 @@
             bindGAEvents('ex_new_user');
         }
 
-        $(document).on('click', '.start-trading, .open-live-account, .open-demo-account', function (event) {
+        $(document).on('click', '.start-işlem yaparak, .open-live-account, .open-demo-account', function (event) {
             var redirectLink = $(this).attr('href');
             bindGAEvents('ex_button', function(){
                 window.location.href = redirectLink;
