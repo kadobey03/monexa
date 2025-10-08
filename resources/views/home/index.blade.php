@@ -569,7 +569,7 @@
                                 </div>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-lg font-medium text-white">Daily Market <span class="text-emerald-400">Updates</span></h4>
+                                <h4 class="text-lg font-medium text-white">Günlük Piyasa <span class="text-emerald-400">Güncellemeleri</span></h4>
                                 <p class="mt-2 text-gray-300" :class="expanded ? '' : 'line-clamp-2'">
                                     Receive daily market analysis directly to your inbox. Our team of expert analysts provide actionable insights on market trends, price movements, and trading opportunities across all major asset classes.
                                 </p>
@@ -588,7 +588,7 @@
                                 </div>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-lg font-medium text-white">Premium Trading <span class="text-blue-400">Tools</span></h4>
+                                <h4 class="text-lg font-medium text-white">Premium Ticaret <span class="text-blue-400">Araçları</span></h4>
                                 <p class="mt-2 text-gray-300" :class="expanded ? '' : 'line-clamp-2'">
                                     Access advanced trading tools designed for all experience levels. Our platform offers customizable solutions to meet diverse trading needs and styles, with multi-language support for international traders.
                                 </p>
@@ -607,7 +607,7 @@
                                 </div>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-lg font-medium text-white">Funds <span class="text-blue-400">Protection</span></h4>
+                                <h4 class="text-lg font-medium text-white">Fon <span class="text-blue-400">Koruması</span></h4>
                                 <p class="mt-2 text-gray-300" :class="expanded ? '' : 'line-clamp-2'">
                                     Your security is our priority. We provide industry-leading insurance protection for client funds up to $1,000,000, ensuring your investments are protected against unforeseen circumstances.
                                 </p>
@@ -621,7 +621,7 @@
 
                     <div class="mt-8 text-center">
                         <a href="login" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition duration-300 transform hover:-translate-y-1">
-                            Learn more about our services
+                            Hizmetlerimiz hakkında daha fazla bilgi edinin
                             <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
@@ -733,7 +733,7 @@
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-white mb-2">Bitcoin</h3>
                     <p class="text-gray-400 text-sm h-24 overflow-hidden">
-                        Bitcoin is a decentralized digital currency without a central bank or administrator, allowing peer-to-peer transactions without intermediaries on the blockchain network.
+                        Bitcoin, merkezi olmayan bir dijital para birimidir ve aracılara ihtiyaç duymadan blockchain ağı üzerinde eşler arası işlemlere olanak tanır.
                     </p>
                     <div class="mt-4 flex justify-between items-center">
                         <a href="cryptocurrencies" class="text-primary hover:underline text-sm font-medium flex items-center">
@@ -753,7 +753,7 @@
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-white mb-2">Ethereum</h3>
                     <p class="text-gray-400 text-sm h-24 overflow-hidden">
-                        Ethereum is a decentralized, open-source blockchain with smart contract functionality. After Bitcoin, it is the largest cryptocurrency by market capitalization and most actively used blockchain.
+                        Ethereum, akıllı sözleşme işlevselliğine sahip merkezi olmayan, açık kaynaklı bir blockchain platformudur. Bitcoin'den sonra piyasa değeri açısından en büyük kripto para birimi ve en aktif kullanılan blockchain'dir.
                     </p>
                     <div class="mt-4 flex justify-between items-center">
                         <a href="cryptocurrencies" class="text-primary hover:underline text-sm font-medium flex items-center">
@@ -775,7 +775,7 @@
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-white mb-2">Ripple</h3>
                     <p class="text-gray-400 text-sm h-24 overflow-hidden">
-                        Ripple is a real-time gross settlement system, currency exchange and remittance network created by Ripple Labs. It uses XRP as its native cryptocurrency to facilitate fast, low-cost international transactions.
+                        Ripple, Ripple Labs tarafından oluşturulan gerçek zamanlı brüt ödeme sistemi, döviz değişimi ve havale ağıdır. Hızlı, düşük maliyetli uluslararası işlemleri kolaylaştırmak için XRP'yi yerel kripto para birimi olarak kullanır.
                     </p>
                     <div class="mt-4 flex justify-between items-center">
                         <a href="cryptocurrencies" class="text-primary hover:underline text-sm font-medium flex items-center">
@@ -797,7 +797,7 @@
                 <div class="p-6">
                     <h3 class="text-xl font-bold text-white mb-2">Cardano</h3>
                     <p class="text-gray-400 text-sm h-24 overflow-hidden">
-                        Cardano is a proof-of-stake blockchain platform created by Ethereum co-founder Charles Hoskinson. It aims to be more scalable, sustainable, and interoperable than other blockchain platforms.
+                        Cardano, Ethereum'un kurucu ortağı Charles Hoskinson tarafından oluşturulan proof-of-stake blockchain platformudur. Diğer blockchain platformlarından daha ölçeklenebilir, sürdürülebilir ve birlikte çalışabilir olmayı hedefler.
                     </p>
                     <div class="mt-4 flex justify-between items-center">
                         <a href="cryptocurrencies" class="text-primary hover:underline text-sm font-medium flex items-center">
@@ -849,13 +849,13 @@
                 </div>
 
                 <p class="text-gray-300 text-lg">
-                    Discover everything you need to know about cryptocurrency trading, from fundamentals to advanced strategies.
+                    Kripto para ticaretinin temel bilgilerinden gelişmiş stratejilere kadar ihtiyacınız olan her şeyi keşfedin.
                 </p>
 
                 <div class="bg-dark-300 rounded-lg p-6 border border-gray-800">
                     <h3 class="text-xl font-semibold text-white mb-3">About Bitcoin</h3>
                     <p class="text-gray-400">
-                        Bitcoin (â‚¿) is a decentralized digital currency that operates without a central authority. Transactions are verified by network nodes through cryptography and recorded on a public distributed ledger called a blockchain. Created in 2008 by an unknown person or group using the name Satoshi Nakamoto, Bitcoin pioneered the concept of cryptocurrencies.
+                        Bitcoin (₿), merkezi olmayan bir dijital para birimidir ve merkezi bir otorite olmadan çalışır. İşlemler, kriptografi yoluyla ağ düğümleri tarafından doğrulanır ve blockchain adı verilen halka açık dağıtılmış bir defterde kaydedilir. 2008 yılında Satoshi Nakamoto takma adını kullanan bilinmeyen bir kişi veya grup tarafından oluşturulan Bitcoin, kripto para kavramının öncüsüdür.
                     </p>
                 </div>
 
@@ -909,7 +909,7 @@
                                 </div>
                             </div>
                             <p class="ml-3 text-gray-300">
-                                <span class="font-semibold text-white">Ultra-low spreads</span> from 0.0 pips on major pairs
+                                Ana çiftlerde 0.0 pipten başlayan <span class="font-semibold text-white">ultra düşük spreadler</span>
                             </p>
                         </li>
 
@@ -920,7 +920,7 @@
                                 </div>
                             </div>
                             <p class="ml-3 text-gray-300">
-                                <span class="font-semibold text-white">Lightning-fast execution</span> from NY4 server facility with minimal slippage
+                                NY4 sunucu tesisinden <span class="font-semibold text-white">yıldırım hızında uygulama</span> ve minimum kayma ile
                             </p>
                         </li>
 
@@ -931,7 +931,7 @@
                                 </div>
                             </div>
                             <p class="ml-3 text-gray-300">
-                                <span class="font-semibold text-white">Top-tier liquidity</span> and market-leading pricing 24/5
+                                <span class="font-semibold text-white">Üst düzey likidite</span> ve pazar lideri fiyatlandırma 24/5
                             </p>
                         </li>
 
@@ -942,7 +942,7 @@
                                 </div>
                             </div>
                             <p class="ml-3 text-gray-300">
-                                <span class="font-semibold text-white">No dealing desk</span> and no requotes, ever
+                                <span class="font-semibold text-white">Dealing desk yok</span> ve hiçbir zaman requote yok
                             </p>
                         </li>
                     </ul>
@@ -997,7 +997,7 @@
                 Social Trading
             </span>
             <h2 class="mt-2 text-3xl font-bold text-white">Copy Professional Traders</h2>
-            <p class="mt-2 text-gray-400 max-w-2xl mx-auto">Let experienced traders do the work for you with our advanced copy trading system</p>
+            <p class="mt-2 text-gray-400 max-w-2xl mx-auto">Gelişmiş kopya ticaret sistemimizle deneyimli tüccarlar sizin için çalışsın</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1007,7 +1007,7 @@
                     <i class="fas fa-copy text-green-400 text-xl"></i>
                 </div>
                 <h3 class="text-xl font-bold text-white mb-3">Copy 400+ Strategies</h3>
-                <p class="text-gray-400">Access hundreds of strategies for more than 1000 instruments across 7 asset classes.</p>
+                <p class="text-gray-400">7 varlık sınıfında 1000'den fazla enstrüman için yüzlerce stratejiye erişin.</p>
             </div>
 
             <!-- Strategy 2 -->
@@ -1016,7 +1016,7 @@
                     <i class="fas fa-chart-line text-green-400 text-xl"></i>
                 </div>
                 <h3 class="text-xl font-bold text-white mb-3">Select Top Performers</h3>
-                <p class="text-gray-400">Use our reporting tools to rank strategies according to performance and select the most suitable for your circumstances.</p>
+                <p class="text-gray-400">Performanslarına göre stratejileri sıralamak ve durumunuza en uygun olanı seçmek için raporlama araçlarımızı kullanın.</p>
             </div>
 
             <!-- Strategy 3 -->
@@ -1025,7 +1025,7 @@
                     <i class="fas fa-shield-alt text-green-400 text-xl"></i>
                 </div>
                 <h3 class="text-xl font-bold text-white mb-3">Stay Protected</h3>
-                <p class="text-gray-400">The system uses sophisticated calculations to keep your exposure at an optimal level for your account.</p>
+                <p class="text-gray-400">Sistem, hesabınız için maruziyetinizi optimal seviyede tutmak için gelişmiş hesaplamalar kullanır.</p>
             </div>
 
             <!-- Strategy 4 -->
@@ -1034,7 +1034,7 @@
                     <i class="fas fa-sliders-h text-green-400 text-xl"></i>
                 </div>
                 <h3 class="text-xl font-bold text-white mb-3">Combine Methods</h3>
-                <p class="text-gray-400">Our integrated platform allows you to combine copying with manual and automated trading, depending on your preferences.</p>
+                <p class="text-gray-400">Entegre platformumuz, tercihinize bağlı olarak kopyalama işlemini manuel ve otomatik ticaret ile birleştirmenize olanak tanır.</p>
             </div>
         </div>
     </div>
@@ -1065,11 +1065,11 @@
 
         <div class="max-w-4xl mx-auto bg-dark-400 bg-opacity-80 p-8 rounded-xl border border-gray-800 shadow-xl">
             <p class="text-gray-300 leading-relaxed">
-                {{$settings->site_name}} has become one of the most reputable brokers in the industry, offering traders CFDs across Forex, Equities, Commodities and Futures. Trading on the Forex market is a legitimate and straightforward way of generating income.
+                {{$settings->site_name}}, Forex, Hisse Senetleri, Emtialar ve Vadeli İşlemler genelinde CFD'ler sunan sektörün en saygın brokerlarından biri haline geldi. Forex piyasasında ticaret yapmak, gelir elde etmenin meşru ve basit bir yoludur.
             </p>
 
             <p class="text-gray-300 leading-relaxed mt-4">
-                The good news is that you don't have to be a professional trader in order to make money. All you need is the right personality and the right skill set and you can make money trading on foreign exchanges. {{$settings->site_name}} lets you trade in the way that best suits you.
+                İyi haber şu ki, para kazanmak için profesyonel bir tüccar olmanız gerekmez. Doğru kişiliğe ve doğru beceri setine sahip olmanız yeterlidir ve döviz borsalarında para kazanabilirsiniz. {{$settings->site_name}}, size en uygun şekilde ticaret yapma imkanı sunar.
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -1079,7 +1079,7 @@
                         Personalized Trading
                     </h3>
                     <p class="text-gray-400 mt-2">
-                        Do you want to risk a little or a lot? Do you want gains in the short term or are you playing a longer game? Are you a day trader, a swing trader or a scalper?
+                        Biraz mı yoksa çok mu risk almak istiyorsunuz? Kısa vadede mi yoksa uzun vadede mi kazanç istiyorsunuz? Günlük tüccar mı, swing tüccarı mı yoksa scalper mı olmak istiyorsunuz?
                     </p>
                 </div>
 
@@ -1089,7 +1089,7 @@
                         Complete Control
                     </h3>
                     <p class="text-gray-400 mt-2">
-                        With the right tools, information and access to all the world's currencies, {{$settings->site_name}} puts you in control of the trades you make.
+                        Doğru araçlar, bilgiler ve dünyanın tüm para birimlerine erişim ile {{$settings->site_name}}, yaptığınız işlemlerin kontrolünü size verir.
                     </p>
                 </div>
             </div>
@@ -1108,7 +1108,7 @@
 
 
 
-<!-- Start Pricing Trading on the Forex market is a legitimate and straightforward way of generating income. And the good news is that you donâ€™t have to be a professional trader in order to make money. All you need is the right personality and the right skill set and you can make money trading on foreign exchanges. {{$settings->site_name}} lets you trade in the way that best suits you. Do you want to risk a little or a lot? Do you want gains in the short term or are you playing a longer game? Are you a day trader, a swing trader or a scalper? Are you an old hand or a rookie just testing the water? It does not matter because {{$settings->site_name}} puts you in control.If you can control todayâ€™s success and not let it cloud tomorrowâ€™s judgment, you probably have it in you to make money as a currency trader. The prizes in Forex are certainly glittering but it is level headedness and persistence that win the day. With the right tools, information and access to all the worldâ€™s currencies, {{$settings->site_name}} puts you in control of the trades you make. </p> </li> </center></ul></div>
+<!-- Start Pricing Trading on the Forex market is a legitimate and straightforward way of generating income. And the good news is that you donâ€™t have to be a professional trader in order to make money. All you need is the right personality and the right skill set and you can make money trading on foreign exchanges. {{$settings->site_name}} lets you trade in the way that best suits you. Biraz mı yoksa çok mu risk almak istiyorsunuz? Kısa vadede mi yoksa uzun vadede mi kazanç istiyorsunuz? Günlük tüccar mı, swing tüccarı mı yoksa scalper mı olmak istiyorsunuz? Are you an old hand or a rookie just testing the water? It does not matter because {{$settings->site_name}} puts you in control.If you can control todayâ€™s success and not let it cloud tomorrowâ€™s judgment, you probably have it in you to make money as a currency trader. The prizes in Forex are certainly glittering but it is level headedness and persistence that win the day. With the right tools, information and access to all the worldâ€™s currencies, {{$settings->site_name}} puts you in control of the trades you make. </p> </li> </center></ul></div>
 
 
 
@@ -1126,10 +1126,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 text-center">
             <span class="inline-block px-4 py-1 text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-70 rounded-full shadow-lg">
-                Trading Plans
+                Ticaret Planları
             </span>
-            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-400">Investment Opportunities</h2>
-            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Choose the perfect plan that suits your investment strategy and financial goals</p>
+            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-400">Yatırım Fırsatları</h2>
+            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Yatırım stratejiniz ve finansal hedeflerinize uygun mükemmel planı seçin</p>
         </div>
 
         <div class="overflow-hidden">
@@ -1169,25 +1169,25 @@
                     <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
-                    Principal return on maturity
+                    Vade sonunda ana para iadesi
                 </li>
                 <li class="text-gray-300 flex items-center justify-center">
                     <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
-                    Instant Withdrawal
+                    Anında Para Çekme
                 </li>
                 <li class="text-gray-300 flex items-center justify-center">
                     <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
-                    Professional Charts
+                    Profesyonel Grafikler
                 </li>
                 <li class="text-gray-300 flex items-center justify-center">
                     <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
-                    24/7 Support
+                    7/24 Destek
                 </li>
                 <li class="text-white font-semibold flex items-center justify-center border-t border-gray-700 pt-3 mt-3">
                     <svg class="w-5 h-5 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -1205,7 +1205,7 @@
 
             <!-- CTA Button -->
             <a href="login" class="block w-full px-4 py-3 font-medium text-center text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md transition duration-300 transform hover:-translate-y-1">
-                Select Plan
+                Plan Seçin
             </a>
         </div>
 
@@ -1227,12 +1227,12 @@
         <div class="mt-12 p-6 bg-gray-800 bg-opacity-70 rounded-xl border border-gray-700 shadow-lg">
             <div class="flex flex-col md:flex-row items-center justify-between">
                 <div class="md:w-3/5 mb-6 md:mb-0">
-                    <h3 class="text-xl font-bold text-white mb-3">Need a custom plan?</h3>
-                    <p class="text-gray-300">Our team can create tailored investment solutions for institutional clients and high-net-worth individuals.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">Özel plan mı gerekiyor?</h3>
+                    <p class="text-gray-300">Ekibimiz kurumsal müşteriler ve yüksek net değere sahip bireyler için özel yatırım çözümleri oluşturabilir.</p>
                 </div>
                 <div>
                     <a href="contact" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg transition duration-300 transform hover:-translate-y-1">
-                        Contact Our Team
+                        Ekibimizle İletişime Geçin
                         <svg class="ml-2 -mr-1 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
@@ -1521,7 +1521,7 @@
                         <div class="h-1 w-20 bg-blue-500 mx-auto"></div>
                     </div>
                     <p class="text-gray-300 text-center mb-8">
-                        Open real account and add funds. We work with more than 20 payment systems for your convenience.
+                        Gerçek hesap açın ve fon ekleyin. Kolaylığınız için 20'den fazla ödeme sistemi ile çalışıyoruz.
                     </p>
                     <div class="mt-auto text-center">
                         <a href="register" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition duration-300 transform hover:-translate-y-1">
@@ -1546,7 +1546,7 @@
                         <div class="h-1 w-20 bg-blue-500 mx-auto"></div>
                     </div>
                     <p class="text-gray-300 text-center mb-8">
-                        Trade any of 100 assets and stocks. Use technical analysis and trade the news for better results.
+                        100'den fazla varlık ve hisse senedi ile işlem yapın. Daha iyi sonuçlar için teknik analiz kullanın ve haberleri takip edin.
                     </p>
                     <div class="mt-auto text-center">
                         <a href="login" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition duration-300 transform hover:-translate-y-1">
@@ -1571,7 +1571,7 @@
                         <div class="h-1 w-20 bg-blue-500 mx-auto"></div>
                     </div>
                     <p class="text-gray-300 text-center mb-8">
-                        Get funds easily to your bank card or e-wallet with our fast and secure withdrawal process.
+                        Hızlı ve güvenli para çekme sürecimizle paranızı kolayca banka kartınıza veya e-cüzdanınıza alın.
                     </p>
                     <div class="mt-auto text-center">
                         <a href="login" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition duration-300 transform hover:-translate-y-1">
@@ -1618,7 +1618,7 @@
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-blue-900/20 rounded-xl transform rotate-1 group-hover:rotate-0 transition-all duration-300 opacity-70"></div>
                 <img src="temp/custom/img/commission-scheme-crypt1t1.png" alt="Trading Commission Scheme" class="relative z-10 rounded-xl w-full transform transition-all duration-500 group-hover:scale-105">
                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 p-4">
-                    <p class="text-sm text-blue-300 text-center">Competitive commission structure for all traders</p>
+                    <p class="text-sm text-blue-300 text-center">Tüm tüccarlar için rekabetçi komisyon yapısı</p>
                 </div>
             </div>
 
@@ -1626,7 +1626,7 @@
             <div class="bg-gray-800 bg-opacity-80 rounded-xl border border-gray-700 hover:border-blue-600 p-8 shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-blue-900/20">
                 <h3 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 mb-4">Premium Trading Experience</h3>
                 <p class="text-gray-300 mb-6 leading-relaxed">
-                    One of the primary goals of {{$settings->site_name}} is to provide the best product in the market. Our relationships with leading tier one financial institutions mean deep liquidity and tighter spreads for Forex traders.
+                    {{$settings->site_name}}'in temel hedeflerinden biri pazarda en iyi ürünü sunmaktır. Lider birinci kademe finansal kurumlarla olan ilişkilerimiz, Forex tüccarları için derin likidite ve daha sıkı spreadler anlamına gelir.
                 </p>
                 <div class="space-y-4 mb-6">
                     <div class="flex items-start">
@@ -1635,7 +1635,7 @@
                                 <i class="fas fa-check text-blue-400 text-sm"></i>
                             </span>
                         </div>
-                        <p class="ml-3 text-gray-300">Trade Forex, Indices, Shares & Commodities</p>
+                        <p class="ml-3 text-gray-300">Forex, Endeksler, Hisse Senetleri ve Emtialar ile İşlem Yapın</p>
                     </div>
                     <div class="flex items-start">
                         <div class="flex-shrink-0 mt-1">
@@ -1643,7 +1643,7 @@
                                 <i class="fas fa-check text-blue-400 text-sm"></i>
                             </span>
                         </div>
-                        <p class="ml-3 text-gray-300">Access global markets 24 hours / 7 days</p>
+                        <p class="ml-3 text-gray-300">24 saat / 7 gün küresel piyasalara erişim</p>
                     </div>
                     <div class="flex items-start">
                         <div class="flex-shrink-0 mt-1">
@@ -1651,7 +1651,7 @@
                                 <i class="fas fa-check text-blue-400 text-sm"></i>
                             </span>
                         </div>
-                        <p class="ml-3 text-gray-300">Multilingual customer support</p>
+                        <p class="ml-3 text-gray-300">Çok dilli müşteri desteği</p>
                     </div>
                     <div class="flex items-start">
                         <div class="flex-shrink-0 mt-1">
@@ -1659,7 +1659,7 @@
                                 <i class="fas fa-check text-blue-400 text-sm"></i>
                             </span>
                         </div>
-                        <p class="ml-3 text-gray-300">Trade on the go on our mobile apps</p>
+                        <p class="ml-3 text-gray-300">Mobil uygulamalarımızla hareket halindeyken işlem yapın</p>
                     </div>
                 </div>
                 <div class="mt-6">
@@ -2089,7 +2089,7 @@
             <div class="text-center mt-12">
                 <button @click="showMore = !showMore"
                     class="inline-flex items-center px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-emerald-400 text-white font-medium transition-transform duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
-                    <span x-text="showMore ? 'Show Less' : 'View More Success Stories'"></span>
+                    <span x-text="showMore ? 'Daha Az Göster' : 'Daha Fazla Başarı Hikayesi Görüntüle'"></span>
                     <svg class="w-5 h-5 ml-2 transition-transform duration-300"
                         :class="{ 'rotate-180': showMore }"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
