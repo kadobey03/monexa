@@ -1,0 +1,41 @@
+# Additional security for .env file
+# This .htaccess rule prevents direct access to .env file via web browser
+
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Alternative syntax for newer Apache versions
+<Files ".env">
+    Require all denied
+</Files>
+
+# Block access to other sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block access to composer files
+<Files "composer.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "composer.lock">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Block access to package.json
+<Files "package.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Block access to README files
+<Files "README.md">
+    Order allow,deny
+    Deny from all
+</Files>
