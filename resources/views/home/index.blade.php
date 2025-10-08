@@ -343,7 +343,7 @@
                                     {"s": "SPX500", "d": "S&P 500"},
                                     {"s": "NDX", "d": "NASDAQ 100"},
                                     {"s": "DJI", "d": "Dow Jones"},
-                                    {"s": "UKX", "d": "FTSE 100"},
+                                    {"s": "FTSE", "d": "FTSE 100"},
                                     {"s": "CAC40", "d": "CAC 40"},
                                     {"s": "DAX", "d": "DAX 40"}
                                 ],
@@ -353,23 +353,18 @@
                                 "title": "Emtia",
                                 "symbols": [
                                     {"s": "XAUUSD", "d": "Altın"},
-                                    {"s": "COMEX:SI1!", "d": "Gümüş"},
-                                    {"s": "NYMEX:PL1!", "d": "Platinum"},
-                                    {"s": "NYMEX:PA1!", "d": "Palladium"},
-                                    {"s": "ICE:BRN1!", "d": "Brent Petrol"},
-                                    {"s": "TFEX:USDTRY", "d": "USD/TRY Vadeli"}
+                                    {"s": "XAGUSD", "d": "Gümüş"},
+                                    {"s": "XPTUSD", "d": "Platinum"},
+                                    {"s": "XPTUSD", "d": "Palladium"},
+                                    {"s": "OIL", "d": "Brent Petrol"},
+                                    {"s": "USDTRY", "d": "USD/TRY Vadeli"}
                                 ],
                                 "originalTitle": "Emtia"
                             },
                             {
                                 "title": "Tahviller",
                                 "symbols": [
-                                    {"s": "TR10Y", "d": "Türkiye Tahvili"},
-                                    {"s": "TURKEY:TLREF", "d": "TLREF"},
-                                    {"s": "TURKEY:TRLIBOR", "d": "TRLIBOR"},
-                                    {"s": "BIST:ALTIN", "d": "Altın Tahvili"},
-                                    {"s": "BIST:GES", "d": "GES"},
-                                    {"s": "BIST:REIT", "d": "GYO"}
+                                    {"s": "US10Y", "d": "Türkiye Tahvili"}
                                 ],
                                 "originalTitle": "Tahviller"
                             },
@@ -378,10 +373,10 @@
                                 "symbols": [
                                     {"s": "FX:USDTRY", "d": "USD/TRY"},
                                     {"s": "FX:EURTRY", "d": "EUR/TRY"},
-                                    {"s": "FX:GBPTRY", "d": "GBP/TRY"},
-                                    {"s": "FX:JPYTRY", "d": "JPY/TRY"},
-                                    {"s": "FX:CHFTRY", "d": "CHF/TRY"},
-                                    {"s": "FX:CADTRY", "d": "CAD/TRY"}
+                                    {"s": "GBPUSD", "d": "GBP/TRY"},
+                                    {"s": "USDJPY", "d": "JPY/TRY"},
+                                    {"s": "USDCHF", "d": "CHF/TRY"},
+                                    {"s": "USDCAD", "d": "CAD/TRY"}
                                 ],
                                 "originalTitle": "Döviz"
                             }
