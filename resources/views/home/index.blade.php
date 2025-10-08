@@ -213,128 +213,6 @@
     <!-- TradingView Widget END -->
 </div>
 
-<!-- Cryptocurrency Price Cards -->
-{{-- <section class="py-12 bg-gray-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-10 text-center">
-            <h2 class="text-3xl font-bold text-white">Live Cryptocurrency Prices</h2>
-            <p class="mt-2 text-gray-400">Stay updated with real-time market data</p>
-        </div>
-
-        <!-- Crypto Price Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Bitcoin Card -->
-            <div class="bg-gray-800 rounded-xl p-6 transition-transform transform hover:scale-105 duration-300 border border-gray-700 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-900/10">
-                <div class="flex items-center mb-4">
-                    <img src="{{ asset('dash/bitcoin-btc-logo.png') }}" alt="Bitcoin" class="w-10 h-10 mr-3">
-                    <div>
-                        <h3 class="font-semibold text-lg text-white">Bitcoin</h3>
-                        <span class="text-xs text-gray-400">BTC</span>
-                    </div>
-                </div>
-                <div x-data="{ price: 0, change: 0 }" x-init="
-                    fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true')
-                        .then(response => response.json())
-                        .then(data => {
-                            price = data.bitcoin.usd;
-                            change = data.bitcoin.usd_24h_change;
-                        })
-                        .catch(err => console.error(err))
-                ">
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-white" x-text="'$' + price.toLocaleString()">$--,---</span>
-                        <span class="px-2 py-1 rounded-full text-sm"
-                            :class="change >= 0 ? 'bg-green-900 bg-opacity-30 text-green-400' : 'bg-red-900 bg-opacity-30 text-red-400'"
-                            x-text="(change >= 0 ? '+' : '') + change.toFixed(2) + '%'">---%</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Ethereum Card -->
-            <div class="bg-gray-800 rounded-xl p-6 transition-transform transform hover:scale-105 duration-300 border border-gray-700 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-900/10">
-                <div class="flex items-center mb-4">
-                    <img src="{{ asset('dash/ethereum-eth-logo.png') }}" alt="Ethereum" class="w-10 h-10 mr-3">
-                    <div>
-                        <h3 class="font-semibold text-lg text-white">Ethereum</h3>
-                        <span class="text-xs text-gray-400">ETH</span>
-                    </div>
-                </div>
-                <div x-data="{ price: 0, change: 0 }" x-init="
-                    fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd&include_24hr_change=true')
-                        .then(response => response.json())
-                        .then(data => {
-                            price = data.ethereum.usd;
-                            change = data.ethereum.usd_24h_change;
-                        })
-                        .catch(err => console.error(err))
-                ">
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-white" x-text="'$' + price.toLocaleString()">$--,---</span>
-                        <span class="px-2 py-1 rounded-full text-sm"
-                            :class="change >= 0 ? 'bg-green-900 bg-opacity-30 text-green-400' : 'bg-red-900 bg-opacity-30 text-red-400'"
-                            x-text="(change >= 0 ? '+' : '') + change.toFixed(2) + '%'">---%</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tether Card -->
-            <div class="bg-gray-800 rounded-xl p-6 transition-transform transform hover:scale-105 duration-300 border border-gray-700 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-900/10">
-                <div class="flex items-center mb-4">
-                    <img src="{{ asset('dash/tether-usdt-logo.png') }}" alt="Tether" class="w-10 h-10 mr-3">
-                    <div>
-                        <h3 class="font-semibold text-lg text-white">Tether</h3>
-                        <span class="text-xs text-gray-400">USDT</span>
-                    </div>
-                </div>
-                <div x-data="{ price: 0, change: 0 }" x-init="
-                    fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=usd&include_24hr_change=true')
-                        .then(response => response.json())
-                        .then(data => {
-                            price = data.tether.usd;
-                            change = data.tether.usd_24h_change;
-                        })
-                        .catch(err => console.error(err))
-                ">
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-white" x-text="'$' + price.toLocaleString()">$--,---</span>
-                        <span class="px-2 py-1 rounded-full text-sm"
-                            :class="change >= 0 ? 'bg-green-900 bg-opacity-30 text-green-400' : 'bg-red-900 bg-opacity-30 text-red-400'"
-                            x-text="(change >= 0 ? '+' : '') + change.toFixed(2) + '%'">---%</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Binance Coin Card -->
-            <div class="bg-gray-800 rounded-xl p-6 transition-transform transform hover:scale-105 duration-300 border border-gray-700 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-900/10">
-                <div class="flex items-center mb-4">
-                    <div class="w-10 h-10 mr-3 bg-yellow-500 rounded-full flex items-center justify-center">
-                        <span class="font-bold text-dark-400">BNB</span>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg text-white">Binance Coin</h3>
-                        <span class="text-xs text-gray-400">BNB</span>
-                    </div>
-                </div>
-                <div x-data="{ price: 0, change: 0 }" x-init="
-                    fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd&include_24hr_change=true')
-                        .then(response => response.json())
-                        .then(data => {
-                            price = data.binancecoin.usd;
-                            change = data.binancecoin.usd_24h_change;
-                        })
-                        .catch(err => console.error(err))
-                ">
-                    <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-white" x-text="'$' + price.toLocaleString()">$--,---</span>
-                        <span class="px-2 py-1 rounded-full text-sm"
-                            :class="change >= 0 ? 'bg-green-900 bg-opacity-30 text-green-400' : 'bg-red-900 bg-opacity-30 text-red-400'"
-                            x-text="(change >= 0 ? '+' : '') + change.toFixed(2) + '%'">---%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> --}}
 
 <!-- Features Section -->
 <section class="py-12 bg-gray-800">
@@ -1037,21 +915,21 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <!-- Chart Widget -->
-           <div class="bg-dark-300 rounded-xl overflow-hidden border border-gray-800 shadow-lg">
-    <div class="w-full h-[400px]">
-        <iframe
-            src="https://widget.coinlib.io/widget?type=chart&theme=dark&coin_id=859&pref_coin_id=1505"
-            scrolling="auto"
-            marginwidth="0"
-            marginheight="0"
-            frameborder="0"
-            class="w-full h-full border-0">
-        </iframe>
-    </div>
-    <div class="p-2 text-right text-xs text-green-500">
-        <a href="https://coinlib.io" target="_blank" class="hover:underline">Cryptocurrency Prices by Coinlib</a>
-    </div>
-</div>
+            <div class="bg-dark-300 rounded-xl overflow-hidden border border-gray-800 shadow-lg">
+                <div class="w-full h-[400px]">
+                    <iframe
+                        src="https://widget.coinlib.io/widget?type=chart&theme=dark&coin_id=859&pref_coin_id=1505"
+                        scrolling="auto"
+                        marginwidth="0"
+                        marginheight="0"
+                        frameborder="0"
+                        class="w-full h-full border-0">
+                    </iframe>
+                </div>
+                <div class="p-2 text-right text-xs text-green-500">
+                    <a href="https://coinlib.io" target="_blank" class="hover:underline">Cryptocurrency Prices by Coinlib</a>
+                </div>
+            </div>
 
             <!-- Expert Support Content -->
             <div class="space-y-8">
@@ -1652,7 +1530,6 @@
   </div>
 </section>
 
-<script type=text/javascript> var host = 'h51.p.ctrader.com';</script><script src=temp/custom/js/spreads-home.js type=module></script>
 
 @endsection
 
