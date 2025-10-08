@@ -638,7 +638,7 @@
                             <div class="flex-1">
                                 <h4 class="text-lg font-medium text-white">Günlük Piyasa <span class="text-emerald-400">Güncellemeleri</span></h4>
                                 <p class="mt-2 text-gray-300" :class="expanded ? '' : 'line-clamp-2'">
-                                    Receive daily market analysis directly to your inbox. Our team of expert analysts provide actionable insights on market trends, price movements, and trading opportunities across all major asset classes.
+                                    Günlük piyasa analizini doğrudan gelen kutunuza alın. Uzman analist ekibimiz piyasa eğilimleri, fiyat hareketleri ve tüm büyük varlık sınıflarında ticaret fırsatları hakkında eyleme dönüştürülebilir içgörüler sağlar.
                                 </p>
                                 <button @click="expanded = !expanded" class="mt-2 px-3 py-1 text-xs font-semibold bg-gradient-to-r from-emerald-700 to-blue-700 hover:from-emerald-600 hover:to-blue-600 text-white rounded-full transition duration-300 focus:outline-none">
                                     <span x-show="!expanded">Read more</span>
@@ -657,7 +657,7 @@
                             <div class="flex-1">
                                 <h4 class="text-lg font-medium text-white">Premium Ticaret <span class="text-blue-400">Araçları</span></h4>
                                 <p class="mt-2 text-gray-300" :class="expanded ? '' : 'line-clamp-2'">
-                                    Access advanced trading tools designed for all experience levels. Our platform offers customizable solutions to meet diverse trading needs and styles, with multi-language support for international traders.
+                                    Tüm deneyim seviyelerine uygun tasarlanmış gelişmiş ticaret araçlarına erişin. Platformumuz, çeşitli ticaret ihtiyaçlarına ve tarzlarına uyum sağlayan özelleştirilebilir çözümler sunar ve uluslararası yatırımcılar için çok dilli desteği içerir.
                                 </p>
                                 <button @click="expanded = !expanded" class="mt-2 px-3 py-1 text-xs font-semibold bg-gradient-to-r from-blue-700 to-blue-700 hover:from-blue-600 hover:to-blue-600 text-white rounded-full transition duration-300 focus:outline-none">
                                     <span x-show="!expanded">Read more</span>
@@ -676,7 +676,7 @@
                             <div class="flex-1">
                                 <h4 class="text-lg font-medium text-white">Fon <span class="text-blue-400">Koruması</span></h4>
                                 <p class="mt-2 text-gray-300" :class="expanded ? '' : 'line-clamp-2'">
-                                    Your security is our priority. We provide industry-leading insurance protection for client funds up to $1,000,000, ensuring your investments are protected against unforeseen circumstances.
+                                    Güvenliğiniz önceliğimizdir. Müşteri fonları için sektör lideri sigorta koruması sunuyoruz, öngörülemeyen durumlar karşısında yatırımlarınızı koruyoruz.
                                 </p>
                                 <button @click="expanded = !expanded" class="mt-2 px-3 py-1 text-xs font-semibold bg-gradient-to-r from-blue-700 to-blue-700 hover:from-blue-600 hover:to-blue-600 text-white rounded-full transition duration-300 focus:outline-none">
                                     <span x-show="!expanded">Read more</span>
@@ -804,7 +804,7 @@
                     </p>
                     <div class="mt-4 flex justify-between items-center">
                         <a href="cryptocurrencies" class="text-primary hover:underline text-sm font-medium flex items-center">
-                            Trade now
+                            Şimdi Ticaret Yap
                             <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                         <span class="text-xs py-1 px-2 bg-gray-800 rounded-full text-gray-300">BTC/USD</span>
@@ -824,7 +824,7 @@
                     </p>
                     <div class="mt-4 flex justify-between items-center">
                         <a href="cryptocurrencies" class="text-primary hover:underline text-sm font-medium flex items-center">
-                            Trade now
+                            Şimdi Ticaret Yap
                             <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                         <span class="text-xs py-1 px-2 bg-gray-800 rounded-full text-gray-300">ETH/USD</span>
@@ -846,7 +846,7 @@
                     </p>
                     <div class="mt-4 flex justify-between items-center">
                         <a href="cryptocurrencies" class="text-primary hover:underline text-sm font-medium flex items-center">
-                            Trade now
+                            Şimdi Ticaret Yap
                             <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                         <span class="text-xs py-1 px-2 bg-gray-800 rounded-full text-gray-300">XRP/USD</span>
@@ -868,7 +868,7 @@
                     </p>
                     <div class="mt-4 flex justify-between items-center">
                         <a href="cryptocurrencies" class="text-primary hover:underline text-sm font-medium flex items-center">
-                            Trade now
+                            Şimdi Ticaret Yap
                             <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                         <span class="text-xs py-1 px-2 bg-gray-800 rounded-full text-gray-300">ADA/USD</span>
