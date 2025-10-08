@@ -352,7 +352,7 @@
                             {
                                 "title": "Emtia",
                                 "symbols": [
-                                    {"s": "COMEX:GC1!", "d": "Altın"},
+                                    {"s": "XAUUSD", "d": "Altın"},
                                     {"s": "COMEX:SI1!", "d": "Gümüş"},
                                     {"s": "NYMEX:PL1!", "d": "Platinum"},
                                     {"s": "NYMEX:PA1!", "d": "Palladium"},
@@ -364,7 +364,7 @@
                             {
                                 "title": "Tahviller",
                                 "symbols": [
-                                    {"s": "TURKEY:TURKISHBOND", "d": "Türkiye Tahvili"},
+                                    {"s": "TR10Y", "d": "Türkiye Tahvili"},
                                     {"s": "TURKEY:TLREF", "d": "TLREF"},
                                     {"s": "TURKEY:TRLIBOR", "d": "TRLIBOR"},
                                     {"s": "BIST:ALTIN", "d": "Altın Tahvili"},
