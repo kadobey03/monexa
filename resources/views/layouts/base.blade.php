@@ -502,8 +502,8 @@
                         <ul class="space-y-3">
                             <li><a href="about" class="text-sm text-gray-400 hover:text-white transition">Hakkımızda</a></li>
                             <li><a href="why-us" class="text-sm text-gray-400 hover:text-white transition">Neden Bizi Seçmelisiniz</a></li>
-                            <li><a href="for-traders" class="text-sm text-gray-400 hover:text-white transition">Education</a></li>
-                            <li><a href="contacts" class="text-sm text-gray-400 hover:text-white transition">Contact</a></li>
+                            <li><a href="for-traders" class="text-sm text-gray-400 hover:text-white transition">Eğitim</a></li>
+                            <li><a href="contacts" class="text-sm text-gray-400 hover:text-white transition">İletişim</a></li>
                         </ul>
                     </div>
 
@@ -570,7 +570,7 @@
             <div class="py-6">
                 <div class="text-xs text-gray-400">
                     <p class="mb-4 leading-relaxed">
-                        <span class="font-semibold text-gray-300">RİSK UYARISI:</span> The Financial Products offered by the company include Fark Sözleşmeleri ('CFD'ler') and other complex financial products. Trading CFD'ler carries a high level of risk since leverage can work both to your advantage and disadvantage. As a result, CFD'ler may not be suitable for all investors because it is possible to lose all of your invested capital. You should never invest money that you cannot afford to lose. Before işlem yaparak in the complex financial products offered, please ensure you understand the risks involved.
+                        <span class="font-semibold text-gray-300">RİSK UYARISI:</span> Şirket tarafından sunulan finansal ürünler Fark Sözleşmeleri ('CFD'ler') ve diğer karmaşık finansal ürünleri içerir. CFD işlemi yapmak yüksek seviyede risk taşır çünkü kaldıraç hem avantajınıza hem de dezavantajınıza çalışabilir. Sonuç olarak, CFD'ler tüm yatırımcılar için uygun olmayabilir çünkü yatırılan sermayenin tamamını kaybetmek mümkündür. Kaybetmeyi göze alamayacağınız parayı hiçbir zaman yatırmamalısınız. Sunulan karmaşık finansal ürünlerde işlem yapmadan önce, lütfen riskleri anladığınızdan emin olun.
                     </p>
                     <div class="flex flex-wrap gap-4 mb-4">
                         <a href="terms" class="text-blue-400 hover:text-blue-300 transition">Şartlar ve Koşullar</a>
