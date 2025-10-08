@@ -182,24 +182,24 @@
         {
         "symbols": [
             {
-            "proName": "FOREXCOM:SPXUSD",
-            "title": "S&P 500"
+            "proName": "BIST:XU100",
+            "title": "BIST 100"
             },
             {
-            "proName": "FOREXCOM:NSXUSD",
-            "title": "Nasdaq 100"
+            "proName": "BIST:XU030",
+            "title": "BIST 30"
             },
             {
-            "proName": "FX_IDC:EURUSD",
-            "title": "EUR/USD"
+            "proName": "FX:USDTRY",
+            "title": "USD/TRY"
             },
             {
-            "proName": "BITSTAMP:BTCUSD",
-            "title": "BTC/USD"
+            "proName": "FX:BTCTRY",
+            "title": "BTC/TRY"
             },
             {
-            "proName": "BITSTAMP:ETHUSD",
-            "title": "ETH/USD"
+            "proName": "FX:ETHTRY",
+            "title": "ETH/TRY"
             }
         ],
         "showSymbolLogo": true,
@@ -429,124 +429,124 @@
                     "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
                     "tabs": [
                         {
-                        "title": "Indices",
+                        "title": "Endeksler",
                         "symbols": [
                             {
-                            "s": "FOREXCOM:SPXUSD",
-                            "d": "S&P 500"
+                            "s": "BIST:XU100",
+                            "d": "BIST 100"
                             },
                             {
-                            "s": "FOREXCOM:NSXUSD",
-                            "d": "US 100"
+                            "s": "BIST:XU030",
+                            "d": "BIST 30"
                             },
                             {
-                            "s": "FOREXCOM:DJI",
-                            "d": "Dow 30"
+                            "s": "BIST:XU050",
+                            "d": "BIST 50"
                             },
                             {
-                            "s": "INDEX:NKY",
-                            "d": "Nikkei 225"
+                            "s": "BIST:XUTEK",
+                            "d": "BIST TEKNOLOJİ"
                             },
                             {
-                            "s": "INDEX:DEU40",
-                            "d": "DAX Index"
+                            "s": "BIST:XUSIN",
+                            "d": "BIST SINAİ"
                             },
                             {
-                            "s": "FOREXCOM:UKXGBP",
-                            "d": "UK 100"
+                            "s": "BIST:XUHIZ",
+                            "d": "BIST HİZMETLER"
                             }
                         ],
-                        "originalTitle": "Indices"
+                        "originalTitle": "Endeksler"
                         },
     {
-      "title": "Futures",
+      "title": "Emtia",
       "symbols": [
-        {
-          "s": "CME_MINI:ES1!",
-          "d": "S&P 500"
-        },
-        {
-          "s": "CME:6E1!",
-          "d": "Euro"
-        },
         {
           "s": "COMEX:GC1!",
-          "d": "Gold"
+          "d": "Altın"
         },
         {
-          "s": "NYMEX:CL1!",
-          "d": "Crude Oil"
+          "s": "COMEX:SI1!",
+          "d": "Gümüş"
         },
         {
-          "s": "NYMEX:NG1!",
-          "d": "Natural Gas"
+          "s": "NYMEX:PL1!",
+          "d": "Platinum"
         },
         {
-          "s": "CBOT:ZC1!",
-          "d": "Corn"
+          "s": "NYMEX:PA1!",
+          "d": "Palladium"
+        },
+        {
+          "s": "ICE:BRN1!",
+          "d": "Brent Petrol"
+        },
+        {
+          "s": "TFEX:USDTRY",
+          "d": "USD/TRY Vadeli"
         }
       ],
-      "originalTitle": "Futures"
+      "originalTitle": "Emtia"
     },
     {
-      "title": "Bonds",
+      "title": "Tahviller",
       "symbols": [
         {
-          "s": "CME:GE1!",
-          "d": "Eurodollar"
+          "s": "TURKEY:TURKISHBOND",
+          "d": "Türkiye Tahvili"
         },
         {
-          "s": "CBOT:ZB1!",
-          "d": "T-Bond"
+          "s": "TURKEY:TLREF",
+          "d": "TLREF"
         },
         {
-          "s": "CBOT:UB1!",
-          "d": "Ultra T-Bond"
+          "s": "TURKEY:TRLIBOR",
+          "d": "TRLIBOR"
         },
         {
-          "s": "EUREX:FGBL1!",
-          "d": "Euro Bund"
+          "s": "BIST:ALTIN",
+          "d": "Altın Tahvili"
         },
         {
-          "s": "EUREX:FBTP1!",
-          "d": "Euro BTP"
+          "s": "BIST:GES",
+          "d": "GES"
         },
         {
-          "s": "EUREX:FGBM1!",
-          "d": "Euro BOBL"
+          "s": "BIST:REIT",
+          "d": "GYO"
         }
       ],
-      "originalTitle": "Bonds"
+      "originalTitle": "Tahviller"
     },
     {
-      "title": "Forex",
+      "title": "Döviz",
                         "symbols": [
                             {
-                            "s": "FX:EURUSD",
-                            "d": "EUR/USD"
+                            "s": "FX:USDTRY",
+                            "d": "USD/TRY"
                             },
                             {
-                            "s": "FX:GBPUSD",
-                            "d": "GBP/USD"
+                            "s": "FX:EURTRY",
+                            "d": "EUR/TRY"
                             },
                             {
-                            "s": "FX:USDJPY",
-                            "d": "USD/JPY"
+                            "s": "FX:GBPTRY",
+                            "d": "GBP/TRY"
                             },
                             {
-                            "s": "FX:USDCHF",
-                            "d": "USD/CHF"
+                            "s": "FX:JPYTRY",
+                            "d": "JPY/TRY"
                             },
                             {
-                            "s": "FX:AUDUSD",
-                            "d": "AUD/USD"
+                            "s": "FX:CHFTRY",
+                            "d": "CHF/TRY"
                             },
                             {
-                            "s": "FX:USDCAD",
-                            "d": "USD/CAD"
+                            "s": "FX:CADTRY",
+                            "d": "CAD/TRY"
                             }
                         ],
-                        "originalTitle": "Forex"
+                        "originalTitle": "Döviz"
                         }
                     ]
                     }
