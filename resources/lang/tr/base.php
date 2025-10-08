@@ -14,7 +14,7 @@ return [
     */
 
     'navigation' => [
-        'trading' => 'Trading',
+        'trading' => 'Ticaret',
         'system' => 'Sistem',
         'company' => 'Şirket',
         'education' => 'Eğitim',
