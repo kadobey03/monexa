@@ -824,55 +824,6 @@
 
 
 
-<!-- Education Section -->
-<section class="py-16 bg-dark-400">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <!-- Video Column -->
-           <div class="rounded-xl overflow-hidden shadow-lg">
-    <div class="bg-dark-300 h-[400px]">
-        <iframe
-            src="https://www.youtube.com/embed/Gc2en3nHxA4"
-            allow="autoplay; encrypted-media"
-            allowfullscreen
-            class="w-full h-full object-cover"
-            title="Learn about Bitcoin">
-        </iframe>
-    </div>
-</div>
-
-            <!-- Text Column -->
-            <div class="space-y-6">
-                <div>
-                    <span class="text-primary text-sm font-semibold uppercase tracking-wider">Education Center</span>
-                    <h2 class="mt-2 text-3xl font-bold text-white">Learn From Market Experts</h2>
-                </div>
-
-                <p class="text-gray-300 text-lg">
-                    Kripto para ticaretinin temel bilgilerinden gelişmiş stratejilere kadar ihtiyacınız olan her şeyi keşfedin.
-                </p>
-
-                <div class="bg-dark-300 rounded-lg p-6 border border-gray-800">
-                    <h3 class="text-xl font-semibold text-white mb-3">About Bitcoin</h3>
-                    <p class="text-gray-400">
-                        Bitcoin (₿), merkezi olmayan bir dijital para birimidir ve merkezi bir otorite olmadan çalışır. İşlemler, kriptografi yoluyla ağ düğümleri tarafından doğrulanır ve blockchain adı verilen halka açık dağıtılmış bir defterde kaydedilir. 2008 yılında Satoshi Nakamoto takma adını kullanan bilinmeyen bir kişi veya grup tarafından oluşturulan Bitcoin, kripto para kavramının öncüsüdür.
-                    </p>
-                </div>
-
-                <div class="flex flex-wrap gap-4 mt-4">
-                    <a href="for-traders" class="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition duration-150">
-                        Explore learning resources
-                        <i class="fas fa-graduation-cap ml-2"></i>
-                    </a>
-                    <a href="login" class="inline-flex items-center px-5 py-2 border border-gray-700 text-base font-medium rounded-md text-gray-300 hover:text-white hover:border-gray-500 transition duration-150">
-                        Join free webinars
-                        <i class="fas fa-video ml-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 
 
@@ -1429,79 +1380,6 @@
 
 
 
-<!-- Premium Trading Experience Section -->
-<section class="py-16 bg-gray-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-12 text-center">
-            <span class="inline-block px-4 py-1 text-sm font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-70 rounded-full shadow-lg">
-                Freedom to Trade
-            </span>
-            <h2 class="mt-3 text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600">Trade What You Want, When You Want</h2>
-            <p class="mt-3 text-gray-300 max-w-2xl mx-auto">Experience unlimited trading possibilities with our comprehensive platform</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            <!-- Left: Image Column -->
-            <div class="relative group overflow-hidden rounded-xl shadow-2xl" x-data="{}" x-init="setTimeout(() => { $el.classList.add('opacity-100'); $el.classList.remove('opacity-0'); }, 100)" class="opacity-0 transition-opacity duration-700">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-blue-900/20 rounded-xl transform rotate-1 group-hover:rotate-0 transition-all duration-300 opacity-70"></div>
-                <img src="temp/custom/img/commission-scheme-crypt1t1.png" alt="Trading Commission Scheme" class="relative z-10 rounded-xl w-full transform transition-all duration-500 group-hover:scale-105">
-                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 p-4">
-                    <p class="text-sm text-blue-300 text-center">Tüm tüccarlar için rekabetçi komisyon yapısı</p>
-                </div>
-            </div>
-
-            <!-- Right: Content Column -->
-            <div class="bg-gray-800 bg-opacity-80 rounded-xl border border-gray-700 hover:border-blue-600 p-8 shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-blue-900/20">
-                <h3 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 mb-4">Premium Trading Experience</h3>
-                <p class="text-gray-300 mb-6 leading-relaxed">
-                    {{$settings->site_name}}'in temel hedeflerinden biri pazarda en iyi ürünü sunmaktır. Lider birinci kademe finansal kurumlarla olan ilişkilerimiz, Forex tüccarları için derin likidite ve daha sıkı spreadler anlamına gelir.
-                </p>
-                <div class="space-y-4 mb-6">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 mt-1">
-                            <span class="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 bg-opacity-20">
-                                <i class="fas fa-check text-blue-400 text-sm"></i>
-                            </span>
-                        </div>
-                        <p class="ml-3 text-gray-300">Forex, Endeksler, Hisse Senetleri ve Emtialar ile İşlem Yapın</p>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 mt-1">
-                            <span class="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 bg-opacity-20">
-                                <i class="fas fa-check text-blue-400 text-sm"></i>
-                            </span>
-                        </div>
-                        <p class="ml-3 text-gray-300">24 saat / 7 gün küresel piyasalara erişim</p>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 mt-1">
-                            <span class="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 bg-opacity-20">
-                                <i class="fas fa-check text-blue-400 text-sm"></i>
-                            </span>
-                        </div>
-                        <p class="ml-3 text-gray-300">Çok dilli müşteri desteği</p>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 mt-1">
-                            <span class="flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 bg-opacity-20">
-                                <i class="fas fa-check text-blue-400 text-sm"></i>
-                            </span>
-                        </div>
-                        <p class="ml-3 text-gray-300">Mobil uygulamalarımızla hareket halindeyken işlem yapın</p>
-                    </div>
-                </div>
-                <div class="mt-6">
-                    <a href="login" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition duration-300 transform hover:-translate-y-1">
-                        Learn About Our Commissions
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Trading Services Section -->
 <section class="py-16 bg-gray-800">
