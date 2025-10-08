@@ -489,7 +489,7 @@
                 coin-ids="bitcoin,ethereum,eos,ripple,litecoin"
                 currency="usd"
                 background-color="transparent"
-                locale="tr"
+                locale="en"
                 font-color="#333">
             </coingecko-coin-price-marquee-widget>
         </div>
@@ -521,6 +521,93 @@
             </ul>
         </div>
 
+       <div class="space-y-2">
+            <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
+                <i data-lucide="briefcase" class="w-4 h-4"></i>
+                <span>Portföy ve Yatırımlar</span>
+            </div>
+
+            <!-- Investment Plans Dropdown -->
+            <div x-data="{ investmentOpen: {{ request()->routeIs(['mplans', 'stocks', 'crypto', 'realestate', 'myplans', 'tradinghistory']) ? 'true' : 'false' }} }" class="space-y-1">
+                <!-- Main Investment Plans Button -->
+                <button @click="investmentOpen = !investmentOpen"
+                        class="flex items-center w-full px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-all duration-200 group {{ request()->routeIs(['mplans', 'stocks', 'crypto', 'realestate']) ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                    <i data-lucide="target" class="w-5 h-5 mr-3 transition-colors"></i>
+                    <span class="flex-1 text-left font-medium">Yatırım Planları</span>
+                    <div class="flex items-center space-x-2">
+                        @if(request()->routeIs(['mplans', 'stocks', 'crypto', 'realestate']))
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                        @endif
+                        <i data-lucide="chevron-down"
+                           :class="investmentOpen ? 'rotate-180' : 'rotate-0'"
+                           class="w-4 h-4 transition-transform duration-200 text-gray-400"></i>
+                    </div>
+                </button>
+
+                <!-- Dropdown Content -->
+                <div x-show="investmentOpen"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-2"
+                     class="ml-4 space-y-1 border-l-2 border-gray-200 dark:border-gray-700 pl-4" x-cloak>
+
+                    <!-- All Investment Plans -->
+                    <a href="{{ route('mplans') }}"
+                       class="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 group {{ request()->routeIs('mplans') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <i data-lucide="list" class="w-4 h-4 mr-3"></i>
+                        <span class="text-sm">Tüm Planlar</span>
+                        @if(request()->routeIs('mplans'))
+                            <div class="ml-auto w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                        @endif
+                    </a>
+
+                    <!-- Stock Market -->
+                    <a href="{{ route('stocks') }}"
+                       class="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 group {{ request()->routeIs('stocks') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-blue-500"></i>
+                        <span class="text-sm">Hisse Senedi Piyasası</span>
+                        @if(request()->routeIs('stocks'))
+                            <div class="ml-auto w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                        @endif
+                    </a>
+
+                    <!-- Cryptocurrency -->
+                    <a href="{{ route('crypto') }}"
+                       class="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/50 transition-colors duration-150 group {{ request()->routeIs('crypto') ? 'bg-orange-50 dark:bg-orange-900/50 text-orange-600 dark:text-orange-400 font-medium' : '' }}">
+                        <i data-lucide="coins" class="w-4 h-4 mr-3 text-orange-500"></i>
+                        <span class="text-sm">Kripto Para</span>
+                        @if(request()->routeIs('crypto'))
+                            <div class="ml-auto w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
+                        @endif
+                    </a>
+
+                    <!-- Real Estate -->
+                    <a href="{{ route('realestate') }}"
+                       class="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/50 transition-colors duration-150 group {{ request()->routeIs('realestate') ? 'bg-green-50 dark:bg-green-900/50 text-green-600 dark:text-green-400 font-medium' : '' }}">
+                        <i data-lucide="home" class="w-4 h-4 mr-3 text-green-500"></i>
+                        <span class="text-sm">Gayrimenkul</span>
+                        @if(request()->routeIs('realestate'))
+                            <div class="ml-auto w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                        @endif
+                    </a>
+                </div>
+            </div>
+
+            <!-- Portfolio Management (Separate from dropdown) -->
+            <ul class="space-y-1">
+                <li>
+                    <a href="{{ route('myplans', 'All') }}"
+                       class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('myplans') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <i data-lucide="pie-chart" class="w-5 h-5 mr-3"></i>
+                        Portföyüm
+                        @if(request()->routeIs('myplans'))
+                            <div class="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>
+                        @endif
+                    </a>
+                </li>
                 <li>
                     <a href="{{ route('tradinghistory') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('tradinghistory') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
@@ -541,6 +628,21 @@
                 <i data-lucide="trending-up" class="w-4 h-4"></i>
                 <span>Ticaret ve Piyasalar</span>
             </div>
+            <ul class="space-y-1">
+                <li>
+                    <a href="{{ route('demo.dashboard') }}"
+                       class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/50 transition-colors duration-150 {{ request()->routeIs('demo.*') ? 'bg-green-50 dark:bg-green-900/50 text-green-600 dark:text-green-400 font-medium' : '' }}">
+                        <i data-lucide="graduation-cap" class="w-5 h-5 mr-3"></i>
+                        Demo Ticaret
+                        <span class="ml-auto flex items-center px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full">
+                            <i data-lucide="play" class="w-3 h-3 mr-1"></i>
+                            Uygulama
+                        </span>
+                        <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
+                            100.000 $ sanal para ile uygulama
+                        </div>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ route('trade.index') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('trade.*') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
@@ -555,9 +657,37 @@
                         </div>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('copy.dashboard') }}"
+                       class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('copy.*') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <i data-lucide="users-2" class="w-5 h-5 mr-3"></i>
+                        Kopya Ticaret
+                        <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-purple-500 to-purple-600 rounded-full">Pro</span>
+                        <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
+                            Uzman tüccarları takip et
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('user.bots.index') }}"
+                       class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('user.bots.*') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <i data-lucide="bot" class="w-5 h-5 mr-3"></i>
+                        AI Ticaret Botları
+                        <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full">AI</span>
+                        <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
+                            Otomatik ticaret algoritmaları
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
 
+        <!-- Trading Signals Section -->
+        <div class="space-y-2">
+            <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
+                <i data-lucide="radio" class="w-4 h-4"></i>
+                <span>Piyasa İstihbaratı</span>
+            </div>
 
             <ul class="space-y-1">
                 <!--@if(Auth::check() && Auth::user()->signals)-->
@@ -569,6 +699,17 @@
                 <!--    </a>-->
                 <!--</li>-->
                 <!--@endif-->
+                <li>
+                    <a href="{{ route('signal') }}"
+                       class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('signals') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <i data-lucide="zap" class="w-5 h-5 mr-3"></i>
+                        Premium Sinyaller
+                        <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full">Premium</span>
+                        <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
+                            Uzman ticaret içgörüleri
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
 

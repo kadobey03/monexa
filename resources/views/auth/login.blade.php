@@ -184,7 +184,7 @@
                                     class="group relative inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-gray-600 bg-gray-800 hover:bg-gray-700 hover:border-green-400/50 transition-all duration-200 shadow-lg hover:shadow-xl">
                                 <i data-lucide="qr-code" class="h-6 w-6 text-green-400 group-hover:text-green-300 group-hover:scale-110 transition-all duration-200"></i>
                                 <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-gray-900/90 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                                    QR Code
+                                    QR Kod
                                 </div>
                             </button>
                         </div>
@@ -194,10 +194,10 @@
                     <div class="mt-10 text-center space-y-6">
                         <!-- Register Link -->
                         <div class="text-sm">
-                            <span class="text-gray-300">New to trading? </span>
+                            <span class="text-gray-300">Trading'e yeni misiniz? </span>
                             <a href="{{ route('register') }}"
                                class="font-semibold text-blue-400 hover:text-blue-300 transition-colors underline underline-offset-2">
-                                Create your account
+                                Hesabınızı oluşturun
                             </a>
                         </div>
 
@@ -205,21 +205,21 @@
                         <div class="flex items-center justify-center gap-6 py-4 text-xs text-gray-400">
                             <div class="flex items-center gap-1">
                                 <i data-lucide="shield-check" class="w-3 h-3 text-green-400"></i>
-                                <span>SSL Secured</span>
+                                <span>SSL Güvenliği</span>
                             </div>
                             <div class="flex items-center gap-1">
                                 <i data-lucide="lock" class="w-3 h-3 text-blue-400"></i>
-                                <span>256-bit Encryption</span>
+                                <span>256-bit Şifreleme</span>
                             </div>
                             <div class="flex items-center gap-1">
                                 <i data-lucide="award" class="w-3 h-3 text-cyan-400"></i>
-                                <span>Regulated</span>
+                                <span>Düzenlenmiş</span>
                             </div>
                         </div>
 
                         <!-- Copyright -->
                         <p class="text-xs text-gray-500">
-                            © {{ date('Y') }} {{ $settings->site_name }}. All rights reserved.
+                            © {{ date('Y') }} {{ $settings->site_name }}. Tüm hakları saklıdır.
                         </p>
                     </div>
                 </div>
@@ -230,13 +230,13 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Auto-focus email field
+        // E-posta alanına otomatik odaklanma
         const emailField = document.getElementById('email');
         if (emailField) {
             emailField.focus();
         }
 
-        // Initialize Lucide icons
+        // Lucide ikonlarını başlat
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }
