@@ -975,20 +975,20 @@
 
         // Global functions for notification control
         function closeNotification() {
-            if (window.işlem yaparakNotificationManager) {
-                window.işlem yaparakNotificationManager.hideNotification();
+            if (window.tradingNotificationManager) {
+                window.tradingNotificationManager.hideNotification();
             }
         }
 
         function pauseNotifications() {
-            if (window.işlem yaparakNotificationManager) {
-                window.işlem yaparakNotificationManager.pause();
+            if (window.tradingNotificationManager) {
+                window.tradingNotificationManager.pause();
             }
         }
 
         function resumeNotifications() {
-            if (window.işlem yaparakNotificationManager) {
-                window.işlem yaparakNotificationManager.resume();
+            if (window.tradingNotificationManager) {
+                window.tradingNotificationManager.resume();
             }
         }
 
@@ -996,7 +996,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Small delay to ensure everything is loaded
             setTimeout(() => {
-                window.işlem yaparakNotificationManager = new TradingNotificationManager();
+                window.tradingNotificationManager = new TradingNotificationManager();
             }, 500); // Reduced from 2000ms to 500ms
         });
 
@@ -1004,7 +1004,7 @@
         let userActiveTimeout;
         function resetUserActiveTimer() {
             clearTimeout(userActiveTimeout);
-            if (window.işlem yaparakNotificationManager && !window.işlem yaparakNotificationManager.isActive) {
+            if (window.tradingNotificationManager && !window.tradingNotificationManager.isActive) {
                 resumeNotifications();
             }
 

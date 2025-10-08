@@ -313,6 +313,29 @@
                         "hideSymbolLogo": false,
                         "saveImage": false,
                         "calendar": false,
+                        "showVolume": true,
+                        "volumeUpColor": "rgba(0, 255, 0, 0.8)",
+                        "volumeDownColor": "rgba(255, 0, 0, 0.8)",
+                        "showIntervalTabs": true,
+                        "showCurrencySymbols": true,
+                        "showPriceLabels": true,
+                        "showChangePercent": true,
+                        "showChangeValue": true,
+                        "enableScrolling": false,
+                        "fontSizes": {
+                            "title": 16,
+                            "label": 12,
+                            "value": 14
+                        },
+                        "backgroundColor": "rgba(0, 0, 0, 0)",
+                        "widgetFontColor": "rgba(255, 255, 255, 1)",
+                        "borderColor": "rgba(255, 255, 255, 0.1)",
+                        "upColor": "#26a69a",
+                        "downColor": "#ef5350",
+                        "borderUpColor": "#26a69a",
+                        "borderDownColor": "#ef5350",
+                        "wickUpColor": "#26a69a",
+                        "wickDownColor": "#ef5350"
                         "tabs": [
                             {
                                 "title": "Endeksler",
