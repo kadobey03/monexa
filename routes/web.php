@@ -31,15 +31,6 @@ Route::post('/change-language', [LanguageController::class, 'changeLanguage'])->
 Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
 Route::get('/current-language', [LanguageController::class, 'getCurrentLanguage'])->name('current.language');
 
-// Dil değiştirme rotası
-Route::get('/lang/{locale}', function ($locale) {
-    if (in_array($locale, ['tr', 'en'])) {
-        Session::put('locale', $locale);
-        App::setLocale($locale);
-    }
-    return redirect()->back();
-})->name('lang.switch');
-
 
 
 

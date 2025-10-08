@@ -205,7 +205,7 @@
 <body class="antialiased text-gray-200 bg-gray-900 font-sans min-h-screen flex flex-col">
     <!-- Accessibility Skip Link -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:bg-blue-700 focus:text-white focus:fixed focus:px-4 focus:py-2 focus:top-2 focus:left-2 focus:z-50">
-        @lang('accessibility.skip_content')
+        İçeriği Atla
     </a>
 
 
@@ -244,7 +244,7 @@
                 <nav class="hidden md:flex space-x-8">
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" @click.away="open = false" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
-                            <span>@lang('navigation.trading')</span>
+                            <span>Ticaret</span>
                             <svg class="ml-2 h-4 w-4 text-gray-400 group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
@@ -260,7 +260,7 @@
 
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" @click.away="open = false" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
-                            <span>@lang('navigation.system')</span>
+                            <span>Sistem</span>
                             <svg class="ml-2 h-4 w-4 text-gray-400 group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
@@ -274,7 +274,7 @@
 
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" @click.away="open = false" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
-                            <span>@lang('navigation.company')</span>
+                            <span>Şirket</span>
                             <svg class="ml-2 h-4 w-4 text-gray-400 group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
@@ -287,8 +287,8 @@
                         </div>
                     </div>
 
-                    <a href="for-traders" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white">@lang('navigation.education')</a>
-                    <a href="contacts" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white">@lang('navigation.contact')</a>
+                    <a href="for-traders" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white">Eğitim</a>
+                    <a href="contacts" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white">İletişim</a>
                 </nav>
 
                 <!-- Right Navigation -->
@@ -308,19 +308,6 @@
                         </a>
                     </div>
 
-                    <!-- Language Selector (Desktop) -->
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" @click.away="open = false" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
-                            <span>{{ app()->getLocale() == 'tr' ? 'TR' : 'EN' }}</span>
-                            <svg class="ml-2 h-4 w-4 text-gray-400 group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" class="absolute right-0 mt-2 w-32 rounded-md shadow-lg py-1 bg-dark-300 ring-1 ring-black ring-opacity-5 z-50" style="display: none;">
-                            <a href="/lang/tr" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200 {{ app()->getLocale() == 'tr' ? 'bg-dark-200' : '' }}">@lang('language.turkish')</a>
-                            <a href="/lang/en" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200 {{ app()->getLocale() == 'en' ? 'bg-dark-200' : '' }}">@lang('language.english')</a>
-                        </div>
-                    </div>
 
                     <!-- Dark/Light Mode Toggle -->
                     <!--<button-->
@@ -336,10 +323,10 @@
                     <div class="flex items-center space-x-4">
                         <a href="login" class="text-gray-200 hover:text-white flex items-center">
                             <i class="fas fa-lock mr-1"></i>
-                            <span>@lang('auth.login')</span>
+                            <span>Giriş Yap</span>
                         </a>
                         <a href="register" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                            @lang('auth.register')
+                            Kayıt Ol
                         </a>
                     </div>
                 </div>
@@ -359,7 +346,7 @@
 
                     <!-- Mobile Menu Toggle -->
                     <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">@lang('navigation.open_menu')</span>
+                        <span class="sr-only">Menüyü Aç</span>
                         <svg x-show="!mobileMenuOpen" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -377,7 +364,7 @@
                 <!-- Mobile Navigation -->
                 <div x-data="{ open: false }" class="py-1">
                     <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
-                        <span>@lang('navigation.trading')</span>
+                        <span>Ticaret</span>
                         <svg class="h-4 w-4 text-gray-400" :class="{'transform rotate-180': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
@@ -393,7 +380,7 @@
 
                 <div x-data="{ open: false }" class="py-1">
                     <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
-                        <span>@lang('navigation.system')</span>
+                        <span>Sistem</span>
                         <svg class="h-4 w-4 text-gray-400" :class="{'transform rotate-180': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
@@ -407,7 +394,7 @@
 
                 <div x-data="{ open: false }" class="py-1">
                     <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
-                        <span>@lang('navigation.company')</span>
+                        <span>Şirket</span>
                         <svg class="h-4 w-4 text-gray-400" :class="{'transform rotate-180': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
@@ -420,31 +407,18 @@
                     </div>
                 </div>
 
-                <a href="for-traders" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">@lang('navigation.education')</a>
-                <a href="contacts" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">@lang('navigation.contact')</a>
+                <a href="for-traders" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Eğitim</a>
+                <a href="contacts" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">İletişim</a>
 
-                <!-- Language Selector (Mobile) -->
-                <div x-data="{ open: false }" class="py-1">
-                    <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
-                        <span>@lang('language.'.(app()->getLocale() == 'tr' ? 'turkish' : 'english'))</span>
-                        <svg class="h-4 w-4 text-gray-400" :class="{'transform rotate-180': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                    <div x-show="open" class="pl-4">
-                        <a href="/lang/tr" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 {{ app()->getLocale() == 'tr' ? 'bg-gray-700' : '' }}">@lang('language.turkish')</a>
-                        <a href="/lang/en" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 {{ app()->getLocale() == 'en' ? 'bg-gray-700' : '' }}">@lang('language.english')</a>
-                    </div>
-                </div>
 
                 <div class="pt-4 pb-3 border-t border-gray-700">
                     <div class="flex items-center justify-between px-4">
                         <div class="flex items-center space-x-3">
                             <a href="login" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                                <i class="fas fa-lock mr-1"></i> @lang('auth.login')
+                                <i class="fas fa-lock mr-1"></i> Giriş Yap
                             </a>
                             <a href="register" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                                @lang('auth.register')
+                                Kayıt Ol
                             </a>
                         </div>
                     </div>
