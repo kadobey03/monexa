@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'Sign In')
+@section('title', 'Giriş Yap')
 @section('content')
 
 <!-- Fintech Trading Platform Login -->
@@ -39,13 +39,13 @@
 
                         <!-- Title -->
                         <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">
-                            Welcome Back
+                            Tekrar Hoş Geldiniz
                         </h1>
                         <h2 class="text-lg sm:text-xl font-semibold mb-3">
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{{ $settings->site_name }}</span>
                         </h2>
                         <p class="text-gray-300 text-sm sm:text-base">
-                            Access your trading dashboard
+                            Ticaret panelinize erişin
                         </p>
 
                         <!-- Trading Stats -->
@@ -53,23 +53,23 @@
                             <div class="text-center">
                                 <div class="flex items-center justify-center gap-1 text-green-400 mb-1">
                                     <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                                    <span class="font-medium">Live</span>
+                                    <span class="font-medium">Canlı</span>
                                 </div>
-                                <div class="text-gray-400">24/7 Markets</div>
+                                <div class="text-gray-400">7/24 Piyasalar</div>
                             </div>
                             <div class="w-px h-10 bg-white/20"></div>
                             <div class="text-center">
                                 <div class="flex items-center justify-center gap-1 text-blue-400 mb-1">
                                     <i data-lucide="zap" class="w-3 h-3"></i>
-                                    <span class="font-medium">Fast</span>
+                                    <span class="font-medium">Hızlı</span>
                                 </div>
-                                <div class="text-gray-400">Execution</div>
+                                <div class="text-gray-400">Yürütme</div>
                             </div>
                             <div class="w-px h-10 bg-white/20"></div>
                             <div class="text-center">
                                 <div class="flex items-center justify-center gap-1 text-cyan-400 mb-1">
                                     <i data-lucide="shield" class="w-3 h-3"></i>
-                                    <span class="font-medium">Secure</span>
+                                    <span class="font-medium">Güvenli</span>
                                 </div>
                                 <div class="text-gray-400">Platform</div>
                             </div>
@@ -94,7 +94,7 @@
                         <!-- Email Field -->
                         <div class="space-y-2">
                             <label for="email" class="block text-sm font-semibold text-gray-200">
-                                Email Address or Username
+                                E-posta Adresi veya Kullanıcı Adı
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -102,7 +102,7 @@
                                 </div>
                                 <input type="text" name="email" id="email" required
                                        class="block w-full rounded-2xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-medium"
-                                       placeholder="your.email@example.com"
+                                       placeholder="eposta@ornek.com"
                                        value="{{ old('email') }}">
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                         <!-- Password Field -->
                         <div class="space-y-2">
                             <label for="password" class="block text-sm font-semibold text-gray-200">
-                                Password
+                                Şifre
                             </label>
                             <div class="relative group" x-data="{ showPassword: false }">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -119,7 +119,7 @@
                                 <input type="password" name="password" id="password" required
                                        :type="showPassword ? 'text' : 'password'"
                                        class="block w-full rounded-2xl border border-gray-600 bg-gray-900 pl-12 pr-12 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-medium"
-                                       placeholder="Enter your password">
+                                       placeholder="Şifrenizi giriniz">
                                 <button type="button" @click="showPassword = !showPassword"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-400 transition-colors">
                                     <i data-lucide="eye" class="h-5 w-5" x-show="!showPassword"></i>
@@ -134,12 +134,12 @@
                                 <input type="checkbox" name="remember" id="remember"
                                        class="h-4 w-4 rounded border-gray-600 bg-gray-900 text-blue-500 focus:ring-2 focus:ring-blue-400/20 transition-colors">
                                 <label for="remember" class="ml-3 text-gray-300 font-medium">
-                                    Remember me
+                                    Beni hatırla
                                 </label>
                             </div>
                             <a href="{{ route('password.request') }}"
                                class="text-blue-400 hover:text-blue-300 transition-colors underline underline-offset-2">
-                                Forgot password?
+                                Şifremi unuttum?
                             </a>
                         </div>
 
@@ -148,7 +148,7 @@
                             <button type="submit"
                                     class="group relative flex w-full justify-center items-center gap-3 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 px-6 py-4 text-base font-bold text-white transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400/50 disabled:opacity-50 disabled:cursor-not-allowed">
                                 <i data-lucide="log-in" class="h-5 w-5"></i>
-                                <span>Access Dashboard</span>
+                                <span>Panele Eriş</span>
                                 <i data-lucide="arrow-right" class="h-4 w-4 group-hover:translate-x-1 transition-transform"></i>
                             </button>
                         </div>
@@ -161,7 +161,7 @@
                                 <div class="w-full border-t border-white/20"></div>
                             </div>
                             <div class="relative flex justify-center text-sm">
-                                <span class="bg-gray-900 px-4 text-gray-300 font-medium">Quick Access</span>
+                                <span class="bg-gray-900 px-4 text-gray-300 font-medium">Hızlı Erişim</span>
                             </div>
                         </div>
 
@@ -170,14 +170,14 @@
                                     class="group relative inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-gray-600 bg-gray-800 hover:bg-gray-700 hover:border-blue-400/50 transition-all duration-200 shadow-lg hover:shadow-xl">
                                 <i data-lucide="fingerprint" class="h-6 w-6 text-blue-400 group-hover:text-blue-300 group-hover:scale-110 transition-all duration-200"></i>
                                 <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-gray-900/90 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                                    Fingerprint
+                                    Parmak İzi
                                 </div>
                             </button>
                             <button type="button" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false"
                                     class="group relative inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-gray-600 bg-gray-800 hover:bg-gray-700 hover:border-cyan-400/50 transition-all duration-200 shadow-lg hover:shadow-xl">
                                 <i data-lucide="scan-face" class="h-6 w-6 text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all duration-200"></i>
                                 <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-gray-900/90 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                                    Face ID
+                                    Yüz Tanıma
                                 </div>
                             </button>
                             <button type="button" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false"
