@@ -286,155 +286,83 @@
                     <div class="tradingview-widget-container__widget"></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
                     {
-                    "colorTheme": "dark",
-                    "dateRange": "12M",
-                    "showChart": true,
-                    "locale": "tr",
-                    "largeChartUrl": "",
-                    "isTransparent": false,
-                    "showSymbolLogo": true,
-                    "showFloatingTooltip": false,
-                    "width": "100%",
-                    "height": "500",
-                    "plotLineColorGrowing": "rgba(0, 255, 0, 1)",
-                    "plotLineColorFalling": "rgba(255, 0, 0, 1)",
-                    "gridLineColor": "rgba(42, 46, 57, 0.5)",
-                    "scaleFontColor": "rgba(106, 109, 120, 1)",
-                    "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-                    "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-                    "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-                    "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-                    "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
-                    "timeZone": "Europe/Istanbul",
-                    "style": "area",
-                    "interval": "1D",
-                    "hideDateRanges": false,
-                    "hideMarketStatus": false,
-                    "hideSymbolLogo": false,
-                    "saveImage": false,
-                    "calendar": false,
-                    "tabs": [
-                        {
-                        "title": "Endeksler",
-                        "symbols": [
+                        "colorTheme": "dark",
+                        "dateRange": "12M",
+                        "showChart": true,
+                        "locale": "tr",
+                        "largeChartUrl": "",
+                        "isTransparent": false,
+                        "showSymbolLogo": true,
+                        "showFloatingTooltip": false,
+                        "width": "100%",
+                        "height": "500",
+                        "plotLineColorGrowing": "rgba(0, 255, 0, 1)",
+                        "plotLineColorFalling": "rgba(255, 0, 0, 1)",
+                        "gridLineColor": "rgba(42, 46, 57, 0.5)",
+                        "scaleFontColor": "rgba(106, 109, 120, 1)",
+                        "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                        "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+                        "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+                        "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+                        "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+                        "timeZone": "Europe/Istanbul",
+                        "style": "area",
+                        "interval": "1D",
+                        "hideDateRanges": false,
+                        "hideMarketStatus": false,
+                        "hideSymbolLogo": false,
+                        "saveImage": false,
+                        "calendar": false,
+                        "tabs": [
                             {
-                            "s": "SPX500",
-                            "d": "S&P 500"
+                                "title": "Endeksler",
+                                "symbols": [
+                                    {"s": "SPX500", "d": "S&P 500"},
+                                    {"s": "NDX", "d": "NASDAQ 100"},
+                                    {"s": "DJI", "d": "Dow Jones"},
+                                    {"s": "UKX", "d": "FTSE 100"},
+                                    {"s": "CAC40", "d": "CAC 40"},
+                                    {"s": "DAX", "d": "DAX 40"}
+                                ],
+                                "originalTitle": "Endeksler"
                             },
                             {
-                            "s": "NDX",
-                            "d": "NASDAQ 100"
+                                "title": "Emtia",
+                                "symbols": [
+                                    {"s": "COMEX:GC1!", "d": "Altın"},
+                                    {"s": "COMEX:SI1!", "d": "Gümüş"},
+                                    {"s": "NYMEX:PL1!", "d": "Platinum"},
+                                    {"s": "NYMEX:PA1!", "d": "Palladium"},
+                                    {"s": "ICE:BRN1!", "d": "Brent Petrol"},
+                                    {"s": "TFEX:USDTRY", "d": "USD/TRY Vadeli"}
+                                ],
+                                "originalTitle": "Emtia"
                             },
                             {
-                            "s": "DJI",
-                            "d": "Dow Jones"
+                                "title": "Tahviller",
+                                "symbols": [
+                                    {"s": "TURKEY:TURKISHBOND", "d": "Türkiye Tahvili"},
+                                    {"s": "TURKEY:TLREF", "d": "TLREF"},
+                                    {"s": "TURKEY:TRLIBOR", "d": "TRLIBOR"},
+                                    {"s": "BIST:ALTIN", "d": "Altın Tahvili"},
+                                    {"s": "BIST:GES", "d": "GES"},
+                                    {"s": "BIST:REIT", "d": "GYO"}
+                                ],
+                                "originalTitle": "Tahviller"
                             },
                             {
-                            "s": "UKX",
-                            "d": "FTSE 100"
-                            },
-                            {
-                            "s": "CAC40",
-                            "d": "CAC 40"
-                            },
-                            {
-                            "s": "DAX",
-                            "d": "DAX 40"
+                                "title": "Döviz",
+                                "symbols": [
+                                    {"s": "FX:USDTRY", "d": "USD/TRY"},
+                                    {"s": "FX:EURTRY", "d": "EUR/TRY"},
+                                    {"s": "FX:GBPTRY", "d": "GBP/TRY"},
+                                    {"s": "FX:JPYTRY", "d": "JPY/TRY"},
+                                    {"s": "FX:CHFTRY", "d": "CHF/TRY"},
+                                    {"s": "FX:CADTRY", "d": "CAD/TRY"}
+                                ],
+                                "originalTitle": "Döviz"
                             }
-                        ],
-                        "originalTitle": "Endeksler"
-                        },
-    {
-      "title": "Emtia",
-      "symbols": [
-        {
-          "s": "COMEX:GC1!",
-          "d": "Altın"
-        },
-        {
-          "s": "COMEX:SI1!",
-          "d": "Gümüş"
-        },
-        {
-          "s": "NYMEX:PL1!",
-          "d": "Platinum"
-        },
-        {
-          "s": "NYMEX:PA1!",
-          "d": "Palladium"
-        },
-        {
-          "s": "ICE:BRN1!",
-          "d": "Brent Petrol"
-        },
-        {
-          "s": "TFEX:USDTRY",
-          "d": "USD/TRY Vadeli"
-        }
-      ],
-      "originalTitle": "Emtia"
-    },
-    {
-      "title": "Tahviller",
-      "symbols": [
-        {
-          "s": "TURKEY:TURKISHBOND",
-          "d": "Türkiye Tahvili"
-        },
-        {
-          "s": "TURKEY:TLREF",
-          "d": "TLREF"
-        },
-        {
-          "s": "TURKEY:TRLIBOR",
-          "d": "TRLIBOR"
-        },
-        {
-          "s": "BIST:ALTIN",
-          "d": "Altın Tahvili"
-        },
-        {
-          "s": "BIST:GES",
-          "d": "GES"
-        },
-        {
-          "s": "BIST:REIT",
-          "d": "GYO"
-        }
-      ],
-      "originalTitle": "Tahviller"
-    },
-    {
-      "title": "Döviz",
-                        "symbols": [
-                            {
-                            "s": "FX:USDTRY",
-                            "d": "USD/TRY"
-                            },
-                            {
-                            "s": "FX:EURTRY",
-                            "d": "EUR/TRY"
-                            },
-                            {
-                            "s": "FX:GBPTRY",
-                            "d": "GBP/TRY"
-                            },
-                            {
-                            "s": "FX:JPYTRY",
-                            "d": "JPY/TRY"
-                            },
-                            {
-                            "s": "FX:CHFTRY",
-                            "d": "CHF/TRY"
-                            },
-                            {
-                            "s": "FX:CADTRY",
-                            "d": "CAD/TRY"
-                            }
-                        ],
-                        "originalTitle": "Döviz"
-                        }
-                    ]
+                        ]
                     }
                     </script>
                 </div>
@@ -922,22 +850,6 @@
 <section class="py-16 bg-dark-400">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <!-- Chart Widget -->
-            <div class="bg-dark-300 rounded-xl overflow-hidden border border-gray-800 shadow-lg">
-                <div class="w-full h-[400px]">
-                    <iframe
-                        src="https://widget.coinlib.io/widget?type=chart&theme=dark&coin_id=859&pref_coin_id=1505"
-                        scrolling="auto"
-                        marginwidth="0"
-                        marginheight="0"
-                        frameborder="0"
-                        class="w-full h-full border-0">
-                    </iframe>
-                </div>
-                <div class="p-2 text-right text-xs text-green-500">
-                    <a href="https://coinlib.io" target="_blank" class="hover:underline">Cryptocurrency Prices by Coinlib</a>
-                </div>
-            </div>
 
             <!-- Expert Support Content -->
             <div class="space-y-8">
