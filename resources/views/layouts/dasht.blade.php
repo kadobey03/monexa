@@ -161,7 +161,7 @@
              {{$settings->site_name}}
             </span>
             <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">
-              Professional Trading
+              Profesyonel Ticaret
             </div>
           </div>
         </a>
@@ -191,7 +191,7 @@
       <!-- Center Section: Account Balance (Desktop) -->
       <div class="hidden md:flex items-center space-x-6">
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 px-4 py-2 rounded-lg border border-blue-100 dark:border-blue-800">
-          <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Account Balance</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Hesap Bakiyesi</div>
           <div class="text-lg font-bold text-gray-900 dark:text-white">
             {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
           </div>
@@ -206,7 +206,7 @@
           <button @click="quickActionsOpen = !quickActionsOpen"
                   class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
             <i data-lucide="zap" class="w-4 h-4"></i>
-            <span>Quick Trade</span>
+            <span>Hızlı İşlem</span>
             <i data-lucide="chevron-down" class="w-4 h-4" :class="quickActionsOpen ? 'rotate-180' : ''"></i>
           </button>
 
@@ -218,15 +218,15 @@
             <div class="p-2">
               <a href="{{ route('deposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <i data-lucide="plus-circle" class="w-4 h-4 mr-3 text-green-500"></i>
-                Deposit Funds
+                Para Yatırma
               </a>
               <a href="{{ route('withdrawalsdeposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <i data-lucide="minus-circle" class="w-4 h-4 mr-3 text-red-500"></i>
-                Withdraw
+                Para Çekme
               </a>
               <a href="{{ route('trade.index') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-blue-500"></i>
-                Trade Markets
+                Piyasa İşlemleri
               </a>
             </div>
           </div>
@@ -256,7 +256,7 @@
                class="absolute right-0 sm:right-0 sm:left-auto left-1/2 sm:transform-none transform -translate-x-1/2 mt-2 w-80 max-w-[90vw] bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20" x-cloak>
             <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
               <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
-                Notifications
+                Bildirimler
                 @if($unreadCount > 0)
                   <span class="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-500 rounded-full">
                     {{ $unreadCount }}
@@ -306,15 +306,15 @@
                   <div class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 mb-4">
                     <i data-lucide="bell-off" class="h-6 w-6"></i>
                   </div>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">No notifications</p>
-                  <p class="mt-1 text-xs text-gray-500 dark:text-gray-500">We'll notify you when something arrives</p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">Bildirim yok</p>
+                      <p class="mt-1 text-xs text-gray-500 dark:text-gray-500">Bir şey olduğunda size haber vereceğiz</p>
                 </div>
               @endforelse
             </div>
 
             @if(count($notifications) > 0)
               <div class="px-4 py-3 border-t border-gray-200 dark:border-gray-700 text-center">
-                <a href="{{ route('notifications') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">View all notifications</a>
+                <a href="{{ route('notifications') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">Tüm bildirimleri görüntüle</a>
               </div>
             @endif
           </div>
@@ -346,7 +346,7 @@
                   {{ auth()->user()->name }}
                 </div>
                 <div class="text-xs text-gray-500 dark:text-gray-400">
-                  Trading Account
+                  Ticaret Hesabı
                 </div>
               </div>
             </div>
@@ -380,22 +380,22 @@
             <div class="p-2">
               <a href="{{ route('profile') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <i data-lucide="user" class="w-4 h-4 mr-3"></i>
-                Profile Settings
+                Profil Ayarları
               </a>
               <a href="{{ route('accounthistory') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <i data-lucide="receipt" class="w-4 h-4 mr-3"></i>
-                Account History
+                Hesap Geçmişi
               </a>
               <a href="{{ route('support') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <i data-lucide="help-circle" class="w-4 h-4 mr-3"></i>
-                Support Center
+                Destek Merkezi
               </a>
               <div class="border-t border-gray-200 dark:border-gray-600 my-2"></div>
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="w-full flex items-center px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md">
                   <i data-lucide="log-out" class="w-4 h-4 mr-3"></i>
-                  Sign Out
+                  Çıkış Yap
                 </button>
               </form>
             </div>
@@ -501,21 +501,21 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                <span>Overview</span>
+                <span>Genel Bakış</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('dashboard') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
-                        Dashboard
+                        Ana Sayfa
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('accounthistory') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('accounthistory') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="receipt" class="w-5 h-5 mr-3"></i>
-                        Account Statement
+                        Hesap Özeti
                     </a>
                 </li>
             </ul>
@@ -524,7 +524,7 @@
        <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <i data-lucide="briefcase" class="w-4 h-4"></i>
-                <span>Portfolio & Investments</span>
+                <span>Portföy ve Yatırımlar</span>
             </div>
 
             <!-- Investment Plans Dropdown -->
@@ -533,7 +533,7 @@
                 <button @click="investmentOpen = !investmentOpen"
                         class="flex items-center w-full px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-all duration-200 group {{ request()->routeIs(['mplans', 'stocks', 'crypto', 'realestate']) ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                     <i data-lucide="target" class="w-5 h-5 mr-3 transition-colors"></i>
-                    <span class="flex-1 text-left font-medium">Investment Plans</span>
+                    <span class="flex-1 text-left font-medium">Yatırım Planları</span>
                     <div class="flex items-center space-x-2">
                         @if(request()->routeIs(['mplans', 'stocks', 'crypto', 'realestate']))
                             <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
@@ -558,7 +558,7 @@
                     <a href="{{ route('mplans') }}"
                        class="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 group {{ request()->routeIs('mplans') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="list" class="w-4 h-4 mr-3"></i>
-                        <span class="text-sm">All Plans</span>
+                        <span class="text-sm">Tüm Planlar</span>
                         @if(request()->routeIs('mplans'))
                             <div class="ml-auto w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
                         @endif
@@ -568,7 +568,7 @@
                     <a href="{{ route('stocks') }}"
                        class="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 group {{ request()->routeIs('stocks') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-blue-500"></i>
-                        <span class="text-sm">Stock Market</span>
+                        <span class="text-sm">Hisse Senedi Piyasası</span>
                         @if(request()->routeIs('stocks'))
                             <div class="ml-auto w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
                         @endif
@@ -578,7 +578,7 @@
                     <a href="{{ route('crypto') }}"
                        class="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-orange-50 dark:hover:bg-orange-900/50 transition-colors duration-150 group {{ request()->routeIs('crypto') ? 'bg-orange-50 dark:bg-orange-900/50 text-orange-600 dark:text-orange-400 font-medium' : '' }}">
                         <i data-lucide="coins" class="w-4 h-4 mr-3 text-orange-500"></i>
-                        <span class="text-sm">Cryptocurrency</span>
+                        <span class="text-sm">Kripto Para</span>
                         @if(request()->routeIs('crypto'))
                             <div class="ml-auto w-1.5 h-1.5 bg-orange-500 rounded-full"></div>
                         @endif
@@ -588,7 +588,7 @@
                     <a href="{{ route('realestate') }}"
                        class="flex items-center px-3 py-2 text-gray-600 dark:text-gray-300 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/50 transition-colors duration-150 group {{ request()->routeIs('realestate') ? 'bg-green-50 dark:bg-green-900/50 text-green-600 dark:text-green-400 font-medium' : '' }}">
                         <i data-lucide="home" class="w-4 h-4 mr-3 text-green-500"></i>
-                        <span class="text-sm">Real Estate</span>
+                        <span class="text-sm">Gayrimenkul</span>
                         @if(request()->routeIs('realestate'))
                             <div class="ml-auto w-1.5 h-1.5 bg-green-500 rounded-full"></div>
                         @endif
@@ -602,7 +602,7 @@
                     <a href="{{ route('myplans', 'All') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('myplans') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="pie-chart" class="w-5 h-5 mr-3"></i>
-                        My Portfolio
+                        Portföyüm
                         @if(request()->routeIs('myplans'))
                             <div class="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>
                         @endif
@@ -612,7 +612,7 @@
                     <a href="{{ route('tradinghistory') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('tradinghistory') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="activity" class="w-5 h-5 mr-3"></i>
-                        Performance History
+                        Performans Geçmişi
                         @if(request()->routeIs('tradinghistory'))
                             <div class="ml-auto w-2 h-2 bg-blue-500 rounded-full"></div>
                         @endif
@@ -626,20 +626,20 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <i data-lucide="trending-up" class="w-4 h-4"></i>
-                <span>Trading & Markets</span>
+                <span>Ticaret ve Piyasalar</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('demo.dashboard') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/50 transition-colors duration-150 {{ request()->routeIs('demo.*') ? 'bg-green-50 dark:bg-green-900/50 text-green-600 dark:text-green-400 font-medium' : '' }}">
                         <i data-lucide="graduation-cap" class="w-5 h-5 mr-3"></i>
-                        Demo Trading
+                        Demo Ticaret
                         <span class="ml-auto flex items-center px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full">
                             <i data-lucide="play" class="w-3 h-3 mr-1"></i>
-                            Practice
+                            Uygulama
                         </span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            Practice with $100,000 virtual money
+                            100.000 $ sanal para ile uygulama
                         </div>
                     </a>
                 </li>
@@ -647,13 +647,13 @@
                     <a href="{{ route('trade.index') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('trade.*') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="candlestick-chart" class="w-5 h-5 mr-3"></i>
-                        Live Markets
+                        Canlı Piyasalar
                         <span class="ml-auto flex items-center px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-red-500 to-red-600 rounded-full">
                             <div class="w-1.5 h-1.5 bg-white rounded-full animate-pulse mr-1.5"></div>
-                            Live
+                            Canlı
                         </span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            Real-time market trading
+                            Gerçek zamanlı piyasa ticareti
                         </div>
                     </a>
                 </li>
@@ -661,10 +661,10 @@
                     <a href="{{ route('copy.dashboard') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('copy.*') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="users-2" class="w-5 h-5 mr-3"></i>
-                        Copy Trading
+                        Kopya Ticaret
                         <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-purple-500 to-purple-600 rounded-full">Pro</span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            Follow expert traders
+                            Uzman tüccarları takip et
                         </div>
                     </a>
                 </li>
@@ -672,10 +672,10 @@
                     <a href="{{ route('user.bots.index') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('user.bots.*') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="bot" class="w-5 h-5 mr-3"></i>
-                        AI Trading Bots
+                        AI Ticaret Botları
                         <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-full">AI</span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            Automated trading algorithms
+                            Otomatik ticaret algoritmaları
                         </div>
                     </a>
                 </li>
@@ -686,7 +686,7 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <i data-lucide="radio" class="w-4 h-4"></i>
-                <span>Market Intelligence</span>
+                <span>Piyasa İstihbaratı</span>
             </div>
 
             <ul class="space-y-1">
@@ -703,10 +703,10 @@
                     <a href="{{ route('signal') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('signals') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="zap" class="w-5 h-5 mr-3"></i>
-                        Premium Signals
+                        Premium Sinyaller
                         <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-yellow-500 to-orange-600 rounded-full">Premium</span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            Expert trading insights
+                            Uzman ticaret içgörüleri
                         </div>
                     </a>
                 </li>
@@ -717,28 +717,28 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <i data-lucide="wallet" class="w-4 h-4"></i>
-                <span>Wallet & Funds</span>
+                <span>Cüzdan ve Fonlar</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('deposits') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('deposits') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="plus-circle" class="w-5 h-5 mr-3"></i>
-                        Deposit Funds
+                        Para Yatırma
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('withdrawalsdeposits') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('withdrawalsdeposits') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="minus-circle" class="w-5 h-5 mr-3"></i>
-                        Withdraw Funds
+                        Para Çekme
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('transferview') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('transferview') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="arrow-left-right" class="w-5 h-5 mr-3"></i>
-                        Internal Transfer
+                        Dahili Transfer
                     </a>
                 </li>
                 {{-- <li>
@@ -759,17 +759,17 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <i data-lucide="credit-card" class="w-4 h-4"></i>
-                <span>Credit & Financing</span>
+                <span>Kredi ve Finansman</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('loan') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('loan') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="file-plus" class="w-5 h-5 mr-3"></i>
-                        Apply for Credit
-                        <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full">Fast</span>
+                        Kredi Başvurusu
+                        <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full">Hızlı</span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            Apply for loans and credit facilities
+                            Kredi ve kredi tesisleri için başvurun
                         </div>
                     </a>
                 </li>
@@ -777,9 +777,9 @@
                     <a href="{{route('veiwloan')}}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('veiwloan') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="file-text" class="w-5 h-5 mr-3"></i>
-                        Credit History
+                        Kredi Geçmişi
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            View your loan applications and status
+                            Kredi başvurularınızı ve durumunu görüntüleyin
                         </div>
                     </a>
                 </li>
@@ -789,14 +789,14 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <i data-lucide="user-circle" class="w-4 h-4"></i>
-                <span>Account Management</span>
+                <span>Hesap Yönetimi</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('profile') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('profile') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="user" class="w-5 h-5 mr-3"></i>
-                        Profile Settings
+                        Profil Ayarları
                     </a>
                 </li>
                 @if(isset($settings->enable_kyc) && $settings->enable_kyc === 'yes')
@@ -830,7 +830,7 @@
                                  class="mt-2 ml-8 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm" x-cloak>
 
                                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-3">
-                                    Identity Verification
+                                    Kimlik Doğrulama
                                 </h4>
 
                                 @if(Auth::user()->account_verify === 'Under review')
@@ -863,14 +863,14 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <i data-lucide="trending-up" class="w-4 h-4"></i>
-                <span>Growth & Rewards</span>
+                <span>Büyüme ve Ödüller</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('referuser') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('referuser') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="users" class="w-5 h-5 mr-3"></i>
-                        Referral Program
+                        Tavsiye Programı
                         <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full">{{$settings->referral_commission}}%</span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
                             Earn {{$settings->referral_commission}}% commission on referrals
@@ -884,16 +884,16 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <i data-lucide="help-circle" class="w-4 h-4"></i>
-                <span>Support & Help</span>
+                <span>Destek ve Yardım</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('support') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('support') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="headphones" class="w-5 h-5 mr-3"></i>
-                        Support Center
+                        Destek Merkezi
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            Get help from our support team
+                            Destek ekibimizden yardım alın
                         </div>
                     </a>
                 </li>
@@ -1063,7 +1063,7 @@
 
         <i data-lucide="globe" class="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-200"></i>
       </div>
-      <span class="text-xs mt-1 text-gray-500 group-hover:text-blue-600">Language</span>
+      <span class="text-xs mt-1 text-gray-500 group-hover:text-blue-600">Dil</span>
     </div>
 
     <a href="{{ route('deposits') }}"
@@ -1079,10 +1079,10 @@
            transition-colors duration-300"></i>
       </div>
       <span class="text-xs font-medium mt-1
-            {{ request()->routeIs('deposits')
-               ? 'text-blue-600 dark:text-blue-400'
-               : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-            transition-colors duration-300">Deposit</span>
+             {{ request()->routeIs('deposits')
+                ? 'text-blue-600 dark:text-blue-400'
+                : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
+             transition-colors duration-300">Yatırma</span>
     </a>
 
     <a href="{{ route('profile') }}"
@@ -1098,10 +1098,10 @@
            transition-colors duration-300"></i>
       </div>
       <span class="text-xs font-medium mt-1
-            {{ request()->routeIs('profile')
-               ? 'text-blue-600 dark:text-blue-400'
-               : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-            transition-colors duration-300">Profile</span>
+             {{ request()->routeIs('profile')
+                ? 'text-blue-600 dark:text-blue-400'
+                : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
+             transition-colors duration-300">Profil</span>
     </a>
 
     <!-- Animated FAB Button -->
