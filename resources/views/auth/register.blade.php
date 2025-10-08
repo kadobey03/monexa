@@ -6,7 +6,7 @@
       $captcha_answer = $num1 + $num2;
 @endphp
 @extends('layouts.guest1')
-@section('title', 'Create Account')
+@section('title', 'Hesap Oluştur')
 @section('content')
 
 <!-- Fintech Trading Platform Registration -->
@@ -15,7 +15,7 @@
         <div class="w-full max-w-2xl">
             <!-- Professional Trading Registration Card -->
             <div class="bg-gray-900 border border-gray-700 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl"
-                 x-data="registrationForm()" x-cloak>
+                 x-data="kayitFormu()" x-cloak>
 
                 <!-- Header Section -->
                 <div class="text-center mb-8">
@@ -28,10 +28,10 @@
 
                     <!-- Title -->
                     <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
-                        Join <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{{ $settings->site_name }}</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{{ $settings->site_name }}</span>'a Katılın
                     </h1>
                     <p class="text-gray-300 text-sm sm:text-base lg:text-lg mb-6">
-                        Start your professional trading journey
+                        Profesyonel ticaret yolculuğunuza başlayın
                     </p>
 
                     <!-- Trading Stats - Mobile Responsive -->
@@ -53,9 +53,9 @@
                         <div class="text-center p-3 bg-gray-800/50 rounded-xl border border-gray-700/50">
                             <div class="flex items-center justify-center gap-1 text-cyan-400 mb-1">
                                 <i data-lucide="users" class="w-3 h-3"></i>
-                                <span class="font-semibold">1M+ Traders</span>
+                                <span class="font-semibold">1M+ Yatırımcı</span>
                             </div>
-                            <div class="text-gray-400">Community</div>
+                            <div class="text-gray-400">Topluluk</div>
                         </div>
                     </div>
                 </div>
@@ -140,8 +140,8 @@
                                     <i data-lucide="user-circle" class="w-5 h-5 text-blue-400"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg sm:text-xl font-bold text-white">Personal Information</h3>
-                                    <p class="text-gray-400 text-sm">Create your trading profile</p>
+                                    <h3 class="text-lg sm:text-xl font-bold text-white">Kişisel Bilgiler</h3>
+                                    <p class="text-gray-400 text-sm">Ticaret profilinizi oluşturun</p>
                                 </div>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                             <!-- Username Field -->
                             <div class="space-y-2">
                                 <label for="username" class="block text-sm font-bold text-gray-200">
-                                    Trading Username <span class="text-red-400">*</span>
+                                    Ticaret Kullanıcı Adı <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -158,7 +158,7 @@
                                     </div>
                                     <input type="text" name="username" id="username" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                           placeholder="Choose username">
+                                           placeholder="Kullanıcı adı seçin">
                                 </div>
                                 @error('username')
                                     <p class="text-sm text-red-400 flex items-center gap-1">
@@ -170,7 +170,7 @@
                             <!-- Full Name Field -->
                             <div class="space-y-2">
                                 <label for="name" class="block text-sm font-bold text-gray-200">
-                                    Full Name <span class="text-red-400">*</span>
+                                    Ad Soyad <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -178,7 +178,7 @@
                                     </div>
                                     <input type="text" name="name" id="name" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                           placeholder="Enter full name">
+                                           placeholder="Ad soyad giriniz">
                                 </div>
                                 @error('name')
                                     <p class="text-sm text-red-400 flex items-center gap-1">
@@ -190,7 +190,7 @@
                             <!-- Email Field -->
                             <div class="space-y-2">
                                 <label for="email" class="block text-sm font-bold text-gray-200">
-                                    Email Address <span class="text-red-400">*</span>
+                                    E-posta Adresi <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -198,7 +198,7 @@
                                     </div>
                                     <input type="email" name="email" id="email" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                           placeholder="your.email@example.com">
+                                           placeholder="eposta@ornek.com">
                                 </div>
                                 @error('email')
                                     <p class="text-sm text-red-400 flex items-center gap-1">
@@ -210,7 +210,7 @@
                             <!-- Phone Field -->
                             <div class="space-y-2">
                                 <label for="phone" class="block text-sm font-bold text-gray-200">
-                                    Phone Number <span class="text-red-400">*</span>
+                                    Telefon Numarası <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -218,7 +218,7 @@
                                     </div>
                                     <input type="tel" name="phone" id="phone" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                           placeholder="+1 (555) 123-4567">
+                                           placeholder="+90 (555) 123-4567">
                                 </div>
                             </div>
                         </div>
@@ -237,8 +237,8 @@
                                 <i data-lucide="globe-2" class="w-5 h-5 text-purple-400"></i>
                             </div>
                             <div>
-                                <h3 class="text-lg sm:text-xl font-bold text-white">Location</h3>
-                                <p class="text-gray-400 text-sm">Set your regional trading preferences</p>
+                                <h3 class="text-lg sm:text-xl font-bold text-white">Konum</h3>
+                                <p class="text-gray-400 text-sm">Bölgesel ticaret tercihlerinizi ayarlayın</p>
                             </div>
                         </div>
                     </div>
@@ -247,7 +247,7 @@
                         <!-- Country Field -->
                         <div class="space-y-2">
                             <label for="country" class="block text-sm font-bold text-gray-200">
-                                Country <span class="text-red-400">*</span>
+                                Ülke <span class="text-red-400">*</span>
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4 z-10">
@@ -255,7 +255,7 @@
                                 </div>
                                 <select name="country" id="country" required
                                         class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-8 py-4 text-white focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold appearance-none">
-                                    <option selected disabled class="text-gray-400">Select your country</option>
+                                    <option selected disabled class="text-gray-400">Ülkenizi seçin</option>
                                     @include('auth.countries')
                                 </select>
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
@@ -294,8 +294,8 @@
                         <div class="flex items-start gap-3">
                             <i data-lucide="info" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
                             <div class="text-sm">
-                                <p class="text-blue-300 font-bold mb-1">Regional Trading Information</p>
-                                <p class="text-gray-300">Your location helps us provide region-specific features, compliance, and optimal server connections for faster trading execution.</p>
+                                <p class="text-blue-300 font-bold mb-1">Bölgesel Ticaret Bilgileri</p>
+                                <p class="text-gray-300">Konumunuz, bölgeye özel özellikler, uyumluluk ve daha hızlı ticaret yürütme için optimum sunucu bağlantıları sağlamamıza yardımcı olur.</p>
                             </div>
                         </div>
                     </div>
@@ -314,8 +314,8 @@
                                 <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
                             </div>
                             <div>
-                                <h3 class="text-lg sm:text-xl font-bold text-white">Account Security</h3>
-                                <p class="text-gray-400 text-sm">Secure your trading account</p>
+                                <h3 class="text-lg sm:text-xl font-bold text-white">Hesap Güvenliği</h3>
+                                <p class="text-gray-400 text-sm">Ticaret hesabınızı güvenceye alın</p>
                             </div>
                         </div>
                     </div>
@@ -324,7 +324,7 @@
                         <!-- Password Field -->
                         <div class="space-y-2">
                             <label for="password" class="block text-sm font-bold text-gray-200">
-                                Password <span class="text-red-400">*</span>
+                                Şifre <span class="text-red-400">*</span>
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -332,7 +332,7 @@
                                 </div>
                                 <input type="password" name="password" id="password" required
                                        class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                       placeholder="Create strong password">
+                                       placeholder="Güçlü şifre oluşturun">
                             </div>
                             @error('password')
                                 <p class="text-sm text-red-400 flex items-center gap-1">
@@ -344,7 +344,7 @@
                         <!-- Confirm Password Field -->
                         <div class="space-y-2">
                             <label for="password_confirmation" class="block text-sm font-bold text-gray-200">
-                                Confirm Password <span class="text-red-400">*</span>
+                                Şifreyi Onayla <span class="text-red-400">*</span>
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -352,7 +352,7 @@
                                 </div>
                                 <input type="password" name="password_confirmation" id="password_confirmation" required
                                        class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                       placeholder="Confirm your password">
+                                       placeholder="Şifrenizi onaylayın">
                             </div>
                         </div>
                     </div>
@@ -361,7 +361,7 @@
                     <div class="space-y-4 mt-6">
                         <div class="space-y-2">
                             <label for="captcha" class="block text-sm font-bold text-gray-200">
-                                Simple Math Verification <span class="text-red-400">*</span>
+                                Basit Matematik Doğrulama <span class="text-red-400">*</span>
                             </label>
 
                             <!-- CAPTCHA Display -->
@@ -369,7 +369,7 @@
                                 <div class="flex items-center justify-center">
                                     <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-4 border border-gray-600">
                                         <div class="text-center">
-                                            <p class="text-sm text-gray-300 mb-3 font-medium">What is the answer to this simple math?</p>
+                                            <p class="text-sm text-gray-300 mb-3 font-medium">Bu basit matematiğin cevabı nedir?</p>
                                             <div class="bg-gray-900 rounded-lg px-8 py-4 border border-gray-700">
                                                 <span class="text-3xl font-bold text-green-400 tracking-wide select-none"
                                                       style="font-family: 'Arial', sans-serif;">
@@ -388,7 +388,7 @@
                                 </div>
                                 <input type="number" name="captcha" id="captcha" required
                                        class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold text-center"
-                                       placeholder="Enter the answer (numbers only)"
+                                       placeholder="Cevabı giriniz (sadece rakamlar)"
                                        autocomplete="off"
                                        min="0"
                                        max="99">
@@ -403,7 +403,7 @@
                             <!-- Helper text -->
                             <p class="text-xs text-gray-400 flex items-center gap-1">
                                 <i data-lucide="info" class="w-3 h-3"></i>
-                                Just solve this simple math problem to verify you're human. Much easier than typing random codes!
+                                İnsan olduğunuzu doğrulamak için bu basit matematik problemini çözün. Rastgele kodlar yazmaktan çok daha kolay!
                             </p>
                         </div>
                     </div>
@@ -417,19 +417,19 @@
 
                     <!-- Password Requirements -->
                     <div class="mt-6 p-4 bg-gray-800/50 rounded-xl border border-gray-700">
-                        <p class="text-sm font-bold text-gray-200 mb-2">Password Requirements:</p>
+                        <p class="text-sm font-bold text-gray-200 mb-2">Şifre Gereksinimleri:</p>
                         <ul class="text-xs text-gray-300 space-y-1">
                             <li class="flex items-center gap-2">
                                 <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
-                                At least 8 characters long
+                                En az 8 karakter uzunluğunda
                             </li>
                             <li class="flex items-center gap-2">
                                 <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
-                                Contains uppercase and lowercase letters
+                                Büyük ve küçük harf içerir
                             </li>
                             <li class="flex items-center gap-2">
                                 <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
-                                Includes at least one number or special character
+                                En az bir rakam veya özel karakter içerir
                             </li>
                         </ul>
                     </div>
@@ -443,17 +443,18 @@
                             </div>
                             <div class="flex-1">
                                 <label for="agree" class="text-sm font-bold text-gray-200 leading-relaxed">
-                                    I agree to {{ $settings->site_name }}'s
+                                    {{ $settings->site_name }}'ın
                                     <a href="rules" target="_blank" class="text-blue-400 hover:text-blue-300 font-bold underline underline-offset-2">
-                                        Terms and Conditions
+                                        Şartlar ve Koşullarını
                                     </a>
-                                    and acknowledge that I have read and understood the
+                                    kabul ediyorum ve
                                     <a href="#" target="_blank" class="text-blue-400 hover:text-blue-300 font-bold underline underline-offset-2">
-                                        Privacy Policy
+                                        Gizlilik Politikasını
                                     </a>
+                                    okuduğumu ve anladığımı beyan ediyorum
                                 </label>
                                 <p class="text-xs text-gray-400 mt-2">
-                                    By creating an account, you confirm that you are at least 18 years old and agree to receive trading updates and market insights.
+                                    Hesap oluşturarak en az 18 yaşında olduğunuzu ve ticaret güncellemeleri ile piyasa analizleri almayı kabul ettiğinizi onaylarsınız.
                                 </p>
                             </div>
                         </div>
@@ -463,11 +464,11 @@
                 <!-- Enhanced Navigation Buttons -->
                 <div class="flex flex-col sm:flex-row justify-between items-center mt-10 pt-8 border-t border-gray-700 gap-4" x-cloak>
                     <!-- Previous Button -->
-                    <button type="button" @click="previousStep()"
+                    <button type="button" @click="oncekiAdim()"
                             x-show="currentStep > 0"
                             class="inline-flex items-center gap-2 px-6 py-3 text-gray-400 hover:text-white transition-all duration-200 rounded-xl hover:bg-gray-800/50 group">
                         <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
-                        <span class="font-bold">Previous Step</span>
+                        <span class="font-bold">Önceki Adım</span>
                     </button>
 
                     <!-- Progress Indicator -->
@@ -476,10 +477,10 @@
                     </div>
 
                     <!-- Next Button -->
-                    <button type="button" @click="nextStep()"
+                    <button type="button" @click="sonrakiAdim()"
                             x-show="currentStep < steps.length - 1"
                             class="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group">
-                        <span>Continue</span>
+                        <span>Devam Et</span>
                         <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                     </button>
 
@@ -487,7 +488,7 @@
                     <button type="submit" x-show="currentStep === steps.length - 1"
                             class="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group">
                         <i data-lucide="user-plus" class="w-5 h-5"></i>
-                        <span>Create Trading Account</span>
+                        <span>Ticaret Hesabı Oluştur</span>
                         <i data-lucide="sparkles" class="w-4 h-4 group-hover:rotate-12 transition-transform"></i>
                     </button>
                 </div>
@@ -496,10 +497,10 @@
                 <div class="mt-8 text-center space-y-4">
                     <div class="flex items-center justify-center gap-6 text-sm">
                         <p class="text-gray-400">
-                            Already have an account?
+                            Zaten hesabınız var mı?
                             <a href="{{ route('login') }}"
                                class="font-bold text-blue-400 hover:text-blue-300 transition-colors underline underline-offset-2">
-                                Sign in here
+                                Buradan giriş yapın
                             </a>
                         </p>
                     </div>
@@ -508,21 +509,21 @@
                     <div class="flex items-center justify-center gap-8 py-4 text-xs text-gray-500">
                         <div class="flex items-center gap-1">
                             <i data-lucide="shield" class="w-3 h-3"></i>
-                            <span>SSL Secured</span>
+                            <span>SSL Güvenliği</span>
                         </div>
                         <div class="flex items-center gap-1">
                             <i data-lucide="lock" class="w-3 h-3"></i>
-                            <span>256-bit Encryption</span>
+                            <span>256-bit Şifreleme</span>
                         </div>
                         <div class="flex items-center gap-1">
                             <i data-lucide="award" class="w-3 h-3"></i>
-                            <span>Regulated Platform</span>
+                            <span>Düzenlenmiş Platform</span>
                         </div>
                     </div>
 
                     <p class="text-xs text-gray-500">
-                        © {{ date('Y') }} {{ $settings->site_name }}. All rights reserved. |
-                        Licensed and regulated trading platform.
+                        © {{ date('Y') }} {{ $settings->site_name }}. Tüm hakları saklıdır. |
+                        Lisanslı ve düzenlenmiş ticaret platformu.
                     </p>
                 </div>
             </form>
@@ -555,28 +556,28 @@
     <script type="text/javascript" src="https://translate.google.com/translate_a/elementa0d8.js?cb=googleTranslateElementInit"></script>
 
     <script>
-        function registrationForm() {
+        function kayitFormu() {
             return {
                 currentStep: 0,
                 steps: [
                     {
-                        title: 'Personal Info',
-                        description: 'Basic details',
+                        title: 'Kişisel Bilgiler',
+                        description: 'Temel bilgiler',
                         completed: false
                     },
                     {
-                        title: 'Location',
-                        description: 'Regional settings',
+                        title: 'Konum',
+                        description: 'Bölgesel ayarlar',
                         completed: false
                     },
                     {
-                        title: 'Security',
-                        description: 'Account protection',
+                        title: 'Güvenlik',
+                        description: 'Hesap koruması',
                         completed: false
                     }
                 ],
 
-                nextStep() {
+                sonrakiAdim() {
                     if (this.validateCurrentStep()) {
                         this.steps[this.currentStep].completed = true;
                         if (this.currentStep < this.steps.length - 1) {
@@ -586,7 +587,7 @@
                     }
                 },
 
-                previousStep() {
+                oncekiAdim() {
                     if (this.currentStep > 0) {
                         this.currentStep--;
                         this.scrollToTop();
