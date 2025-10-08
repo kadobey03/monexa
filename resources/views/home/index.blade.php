@@ -289,7 +289,7 @@
                     "colorTheme": "dark",
                     "dateRange": "12M",
                     "showChart": true,
-                    "locale": "en",
+                    "locale": "tr",
                     "largeChartUrl": "",
                     "isTransparent": false,
                     "showSymbolLogo": true,
@@ -305,6 +305,14 @@
                     "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
                     "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
                     "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+                    "timeZone": "Europe/Istanbul",
+                    "style": "area",
+                    "interval": "1D",
+                    "hideDateRanges": false,
+                    "hideMarketStatus": false,
+                    "hideSymbolLogo": false,
+                    "saveImage": false,
+                    "calendar": false,
                     "tabs": [
                         {
                         "title": "Endeksler",

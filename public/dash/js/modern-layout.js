@@ -32,18 +32,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Handle notifications dropdown
-    const notificationsToggle = document.querySelector('.notifications-toggle');
-    if (notificationsToggle) {
+    // Handle notifications dropdown - Alpine.js handles this, but keeping for compatibility
+    const notificationsToggle = document.querySelector('[data-lucide="bell"]');
+    if (notificationsToggle && !window.Alpine) {
+        // Only add custom handler if Alpine.js is not available
         notificationsToggle.addEventListener('click', function(e) {
             e.stopPropagation();
-            const dropdown = this.nextElementSibling;
-            dropdown.classList.toggle('show');
+            const dropdown = document.querySelector('[x-show*="notificationOpen"]');
+            if (dropdown) {
+                dropdown.classList.toggle('show');
+                dropdown.setAttribute('x-show', dropdown.getAttribute('x-show') === 'true' ? 'false' : 'true');
+            }
 
             // Close dropdown when clicking outside
             document.addEventListener('click', function closeDropdown(e) {
-                if (!dropdown.contains(e.target)) {
+                if (dropdown && !dropdown.contains(e.target)) {
                     dropdown.classList.remove('show');
+                    dropdown.setAttribute('x-show', 'false');
                     document.removeEventListener('click', closeDropdown);
                 }
             });
