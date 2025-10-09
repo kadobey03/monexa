@@ -1,5 +1,5 @@
 @extends('layouts.dasht')
-@section('title', 'Investment Plan Details')
+@section('title', 'Yatırım Planı Detayları')
 
 @section('styles')
 @parent

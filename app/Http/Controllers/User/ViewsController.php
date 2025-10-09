@@ -101,7 +101,7 @@ class ViewsController extends Controller
 
 
         return view("user.dashboard", [
-            'title' => 'Account Dashboard',
+            'title' => 'Hesap Gösterge Paneli',
             'settings' => $settings,
             'deposited' => $total_deposited,
             'total_withdrawal' => $total_withdrawal,
@@ -124,7 +124,7 @@ class ViewsController extends Controller
         $settings = Settings::where('id', 1)->first();
 
         return view('user.connect-wallet', [
-            'title' => 'Wallet Connect',
+            'title' => 'Cüzdan Bağlantısı',
             'settings'=>$settings,
         ]);
     }
@@ -242,7 +242,7 @@ class ViewsController extends Controller
         return view("user.profile")->with(array(
             'userinfo' => $userinfo,
             'methods' => $paymethods,
-            'title' => 'Profile',
+            'title' => 'Profil',
         ));
     }
 
@@ -260,7 +260,7 @@ class ViewsController extends Controller
     public function loan()
     {
         return view('user.loan')->with(array(
-            'title' => 'Loan Application',
+            'title' => 'Kredi Başvurusu',
         ));
     }
     //support route
@@ -270,7 +270,7 @@ class ViewsController extends Controller
 
         return view("user.support")
             ->with(array(
-                'title' => 'Support',
+                'title' => 'Destek',
             ));
     }
 
@@ -285,7 +285,7 @@ class ViewsController extends Controller
                 ->whereIn('type',  ['Sell','Buy','WIN','LOSE'])
                 ->orderByDesc('id')->paginate(15),
 
-                'title' => 'Trading History',
+                'title' => 'İşlem Geçmişi',
             ));
     }
 
@@ -305,7 +305,7 @@ class ViewsController extends Controller
                     ->paginate(10),
                 'deposits' => Deposit::where('user', Auth::user()->id)->orderBy('id', 'desc')
                     ->paginate(10),
-                'title' => 'Account Transactions History',
+                'title' => 'Hesap İşlem Geçmişi',
 
             ));
     }
@@ -325,7 +325,7 @@ class ViewsController extends Controller
 
         return view("user.deposits")
             ->with(array(
-                'title' => 'Fund your account',
+                'title' => 'Hesabınızı Fonlayın',
                 'dmethods' => $paymethod,
                 'deposits' => Deposit::where(['user' => Auth::user()->id])
                     ->orderBy('id', 'desc')
@@ -351,7 +351,7 @@ class ViewsController extends Controller
 
         return view("user.signal")
             ->with(array(
-                'title' => 'Fund your account',
+                'title' => 'Hesabınızı Fonlayın',
                 'dmethods' => $paymethod,
                 'signals' => $signals,
 
@@ -381,7 +381,7 @@ class ViewsController extends Controller
 
         return view('user.withdrawals')
             ->with(array(
-                'title' => 'Withdraw Your funds',
+                'title' => 'Fonlarınızı Çekin',
                 'wmethods' => $withdrawals,
                 'withdrawals' => Withdrawal::where('user', Auth::user()->id)->orderBy('id', 'desc')
                 ->get(),
@@ -398,7 +398,7 @@ class ViewsController extends Controller
             abort(404);
         }
         return view("user.transfer", [
-            'title' => 'Send funds to a friend',
+            'title' => 'Arkadaşınıza Fon Gönderin',
         ]);
     }
 
@@ -414,7 +414,7 @@ class ViewsController extends Controller
         }
         return view("user.subtrade")
             ->with(array(
-                'title' => 'Subscription Trade',
+                'title' => 'Abonelik Ticareti',
                 'subscriptions' => Mt4Details::where('client_id', auth::user()->id)->orderBy('id', 'desc')->get(),
             ));
     }
@@ -427,7 +427,7 @@ class ViewsController extends Controller
 
         return view("user.mplans")
             ->with(array(
-                'title' => 'Main Plans',
+                'title' => 'Ana Planlar',
                 'plans' => Plans::where('type', 'main')->get(),
                 'settings' => Settings::where('id', '1')->first(),
             ));
@@ -444,7 +444,7 @@ class ViewsController extends Controller
             return view("user.myplans")
                 ->with(array(
                     'numOfPlan' => investment::where('user', Auth::user()->id)->count(),
-                    'title' => 'Your packages',
+                    'title' => 'Paketleriniz',
                     'plans' =>  investment::where('user', Auth::user()->id)->orderByDesc('id')->paginate(10),
                     'settings' => Settings::where('id', '1')->first(),
                 ));
@@ -452,7 +452,7 @@ class ViewsController extends Controller
             return view("user.myplans")
                 ->with(array(
                     'numOfPlan' =>  investment::where('user', Auth::user()->id)->count(),
-                    'title' => 'Your packages',
+                    'title' => 'Paketleriniz',
                     'plans' =>  investment::where('user', Auth::user()->id)->where('active', $sort)->orderByDesc('id')->paginate(10),
                     'settings' => Settings::where('id', '1')->first(),
                 ));
@@ -467,7 +467,7 @@ class ViewsController extends Controller
     {
         return view("user.realestate")
             ->with(array(
-                'title' => 'Real Estate Investment Plans',
+                'title' => 'Gayrimenkul Yatırım Planları',
                 'plans' => Plans::where('investment_type', 'real_estate')->get(),
                 'settings' => Settings::where('id', '1')->first(),
             ));
@@ -478,7 +478,7 @@ class ViewsController extends Controller
     {
         return view("user.crypto")
             ->with(array(
-                'title' => 'Cryptocurrency Investment Plans',
+                'title' => 'Kripto Para Yatırım Planları',
                 'plans' => Plans::where('investment_type', 'crypto')->get(),
                 'settings' => Settings::where('id', '1')->first(),
             ));
@@ -489,7 +489,7 @@ class ViewsController extends Controller
     {
         return view("user.stocks")
             ->with(array(
-                'title' => 'Stock Market Investment Plans',
+                'title' => 'Hisse Senedi Yatırım Planları',
                 'plans' => Plans::where('investment_type', 'stock')->get(),
                 'settings' => Settings::where('id', '1')->first(),
             ));
@@ -506,7 +506,7 @@ class ViewsController extends Controller
             return view("user.msignals")
                 ->with(array(
                     'numOfPlan' => User_signal::where('user', Auth::user()->id)->count(),
-                    'title' => 'Your Signals',
+                    'title' => 'Sinyalleriniz',
                     'signals' =>  User_signal::where('user', Auth::user()->id)->orderByDesc('id')->paginate(10),
                     'settings' => Settings::where('id', '1')->first(),
                 ));
@@ -514,7 +514,7 @@ class ViewsController extends Controller
             return view("user.msignals")
                 ->with(array(
                     'numOfPlan' =>  User_signal::where('user', Auth::user()->id)->count(),
-                    'title' => 'Your Signals',
+                    'title' => 'Sinyalleriniz',
                     'signals' =>  User_signal::where('user', Auth::user()->id)->where('active', $sort)->orderByDesc('id')->paginate(10),
                     'settings' => Settings::where('id', '1')->first(),
                 ));
@@ -542,7 +542,7 @@ class ViewsController extends Controller
     function twofa()
     {
         return view("profile.show", [
-            'title' => 'Advance Security Settings',
+            'title' => 'Gelişmiş Güvenlik Ayarları',
         ]);
     }
 
@@ -552,7 +552,7 @@ class ViewsController extends Controller
 
 
         return view("user.referuser", [
-            'title' => 'Refer user',
+            'title' => 'Kullanıcıyı Referans Et',
         ]);
     }
 
@@ -565,7 +565,7 @@ class ViewsController extends Controller
             abort(404, 'You do not have permission to access this page');
         }
         return view("user.verify", [
-            'title' => 'Verify your Account',
+            'title' => 'Hesabınızı Doğrulayın',
         ]);
     }
 
@@ -600,7 +600,7 @@ class ViewsController extends Controller
         $info = json_decode($responseSt);
 
         return view("user.signals.subscribe", [
-            'title' => 'Trade signals',
+            'title' => 'İşlem Sinyalleri',
             'subscription' => $res->data,
             'set' => $info->data->settings,
         ]);

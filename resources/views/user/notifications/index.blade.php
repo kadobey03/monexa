@@ -1,5 +1,5 @@
 @extends('layouts.dasht')
-@section('title', 'Notifications')
+@section('title', 'Bildirimler')
 
 @section('content')
 <div x-data="{

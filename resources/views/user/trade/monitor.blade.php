@@ -1,5 +1,5 @@
 @extends('layouts.dasht')
-@section('title', $title)
+@section('title', 'Ticaret Monitörü')
 @section('content')
 
 <div class="container mx-auto px-4 py-8"

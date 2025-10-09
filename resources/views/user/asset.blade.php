@@ -9,16 +9,16 @@
     <div class="mb-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Crypto Exchange</h1>
+                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Kripto Borsası</h1>
                 <p class="text-gray-400 text-sm md:text-base">
-                    Trade cryptocurrencies with fixed rates and low fees
+                    Sabit oranlar ve düşük ücretlerle kripto para birimleri ticareti yapın
                 </p>
             </div>
             <div class="flex flex-col sm:flex-row gap-3">
                 <a href="{{ route('swaphistory') }}"
                    class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                     <i data-lucide="history" class="w-4 h-4 mr-2"></i>
-                    Transaction History
+                    İşlem Geçmişi
                 </a>
             </div>
         </div>
@@ -33,7 +33,7 @@
                     <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400"></i>
                 </div>
                 <div class="text-right">
-                    <p class="text-xs text-gray-400 uppercase tracking-wide">Account Balance</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wide">Hesap Bakiyesi</p>
                     <p class="text-lg font-bold text-white">
                         {{ Auth::user()->currency }}{{ number_format(Auth::user()->account_bal, 2, '.', ',') }}
                     </p>
@@ -193,8 +193,8 @@
         <!-- Left side: Swap Form -->
         <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
             <div class="mb-6">
-                <h2 class="text-xl font-bold text-white mb-2">Instant Swap</h2>
-                <p class="text-gray-400 text-sm">Exchange cryptocurrencies with guaranteed fixed rates</p>
+                <h2 class="text-xl font-bold text-white mb-2">Anında Takas</h2>
+                <p class="text-gray-400 text-sm">Garantili sabit oranlarla kripto para birimleri takas edin</p>
             </div>
 
             <form id="newSwapForm" class="space-y-6">

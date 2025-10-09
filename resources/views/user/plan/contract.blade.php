@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Investment Contract')
+@section('title', 'Yatırım Sözleşmesi')
 
 @section('styles')
 @parent

@@ -8,35 +8,24 @@
                 <div class="col-lg-4">
                     <input type="text" wire:model='search'
                         class="form-control form-control-lg border-2 border-primary rounded-pill mb-4"
-                        placeholder="Write a question or problem">
+                        placeholder="Bir soru veya sorun yazın">
                 </div>
             </div> <!-- / .row -->
 
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-xl-6 text-center mb-7">
-                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">How secure is
-                        your
-                        Payment method?</a>
-                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">How secure is
-                        my
-                        data?</a>
-                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">How can I
-                        upgrade
-                        my plan?</a>
-                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">How do I know
-                        I
-                        have the latest version?</a>
-                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">Can I invite
-                        others?</a>
-                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">Where do I
-                        find my
-                        Profit history?</a>
+                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">Ödeme yönteminiz ne kadar güvenli?</a>
+                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">Verilerim ne kadar güvenli?</a>
+                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">Planımı nasıl yükseltebilirim?</a>
+                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">En son sürümün olduğunu nasıl anlarım?</a>
+                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">Başkalarını davet edebilir miyim?</a>
+                    <a href="javascript: void(0);" class="badge fs-5 text-bg-gray-300 py-2 px-3 m-2 mb-1">Kar geçmişimi nereden bulurum?</a>
                 </div>
             </div> <!-- / .row -->
 
             <div class="row justify-content-center">
                 <div class="col-lg-10 col-xxl-9">
-                    <h2 class="h3 text-center">Frequently Asked Questions</h2>
+                    <h2 class="h3 text-center">Sık Sorulan Sorular</h2>
 
                     <div class="row mb-6">
                         @forelse ($faqs as $faq)
@@ -58,7 +47,7 @@
                             </div>
                         @empty
                             <div class="py-4 col-12">
-                                <h2 class="h4 text-center">No FAQs at the moment.</h2>
+                                <h2 class="h4 text-center">Şu anda SSS yok.</h2>
                             </div>
                         @endforelse
                     </div>
@@ -67,11 +56,11 @@
                 <div
                     class="d-flex align-items-end bg-primary rounded text-center pt-6 px-4 position-relative min-h-200px">
                     <div class="position-absolute top-50 start-50 translate-middle">
-                        <h4 class="h3 text-white">Can't find what you're looking for?</h4>
+                        <h4 class="h3 text-white">Aradığınızı bulamıyor musunuz?</h4>
 
                         <!-- Link -->
                         <a class="btn btn-lg btn-white link-primary"
-                            href="mailto:{{ $settings->contact_email }}">Contact Us</a>
+                            href="mailto:{{ $settings->contact_email }}">Bize Ulaşın</a>
                     </div>
                     <img src="https://d33wubrfki0l68.cloudfront.net/3b17577d9510ca8e973cf1ec6558bb69279745e7/40233/assets/images/illustrations/faq-illustration.svg"
                         class="img-fluid ms-auto d-none d-md-block" alt="..." width="150" height="150">

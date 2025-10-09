@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Plan Payment')
+@section('title', 'Plan Ödemesi')
 
 @section('styles')
 @parent

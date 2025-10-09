@@ -1,5 +1,5 @@
 @extends('layouts.dasht')
-@section('title', 'Demo Trading History')
+@section('title', 'Demo Ticaret Geçmişi')
 @section('content')
 
 <!-- Simple Header -->
