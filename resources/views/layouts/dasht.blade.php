@@ -720,8 +720,8 @@
 <link href="https://unpkg.com/lucide@latest" rel="stylesheet">
 
 <div class="fixed bottom-0 w-full z-30 md:hidden" x-data="{ fabOpen: false }" x-cloak>
-  <!-- Bottom Navigation Bar with Glassmorphism -->
-  <div class="flex justify-between items-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg px-6 py-4 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] relative border-t border-gray-200/20 dark:border-gray-700/20">
+  <!-- Bottom Navigation Bar with Enhanced Glassmorphism -->
+  <div class="flex justify-between items-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl px-6 py-4 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] relative border-t border-gray-200/30 dark:border-gray-700/30"
     <!-- Language Selector (Mobile) -->
     <div class="group flex flex-col items-center relative">
       <div class="relative">
@@ -768,22 +768,6 @@
              transition-colors duration-300">Profil</span>
     </a>
 
-<<<<<<< HEAD
-    <!-- Animated FAB Button -->
-    <button @click="fabOpen = !fabOpen"
-            class="absolute -top-7 left-1/2 transform -translate-x-1/2
-                   bg-gradient-to-r from-blue-600 to-indigo-600 text-white
-                   w-14 h-14 rounded-full flex items-center justify-center
-                   shadow-[0_8px_30px_rgba(59,130,246,0.5)]
-                   border-4 border-white dark:border-gray-900
-                   hover:scale-110 hover:shadow-[0_8px_35px_rgba(59,130,246,0.6)]
-                   active:scale-95
-                   transition-all duration-300 ease-out">
-      <i data-lucide="zap" class="w-6 h-6 transform transition-transform group-hover:scale-110"></i>
-      <!-- Pulse Effect -->
-      <span class="absolute w-full h-full rounded-full bg-blue-500 animate-ping opacity-20"></span>
-    </button>
-=======
     <a href="{{ route('trade.index') }}"
        class="group flex flex-col items-center relative">
       <div class="p-2 rounded-xl transition-all duration-300 ease-out
@@ -802,8 +786,6 @@
                 : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
              transition-colors duration-300">İşlem Aç</span>
     </a>
->>>>>>> 7efd95a447d0bb0988400a050e609f6d7f4e7cee
-
 <a href="{{ route('support') }}"
    class="flex flex-col items-center
           {{ request()->routeIs('support') ? 'text-blue-600 font-semibold' : 'text-gray-500' }}
@@ -841,29 +823,7 @@
                 transform transition-all duration-300
                 animate-slideUp">
 
-      <!-- Quick Actions Grid -->
-      <div class="grid grid-cols-2 gap-4 mb-6">
-        <a href="{{ route('mplans') }}"
-           class="flex flex-col items-center p-4 rounded-xl
-                  bg-gray-800 border border-gray-700
-                  hover:bg-gray-700 hover:shadow-lg hover:scale-105 transition-all duration-300
-                  group">
-          <i data-lucide="trending-up" class="w-6 h-6 mb-2 text-blue-400
-                                              group-hover:scale-110 transition-transform duration-300"></i>
-          <span class="text-sm font-medium text-gray-200">Yatırım Yap</span>
-        </a>
-
-        <a href="{{ route('withdrawalsdeposits') }}"
-           class="flex flex-col items-center p-4 rounded-xl
-                  bg-gray-800 border border-gray-700
-                  hover:bg-gray-700 hover:shadow-lg hover:scale-105 transition-all duration-300
-                  group">
-          <i data-lucide="wallet" class="w-6 h-6 mb-2 text-green-400
-                                       group-hover:scale-110 transition-transform duration-300"></i>
-          <span class="text-sm font-medium text-gray-200">Para Çek</span>
-        </a>
-      </div>
-
+      
       <!-- Menu Links -->
       <div class="space-y-2">
 
