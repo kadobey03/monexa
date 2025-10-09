@@ -493,7 +493,7 @@
             <h3 class="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Live Market</h3>
             <span class="flex items-center text-xs text-green-600 dark:text-green-400">
                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
-                <span class="font-medium">LIVE</span>
+                <span class="font-medium">CANLI</span>
             </span>
         </div>
         <div class="space-y-2">

@@ -481,7 +481,7 @@
             <h3 class="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Canlı Piyasa</h3>
             <span class="flex items-center text-xs text-green-600 dark:text-green-400">
                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
-                <span class="font-medium">LIVE</span>
+                <span class="font-medium">Canlı</span>
             </span>
         </div>
         <div class="space-y-2">
@@ -777,7 +777,7 @@
              {{ request()->routeIs('trade.index')
                 ? 'text-blue-600 dark:text-blue-400'
                 : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-             transition-colors duration-300">Şimşek Gridi</span>
+             transition-colors duration-300">İşlem Aç</span>
     </a>
 
 <a href="{{ route('support') }}"
