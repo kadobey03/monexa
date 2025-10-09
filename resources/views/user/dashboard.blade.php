@@ -113,58 +113,6 @@
     </div>
     @endif
 
-    <!-- Demo Trading Promotion Banner -->
-    @if(Auth::user()->demo_balance <= 0)
-    <div class="bg-gradient-to-r from-green-500 via-green-600 to-green-700 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-lg ring-1 ring-green-400/20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
-        <div class="relative">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                        <i data-lucide="graduation-cap" class="w-6 h-6 sm:w-8 sm:h-8 text-white"></i>
-                    </div>
-                    <div class="text-center sm:text-left">
-                        <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Demo Ticaretine Başlayın!</h3>
-                        <p class="text-sm sm:text-base text-green-100">100.000$ sanal para ile pratik yapın - Risksiz öğrenme!</p>
-                    </div>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                    <a href="{{ route('demo.dashboard') }}" class="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white text-green-600 rounded-lg shadow hover:bg-green-50 transition-all duration-300 font-medium text-sm sm:text-base min-w-[120px] group">
-                        <i data-lucide="play" class="w-4 h-4 group-hover:scale-110 transition-transform duration-300"></i>
-                        Demo Başlat
-                    </a>
-                    <a href="{{ route('mplans') }}" class="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-green-800/50 text-white rounded-lg shadow hover:bg-green-800/70 transition-all duration-300 font-medium text-sm sm:text-base min-w-[120px] backdrop-blur-sm">
-                        <i data-lucide="trending-up" class="w-4 h-4"></i>
-                        Canlıya Geç
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    @else
-    <div class="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-lg ring-1 ring-blue-400/20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
-        <div class="relative">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                        <i data-lucide="graduation-cap" class="w-6 h-6 sm:w-8 sm:h-8 text-white"></i>
-                    </div>
-                    <div class="text-center sm:text-left">
-                        <h3 class="text-lg sm:text-xl font-bold text-white mb-1">Demo Hesap Aktif</h3>
-                        <p class="text-sm sm:text-base text-blue-100">Demo Balance: {{ Auth::user()->currency }}{{ number_format(Auth::user()->demo_balance, 2, '.', ',') }}</p>
-                    </div>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                    <a href="{{ route('demo.dashboard') }}" class="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white text-blue-600 rounded-lg shadow hover:bg-blue-50 transition-all duration-300 font-medium text-sm sm:text-base min-w-[120px] group">
-                        <i data-lucide="play" class="w-4 h-4 group-hover:scale-110 transition-transform duration-300"></i>
-                        Demo Ticaretine Geç
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
 
 
  <!-- Investment Dashboard - Clean Modern Layout -->
