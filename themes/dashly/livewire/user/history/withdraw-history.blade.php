@@ -8,16 +8,16 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h5>Withdrawal history</h5>
+                    <h5>Çekim geçmişi</h5>
                     <div class="table-responsive">
                         <table class="table text-center">
                             <thead>
                                 <tr>
-                                    <th>Amount requested</th>
-                                    <th>Amount + charges</th>
-                                    <th>Recieving mode</th>
-                                    <th>Status</th>
-                                    <th>Date created</th>
+                                    <th>İstenen tutar</th>
+                                    <th>Tutar + ücretler</th>
+                                    <th>Alma modu</th>
+                                    <th>Durum</th>
+                                    <th>Oluşturulma tarihi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,7 +28,7 @@
                                         <td>{{ $with->payment_mode }}</td>
                                         <td>
                                             @if ($with->status == 'Processed')
-                                                <span class="badge bg-success">{{ $with->status }}</span>
+                                                <span class="badge bg-success">İşlendi</span>
                                             @else
                                                 <span class="badge bg-danger">{{ $with->status }}</span>
                                             @endif
@@ -41,7 +41,7 @@
                                     <tr>
                                         <td class="py-5" colspan="5">
                                             <i class="bi bi-database-fill-exclamation" style="font-size: 50px"></i>
-                                            <h5>No withdrawal history</h5>
+                                            <h5>Çekim geçmişi yok</h5>
                                         </td>
                                     </tr>
                                 @endforelse

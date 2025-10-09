@@ -7,13 +7,13 @@
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
             <div class="text-center sm:text-left">
-                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-600 bg-clip-text text-transparent">Fund Withdrawals</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-2 text-sm sm:text-base">Securely withdraw your funds using various payment methods</p>
+                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-600 bg-clip-text text-transparent">Fon Çekimleri</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-2 text-sm sm:text-base">Çeşitli ödeme yöntemlerini kullanarak fonlarınızı güvenli bir şekilde çekin</p>
             </div>
             <a href="{{ route('dashboard') }}"
                class="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm text-sm sm:text-base">
                 <i data-lucide="arrow-left" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                <span class="hidden sm:inline">Back to Dashboard</span>
+                <span class="hidden sm:inline">Gösterge Paneline Dön</span>
                 <span class="sm:hidden">Back</span>
             </a>
         </div>
@@ -28,13 +28,13 @@
                 <li class="inline-flex items-center">
                     <a href="{{ route('dashboard') }}" class="inline-flex items-center text-xs sm:text-sm text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors">
                         <i data-lucide="home" class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2"></i>
-                        Home
+                        Ana Sayfa
                     </a>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
                         <i data-lucide="chevron-right" class="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 mx-1"></i>
-                        <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Withdrawals</span>
+                        <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Çekimler</span>
                     </div>
                 </li>
             </ol>
@@ -49,8 +49,8 @@
                             <i data-lucide="shield-check" class="w-6 h-6 sm:w-8 sm:h-8 text-amber-400"></i>
                         </div>
                         <div>
-                            <h2 class="text-xl sm:text-2xl font-bold text-white">Security Verification Required</h2>
-                            <p class="text-gray-300 mt-1 text-sm sm:text-base">Additional verification needed to process your withdrawal</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-white">Güvenlik Doğrulaması Gerekli</h2>
+                            <p class="text-gray-300 mt-1 text-sm sm:text-base">Çekiminizi işlemek için ek doğrulama gerekli</p>
                         </div>
                     </div>
                 </div>
@@ -64,24 +64,24 @@
                             </div>
                             <div class="sm:ml-4 flex-1">
                                 <div class="text-sm sm:text-base font-medium text-amber-300 mb-2">
-                                    Withdrawal Code Required
+                                    Çekim Kodu Gerekli
                                 </div>
                                 <p class="text-xs sm:text-sm text-amber-200 leading-relaxed">
-                                    For your security, this withdrawal requires a verification code. Please contact our customer support team via live chat or email at
+                                    Güvenliğiniz için bu çekim bir doğrulama kodu gerektirir. Lütfen canlı sohbet veya e-posta yoluyla müşteri destek ekibimize başvurun
                                     <a href="mailto:{{$settings->contact_email}}" class="font-semibold underline hover:text-amber-100 transition-colors">{{$settings->contact_email}}</a>
-                                    to obtain your withdrawal verification code.
+                                    çekim doğrulama kodunuzu almak için.
                                 </p>
                                 <button @click="showCodeInfo = !showCodeInfo" class="mt-3 flex items-center text-xs sm:text-sm font-medium text-amber-300 hover:text-amber-200 transition-colors">
-                                    <span x-text="showCodeInfo ? 'Hide security details' : 'Learn about withdrawal security'"></span>
+                                    <span x-text="showCodeInfo ? 'Güvenlik ayrıntılarını gizle' : 'Çekim güvenliği hakkında bilgi edinin'"></span>
                                     <i x-bind:data-lucide="showCodeInfo ? 'chevron-up' : 'chevron-down'" class="ml-1 w-3 h-3 sm:w-4 sm:h-4"></i>
                                 </button>
                                 <div x-show="showCodeInfo" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="mt-3 p-3 sm:p-4 bg-amber-500/10 rounded-lg text-xs sm:text-sm text-amber-200" style="display: none;">
-                                    <p class="font-medium mb-2">Why withdrawal codes are required:</p>
+                                    <p class="font-medium mb-2">Çekim kodlarının neden gerekli olduğu:</p>
                                     <ul class="space-y-1 text-xs">
-                                        <li>• Enhanced security to protect your account from unauthorized access</li>
-                                        <li>• Verification that all withdrawal requests are legitimate and authorized</li>
-                                        <li>• Additional layer of protection against fraudulent transactions</li>
-                                        <li>• Compliance with financial security regulations and best practices</li>
+                                        <li>• Hesabınızı yetkisiz erişimden korumak için gelişmiş güvenlik</li>
+                                        <li>• Tüm çekim taleplerinin yasal ve yetkilendirilmiş olduğunun doğrulanması</li>
+                                        <li>• Sahte işlemlerden ek koruma katmanı</li>
+                                        <li>• Finansal güvenlik düzenlemelerine ve en iyi uygulamalara uyumluluk</li>
                                     </ul>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                             @csrf
                             <div>
                                 <label for="withdrawal_code" class="block text-sm font-semibold text-gray-200 mb-3">
-                                    Enter Withdrawal Verification Code
+                                    Çekim Doğrulama Kodunu Girin
                                 </label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -104,16 +104,16 @@
                                            name="withdrawal_code"
                                            id="withdrawal_code"
                                            required
-                                           placeholder="Enter your verification code here"
+                                           placeholder="Doğrulama kodunuzu buraya girin"
                                            class="pl-10 sm:pl-12 block w-full rounded-xl border-gray-600/50 bg-gray-800/50 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-white text-sm sm:text-base py-3 sm:py-4 transition-all duration-200 backdrop-blur-sm"
                                     />
                                 </div>
-                                <p class="mt-2 text-xs text-gray-400">This code was provided by our customer support team</p>
+                                <p class="mt-2 text-xs text-gray-400">Bu kod müşteri destek ekibimiz tarafından sağlandı</p>
                             </div>
 
                             <button type="submit" class="w-full inline-flex justify-center items-center gap-2 py-3 sm:py-4 px-4 sm:px-6 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base">
                                 <i data-lucide="check-circle" class="h-4 w-4 sm:h-5 sm:w-5"></i>
-                                <span>Verify & Continue</span>
+                                <span>Doğrula ve Devam Et</span>
                             </button>
                         </form>
                     </div>
@@ -129,8 +129,8 @@
                         <i data-lucide="credit-card" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-400"></i>
                     </div>
                     <div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-white">Select Withdrawal Method</h2>
-                        <p class="text-gray-300 mt-1 text-sm sm:text-base">Choose your preferred payment method for receiving funds</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white">Çekim Yöntemi Seçin</h2>
+                        <p class="text-gray-300 mt-1 text-sm sm:text-base">Fon almak için tercih ettiğiniz ödeme yöntemini seçin</p>
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                     <!-- Enhanced Withdrawal Method Selector -->
                     <div>
                         <label for="method" class="block text-sm font-semibold text-gray-200 mb-3 sm:mb-4">
-                            Payment Method
+                            Ödeme Yöntemi
                         </label>
                         <div class="relative">
                             <select
@@ -152,11 +152,11 @@
                                 x-model="selectedMethod"
                                 class="appearance-none block w-full pl-4 pr-12 py-3 sm:py-4 border border-gray-600/50 bg-gray-800/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white text-sm sm:text-base transition-all duration-200 backdrop-blur-sm"
                             >
-                                <option value="" disabled selected>Choose a withdrawal method</option>
+                                <option value="" disabled selected>Bir çekim yöntemi seçin</option>
                                 @forelse ($wmethods as $method)
                                     <option value="{{$method->name}}">{{$method->name}}</option>
                                 @empty
-                                    <option value="" disabled>No withdrawal methods available</option>
+                                    <option value="" disabled>Kullanılabilir çekim yöntemi yok</option>
                                 @endforelse
                             </select>
                             <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
@@ -185,11 +185,11 @@
                                 }"></i>
                             </div>
                             <div class="flex-1 text-center sm:text-left">
-                                <h3 class="font-semibold text-white text-base sm:text-lg" x-text="selectedMethod + ' Withdrawal'"></h3>
-                                <p class="text-xs sm:text-sm text-gray-300 mt-1" x-text="'You have selected ' + selectedMethod + ' as your preferred withdrawal method.'"></p>
+                                <h3 class="font-semibold text-white text-base sm:text-lg" x-text="selectedMethod + ' Çekimi'"></h3>
+                                <p class="text-xs sm:text-sm text-gray-300 mt-1" x-text="selectedMethod + ' tercih ettiğiniz çekim yöntemi olarak seçtiniz.'"></p>
                                 <div class="mt-3 flex items-center justify-center sm:justify-start gap-2 text-xs text-blue-400">
                                     <i data-lucide="shield-check" class="w-3 h-3 sm:w-4 sm:h-4"></i>
-                                    <span>Secure & encrypted transaction</span>
+                                    <span>Güvenli ve şifreli işlem</span>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +197,7 @@
 
                     <button type="submit" class="w-full inline-flex justify-center items-center gap-2 sm:gap-3 py-3 sm:py-4 px-4 sm:px-6 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base">
                         <i data-lucide="arrow-right" class="h-4 w-4 sm:h-5 sm:w-5"></i>
-                        <span>Proceed to Withdrawal</span>
+                        <span>Çekime Geç</span>
                     </button>
                 </form>
             </div>
@@ -211,8 +211,8 @@
                         <i data-lucide="history" class="w-6 h-6 sm:w-8 sm:h-8 text-indigo-400"></i>
                     </div>
                     <div class="flex-1">
-                        <h2 class="text-xl sm:text-2xl font-bold text-white">Withdrawal History</h2>
-                        <p class="text-gray-300 mt-1 text-sm sm:text-base">Monitor the status and details of your withdrawal requests</p>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white">Çekim Geçmişi</h2>
+                        <p class="text-gray-300 mt-1 text-sm sm:text-base">Çekim taleplerinizin durumunu ve ayrıntılarını izleyin</p>
                     </div>
                 </div>
             </div>
@@ -223,10 +223,10 @@
                         <table class="w-full">
                             <thead>
                                 <tr class="bg-gradient-to-r from-gray-800/50 to-gray-700/50">
-                                    <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Amount</th>
-                                    <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Date</th>
-                                    <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider hidden sm:table-cell">Method</th>
-                                    <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Status</th>
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Tutar</th>
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Tarih</th>
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider hidden sm:table-cell">Yöntem</th>
+                                    <th class="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-bold text-gray-300 uppercase tracking-wider">Durum</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-gray-900/50 divide-y divide-gray-700/50">
@@ -239,7 +239,7 @@
                                                 </div>
                                                 <div>
                                                     <div class="text-sm sm:text-base font-semibold text-white">{{Auth::user()->currency}}{{ number_format($withdrawal->amount, 2, '.', ',') }}</div>
-                                                    <div class="text-xs text-gray-400 hidden sm:block">Withdrawal Amount</div>
+                                                    <div class="text-xs text-gray-400 hidden sm:block">Çekim Tutarı</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -257,20 +257,20 @@
                                             @if($withdrawal->status=='Pending')
                                                 <span class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-xs sm:text-sm font-medium bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
                                                     <i data-lucide="clock" class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2"></i>
-                                                    <span class="hidden sm:inline">{{ $withdrawal->status }}</span>
-                                                    <span class="sm:hidden">Pending</span>
+                                                    <span class="hidden sm:inline">Beklemede</span>
+                                                    <span class="sm:hidden">Beklemede</span>
                                                 </span>
                                             @elseif($withdrawal->status=='Rejected')
                                                 <span class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-xs sm:text-sm font-medium bg-red-500/20 text-red-300 border border-red-500/30">
                                                     <i data-lucide="x-circle" class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2"></i>
-                                                    <span class="hidden sm:inline">{{ $withdrawal->status }}</span>
-                                                    <span class="sm:hidden">Rejected</span>
+                                                    <span class="hidden sm:inline">Reddedildi</span>
+                                                    <span class="sm:hidden">Reddedildi</span>
                                                 </span>
                                             @else
                                                 <span class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-xs sm:text-sm font-medium bg-green-500/20 text-green-300 border border-green-500/30">
                                                     <i data-lucide="check-circle" class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2"></i>
-                                                    <span class="hidden sm:inline">{{ $withdrawal->status }}</span>
-                                                    <span class="sm:hidden">Complete</span>
+                                                    <span class="hidden sm:inline">Tamamlandı</span>
+                                                    <span class="sm:hidden">Tamamlandı</span>
                                                 </span>
                                             @endif
                                         </td>
@@ -282,8 +282,8 @@
                                                 <div class="p-3 sm:p-4 bg-gray-800/50 rounded-full mb-3 sm:mb-4">
                                                     <i data-lucide="inbox" class="w-6 h-6 sm:w-8 sm:h-8 text-gray-500"></i>
                                                 </div>
-                                                <h3 class="text-base sm:text-lg font-medium text-white mb-1">No withdrawals yet</h3>
-                                                <p class="text-sm text-gray-400">Your withdrawal history will appear here once you make your first request</p>
+                                                <h3 class="text-base sm:text-lg font-medium text-white mb-1">Henüz çekim yok</h3>
+                                                <p class="text-sm text-gray-400">İlk talebinizi yaptıktan sonra çekim geçmişiniz burada görünecektir</p>
                                             </div>
                                         </td>
                                     </tr>
