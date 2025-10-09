@@ -546,13 +546,6 @@
                         Para Çekme
                     </a>
                 </li>
-                <li>
-                    <a href="{{ route('transferview') }}"
-                       class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('transferview') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="arrow-left-right" class="w-5 h-5 mr-3"></i>
-                        Dahili Transfer
-                    </a>
-                </li>
                 {{-- <li>
                     <a href="{{ route('assetbalance') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('assetbalance') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
@@ -986,14 +979,6 @@
                                      group-hover:scale-110 transition-transform duration-300"></i>
           <span class="font-medium">Kopya Ticaret</span>
           <!--<span class="ml-auto text-xs font-bold text-green-400">New</span>-->
-        </a>
-
-        <a href="{{ route('transferview') }}" class="flex items-center p-3 rounded-lg text-gray-100
-                          hover:bg-gray-800
-                          transition-colors duration-200 group">
-          <i data-lucide="refresh-ccw" class="w-5 h-5 mr-3 text-purple-400
-                                             group-hover:rotate-180 transition-transform duration-500"></i>
-          <span class="font-medium">Fon Transferi</span>
         </a>
 
         {{-- <a href="{{ route('assetbalance') }}" class="flex items-center p-3 rounded-lg text-gray-100
