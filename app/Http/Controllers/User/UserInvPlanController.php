@@ -54,10 +54,10 @@ class UserInvPlanController extends Controller
 
         // Check if the user has sufficient balance
         if ($currentBalance < $amount) {
-            $balanceType = $isDemoMode ? 'demo' : 'live';
+            $balanceType = $isDemoMode ? 'demo' : 'canlı';
             $redirectRoute = $isDemoMode ? 'user.demo.dashboard' : 'deposits';
             return redirect()->route($redirectRoute)
-                ->with('message', "Your {$balanceType} account is insufficient for this trade. Current balance: $" . number_format($currentBalance, 2));
+                ->with('message', "{$balanceType} hesabınızın bakiyesi bu işlem için yetersiz. Mevcut bakiye: $" . number_format($currentBalance, 2));
         }
 
 
@@ -65,7 +65,7 @@ class UserInvPlanController extends Controller
         try {
             $expiration = explode(" ", $request->expire);
             if (count($expiration) < 2) {
-                return redirect()->back()->with('message', 'Invalid expiration format.');
+                return redirect()->back()->with('message', 'Geçersiz süre formatı.');
             }
 
             $digit = intval($expiration[0]);
@@ -81,14 +81,14 @@ class UserInvPlanController extends Controller
             ];
 
             if (!isset($frameMap[$frame])) {
-                return redirect()->back()->with('message', 'Invalid time frame.');
+                return redirect()->back()->with('message', 'Geçersiz zaman dilimi.');
             }
 
             $carbonMethod = $frameMap[$frame];
             $end_at = Carbon::now()->$carbonMethod($digit);
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('message', 'Error calculating expiration date.');
+            return redirect()->back()->with('message', 'Süre hesaplama hatası.');
         }
        // return $end_at;
 
@@ -218,12 +218,12 @@ class UserInvPlanController extends Controller
             }
 
             return redirect()->back()
-                ->with('success', "You have successfully traded {$asset}. Your trade is now active.");
+                ->with('success', "{$asset} başarıyla traded edildi. İşleminiz artık aktif.");
 
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()
-                ->with('message', 'Failed to create trade: ' . $e->getMessage());
+                ->with('message', 'İşlem oluşturma başarısız: ' . $e->getMessage());
         }
     }
 
@@ -240,7 +240,7 @@ class UserInvPlanController extends Controller
         // Get authenticated user
         $user = User::find(Auth::id());
         if (!$user) {
-            return redirect()->back()->with('message', 'User not found.');
+            return redirect()->back()->with('message', 'Kullanıcı bulunamadı.');
         }
 
         // Get investment plan
