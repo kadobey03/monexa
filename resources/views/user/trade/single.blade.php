@@ -521,6 +521,8 @@
                     <input type="hidden" name="instrument_price" value="{{ $instrument->price }}">
                     <input type="hidden" name="order_type" x-model="orderType">
                     <input type="hidden" name="trade_type" value="market">
+                    <input type="hidden" name="leverage" value="100">
+                    <input type="hidden" name="expire" value="7 Days">
 
 
                     <!-- Price Input (for limit/stop orders) -->
@@ -624,12 +626,11 @@ function tradingSingle() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Geçersiz Miktar',
-                    text: 'Please enter a valid amount to trade.',
+                    text: 'Lütfen işlem yapmak için geçerli bir miktar girin.',
                     confirmButtonColor: '#3B82F6'
                 });
                 return;
             }
-
 
             const total = this.formatAmount();
             const units = this.formatUnits();
@@ -643,6 +644,8 @@ function tradingSingle() {
                         <p><strong>İşlem:</strong> ${action}</p>
                         <p><strong>Yatırım Miktarı:</strong> ${total}</p>
                         <p><strong>Birimler:</strong> ${units}</p>
+                        <p><strong>Kaldıraç:</strong> 1:100</p>
+                        <p><strong>Süre:</strong> 7 Gün</p>
                     </div>
                 `,
                 icon: 'question',
