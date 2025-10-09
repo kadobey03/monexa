@@ -32,20 +32,20 @@
                                         'showMethod': 'fadeIn',
                                         'hideMethod': 'fadeOut'
                                     };
-                                    Command: toastr['success']('Copied to clipboard', 'Success')
+                                    Command: toastr['success']('Panoya kopyalandı', 'Başarılı')
                                     toastr.options = toastOptions;
                                 })
                         },
                     }">
                         <div class="col-md-8 offset-md-2 text-center">
-                            <h4>You can refer users by sharing your referral link:</h4>
+                            <h4>Kullanıcıları referans bağlantınızı paylaşarak yönlendirebilirsiniz:</h4>
 
                             <div class="d-flex mt-2">
                                 <input class="form-control me-3 fs-4" id="reflink" value="{{ Auth::user()->ref_link }}"
                                     readonly>
                                 <div>
                                     <span x-show="copied" style="display: none" x-transition.scale.origin.right.opacity
-                                        class="pr-2 text-sm">Copied!</span>
+                                        class="pr-2 text-sm">Kopyalandı!</span>
                                     <!-- Button -->
                                     <button class="clipboard btn btn-link px-0" data-clipboard-target="#key-02"
                                         data-bs-toggle="tooltip" data-bs-title="Copy to clipboard"
@@ -57,7 +57,7 @@
                             </div>
 
                             <div>
-                                <h4 class="mt-3 mb-0">or your Referral ID</h4>
+                                <h4 class="mt-3 mb-0">veya Referans Kimliğiniz</h4>
                                 <h4 class="text-primary h2 d-inline"> {{ Auth::user()->username }}</h4>
                                 {{-- <input type="hidden" x-model="username" value="{{ Auth::user()->username }}"> --}}
                                 <!-- Button -->
@@ -71,7 +71,7 @@
                             @if ($parent)
                                 <div class="mt-2 text-center">
                                     <i class="bi bi-person-up"></i>
-                                    <span>Parent</span>
+                                    <span>Üst</span>
                                     <h4 class="h3 m-0">{{ $parent->name }}</h4>
                                 </div>
                             @endif
@@ -82,31 +82,31 @@
                                     <ul class="nav nav-pills nav-fill">
                                         <li class="nav-item border rounded m-1">
                                             <a @class(['nav-link', 'active' => $level == 'Direct level']) aria-current="page" href="#"
-                                                wire:click.prevent="changeLevel('Direct level')">Direct level</a>
+                                                wire:click.prevent="changeLevel('Direct level')">Doğrudan seviye</a>
                                         </li>
                                         <li class="nav-item border rounded m-1">
                                             <a @class(['nav-link', 'active' => $level == 'Level 1']) href="#"
-                                                wire:click.prevent="changeLevel('Level 1')">Level
+                                                wire:click.prevent="changeLevel('Level 1')">Seviye
                                                 1</a>
                                         </li>
                                         <li class="nav-item border rounded m-1">
                                             <a @class(['nav-link', 'active' => $level == 'Level 2']) href="#"
-                                                wire:click.prevent="changeLevel('Level 2')">Level
+                                                wire:click.prevent="changeLevel('Level 2')">Seviye
                                                 2</a>
                                         </li>
                                         <li class="nav-item border rounded m-1">
                                             <a @class(['nav-link', 'active' => $level == 'Level 3']) href="#"
-                                                wire:click.prevent="changeLevel('Level 3')">Level
+                                                wire:click.prevent="changeLevel('Level 3')">Seviye
                                                 3</a>
                                         </li>
                                         <li class="nav-item border rounded m-1">
                                             <a @class(['nav-link', 'active' => $level == 'Level 4']) href="#"
-                                                wire:click.prevent="changeLevel('Level 4')">Level
+                                                wire:click.prevent="changeLevel('Level 4')">Seviye
                                                 4</a>
                                         </li>
                                         <li class="nav-item border rounded m-1">
                                             <a @class(['nav-link', 'active' => $level == 'Level 5']) href="#"
-                                                wire:click.prevent="changeLevel('Level 5')">Level
+                                                wire:click.prevent="changeLevel('Level 5')">Seviye
                                                 5</a>
                                         </li>
                                     </ul>
@@ -114,12 +114,12 @@
                             </div>
 
                             <div class="col-12">
-                                <h5>{{ $level }} referrals</h5>
+                                <h5>{{ $level }} referansları</h5>
                                 <div class="row mb-3">
                                     <div class="col-md-3">
                                         <div class="card">
                                             <div class="card-body text-center">
-                                                <h6 class="m-0 h5">Total Deposit</h6>
+                                                <h6 class="m-0 h5">Toplam Yatırım</h6>
                                                 <h3 class="m-0">
                                                     {{ $settings->currency }}{{ number_format($totalDeposit, '2', '.') }}
                                                 </h3>
@@ -129,7 +129,7 @@
                                     <div class="col-md-3">
                                         <div class="card">
                                             <div class="card-body text-center">
-                                                <h6 class="m-0 h5">Total Amount invested</h6>
+                                                <h6 class="m-0 h5">Yatırılan Toplam Tutar</h6>
                                                 <h3 class="m-0">
                                                     {{ $settings->currency }}{{ number_format($totalAmountInPlans, '2', '.') }}
                                                 </h3>
@@ -139,7 +139,7 @@
                                     <div class="col-md-3">
                                         <div class="card">
                                             <div class="card-body text-center">
-                                                <h6 class="m-0 h5">Profit made by Referrals</h6>
+                                                <h6 class="m-0 h5">Referanslardan Elde Edilen Kar</h6>
                                                 <h3 class="m-0">
                                                     {{ $settings->currency }}{{ number_format($totalProfit, '2', '.') }}
                                                 </h3>
@@ -149,7 +149,7 @@
                                     <div class="col-md-3">
                                         <div class="card">
                                             <div class="card-body text-center">
-                                                <h6 class="m-0 h5">You have Earned</h6>
+                                                <h6 class="m-0 h5">Kazandınız</h6>
                                                 <h3 class="m-0">
                                                     @php
                                                         if ($settings->referral_proffit_from == 'Deposit') {
@@ -169,14 +169,14 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>Client name</th>
-                                                    <th>Ref. level</th>
-                                                    <th>Total Deposit</th>
-                                                    <th>Total Amount invested</th>
-                                                    <th>Profit Made</th>
-                                                    <th>Parent</th>
-                                                    <th>Client status</th>
-                                                    <th>Date registered</th>
+                                                    <th>Müşteri adı</th>
+                                                    <th>Ref. seviyesi</th>
+                                                    <th>Toplam Yatırım</th>
+                                                    <th>Yatırılan Toplam Tutar</th>
+                                                    <th>Elde Edilen Kar</th>
+                                                    <th>Üst</th>
+                                                    <th>Müşteri durumu</th>
+                                                    <th>Kayıt tarihi</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -194,18 +194,18 @@
                                                         <td>
                                                             {{ $settings->currency }}{{ number_format($ref['totalProfit'], '2', '.') }}
                                                         </td>
-                                                        <td>You</td>
+                                                        <td>Siz</td>
                                                         <td>
                                                             @if ($ref['status'] == 'active')
-                                                                <span class="badge bg-success">Active</span>
+                                                                <span class="badge bg-success">Aktif</span>
                                                             @else
-                                                                <span class="badge bg-danger">Inactive</span>
+                                                                <span class="badge bg-danger">Aktif değil</span>
                                                             @endif
                                                         </td>
                                                         <td>{{ $ref['created_at'] }}</td>
                                                         <td>
                                                             <a wire:click.prevent="showDetails({{ $ref['id'] }})"
-                                                                href="" class="btn btn-sm btn-info">View</a>
+                                                                href="" class="btn btn-sm btn-info">Görüntüle</a>
                                                         </td>
                                                     </tr>
                                                 @empty
@@ -213,7 +213,7 @@
                                                         <td colspan="9" class="text-center py-3">
                                                             <i class="bi bi-database-fill-exclamation"
                                                                 style="font-size: 50px"></i>
-                                                            <p> No referrals yet</p>
+                                                            <p> Henüz referans yok</p>
                                                         </td>
                                                     </tr>
                                                 @endforelse
@@ -228,14 +228,14 @@
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>Client name</th>
-                                                    <th>Ref. level</th>
-                                                    <th>Total Deposit</th>
-                                                    <th>Total Amount invested</th>
-                                                    <th>Profit Made</th>
-                                                    <th>Parent</th>
-                                                    <th>Client status</th>
-                                                    <th>Date registered</th>
+                                                    <th>Müşteri adı</th>
+                                                    <th>Ref. seviyesi</th>
+                                                    <th>Toplam Yatırım</th>
+                                                    <th>Yatırılan Toplam Tutar</th>
+                                                    <th>Elde Edilen Kar</th>
+                                                    <th>Üst</th>
+                                                    <th>Müşteri durumu</th>
+                                                    <th>Kayıt tarihi</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -257,16 +257,16 @@
                                                         <td>{{ $ref['parent']->name }}</td>
                                                         <td>
                                                             @if ($ref['status'] == 'active')
-                                                                <span class="badge bg-success">Active</span>
+                                                                <span class="badge bg-success">Aktif</span>
                                                             @else
-                                                                <span class="badge bg-danger">Inactive</span>
+                                                                <span class="badge bg-danger">Aktif değil</span>
                                                             @endif
                                                         </td>
                                                         <td>{{ $ref['created_at'] }}</td>
                                                         <td>
                                                             @if ($refLevel !== 'Level 5 referrals')
                                                                 <a wire:click.prevent="showDetails({{ $ref['id'] }})"
-                                                                    href="" class="btn btn-sm btn-info">View</a>
+                                                                    href="" class="btn btn-sm btn-info">Görüntüle</a>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -275,7 +275,7 @@
                                                         <td colspan="9" class="text-center py-3">
                                                             <i class="bi bi-database-fill-exclamation"
                                                                 style="font-size: 50px"></i>
-                                                            <p> No {{ $level }} referrals yet</p>
+                                                            <p> Henüz {{ $level }} referansı yok</p>
                                                         </td>
                                                     </tr>
                                                 @endforelse
@@ -289,7 +289,7 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <h6 class="m-0 h5">Total Deposit</h6>
+                                        <h6 class="m-0 h5">Toplam Yatırım</h6>
                                         <h3 class="m-0">
                                             {{ $settings->currency }}{{ number_format($totalDeposit, '2', '.') }}
                                         </h3>
@@ -299,7 +299,7 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <h6 class="m-0 h5">Total Amount invested</h6>
+                                        <h6 class="m-0 h5">Yatırılan Toplam Tutar</h6>
                                         <h3 class="m-0">
                                             {{ $settings->currency }}{{ number_format($totalAmountInPlans, '2', '.') }}
                                         </h3>
@@ -309,7 +309,7 @@
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <h6 class="m-0 h5">Profit made by Referrals</h6>
+                                        <h6 class="m-0 h5">Referanslardan Elde Edilen Kar</h6>
                                         <h3 class="m-0">
                                             {{ $settings->currency }}{{ number_format($totalProfit, '2', '.') }}
                                         </h3>
@@ -317,10 +317,10 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-between mb-2">
-                                <h3>Referred by {{ $user->name }}</h3>
+                                <h3>{{ $user->name }} tarafından referans edildi</h3>
                                 <div>
                                     <a wire:click.prevent="cancelShowDeatials" href=""
-                                        class="btn btn-sm btn-danger">Cancel</a>
+                                        class="btn btn-sm btn-danger">İptal</a>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -328,13 +328,13 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Client name</th>
-                                                <th>Total Deposit</th>
-                                                <th>Total Amount invested</th>
-                                                <th>Profit Made</th>
-                                                <th>Parent</th>
-                                                <th>Client status</th>
-                                                <th>Date registered</th>
+                                                <th>Müşteri adı</th>
+                                                <th>Toplam Yatırım</th>
+                                                <th>Yatırılan Toplam Tutar</th>
+                                                <th>Elde Edilen Kar</th>
+                                                <th>Üst</th>
+                                                <th>Müşteri durumu</th>
+                                                <th>Kayıt tarihi</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -354,16 +354,16 @@
                                                     <td>{{ $ref['parent']->name }}</td>
                                                     <td>
                                                         @if ($ref['status'] == 'active')
-                                                            <span class="badge bg-success">Active</span>
+                                                            <span class="badge bg-success">Aktif</span>
                                                         @else
-                                                            <span class="badge bg-danger">Inactive</span>
+                                                            <span class="badge bg-danger">Aktif değil</span>
                                                         @endif
                                                     </td>
                                                     <td>{{ $ref['created_at'] }}</td>
                                                     <td>
                                                         @if ($refLevel !== 'Level 5 referrals')
                                                             <a wire:click.prevent="showDetails({{ $ref['id'] }})"
-                                                                href="" class="btn btn-sm btn-info">View</a>
+                                                                href="" class="btn btn-sm btn-info">Görüntüle</a>
                                                         @endif
                                                     </td>
                                                 </tr>
@@ -373,7 +373,7 @@
                                                         <i class="bi bi-database-fill-exclamation"
                                                             style="font-size: 50px"></i>
                                                         <p>
-                                                            No referrals for {{ $user->name }} yet
+                                                            {{ $user->name }} için henüz referans yok
                                                         </p>
                                                     </td>
                                                 </tr>

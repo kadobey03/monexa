@@ -23,8 +23,8 @@
     <div class="mb-6 sm:mb-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">Referral Program</h1>
-                <p class="text-gray-400 text-sm sm:text-base">Grow your network and earn rewards with {{ $settings->site_name }}</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">Referans Programı</h1>
+                <p class="text-gray-400 text-sm sm:text-base">{{ $settings->site_name }} ile ağınızı büyütün ve ödüller kazanın</p>
             </div>
             <div class="flex flex-wrap gap-2">
                 <button @click="showShareModal = true"
@@ -32,14 +32,14 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
                     </svg>
-                    Share Program
+                    Programı Paylaş
                 </button>
                 <button @click="showQRCode = !showQRCode"
                         class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors duration-200 text-sm font-medium">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h2M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
                     </svg>
-                    QR Code
+                    QR Kod
                 </button>
             </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Total Referrals</p>
+                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Toplam Referans</p>
                     <p class="text-white text-xl sm:text-2xl font-bold mt-1">{{ count($array->where('ref_by', Auth::user()->id)) }}</p>
                 </div>
                 <div class="bg-blue-600/10 p-2 sm:p-3 rounded-lg">
@@ -60,14 +60,14 @@
                 </div>
             </div>
             <div class="mt-3 sm:mt-4">
-                <span class="text-green-500 text-xs sm:text-sm font-medium">+12% this month</span>
+                <span class="text-green-500 text-xs sm:text-sm font-medium">Bu ay +%12</span>
             </div>
         </div>
 
         <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Total Earnings</p>
+                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Toplam Kazanç</p>
                     <p class="text-white text-xl sm:text-2xl font-bold mt-1">${{ number_format(Auth::user()->ref_earnings ?? 0, 2) }}</p>
                 </div>
                 <div class="bg-green-600/10 p-2 sm:p-3 rounded-lg">
@@ -77,14 +77,14 @@
                 </div>
             </div>
             <div class="mt-3 sm:mt-4">
-                <span class="text-green-500 text-xs sm:text-sm font-medium">+8.3% this month</span>
+                <span class="text-green-500 text-xs sm:text-sm font-medium">Bu ay +%8.3</span>
             </div>
         </div>
 
         <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Your Level</p>
+                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Seviyeniz</p>
                     <p class="text-white text-xl sm:text-2xl font-bold mt-1">
                         @php
                             $referralCount = count($array->where('ref_by', Auth::user()->id));
@@ -112,8 +112,8 @@
         <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Referred By</p>
-                    <p class="text-white text-lg sm:text-xl font-bold mt-1">{{ $uc->getUserParent($usr) ?: 'Direct Sign-up' }}</p>
+                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Referans Veren</p>
+                    <p class="text-white text-lg sm:text-xl font-bold mt-1">{{ $uc->getUserParent($usr) ?: 'Doğrudan Kayıt' }}</p>
                 </div>
                 <div class="bg-amber-600/10 p-2 sm:p-3 rounded-lg">
                     <svg class="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,13 +126,13 @@
 
     <!-- Referral Tools Section -->
     <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 mb-6 sm:mb-8">
-        <h2 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Referral Tools</h2>
+        <h2 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Referans Araçları</h2>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Referral Link -->
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Your Referral Link</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Referans Bağlantınız</label>
                     <div class="flex rounded-lg overflow-hidden">
                         <input type="text"
                                value="{{ Auth::user()->ref_link }}"
@@ -146,12 +146,12 @@
                         </button>
                     </div>
                     <div x-show="showCopied" x-transition class="text-green-500 text-sm mt-2">
-                        ✓ Link copied to clipboard!
+                        ✓ Bağlantı panoya kopyalandı!
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Your Referral ID</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Referans Kimliğiniz</label>
                     <div class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-3">
                         <span class="text-blue-400 font-mono text-lg">{{ Auth::user()->username }}</span>
                     </div>
@@ -161,10 +161,10 @@
             <!-- QR Code -->
             <div class="space-y-4" x-show="showQRCode" x-transition>
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">QR Code</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">QR Kod</label>
                     <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 text-center">
                         <div id="qrcode" class="inline-block"></div>
-                        <p class="text-gray-400 text-sm mt-2">Scan to use referral link</p>
+                        <p class="text-gray-400 text-sm mt-2">Referans bağlantısını kullanmak için tarayın</p>
                     </div>
                 </div>
             </div>
@@ -178,12 +178,12 @@
                 <button @click="selectedTab = 'overview'"
                         :class="selectedTab === 'overview' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
                         class="px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors duration-200">
-                    Overview
+                    Genel Bakış
                 </button>
                 <button @click="selectedTab = 'referrals'"
                         :class="selectedTab === 'referrals' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800'"
                         class="px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors duration-200">
-                    My Referrals
+                    Referanslarım
                 </button>
             </nav>
         </div>
@@ -194,34 +194,34 @@
             <div x-show="selectedTab === 'overview'" x-transition>
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-lg font-semibold text-white mb-4">How It Works</h3>
+                        <h3 class="text-lg font-semibold text-white mb-4">Nasıl Çalışır</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="text-center">
                                 <div class="bg-blue-600/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                                     <span class="text-blue-500 font-bold">1</span>
                                 </div>
-                                <h4 class="text-white font-medium mb-2">Share Your Link</h4>
-                                <p class="text-gray-400 text-sm">Share your unique referral link with friends and family</p>
+                                <h4 class="text-white font-medium mb-2">Bağlantınızı Paylaşın</h4>
+                                <p class="text-gray-400 text-sm">Benzersiz referans bağlantınızı arkadaşlarınız ve ailenizle paylaşın</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-green-600/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                                     <span class="text-green-500 font-bold">2</span>
                                 </div>
-                                <h4 class="text-white font-medium mb-2">They Join</h4>
-                                <p class="text-gray-400 text-sm">When someone signs up using your link, they become your referral</p>
+                                <h4 class="text-white font-medium mb-2">Katılırlar</h4>
+                                <p class="text-gray-400 text-sm">Birisi bağlantınızı kullanarak kaydolduğunda, referansınız olur</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-purple-600/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                                     <span class="text-purple-500 font-bold">3</span>
                                 </div>
-                                <h4 class="text-white font-medium mb-2">Earn Rewards</h4>
-                                <p class="text-gray-400 text-sm">Get commission from their trading activities and transactions</p>
+                                <h4 class="text-white font-medium mb-2">Ödüller Kazanın</h4>
+                                <p class="text-gray-400 text-sm">Ticaret faaliyetlerinden ve işlemlerinden komisyon alın</p>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <h3 class="text-lg font-semibold text-white mb-4">Referral Levels</h3>
+                        <h3 class="text-lg font-semibold text-white mb-4">Referans Seviyeleri</h3>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -229,11 +229,11 @@
                                         <span class="text-xs font-bold text-white">S</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Starter</span>
-                                        <p class="text-gray-400 text-sm">0-9 referrals</p>
+                                        <span class="text-white font-medium">Başlangıç</span>
+                                        <p class="text-gray-400 text-sm">0-9 referans</p>
                                     </div>
                                 </div>
-                                <span class="text-gray-400">5% commission</span>
+                                <span class="text-gray-400">%5 komisyon</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -241,11 +241,11 @@
                                         <span class="text-xs font-bold text-white">B</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Bronze</span>
-                                        <p class="text-gray-400 text-sm">10-24 referrals</p>
+                                        <span class="text-white font-medium">Bronz</span>
+                                        <p class="text-gray-400 text-sm">10-24 referans</p>
                                     </div>
                                 </div>
-                                <span class="text-amber-400">7% commission</span>
+                                <span class="text-amber-400">%7 komisyon</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -253,11 +253,11 @@
                                         <span class="text-xs font-bold text-gray-900">S</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Silver</span>
-                                        <p class="text-gray-400 text-sm">25-49 referrals</p>
+                                        <span class="text-white font-medium">Gümüş</span>
+                                        <p class="text-gray-400 text-sm">25-49 referans</p>
                                     </div>
                                 </div>
-                                <span class="text-gray-400">10% commission</span>
+                                <span class="text-gray-400">%10 komisyon</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -265,11 +265,11 @@
                                         <span class="text-xs font-bold text-gray-900">G</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Gold</span>
-                                        <p class="text-gray-400 text-sm">50-99 referrals</p>
+                                        <span class="text-white font-medium">Altın</span>
+                                        <p class="text-gray-400 text-sm">50-99 referans</p>
                                     </div>
                                 </div>
-                                <span class="text-yellow-400">12% commission</span>
+                                <span class="text-yellow-400">%12 komisyon</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -277,11 +277,11 @@
                                         <span class="text-xs font-bold text-white">E</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Elite</span>
-                                        <p class="text-gray-400 text-sm">100+ referrals</p>
+                                        <span class="text-white font-medium">Elit</span>
+                                        <p class="text-gray-400 text-sm">100+ referans</p>
                                     </div>
                                 </div>
-                                <span class="text-purple-400">15% commission</span>
+                                <span class="text-purple-400">%15 komisyon</span>
                             </div>
                         </div>
                     </div>
@@ -296,7 +296,7 @@
                         <div class="flex-1">
                             <input type="text"
                                    x-model="searchQuery"
-                                   placeholder="Search referrals..."
+                                   placeholder="Referansları ara..."
                                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
@@ -307,11 +307,11 @@
                     <table class="w-full">
                         <thead>
                             <tr class="border-b border-gray-800">
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Client Name</th>
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Level</th>
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Parent</th>
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Status</th>
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Date Registered</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Müşteri Adı</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Seviye</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Üst</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Durum</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Kayıt Tarihi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -337,11 +337,11 @@
                             </div>
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between">
-                                    <span class="text-gray-400">Email:</span>
+                                    <span class="text-gray-400">E-posta:</span>
                                     <span class="text-white">{{ $referral->email }}</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-gray-400">Joined:</span>
+                                    <span class="text-gray-400">Katıldı:</span>
                                     <span class="text-white">{{ $referral->created_at->format('M d, Y') }}</span>
                                 </div>
                             </div>
@@ -354,11 +354,11 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-gray-400 font-medium mb-2">No referrals yet</h3>
-                            <p class="text-gray-500 text-sm mb-4">Start sharing your referral link to build your network</p>
+                            <h3 class="text-gray-400 font-medium mb-2">Henüz referans yok</h3>
+                            <p class="text-gray-500 text-sm mb-4">Ağınızı oluşturmak için referans bağlantınızı paylaşmaya başlayın</p>
                             <button @click="navigator.clipboard.writeText('{{ Auth::user()->ref_link }}'); showCopied = true; setTimeout(() => showCopied = false, 2000)"
                                     class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 text-sm">
-                                Copy Referral Link
+                                Referans Bağlantısını Kopyala
                             </button>
                         </div>
                     @endif
@@ -386,7 +386,7 @@
                 <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="w-full">
-                            <h3 class="text-lg leading-6 font-medium text-white mb-4">Share Referral Program</h3>
+                            <h3 class="text-lg leading-6 font-medium text-white mb-4">Referans Programını Paylaş</h3>
 
                             <div class="grid grid-cols-2 gap-3">
                                 <button @click="shareToSocial('twitter')"
@@ -428,7 +428,7 @@
                 <div class="bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button @click="showShareModal = false"
                             class="w-full inline-flex justify-center rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Close
+                        Kapat
                     </button>
                 </div>
             </div>
@@ -448,7 +448,7 @@
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
-            Shared successfully!
+            Başarıyla paylaşıldı!
         </div>
     </div>
 </div>
@@ -459,7 +459,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('referralData', () => ({
         shareToSocial(platform) {
             const url = '{{ Auth::user()->ref_link }}';
-            const text = `Join me on {{ $settings->site_name }} - The ultimate trading platform! Use my referral link to get started: `;
+            const text = `{{ $settings->site_name }}'e katılın - En iyi ticaret platformu! Başlamak için referans bağlantımı kullanın: `;
 
             let shareUrl = '';
 

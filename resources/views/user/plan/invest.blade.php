@@ -238,13 +238,13 @@
 
                     <!-- Referral Code -->
                     <div class="mb-8">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Referral Code (Optional)</h3>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Referans Kodu (İsteğe Bağlı)</h3>
 
                         <div>
-                            <label for="referral_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Have a Referral Code?</label>
-                            <input type="text" id="referral_code" name="referral_code" value="{{ old('referral_code') }}" class="block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white sm:text-sm" placeholder="Enter referral code">
+                            <label for="referral_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Referans Kodunuz Var mı?</label>
+                            <input type="text" id="referral_code" name="referral_code" value="{{ old('referral_code') }}" class="block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white sm:text-sm" placeholder="Referans kodunu girin">
                             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                If someone referred you, enter their code here. They will receive a {{ $plan->referral_bonus }}% bonus.
+                                Birisi sizi yönlendirdiyse, kodunu buraya girin. {{ $plan->referral_bonus }}% bonus alacaklar.
                             </p>
                         </div>
                     </div>
