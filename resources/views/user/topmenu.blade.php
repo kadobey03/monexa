@@ -21,7 +21,7 @@
                         @if (Auth::user()->account_verify == 'Verified')
                             <a class="nav-link nav-link-icon" href="#">
                                 <i class="fas fa-user-check"></i>
-                                <strong style="font-size:8px;">Verified</strong>
+                                <strong style="font-size:8px;">Doğrulandı</strong>
                             </a>
                         @else
                             <a class="nav-link nav-link-icon" data-toggle="dropdown" href="#"
@@ -31,16 +31,16 @@
                             </a>
                             <div class="p-0 dropdown-menu dropdown-menu-right dropdown-menu-lg dropdown-menu-arrow">
                                 <div class="p-2">
-                                    <h5 class="mb-0 heading h6">KYC Verification</h5>
+                                    <h5 class="mb-0 heading h6">KYC Doğrulama</h5>
                                 </div>
                                 <div class="pb-2 mt-0 text-center list-group list-group-flush">
                                     @if (Auth::user()->account_verify == 'Under review')
-                                        Your Submission is under review
+                                        Gönderiminiz inceleme altında
                                     @else
                                         <div class="">
                                             <a href="{{ route('account.verify') }}"
-                                                class="btn btn-primary btn-sm">Verify
-                                                Account </a>
+                                                class="btn btn-primary btn-sm">Hesabı
+                                                Doğrula </a>
                                         </div>
                                     @endif
                                 </div>
@@ -57,10 +57,10 @@
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow">
-                        <h6 class="px-0 dropdown-header">Hi, {{ Auth::user()->name }}!</h6>
+                        <h6 class="px-0 dropdown-header">Merhaba, {{ Auth::user()->name }}!</h6>
                         <a href="{{ route('profile') }}" class="dropdown-item">
                             <i class="far fa-user"></i>
-                            <span>My profile</span>
+                            <span>Profilim</span>
                         </a>
                         <div class="dropdown-divider"></div>
 
@@ -68,7 +68,7 @@
                             onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             <i class="far fa-sign-out-alt"></i>
-                            <span>Logout</span>
+                            <span>Çıkış</span>
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
@@ -105,9 +105,9 @@
                     <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right dropdown-menu-arrow">
                         <div class="px-3 py-2 border-bottom">
                             <h6 class="mb-0 d-flex justify-content-between align-items-center">
-                                Notifications
+                                Bildirimler
                                 @if($unreadCount > 0)
-                                <a href="{{ route('notifications.mark-all-read') }}" class="text-sm text-primary">Mark all read</a>
+                                <a href="{{ route('notifications.mark-all-read') }}" class="text-sm text-primary">Tümünü okundu olarak işaretle</a>
                                 @endif
                             </h6>
                         </div>
@@ -141,13 +141,13 @@
                             @empty
                                 <div class="text-center py-4">
                                     <i class="fas fa-bell-slash fa-3x text-muted"></i>
-                                    <p class="mt-2">No notifications</p>
+                                    <p class="mt-2">Bildirim yok</p>
                                 </div>
                             @endforelse
                         </div>
 
                         <div class="py-2 text-center border-top">
-                            <a href="{{ route('notifications') }}" class="link link-sm link--style-3">View all notifications</a>
+                            <a href="{{ route('notifications') }}" class="link link-sm link--style-3">Tüm bildirimleri görüntüle</a>
                         </div>
                     </div>
                 </li>
@@ -157,7 +157,7 @@
                         @if (Auth::user()->account_verify == 'Verified')
                             <a class="nav-link nav-link-icon" href="#">
                                 <i class="fas fa-user-check"></i>
-                                <strong style="font-size:8px;">Verified</strong>
+                                <strong style="font-size:8px;">Doğrulandı</strong>
                             </a>
                         @else
                             <a class="nav-link nav-link-icon" data-toggle="dropdown" href="#"
@@ -167,16 +167,16 @@
                             </a>
                             <div class="p-0 dropdown-menu dropdown-menu-right dropdown-menu-lg dropdown-menu-arrow">
                                 <div class="p-2">
-                                    <h5 class="mb-0 heading h6">KYC Verification</h5>
+                                    <h5 class="mb-0 heading h6">KYC Doğrulama</h5>
                                 </div>
                                 <div class="pb-2 mt-0 text-center list-group list-group-flush">
                                     @if (Auth::user()->account_verify == 'Under review')
-                                        Your Submission is under review
+                                        Gönderiminiz inceleme altında
                                     @else
                                         <div class="">
                                             <a href="{{ route('account.verify') }}"
-                                                class="btn btn-primary btn-sm">Verify
-                                                Account </a>
+                                                class="btn btn-primary btn-sm">Hesabı
+                                                Doğrula </a>
                                         </div>
                                     @endif
                                 </div>
@@ -198,10 +198,10 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow">
-                        <h6 class="px-0 dropdown-header">Hi, {{ Auth::user()->name }}!</h6>
+                        <h6 class="px-0 dropdown-header">Merhaba, {{ Auth::user()->name }}!</h6>
                         <a href="{{ route('profile') }}" class="dropdown-item">
                             <i class="far fa-user"></i>
-                            <span>My profile</span>
+                            <span>Profilim</span>
                         </a>
                         <div class="dropdown-divider"></div>
 
@@ -209,7 +209,7 @@
                             onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             <i class="far fa-sign-out-alt"></i>
-                            <span>Logout</span>
+                            <span>Çıkış</span>
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST"
                             style="display: none;">

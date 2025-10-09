@@ -5,14 +5,14 @@
             @method('PUT')
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <h5 class="">Contact Email</h5>
+                    <h5 class="">İletişim E-postası</h5>
                     <input type="text" class="form-control  " name="contact_email"
                         value="{{ $settings->contact_email }}" required>
                 </div>
 
                 <input name="s_currency" value="{{ $settings->s_currency }}" id="s_c" type="hidden">
                 <div class="form-group col-md-6">
-                    <h5 class="">Website Currency</h5>
+                    <h5 class="">Web Sitesi Para Birimi</h5>
                     <select name="currency" id="select_c" class="form-control   select2" onchange="changecurr()"
                         style="width: 100%">
                         <option value="<?php echo htmlentities($settings->currency); ?>">{{ $settings->currency }}</option>
@@ -25,17 +25,16 @@
                 </div>
                 <input type="hidden" value="{{ $settings->site_preference }}" name="site_preference">
                 <div class="form-group col-md-6">
-                    <h5 class="">HomePage Url (Redirect)</h5>
+                    <h5 class="">Ana Sayfa URL'si (Yönlendirme)</h5>
                     <input type="text" class="form-control " name="redirect_url"
                         placeholder="eg https://myhomepage.com" value="{{ $settings->redirect_url }}">
-                    <small>If you use a custom homepage and you want all request to be rediected to that page, please
-                        enter the url here, if empty the system will use our default homepage/webpages</small>
+                    <small>Özel bir ana sayfa kullanıyorsanız ve tüm isteklerin o sayfaya yönlendirilmesini istiyorsanız, lütfen URL'yi buraya girin, boş bırakılırsa sistem varsayılan ana sayfamızı/web sayfalarımızı kullanacaktır</small>
                 </div>
             </div>
 
             <div class="mt-3 row">
                 <div class="mt-4 col-md-6">
-                    <h5 class="">Annoucment:</h5>
+                    <h5 class="">Duyuru:</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="annouc" value="on" class="selectgroup-input"
@@ -50,7 +49,7 @@
                     </div>
                 </div>
                 <div class="mt-4 col-md-6">
-                    <h5 class="">Weekend Trade:</h5>
+                    <h5 class="">Hafta Sonu Ticaret:</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="weekend_trade" value="on" class="selectgroup-input"
@@ -65,12 +64,12 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">if turned off, Users will not receive ROI on weekends</small>
+                        <small class="">kapalıysa, kullanıcılar hafta sonları ROI almayacak</small>
                     </div>
                 </div>
 
                 <div class="mt-4 col-md-6">
-                    <h5 class="">Withdrawals</h5>
+                    <h5 class="">Para Çekme</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="withdraw" id="withdraw" value="true"
@@ -85,7 +84,7 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">if disabled, Users will not be able to place withdrawal request</small>
+                        <small class="">devre dışı bırakılırsa, kullanıcılar para çekme talebi gönderemeyecek</small>
                     </div>
 
                 </div>
@@ -105,17 +104,15 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">if turned on, Users will need to pass the google recaptcha challenge upon
-                            registration, also please see how to set up google recpatcha on your website before you can
-                            use it. <a
+                        <small class="">açık ise, kullanıcılar kayıt sırasında google recaptcha testini geçmek zorunda kalacak, ayrıca kullanmadan önce web sitenizde google recaptcha'nın nasıl kurulacağını görün. <a
                                 href="https://doc.onlinetrade.brynamics.xyz/details/how-to-add-google-recaptcha-"
-                                target="_blank">See how</a></small>
+                                target="_blank">Nasıl yapılır</a></small>
                     </div>
 
                 </div>
 
                 <div class="mt-4 col-md-6">
-                    <h5 class="">Translation</h5>
+                    <h5 class="">Çeviri</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="googlet" id="googlet" value="on"
@@ -130,13 +127,12 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">if turned on, Users will have the option of selecting their preferred
-                            language through google translation</small>
+                        <small class="">açık ise, kullanıcılar google çeviri aracılığıyla tercih ettikleri dili seçme seçeneğine sahip olacak</small>
                     </div>
                 </div>
 
                 <div class="mt-4 col-md-6">
-                    <h5 class="">Trade Mode</h5>
+                    <h5 class="">Ticaret Modu</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="trade_mode" value="on" class="selectgroup-input"
@@ -151,12 +147,12 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">if turned off, Users will not receive thier ROI at all.</small>
+                        <small class="">kapalıysa, kullanıcılar ROI'yi hiç almayacak.</small>
                     </div>
                 </div>
 
                 <div class="mt-4 col-md-6">
-                    <h5 class="">KYC(Verification)</h5>
+                    <h5 class="">KYC(Doğrulama)</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="enable_kyc" value="yes" class="selectgroup-input"
@@ -171,13 +167,12 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">if turned on, Users will need to submit required documents to get
-                            verified before they can place a withdrawal request.</small>
+                        <small class="">açık ise, kullanıcılar para çekme talebi göndermeden önce gerekli belgeleri göndermek zorunda kalacak.</small>
                     </div>
                 </div>
 
                 <div class="mt-4 col-md-6">
-                    <h5 class="">KYC(Verification) on Registraion</h5>
+                    <h5 class="">KYC(Doğrulama) Kayıt Sırasında</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="enable_kyc_registration" value="yes"
@@ -193,17 +188,13 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">if turned on, Users will have to go through the verification process upon
-                            registration and they will not be allowed to carry out any operation on your system until
-                            they have been verified by the admin. Note this will affect existing users who have not
-                            completed their KYC. <strong>After they have submitted an application, you will also need to
-                                verify the user from your end before they can procced.</strong>
+                        <small class="">açık ise, kullanıcılar kayıt sırasında doğrulama sürecinden geçmek zorunda kalacak ve yönetici tarafından doğrulanana kadar sisteminizde hiçbir işlem yapmalarına izin verilmeyecek. Bunun mevcut KYC'lerini tamamlamamış kullanıcıları etkileyeceğini unutmayın. <strong>Bir başvuru gönderdikten sonra, devam etmeden önce kullanıcıyı kendi tarafınızdan doğrulamak zorunda kalacaksınız.</strong>
                         </small>
                     </div>
                 </div>
 
                 <div class="mt-4 col-md-6">
-                    <h5 class="">Google Login</h5>
+                    <h5 class="">Google Girişi</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="social" id="social" value="yes"
@@ -219,13 +210,12 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">Google Login allows users to login/register with their google
-                            account</small>
+                        <small class="">Google Girişi, kullanıcıların google hesaplarıyla giriş yapmalarına/kayıt olmalarına izin verir</small>
                     </div>
                 </div>
 
                 <div class="mt-4 col-md-6">
-                    <h5 class="">Email Verification</h5>
+                    <h5 class="">E-posta Doğrulama</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="enail_verify" value="true" class="selectgroup-input"
@@ -240,12 +230,11 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">If email verification is disabled users will not be ask to verify their
-                            email address.</small>
+                        <small class="">E-posta doğrulaması devre dışı bırakılırsa kullanıcılara e-posta adreslerini doğrulamaları sorulmayacak.</small>
                     </div>
                 </div>
                 <div class="mt-4 col-md-6">
-                    <h5 class="">Return Capital</h5>
+                    <h5 class="">Sermaye İadesi</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="return_capital" value="true" class="selectgroup-input"
@@ -260,12 +249,11 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">If return capital is No, the system will not credit the user with his
-                            capital after investment plan expires</small>
+                        <small class="">Sermaye iadesi Hayır ise, sistem yatırım planı süresi dolduktan sonra kullanıcıya sermayesini kredilendirmeyecek</small>
                     </div>
                 </div>
                 <div class="mt-4 col-md-6">
-                    <h5 class="">Plan Cancellation</h5>
+                    <h5 class="">Plan İptali</h5>
                     <div class="selectgroup">
                         <label class="selectgroup-item">
                             <input type="radio" name="should_cancel_plan" value="1" class="selectgroup-input"
@@ -280,14 +268,12 @@
                         </label>
                     </div>
                     <div>
-                        <small class="">Turn it on if you want users to be able to cancel their active investment
-                            plans. Note the capital will be returned to users account when they cancel their
-                            plan.</small>
+                        <small class="">Kullanıcıların aktif yatırım planlarını iptal edebilmesini istiyorsanız açın. Planlarını iptal ettiklerinde sermayenin kullanıcı hesabına iade edileceğini unutmayın.</small>
                     </div>
                 </div>
             </div>
             <div class="mt-4">
-                <input type="submit" class="px-5 btn btn-primary btn-lg" value="Save">
+                <input type="submit" class="px-5 btn btn-primary btn-lg" value="Kaydet">
             </div>
         </form>
     </div>

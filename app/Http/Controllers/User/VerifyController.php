@@ -27,7 +27,7 @@ class VerifyController extends Controller
 
         if (!in_array($extension, $whitelist) or !in_array($backimgExtention, $whitelist)) {
             return redirect()->back()
-                ->with('message', 'Unaccepted Image Uploaded, please make sure to upload the correct document.');
+                ->with('message', 'Kabul edilmeyen resim yüklendi, lütfen doğru belgeyi yüklediğinizden emin olun.');
         }
 
         // upload documents to storage
@@ -61,16 +61,16 @@ class VerifyController extends Controller
             ]);
 
         $settings = Settings::find(1);
-        $message = "This is to inform you that $user->name just submitted a request for KYC(identity verification), please login your admin account to review and take neccessary action.";
-        $subject = "Identity Verification Request from $user->name";
+        $message = "Bu, $user->name'in KYC(kimlik doğrulaması) için bir istek gönderdiğini bildirmek içindir, lütfen incelemek ve gerekli eylemi almak için yönetici hesabınıza giriş yapın.";
+        $subject = "$user->name'den Kimlik Doğrulama İsteği";
         $url = config('app.url') . '/admin/dashboard/kyc';
 
         try {
             Mail::to($settings->contact_email)->send(new NewNotification($message, $subject, 'Admin', $url));
         } catch (\Exception $e) {
-            \Log::error('Failed to send KYC verification notification email. User: ' . $user->name . ' (' . $user->email . '), KYC ID: ' . $kyc->id . '. Error: ' . $e->getMessage());
+            \Log::error('KYC doğrulama bildirim e-postası gönderilemedi. Kullanıcı: ' . $user->name . ' (' . $user->email . '), KYC ID: ' . $kyc->id . '. Hata: ' . $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Action Sucessful! Please wait while we verify your application. You will receive an email regarding the status of your application.');
+        return redirect()->back()->with('success', 'İşlem Başarılı! Başvurunuzu doğrularız, lütfen bekleyin. Başvurunuzun durumu hakkında bir e-posta alacaksınız.');
     }
 }
