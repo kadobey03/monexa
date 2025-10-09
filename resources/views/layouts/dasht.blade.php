@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ darkMode: localStorage.getItem('theme') === 'light' ? false : true }"
+<html lang="tr" x-data="{ darkMode: localStorage.getItem('theme') === 'light' ? false : true }"
       :class="{ 'dark': darkMode }"
       class="dark bg-gray-900">
 <head>
@@ -435,7 +435,7 @@
         </div>
       </div>
       <div class="md:hidden">
-        <div class="text-gray-500 dark:text-gray-400">Balance:</div>
+        <div class="text-gray-500 dark:text-gray-400">Bakiye:</div>
         <div class="font-semibold text-gray-900 dark:text-white">
           {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
         </div>
@@ -478,7 +478,7 @@
     <!-- Live Market Prices -->
     <div class="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20" x-cloak>
         <div class="flex items-center justify-between mb-3">
-            <h3 class="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Live Market</h3>
+            <h3 class="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Canlı Piyasa</h3>
             <span class="flex items-center text-xs text-green-600 dark:text-green-400">
                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
                 <span class="font-medium">LIVE</span>
@@ -719,16 +719,9 @@
 <!-- Modern Mobile Navigation with Glassmorphism -->
 <link href="https://unpkg.com/lucide@latest" rel="stylesheet">
 
-<div class="fixed bottom-0 w-full z-30 md:hidden" x-data="{ fabOpen: false }" x-cloak>
+<div class="fixed bottom-0 w-full z-30 md:hidden" x-cloak>
   <!-- Bottom Navigation Bar with Glassmorphism -->
   <div class="flex justify-between items-center bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg px-6 py-4 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] relative border-t border-gray-200/20 dark:border-gray-700/20">
-    <!-- Language Selector (Mobile) -->
-    <div class="group flex flex-col items-center relative">
-      <div class="relative">
-        <span class="text-sm font-medium text-gray-900 dark:text-white">Türkçe</span>
-      </div>
-      <span class="text-xs mt-1 text-gray-500">Dil</span>
-    </div>
 
     <a href="{{ route('deposits') }}"
        class="group flex flex-col items-center relative">
@@ -746,7 +739,7 @@
              {{ request()->routeIs('deposits')
                 ? 'text-blue-600 dark:text-blue-400'
                 : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-             transition-colors duration-300">Yatırma</span>
+             transition-colors duration-300">Para Yatır</span>
     </a>
 
     <a href="{{ route('profile') }}"
@@ -768,27 +761,31 @@
              transition-colors duration-300">Profil</span>
     </a>
 
-    <!-- Animated FAB Button -->
-    <button @click="fabOpen = !fabOpen"
-            class="absolute -top-7 left-1/2 transform -translate-x-1/2
-                   bg-gradient-to-r from-blue-600 to-indigo-600 text-white
-                   w-14 h-14 rounded-full flex items-center justify-center
-                   shadow-[0_8px_30px_rgba(59,130,246,0.5)]
-                   border-4 border-white dark:border-gray-900
-                   hover:scale-110 hover:shadow-[0_8px_35px_rgba(59,130,246,0.6)]
-                   active:scale-95
-                   transition-all duration-300 ease-out">
-      <i data-lucide="zap" class="w-6 h-6 transform transition-transform group-hover:scale-110"></i>
-      <!-- Pulse Effect -->
-      <span class="absolute w-full h-full rounded-full bg-blue-500 animate-ping opacity-20"></span>
-    </button>
+    <a href="{{ route('trade.index') }}"
+       class="group flex flex-col items-center relative">
+      <div class="p-2 rounded-xl transition-all duration-300 ease-out
+                  {{ request()->routeIs('trade.index')
+                     ? 'bg-blue-500/10 dark:bg-blue-400/10 scale-110'
+                     : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
+        <i data-lucide="zap" class="w-6 h-6
+           {{ request()->routeIs('trade.index')
+              ? 'text-blue-600 dark:text-blue-400'
+              : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
+           transition-colors duration-300"></i>
+      </div>
+      <span class="text-xs font-medium mt-1
+             {{ request()->routeIs('trade.index')
+                ? 'text-blue-600 dark:text-blue-400'
+                : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
+             transition-colors duration-300">Şimşek Gridi</span>
+    </a>
 
 <a href="{{ route('support') }}"
    class="flex flex-col items-center
           {{ request()->routeIs('support') ? 'text-blue-600 font-semibold' : 'text-gray-500' }}
           hover:text-blue-600">
   <i data-lucide="life-buoy" class="w-6 h-6"></i>
-  <span class="text-xs mt-1">Support</span>
+  <span class="text-xs mt-1">Destek</span>
 </a>
 
 
@@ -797,7 +794,7 @@
    class="flex flex-col items-center
           {{ request()->routeIs('dashboard') ? 'text-blue-600' : 'text-gray-500' }} hover:text-blue-600">
  <i data-lucide="home" class="w-6 h-6 transition-colors duration-200"></i>
-  <span class="text-xs mt-1">Home</span>
+ <span class="text-xs mt-1">Anasayfa</span>
 </a>
   </div>
 
