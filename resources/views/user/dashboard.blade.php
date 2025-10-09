@@ -202,10 +202,10 @@
     <div class="xl:col-span-3 grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 gap-3 sm:gap-4">
         @php
             $cards = [
-                ['label' => 'Total Profit', 'value' => Auth::user()->roi, 'icon' => 'dollar-sign'],
-                ['label' => 'Total Deposit', 'value' => $deposited, 'icon' => 'arrow-down'],
-                ['label' => 'Total Withdrawal', 'value' => $total_withdrawal, 'icon' => 'arrow-up'],
-                ['label' => 'Bonus', 'value' => Auth::user()->bonus ?? 0, 'icon' => 'gift'],
+                ['label' => 'Toplam Kar', 'value' => Auth::user()->roi, 'icon' => 'dollar-sign'],
+                ['label' => 'Toplam Yatırım', 'value' => $deposited, 'icon' => 'arrow-down'],
+                ['label' => 'Toplam Çekim', 'value' => $total_withdrawal, 'icon' => 'arrow-up'],
+                ['label' => 'Ödül', 'value' => Auth::user()->bonus ?? 0, 'icon' => 'gift'],
             ];
         @endphp
 
@@ -224,7 +224,7 @@
 
                 <div class="text-xs text-gray-500 dark:text-gray-400 mt-auto flex items-center gap-1">
                     <i data-lucide="calendar" class="w-3 h-3"></i>
-                    <span>{{ $card['label'] === 'Total Profit' ? 'Son dönem' : 'Tüm zaman' }}</span>
+                    <span>{{ $card['label'] === 'Toplam Kar' ? 'Son dönem' : 'Tüm zaman' }}</span>
                 </div>
             </div>
         @endforeach
