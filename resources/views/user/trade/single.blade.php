@@ -37,7 +37,7 @@
         <a href="{{ route('trade.index') }}"
            class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-            Back to Markets
+            Pazarlara Dön
         </a>
     </div>
 
@@ -83,7 +83,7 @@
             <!-- Chart Widget -->
            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
     <div class="mb-4">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Price Chart</h2>
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Fiyat Grafiği</h2>
     </div>
 
     <!-- TradingView Chart -->
@@ -118,25 +118,25 @@
 </div>
            <!-- Market Stats -->
             <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Market Statistics</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Pazar İstatistikleri</h3>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="text-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">24h High</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">24s Yüksek</div>
                         <div class="font-semibold text-gray-900 dark:text-white">
                             ${{ number_format($instrument->high ?? 0, $instrument->price >= 1 ? 2 : 6) }}
                         </div>
                     </div>
 
                     <div class="text-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">24h Low</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">24s Düşük</div>
                         <div class="font-semibold text-gray-900 dark:text-white">
                             ${{ number_format($instrument->low ?? 0, $instrument->price >= 1 ? 2 : 6) }}
                         </div>
                     </div>
 
                     <div class="text-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">24h Volume</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">24s Hacim</div>
                         <div class="font-semibold text-gray-900 dark:text-white">
                             @if($instrument->volume >= 1e9)
                                 ${{ number_format($instrument->volume / 1e9, 1) }}B
@@ -151,7 +151,7 @@
                     </div>
 
                     <div class="text-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Market Cap</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">Pazar Değeri</div>
                         <div class="font-semibold text-gray-900 dark:text-white">
                             @if($instrument->market_cap >= 1e9)
                                 ${{ number_format($instrument->market_cap / 1e9, 1) }}B
@@ -176,12 +176,12 @@
                     <button @click="activeTab = 'open'"
                             :class="activeTab === 'open' ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-400'"
                             class="flex-1 py-2 px-4 rounded-md font-medium transition-colors text-sm">
-                        Open Trades ({{ $openTrades->count() }})
+                        Açık İşlemler ({{ $openTrades->count() }})
                     </button>
                     <button @click="activeTab = 'closed'"
                             :class="activeTab === 'closed' ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-400'"
                             class="flex-1 py-2 px-4 rounded-md font-medium transition-colors text-sm">
-                        Closed Trades ({{ $closedTrades->count() }})
+                        Kapalı İşlemler ({{ $closedTrades->count() }})
                     </button>
                 </div>
 
@@ -203,7 +203,7 @@
                                             <div>
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
                                                     <i data-lucide="activity" class="w-3 h-3 mr-1"></i>
-                                                    Active
+                                                    Aktif
                                                 </span>
                                             </div>
                                         </div>
@@ -254,7 +254,7 @@
 
                                             <div class="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-3">
                                                 <div class="flex justify-between items-center mb-2">
-                                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Time Progress</span>
+                                                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">Zaman İlerlemesi</span>
                                                     <span class="text-xs text-gray-600 dark:text-gray-400">{{ $timeLeft }}</span>
                                                 </div>
                                                 <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
@@ -270,11 +270,11 @@
                                         <!-- Trade Info Grid -->
                                         <div class="grid grid-cols-2 gap-3 text-sm">
                                             <div class="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-2">
-                                                <div class="text-gray-600 dark:text-gray-400 text-xs">Duration</div>
+                                                <div class="text-gray-600 dark:text-gray-400 text-xs">Süre</div>
                                                 <div class="font-medium text-gray-900 dark:text-white">{{ $trade->inv_duration ?? 'N/A' }}</div>
                                             </div>
                                             <div class="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-2">
-                                                <div class="text-gray-600 dark:text-gray-400 text-xs">Current P&L</div>
+                                                <div class="text-gray-600 dark:text-gray-400 text-xs">Mevcut Kar/Zarar</div>
                                                 <div class="font-medium {{ ($trade->profit_earned ?? 0) >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
                                                     {{ ($trade->profit_earned ?? 0) >= 0 ? '+' : '' }}{{Auth::user()->currency}}{{ number_format($trade->profit_earned ?? 0, 2) }}
                                                 </div>
@@ -286,7 +286,7 @@
                                     <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                                         <a href="{{ route('trade.monitor', $trade->id) }}" class="w-full py-2 px-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors text-sm font-medium group-hover:bg-blue-50 group-hover:text-blue-600 dark:group-hover:bg-blue-900/30 dark:group-hover:text-blue-400 block text-center">
                                             <i data-lucide="eye" class="w-4 h-4 inline mr-2"></i>
-                                            Monitor Trade
+                                            İşlemi İzle
                                         </a>
                                     </div>
                                 </div>
@@ -297,10 +297,10 @@
                             <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
                                 <i data-lucide="chart-line" class="w-8 h-8 text-gray-400"></i>
                             </div>
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Open Trades</h4>
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Açık İşlem Yok</h4>
                             <p class="text-gray-600 dark:text-gray-400 mb-4">You don't have any open trades for {{ $instrument->symbol }}</p>
                             <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium">
-                                Start Trading
+                                İşleme Başla
                             </button>
                         </div>
                     @endif
@@ -331,7 +331,7 @@
                                                 </div>
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
                                                     <div class="w-2 h-2 rounded-full bg-yellow-500 mr-1 animate-pulse"></div>
-                                                    Active Trade
+                                                    Aktif İşlem
                                                 </span>
                                             @elseif($trade->active === 'expired')
                                                 <!-- Closed Trade -->
@@ -344,7 +344,7 @@
                                                 </div>
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $isSuccessful ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400' }}">
                                                     <div class="w-2 h-2 rounded-full {{ $isSuccessful ? 'bg-green-500' : 'bg-red-500' }} mr-1"></div>
-                                                    {{ $isSuccessful ? 'Completed' : 'Closed' }}
+                                                    {{ $isSuccessful ? 'Tamamlandı' : 'Kapalı' }}
                                                 </span>
                                             @else
                                                 <!-- Unknown Status -->
@@ -393,19 +393,19 @@
                                         <div class="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-3">
                                             <div class="grid grid-cols-2 gap-3">
                                                 <div>
-                                                    <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">P&L</div>
+                                                    <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">Kar/Zarar</div>
                                                     @if($trade->active === 'expired')
                                                         <div class="font-semibold {{ $isProfit ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
                                                             {{ $isProfit ? '+' : '-' }}{{Auth::user()->currency}}{{ number_format($profitAmount, 2) }}
                                                         </div>
                                                     @else
                                                         <div class="font-semibold text-yellow-600 dark:text-yellow-400">
-                                                            Pending
+                                                            Beklemede
                                                         </div>
                                                     @endif
                                                 </div>
                                                 <div>
-                                                    <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">Return</div>
+                                                    <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">Getiri</div>
                                                     @if($trade->active === 'expired' && $trade->amount > 0)
                                                         <div class="font-semibold {{ $isProfit ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
                                                             {{ $isProfit ? '+' : '-' }}{{ number_format(($profitAmount / $trade->amount) * 100, 1) }}%
@@ -422,17 +422,17 @@
                                         <!-- Trade Timeline -->
                                         <div class="grid grid-cols-2 gap-3 text-sm">
                                             <div class="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-2">
-                                                <div class="text-gray-600 dark:text-gray-400 text-xs">Duration</div>
+                                                <div class="text-gray-600 dark:text-gray-400 text-xs">Süre</div>
                                                 <div class="font-medium text-gray-900 dark:text-white">{{ $trade->inv_duration ?? 'N/A' }}</div>
                                             </div>
                                             <div class="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-2">
                                                 @if($trade->active === 'yes')
-                                                    <div class="text-gray-600 dark:text-gray-400 text-xs">Expires</div>
+                                                    <div class="text-gray-600 dark:text-gray-400 text-xs">Sona Eriyor</div>
                                                     <div class="font-medium text-yellow-600 dark:text-yellow-400">
                                                         {{ $trade->expire_date ? \Carbon\Carbon::parse($trade->expire_date)->format('M d, H:i') : 'N/A' }}
                                                     </div>
                                                 @else
-                                                    <div class="text-gray-600 dark:text-gray-400 text-xs">Closed</div>
+                                                    <div class="text-gray-600 dark:text-gray-400 text-xs">Kapalı</div>
                                                     <div class="font-medium text-gray-900 dark:text-white">
                                                         {{ \Carbon\Carbon::parse($trade->expire_date ?? $trade->updated_at)->format('M d, H:i') }}
                                                     </div>
@@ -445,7 +445,7 @@
                                     <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                                         <a href="{{ route('trade.monitor', $trade->id) }}" class="w-full py-2 px-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors text-sm font-medium group-hover:bg-blue-50 group-hover:text-blue-600 dark:group-hover:bg-blue-900/30 dark:group-hover:text-blue-400 block text-center">
                                             <i data-lucide="bar-chart-3" class="w-4 h-4 inline mr-2"></i>
-                                            View Details
+                                            Detayları Görüntüle
                                         </a>
                                     </div>
                                 </div>
@@ -454,10 +454,10 @@
 
                         @if($closedTrades->count() >= 10)
                             <div class="text-center mt-6 p-4 bg-gray-50 dark:bg-gray-700/30 rounded-lg">
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Showing recent 10 trades</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Son 10 işlem gösteriliyor</p>
                                 <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium">
                                     <i data-lucide="history" class="w-4 h-4 inline mr-2"></i>
-                                    View All History
+                                    Tüm Geçmişi Görüntüle
                                 </button>
                             </div>
                         @endif
@@ -466,22 +466,22 @@
                             <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
                                 <i data-lucide="history" class="w-8 h-8 text-gray-400"></i>
                             </div>
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Trade History</h4>
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">İşlem Geçmişi Yok</h4>
                             <p class="text-gray-600 dark:text-gray-400 mb-4">You haven't completed any trades for {{ $instrument->symbol }} yet</p>
                             <div class="space-y-3">
                                 <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium">
-                                    Start Trading
+                                    İşleme Başla
                                 </button>
                                 <div>
                                     <a href="{{ url('user-trades-debug.php') }}" class="text-sm text-blue-600 hover:underline">
-                                        View All Your Trades
+                                        Tüm İşlemlerinizi Görüntüle
                                     </a>
                                 </div>
                             </div>
                             @if(config('app.debug') && auth()->user()->is_admin)
                                 <div class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
                                     <div class="text-xs text-yellow-800 dark:text-yellow-400">
-                                        <strong>Debug Info:</strong> Looking for trades with: {{ $instrument->symbol }}, {{ $instrument->name }},
+                                        <strong>Hata Ayıklama Bilgisi:</strong> Şu işlemler aranıyor: {{ $instrument->symbol }}, {{ $instrument->name }},
                                         {{ str_replace('/', '', $instrument->symbol) }}, and other variations.
                                     </div>
                                 </div>
@@ -495,19 +495,19 @@
         <!-- Trading Panel (Right Side) -->
         <div class="xl:col-span-1">
             <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 sticky top-8">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Place Order</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Sipariş Ver</h3>
 
                 <!-- Order Type Tabs -->
                 <div class="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1 mb-6">
                     <button @click="orderType = 'Buy'"
                             :class="orderType === 'Buy' ? 'bg-green-500 text-white' : 'text-gray-600 dark:text-gray-400'"
                             class="flex-1 py-2 px-4 rounded-md font-medium transition-colors">
-                        Buy
+                        Al
                     </button>
                     <button @click="orderType = 'Sell'"
                             :class="orderType === 'Sell' ? 'bg-red-500 text-white' : 'text-gray-600 dark:text-gray-400'"
                             class="flex-1 py-2 px-4 rounded-md font-medium transition-colors">
-                        Sell
+                        Sat
                     </button>
                 </div>
 
@@ -523,22 +523,22 @@
 
                     <!-- Order Type Selector -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Order Type</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sipariş Türü</label>
                         <select x-model="tradeType" name="trade_type" class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white">
 
-                            <option value="market">Market Order</option>
-                            <option value="limit">Limit Order</option>
+                            <option value="market">Pazar Emri</option>
+                            <option value="limit">Limit Emri</option>
 
-                            <option value="stop">Stop Order</option>
+                            <option value="stop">Stop Emri</option>
                         </select>
                     </div>
 
                     <!-- Leverage Selector -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Leverage</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kaldıraç</label>
                         <select name="leverage" id="leverage" required
                                 class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
-                            <option disabled selected value="">Leverage</option>
+                            <option disabled selected value="">Kaldıraç</option>
                             <option value="10">1:10</option>
                             <option value="20">1:20</option>
                             <option value="30">1:30</option>
@@ -554,10 +554,10 @@
 
                     <!-- Expiration Selector -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Expiration</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Son Kullanma</label>
                         <select name="expire" id="expire" required
                                 class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
-                            <option disabled selected value="">Expiration</option>
+                            <option disabled selected value="">Son Kullanma</option>
                             <option value="3 Minutes">3 Minute</option>
                             <option value="5 Minutes">5 Minutes</option>
                             <option value="15 Minutes">15 Minutes</option>
@@ -572,7 +572,7 @@
 
                     <!-- Price Input (for limit/stop orders) -->
                     <div >
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Price ($)</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fiyat ($)</label>
                         <input type="number"
                                x-model="price"
                                name="price"
@@ -584,7 +584,7 @@
 
                     <!-- Amount Input (Total Investment) -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Investment Amount ($)</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Yatırım Miktarı ($)</label>
                         <input type="number"
                                x-model="amount"
                                name="amount"
@@ -596,15 +596,15 @@
                     </div>                    <!-- Investment Summary -->
                     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm text-gray-600 dark:text-gray-400">Investment Amount:</span>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Yatırım Miktarı:</span>
                             <span class="font-semibold text-gray-900 dark:text-white" x-text="formatAmount()"></span>
                         </div>
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm text-gray-600 dark:text-gray-400">Units:</span>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Birimler:</span>
                             <span class="text-sm text-gray-900 dark:text-white" x-text="formatUnits()"></span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-600 dark:text-gray-400">Available Balance:</span>
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Mevcut Bakiye:</span>
                             <span class="text-sm text-gray-900 dark:text-white">${{ number_format(auth()->user()->account_bal ?? 0, 2) }}</span>
                         </div>
                     </div>
@@ -617,13 +617,13 @@
                         <template x-if="loading">
                             <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                         </template>
-                        <span x-text="loading ? 'Processing...' : (orderType === 'Buy' ? 'Buy ' + '{{ $instrument->symbol }}' : 'Sell ' + '{{ $instrument->symbol }}')"></span>
+                        <span x-text="loading ? 'İşleniyor...' : (orderType === 'Buy' ? 'Al ' + '{{ $instrument->symbol }}' : 'Sat ' + '{{ $instrument->symbol }}')"></span>
                     </button>
                 </form>
 
                 <!-- Quick Amount Buttons -->
                 <div class="mt-4">
-                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Quick amounts:</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Hızlı miktarlar:</div>
                     <div class="grid grid-cols-4 gap-2">
                         <button @click="setQuickAmount(25)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">25%</button>
                         <button @click="setQuickAmount(50)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">50%</button>
@@ -670,7 +670,7 @@ function tradingSingle() {
             if (!this.amount || this.amount <= 0) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Invalid Amount',
+                    title: 'Geçersiz Miktar',
                     text: 'Please enter a valid amount to trade.',
                     confirmButtonColor: '#3B82F6'
                 });
@@ -683,7 +683,7 @@ function tradingSingle() {
             if (!leverage) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Select Leverage',
+                    title: 'Kaldıraç Seç',
                     text: 'Please select a leverage ratio.',
                     confirmButtonColor: '#3B82F6'
                 });
@@ -693,7 +693,7 @@ function tradingSingle() {
             if (!expire) {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Select Expiration',
+                    title: 'Son Kullanma Seç',
                     text: 'Please select an expiration time.',
                     confirmButtonColor: '#3B82F6'
                 });
@@ -705,7 +705,7 @@ function tradingSingle() {
             const action = this.orderType.toUpperCase();
 
             Swal.fire({
-                title: `Confirm ${action} Order`,
+                title: `Al/Sat Siparişini Onayla`,
                 html: `
                     <div class="text-left space-y-2">
                         <p><strong>Instrument:</strong> ${this.instrument.symbol}</p>
@@ -720,16 +720,16 @@ function tradingSingle() {
                 showCancelButton: true,
                 confirmButtonColor: this.orderType === 'Buy' ? '#10B981' : '#EF4444',
                 cancelButtonColor: '#6B7280',
-                confirmButtonText: `Yes, ${action}!`,
-                cancelButtonText: 'Cancel'
+                confirmButtonText: `Evet, ${action}!`,
+                cancelButtonText: 'İptal'
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.loading = true;
 
                     // Show processing message
                     Swal.fire({
-                        title: 'Processing Order...',
-                        text: 'Please wait while we process your trade.',
+                        title: 'Sipariş İşleniyor...',
+                        text: 'Lütfen işleminiz işlenirken bekleyin.',
                         allowOutsideClick: false,
                         allowEscapeKey: false,
                         showConfirmButton: false,

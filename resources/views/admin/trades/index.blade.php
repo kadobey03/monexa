@@ -9,7 +9,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title">User Trades Management</h4>
+                <h4 class="page-title">Kullanıcı İşlemler Yönetimi</h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="{{ route('admin.dashboard') }}">
@@ -20,13 +20,13 @@
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Management</a>
+                        <a href="#">Yönetim</a>
                     </li>
                     <li class="separator">
                         <i class="flaticon-right-arrow"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Trades</a>
+                        <a href="#">İşlemler</a>
                     </li>
                 </ul>
             </div>
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="col col-stats ml-3 ml-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Total Trades</p>
+                                        <p class="card-category">Toplam İşlem</p>
                                         <h4 class="card-title">{{ number_format($stats['total'] ?? 0) }}</h4>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="col col-stats ml-3 ml-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Active Trades</p>
+                                        <p class="card-category">Aktif İşlemler</p>
                                         <h4 class="card-title">{{ number_format($stats['active'] ?? 0) }}</h4>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="col col-stats ml-3 ml-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Completed</p>
+                                        <p class="card-category">Tamamlandı</p>
                                         <h4 class="card-title">{{ number_format($stats['expired'] ?? 0) }}</h4>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="col col-stats ml-3 ml-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Total Volume</p>
+                                        <p class="card-category">Toplam Hacim</p>
                                         <h4 class="card-title">${{ number_format($stats['total_volume'] ?? 0, 2) }}</h4>
                                     </div>
                                 </div>
@@ -137,11 +137,11 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title">
-                                    <i class="fas fa-filter mr-2"></i>Filters & Search
+                                    <i class="fas fa-filter mr-2"></i>Filtreler ve Arama
                                 </h4>
                                 <button class="btn btn-primary btn-round ml-auto" data-toggle="collapse" data-target="#filtersCollapse" aria-expanded="false">
                                     <i class="fas fa-search"></i>
-                                    Toggle Filters
+                                    Filtreleri Aç/Kapat
                                 </button>
                             </div>
                         </div>
@@ -151,36 +151,36 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="search">Search User</label>
+                                                <label for="search">Kullanıcı Ara</label>
                                                 <input type="text" class="form-control" id="search" name="search"
-                                                       value="{{ request('search') }}" placeholder="Username or Email">
+                                                       value="{{ request('search') }}" placeholder="Kullanıcı Adı veya E-posta">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <label for="status">Status</label>
+                                                <label for="status">Durum</label>
                                                 <select class="form-control" id="status" name="status">
-                                                    <option value="">All</option>
-                                                    <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>Active</option>
-                                                    <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Expired</option>
+                                                    <option value="">Tümü</option>
+                                                    <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>Aktif</option>
+                                                    <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Süresi Dolmuş</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <label for="type">Trade Type</label>
+                                                <label for="type">İşlem Türü</label>
                                                 <select class="form-control" id="type" name="type">
-                                                    <option value="">All</option>
-                                                    <option value="Buy" {{ request('type') == 'Buy' ? 'selected' : '' }}>Buy</option>
-                                                    <option value="Sell" {{ request('type') == 'Sell' ? 'selected' : '' }}>Sell</option>
+                                                    <option value="">Tümü</option>
+                                                    <option value="Buy" {{ request('type') == 'Buy' ? 'selected' : '' }}>Al</option>
+                                                    <option value="Sell" {{ request('type') == 'Sell' ? 'selected' : '' }}>Sat</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label for="asset">Asset</label>
+                                                <label for="asset">Varlık</label>
                                                 <input type="text" class="form-control" id="asset" name="asset"
-                                                       value="{{ request('asset') }}" placeholder="Asset name">
+                                                       value="{{ request('asset') }}" placeholder="Varlık adı">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -188,7 +188,7 @@
                                                 <label>&nbsp;</label>
                                                 <div>
                                                     <button type="submit" class="btn btn-primary btn-block">
-                                                        <i class="fas fa-search mr-1"></i>Filter
+                                                        <i class="fas fa-search mr-1"></i>Filtrele
                                                     </button>
                                                 </div>
                                             </div>
@@ -208,16 +208,16 @@
                         <div class="card-header">
                             <div class="d-flex align-items-center">
                                 <h4 class="card-title">
-                                    <i class="fas fa-table mr-2"></i>User Trades ({{ $trades->total() }} records)
+                                    <i class="fas fa-table mr-2"></i>Kullanıcı İşlemleri ({{ $trades->total() }} kayıt)
                                 </h4>
                                 <div class="ml-auto">
                                     <!-- Test URL Button -->
                                     <button type="button" class="btn btn-info btn-sm mr-2" onclick="testRoutes()">
-                                        <i class="fas fa-bug mr-1"></i>Test Routes
+                                        <i class="fas fa-bug mr-1"></i>Rotaları Test Et
                                     </button>
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fas fa-download mr-1"></i>Export
+                                            <i class="fas fa-download mr-1"></i>Dışa Aktar
                                         </button>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="{{ route('admin.trades.export', ['format' => 'csv'] + request()->all()) }}">
@@ -237,16 +237,16 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>User</th>
-                                            <th>Asset</th>
-                                            <th>Type</th>
-                                            <th>Amount</th>
-                                            <th>Leverage</th>
-                                            <th>Profit/Loss</th>
-                                            <th>Status</th>
-                                            <th>Created</th>
-                                            <th>Expires</th>
-                                            <th class="no-sort">Actions</th>
+                                            <th>Kullanıcı</th>
+                                            <th>Varlık</th>
+                                            <th>Tür</th>
+                                            <th>Miktar</th>
+                                            <th>Kaldıraç</th>
+                                            <th>Kâr/Zarar</th>
+                                            <th>Durum</th>
+                                            <th>Oluşturuldu</th>
+                                            <th>Süresi Doluyor</th>
+                                            <th class="no-sort">İşlemler</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -308,11 +308,11 @@
                                                 <td>
                                                     @if($trade->active == 'yes')
                                                         <span class="badge badge-warning">
-                                                            <i class="fas fa-clock mr-1"></i>Active
+                                                            <i class="fas fa-clock mr-1"></i>Aktif
                                                         </span>
                                                     @elseif($trade->active == 'expired')
                                                         <span class="badge badge-success">
-                                                            <i class="fas fa-check mr-1"></i>Completed
+                                                            <i class="fas fa-check mr-1"></i>Tamamlandı
                                                         </span>
                                                     @else
                                                         <span class="badge badge-secondary">{{ ucfirst($trade->active ?? 'N/A') }}</span>
@@ -334,20 +334,20 @@
                                                     <div class="form-button-action">
                                                         <a href="{{ route('admin.trades.edit', $trade->id) }}"
                                                            class="btn btn-link btn-primary btn-lg"
-                                                           data-original-title="Edit Trade"
-                                                           title="Edit Trade">
+                                                           data-original-title="İşlemi Düzenle"
+                                                           title="İşlemi Düzenle">
                                                             <i class="fa fa-edit"></i>
                                                         </a>
                                                         <button type="button" class="btn btn-link btn-success btn-lg"
                                                                 onclick="showAddProfitForm({{ $trade->id }})"
-                                                                data-original-title="Add Profit"
-                                                                title="Add Profit">
+                                                                data-original-title="Kâr Ekle"
+                                                                title="Kâr Ekle">
                                                             <i class="fa fa-plus"></i>
                                                         </button>
                                                         <button type="button" class="btn btn-link btn-danger"
                                                                 onclick="deleteTrade({{ $trade->id }})"
-                                                                data-original-title="Delete"
-                                                                title="Delete Trade">
+                                                                data-original-title="Sil"
+                                                                title="İşlemi Sil">
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
@@ -361,10 +361,10 @@
                                                             <i class="fas fa-chart-line fa-4x text-muted mb-3"></i>
                                                         </div>
                                                         <div class="empty-state-title">
-                                                            <h3 class="text-muted">No trades found</h3>
+                                                            <h3 class="text-muted">İşlem bulunamadı</h3>
                                                         </div>
                                                         <div class="empty-state-subtitle text-muted">
-                                                            Try adjusting your filters or search criteria.
+                                                            Filtrelerinizi veya arama kriterlerinizi ayarlamayı deneyin.
                                                         </div>
                                                     </div>
                                                 </td>
@@ -392,7 +392,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addProfitModalLabel">
-                    <i class="fas fa-plus-circle mr-2"></i>Add Profit to User ROI
+                    <i class="fas fa-plus-circle mr-2"></i>Kullanıcı ROI'sine Kâr Ekle
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -403,24 +403,24 @@
                 <div class="modal-body">
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle mr-2"></i>
-                        This will add the specified amount to both the trade's profit_earned and the user's ROI.
+                        Bu, belirtilen miktarı hem işlemin kârına hem de kullanıcının ROI'sine ekleyecek.
                     </div>
                     <div class="form-group">
-                        <label for="profit_amount">Profit Amount ($)</label>
+                        <label for="profit_amount">Kâr Miktarı ($)</label>
                         <input type="number" class="form-control" id="profit_amount" name="profit_amount"
-                               step="0.01" required placeholder="Enter amount to add">
-                        <small class="form-text text-muted">Use positive numbers for profit, negative for loss</small>
+                               step="0.01" required placeholder="Eklenecek miktarı girin">
+                        <small class="form-text text-muted">Kâr için pozitif sayılar kullanın, zarar için negatif</small>
                     </div>
                     <div class="form-group">
-                        <label for="profit_note">Note (Optional)</label>
+                        <label for="profit_note">Not (İsteğe Bağlı)</label>
                         <textarea class="form-control" id="profit_note" name="note" rows="3"
-                                  placeholder="Add a note about this profit adjustment..."></textarea>
+                                  placeholder="Bu kâr ayarlaması hakkında bir not ekleyin..."></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
                     <button type="submit" class="btn btn-success">
-                        <i class="fas fa-plus mr-1"></i>Add Profit
+                        <i class="fas fa-plus mr-1"></i>Kâr Ekle
                     </button>
                 </div>
             </form>
@@ -573,7 +573,7 @@ $(document).ready(function() {
             { "orderable": false, "targets": [-1] } // Disable ordering on Actions column
         ],
         "language": {
-            "emptyTable": "No trades found"
+            "emptyTable": "İşlem bulunamadı"
         }
     });    // Auto-dismiss alerts after 5 seconds
     setTimeout(function() {
@@ -618,17 +618,17 @@ function deleteTrade(tradeId) {
     console.log('Delete URL:', deleteUrl);
 
     swal({
-        title: "Delete Trade?",
-        text: "This action cannot be undone. The trade record will be permanently deleted.",
+        title: "İşlemi Sil?",
+        text: "Bu işlem geri alınamaz. İşlem kaydı kalıcı olarak silinecek.",
         type: "warning",
         buttons: {
             cancel: {
                 visible: true,
-                text: "Cancel",
+                text: "İptal",
                 className: "btn btn-secondary"
             },
             confirm: {
-                text: "Yes, delete it!",
+                text: "Evet, sil!",
                 className: "btn btn-danger"
             }
         }
