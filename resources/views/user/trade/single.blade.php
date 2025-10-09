@@ -522,9 +522,9 @@
                     <input type="hidden" name="order_type" x-model="orderType">
                     <input type="hidden" name="trade_type" value="market">
 
-                    <input type="hidden" name="leverage" value="100">
+                    <input type="hidden" name="leverage" id="leverage" value="100">
 
-                    <input type="hidden" name="expire" value="7 Days">
+                    <input type="hidden" name="expire" id="expire" value="7 Days">
 
                     <!-- Price Input (for limit/stop orders) -->
                     <div >
