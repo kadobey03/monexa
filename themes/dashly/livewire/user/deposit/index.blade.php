@@ -37,7 +37,7 @@
                             </div>
                             <!-- Title -->
                             <h3 class="card-title mt-3 mb-0 text-dark">{{ $method->name }}</h3>
-                            <span class="text-muted m-0 p-0">Pay via {{ strtolower($method->name) }}</span>
+                            <span class="text-muted m-0 p-0">{{ strtolower($method->name) }} ile ödeyin</span>
                         </div>
                     </div>
                 </a>
@@ -50,11 +50,11 @@
             <h1 class="m-0 p-0">
                 {{ $methodSelected }}
             </h1>
-            <span class="badge rounded-pill text-bg-primary m-0">selected</span>
+            <span class="badge rounded-pill text-bg-primary m-0">seçildi</span>
         </div>
 
         <div class="col-lg-8 mt-3">
-            <p class="m-0">Select an amount</p>
+            <p class="m-0">Bir miktar seçin</p>
             <div class="row mt-2">
                 <div class="col-lg-4 col-3">
                     <a href="" wire:click.prevent="setAmount(100)">
@@ -99,12 +99,12 @@
                     </a>
                 </div>
                 <div class="col-lg-12 mt-2">
-                    <label class="visually-hidden" for="inlineFormInputGroupUsername">Enter amount</label>
+                    <label class="visually-hidden" for="inlineFormInputGroupUsername">Miktar girin</label>
                     <form action="{{ route('newdeposit') }}" method="POST"
                         class="row row-cols-lg-auto g-3 align-items-center">
                         @csrf
                         <div class="col-12">
-                            <input class="form-control w-100" placeholder="Enter Amount"
+                            <input class="form-control w-100" placeholder="Miktar Girin"
                                 min="{{ $moresettings->minamt }}" type="number" step="any" name="amount"
                                 wire:model.defer='amount' value="{{ $amount }}" required>
                             <input type="hidden" name="payment_method" value="{{ $methodSelected }}"
@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-12">
                             <button class="btn btn-primary">
-                                Proceed
+                                Devam Et
                                 <i class="bi bi-arrow-right"></i>
                             </button>
                         </div>

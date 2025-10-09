@@ -8,15 +8,15 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h5>Deposit history</h5>
+                    <h5>Yatırım Geçmişi</h5>
                     <div class="table-responsive">
                         <table class="table text-center">
                             <thead>
                                 <tr>
-                                    <th>Amount</th>
-                                    <th>Payment mode</th>
-                                    <th>Status</th>
-                                    <th>Date created</th>
+                                    <th>Miktar</th>
+                                    <th>Ödeme Yöntemi</th>
+                                    <th>Durum</th>
+                                    <th>Oluşturulma Tarihi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,7 +39,7 @@
                                     <tr>
                                         <td class="py-5" colspan="4">
                                             <i class="bi bi-database-fill-exclamation" style="font-size: 50px"></i>
-                                            <h5>No deposit history</h5>
+                                            <h5>Yatırım geçmişi yok</h5>
                                         </td>
                                     </tr>
                                 @endforelse
