@@ -522,9 +522,6 @@
                     <input type="hidden" name="order_type" x-model="orderType">
                     <input type="hidden" name="trade_type" value="market">
 
-                    <input type="hidden" name="leverage" id="leverage" value="100">
-
-                    <input type="hidden" name="expire" id="expire" value="7 Days">
 
                     <!-- Price Input (for limit/stop orders) -->
                     <div >
@@ -633,28 +630,6 @@ function tradingSingle() {
                 return;
             }
 
-            const leverage = document.getElementById('leverage').value;
-            const expire = document.getElementById('expire').value;
-
-            if (!leverage) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Kaldıraç Seç',
-                    text: 'Please select a leverage ratio.',
-                    confirmButtonColor: '#3B82F6'
-                });
-                return;
-            }
-
-            if (!expire) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Son Kullanma Seç',
-                    text: 'Please select an expiration time.',
-                    confirmButtonColor: '#3B82F6'
-                });
-                return;
-            }
 
             const total = this.formatAmount();
             const units = this.formatUnits();
@@ -664,12 +639,10 @@ function tradingSingle() {
                 title: `Al/Sat Siparişini Onayla`,
                 html: `
                     <div class="text-left space-y-2">
-                        <p><strong>Instrument:</strong> ${this.instrument.symbol}</p>
-                        <p><strong>Action:</strong> ${action}</p>
-                        <p><strong>Investment Amount:</strong> ${total}</p>
-                        <p><strong>Units:</strong> ${units}</p>
-                        <p><strong>Leverage:</strong> 1:${leverage}</p>
-                        <p><strong>Expiration:</strong> ${expire}</p>
+                        <p><strong>Enstrüman:</strong> ${this.instrument.symbol}</p>
+                        <p><strong>İşlem:</strong> ${action}</p>
+                        <p><strong>Yatırım Miktarı:</strong> ${total}</p>
+                        <p><strong>Birimler:</strong> ${units}</p>
                     </div>
                 `,
                 icon: 'question',
