@@ -7,10 +7,10 @@
     <div class="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="text-center">
             <h1 class="text-2xl font-medium text-gray-900 dark:text-white">
-                Fund Your Account
+                Hesabınızı Yatırın
             </h1>
             <p class="mt-2 text-gray-600 dark:text-gray-400">
-                Secure deposits to start trading
+                Alım satım yapmaya başlamak için güvenli yatırımlar
             </p>
         </div>
     </div>
@@ -26,7 +26,7 @@
 
     <!-- Quick Amount Selector -->
     <div class="mb-8 text-center">
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Quick amounts:</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Hızlı miktarlar:</p>
         <div class="flex flex-wrap justify-center gap-3">
             @php
                 $quickAmounts = [100, 500, 1000, 5000];
@@ -49,7 +49,7 @@
             <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-                        Make a Deposit
+                        Yatırım Yapın
                     </h2>
                     <div class="flex items-center gap-2 px-3 py-1 bg-green-50 dark:bg-green-900/20 rounded-full">
                         <i data-lucide="shield-check" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
@@ -64,7 +64,7 @@
                     <!-- Payment Method Selection -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Payment Method <span class="text-red-500">*</span>
+                            Ödeme Yöntemi <span class="text-red-500">*</span>
                         </label>
                         <select name="payment_method" required
                                 class="block w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
@@ -80,7 +80,7 @@
                     <!-- Amount Input -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Amount to Deposit <span class="text-red-500">*</span>
+                            Yatırım Miktarı <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -97,7 +97,7 @@
                                           rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
-                            Enter the amount you wish to deposit
+                            Yatırmak istediğiniz miktarı girin
                         </p>
                     </div>
 
@@ -105,7 +105,7 @@
                     <div class="pt-4">
                         <button type="submit"
                                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors">
-                            Proceed with Deposit
+                            Yatırım İle İlerle
                         </button>
                     </div>
                 </form>
@@ -117,7 +117,7 @@
             <!-- Payment Methods Card -->
             <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                    Payment Methods
+                    Ödeme Yöntemleri
                 </h3>
                 <div class="space-y-3">
                     @foreach ($dmethods as $method)
@@ -132,7 +132,7 @@
             <!-- Deposit Guide Card -->
             <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                    How to Deposit
+                    Nasıl Yatırım Yapılır
                 </h3>
                 <div class="space-y-4">
                     <div class="flex items-start gap-3">
@@ -140,7 +140,7 @@
                             <span class="text-xs font-medium text-gray-600 dark:text-gray-400">1</span>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Choose your payment method
+                            Ödeme yönteminizi seçin
                         </p>
                     </div>
                     <div class="flex items-start gap-3">
@@ -148,7 +148,7 @@
                             <span class="text-xs font-medium text-gray-600 dark:text-gray-400">2</span>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Enter deposit amount
+                            Yatırım miktarını girin
                         </p>
                     </div>
                     <div class="flex items-start gap-3">
@@ -156,7 +156,7 @@
                             <span class="text-xs font-medium text-gray-600 dark:text-gray-400">3</span>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Complete secure payment
+                            Güvenli ödemeyi tamamlayın
                         </p>
                     </div>
                 </div>
