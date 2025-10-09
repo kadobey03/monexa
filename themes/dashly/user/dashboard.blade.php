@@ -363,7 +363,7 @@
                                 <div class="text-center card-body py-4">
                                     <i class="bi bi-database-fill-exclamation" style="font-size: 50px"></i>
                                     <p>Şu anda aktif bir yatırımınız yok.</p>
-                                    <a href="{{ route('mplans') }}" class="btn btn-primary">
+                                    <a href="{{ route('trade.index') }}" class="btn btn-primary">
                                         Şimdi Yatırım Yap
                                     </a>
                                 </div>
