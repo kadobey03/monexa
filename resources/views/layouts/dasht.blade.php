@@ -481,7 +481,7 @@
             <h3 class="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Live Market</h3>
             <span class="flex items-center text-xs text-green-600 dark:text-green-400">
                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
-                <span class="font-medium">LIVE</span>
+                <span class="font-medium">Canlı</span>
             </span>
         </div>
         <div class="space-y-2">
@@ -768,6 +768,7 @@
              transition-colors duration-300">Profil</span>
     </a>
 
+<<<<<<< HEAD
     <!-- Animated FAB Button -->
     <button @click="fabOpen = !fabOpen"
             class="absolute -top-7 left-1/2 transform -translate-x-1/2
@@ -782,6 +783,26 @@
       <!-- Pulse Effect -->
       <span class="absolute w-full h-full rounded-full bg-blue-500 animate-ping opacity-20"></span>
     </button>
+=======
+    <a href="{{ route('trade.index') }}"
+       class="group flex flex-col items-center relative">
+      <div class="p-2 rounded-xl transition-all duration-300 ease-out
+                  {{ request()->routeIs('trade.index')
+                     ? 'bg-blue-500/10 dark:bg-blue-400/10 scale-110'
+                     : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
+        <i data-lucide="zap" class="w-6 h-6
+           {{ request()->routeIs('trade.index')
+              ? 'text-blue-600 dark:text-blue-400'
+              : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
+           transition-colors duration-300"></i>
+      </div>
+      <span class="text-xs font-medium mt-1
+             {{ request()->routeIs('trade.index')
+                ? 'text-blue-600 dark:text-blue-400'
+                : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
+             transition-colors duration-300">İşlem Aç</span>
+    </a>
+>>>>>>> 7efd95a447d0bb0988400a050e609f6d7f4e7cee
 
 <a href="{{ route('support') }}"
    class="flex flex-col items-center

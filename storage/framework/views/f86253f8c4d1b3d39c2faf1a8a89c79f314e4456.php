@@ -53,7 +53,7 @@
                             <div class="text-center">
                                 <div class="flex items-center justify-center gap-1 text-green-400 mb-1">
                                     <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                                    <span class="font-medium">Live</span>
+                                    <span class="font-medium">CANLI</span>
                                 </div>
                                 <div class="text-gray-400">24/7 Markets</div>
                             </div>
