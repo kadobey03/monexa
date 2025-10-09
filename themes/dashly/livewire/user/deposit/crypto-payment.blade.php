@@ -37,15 +37,15 @@
                             @if ($settings->deposit_option == 'manual')
                                 @if (!empty($payment_mode->barcode))
                                     <div class="text-center">
-                                        <p class="m-0">Scan the barcode below to make payment</p>
+                                        <p class="m-0">Aşağıdaki barkodu tarayarak ödeme yapın</p>
                                         <img src="{{ asset('storage/app/public/' . $payment_mode->barcode) }}"
                                             alt="" class="img-fluid w-25 m-0">
                                     </div>
                                 @endif
                                 <div class="mt-5">
                                     <p class="m-0">
-                                        Or Send {{ $settings->currency }}{{ $amount }} to the
-                                        address below
+                                        Veya {{ $settings->currency }}{{ $amount }} miktarını aşağıdaki
+                                        adrese gönderin
                                     </p>
                                     <div class="d-flex mt-2">
                                         <input id="key-02" class="form-control me-3"
@@ -62,7 +62,7 @@
                                     </div>
                                     @if ($payment_mode->network)
                                         <small class="d-block mt-1">
-                                            <strong>Network Type:</strong>
+                                            <strong>Ağ Türü:</strong>
                                             {{ $payment_mode->network }}
                                         </small>
                                     @endif
@@ -79,7 +79,7 @@
                                     @else
                                         <a href="{{ url('dashboard/cpay') }}/{{ $amount }}/{{ $coin }}/{{ Auth::user()->id }}/new"
                                             class="btn btn-primary">
-                                            Pay Via Coinpayment
+                                            Coinpayment ile Öde
                                         </a>
                                     @endif
                                 </div>

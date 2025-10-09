@@ -19,14 +19,14 @@
         <div class="text-center mb-8">
             <div class="inline-flex items-center gap-3 px-4 py-2 bg-blue-500/10 rounded-full border border-blue-500/20 mb-6">
                 <i data-lucide="shield-check" class="w-5 h-5 text-blue-400"></i>
-                <span class="text-sm font-medium text-blue-300">Secure Payment Gateway</span>
+                <span class="text-sm font-medium text-blue-300">Güvenli Ödeme Ağ Geçidi</span>
             </div>
             <h1 class="text-3xl sm:text-4xl font-bold text-white mb-4">
-                Complete Your Deposit
+                Yatırımınızı Tamamlayın
             </h1>
             <p class="text-lg text-gray-300 max-w-2xl mx-auto">i
-                Securely deposit funds using <span class="text-blue-400 font-semibold">{{ $payment_mode->name }}</span>
-                to start trading immediately
+                <span class="text-blue-400 font-semibold">{{ $payment_mode->name }}</span> kullanarak
+                fonları güvenli bir şekilde yatırın ve hemen ticarete başlayın
             </p>
         </div>
 
@@ -37,24 +37,24 @@
                     <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500 rounded-full flex items-center justify-center">
                         <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-white"></i>
                     </div>
-                    <span class="ml-2 sm:ml-3 text-xs sm:text-sm font-medium text-blue-400 hidden sm:inline">Payment Method</span>
-                    <span class="ml-2 text-xs font-medium text-blue-400 sm:hidden">Method</span>
+                    <span class="ml-2 sm:ml-3 text-xs sm:text-sm font-medium text-blue-400 hidden sm:inline">Ödeme Yöntemi</span>
+                    <span class="ml-2 text-xs font-medium text-blue-400 sm:hidden">Yöntem</span>
                 </div>
                 <div class="w-4 sm:w-8 h-0.5 bg-blue-500"></div>
                 <div class="flex items-center">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/20 border-2 border-blue-500 rounded-full flex items-center justify-center">
                         <span class="text-xs sm:text-sm font-bold text-blue-400">2</span>
                     </div>
-                    <span class="ml-2 sm:ml-3 text-xs sm:text-sm font-medium text-white hidden sm:inline">Send Payment</span>
-                    <span class="ml-2 text-xs font-medium text-white sm:hidden">Payment</span>
+                    <span class="ml-2 sm:ml-3 text-xs sm:text-sm font-medium text-white hidden sm:inline">Ödeme Gönder</span>
+                    <span class="ml-2 text-xs font-medium text-white sm:hidden">Ödeme</span>
                 </div>
                 <div class="w-4 sm:w-8 h-0.5 bg-gray-600"></div>
                 <div class="flex items-center">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 bg-gray-700 rounded-full flex items-center justify-center">
                         <span class="text-xs sm:text-sm font-bold text-gray-400">3</span>
                     </div>
-                    <span class="ml-2 sm:ml-3 text-xs sm:text-sm font-medium text-gray-400 hidden sm:inline">Confirmation</span>
-                    <span class="ml-2 text-xs font-medium text-gray-400 sm:hidden">Confirm</span>
+                    <span class="ml-2 sm:ml-3 text-xs sm:text-sm font-medium text-gray-400 hidden sm:inline">Onay</span>
+                    <span class="ml-2 text-xs font-medium text-gray-400 sm:hidden">Onayla</span>
                 </div>
             </div>
         </div>
@@ -73,18 +73,18 @@
                                 <i data-lucide="credit-card" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400"></i>
                             </div>
                             <div>
-                                <h2 class="text-lg sm:text-xl font-bold text-white">Payment Details</h2>
-                                <p class="text-sm sm:text-base text-gray-400">{{ $payment_mode->name }} Deposit</p>
+                                <h2 class="text-lg sm:text-xl font-bold text-white">Ödeme Detayları</h2>
+                                <p class="text-sm sm:text-base text-gray-400">{{ $payment_mode->name }} Yatırım</p>
                             </div>
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30">
                                 <i data-lucide="shield" class="w-3 h-3 mr-1"></i>
-                                SSL Secured
+                                SSL Güvenli
                             </span>
                             <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">
                                 <i data-lucide="clock" class="w-3 h-3 mr-1"></i>
-                                24/7 Support
+                                7/24 Destek
                             </span>
                         </div>
                     </div>
@@ -100,14 +100,14 @@
                             <div class="text-center">
                                 <div class="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-400 mb-2">
                                     <i data-lucide="banknote" class="w-3 h-3 sm:w-4 sm:h-4"></i>
-                                    <span>Amount to Deposit</span>
+                                    <span>Yatırılacak Miktar</span>
                                 </div>
                                 <div class="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 break-all">
                                     {{ $amount }}<span class="text-lg sm:text-2xl text-gray-400">{{ Auth::user()->currency }}</span>
                                 </div>
                                 <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-500/20 rounded-full border border-amber-500/30">
                                     <i data-lucide="alert-triangle" class="w-3 h-3 sm:w-4 sm:h-4 text-amber-400"></i>
-                                    <span class="text-xs sm:text-sm text-amber-300">Send exact amount to avoid delays</span>
+                                    <span class="text-xs sm:text-sm text-amber-300">Gecikmeleri önlemek için tam miktarı gönderin</span>
                                 </div>
                             </div>
                         </div>
@@ -120,31 +120,31 @@
                                 <i data-lucide="info" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h3 class="text-base sm:text-lg font-semibold text-white mb-3">How to Complete Your Payment</h3>
+                                <h3 class="text-base sm:text-lg font-semibold text-white mb-3">Ödemenizi Nasıl Tamamlayacağınız</h3>
                                 <div class="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4">
                                     <div class="flex items-start gap-3">
                                         <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0">1</div>
                                         <div class="min-w-0">
-                                            <h4 class="font-medium text-white text-sm sm:text-base">Send Payment</h4>
+                                            <h4 class="font-medium text-white text-sm sm:text-base">Ödeme Gönder</h4>
                                             @if($payment_mode->methodtype == 'crypto')
-                                                <p class="text-xs sm:text-sm text-gray-400 break-words">Transfer {{ $amount }}{{ Auth::user()->currency }} to the wallet address</p>
+                                                <p class="text-xs sm:text-sm text-gray-400 break-words">{{ $amount }}{{ Auth::user()->currency }} miktarını cüzdan adresine aktarın</p>
                                             @else
-                                                <p class="text-xs sm:text-sm text-gray-400 break-words">Transfer {{ $amount }}{{ Auth::user()->currency }} to the bank account details</p>
+                                                <p class="text-xs sm:text-sm text-gray-400 break-words">{{ $amount }}{{ Auth::user()->currency }} miktarını banka hesabı detaylarına aktarın</p>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="flex items-start gap-3">
                                         <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0">2</div>
                                         <div class="min-w-0">
-                                            <h4 class="font-medium text-white text-sm sm:text-base">Upload Proof</h4>
-                                            <p class="text-xs sm:text-sm text-gray-400">Take a screenshot of your transaction</p>
+                                            <h4 class="font-medium text-white text-sm sm:text-base">Kanıt Yükle</h4>
+                                            <p class="text-xs sm:text-sm text-gray-400">İşleminizin ekran görüntüsünü çekin</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start gap-3">
                                         <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0">3</div>
                                         <div class="min-w-0">
-                                            <h4 class="font-medium text-white text-sm sm:text-base">Submit & Wait</h4>
-                                            <p class="text-xs sm:text-sm text-gray-400">Submit proof and wait for confirmation</p>
+                                            <h4 class="font-medium text-white text-sm sm:text-base">Gönder ve Bekle</h4>
+                                            <p class="text-xs sm:text-sm text-gray-400">Kanıtı gönderin ve onay için bekleyin</p>
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +160,7 @@
                         <div class="space-y-4 sm:space-y-6">
                             <h3 class="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
                                 <i data-lucide="qr-code" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
-                                QR Code Payment
+                                QR Kod Ödemesi
                             </h3>
 
                             <div class="relative group">
@@ -178,7 +178,7 @@
                             </div>
 
                             <p class="text-xs sm:text-sm text-gray-400 text-center">
-                                Scan with your wallet app to send payment instantly
+                                Ödemeyi anında göndermek için cüzdan uygulamanızla tarayın
                             </p>
                         </div>
                         @else
@@ -186,7 +186,7 @@
                         <div class="space-y-4 sm:space-y-6">
                             <h3 class="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
                                 <i data-lucide="building-2" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
-                                Bank Transfer Details
+                                Banka Transfer Detayları
                             </h3>
 
                             <div class="relative group">
@@ -250,7 +250,7 @@
                             </div>
 
                             <p class="text-xs sm:text-sm text-gray-400 text-center">
-                                Transfer funds using your bank's online banking or mobile app
+                                Bankanızın çevrimiçi bankacılık veya mobil uygulaması kullanarak fonları aktarın
                             </p>
                         </div>
                         @endif
@@ -263,7 +263,7 @@
                             <div class="space-y-3">
                                 <label class="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
                                     <i data-lucide="wallet" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
-                                    Wallet Address
+                                    Cüzdan Adresi
                                 </label>
                                 <div class="relative group">
                                     <div class="flex flex-col sm:flex-row">
@@ -295,7 +295,7 @@
                             <div class="space-y-3">
                                 <label class="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
                                     <i data-lucide="upload" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
-                                    Upload Payment Proof
+                                    Ödeme Kanıtı Yükle
                                 </label>
 
                                 <div class="relative">
@@ -320,8 +320,8 @@
                                             </div>
 
                                             <div x-show="!fileName">
-                                                <p class="text-sm sm:text-lg font-medium text-white">Choose file or drag & drop</p>
-                                                <p class="text-xs sm:text-sm text-gray-400">PNG, JPG, GIF up to 10MB</p>
+                                                <p class="text-sm sm:text-lg font-medium text-white">Dosya seçin veya sürükleyip bırakın</p>
+                                                <p class="text-xs sm:text-sm text-gray-400">PNG, JPG, GIF 10MB'ye kadar</p>
                                             </div>
 
                                             <div x-show="fileName" class="text-center">
@@ -330,7 +330,7 @@
                                                 <button type="button"
                                                         @click.stop="removeFile()"
                                                         class="mt-2 text-red-400 hover:text-red-300 text-xs sm:text-sm">
-                                                    Remove file
+                                                    Dosyayı kaldır
                                                 </button>
                                             </div>
                                         </div>
@@ -357,14 +357,14 @@
                             <div class="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-200"></div>
                             <div class="relative bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl flex items-center justify-center gap-2 sm:gap-3 transition-all duration-200">
                                 <i data-lucide="send" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                                <span class="text-sm sm:text-lg font-semibold">Submit Payment Proof</span>
+                                <span class="text-sm sm:text-lg font-semibold">Ödeme Kanıtını Gönder</span>
                             </div>
                         </button>
 
                         <!-- Security Notice -->
                         <div class="mt-4 sm:mt-6 flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-400">
                             <i data-lucide="shield-check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-400"></i>
-                            <span>Protected by 256-bit SSL encryption</span>
+                            <span>256-bit SSL şifreleme ile korunuyor</span>
                         </div>
                     </div>
                 </div>
@@ -377,24 +377,24 @@
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <i data-lucide="headphones" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400"></i>
                 </div>
-                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">24/7 Support</h3>
-                <p class="text-gray-400 text-xs sm:text-sm">Need help? Our support team is available around the clock</p>
+                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">7/24 Destek</h3>
+                <p class="text-gray-400 text-xs sm:text-sm">Yardım mı lazım? Destek ekibimiz 24 saat hizmet veriyor</p>
             </div>
 
             <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 text-center">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <i data-lucide="zap" class="w-5 h-5 sm:w-6 sm:h-6 text-green-400"></i>
                 </div>
-                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">Instant Processing</h3>
-                <p class="text-gray-400 text-xs sm:text-sm">Deposits are processed within minutes of confirmation</p>
+                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">Anında İşleme</h3>
+                <p class="text-gray-400 text-xs sm:text-sm">Yatırımlar onaydan sonraki dakikalar içinde işlenir</p>
             </div>
 
             <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 text-center md:col-span-1">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <i data-lucide="shield" class="w-5 h-5 sm:w-6 sm:h-6 text-purple-400"></i>
                 </div>
-                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">Bank-Grade Security</h3>
-                <p class="text-gray-400 text-xs sm:text-sm">Your funds and data are protected with enterprise security</p>
+                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">Banka Seviyesi Güvenlik</h3>
+                <p class="text-gray-400 text-xs sm:text-sm">Fonlarınız ve verileriniz kurumsal güvenlik önlemleriyle korunur</p>
             </div>
         </div>
     </div>
