@@ -7,8 +7,8 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Profile Settings</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-2">Manage your account details and security preferences</p>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Profil Ayarları</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">Hesap bilgilerinizi ve güvenlik tercihlerinizi yönetin</p>
             </div>
             <a href="{{ route('dashboard') }}"
                class="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
@@ -28,13 +28,13 @@
                 <li class="inline-flex items-center">
                     <a href="{{ route('dashboard') }}" class="inline-flex items-center text-sm text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
                         <i data-lucide="home" class="w-4 h-4 mr-2"></i>
-                        Home
+                        Ana Sayfa
                     </a>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
                         <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 mx-1"></i>
-                        <span class="text-sm text-gray-500 dark:text-gray-400">Profile</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Profil</span>
                     </div>
                 </li>
             </ol>
@@ -64,11 +64,11 @@
                 <div class="flex px-6">
                     <button @click="activeTab = 'per'" :class="{ 'border-b-2 border-blue-500': activeTab === 'per', 'text-blue-600 dark:text-blue-400': activeTab === 'per', 'text-gray-300 dark:text-gray-400': activeTab !== 'per' }" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors">
                         <i data-lucide="user" class="w-5 h-5"></i>
-                        <span>Personal Information</span>
+                        <span>Kişisel Bilgiler</span>
                     </button>
                     <button @click="activeTab = 'pas'" :class="{ 'border-b-2 border-blue-500': activeTab === 'pas', 'text-blue-600 dark:text-blue-400': activeTab === 'pas', 'text-gray-300 dark:text-gray-400': activeTab !== 'pas' }" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors">
                         <i data-lucide="lock" class="w-5 h-5"></i>
-                        <span>Security</span>
+                        <span>Güvenlik</span>
                     </button>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                             </div>
                             <div class="ml-3">
                                 <p class="text-sm text-blue-700 dark:text-blue-400">
-                                    Your personal information helps us personalize your experience. Please ensure all details are accurate and up-to-date.
+                                    Kişisel bilgileriniz deneyiminizi kişiselleştirmemize yardımcı olur. Lütfen tüm ayrıntıların doğru ve güncel olduğundan emin olun.
                                 </p>
                             </div>
                         </div>
@@ -116,8 +116,8 @@
                     <i data-lucide="activity" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold text-white dark:text-white">Recent Activity</h2>
-                    <p class="text-sm text-gray-300 dark:text-gray-400">Latest actions on your account</p>
+                    <h2 class="text-xl font-bold text-white dark:text-white">Son Aktiviteler</h2>
+                    <p class="text-sm text-gray-300 dark:text-gray-400">Hesabınızdaki son işlemler</p>
                 </div>
             </div>
 
@@ -127,8 +127,8 @@
                         <i data-lucide="log-in" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-white dark:text-white">Account Login</p>
-                        <p class="text-xs text-gray-300 dark:text-gray-400">Last login from {{ request()->ip() }}</p>
+                        <p class="text-sm font-medium text-white dark:text-white">Hesap Girişi</p>
+                        <p class="text-xs text-gray-300 dark:text-gray-400">Son giriş {{ request()->ip() }}</p>
                     </div>
                     <div class="text-right">
                         <p class="text-xs font-medium text-gray-300 dark:text-gray-400">{{ \Carbon\Carbon::now()->subMinutes(rand(5, 120))->diffForHumans() }}</p>
@@ -140,8 +140,8 @@
                         <i data-lucide="settings" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-white dark:text-white">Profile Updated</p>
-                        <p class="text-xs text-gray-300 dark:text-gray-400">You updated your profile information</p>
+                        <p class="text-sm font-medium text-white dark:text-white">Profil Güncellendi</p>
+                        <p class="text-xs text-gray-300 dark:text-gray-400">Profil bilgilerinizi güncellediniz</p>
                     </div>
                     <div class="text-right">
                         <p class="text-xs font-medium text-gray-300 dark:text-gray-400">

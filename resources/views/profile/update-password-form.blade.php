@@ -7,7 +7,7 @@
             </div>
             <div class="ml-3">
                 <p class="text-sm text-blue-700 dark:text-blue-400">
-                    Updating your password regularly helps keep your account secure. Create a strong password that you don't use elsewhere.
+                    Şifrenizi düzenli olarak güncellemek hesabınızın güvenliğini sağlar. Başka yerde kullanmadığınız güçlü bir şifre oluşturun.
                 </p>
             </div>
         </div>
@@ -22,7 +22,7 @@
             <!-- Current Password -->
             <div class="space-y-2">
                 <label for="current_password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Current Password
+                    Mevcut Şifre
                 </label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -35,7 +35,7 @@
                         :type="showOldPassword ? 'text' : 'password'"
                         class="pl-10 pr-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         required
-                        placeholder="Enter current password"
+                        placeholder="Mevcut şifreyi girin"
                     >
                     <div class="absolute inset-y-0 right-0 flex items-center px-3">
                         <button
@@ -53,7 +53,7 @@
             <!-- New Password -->
             <div class="space-y-2">
                 <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    New Password
+                    Yeni Şifre
                 </label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -66,7 +66,7 @@
                         :type="showNewPassword ? 'text' : 'password'"
                         class="pl-10 pr-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         required
-                        placeholder="Enter new password"
+                        placeholder="Yeni şifre girin"
                         @input="checkPasswordStrength($event.target.value)"
                     >
                     <div class="absolute inset-y-0 right-0 flex items-center px-3">
@@ -85,7 +85,7 @@
                 <div class="mt-2">
                     <div class="flex items-center justify-between mb-1">
                         <div class="text-xs font-medium text-gray-500 dark:text-gray-400" x-text="passwordFeedback"></div>
-                        <div class="text-xs font-medium text-gray-500 dark:text-gray-400">Password Strength</div>
+                        <div class="text-xs font-medium text-gray-500 dark:text-gray-400">Şifre Gücü</div>
                     </div>
                     <div class="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                         <div
@@ -104,7 +104,7 @@
             <!-- Confirm New Password -->
             <div class="space-y-2">
                 <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Confirm New Password
+                    Yeni Şifreyi Onayla
                 </label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -117,7 +117,7 @@
                         :type="showConfirmPassword ? 'text' : 'password'"
                         class="pl-10 pr-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         required
-                        placeholder="Confirm new password"
+                        placeholder="Yeni şifreyi onaylayın"
                     >
                     <div class="absolute inset-y-0 right-0 flex items-center px-3">
                         <button
@@ -140,7 +140,7 @@
                 class="inline-flex items-center px-6 py-4 border border-transparent rounded-xl shadow-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
             >
                 <i data-lucide="save" class="mr-2 h-5 w-5"></i>
-                Update Password
+                Şifreyi Güncelle
             </button>
         </div>
     </form>
@@ -153,7 +153,7 @@
             <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
                 <i data-lucide="shield-check" class="h-5 w-5 text-indigo-600 dark:text-indigo-400"></i>
             </div>
-            <h3 class="text-base font-medium text-gray-900 dark:text-white">Password Requirements</h3>
+            <h3 class="text-base font-medium text-gray-900 dark:text-white">Şifre Gereksinimleri</h3>
         </div>
 
         <div class="space-y-3 pl-2">
@@ -162,7 +162,7 @@
                     <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
-                    Minimum 8 characters long - the more, the better
+                    Minimum 8 karakter uzunluğunda - ne kadar çok olursa o kadar iyi
                 </p>
             </div>
 
@@ -171,7 +171,7 @@
                     <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
-                    At least one lowercase character
+                    En az bir küçük harf
                 </p>
             </div>
 
@@ -180,7 +180,7 @@
                     <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
-                    At least one uppercase character
+                    En az bir büyük harf
                 </p>
             </div>
 
@@ -189,7 +189,7 @@
                     <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
-                    At least one number or special symbol
+                    En az bir sayı veya özel sembol
                 </p>
             </div>
         </div>
@@ -227,13 +227,13 @@
 
                     // Set feedback based on strength
                     if (strength < 25) {
-                        this.passwordFeedback = 'Very Weak';
+                        this.passwordFeedback = 'Çok Zayıf';
                     } else if (strength < 50) {
-                        this.passwordFeedback = 'Weak';
+                        this.passwordFeedback = 'Zayıf';
                     } else if (strength < 75) {
-                        this.passwordFeedback = 'Moderate';
+                        this.passwordFeedback = 'Orta';
                     } else {
-                        this.passwordFeedback = 'Strong';
+                        this.passwordFeedback = 'Güçlü';
                     }
                 }
             }));

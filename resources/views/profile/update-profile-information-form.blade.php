@@ -8,9 +8,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div class="md:col-span-1">
                     <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Full Name
+                        Tam Ad
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Your display name on the platform</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Platformdaki görünen adınız</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -33,9 +33,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div class="md:col-span-1">
                     <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Phone Number
+                        Telefon Numarası
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Used for account verification</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Hesap doğrulaması için kullanılır</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -57,9 +57,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div class="md:col-span-1">
                     <label for="emailAddress" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Email Address
+                        E-posta Adresi
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Your primary contact email</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Birincil iletişim e-postanız</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -77,7 +77,7 @@
                     <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                         <span class="inline-flex items-center">
                             <i data-lucide="info" class="h-3.5 w-3.5 mr-1 text-gray-400"></i>
-                            Email address cannot be changed
+                            E-posta adresi değiştirilemez
                         </span>
                     </p>
                 </div>
@@ -87,9 +87,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
                 <div class="md:col-span-1">
                     <label for="country" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Country
+                        Ülke
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Your current location</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Mevcut konumunuz</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -105,253 +105,253 @@
 
                             <option value="{{ Auth::user()->country }}" selected disabled>{{ Auth::user()->country }}</option>
 
-                            <option value="Afganistan">Afghanistan</option>
-<option value="Albania">Albania</option>
-<option value="Algeria">Algeria</option>
-<option value="American Samoa">American Samoa</option>
+                            <option value="Afganistan">Afganistan</option>
+<option value="Albania">Arnavutluk</option>
+<option value="Algeria">Cezayir</option>
+<option value="American Samoa">Amerikan Samoası</option>
 <option value="Andorra">Andorra</option>
 <option value="Angola">Angola</option>
 <option value="Anguilla">Anguilla</option>
-<option value="Antigua &amp; Barbuda">Antigua &amp; Barbuda</option>
-<option value="Argentina">Argentina</option>
-<option value="Armenia">Armenia</option>
+<option value="Antigua & Barbuda">Antigua ve Barbuda</option>
+<option value="Argentina">Arjantin</option>
+<option value="Armenia">Ermenistan</option>
 <option value="Aruba">Aruba</option>
-<option value="Australia">Australia</option>
-<option value="Austria">Austria</option>
-<option value="Azerbaijan">Azerbaijan</option>
-<option value="Bahamas">Bahamas</option>
-<option value="Bahrain">Bahrain</option>
-<option value="Bangladesh">Bangladesh</option>
+<option value="Australia">Avustralya</option>
+<option value="Austria">Avusturya</option>
+<option value="Azerbaijan">Azerbaycan</option>
+<option value="Bahamas">Bahamalar</option>
+<option value="Bahrain">Bahreyn</option>
+<option value="Bangladesh">Bangladeş</option>
 <option value="Barbados">Barbados</option>
 <option value="Belarus">Belarus</option>
-<option value="Belgium">Belgium</option>
+<option value="Belgium">Belçika</option>
 <option value="Belize">Belize</option>
 <option value="Benin">Benin</option>
 <option value="Bermuda">Bermuda</option>
-<option value="Bhutan">Bhutan</option>
-<option value="Bolivia">Bolivia</option>
+<option value="Bhutan">Butan</option>
+<option value="Bolivia">Bolivya</option>
 <option value="Bonaire">Bonaire</option>
-<option value="Bosnia &amp; Herzegovina">Bosnia &amp; Herzegovina</option>
-<option value="Botswana">Botswana</option>
-<option value="Brazil">Brazil</option>
-<option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+<option value="Bosnia & Herzegovina">Bosna Hersek</option>
+<option value="Botswana">Botsvana</option>
+<option value="Brazil">Brezilya</option>
+<option value="British Indian Ocean Ter">Britanya Hint Okyanusu Toprakları</option>
 <option value="Brunei">Brunei</option>
-<option value="Bulgaria">Bulgaria</option>
+<option value="Bulgaria">Bulgaristan</option>
 <option value="Burkina Faso">Burkina Faso</option>
 <option value="Burundi">Burundi</option>
-<option value="Cambodia">Cambodia</option>
-<option value="Cameroon">Cameroon</option>
-<option value="Canada">Canada</option>
-<option value="Canary Islands">Canary Islands</option>
-<option value="Cape Verde">Cape Verde</option>
-<option value="Cayman Islands">Cayman Islands</option>
-<option value="Central African Republic">Central African Republic</option>
-<option value="Chad">Chad</option>
-<option value="Channel Islands">Channel Islands</option>
-<option value="Chile">Chile</option>
-<option value="China">China</option>
-<option value="Christmas Island">Christmas Island</option>
-<option value="Cocos Island">Cocos Island</option>
-<option value="Colombia">Colombia</option>
-<option value="Comoros">Comoros</option>
-<option value="Congo">Congo</option>
-<option value="Cook Islands">Cook Islands</option>
-<option value="Costa Rica">Costa Rica</option>
-<option value="Cote DIvoire">Cote D'Ivoire</option>
-<option value="Croatia">Croatia</option>
-<option value="Cuba">Cuba</option>
-<option value="Curaco">Curacao</option>
-<option value="Cyprus">Cyprus</option>
-<option value="Czech Republic">Czech Republic</option>
-<option value="Denmark">Denmark</option>
-<option value="Djibouti">Djibouti</option>
-<option value="Dominica">Dominica</option>
-<option value="Dominican Republic">Dominican Republic</option>
-<option value="East Timor">East Timor</option>
-<option value="Ecuador">Ecuador</option>
-<option value="Egypt">Egypt</option>
+<option value="Cambodia">Kamboçya</option>
+<option value="Cameroon">Kamerun</option>
+<option value="Canada">Kanada</option>
+<option value="Canary Islands">Kanarya Adaları</option>
+<option value="Cape Verde">Yeşil Burun Adaları</option>
+<option value="Cayman Islands">Kayman Adaları</option>
+<option value="Central African Republic">Orta Afrika Cumhuriyeti</option>
+<option value="Chad">Çad</option>
+<option value="Channel Islands">Kanal Adaları</option>
+<option value="Chile">Şili</option>
+<option value="China">Çin</option>
+<option value="Christmas Island">Christmas Adası</option>
+<option value="Cocos Island">Cocos Adası</option>
+<option value="Colombia">Kolombiya</option>
+<option value="Comoros">Komorlar</option>
+<option value="Congo">Kongo</option>
+<option value="Cook Islands">Cook Adaları</option>
+<option value="Costa Rica">Kosta Rika</option>
+<option value="Cote DIvoire">Fildişi Sahili</option>
+<option value="Croatia">Hırvatistan</option>
+<option value="Cuba">Küba</option>
+<option value="Curaco">Curaçao</option>
+<option value="Cyprus">Kıbrıs</option>
+<option value="Czech Republic">Çek Cumhuriyeti</option>
+<option value="Denmark">Danimarka</option>
+<option value="Djibouti">Cibuti</option>
+<option value="Dominica">Dominika</option>
+<option value="Dominican Republic">Dominik Cumhuriyeti</option>
+<option value="East Timor">Doğu Timor</option>
+<option value="Ecuador">Ekvador</option>
+<option value="Egypt">Mısır</option>
 <option value="El Salvador">El Salvador</option>
-<option value="Equatorial Guinea">Equatorial Guinea</option>
-<option value="Eritrea">Eritrea</option>
-<option value="Estonia">Estonia</option>
-<option value="Ethiopia">Ethiopia</option>
-<option value="Falkland Islands">Falkland Islands</option>
-<option value="Faroe Islands">Faroe Islands</option>
+<option value="Equatorial Guinea">Ekvator Ginesi</option>
+<option value="Eritrea">Eritre</option>
+<option value="Estonia">Estonya</option>
+<option value="Ethiopia">Etiyopya</option>
+<option value="Falkland Islands">Falkland Adaları</option>
+<option value="Faroe Islands">Faroe Adaları</option>
 <option value="Fiji">Fiji</option>
-<option value="Finland">Finland</option>
-<option value="France">France</option>
-<option value="French Guiana">French Guiana</option>
-<option value="French Polynesia">French Polynesia</option>
-<option value="French Southern Ter">French Southern Ter</option>
+<option value="Finland">Finlandiya</option>
+<option value="France">Fransa</option>
+<option value="French Guiana">Fransız Guyanası</option>
+<option value="French Polynesia">Fransız Polinezyası</option>
+<option value="French Southern Ter">Fransız Güney Toprakları</option>
 <option value="Gabon">Gabon</option>
-<option value="Gambia">Gambia</option>
-<option value="Georgia">Georgia</option>
-<option value="Germany">Germany</option>
-<option value="Ghana">Ghana</option>
-<option value="Gibraltar">Gibraltar</option>
-<option value="Great Britain">Great Britain</option>
-<option value="Greece">Greece</option>
-<option value="Greenland">Greenland</option>
+<option value="Gambia">Gambiya</option>
+<option value="Georgia">Gürcistan</option>
+<option value="Germany">Almanya</option>
+<option value="Ghana">Gana</option>
+<option value="Gibraltar">Cebelitarık</option>
+<option value="Great Britain">Büyük Britanya</option>
+<option value="Greece">Yunanistan</option>
+<option value="Greenland">Grönland</option>
 <option value="Grenada">Grenada</option>
 <option value="Guadeloupe">Guadeloupe</option>
 <option value="Guam">Guam</option>
 <option value="Guatemala">Guatemala</option>
-<option value="Guinea">Guinea</option>
+<option value="Guinea">Gine</option>
 <option value="Guyana">Guyana</option>
 <option value="Haiti">Haiti</option>
 <option value="Hawaii">Hawaii</option>
 <option value="Honduras">Honduras</option>
 <option value="Hong Kong">Hong Kong</option>
-<option value="Hungary">Hungary</option>
-<option value="Iceland">Iceland</option>
-<option value="India">India</option>
-<option value="Indonesia">Indonesia</option>
-<option value="Iran">Iran</option>
-<option value="Iraq">Iraq</option>
-<option value="Ireland">Ireland</option>
-<option value="Isle of Man">Isle of Man</option>
-<option value="Israel">Israel</option>
-<option value="Italy">Italy</option>
-<option value="Jamaica">Jamaica</option>
-<option value="Japan">Japan</option>
-<option value="Jordan">Jordan</option>
-<option value="Kazakhstan">Kazakhstan</option>
+<option value="Hungary">Macaristan</option>
+<option value="Iceland">İzlanda</option>
+<option value="India">Hindistan</option>
+<option value="Indonesia">Endonezya</option>
+<option value="Iran">İran</option>
+<option value="Iraq">Irak</option>
+<option value="Ireland">İrlanda</option>
+<option value="Isle of Man">Man Adası</option>
+<option value="Israel">İsrail</option>
+<option value="Italy">İtalya</option>
+<option value="Jamaica">Jamaika</option>
+<option value="Japan">Japonya</option>
+<option value="Jordan">Ürdün</option>
+<option value="Kazakhstan">Kazakistan</option>
 <option value="Kenya">Kenya</option>
 <option value="Kiribati">Kiribati</option>
-<option value="Korea North">Korea North</option>
-<option value="Korea Sout">Korea South</option>
-<option value="Kuwait">Kuwait</option>
-<option value="Kyrgyzstan">Kyrgyzstan</option>
+<option value="Korea North">Kuzey Kore</option>
+<option value="Korea Sout">Güney Kore</option>
+<option value="Kuwait">Kuveyt</option>
+<option value="Kyrgyzstan">Kırgızistan</option>
 <option value="Laos">Laos</option>
-<option value="Latvia">Latvia</option>
-<option value="Lebanon">Lebanon</option>
+<option value="Latvia">Letonya</option>
+<option value="Lebanon">Lübnan</option>
 <option value="Lesotho">Lesotho</option>
-<option value="Liberia">Liberia</option>
+<option value="Liberia">Liberya</option>
 <option value="Libya">Libya</option>
 <option value="Liechtenstein">Liechtenstein</option>
-<option value="Lithuania">Lithuania</option>
-<option value="Luxembourg">Luxembourg</option>
-<option value="Macau">Macau</option>
-<option value="Macedonia">Macedonia</option>
-<option value="Madagascar">Madagascar</option>
-<option value="Malaysia">Malaysia</option>
-<option value="Malawi">Malawi</option>
-<option value="Maldives">Maldives</option>
+<option value="Lithuania">Litvanya</option>
+<option value="Luxembourg">Lüksemburg</option>
+<option value="Macau">Makao</option>
+<option value="Macedonia">Makedonya</option>
+<option value="Madagascar">Madagaskar</option>
+<option value="Malaysia">Malezya</option>
+<option value="Malawi">Malavi</option>
+<option value="Maldives">Maldivler</option>
 <option value="Mali">Mali</option>
 <option value="Malta">Malta</option>
-<option value="Marshall Islands">Marshall Islands</option>
+<option value="Marshall Islands">Marshall Adaları</option>
 <option value="Martinique">Martinique</option>
-<option value="Mauritania">Mauritania</option>
+<option value="Mauritania">Moritanya</option>
 <option value="Mauritius">Mauritius</option>
 <option value="Mayotte">Mayotte</option>
-<option value="Mexico">Mexico</option>
-<option value="Midway Islands">Midway Islands</option>
+<option value="Mexico">Meksika</option>
+<option value="Midway Islands">Midway Adaları</option>
 <option value="Moldova">Moldova</option>
-<option value="Monaco">Monaco</option>
-<option value="Mongolia">Mongolia</option>
+<option value="Monaco">Monako</option>
+<option value="Mongolia">Moğolistan</option>
 <option value="Montserrat">Montserrat</option>
-<option value="Morocco">Morocco</option>
-<option value="Mozambique">Mozambique</option>
+<option value="Morocco">Fas</option>
+<option value="Mozambique">Mozambik</option>
 <option value="Myanmar">Myanmar</option>
-<option value="Nambia">Nambia</option>
+<option value="Nambia">Namibya</option>
 <option value="Nauru">Nauru</option>
 <option value="Nepal">Nepal</option>
-<option value="Netherland Antilles">Netherland Antilles</option>
-<option value="Netherlands">Netherlands (Holland, Europe)</option>
+<option value="Netherland Antilles">Hollanda Antilleri</option>
+<option value="Netherlands">Hollanda (Avrupa)</option>
 <option value="Nevis">Nevis</option>
-<option value="New Caledonia">New Caledonia</option>
-<option value="New Zealand">New Zealand</option>
-<option value="Nicaragua">Nicaragua</option>
-<option value="Niger">Niger</option>
-<option value="Nigeria">Nigeria</option>
+<option value="New Caledonia">Yeni Kaledonya</option>
+<option value="New Zealand">Yeni Zelanda</option>
+<option value="Nicaragua">Nikaragua</option>
+<option value="Niger">Nijer</option>
+<option value="Nigeria">Nijerya</option>
 <option value="Niue">Niue</option>
-<option value="Norfolk Island">Norfolk Island</option>
-<option value="Norway">Norway</option>
-<option value="Oman">Oman</option>
+<option value="Norfolk Island">Norfolk Adası</option>
+<option value="Norway">Norveç</option>
+<option value="Oman">Umman</option>
 <option value="Pakistan">Pakistan</option>
-<option value="Palau Island">Palau Island</option>
-<option value="Palestine">Palestine</option>
+<option value="Palau Island">Palau Adası</option>
+<option value="Palestine">Filistin</option>
 <option value="Panama">Panama</option>
-<option value="Papua New Guinea">Papua New Guinea</option>
+<option value="Papua New Guinea">Papua Yeni Gine</option>
 <option value="Paraguay">Paraguay</option>
 <option value="Peru">Peru</option>
-<option value="Phillipines">Philippines</option>
-<option value="Pitcairn Island">Pitcairn Island</option>
-<option value="Poland">Poland</option>
-<option value="Portugal">Portugal</option>
-<option value="Puerto Rico">Puerto Rico</option>
-<option value="Qatar">Qatar</option>
-<option value="Republic of Montenegro">Republic of Montenegro</option>
-<option value="Republic of Serbia">Republic of Serbia</option>
+<option value="Phillipines">Filipinler</option>
+<option value="Pitcairn Island">Pitcairn Adası</option>
+<option value="Poland">Polonya</option>
+<option value="Portugal">Portekiz</option>
+<option value="Puerto Rico">Porto Riko</option>
+<option value="Qatar">Katar</option>
+<option value="Republic of Montenegro">Karadağ Cumhuriyeti</option>
+<option value="Republic of Serbia">Sırbistan Cumhuriyeti</option>
 <option value="Reunion">Reunion</option>
-<option value="Romania">Romania</option>
-<option value="Russia">Russia</option>
-<option value="Rwanda">Rwanda</option>
-<option value="St Barthelemy">St Barthelemy</option>
-<option value="St Eustatius">St Eustatius</option>
-<option value="St Helena">St Helena</option>
-<option value="St Kitts-Nevis">St Kitts-Nevis</option>
-<option value="St Lucia">St Lucia</option>
-<option value="St Maarten">St Maarten</option>
-<option value="St Pierre &amp; Miquelon">St Pierre &amp; Miquelon</option>
-<option value="St Vincent &amp; Grenadines">St Vincent &amp; Grenadines</option>
+<option value="Romania">Romanya</option>
+<option value="Russia">Rusya</option>
+<option value="Rwanda">Ruanda</option>
+<option value="St Barthelemy">Saint Barthélemy</option>
+<option value="St Eustatius">Saint Eustatius</option>
+<option value="St Helena">Saint Helena</option>
+<option value="St Kitts-Nevis">Saint Kitts ve Nevis</option>
+<option value="St Lucia">Saint Lucia</option>
+<option value="St Maarten">Saint Maarten</option>
+<option value="St Pierre & Miquelon">Saint Pierre ve Miquelon</option>
+<option value="St Vincent & Grenadines">Saint Vincent ve Grenadinler</option>
 <option value="Saipan">Saipan</option>
 <option value="Samoa">Samoa</option>
-<option value="Samoa American">Samoa American</option>
+<option value="Samoa American">Amerikan Samoası</option>
 <option value="San Marino">San Marino</option>
-<option value="Sao Tome &amp; Principe">Sao Tome &amp; Principe</option>
-<option value="Saudi Arabia">Saudi Arabia</option>
+<option value="Sao Tome & Principe">São Tomé ve Príncipe</option>
+<option value="Saudi Arabia">Suudi Arabistan</option>
 <option value="Senegal">Senegal</option>
-<option value="Serbia">Serbia</option>
-<option value="Seychelles">Seychelles</option>
+<option value="Serbia">Sırbistan</option>
+<option value="Seychelles">Seyşeller</option>
 <option value="Sierra Leone">Sierra Leone</option>
-<option value="Singapore">Singapore</option>
-<option value="Slovakia">Slovakia</option>
-<option value="Slovenia">Slovenia</option>
-<option value="Solomon Islands">Solomon Islands</option>
-<option value="Somalia">Somalia</option>
-<option value="South Africa">South Africa</option>
-<option value="Spain">Spain</option>
+<option value="Singapore">Singapur</option>
+<option value="Slovakia">Slovakya</option>
+<option value="Slovenia">Slovenya</option>
+<option value="Solomon Islands">Solomon Adaları</option>
+<option value="Somalia">Somali</option>
+<option value="South Africa">Güney Afrika</option>
+<option value="Spain">İspanya</option>
 <option value="Sri Lanka">Sri Lanka</option>
 <option value="Sudan">Sudan</option>
-<option value="Suriname">Suriname</option>
-<option value="Swaziland">Swaziland</option>
-<option value="Sweden">Sweden</option>
-<option value="Switzerland">Switzerland</option>
-<option value="Syria">Syria</option>
+<option value="Suriname">Surinam</option>
+<option value="Swaziland">Svaziland</option>
+<option value="Sweden">İsveç</option>
+<option value="Switzerland">İsviçre</option>
+<option value="Syria">Suriye</option>
 <option value="Tahiti">Tahiti</option>
-<option value="Taiwan">Taiwan</option>
-<option value="Tajikistan">Tajikistan</option>
-<option value="Tanzania">Tanzania</option>
-<option value="Thailand">Thailand</option>
+<option value="Taiwan">Tayvan</option>
+<option value="Tajikistan">Tacikistan</option>
+<option value="Tanzania">Tanzanya</option>
+<option value="Thailand">Tayland</option>
 <option value="Togo">Togo</option>
 <option value="Tokelau">Tokelau</option>
 <option value="Tonga">Tonga</option>
-<option value="Trinidad &amp; Tobago">Trinidad &amp; Tobago</option>
-<option value="Tunisia">Tunisia</option>
-<option value="Turkey">Turkey</option>
-<option value="Turkmenistan">Turkmenistan</option>
-<option value="Turks &amp; Caicos Is">Turks &amp; Caicos Is</option>
+<option value="Trinidad & Tobago">Trinidad ve Tobago</option>
+<option value="Tunisia">Tunus</option>
+<option value="Turkey">Türkiye</option>
+<option value="Turkmenistan">Türkmenistan</option>
+<option value="Turks & Caicos Is">Turks ve Caicos Adaları</option>
 <option value="Tuvalu">Tuvalu</option>
 <option value="Uganda">Uganda</option>
-<option value="Ukraine">Ukraine</option>
-<option value="United Arab Erimates">United Arab Emirates</option>
-<option value="United Kingdom">United Kingdom</option>
-<option value="United States of America">United States of America</option>
+<option value="Ukraine">Ukrayna</option>
+<option value="United Arab Erimates">Birleşik Arap Emirlikleri</option>
+<option value="United Kingdom">Birleşik Krallık</option>
+<option value="United States of America">Amerika Birleşik Devletleri</option>
 <option value="Uraguay">Uruguay</option>
-<option value="Uzbekistan">Uzbekistan</option>
+<option value="Uzbekistan">Özbekistan</option>
 <option value="Vanuatu">Vanuatu</option>
-<option value="Vatican City State">Vatican City State</option>
+<option value="Vatican City State">Vatikan Şehir Devleti</option>
 <option value="Venezuela">Venezuela</option>
 <option value="Vietnam">Vietnam</option>
-<option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
-<option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
-<option value="Wake Island">Wake Island</option>
-<option value="Wallis &amp; Futana Is">Wallis &amp; Futana Is</option>
+<option value="Virgin Islands (Brit)">Britanya Virgin Adaları</option>
+<option value="Virgin Islands (USA)">ABD Virgin Adaları</option>
+<option value="Wake Island">Wake Adası</option>
+<option value="Wallis & Futana Is">Wallis ve Futuna Adaları</option>
 <option value="Yemen">Yemen</option>
 <option value="Zaire">Zaire</option>
-<option value="Zambia">Zambia</option>
-                            <option value="Zimbabwe">Zimbabwe</option>
+<option value="Zambia">Zambiya</option>
+                            <option value="Zimbabwe">Zimbabve</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                             <i data-lucide="chevron-down" class="h-5 w-5 text-gray-400"></i>
@@ -364,9 +364,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div class="md:col-span-1">
                     <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Username
+                        Kullanıcı Adı
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Your unique identifier</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Benzersiz tanımlayıcınız</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -384,7 +384,7 @@
                     <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                         <span class="inline-flex items-center">
                             <i data-lucide="lock" class="h-3.5 w-3.5 mr-1 text-gray-400"></i>
-                            Username cannot be changed
+                            Kullanıcı adı değiştirilemez
                         </span>
                     </p>
                 </div>
@@ -401,14 +401,14 @@
                     >
                         <span x-show="!saving">
                             <i data-lucide="save" class="mr-2 h-5 w-5"></i>
-                            Save Changes
+                            Değişiklikleri Kaydet
                         </span>
                         <span x-show="saving" style="display: none;">
                             <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            Processing...
+                            İşleniyor...
                         </span>
                     </button>
                 </div>
@@ -503,7 +503,7 @@
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium">Failed to update profile. Please try again.</p>
+                            <p class="text-sm font-medium">Profil güncellenemedi. Lütfen tekrar deneyin.</p>
                         </div>
                         <div class="ml-auto pl-3">
                             <div class="-mx-1.5 -my-1.5">

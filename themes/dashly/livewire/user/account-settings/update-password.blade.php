@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row mb-4">
                 <div class="col-lg-3">
-                    <label for="currentPassword" class="col-form-label">Current password</label>
+                    <label for="currentPassword" class="col-form-label">Mevcut şifre</label>
                 </div>
 
                 <div class="col-lg">
@@ -23,7 +23,7 @@
                 <div class="col-lg">
                     <div class="input-group input-group-merge">
                         <input type="password" class="form-control" id="newPassword" autocomplete="off"
-                            data-toggle-password-input placeholder="Your new password" wire:model.defer='password'
+                            data-toggle-password-input placeholder="Yeni şifreniz" wire:model.defer='password'
                             required>
 
                         <button type="button" class="input-group-text px-4 text-secondary link-primary"
@@ -37,26 +37,26 @@
                 <div class="col-lg">
                     <div class="input-group input-group-merge">
                         <input type="password" class="form-control" id="newPasswordAgain" autocomplete="off"
-                            data-toggle-password-input placeholder="Confirm your new password"
+                            data-toggle-password-input placeholder="Yeni şifrenizi onaylayın"
                             wire:model.defer='password_confirmation' required>
 
                         <button type="button" class="input-group-text px-4 text-secondary link-primary"
                             data-toggle-password></button>
                     </div>
 
-                    <div class="invalid-feedback">Please confirm your new password again</div>
+                    <div class="invalid-feedback">Lütfen yeni şifrenizi tekrar onaylayın</div>
                 </div>
             </div> <!-- / .row -->
 
             <div class="row">
                 <div class="col-lg offset-lg-3">
                     <div class="alert alert-light mw-450px" role="alert">
-                        <h4 class="mb-3">Password requirements:</h4>
+                        <h4 class="mb-3">Şifre gereksinimleri:</h4>
                         <ul class="p-3 mb-0">
-                            <li>Minimum 8 characters long - the more, the better</li>
-                            <li>At least one lowercase character</li>
-                            <li>At least one uppercase character</li>
-                            <li>At least one number, symbol.</li>
+                            <li>Minimum 8 karakter uzunluğunda - ne kadar çok olursa o kadar iyi</li>
+                            <li>En az bir küçük harf karakter</li>
+                            <li>En az bir büyük harf karakter</li>
+                            <li>En az bir sayı, sembol.</li>
                         </ul>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
 
             <div class="d-flex justify-content-end mt-5">
                 <!-- Button -->
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Değişiklikleri kaydet</button>
             </div>
         </div>
     </form>

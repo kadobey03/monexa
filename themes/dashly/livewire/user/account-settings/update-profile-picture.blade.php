@@ -23,19 +23,19 @@
             <input type="file" wire:model='photo' class="d-none">
         </label>
         @if ($photoPath)
-            <img src="{{ asset('storage/app/public/' . $photoPath) }}" alt="Profile picture" class="avatar-img"
+            <img src="{{ asset('storage/app/public/' . $photoPath) }}" alt="Profil resmi" class="avatar-img"
                 width="112" height="112">
         @else
             <img src="https://png.pngtree.com/png-vector/20220521/ourlarge/pngtree-avatar-profile-icon-png-image_4644647.png"
-                alt="Profile picture" class="avatar-img" width="112" height="112">
+                alt="Profil resmi" class="avatar-img" width="112" height="112">
         @endif
         @if ($photo)
             <button type="submit" class="btn btn-sm btn-primary">
                 <div class="spinner-border spinner-border-sm" role="status" wire:loading wire:target='update'>
-                    <span class="visually-hidden">Loading...</span>
+                    <span class="visually-hidden">Yükleniyor...</span>
                 </div>
                 <span wire:loading.remove wire:target='update'>
-                    Save
+                    Kaydet
                 </span>
             </button>
         @endif
