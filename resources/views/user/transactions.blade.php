@@ -11,10 +11,10 @@
                 </div>
                 <div class="text-center sm:text-left">
                     <h1 class="text-2xl sm:text-3xl lg:text-4xl font-light text-slate-800 dark:text-white mb-1 sm:mb-2">
-                        Transaction History
+                        İşlem Geçmişi
                     </h1>
                     <p class="text-slate-500 dark:text-slate-400 font-light text-base sm:text-lg">
-                        Monitor all your financial activities
+                        Tüm finansal faaliyetlerinizi izleyin
                     </p>
                 </div>
             </div>
@@ -30,19 +30,19 @@
                             :class="activeTab === 'deposits' ? 'bg-gray-700 text-white shadow-lg' : 'text-slate-300 hover:text-white hover:bg-gray-700/50'"
                             class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105">
                         <i data-lucide="arrow-down-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                        <span class="text-sm sm:text-base">Deposits</span>
+                        <span class="text-sm sm:text-base">Yatırımlar</span>
                     </button>
                     <button @click="activeTab = 'withdrawals'"
                             :class="activeTab === 'withdrawals' ? 'bg-gray-700 text-white shadow-lg' : 'text-slate-300 hover:text-white hover:bg-gray-700/50'"
                             class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105">
                         <i data-lucide="arrow-up-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                        <span class="text-sm sm:text-base">Withdrawals</span>
+                        <span class="text-sm sm:text-base">Çekimler</span>
                     </button>
                     <button @click="activeTab = 'others'"
                             :class="activeTab === 'others' ? 'bg-gray-700 text-white shadow-lg' : 'text-slate-300 hover:text-white hover:bg-gray-700/50'"
                             class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105">
                         <i data-lucide="activity" class="w-4 h-4 sm:w-5 sm:h-5"></i>
-                        <span class="text-sm sm:text-base">Others</span>
+                        <span class="text-sm sm:text-base">Diğerleri</span>
                     </button>
                 </div>
 
@@ -52,11 +52,11 @@
                     <div x-show="activeTab === 'deposits'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0">
                         <div class="mb-4 sm:mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
                             <div class="text-center lg:text-left">
-                                <h3 class="text-xl sm:text-2xl font-light text-white mb-1 sm:mb-2">Deposit History</h3>
-                                <p class="text-slate-400 font-light text-sm sm:text-base">Track your deposit transactions</p>
+                                <h3 class="text-xl sm:text-2xl font-light text-white mb-1 sm:mb-2">Yatırım Geçmişi</h3>
+                                <p class="text-slate-400 font-light text-sm sm:text-base">Yatırım işlemlerinizi takip edin</p>
                             </div>
                             <div class="relative">
-                                <input type="text" placeholder="Search deposits..." class="w-full lg:w-80 pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 bg-gray-800 border border-gray-600 rounded-xl sm:rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base">
+                                <input type="text" placeholder="Yatırımları ara..." class="w-full lg:w-80 pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 bg-gray-800 border border-gray-600 rounded-xl sm:rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base">
                                 <i data-lucide="search" class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400"></i>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                             </div>
                                             <div>
                                                 <div class="text-white font-medium">{{ Auth::user()->currency }}{{ number_format($deposit->amount, 2) }}</div>
-                                                <div class="text-slate-400 text-sm">Deposit</div>
+                                                <div class="text-slate-400 text-sm">Yatırım</div>
                                             </div>
                                         </div>
                                         @if ($deposit->status == 'Processed')
@@ -89,7 +89,7 @@
                                         @endif
                                     </div>
                                     <div class="flex justify-between items-center text-sm">
-                                        <span class="text-slate-400">Payment Mode</span>
+                                        <span class="text-slate-400">Ödeme Yöntemi</span>
                                         <span class="text-blue-400 bg-blue-900/30 px-2 py-1 rounded-lg">{{ $deposit->payment_mode }}</span>
                                     </div>
                                     <div class="mt-2 text-xs text-slate-500">
@@ -102,8 +102,8 @@
                                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-800 mb-4">
                                         <i data-lucide="arrow-down-circle" class="w-8 h-8 text-slate-400"></i>
                                     </div>
-                                    <h4 class="text-lg font-light text-white mb-2">No deposits yet</h4>
-                                    <p class="text-slate-400 font-light text-sm">Your deposit history will appear here</p>
+                                    <h4 class="text-lg font-light text-white mb-2">Henüz yatırım yok</h4>
+                                    <p class="text-slate-400 font-light text-sm">Yatırım geçmişiniz burada görünecek</p>
                                 </div>
                             @endif
                         </div>
@@ -114,10 +114,10 @@
                                 <table class="w-full">
                                     <thead class="bg-gray-800">
                                         <tr>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Amount</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Payment Mode</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Status</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Date</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Miktar</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Ödeme Yöntemi</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Durum</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Tarih</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-700">
@@ -130,7 +130,7 @@
                                                     </div>
                                                     <div>
                                                         <div class="text-white font-medium">{{ Auth::user()->currency }}{{ number_format($deposit->amount, 2) }}</div>
-                                                        <div class="text-slate-400 text-sm">Deposit</div>
+                                                        <div class="text-slate-400 text-sm">Yatırım</div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -164,8 +164,8 @@
                                     <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gray-800 mb-6">
                                         <i data-lucide="arrow-down-circle" class="w-10 h-10 text-slate-400"></i>
                                     </div>
-                                    <h4 class="text-xl font-light text-white mb-3">No deposits yet</h4>
-                                    <p class="text-slate-400 font-light">Your deposit history will appear here</p>
+                                    <h4 class="text-xl font-light text-white mb-3">Henüz yatırım yok</h4>
+                                    <p class="text-slate-400 font-light">Yatırım geçmişiniz burada görünecek</p>
                                 </div>
                             @endif
                         </div>
@@ -180,14 +180,14 @@
                                                 <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0L2.586 11l3.707-3.707a1 1 0 011.414 1.414L5.414 11l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                                                 </svg>
-                                                Previous
+                                                Önceki
                                             </span>
                                         @else
                                             <a href="{{ $deposits->previousPageUrl() }}" class="inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-300 hover:text-blue-400 transition-colors duration-200">
                                                 <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0L2.586 11l3.707-3.707a1 1 0 011.414 1.414L5.414 11l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                                                 </svg>
-                                                Previous
+                                                Önceki
                                             </a>
                                         @endif
                                     </div>
@@ -213,7 +213,7 @@
                                     <div class="-mt-px flex w-0 flex-1 justify-end">
                                         @if ($deposits->hasMorePages())
                                             <a href="{{ $deposits->nextPageUrl() }}" class="inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-300 hover:text-blue-400 transition-colors duration-200">
-                                                Next
+                                                Sonraki
                                                 <svg class="ml-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4.707 4.707-4.707 4.707a1 1 0 01-1.414-1.414L15.586 10l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                                 </svg>
@@ -233,10 +233,10 @@
                                 <div class="flex justify-center mt-4 md:hidden">
                                     <div class="flex items-center space-x-4">
                                         <p class="text-sm text-gray-400">
-                                            Page {{ $deposits->currentPage() }} of {{ $deposits->lastPage() }}
+                                            Sayfa {{ $deposits->currentPage() }} / {{ $deposits->lastPage() }}
                                         </p>
                                         <p class="text-sm text-gray-500">
-                                            {{ $deposits->total() }} total deposits
+                                            {{ $deposits->total() }} toplam yatırım
                                         </p>
                                     </div>
                                 </div>
@@ -244,7 +244,7 @@
                                 <!-- Desktop pagination info -->
                                 <div class="hidden md:flex justify-center mt-4">
                                     <p class="text-sm text-gray-400">
-                                        Showing {{ $deposits->firstItem() }} to {{ $deposits->lastItem() }} of {{ $deposits->total() }} deposits
+                                        {{ $deposits->firstItem() }}'den {{ $deposits->lastItem() }}'e kadar {{ $deposits->total() }} yatırım gösteriliyor
                                     </p>
                                 </div>
                             </div>
@@ -255,11 +255,11 @@
                     <div x-show="activeTab === 'withdrawals'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0">
                         <div class="mb-4 sm:mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
                             <div class="text-center lg:text-left">
-                                <h3 class="text-xl sm:text-2xl font-light text-white mb-1 sm:mb-2">Withdrawal History</h3>
-                                <p class="text-slate-400 font-light text-sm sm:text-base">Track your withdrawal transactions</p>
+                                <h3 class="text-xl sm:text-2xl font-light text-white mb-1 sm:mb-2">Çekim Geçmişi</h3>
+                                <p class="text-slate-400 font-light text-sm sm:text-base">Çekim işlemlerinizi takip edin</p>
                             </div>
                             <div class="relative">
-                                <input type="text" placeholder="Search withdrawals..." class="w-full lg:w-80 pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 bg-gray-800 border border-gray-600 rounded-xl sm:rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base">
+                                <input type="text" placeholder="Çekimleri ara..." class="w-full lg:w-80 pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 bg-gray-800 border border-gray-600 rounded-xl sm:rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base">
                                 <i data-lucide="search" class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400"></i>
                             </div>
                         </div>
@@ -276,7 +276,7 @@
                                             </div>
                                             <div>
                                                 <div class="text-white font-medium">{{ Auth::user()->currency }}{{ number_format($withdrawal->amount, 2) }}</div>
-                                                <div class="text-slate-400 text-sm">Withdrawal</div>
+                                                <div class="text-slate-400 text-sm">Çekim</div>
                                             </div>
                                         </div>
                                         @if ($withdrawal->status == 'Processed')
@@ -293,11 +293,11 @@
                                     </div>
                                     <div class="space-y-2">
                                         <div class="flex justify-between items-center text-sm">
-                                            <span class="text-slate-400">Total Deducted</span>
+                                            <span class="text-slate-400">Toplam Kesilen</span>
                                             <span class="text-white">{{ Auth::user()->currency }}{{ number_format($withdrawal->to_deduct, 2) }}</span>
                                         </div>
                                         <div class="flex justify-between items-center text-sm">
-                                            <span class="text-slate-400">Payment Mode</span>
+                                            <span class="text-slate-400">Ödeme Yöntemi</span>
                                             <span class="text-blue-400 bg-blue-900/30 px-2 py-1 rounded-lg">{{ $withdrawal->payment_mode }}</span>
                                         </div>
                                     </div>
@@ -311,8 +311,8 @@
                                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-800 mb-4">
                                         <i data-lucide="arrow-up-circle" class="w-8 h-8 text-slate-400"></i>
                                     </div>
-                                    <h4 class="text-lg font-light text-white mb-2">No withdrawals yet</h4>
-                                    <p class="text-slate-400 font-light text-sm">Your withdrawal history will appear here</p>
+                                    <h4 class="text-lg font-light text-white mb-2">Henüz çekim yok</h4>
+                                    <p class="text-slate-400 font-light text-sm">Çekim geçmişiniz burada görünecek</p>
                                 </div>
                             @endif
                         </div>
@@ -323,11 +323,11 @@
                                 <table class="w-full">
                                     <thead class="bg-gray-800">
                                         <tr>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Amount Requested</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Total Deducted</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Payment Mode</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Status</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Date</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Talep Edilen Miktar</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Toplam Kesilen</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Ödeme Yöntemi</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Durum</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Tarih</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-700">
@@ -340,13 +340,13 @@
                                                     </div>
                                                     <div>
                                                         <div class="text-white font-medium">{{ Auth::user()->currency }}{{ number_format($withdrawal->amount, 2) }}</div>
-                                                        <div class="text-slate-400 text-sm">Withdrawal</div>
+                                                        <div class="text-slate-400 text-sm">Çekim</div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4">
                                                 <div class="text-white font-medium">{{ Auth::user()->currency }}{{ number_format($withdrawal->to_deduct, 2) }}</div>
-                                                <div class="text-slate-400 text-sm">Including fees</div>
+                                                <div class="text-slate-400 text-sm">Ücretler dahil</div>
                                             </td>
                                             <td class="px-6 py-4">
                                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-900/30 text-blue-400">
@@ -378,8 +378,8 @@
                                     <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gray-800 mb-6">
                                         <i data-lucide="arrow-up-circle" class="w-10 h-10 text-slate-400"></i>
                                     </div>
-                                    <h4 class="text-xl font-light text-white mb-3">No withdrawals yet</h4>
-                                    <p class="text-slate-400 font-light">Your withdrawal history will appear here</p>
+                                    <h4 class="text-xl font-light text-white mb-3">Henüz çekim yok</h4>
+                                    <p class="text-slate-400 font-light">Çekim geçmişiniz burada görünecek</p>
                                 </div>
                             @endif
                         </div>
@@ -394,14 +394,14 @@
                                                 <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0L2.586 11l3.707-3.707a1 1 0 011.414 1.414L5.414 11l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                                                 </svg>
-                                                Previous
+                                                Önceki
                                             </span>
                                         @else
                                             <a href="{{ $withdrawals->previousPageUrl() }}" class="inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-300 hover:text-blue-400 transition-colors duration-200">
                                                 <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0L2.586 11l3.707-3.707a1 1 0 011.414 1.414L5.414 11l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                                                 </svg>
-                                                Previous
+                                                Önceki
                                             </a>
                                         @endif
                                     </div>
@@ -427,7 +427,7 @@
                                     <div class="-mt-px flex w-0 flex-1 justify-end">
                                         @if ($withdrawals->hasMorePages())
                                             <a href="{{ $withdrawals->nextPageUrl() }}" class="inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-300 hover:text-blue-400 transition-colors duration-200">
-                                                Next
+                                                Sonraki
                                                 <svg class="ml-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4.707 4.707-4.707 4.707a1 1 0 01-1.414-1.414L15.586 10l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                                 </svg>
@@ -447,10 +447,10 @@
                                 <div class="flex justify-center mt-4 md:hidden">
                                     <div class="flex items-center space-x-4">
                                         <p class="text-sm text-gray-400">
-                                            Page {{ $withdrawals->currentPage() }} of {{ $withdrawals->lastPage() }}
+                                            Sayfa {{ $withdrawals->currentPage() }} / {{ $withdrawals->lastPage() }}
                                         </p>
                                         <p class="text-sm text-gray-500">
-                                            {{ $withdrawals->total() }} total withdrawals
+                                            {{ $withdrawals->total() }} toplam çekim
                                         </p>
                                     </div>
                                 </div>
@@ -458,7 +458,7 @@
                                 <!-- Desktop pagination info -->
                                 <div class="hidden md:flex justify-center mt-4">
                                     <p class="text-sm text-gray-400">
-                                        Showing {{ $withdrawals->firstItem() }} to {{ $withdrawals->lastItem() }} of {{ $withdrawals->total() }} withdrawals
+                                        {{ $withdrawals->firstItem() }}'den {{ $withdrawals->lastItem() }}'e kadar {{ $withdrawals->total() }} çekim gösteriliyor
                                     </p>
                                 </div>
                             </div>
@@ -469,11 +469,11 @@
                     <div x-show="activeTab === 'others'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0">
                         <div class="mb-4 sm:mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
                             <div class="text-center lg:text-left">
-                                <h3 class="text-xl sm:text-2xl font-light text-white mb-1 sm:mb-2">Other Transactions</h3>
-                                <p class="text-slate-400 font-light text-sm sm:text-base">Additional transaction history</p>
+                                <h3 class="text-xl sm:text-2xl font-light text-white mb-1 sm:mb-2">Diğer İşlemler</h3>
+                                <p class="text-slate-400 font-light text-sm sm:text-base">Ek işlem geçmişi</p>
                             </div>
                             <div class="relative">
-                                <input type="text" placeholder="Search transactions..." class="w-full lg:w-80 pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 bg-gray-800 border border-gray-600 rounded-xl sm:rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base">
+                                <input type="text" placeholder="İşlemleri ara..." class="w-full lg:w-80 pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 bg-gray-800 border border-gray-600 rounded-xl sm:rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base">
                                 <i data-lucide="search" class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400"></i>
                             </div>
                         </div>
@@ -490,7 +490,7 @@
                                             </div>
                                             <div>
                                                 <div class="text-white font-medium">{{ $history->type }}</div>
-                                                <div class="text-slate-400 text-sm">Transaction</div>
+                                                <div class="text-slate-400 text-sm">İşlem</div>
                                             </div>
                                         </div>
                                         <div class="text-right">
@@ -504,7 +504,7 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-between items-center text-sm">
-                                        <span class="text-slate-400">Description</span>
+                                        <span class="text-slate-400">Açıklama</span>
                                         <span class="text-slate-300">{{ $history->plan ?? 'N/A' }}</span>
                                     </div>
                                     <div class="mt-2 text-xs text-slate-500">
@@ -517,8 +517,8 @@
                                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-800 mb-4">
                                         <i data-lucide="activity" class="w-8 h-8 text-slate-400"></i>
                                     </div>
-                                    <h4 class="text-lg font-light text-white mb-2">No other transactions</h4>
-                                    <p class="text-slate-400 font-light text-sm">Additional transactions will appear here</p>
+                                    <h4 class="text-lg font-light text-white mb-2">Diğer işlem yok</h4>
+                                    <p class="text-slate-400 font-light text-sm">Ek işlemler burada görünecek</p>
                                 </div>
                             @endif
                         </div>
@@ -529,10 +529,10 @@
                                 <table class="w-full">
                                     <thead class="bg-gray-800">
                                         <tr>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Type</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Amount</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Description</th>
-                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Date</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Tür</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Miktar</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Açıklama</th>
+                                            <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Tarih</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-700">
@@ -545,7 +545,7 @@
                                                     </div>
                                                     <div>
                                                         <div class="text-white font-medium">{{ $history->type }}</div>
-                                                        <div class="text-slate-400 text-sm">Transaction</div>
+                                                        <div class="text-slate-400 text-sm">İşlem</div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -559,7 +559,7 @@
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4">
-                                                <span class="text-slate-300 font-light">{{ $history->plan ?? 'N/A' }}</span>
+                                                <span class="text-slate-300 font-light">{{ $history->plan ?? 'Yok' }}</span>
                                             </td>
                                             <td class="px-6 py-4 text-slate-300 font-light">
                                                 {{ \Carbon\Carbon::parse($history->created_at)->format('M d, Y \a\t g:i A') }}
@@ -573,8 +573,8 @@
                                     <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gray-800 mb-6">
                                         <i data-lucide="activity" class="w-10 h-10 text-slate-400"></i>
                                     </div>
-                                    <h4 class="text-xl font-light text-white mb-3">No other transactions</h4>
-                                    <p class="text-slate-400 font-light">Additional transactions will appear here</p>
+                                    <h4 class="text-xl font-light text-white mb-3">Diğer işlem yok</h4>
+                                    <p class="text-slate-400 font-light">Ek işlemler burada görünecek</p>
                                 </div>
                             @endif
                         </div>
@@ -589,14 +589,14 @@
                                                 <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0L2.586 11l3.707-3.707a1 1 0 011.414 1.414L5.414 11l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                                                 </svg>
-                                                Previous
+                                                Önceki
                                             </span>
                                         @else
                                             <a href="{{ $t_history->previousPageUrl() }}" class="inline-flex items-center pt-4 pr-1 text-sm font-medium text-gray-300 hover:text-blue-400 transition-colors duration-200">
                                                 <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0L2.586 11l3.707-3.707a1 1 0 011.414 1.414L5.414 11l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                                                 </svg>
-                                                Previous
+                                                Önceki
                                             </a>
                                         @endif
                                     </div>
@@ -622,7 +622,7 @@
                                     <div class="-mt-px flex w-0 flex-1 justify-end">
                                         @if ($t_history->hasMorePages())
                                             <a href="{{ $t_history->nextPageUrl() }}" class="inline-flex items-center pt-4 pl-1 text-sm font-medium text-gray-300 hover:text-blue-400 transition-colors duration-200">
-                                                Next
+                                                Sonraki
                                                 <svg class="ml-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4.707 4.707-4.707 4.707a1 1 0 01-1.414-1.414L15.586 10l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                                 </svg>
@@ -642,10 +642,10 @@
                                 <div class="flex justify-center mt-4 md:hidden">
                                     <div class="flex items-center space-x-4">
                                         <p class="text-sm text-gray-400">
-                                            Page {{ $t_history->currentPage() }} of {{ $t_history->lastPage() }}
+                                            Sayfa {{ $t_history->currentPage() }} / {{ $t_history->lastPage() }}
                                         </p>
                                         <p class="text-sm text-gray-500">
-                                            {{ $t_history->total() }} total transactions
+                                            {{ $t_history->total() }} toplam işlem
                                         </p>
                                     </div>
                                 </div>
@@ -653,7 +653,7 @@
                                 <!-- Desktop pagination info -->
                                 <div class="hidden md:flex justify-center mt-4">
                                     <p class="text-sm text-gray-400">
-                                        Showing {{ $t_history->firstItem() }} to {{ $t_history->lastItem() }} of {{ $t_history->total() }} transactions
+                                        {{ $t_history->firstItem() }}'den {{ $t_history->lastItem() }}'e kadar {{ $t_history->total() }} işlem gösteriliyor
                                     </p>
                                 </div>
                             </div>
