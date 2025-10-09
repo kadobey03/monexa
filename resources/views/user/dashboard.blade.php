@@ -402,13 +402,6 @@
 
  <!-- Quick Actions Grid (Tinker UI, Mature/Neutral) -->
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-    <a href="{{ route('demo.dashboard') }}" class="flex flex-col items-center justify-center rounded-xl border border-green-200 dark:border-green-700 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 hover:from-green-100 hover:to-green-200 dark:hover:from-green-800/30 dark:hover:to-green-700/30 transition-all duration-300 shadow-sm group py-3 px-2 relative overflow-hidden">
-        <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-green-500/10 dark:bg-green-400/10 mb-1 group-hover:scale-110 transition-transform duration-300">
-            <i data-lucide="graduation-cap" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
-        </span>
-        <span class="font-medium text-xs text-green-800 dark:text-green-200">Demo Ticaret</span>
-        <span class="absolute top-1 right-1 px-1.5 py-0.5 text-[10px] font-bold text-white bg-green-500 rounded-full">FREE</span>
-    </a>
     <a href="{{ route('deposits') }}" class="flex flex-col items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-sm group py-3 px-2">
         <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 mb-1">
             <i data-lucide="plus-circle" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>

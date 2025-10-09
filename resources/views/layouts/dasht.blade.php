@@ -630,20 +630,6 @@
             </div>
             <ul class="space-y-1">
                 <li>
-                    <a href="{{ route('demo.dashboard') }}"
-                       class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/50 transition-colors duration-150 {{ request()->routeIs('demo.*') ? 'bg-green-50 dark:bg-green-900/50 text-green-600 dark:text-green-400 font-medium' : '' }}">
-                        <i data-lucide="graduation-cap" class="w-5 h-5 mr-3"></i>
-                        Demo Ticaret
-                        <span class="ml-auto flex items-center px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-green-500 to-green-600 rounded-full">
-                            <i data-lucide="play" class="w-3 h-3 mr-1"></i>
-                            Uygulama
-                        </span>
-                        <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            100.000 $ sanal para ile uygulama
-                        </div>
-                    </a>
-                </li>
-                <li>
                     <a href="{{ route('trade.index') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('trade.*') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <i data-lucide="candlestick-chart" class="w-5 h-5 mr-3"></i>
