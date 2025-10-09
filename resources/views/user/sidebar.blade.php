@@ -80,7 +80,7 @@
             <a href="{{ route('tradinghistory') }}"
                 class="text-sm btn btn-square {{ request()->routeIs('tradinghistory') ? 'active' : '' }}">
                 <span class="btn-inner--icon d-block"><i class="fal fa-history fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">Profit History</span>
+                <span class="pt-2 btn-inner--icon d-block">İşlem Geçmişi</span>
             </a>
         @endif
         <a href="{{ route('accounthistory') }}"
