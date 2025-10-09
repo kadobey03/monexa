@@ -893,7 +893,7 @@
             "displayMode": "compact",
             "width": "100%",
             "height": "350",
-            "locale": "en"
+            "locale": "tr"
         }
         </script>
     </div>
