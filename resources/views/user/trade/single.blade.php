@@ -520,55 +520,11 @@
                     <input type="hidden" name="asset" value="{{ $instrument->name }}">
                     <input type="hidden" name="instrument_price" value="{{ $instrument->price }}">
                     <input type="hidden" name="order_type" x-model="orderType">
+                    <input type="hidden" name="trade_type" value="market">
 
-                    <!-- Order Type Selector -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sipariş Türü</label>
-                        <select x-model="tradeType" name="trade_type" class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white">
+                    <input type="hidden" name="leverage" value="100">
 
-                            <option value="market">Pazar Emri</option>
-                            <option value="limit">Limit Emri</option>
-
-                            <option value="stop">Stop Emri</option>
-                        </select>
-                    </div>
-
-                    <!-- Leverage Selector -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kaldıraç</label>
-                        <select name="leverage" id="leverage" required
-                                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
-                            <option disabled selected value="">Kaldıraç</option>
-                            <option value="10">1:10</option>
-                            <option value="20">1:20</option>
-                            <option value="30">1:30</option>
-                            <option value="40">1:40</option>
-                            <option value="50">1:50</option>
-                            <option value="60">1:60</option>
-                            <option value="70">1:70</option>
-                            <option value="80">1:80</option>
-                            <option value="90">1:90</option>
-                            <option value="100">1:100</option>
-                        </select>
-                    </div>
-
-                    <!-- Expiration Selector -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Son Kullanma</label>
-                        <select name="expire" id="expire" required
-                                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
-                            <option disabled selected value="">Son Kullanma</option>
-                            <option value="3 Minutes">3 Minute</option>
-                            <option value="5 Minutes">5 Minutes</option>
-                            <option value="15 Minutes">15 Minutes</option>
-                            <option value="30 Minutes">30 Minutes</option>
-                            <option value="60 Minutes">1 Hour</option>
-                            <option value="4 Hours">4 Hours</option>
-                            <option value="1 Days">1 Day</option>
-                            <option value="2 Days">2 Days</option>
-                            <option value="7 Days">7 Days</option>
-                        </select>
-                    </div>
+                    <input type="hidden" name="expire" value="7 Days">
 
                     <!-- Price Input (for limit/stop orders) -->
                     <div >
