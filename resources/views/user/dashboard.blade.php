@@ -622,37 +622,18 @@
     </div>
     <!-- Leverage & Expiration -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-        <div>
+        <div class="hidden">
             <label for="leverage" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kaldıraç</label>
             <select name="leverage" id="leverage" required
                 class="block w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
-                <option disabled selected value="">Kaldıraç</option>
-                <option value="10">1:10</option>
-                <option value="20">1:20</option>
-                <option value="30">1:30</option>
-                <option value="40">1:40</option>
-                <option value="50">1:50</option>
-                <option value="60">1:60</option>
-                <option value="70">1:70</option>
-                <option value="80">1:80</option>
-                <option value="90">1:90</option>
-                <option value="100">1:100</option>
+                <option value="100" selected>1:100</option>
             </select>
         </div>
-        <div>
+        <div class="hidden">
             <label for="expire" class="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Son Kullanma</label>
             <select name="expire" id="expire" required
                 class="block w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
-                <option disabled selected value="">Son Kullanma</option>
-                <option value="1 Minutes">1 Dakika</option>
-                <option value="5 Minutes">5 Dakika</option>
-                <option value="15 Minutes">15 Dakika</option>
-                <option value="30 Minutes">30 Dakika</option>
-                <option value="60 Minutes">1 Saat</option>
-                <option value="4 Hours">4 Saat</option>
-                <option value="1 Days">1 Gün</option>
-                <option value="2 Days">2 Gün</option>
-                <option value="7 Days">7 Gün</option>
+                <option value="7 Days" selected>7 Gün</option>
             </select>
         </div>
     </div>
