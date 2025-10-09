@@ -725,127 +725,9 @@
     <!-- Language Selector (Mobile) -->
     <div class="group flex flex-col items-center relative">
       <div class="relative">
-        <div class="gtranslate_wrapper_mobile_nav"></div>
-        <style>
-          .gtranslate_wrapper_mobile_nav {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-
-          .gtranslate_wrapper_mobile_nav .gt_float_wrapper {
-            position: static !important;
-            transform: none !important;
-            background: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-            border-radius: 0 !important;
-            width: auto !important;
-            height: auto !important;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-          }
-
-          .gtranslate_wrapper_mobile_nav .gt_float_wrapper a {
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            text-decoration: none !important;
-            transition: all 0.2s ease !important;
-          }
-
-          .gtranslate_wrapper_mobile_nav .gt_float_wrapper a:hover {
-            transform: scale(1.05) !important;
-          }
-
-          .gtranslate_wrapper_mobile_nav .gt_float_wrapper img {
-            width: 24px !important;
-            height: 24px !important;
-            border-radius: 4px !important;
-            margin: 0 !important;
-          }
-
-          .gtranslate_wrapper_mobile_nav .gt_float_wrapper .gt_options {
-            position: fixed !important;
-            bottom: 80px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            background: white !important;
-            border: 1px solid #e5e7eb !important;
-            border-radius: 12px !important;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-            z-index: 1000 !important;
-            max-height: 300px !important;
-            overflow-y: auto !important;
-            width: 280px !important;
-            max-width: 90vw !important;
-          }
-
-          .dark .gtranslate_wrapper_mobile_nav .gt_float_wrapper .gt_options {
-            background: #374151 !important;
-            border-color: #4b5563 !important;
-          }
-
-          .gtranslate_wrapper_mobile_nav .gt_float_wrapper .gt_options a {
-            padding: 8px 12px !important;
-            display: flex !important;
-            align-items: center !important;
-            flex-direction: row !important;
-            gap: 8px !important;
-            color: #374151 !important;
-            font-size: 14px !important;
-            border-bottom: 1px solid #f3f4f6 !important;
-          }
-
-          .dark .gtranslate_wrapper_mobile_nav .gt_float_wrapper .gt_options a {
-            color: #f9fafb !important;
-            border-bottom-color: #4b5563 !important;
-          }
-
-          .gtranslate_wrapper_mobile_nav .gt_float_wrapper .gt_options a:hover {
-            background: #f3f4f6 !important;
-            transform: none !important;
-          }
-
-          .dark .gtranslate_wrapper_mobile_nav .gt_float_wrapper .gt_options a:hover {
-            background: #4b5563 !important;
-          }
-
-          .gtranslate_wrapper_mobile_nav .gt_float_wrapper .gt_options a:last-child {
-            border-bottom: none !important;
-          }
-
-          .gtranslate_wrapper_mobile_nav .gt_float_wrapper .gt_options img {
-            width: 20px !important;
-            height: 20px !important;
-          }
-        </style>
-        <script>
-          if (!window.gtranslateSettingsMobileNav) {
-            window.gtranslateSettingsMobileNav = {
-              "default_language": "en",
-              "wrapper_selector": ".gtranslate_wrapper_mobile_nav",
-              "flag_style": "3d",
-              "alt_flags": {"en": "usa"},
-              "switcher_horizontal_position": "center",
-              "switcher_vertical_position": "bottom"
-            };
-
-            // Load script for mobile nav if not already loaded
-            var script = document.createElement('script');
-            script.src = 'https://cdn.gtranslate.net/widgets/latest/float.js';
-            script.defer = true;
-            document.head.appendChild(script);
-          }
-        </script>
-
-        <i data-lucide="globe" class="w-6 h-6 text-gray-500 group-hover:text-blue-600 transition-colors duration-200"></i>
+        <span class="text-sm font-medium text-gray-900 dark:text-white">Türkçe</span>
       </div>
-      <span class="text-xs mt-1 text-gray-500 group-hover:text-blue-600">Dil</span>
+      <span class="text-xs mt-1 text-gray-500">Dil</span>
     </div>
 
     <a href="{{ route('deposits') }}"
@@ -963,23 +845,7 @@
 
       <!-- Menu Links -->
       <div class="space-y-2">
-        <a href="{{ route('demo.dashboard') }}" class="flex items-center p-3 rounded-lg text-gray-100
-                          hover:bg-gray-800
-                          transition-colors duration-200 group">
-          <i data-lucide="graduation-cap" class="w-5 h-5 mr-3 text-green-400
-                                     group-hover:scale-110 transition-transform duration-300"></i>
-          <span class="font-medium">Demo Ticaret</span>
-          <span class="ml-auto text-xs font-bold text-green-400">Uygulama</span>
-        </a>
 
-        <a href="{{ route('copy.dashboard') }}" class="flex items-center p-3 rounded-lg text-gray-100
-                          hover:bg-gray-800
-                          transition-colors duration-200 group">
-          <i data-lucide="copy" class="w-5 h-5 mr-3 text-blue-400
-                                     group-hover:scale-110 transition-transform duration-300"></i>
-          <span class="font-medium">Kopya Ticaret</span>
-          <!--<span class="ml-auto text-xs font-bold text-green-400">New</span>-->
-        </a>
 
         {{-- <a href="{{ route('assetbalance') }}" class="flex items-center p-3 rounded-lg text-gray-100
                           hover:bg-gray-800
@@ -1004,16 +870,9 @@
                                                transition-colors duration-200 group">
           <i data-lucide="life-buoy" class="w-5 h-5 mr-3 text-cyan-400
                                            group-hover:scale-110 transition-transform duration-300"></i>
-          <span class="font-medium">Support</span>
+          <span class="font-medium">Destek</span>
         </a>
 
-        <a href="{{ route('user.bots.index') }}" class="flex items-center p-3 rounded-lg text-gray-100
-                          hover:bg-gray-800
-                          transition-colors duration-200 group">
-          <i data-lucide="newspaper" class="w-5 h-5 mr-3 text-indigo-400
-                                          group-hover:scale-110 transition-transform duration-300"></i>
-          <span class="font-medium">Bot Ticareti</span>
-        </a>
       </div>
 
       <!-- Close Button -->
