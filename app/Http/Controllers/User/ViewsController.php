@@ -281,9 +281,9 @@ class ViewsController extends Controller
 
         return view("user.thistory")
             ->with(array(
-                't_history' => Tp_Transaction::where('user', Auth::user()->id)
-                ->whereIn('type',  ['Sell','Buy','WIN','LOSE'])
-                ->orderByDesc('id')->paginate(15),
+                't_history' => DB::table('user_plans')
+                    ->where('user', Auth::user()->id)
+                    ->orderByDesc('id')->paginate(15),
 
                 'title' => 'İşlem Geçmişi',
             ));
