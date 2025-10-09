@@ -518,6 +518,13 @@
                         Hesap Özeti
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('tradinghistory') }}"
+                       class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('tradinghistory') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <i data-lucide="activity" class="w-5 h-5 mr-3"></i>
+                        İşlem Geçmişi
+                    </a>
+                </li>
             </ul>
         </div>
 
