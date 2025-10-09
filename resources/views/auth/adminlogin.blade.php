@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'Admin Login - Trading Platform')
+@section('title', 'Yönetici Girişi - Ticaret Platformu')
 @section('content')
 
 <!-- Modern Admin Login Container -->
@@ -23,17 +23,17 @@
                 <!-- Admin Badge -->
                 <div class="mt-4 inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-500/10 text-red-400 border border-red-500/20">
                     <i data-lucide="shield-check" class="w-3 h-3 mr-2"></i>
-                    Administrator Access
+                    Yönetici Erişimi
                 </div>
             </div>
 
             <!-- Header Section -->
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-bold text-white mb-2">
-                    Admin Sign In
+                    Yönetici Girişi
                 </h1>
                 <p class="text-gray-400 text-sm">
-                    Secure access to the trading platform management
+                    Ticaret platformu yönetimine güvenli erişim
                 </p>
             </div>
 
@@ -62,7 +62,7 @@
                 <!-- Email Field -->
                 <div>
                     <label for="email" class="block text-sm font-bold text-gray-200 mb-3">
-                        Email Address
+                        E-posta Adresi
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -90,11 +90,11 @@
                 <div>
                     <div class="flex items-center justify-between mb-3">
                         <label for="password" class="block text-sm font-bold text-gray-200">
-                            Password
+                            Şifre
                         </label>
                         <a href="{{ route('admin.forgetpassword') }}"
                            class="text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors duration-200">
-                            Forgot password?
+                            Şifrenizi mi unuttunuz?
                         </a>
                     </div>
                     <div class="relative" x-data="{ showPassword: false }">
@@ -133,7 +133,7 @@
                         <span class="absolute left-0 inset-y-0 flex items-center pl-4">
                             <i data-lucide="shield-check" class="h-5 w-5 text-blue-300 group-hover:text-blue-200 transition-colors duration-200"></i>
                         </span>
-                        Sign In to Admin Panel
+                        Yönetici Paneline Giriş Yap
                     </button>
                 </div>
 
@@ -142,8 +142,8 @@
                     <div class="flex items-start">
                         <i data-lucide="info" class="w-5 h-5 text-yellow-400 mr-3 mt-0.5 flex-shrink-0"></i>
                         <div class="text-sm text-yellow-300">
-                            <p class="font-medium mb-1">Security Notice</p>
-                            <p class="text-yellow-400">This is a restricted area. All access attempts are logged and monitored.</p>
+                            <p class="font-medium mb-1">Güvenlik Bildirimi</p>
+                            <p class="text-yellow-400">Bu kısıtlı bir alandır. Tüm erişim girişimleri günlüğe kaydedilir ve izlenir.</p>
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
         <!-- Additional Info -->
         <div class="text-center">
             <p class="text-gray-500 text-sm">
-                Need help? Contact <a href="mailto:support@company.com" class="text-blue-400 hover:text-blue-300 font-medium">technical support</a>
+                Yardıma ihtiyacınız var mı? <a href="mailto:support@company.com" class="text-blue-400 hover:text-blue-300 font-medium">teknik destekle</a> iletişime geçin
             </p>
         </div>
     </div>

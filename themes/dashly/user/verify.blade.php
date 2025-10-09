@@ -5,7 +5,7 @@
     <div class="d-flex align-items-baseline justify-content-between">
         <!-- Title -->
         <h1 class="h2">
-            KYC Verification
+            KYC Doğrulama
         </h1>
     </div>
     <x-danger-alert />
@@ -45,14 +45,13 @@
                             <div class="card-body">
                                 @if (Auth::user()->account_verify == 'Verified' or Auth::user()->account_verify == 'Under review')
                                     <div class="alert alert-info">
-                                        Your KYC verification is {{ Auth::user()->account_verify }}.
+                                        KYC doğrulamınız {{ Auth::user()->account_verify }}.
                                     </div>
                                 @endif
-                                <h2 class="text-center mb-0">KYC Verification</h2>
-                                <p class="text-secondary text-center">To comply with regulation, each participant will
-                                    have
-                                    to go through indentity
-                                    verification (KYC/AML) to prevent fraud causes.</p>
+                                <h2 class="text-center mb-0">KYC Doğrulama</h2>
+                                <p class="text-secondary text-center">Düzenlemeye uymak için, her katılımcı
+                                    dolandırıcılık nedenlerini önlemek için kimlik
+                                    doğrulamasından (KYC/AML) geçmek zorunda kalacaktır.</p>
 
                             </div>
                             <div class="card-footer">
@@ -61,9 +60,9 @@
                                     <!-- Button -->
                                     @if (Auth::user()->account_verify == 'Verified' or Auth::user()->account_verify == 'Under review')
                                         <a class="btn btn-primary" data-toggle="wizard" href="#wizardStepTwo"
-                                            disabled>Next</a>
+                                            disabled>Sonraki</a>
                                     @else
-                                        <a class="btn btn-primary" data-toggle="wizard" href="#wizardStepTwo">Next</a>
+                                        <a class="btn btn-primary" data-toggle="wizard" href="#wizardStepTwo">Sonraki</a>
                                     @endif
 
                                 </div>
@@ -72,15 +71,15 @@
                         <div class="card">
                             <div class="card-body d-lg-flex justify-content-lg-between">
                                 <div>
-                                    <h4 class="m-0">We’re here to help you!</h4>
+                                    <h4 class="m-0">Size yardımcı olmak için buradayız!</h4>
                                     <p class="m-0">
-                                        Ask a question, manage request, report an issue. Our support team will
-                                        get back to you by email.
+                                        Bir soru sorun, istekleri yönetin, bir sorun bildirin. Destek ekibimiz
+                                        size e-posta ile geri dönecektir.
                                     </p>
                                 </div>
                                 <div>
                                     <a href="{{ route('support') }}"
-                                        class="px-3 btn btn-outline-primary btn-sm">Help/Support</a>
+                                        class="px-3 btn btn-outline-primary btn-sm">Yardım/Destek</a>
                                 </div>
                             </div>
                         </div>
@@ -94,70 +93,69 @@
                                         class="needs-validation">
                                         @csrf
                                         <div class="col-12 border-bottom">
-                                            <h5>Personal Details</h5>
-                                            <p>Your simple personal information required for identification</p>
+                                            <h5>Kişisel Detaylar</h5>
+                                            <p>Kimlik için gereken basit kişisel bilgileriniz</p>
                                         </div>
                                         <div class="col-12">
                                             <small>
-                                                Please type carefully and fill out the form with your personal details.
-                                                Your
-                                                can’t edit these details once you submitted the form.
+                                                Lütfen dikkatlice yazın ve formu kişisel bilgilerinizle doldurun.
+                                                Formu gönderdikten sonra bu detayları düzenleyemezsiniz.
                                             </small>
                                         </div>
                                         <div class="mt-4 col-12">
                                             <div class="row">
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="firstname">First name <span
+                                                    <label for="firstname">İlk ad <span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" name="first_name" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="lastname">Last name <span
+                                                    <label for="lastname">Soyad <span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" name="last_name" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="email">Email <span class="text-danger">*</span></label>
+                                                    <label for="email">E-posta <span class="text-danger">*</span></label>
                                                     <input type="email" name="email" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="phone_number">Phone Number <span
+                                                    <label for="phone_number">Telefon Numarası <span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" name="phone_number" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="dob">Date of birth <span
+                                                    <label for="dob">Doğum tarihi <span
                                                             class="text-danger">*</span></label>
                                                     <input type="date" name="dob" class="form-control"
-                                                        data-toggle="date" placeholder="Select date" required>
+                                                        data-toggle="date" placeholder="Tarih seçin" required>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="social_media">Twitter or Facebook username</label>
+                                                    <label for="social_media">Twitter veya Facebook kullanıcı adı</label>
                                                     <input type="text" name="social_media" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="pt-3 mt-3 col-12 border-bottom border-top">
-                                            <h5>Your Address</h5>
-                                            <p>Your simple location information required for identification</p>
+                                            <h5>Adresiniz</h5>
+                                            <p>Kimlik için gereken basit konum bilgileriniz</p>
                                         </div>
                                         <div class="mt-4 col-12">
                                             <div class="row">
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="address">Address line<span
+                                                    <label for="address">Adres satırı<span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" name="address" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="city">City<span class="text-danger">*</span></label>
+                                                    <label for="city">Şehir<span class="text-danger">*</span></label>
                                                     <input type="text" name="city" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="state">State<span class="text-danger">*</span></label>
+                                                    <label for="state">Eyalet<span class="text-danger">*</span></label>
                                                     <input type="text" name="state" class="form-control" required>
                                                 </div>
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="country">Nationality <span
+                                                    <label for="country">Milliyet <span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" name="country" class="form-control" required>
                                                 </div>
@@ -165,8 +163,8 @@
                                             </div>
                                         </div>
                                         <div class="pt-3 mt-3 col-12 border-bottom border-top">
-                                            <h5>Document Upload</h5>
-                                            <p>Your simple personal document required for identification</p>
+                                            <h5>Belge Yükleme</h5>
+                                            <p>Kimlik için gereken basit kişisel belgeniz</p>
                                         </div>
                                         <div class="mt-4 col-12">
                                             <div class="row">
@@ -176,41 +174,39 @@
                                                         <label class="mb-2 shadow-sm btn btn-primary active">
 
                                                             <input type="radio" name="document_type"
-                                                                value="Int'l Passport" autocomplete="off" checked> Int'l
-                                                            Passport
+                                                                value="Int'l Passport" autocomplete="off" checked> Uluslararası
+                                                            Pasaport
                                                         </label>
                                                         <label class="mb-2 shadow-sm btn btn-primary">
 
                                                             <input type="radio" name="document_type"
-                                                                value="National ID" autocomplete="off"> National ID
+                                                                value="National ID" autocomplete="off"> Ulusal Kimlik
                                                         </label>
                                                         <label class="mb-2 shadow-sm btn btn-primary">
 
                                                             <input type="radio" name="document_type"
-                                                                value="Drivers License" autocomplete="off"> Drivers
-                                                            License
+                                                                value="Drivers License" autocomplete="off"> Ehliyet
                                                         </label>
                                                     </div>
                                                     <div class="mt-4">
-                                                        <h6 class=" font-weight-bold">To avoid delays when verifying
-                                                            account, Please make sure your document meets the criteria
-                                                            below:</h6>
+                                                        <h6 class=" font-weight-bold">Hesap doğrulamasında gecikmeleri önlemek için,
+                                                            lütfen belgenizin aşağıdaki kriterleri karşıladığından emin olun:</h6>
                                                         <ul class=" list-group">
                                                             <li>
                                                                 <i class="fas fa-check-square text-primary"></i>
-                                                                Chosen credential must not have expired.
+                                                                Seçilen kimlik belgesinin süresi dolmamış olmalıdır.
                                                             </li>
                                                             <li>
                                                                 <i class="fas fa-check-square text-primary"></i>
-                                                                Document should be in good condition and clearly visible.
+                                                                Belge iyi durumda ve açıkça görünür olmalıdır.
                                                             </li>
                                                             <li>
                                                                 <i class="fas fa-check-square text-primary"></i>
-                                                                Make sure that there is no light glare on the document.
+                                                                Belgede ışık parlaması olmadığından emin olun.
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <p class="mt-3 text-black h6">Upload front side <span
+                                                    <p class="mt-3 text-black h6">Ön tarafı yükleyin <span
                                                             class="text-danger">*</span></p>
                                                     <div class="mt-3 align-items-center justify-content-around d-md-flex">
                                                         <div class="p-2 border p-md-5 ">
@@ -224,7 +220,7 @@
                                                         </div>
                                                     </div>
                                                     <hr>
-                                                    <p class="mt-3 text-black h6">Upload back side <span
+                                                    <p class="mt-3 text-black h6">Arka tarafı yükleyin <span
                                                             class="text-danger">*</span></p>
                                                     <div class="mt-3 align-items-center justify-content-around d-md-flex">
                                                         <div class="p-2 border p-md-5 ">
@@ -245,18 +241,18 @@
                                                 <input class="form-check-input" type="checkbox" value=""
                                                     id="defaultCheck1" required>
                                                 <label class="form-check-label" for="defaultCheck1">
-                                                    All The Information I Have Entered Is Correct.
+                                                    Girdiğim Tüm Bilgiler Doğrudur.
                                                 </label>
                                             </div>
                                             @if (Auth::user()->account_verify == 'Under review')
                                                 <button type="submit" class="px-4 btn btn-primary d-block"
-                                                    disabled>Submit
-                                                    Application</button>
-                                                <small class="text-success">Your previous application is under review,
-                                                    please wait</small>
+                                                    disabled>Başvuru
+                                                    Gönder</button>
+                                                <small class="text-success">Önceki başvurunuz inceleniyor,
+                                                    lütfen bekleyin</small>
                                             @else
-                                                <button type="submit" class="px-4 btn btn-primary">Submit
-                                                    Application</button>
+                                                <button type="submit" class="px-4 btn btn-primary">Başvuru
+                                                    Gönder</button>
                                             @endif
                                         </div>
                                     </form>
@@ -266,7 +262,7 @@
                             <div class="card-footer">
                                 <div class="d-flex justify-content-between">
                                     <!-- Button -->
-                                    <a class="btn btn-light" data-toggle="wizard" href="#wizardStepOne">Previous</a>
+                                    <a class="btn btn-light" data-toggle="wizard" href="#wizardStepOne">Önceki</a>
                                 </div>
                             </div>
                         </div>

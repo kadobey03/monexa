@@ -14,7 +14,7 @@
             <div>
                 <a href="{{ route('user.mycoursedetails', ['id' => $course->id]) }}" class="btn btn-outline-primary btn-sm">
                     <i class="bi bi-arrow-left"></i>
-                    Back
+                    Geri
                 </a>
             </div>
         @endif

@@ -7,9 +7,9 @@
 <div>
     <!-- Title -->
     <h1 class="h2 m-0">
-        Account transactions history
+        Hesap işlemleri geçmişi
     </h1>
-    <p class="m-0">All your transaction history in one place.</p>
+    <p class="m-0">Tüm işlem geçmişiniz tek bir yerde.</p>
 </div>
 
 <div class="row mt-5">
@@ -23,9 +23,9 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex flex-column">
-                            <h3 class="card-title h4 mb-0">Deposits</h3>
+                            <h3 class="card-title h4 mb-0">Yatırımlar</h3>
                             @if ($deposits)
-                                <span class="fs-6 text-dark">{{ $deposits->count() }} records</span>
+                                <span class="fs-6 text-dark">{{ $deposits->count() }} kayıt</span>
                             @endif
                         </div>
 
@@ -47,9 +47,9 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex flex-column">
-                            <h3 class="card-title h4 mb-0">Withdrawals</h3>
+                            <h3 class="card-title h4 mb-0">Çekimler</h3>
                             @if ($withdrawals)
-                                <span class="fs-6 text-dark">{{ $withdrawals->count() }} records</span>
+                                <span class="fs-6 text-dark">{{ $withdrawals->count() }} kayıt</span>
                             @endif
                         </div>
 
@@ -72,9 +72,9 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex flex-column">
-                                <h3 class="card-title h4 mb-0">Profit</h3>
+                                <h3 class="card-title h4 mb-0">Kar</h3>
                                 @if ($profits)
-                                    <span class="fs-6 text-dark">{{ $profits->count() }} records</span>
+                                    <span class="fs-6 text-dark">{{ $profits->count() }} kayıt</span>
                                 @endif
                             </div>
 
@@ -97,9 +97,9 @@
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex flex-column">
-                            <h3 class="card-title h4 mb-0">Others</h3>
+                            <h3 class="card-title h4 mb-0">Diğerleri</h3>
                             @if ($others)
-                                <span class="fs-6 text-dark">{{ $others->count() }} records</span>
+                                <span class="fs-6 text-dark">{{ $others->count() }} kayıt</span>
                             @endif
                         </div>
 

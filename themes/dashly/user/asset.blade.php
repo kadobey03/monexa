@@ -4,11 +4,11 @@
     <!-- Title -->
     <div class="d-flex justify-content-between">
         <h1 class="h2">
-            Currency swap
+            Para Birimi Takası
         </h1>
         <div>
             <a href="{{ route('swaphistory') }}" class="btn btn-primary btn-sm">
-                <i class="bi bi-clock-history"></i> Transactions
+                <i class="bi bi-clock-history"></i> İşlemler
             </a>
         </div>
     </div>
@@ -25,7 +25,7 @@
                                 {{ $settings->currency }}{{ number_format(Auth::user()->account_bal, 2, '.', ',') }}
                             </b>
                         </p>
-                        <small class="text-muted">Account Balance</small>
+                        <small class="text-muted">Hesap Bakiyesi</small>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                                 </b>
 
                             </p>
-                            <small class="text-muted usdelement" id="btc">BTC Balance</small>
+                            <small class="text-muted usdelement" id="btc">BTC Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                             <p class="m-0 ">
                                 <b>{{ round($cbalance->eth, 8) }} ETH</b>
                             </p>
-                            <small class="text-muted usdelement" id="eth">ETH Balance</small>
+                            <small class="text-muted usdelement" id="eth">ETH Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                             <p class="m-0">
                                 <b>{{ round($cbalance->ltc, 8) }} LTC</b>
                             </p>
-                            <small class="text-muted usdelement" id="ltc">LTC Balance</small>
+                            <small class="text-muted usdelement" id="ltc">LTC Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                             <p class="m-0">
                                 <b>{{ round($cbalance->link, 8) }} LINK</b>
                             </p>
-                            <small class="text-muted usdelement" id="link">LINK Balance</small>
+                            <small class="text-muted usdelement" id="link">LINK Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                             <p class="m-0">
                                 <b>{{ round($cbalance->bnb, 8) }} BNB</b>
                             </p>
-                            <small class="text-muted usdelement" id="bnb">BNB Balance</small>
+                            <small class="text-muted usdelement" id="bnb">BNB Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                             <p class="m-0">
                                 <b>{{ round($cbalance->ada, 8) }} ADA</b>
                             </p>
-                            <small class="text-muted usdelement" id="ada">ADA Balance</small>
+                            <small class="text-muted usdelement" id="ada">ADA Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
                             <p class="m-0">
                                 <b>{{ round($cbalance->aave, 8) }} AAVE</b>
                             </p>
-                            <small class="text-muted usdelement" id="aave">AAVE Balance</small>
+                            <small class="text-muted usdelement" id="aave">AAVE Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -186,7 +186,7 @@
                             <p class="m-0">
                                 <b>{{ round($cbalance->bch, 8) }} BCH</b>
                             </p>
-                            <small class="text-muted usdelement" id="bch">BCH Balance</small>
+                            <small class="text-muted usdelement" id="bch">BCH Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -203,7 +203,7 @@
                             <p class="m-0">
                                 <b>{{ round($cbalance->xrp, 8) }} XRP</b>
                             </p>
-                            <small class="text-muted usdelement" id="xrp">XRP Balance</small>
+                            <small class="text-muted usdelement" id="xrp">XRP Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -220,7 +220,7 @@
                             <p class="m-0">
                                 <b>{{ round($cbalance->xlm, 8) }} XLM</b>
                             </p>
-                            <small class="text-muted usdelement" id="xlm">XLM Balance</small>
+                            <small class="text-muted usdelement" id="xlm">XLM Bakiyesi</small>
                         </div>
                     </div>
                 </div>
@@ -241,7 +241,7 @@
                     <form method="POST" action="javascript:void(0)" id="exchnageform">
                         @csrf
                         <div class="form-group">
-                            <p class="mb-1">Source Account</p>
+                            <p class="mb-1">Kaynak Hesap</p>
                             <select class="form-select" name="source" id="sourceasset">
                                 @if ($moresettings->btc == 'enabled')
                                     <option value="btc">BTC</option>
@@ -281,7 +281,7 @@
                         </div>
 
                         <div class="form-group my-3">
-                            <p class="mb-1">Destination Account</p>
+                            <p class="mb-1">Hedef Hesap</p>
                             <select name="destination" class="form-select" id="destinationasset">
                                 <option value="usd">USD</option>
                                 @if ($moresettings->btc == 'enabled')
@@ -318,21 +318,21 @@
                                     <option value="usdt">USDT</option>
                                 @endif
                             </select>
-                            <small class="fs-6 mt-1">NOTE: USD is your account balance.</small>
+                            <small class="fs-6 mt-1">NOT: USD hesabınızın bakiyesidir.</small>
                         </div>
 
                         <div class="form-group">
-                            <p class="mb-1">Amount</p>
-                            <input type="text" name="amount" class="form-control" placeholder="Enter amount of btc"
+                            <p class="mb-1">Miktar</p>
+                            <input type="text" name="amount" class="form-control" placeholder="BTC miktarını girin"
                                 id="amount">
                         </div>
                         <div class="form-group mt-3">
-                            <p class="mb-1">You will get</p>
+                            <p class="mb-1">Alacağınız</p>
                             <div class="input-group">
                                 <div class="spinner-border spinner-border-sm d-none" id="spinload" role="status">
-                                    <span class="visually-hidden">Loading...</span>
+                                    <span class="visually-hidden">Yükleniyor...</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Quantity of usd" id="quantity"
+                                <input type="text" class="form-control" placeholder="USD miktarı" id="quantity"
                                     readonly>
                             </div>
 
@@ -340,14 +340,14 @@
                             <div class="form-group mt-3">
                                 <span class="mb-1 ml-2 caption">
                                     <span class=" font-weight-bolder">
-                                        Fees = {{ $moresettings->fee }}%
+                                        Ücretler = {{ $moresettings->fee }}%
                                     </span>
                                 </span>
                             </div>
 
                             <div class="cta inline-group mt-2">
                                 <button id="swapbtn" class="btn btn-success w-100 btn-sm" disbaled>
-                                    Swap
+                                    Takas
                                 </button>
                             </div>
                     </form>

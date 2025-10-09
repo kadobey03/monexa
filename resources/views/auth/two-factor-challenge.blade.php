@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'Two Factor Authentication - Secure Login')
+@section('title', 'İki Faktörlü Kimlik Doğrulama - Güvenli Giriş')
 @section('content')
 
 <!-- Modern 2FA Authentication -->
@@ -17,10 +17,10 @@
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                    Two-Factor Authentication
+                    İki Faktörlü Kimlik Doğrulama
                 </h1>
                 <p class="text-gray-400 text-sm md:text-base">
-                    Secure your trading account with an additional layer of protection
+                    Ticaret hesabınızı ek bir koruma katmanı ile güvenceye alın
                 </p>
             </div>
 
@@ -29,9 +29,9 @@
                 <div class="flex items-start gap-3">
                     <i data-lucide="mail" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
                     <div class="text-sm">
-                        <p class="text-blue-300 font-bold mb-1">Authentication Code Sent</p>
+                        <p class="text-blue-300 font-bold mb-1">Kimlik Doğrulama Kodu Gönderildi</p>
                         <p class="text-gray-300">
-                            A 6-digit verification code has been sent to your registered email address. Please check your inbox and enter the code below to continue.
+                            Kayıtlı e-posta adresinize 6 haneli bir doğrulama kodu gönderildi. Devam etmek için lütfen gelen kutunuzu kontrol edin ve kodu aşağıya girin.
                         </p>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <!-- Code Input -->
                 <div class="space-y-2">
                     <label for="twofa" class="block text-sm font-bold text-gray-200">
-                        Verification Code
+                        Doğrulama Kodu
                     </label>
                     <div class="relative">
                         <input
@@ -85,20 +85,20 @@
                 <div class="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                     <h4 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
                         <i data-lucide="info" class="w-4 h-4 text-blue-400"></i>
-                        Security Tips
+                        Güvenlik İpuçları
                     </h4>
                     <ul class="text-gray-300 text-xs space-y-1">
                         <li class="flex items-start gap-2">
                             <span class="text-blue-400 mt-1">•</span>
-                            Never share your 2FA code with anyone
+                            2FA kodunuzu kimseyle paylaşmayın
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-blue-400 mt-1">•</span>
-                            Code expires in 10 minutes for security
+                            Güvenlik için kod 10 dakika içinde süresi dolacak
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-blue-400 mt-1">•</span>
-                            Check your spam folder if code doesn't arrive
+                            Kod gelmezse spam klasörünüzü kontrol edin
                         </li>
                     </ul>
                 </div>
@@ -112,7 +112,7 @@
                     >
                         <span class="flex items-center justify-center gap-2">
                             <i data-lucide="check-circle" class="w-5 h-5"></i>
-                            Verify & Continue
+                            Doğrula ve Devam Et
                         </span>
                     </button>
 
@@ -122,7 +122,7 @@
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                            class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200">
                             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                            Back to Sign In
+                            Girişe Dön
                         </a>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
             <!-- Additional Security Info -->
             <div class="mt-8 pt-6 border-t border-gray-700">
                 <div class="text-center">
-                    <p class="text-xs text-gray-500 mb-2">Protected by enterprise-grade security</p>
+                    <p class="text-xs text-gray-500 mb-2">Kurumsal düzeyde güvenlik ile korunuyor</p>
                     <div class="flex items-center justify-center gap-4 text-gray-600">
                         <span class="flex items-center gap-1">
                             <i data-lucide="shield" class="w-3 h-3"></i>
@@ -144,11 +144,11 @@
                         </span>
                         <span class="flex items-center gap-1">
                             <i data-lucide="lock" class="w-3 h-3"></i>
-                            <span class="text-xs">2FA Protected</span>
+                            <span class="text-xs">2FA Korumalı</span>
                         </span>
                         <span class="flex items-center gap-1">
                             <i data-lucide="eye-off" class="w-3 h-3"></i>
-                            <span class="text-xs">Zero Logs</span>
+                            <span class="text-xs">Sıfır Günlük</span>
                         </span>
                     </div>
                 </div>
@@ -165,9 +165,9 @@
         <!-- Resend Code (Future Enhancement) -->
         <div class="text-center mt-6">
             <p class="text-gray-500 text-sm">
-                Didn't receive the code?
+                Kod almadınız mı?
                 <button type="button" class="text-blue-400 hover:text-blue-300 font-medium ml-1 transition-colors duration-200">
-                    Resend Code
+                    Kodu Tekrar Gönder
                 </button>
             </p>
         </div>

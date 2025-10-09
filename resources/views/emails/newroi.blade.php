@@ -1,118 +1,118 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-# Portfolio Update - Investment Returns Generated 📈
+# Portföy Güncellemesi - Yatırım Getirileri Oluşturuldu 📈
 
-## Dear {{$user->name}},
+## Sevgili {{$user->name}},
 
-**Congratulations!** Your investment portfolio has generated new returns. We're pleased to inform you that your strategic investment choices continue to perform well in the current market conditions.
+**Tebrikler!** Yatırım portföyünüz yeni getiriler oluşturdu. Stratejik yatırım seçimlerinizin mevcut piyasa koşullarında iyi performans göstermeye devam ettiğini bildirmekten memnuniyet duyuyoruz.
 
-### 💰 **Return Details**
+### 💰 **Getiri Detayları**
 
 @component('mail::panel', ['color' => 'success'])
-**Investment Performance Summary**
+**Yatırım Performans Özeti**
 
-**Investment Plan:** {{$plan}}<br>
-**Return Amount:** {{$user->currency}}{{number_format($amount, 2)}}<br>
-**Generated On:** {{$plandate}}<br>
-**Status:** Credited to Your Account
+**Yatırım Planı:** {{$plan}}<br>
+**Getiri Miktarı:** {{$user->currency}}{{number_format($amount, 2)}}<br>
+**Oluşturulma Tarihi:** {{$plandate}}<br>
+**Durum:** Hesabınıza Yatırıldı
 @endcomponent
 
-### 📊 **Performance Insights**
+### 📊 **Performans İçgörüleri**
 
-Your {{$plan}} investment plan continues to deliver consistent returns as part of our sophisticated investment strategy. This return reflects:
+{{$plan}} yatırım planınız, gelişmiş yatırım stratejimizin bir parçası olarak tutarlı getiriler sunmaya devam ediyor. Bu getiri şunları yansıtıyor:
 
-- **Market Analysis**: Our expert team's strategic market positioning
-- **Risk Management**: Carefully balanced portfolio optimization
-- **Technology Edge**: Advanced algorithmic trading systems
-- **Diversification**: Multi-asset exposure for stability
+- **Piyasa Analizi**: Uzman ekibimizin stratejik piyasa konumlandırması
+- **Risk Yönetimi**: Dikkatlice dengelenmiş portföy optimizasyonu
+- **Teknoloji Üstünlüğü**: Gelişmiş algoritmik ticaret sistemleri
+- **Çeşitlendirme**: İstikrar için çoklu varlık maruziyeti
 
-### 🚀 **Maximize Your Growth Potential**
+### 🚀 **Büyüme Potansiyelinizi Azami Düzeye Çıkarın**
 
-**Consider These Opportunities:**
-- **Compound Growth**: Reinvest your returns for exponential growth
-- **Portfolio Expansion**: Explore additional investment plans
-- **Copy Trading**: Follow top-performing traders automatically
-- **Premium Strategies**: Upgrade to higher-tier investment plans
+**Bu Fırsatları Düşünün:**
+- **Bileşik Büyüme**: Üstel büyüme için getirilerinizi yeniden yatırım yapın
+- **Portföy Genişletme**: Ek yatırım planlarını keşfedin
+- **Kopya Ticaret**: En iyi performans gösteren tüccarları otomatik olarak takip edin
+- **Premium Stratejiler**: Daha yüksek katman yatırım planlarına yükseltin
 
 @component('mail::button', ['url' => config('app.url').'/dashboard'])
-View Portfolio Performance
+Portföy Performansını Görüntüle
 @endcomponent
 
-### 📈 **Your Investment Journey**
+### 📈 **Yatırım Yolculuğunuz**
 
-**Recent Activity:**
-✅ Investment actively managed by our expert team<br>
-✅ Returns generated and credited to your account<br>
-✅ Portfolio rebalanced for optimal performance<br>
-📊 Continuous monitoring and optimization in progress
+**Son Etkinlik:**
+✅ Yatırımımız uzman ekibimiz tarafından aktif olarak yönetiliyor<br>
+✅ Getiriler oluşturuldu ve hesabınıza yatırıldı<br>
+✅ Portföy optimal performans için yeniden dengelendi<br>
+📊 Sürekli izleme ve optimizasyon devam ediyor
 
-**Next Steps:**
-- Monitor your portfolio performance in real-time
-- Consider reinvestment opportunities for compound growth
-- Explore our advanced trading tools and analytics
+**Sonraki Adımlar:**
+- Portföy performansınızı gerçek zamanlı olarak izleyin
+- Bileşik büyüme için yeniden yatırım fırsatlarını düşünün
+- Gelişmiş ticaret araçlarımızı ve analizlerimizi keşfedin
 
-### 💡 **Investment Insights**
+### 💡 **Yatırım İçgörüleri**
 
 @component('mail::panel')
-**Market Commentary:** Current market conditions favor diversified investment strategies. Your {{$plan}} plan is positioned to capitalize on emerging opportunities while maintaining risk-adjusted returns.
+**Piyasa Yorumu:** Mevcut piyasa koşulları çeşitlendirilmiş yatırım stratejilerini tercih ediyor. {{$plan}} planınız, risk ayarlı getirileri korurken ortaya çıkan fırsatları değerlendirecek şekilde konumlandırılmıştır.
 @endcomponent
 
-**Investment Tips:**
-- **Consistency**: Regular investments often outperform market timing
-- **Diversification**: Spread risk across multiple investment vehicles
-- **Long-term Vision**: Focus on sustainable growth over quick gains
-- **Professional Management**: Leverage our expert team's market expertise
+**Yatırım İpuçları:**
+- **Tutarlılık**: Düzenli yatırımlar genellikle piyasa zamanlamasını geride bırakır
+- **Çeşitlendirme**: Riski birden fazla yatırım aracı arasında dağıtın
+- **Uzun Vadeli Vizyon**: Hızlı kazançlardan ziyade sürdürülebilir büyümeye odaklanın
+- **Profesyonel Yönetim**: Uzman ekibimizin piyasa uzmanlığından yararlanın
 
-### 📞 **Professional Investment Support**
+### 📞 **Profesyonel Yatırım Desteği**
 
-Our investment advisory team is available to help you optimize your portfolio strategy:
+Yatırım danışmanlık ekibimiz portföy stratejilerinizi optimize etmenize yardımcı olmak için hazır:
 
 @component('mail::button', ['url' => config('app.url').'/login', 'color' => 'success'])
-Schedule Investment Consultation
+Yatırım Danışmanlığı Planla
 @endcomponent
 
-**Available Services:**
-- Personal Portfolio Review
-- Investment Strategy Optimization
-- Market Analysis and Insights
-- Risk Assessment and Management
+**Mevcut Hizmetler:**
+- Kişisel Portföy İncelemesi
+- Yatırım Stratejisi Optimizasyonu
+- Piyasa Analizi ve İçgörüleri
+- Risk Değerlendirmesi ve Yönetimi
 
-### 🎯 **Ready to Grow Further?**
+### 🎯 **Daha Fazla Büyümeye Hazır mısınız?**
 
-**Expansion Opportunities:**
-- **Higher Tier Plans**: Unlock premium investment strategies
-- **Copy Trading Elite**: Access to institutional-grade traders
-- **Automated Rebalancing**: AI-powered portfolio optimization
-- **VIP Services**: Dedicated investment advisor access
+**Genişletme Fırsatları:**
+- **Daha Yüksek Katman Planlar**: Premium yatırım stratejilerini açın
+- **Kopya Ticaret Elit**: Kurumsal düzey tüccarlara erişim
+- **Otomatik Yeniden Dengeleme**: AI destekli portföy optimizasyonu
+- **VIP Hizmetler**: Özel yatırım danışmanı erişimi
 
 @component('mail::button', ['url' => config('app.url').'/login'])
-Explore Investment Options
+Yatırım Seçeneklerini Keşfedin
 @endcomponent
 
 ---
 
-### 📊 **Performance Transparency**
+### 📊 **Performans Şeffaflığı**
 
-We believe in complete transparency regarding your investment performance. Access detailed analytics, historical returns, and comprehensive reporting through your dashboard.
+Yatırım performansınızla ilgili tam şeffaflığa inanıyoruz. Panonuz aracılığıyla detaylı analitiklere, geçmiş getirilere ve kapsamlı raporlamaya erişin.
 
-**Key Metrics Available:**
-- Real-time portfolio valuation
-- Historical performance charts
-- Risk-adjusted return analysis
-- Benchmark comparisons
+**Mevcut Ana Metrikler:**
+- Gerçek zamanlı portföy değerleme
+- Geçmiş performans grafikleri
+- Risk ayarlı getiri analizi
+- Kıyaslama karşılaştırmaları
 
-Thank you for trusting {{$settings->site_name}} with your investment goals. We remain committed to delivering exceptional results through our proven investment strategies.
+{{$settings->site_name}}'e yatırım hedeflerinizle güveniniz için teşekkür ederiz. Kanıtlanmış yatırım stratejilerimiz aracılığıyla istisnai sonuçlar sunmaya devam ediyoruz.
 
-**Best regards,**<br>
-**The {{$settings->site_name}} Investment Team**<br>
-*Your Partners in Financial Growth*
+**Saygılarımla,**<br>
+**{{$settings->site_name}} Yatırım Ekibi**<br>
+*Finansal Büyümedeki Ortaklarınız*
 
 ---
 
 @component('mail::subcopy')
-**Investment Disclaimer:** Past performance does not guarantee future results. All investments carry risk, and you may lose some or all of your invested capital. This notification is for informational purposes only and should not be considered as financial advice. Please review our [Risk Disclosure]({{config('app.url')}}/risk-disclosure) and consider consulting with a financial advisor.
+**Yatırım Sorumluluk Reddi:** Geçmiş performans gelecek sonuçları garanti etmez. Tüm yatırımlar risk taşır ve yatırım yaptığınız sermayenin bir kısmını veya tamamını kaybedebilirsiniz. Bu bildirim sadece bilgilendirme amaçlıdır ve finansal tavsiye olarak düşünülmemelidir. Lütfen [Risk Açıklaması]({{config('app.url')}}/risk-disclosure)'mızı inceleyin ve bir finansal danışmanla danışmayı düşünün.
 
-Returns are calculated based on your investment plan's performance and market conditions. {{$settings->site_name}} employs professional investment strategies designed to optimize risk-adjusted returns.
+Getiriler, yatırım planınızın performansına ve piyasa koşullarına göre hesaplanır. {{$settings->site_name}} risk ayarlı getirileri optimize etmek için tasarlanmış profesyonel yatırım stratejileri kullanır.
 @endcomponent
 
 @endcomponent

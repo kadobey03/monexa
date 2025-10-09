@@ -27,12 +27,12 @@
     destinationasset.addEventListener('change', validate);
     sourceasset.addEventListener('change', validate);
     if (destinationasset.value == sourceasset.value) {
-        Command: toastr["error"]("Source and Destination account cannot be thesame", "Error")
+        Command: toastr["error"]("Kaynak ve hedef hesap aynı olamaz", "Hata")
         toastr.options = toastOptions;
     }
     else {
-        amount.placeholder = `Enter amount of ${sourceasset.value}`;
-        quatity.placeholder = `Quantity of ${destinationasset.value}`;
+        amount.placeholder = `${sourceasset.value} miktarını girin`;
+        quatity.placeholder = `${destinationasset.value} miktarı`;
 
     }
 
@@ -40,12 +40,12 @@
         amount.value = '';
         quatity.value = '';
         if (destinationasset.value == sourceasset.value) {
-            Command: toastr["error"]("Source and Destination account cannot be thesame", "Error")
+            Command: toastr["error"]("Kaynak ve hedef hesap aynı olamaz", "Hata")
             toastr.options = toastOptions;
         }
         else {
-            amount.placeholder = `Enter amount of ${sourceasset.value}`;
-            quatity.placeholder = `Quantity of ${destinationasset.value}`;
+            amount.placeholder = `${sourceasset.value} miktarını girin`;
+            quatity.placeholder = `${destinationasset.value} miktarı`;
 
         }
     }
@@ -90,7 +90,7 @@
         // alert('hey');
         event.preventDefault();
         if (amount.value == '') {
-            Command: toastr["error"]("Please Enter an Amount to Exchange", "Something went wrong")
+            Command: toastr["error"]("Lütfen takas edilecek bir miktar girin", "Bir şeyler yanlış gitti")
             toastr.options = toastOptions;
         }
         else {
@@ -100,7 +100,7 @@
                 data: $('#exchnageform').serialize(),
                 success: function(response) {
                     if (response.status === 200) {
-                        Command: toastr["success"](response.success, "Success")
+                        Command: toastr["success"](response.success, "Başarılı")
                         toastr.options = toastOptions;
 
                         setTimeout(function() {
@@ -108,7 +108,7 @@
                         }, 3000);
                     }
                     else {
-                        Command: toastr["error"](response.message, "Something went wrong")
+                        Command: toastr["error"](response.message, "Bir şeyler yanlış gitti")
                         toastr.options = toastOptions;
                     }
                 },

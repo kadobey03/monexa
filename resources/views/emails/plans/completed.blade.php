@@ -1,31 +1,31 @@
 @component('mail::message')
-# Investment Plan Completed
+# Yatırım Planı Tamamlandı
 
-Dear {{ $name }},
+Sayın {{ $name }},
 
-Your investment in the **{{ $planName }}** plan has been completed successfully.
+**{{ $planName }}** planındaki yatırımınız başarıyla tamamlandı.
 
-## Investment Details
-- **Investment Amount:** {{ $currency }}{{ number_format($amount, 2) }}
-- **Total Profit Earned:** {{ $currency }}{{ number_format($profit, 2) }}
-- **Total Return:** {{ $currency }}{{ number_format($totalReturn, 2) }}
-- **Start Date:** {{ $startDate }}
-- **End Date:** {{ $endDate }}
+## Yatırım Detayları
+- **Yatırım Miktarı:** {{ $currency }}{{ number_format($amount, 2) }}
+- **Kazanılan Toplam Kar:** {{ $currency }}{{ number_format($profit, 2) }}
+- **Toplam Getiri:** {{ $currency }}{{ number_format($totalReturn, 2) }}
+- **Başlangıç Tarihi:** {{ $startDate }}
+- **Bitiş Tarihi:** {{ $endDate }}
 
 @if($profit > 0)
-Congratulations on your successful investment! The profits have been credited to your account balance.
+Başarılı yatırımınız için tebrikler! Karlar hesap bakiyenize yatırıldı.
 @else
-Your investment has been completed. Please check your account for the latest balance.
+Yatırımınız tamamlandı. Lütfen en son bakiye için hesabınızı kontrol edin.
 @endif
 
-You can invest in another plan or withdraw your funds from your account dashboard.
+Başka bir planla yatırım yapabilir veya hesap panonuzdan fonlarınızı çekebilirsiniz.
 
 @component('mail::button', ['url' => $siteUrl . '/login'])
-Login to Account
+Hesaba Giriş Yap
 @endcomponent
 
-Thank you for choosing {{ $siteName }} for your investment needs.
+Yatırım ihtiyaçlarınız için {{ $siteName }}'i seçtiğiniz için teşekkür ederiz.
 
-Regards,<br>
-{{ $siteName }} Team
+Saygılarımla,<br>
+{{ $siteName }} Ekibi
 @endcomponent

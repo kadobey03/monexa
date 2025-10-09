@@ -509,7 +509,7 @@
 
                     <!-- Trading -->
                     <div>
-                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Trading</h3>
+                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Ticaret</h3>
                         <ul class="space-y-3">
                             <li><a href="cryptocurrencies" class="text-sm text-gray-400 hover:text-white transition">Kripto Paralar</a></li>
                             <li><a href="forex" class="text-sm text-gray-400 hover:text-white transition">Döviz</a></li>
@@ -845,13 +845,13 @@
 
                 switch(transaction.action) {
                     case 'invested':
-                        message = `Ticaretr from <b>${country}</b> just <b>invested</b> <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> in ${instrument}`;
+                        message = `<b>${country}</b>'dan bir ticaretçi <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> tutarında ${instrument}'a <b>yatırım yaptı</b>`;
                         break;
                     case 'withdrawn':
-                        message = `Ticaretr from <b>${country}</b> successfully <b>withdrew</b> <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> hesabından`;
+                        message = `<b>${country}</b>'dan bir ticaretçi başarıyla <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> tutarını <b>çekti</b>`;
                         break;
                     case 'earned':
-                        message = `Ticaretr from <b>${country}</b> just <b>earned</b> <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> işlem yaparak ${instrument}`;
+                        message = `<b>${country}</b>'dan bir ticaretçi ${instrument} ile işlem yaparak <a href="javascript:void(0);" onclick="javascript:void(0);">${amount}</a> tutarında <b>kazandı</b>`;
                         break;
                 }
 

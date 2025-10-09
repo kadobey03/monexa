@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Contact us')
+@section('title', 'Bize Ulaşın')
 
 @inject('content', 'App\Http\Controllers\FrontController')
 @section('content')
@@ -37,14 +37,14 @@
     <div class="relative z-10 px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="text-center mb-8">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Get in Touch
+                İletişime Geçin
             </div>
             <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
-                <span class="block">Contact Us</span>
-                <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">We're Here to Help</span>
+                <span class="block">Bize Ulaşın</span>
+                <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">Yardıma Hazırız</span>
             </h1>
             <p class="max-w-2xl mt-5 mx-auto text-xl text-gray-300">
-                Have questions about trading? Our multilingual support team is available to assist you 24/7.
+                Alım satım hakkında sorularınız mı var? Çok dilli destek ekibimiz 24/7 size yardımcı olmaya hazır.
             </p>
         </div>
     </div>
@@ -58,41 +58,41 @@
             <div class="lg:col-span-2">
                 <div class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-2xl border border-gray-700 shadow-xl overflow-hidden">
                     <div class="p-6 md:p-8">
-                        <h2 class="text-2xl font-bold text-white mb-6">Send Us a Message</h2>
+                        <h2 class="text-2xl font-bold text-white mb-6">Bize Mesaj Gönderin</h2>
 
                         <form method="post" enctype="text/plain" x-data="{ formType: 'Trading Question', name: '', email: '', message: '' }">
                             <div class="space-y-6">
                                 <!-- Select Type -->
                                 <div>
-                                    <label for="select" class="block text-sm font-medium text-gray-300 mb-2">Select Topic</label>
+                                    <label for="select" class="block text-sm font-medium text-gray-300 mb-2">Konu Seçin</label>
                                     <select
                                         x-model="formType"
                                         class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                                         id="select"
                                         name="question">
-                                        <option value="Trading Question">Trading Question</option>
-                                        <option value="Finance Question">Finance Question</option>
-                                        <option value="Technical Question">Technical Question</option>
+                                        <option value="Trading Question">Alım Satım Sorusu</option>
+                                        <option value="Finance Question">Finans Sorusu</option>
+                                        <option value="Technical Question">Teknik Soru</option>
                                     </select>
                                 </div>
 
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <!-- Name -->
                                     <div>
-                                        <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                                        <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Tam Ad</label>
                                         <input
                                             x-model="name"
                                             type="text"
                                             class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                                             id="name"
-                                            placeholder="Your name"
+                                            placeholder="Adınız"
                                             name="name"
                                             required>
                                     </div>
 
                                     <!-- Email -->
                                     <div>
-                                        <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                                        <label for="email" class="block text-sm font-medium text-gray-300 mb-2">E-posta Adresi</label>
                                         <input
                                             x-model="email"
                                             type="email"
@@ -106,11 +106,11 @@
 
                                 <!-- Message -->
                                 <div>
-                                    <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Your Message</label>
+                                    <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Mesajınız</label>
                                     <textarea
                                         x-model="message"
                                         class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all min-h-[150px]"
-                                        placeholder="How can we help you?"
+                                        placeholder="Size nasıl yardımcı olabiliriz?"
                                         name="message"
                                         required></textarea>
                                 </div>
@@ -125,10 +125,10 @@
                                             <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                                             <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                         </svg>
-                                        Send Message
+                                        Mesaj Gönder
                                     </a>
                                     <p class="mt-3 text-xs text-gray-400 text-center">
-                                        Your information is secure and encrypted
+                                        Bilgileriniz güvenli ve şifrelenmiştir
                                     </p>
                                 </div>
                             </div>
@@ -149,16 +149,16 @@
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <h3 class="text-xl font-semibold text-white">Customer Support</h3>
+                                <h3 class="text-xl font-semibold text-white">Müşteri Desteği</h3>
                             </div>
                             <p class="text-gray-300 mb-4">
-                                Our multilingual support team is ready to assist you with any questions or concerns.
+                                Çok dilli destek ekibimiz herhangi bir soru veya endişenizle ilgili yardımcı olmaya hazır.
                             </p>
                             <div class="flex items-center text-blue-400 hover:text-blue-300 transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
                                 </svg>
-                                <span>24/7 Support Available</span>
+                                <span>24/7 Destek Mevcut</span>
                             </div>
                         </div>
                     </div>
@@ -172,7 +172,7 @@
                                         <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <h3 class="text-xl font-semibold text-white">Address</h3>
+                                <h3 class="text-xl font-semibold text-white">Adres</h3>
                             </div>
                             <p class="text-gray-300 mb-2">
                                 11 GRACE AVENUE, STE 108<br>
@@ -191,7 +191,7 @@
                                         <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                                     </svg>
                                 </div>
-                                <h3 class="text-xl font-semibold text-white">Phone</h3>
+                                <h3 class="text-xl font-semibold text-white">Telefon</h3>
                             </div>
                             <a href="tel:7027064466" class="text-blue-400 hover:text-blue-300 transition flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -212,7 +212,7 @@
                                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                     </svg>
                                 </div>
-                                <h3 class="text-xl font-semibold text-white">Email</h3>
+                                <h3 class="text-xl font-semibold text-white">E-posta</h3>
                             </div>
                             <div class="space-y-2">
                                 <a href="mailto:{{$settings->emailfrom}}" class="text-blue-400 hover:text-blue-300 transition flex items-center">
@@ -254,10 +254,10 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white">Global Presence</h2>
+            <h2 class="text-3xl font-bold text-white">Küresel Varlık</h2>
             <div class="w-24 h-1 mx-auto mt-4 rounded-full bg-gradient-to-r from-blue-500 to-teal-400"></div>
             <p class="mt-4 max-w-3xl mx-auto text-gray-300">
-                With teams around the world, we provide support in multiple languages and time zones
+                Dünya çapında ekiplerimizle, birden fazla dilde ve saat diliminde destek sağlıyoruz
             </p>
         </div>
 
@@ -272,7 +272,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-white">North America</h3>
+                        <h3 class="text-xl font-semibold text-white">Kuzey Amerika</h3>
                         <div class="ml-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 transition-transform duration-300" :class="{'rotate-180': open}" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -289,17 +289,17 @@
                         <div>
                             <h4 class="font-semibold text-blue-400">New York</h4>
                             <p class="text-gray-300 text-sm mt-1">11 GRACE AVENUE, STE 108<br>GREAT NECK, NEW YORK, 11021</p>
-                            <p class="text-blue-400 text-sm mt-1">Trading Hours: 9:30 AM - 4:00 PM EST</p>
+                            <p class="text-blue-400 text-sm mt-1">Alım Satım Saatleri: 9:30 AM - 4:00 PM EST</p>
                         </div>
                         <div>
                             <h4 class="font-semibold text-blue-400">San Francisco</h4>
                             <p class="text-gray-300 text-sm mt-1">301 HOWARD STREET<br>SAN FRANCISCO, CA 94105</p>
-                            <p class="text-blue-400 text-sm mt-1">Trading Hours: 6:30 AM - 1:00 PM PST</p>
+                            <p class="text-blue-400 text-sm mt-1">Alım Satım Saatleri: 6:30 AM - 1:00 PM PST</p>
                         </div>
                         <div>
                             <h4 class="font-semibold text-blue-400">Toronto</h4>
                             <p class="text-gray-300 text-sm mt-1">199 BAY STREET<br>TORONTO, ONTARIO, M5L 1E2</p>
-                            <p class="text-blue-400 text-sm mt-1">Trading Hours: 9:30 AM - 4:00 PM EST</p>
+                            <p class="text-blue-400 text-sm mt-1">Alım Satım Saatleri: 9:30 AM - 4:00 PM EST</p>
                         </div>
                     </div>
                 </div>
@@ -314,14 +314,14 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-white">Europe</h3>
+                        <h3 class="text-xl font-semibold text-white">Avrupa</h3>
                         <div class="ml-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 transition-transform duration-300" :class="{'rotate-180': open}" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </div>
                     </div>
-                    <p class="text-gray-300">London, Frankfurt, Zurich</p>
+                    <p class="text-gray-300">Londra, Frankfurt, Zürih</p>
 
                     <div class="absolute inset-0 bg-gradient-to-r from-blue-800/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
@@ -331,17 +331,17 @@
                         <div>
                             <h4 class="font-semibold text-blue-400">London</h4>
                             <p class="text-gray-300 text-sm mt-1">1 CANADA SQUARE<br>CANARY WHARF, LONDON, E14 5AB</p>
-                            <p class="text-blue-400 text-sm mt-1">Trading Hours: 8:00 AM - 4:30 PM GMT</p>
+                            <p class="text-blue-400 text-sm mt-1">Alım Satım Saatleri: 8:00 AM - 4:30 PM GMT</p>
                         </div>
                         <div>
                             <h4 class="font-semibold text-blue-400">Frankfurt</h4>
                             <p class="text-gray-300 text-sm mt-1">MAINZER LANDSTRASSE 50<br>FRANKFURT, 60325</p>
-                            <p class="text-blue-400 text-sm mt-1">Trading Hours: 9:00 AM - 5:30 PM CET</p>
+                            <p class="text-blue-400 text-sm mt-1">Alım Satım Saatleri: 9:00 AM - 5:30 PM CET</p>
                         </div>
                         <div>
                             <h4 class="font-semibold text-blue-400">Zurich</h4>
                             <p class="text-gray-300 text-sm mt-1">BAHNHOFSTRASSE 64<br>ZURICH, 8001</p>
-                            <p class="text-blue-400 text-sm mt-1">Trading Hours: 9:00 AM - 5:30 PM CET</p>
+                            <p class="text-blue-400 text-sm mt-1">Alım Satım Saatleri: 9:00 AM - 5:30 PM CET</p>
                         </div>
                     </div>
                 </div>
@@ -356,14 +356,14 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-white">Asia Pacific</h3>
+                        <h3 class="text-xl font-semibold text-white">Asya Pasifik</h3>
                         <div class="ml-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400 transition-transform duration-300" :class="{'rotate-180': open}" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </div>
                     </div>
-                    <p class="text-gray-300">Singapore, Hong Kong, Tokyo</p>
+                    <p class="text-gray-300">Singapur, Hong Kong, Tokyo</p>
 
                     <div class="absolute inset-0 bg-gradient-to-r from-blue-800/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
@@ -373,17 +373,17 @@
                         <div>
                             <h4 class="font-semibold text-blue-400">Singapore</h4>
                             <p class="text-gray-300 text-sm mt-1">ONE RAFFLES QUAY<br>SINGAPORE, 048583</p>
-                            <p class="text-blue-400 text-sm mt-1">Trading Hours: 9:00 AM - 5:00 PM SGT</p>
+                            <p class="text-blue-400 text-sm mt-1">Alım Satım Saatleri: 9:00 AM - 5:00 PM SGT</p>
                         </div>
                         <div>
                             <h4 class="font-semibold text-blue-400">Hong Kong</h4>
                             <p class="text-gray-300 text-sm mt-1">INTERNATIONAL FINANCE CENTRE<br>CENTRAL, HONG KONG</p>
-                            <p class="text-blue-400 text-sm mt-1">Trading Hours: 9:30 AM - 4:00 PM HKT</p>
+                            <p class="text-blue-400 text-sm mt-1">Alım Satım Saatleri: 9:30 AM - 4:00 PM HKT</p>
                         </div>
                         <div>
                             <h4 class="font-semibold text-blue-400">Tokyo</h4>
                             <p class="text-gray-300 text-sm mt-1">MARUNOUCHI BUILDING<br>CHIYODA-KU, TOKYO, 100-0005</p>
-                            <p class="text-blue-400 text-sm mt-1">Trading Hours: 9:00 AM - 3:00 PM JST</p>
+                            <p class="text-blue-400 text-sm mt-1">Alım Satım Saatleri: 9:00 AM - 3:00 PM JST</p>
                         </div>
                     </div>
                 </div>
@@ -422,10 +422,10 @@
 <section class="py-16 bg-gray-900" x-data="{ activeTab: null }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white">Frequently Asked Questions</h2>
+            <h2 class="text-3xl font-bold text-white">Sık Sorulan Sorular</h2>
             <div class="w-24 h-1 mx-auto mt-4 rounded-full bg-gradient-to-r from-blue-500 to-teal-400"></div>
             <p class="mt-4 max-w-3xl mx-auto text-gray-300">
-                Find answers to common questions about our services and support
+                Hizmetlerimiz ve desteğimiz hakkında yaygın soruların cevaplarını bulun
             </p>
         </div>
 
@@ -436,7 +436,7 @@
                     @click="activeTab = (activeTab === 1) ? null : 1"
                     class="flex items-center justify-between w-full py-5 px-6 text-left text-white focus:outline-none"
                 >
-                    <span class="font-semibold text-lg">How can I contact customer support?</span>
+                    <span class="font-semibold text-lg">Müşteri desteğine nasıl başvurabilirim?</span>
                     <svg
                         class="w-5 h-5 text-blue-400 transition-transform duration-200"
                         :class="{'rotate-180': activeTab === 1}"
@@ -453,7 +453,7 @@
                     x-cloak
                     class="px-6 pb-5 text-gray-300"
                 >
-                    You can contact our customer support team through email, phone, or by filling out the contact form on this page. Our team is available 24/7 to assist you with any questions or concerns.
+                    Müşteri destek ekibimizle e-posta, telefon veya bu sayfadaki iletişim formunu doldurarak iletişime geçebilirsiniz. Ekibimiz, herhangi bir soru veya endişenizle ilgili size yardımcı olmak için 24/7 mevcuttur.
                 </div>
             </div>
 
@@ -463,7 +463,7 @@
                     @click="activeTab = (activeTab === 2) ? null : 2"
                     class="flex items-center justify-between w-full py-5 px-6 text-left text-white focus:outline-none"
                 >
-                    <span class="font-semibold text-lg">How long does it take to get a response?</span>
+                    <span class="font-semibold text-lg">Yanıt almak ne kadar sürer?</span>
                     <svg
                         class="w-5 h-5 text-blue-400 transition-transform duration-200"
                         :class="{'rotate-180': activeTab === 2}"
@@ -480,7 +480,7 @@
                     x-cloak
                     class="px-6 pb-5 text-gray-300"
                 >
-                    Our support team typically responds to inquiries within 1-2 hours. For urgent matters, we recommend calling our support line for immediate assistance.
+                    Destek ekibimiz genellikle soruları 1-2 saat içinde yanıtlar. Acil durumlar için, anında yardım için destek hattımızı aramanızı öneririz.
                 </div>
             </div>
 
@@ -490,7 +490,7 @@
                     @click="activeTab = (activeTab === 3) ? null : 3"
                     class="flex items-center justify-between w-full py-5 px-6 text-left text-white focus:outline-none"
                 >
-                    <span class="font-semibold text-lg">In which languages is support available?</span>
+                    <span class="font-semibold text-lg">Destek hangi dillerde mevcuttur?</span>
                     <svg
                         class="w-5 h-5 text-blue-400 transition-transform duration-200"
                         :class="{'rotate-180': activeTab === 3}"
@@ -507,7 +507,7 @@
                     x-cloak
                     class="px-6 pb-5 text-gray-300"
                 >
-                    We provide multilingual support including English, Spanish, Chinese, Japanese, Russian, German, French, Arabic, and Portuguese. This ensures clear communication with our global client base.
+                    İngilizce, İspanyolca, Çince, Japonca, Rusça, Almanca, Fransızca, Arapça ve Portekizce dahil olmak üzere çok dilli destek sağlıyoruz. Bu, küresel müşteri tabanımızla net iletişimi sağlar.
                 </div>
             </div>
         </div>

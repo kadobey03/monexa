@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'Email Verification - Secure Your Trading Account')
+@section('title', 'E-posta Doğrulama - Ticaret Hesabınızı Güvenceye Alın')
 @section('content')
 
 <!-- Email Verification Interface -->
@@ -17,10 +17,10 @@
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                    Verify Your Email
+                    E-posta Adresinizi Doğrulayın
                 </h1>
                 <p class="text-gray-400 text-sm md:text-base">
-                    Secure your trading account by verifying your email address
+                    E-posta adresinizi doğrulayarak ticaret hesabınızı güvenceye alın
                 </p>
             </div>
 
@@ -30,9 +30,9 @@
                     <div class="flex items-start gap-3">
                         <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i>
                         <div class="text-sm">
-                            <p class="text-green-300 font-bold mb-1">Verification Email Sent</p>
+                            <p class="text-green-300 font-bold mb-1">Doğrulama E-postası Gönderildi</p>
                             <p class="text-gray-300">
-                                A verification link has been sent to your email address. Please check your inbox and click the link to verify your account.
+                                E-posta adresinize bir doğrulama bağlantısı gönderildi. Hesabınızı doğrulamak için lütfen gelen kutunuzu kontrol edin ve bağlantıya tıklayın.
                             </p>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                     <div class="flex items-start gap-3">
                         <i data-lucide="info" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i>
                         <div class="text-sm">
-                            <p class="text-green-300 font-bold mb-1">Update</p>
+                            <p class="text-green-300 font-bold mb-1">Güncelleme</p>
                             <p class="text-gray-300">{{ session('message') }}</p>
                         </div>
                     </div>
@@ -56,25 +56,25 @@
                 <div class="flex items-start gap-4">
                     <i data-lucide="mail" class="w-6 h-6 text-blue-400 mt-1 flex-shrink-0"></i>
                     <div>
-                        <h3 class="text-blue-300 font-bold text-lg mb-3">Check Your Email</h3>
+                        <h3 class="text-blue-300 font-bold text-lg mb-3">E-postanızı Kontrol Edin</h3>
                         <p class="text-gray-300 text-sm mb-4 leading-relaxed">
-                            We've sent a secure verification link to your registered email address.
-                            Click the link in the email to activate your trading account and access all features.
+                            Kayıtlı e-posta adresinize güvenli bir doğrulama bağlantısı gönderdik.
+                            Ticaret hesabınızı etkinleştirmek ve tüm özelliklere erişmek için e-postadaki bağlantıya tıklayın.
                         </p>
 
                         <!-- Email Steps -->
                         <div class="space-y-3">
                             <div class="flex items-center gap-3 text-sm text-gray-300">
                                 <span class="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 font-bold text-xs">1</span>
-                                <span>Check your inbox for our verification email</span>
+                                <span>Doğrulama e-postamız için gelen kutunuzu kontrol edin</span>
                             </div>
                             <div class="flex items-center gap-3 text-sm text-gray-300">
                                 <span class="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 font-bold text-xs">2</span>
-                                <span>Click the "Verify Email" button in the email</span>
+                                <span>E-postadaki "E-postayı Doğrula" düğmesine tıklayın</span>
                             </div>
                             <div class="flex items-center gap-3 text-sm text-gray-300">
                                 <span class="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 font-bold text-xs">3</span>
-                                <span>Return to complete your account setup</span>
+                                <span>Hesap kurulumunu tamamlamak için geri dönün</span>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                     >
                         <span class="flex items-center justify-center gap-2">
                             <i data-lucide="refresh-cw" class="w-5 h-5"></i>
-                            {{ __('Resend Verification Email') }}
+                            Doğrulama E-postasını Tekrar Gönder
                         </span>
                     </button>
                 </form>
@@ -108,7 +108,7 @@
                     >
                         <span class="flex items-center justify-center gap-2">
                             <i data-lucide="log-out" class="w-5 h-5"></i>
-                            {{ __('Sign Out') }}
+                            Çıkış Yap
                         </span>
                     </button>
                 </form>
@@ -118,24 +118,24 @@
             <div class="mt-8 bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                 <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
                     <i data-lucide="help-circle" class="w-4 h-4 text-yellow-400"></i>
-                    Can't Find the Email?
+                    E-posta Bulamıyor musunuz?
                 </h4>
                 <ul class="text-gray-300 text-xs space-y-2">
                     <li class="flex items-start gap-2">
                         <span class="text-yellow-400 mt-1">•</span>
-                        Check your spam or junk folder
+                        Spam veya gereksiz klasörünüzü kontrol edin
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-yellow-400 mt-1">•</span>
-                        Ensure the email address is correct
+                        E-posta adresinin doğru olduğundan emin olun
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-yellow-400 mt-1">•</span>
-                        Wait a few minutes for delivery
+                        Teslimat için birkaç dakika bekleyin
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-yellow-400 mt-1">•</span>
-                        Click "Resend" if needed after 2 minutes
+                        Gerekirse 2 dakikadan sonra "Tekrar Gönder"e tıklayın
                     </li>
                 </ul>
             </div>
@@ -143,19 +143,19 @@
             <!-- Security Notice -->
             <div class="mt-6 pt-6 border-t border-gray-700">
                 <div class="text-center">
-                    <p class="text-xs text-gray-500 mb-3">Why verify your email?</p>
+                    <p class="text-xs text-gray-500 mb-3">E-posta neden doğrulanıyor?</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                         <div class="flex flex-col items-center gap-1 text-gray-400">
                             <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
-                            <span>Account Security</span>
+                            <span>Hesap Güvenliği</span>
                         </div>
                         <div class="flex flex-col items-center gap-1 text-gray-400">
                             <i data-lucide="bell" class="w-4 h-4 text-blue-400"></i>
-                            <span>Trade Alerts</span>
+                            <span>Ticaret Uyarıları</span>
                         </div>
                         <div class="flex flex-col items-center gap-1 text-gray-400">
                             <i data-lucide="key" class="w-4 h-4 text-purple-400"></i>
-                            <span>Password Recovery</span>
+                            <span>Şifre Kurtarma</span>
                         </div>
                     </div>
                 </div>
@@ -172,9 +172,9 @@
         <!-- Support Contact -->
         <div class="text-center mt-6">
             <p class="text-gray-500 text-sm">
-                Need help?
+                Yardıma ihtiyacınız var mı?
                 <a href="mailto:support@bluetrade.com" class="text-blue-400 hover:text-blue-300 font-medium ml-1 transition-colors duration-200">
-                    Contact Support
+                    Destek ile İletişime Geç
                 </a>
             </p>
         </div>
@@ -218,7 +218,7 @@
                 checkCount = 0;
 
                 // Visual feedback
-                this.innerHTML = '<span class="flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Sending...</span>';
+                this.innerHTML = '<span class="flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Gönderiliyor...</span>';
 
                 // Re-initialize icons after content change
                 setTimeout(() => {

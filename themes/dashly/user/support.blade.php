@@ -3,7 +3,7 @@
 @section('content')
     <!-- Title -->
     <h1 class="h2">
-        Help Center
+        Yardım Merkezi
     </h1>
     <livewire:user.support />
 @endsection

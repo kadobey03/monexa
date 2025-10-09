@@ -5,12 +5,12 @@
 
     <div class="d-flex justify-content-between">
         <h1 class="h2">
-            Swap History
+            Takas Geçmişi
         </h1>
         <div>
             <a class="btn btn-primary btn-sm" href="{{ route('assetbalance') }}">
                 <i class="bi bi-arrow-left"></i>
-                back
+                geri
             </a>
         </div>
     </div>
@@ -26,11 +26,11 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Source</th>
-                                            <th>Destination</th>
-                                            <th>Amount(src)</th>
-                                            <th>Quantity(dest)</th>
-                                            <th>Date</th>
+                                            <th>Kaynak</th>
+                                            <th>Hedef</th>
+                                            <th>Miktar(kaynak)</th>
+                                            <th>Miktar(hedef)</th>
+                                            <th>Tarih</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -46,7 +46,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="5" class="text-center">No record available</td>
+                                                <td colspan="5" class="text-center">Kayıt bulunamadı</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

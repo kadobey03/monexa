@@ -41,21 +41,21 @@
                     class="space-y-6"
                 >
                     <div class="inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                        Advanced Trading Platform
+                        Gelişmiş Alım Satım Platformu
                     </div>
                     <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
                         <span class="block">cTRADER COPY</span>
-                        <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">Smart Strategy Replication</span>
+                        <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">Akıllı Strateji Çoğaltma</span>
                     </h1>
                     <p class="mt-3 text-lg text-gray-300 max-w-2xl mx-auto">
-                        Replicate successful trading strategies from top-performing traders. Diversify your portfolio and maximize profits with our intelligent copy-trading platform.
+                        Başarılı trader'lardan başarılı alım satım stratejilerini çoğaltın. Portföyünüzü çeşitlendirin ve akıllı kopyalama alım satım platformumuzla karları maksimize edin.
                     </p>
                     <div class="flex flex-wrap justify-center gap-4 mt-6">
                         <a href="register" class="px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200">
-                            Get Started
+                            Başlayın
                         </a>
                         <a href="#features" class="px-6 py-3 text-base font-medium text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200">
-                            Learn More
+                            Daha Fazla Bilgi Edinin
                         </a>
                     </div>
                 </div>
@@ -69,13 +69,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Key Features
+                Ana Özellikler
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Amplify Your Trading Potential</span>
+                <span class="block">Alım Satım Potansiyelinizi Artırın</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                Our copy trading platform delivers innovative features to help you optimize your investment strategy and maximize returns.
+                Kopyalama alım satım platformumuz, yatırım stratejinizi optimize etmenize ve getirileri maksimize etmenize yardımcı olacak yenilikçi özellikler sunar.
             </p>
         </div>
 
@@ -87,8 +87,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Copy 400+ Strategies</h3>
-                <p class="text-gray-300">Access hundreds of strategies for more than 1000 instruments across 7 asset classes, providing diverse opportunities for every trading style.</p>
+                <h3 class="text-xl font-bold text-white mb-3">400+ Strateji Kopyala</h3>
+                <p class="text-gray-300">7 varlık sınıfı genelinde 1000'den fazla enstrüman için yüzlerce stratejiye erişin, her alım satım tarzı için çeşitli fırsatlar sağlayın.</p>
             </div>
 
             <!-- Feature 2 -->
@@ -98,8 +98,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Select Top Performers</h3>
-                <p class="text-gray-300">Use our advanced reporting tools to rank strategies according to performance and select the most suitable ones for your unique circumstances.</p>
+                <h3 class="text-xl font-bold text-white mb-3">En İyi Performans Gösterenleri Seçin</h3>
+                <p class="text-gray-300">Stratejileri performansa göre sıralamak ve benzersiz koşullarınız için en uygun olanları seçmek için gelişmiş raporlama araçlarımızı kullanın.</p>
             </div>
 
             <!-- Feature 3 -->
@@ -109,8 +109,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Stay Protected</h3>
-                <p class="text-gray-300">Our system employs sophisticated calculations to maintain your exposure at an optimal level for your account, protecting your investments.</p>
+                <h3 class="text-xl font-bold text-white mb-3">Korunmada Kalın</h3>
+                <p class="text-gray-300">Sistemimiz, hesabınız için maruziyetinizi optimal düzeyde tutmak için sofistike hesaplamalar kullanarak yatırımlarınızı korur.</p>
             </div>
 
             <!-- Feature 4 -->
@@ -120,8 +120,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Combine With Other Methods</h3>
-                <p class="text-gray-300">Our integrated platform allows you to combine copying with manual and automated trading, tailoring your approach to your preferences.</p>
+                <h3 class="text-xl font-bold text-white mb-3">Diğer Yöntemlerle Birleştirin</h3>
+                <p class="text-gray-300">Entegre platformumuz, kopyalamayı manuel ve otomatik alım satım ile birleştirmenizi, yaklaşımınızı tercihlerinize göre uyarlamanızı sağlar.</p>
             </div>
         </div>
     </div>
@@ -132,13 +132,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Trading Process
+                Alım Satım Süreci
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">How Copy Trading Works</span>
+                <span class="block">Kopyalama Alım Satımı Nasıl Çalışır</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                Get started with copy trading in just a few simple steps
+                Kopyalama alım satımına sadece birkaç basit adımda başlayın
             </p>
         </div>
 
@@ -147,8 +147,8 @@
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 relative">
                 <div class="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl z-10">1</div>
                 <div class="pt-6">
-                    <h3 class="text-xl font-bold text-white mb-3">Browse Strategies</h3>
-                    <p class="text-gray-300">Explore our marketplace of trading strategies. Filter by performance metrics, risk level, asset class, and more to find strategies that match your investment goals.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">Stratejilere Göz Atın</h3>
+                    <p class="text-gray-300">Alım satım stratejileri pazarımızı keşfedin. Performans metriklerine, risk seviyesine, varlık sınıfına göre filtreleyin ve yatırım hedeflerinize uygun stratejileri bulun.</p>
                 </div>
             </div>
 
@@ -156,8 +156,8 @@
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 relative">
                 <div class="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl z-10">2</div>
                 <div class="pt-6">
-                    <h3 class="text-xl font-bold text-white mb-3">Select & Subscribe</h3>
-                    <p class="text-gray-300">Choose the strategies you want to follow. Set your risk parameters and allocation amount to customize how much capital you want to allocate to each strategy.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">Seçin ve Abone Olun</h3>
+                    <p class="text-gray-300">Takip etmek istediğiniz stratejileri seçin. Risk parametrelerinizi ve tahsis miktarınızı ayarlayın, böylece her stratejiye ne kadar sermaye tahsis etmek istediğinizi özelleştirin.</p>
                 </div>
             </div>
 
@@ -165,8 +165,8 @@
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 relative">
                 <div class="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl z-10">3</div>
                 <div class="pt-6">
-                    <h3 class="text-xl font-bold text-white mb-3">Automated Trading</h3>
-                    <p class="text-gray-300">Once subscribed, trades will be automatically executed in your account based on the strategy provider's activity, adjusted to your risk settings and capital allocation.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">Otomatik Alım Satım</h3>
+                    <p class="text-gray-300">Abone olduktan sonra, strateji sağlayıcısının faaliyetine göre, risk ayarlarınıza ve sermaye tahsisinize göre ayarlanmış olarak işlemler hesabınızda otomatik olarak yürütülecektir.</p>
                 </div>
             </div>
         </div>
@@ -205,31 +205,31 @@
                     x-transition:enter-end="opacity-100 transform translate-y-0"
                 >
                     <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                        Premium Support
+                        Premium Destek
                     </div>
 
                     <h2 class="text-3xl font-extrabold text-white sm:text-4xl mb-6">
-                        <span class="block">STAY UP TO DATE</span>
-                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">WITH OUR EXPERTS!</span>
+                        <span class="block">UZMANLARIMIZLA</span>
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">GÜNCEL KALIN!</span>
                     </h2>
 
                     <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 mb-8">
                         <p class="text-gray-300 text-lg">
-                            Our local and international teams are here to support you on a 24/5 basis in more than 20 languages, while our wide range of payment methods gives you greater flexibility when it comes to deposits and withdrawals.
+                            Yerel ve uluslararası ekiplerimiz, 20'den fazla dilde 24/5 bazında sizi desteklemek için burada, geniş ödeme yöntemleri yelpazemiz ise para yatırma ve çekme konusunda size daha fazla esneklik sağlar.
                         </p>
                     </div>
 
-                    <h3 class="text-2xl font-bold text-white mb-4">Experience More Than Trading</h3>
+                    <h3 class="text-2xl font-bold text-white mb-4">Alım Satımdan Daha Fazlasını Yaşayın</h3>
 
                     <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
                         <p class="text-gray-300 text-lg">
-                            Our success is centred around a number of core values. They include providing competitive brokerage fees through tight spreads, ensuring lightning-fast execution, access to advanced trading platforms with a wide range of products, and exceptional customer service.
+                            Başarımız bir dizi temel değer etrafında toplanır. Bunlar arasında sıkı spreadler aracılığıyla rekabetçi komisyon ücretleri sağlamak, şimşek hızında yürütme sağlamak, geniş ürün yelpazesiyle gelişmiş alım satım platformlarına erişim ve üstün müşteri hizmetleri bulunur.
                         </p>
                     </div>
 
                     <div class="mt-8">
                         <a href="about" title="Learn About {{$settings->site_name}} Trade Commissions" class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-blue-500 transition-all duration-200">
-                            Learn More
+                            Daha Fazla Bilgi Edinin
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                             </svg>
@@ -261,17 +261,17 @@
                 <!-- Content -->
                 <div class="relative z-10 text-center max-w-2xl mx-auto">
                     <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-                        Ready to Start Copy Trading?
+                        Kopyalama Alım Satımına Başlamaya Hazır mısınız?
                     </h2>
                     <p class="mt-4 text-xl text-blue-100">
-                        Join thousands of traders using our platform to replicate successful strategies and maximize profits.
+                        Başarılı stratejileri çoğaltmak ve karları maksimize etmek için platformumuzu kullanan binlerce trader'a katılın.
                     </p>
                     <div class="mt-8 flex justify-center">
                         <a href="/register" class="px-8 py-4 text-base font-medium text-blue-900 bg-white border border-transparent rounded-lg shadow-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-800 transition-all duration-200">
-                            Create Free Account
+                            Ücretsiz Hesap Oluşturun
                         </a>
                         <a href="login" class="ml-4 px-8 py-4 text-base font-medium text-white bg-transparent border border-white rounded-lg shadow-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-800 transition-all duration-200">
-                            Login
+                            Giriş
                         </a>
                     </div>
                 </div>

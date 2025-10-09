@@ -1,100 +1,100 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-# Welcome to {{$settings->site_name}}, {{$user->name}}!
+# {{$settings->site_name}}'a hoş geldiniz, {{$user->name}}!
 
-## Your Gateway to Advanced Investment Opportunities
+## Gelişmiş Yatırım Fırsatlarına Geçidiniz
 
-Dear {{$user->name}},
+Sayın {{$user->name}},
 
-We are thrilled to welcome you to the **{{$settings->site_name}}** family - where intelligent investing meets cutting-edge technology. Your journey toward financial growth and portfolio diversification begins today.
+**{{$settings->site_name}}** ailesine katılmanızdan heyecan duyuyoruz - akıllı yatırımın en son teknolojiyle buluştuğu yer. Finansal büyüme ve portföy çeşitlendirmeye yolculuğunuz bugün başlıyor.
 
-### 🚀 **What Makes Us Different**
+### 🚀 **Bizi Farklı Kılan Nedir**
 
-**{{$settings->site_name}}** is more than just a trading platform. We're your strategic partner in building long-term wealth through:
+**{{$settings->site_name}}** sadece bir ticaret platformu değil. Uzun vadeli zenginlik oluşturma konusunda stratejik ortağınızız:
 
-- **Advanced Algorithmic Trading** - Leverage AI-powered strategies
-- **Copy Trading Excellence** - Follow and replicate successful traders
-- **Diversified Investment Plans** - From conservative to aggressive growth options
-- **Real-Time Analytics** - Professional-grade market insights
-- **Risk Management Tools** - Protect and optimize your investments
+- **Gelişmiş Algoritmik Ticaret** - AI destekli stratejilerden yararlanın
+- **Kopya Ticaret Mükemmelliği** - Başarılı tüccarları takip edin ve çoğaltın
+- **Çeşitlendirilmiş Yatırım Planları** - Muhafazakardan agresif büyüme seçeneklerine
+- **Gerçek Zamanlı Analitikler** - Profesyonel düzey piyasa içgörüleri
+- **Risk Yönetimi Araçları** - Yatırımlarınızı koruyun ve optimize edin
 
-### 📈 **Your Next Steps to Success**
+### 📈 **Başarıya Sonraki Adımlarınız**
 
 @component('mail::panel')
-**Getting Started is Simple:**
+**Başlamak Basit:**
 
-1. **Complete Your Profile** - Verify your account for enhanced security
-2. **Explore Investment Options** - Review our curated investment plans
-3. **Make Your First Deposit** - Start with an amount you're comfortable with
-4. **Choose Your Strategy** - Select from algorithmic trading or copy trading
-5. **Monitor & Grow** - Track your portfolio performance in real-time
+1. **Profilinizi Tamamlayın** - Gelişmiş güvenlik için hesabınızı doğrulayın
+2. **Yatırım Seçeneklerini Keşfedin** - Küratörlüğümüz yatırım planlarını inceleyin
+3. **İlk Para Yatırmanızı Yapın** - Rahat olduğunuz bir tutarla başlayın
+4. **Stratejinizi Seçin** - Algoritmik ticaret veya kopya ticaret arasından seçin
+5. **İzleyin ve Büyütün** - Portföy performansınızı gerçek zamanlı takip edin
 @endcomponent
 
 @component('mail::button', ['url' => config('app.url').'/dashboard'])
-Access Your Dashboard
+Panonuza Erişin
 @endcomponent
 
-### 💡 **Investment Opportunities Await**
+### 💡 **Yatırım Fırsatları Bekliyor**
 
-**Beginner-Friendly Options:**
-- Low-risk investment plans with steady returns
-- Educational resources and market analysis
-- Dedicated support for new investors
+**Yeni Başlayan Dostu Seçenekler:**
+- Düşük riskli yatırım planları sabit getirilerle
+- Eğitim kaynakları ve piyasa analizi
+- Yeni yatırımcılar için özel destek
 
-**Advanced Trading Features:**
-- Copy successful traders automatically
-- Access to premium market signals
-- Advanced portfolio management tools
+**Gelişmiş Ticaret Özellikleri:**
+- Başarılı tüccarları otomatik olarak kopyalayın
+- Premium piyasa sinyallerine erişim
+- Gelişmiş portföy yönetim araçları
 
-### 🛡️ **Your Security is Our Priority**
+### 🛡️ **Güvenliğiniz Önceliğimiz**
 
-Rest assured that your investments are protected by:
-- Bank-level encryption and security protocols
-- Regulatory compliance and transparent operations
-- 24/7 monitoring and fraud protection
-- Segregated client funds for maximum safety
+Yatırımlarınızın aşağıdakilerle korunduğundan emin olun:
+- Banka düzeyinde şifreleme ve güvenlik protokolleri
+- Düzenleyici uyumluluk ve şeffaf işlemler
+- 7/24 izleme ve dolandırıcılık koruması
+- Maksimum güvenlik için ayrılmış müşteri fonları
 
-### 📞 **Expert Support When You Need It**
+### 📞 **İhtiyacınız Olduğunda Uzman Desteği**
 
-Our professional team is here to guide you every step of the way:
+Profesyonel ekibimiz her adımda size rehberlik etmek için burada:
 
 @component('mail::button', ['url' => config('app.url').'/support', 'color' => 'success'])
-Contact Our Investment Advisors
+Yatırım Danışmanlarımızla İletişime Geçin
 @endcomponent
 
-**Available Support:**
-- 24/7 Customer Service
-- Personal Investment Consultations
-- Educational Webinars and Resources
-- Market Analysis and Insights
+**Mevcut Destek:**
+- 7/24 Müşteri Hizmetleri
+- Kişisel Yatırım Danışmanlıkları
+- Eğitim Webinarları ve Kaynakları
+- Piyasa Analizi ve İçgörüleri
 
 ---
 
-### 🎯 **Ready to Begin?**
+### 🎯 **Başlamaya Hazır mısınız?**
 
-The global markets never sleep, and neither do the opportunities. Whether you're looking to:
-- Build retirement wealth
-- Generate passive income
-- Diversify your investment portfolio
-- Learn advanced trading strategies
+Küresel piyasalar asla uyumaz ve fırsatlar da öyle. Aradığınız şey:
+- Emeklilik zenginliği oluşturmak
+- Pasif gelir üretmek
+- Yatırım portföyünüzü çeşitlendirmek
+- Gelişmiş ticaret stratejilerini öğrenmek
 
-**{{$settings->site_name}}** provides the tools, expertise, and support you need to achieve your financial goals.
+**{{$settings->site_name}}** finansal hedeflerinize ulaşmanız için gereken araçları, uzmanlığı ve desteği sağlar.
 
 @component('mail::panel', ['color' => 'success'])
-**Special Welcome Offer:** As a new member, you'll receive complimentary access to our premium market analysis for your first 30 days. Start making informed investment decisions from day one!
+**Özel Hoş Geldiniz Teklifi:** Yeni üye olarak, ilk 30 gün boyunca premium piyasa analizimize ücretsiz erişim alacaksınız. Gün birinden itibaren bilinçli yatırım kararları vermeye başlayın!
 @endcomponent
 
-Welcome aboard, and here's to your investment success!
+Gemiye hoş geldiniz, yatırım başarınız için!
 
-**The {{$settings->site_name}} Team**<br>
-*Empowering Intelligent Investors Since Day One*
+**{{$settings->site_name}} Ekibi**<br>
+*Gün Birinden Beri Akıllı Yatırımcıları Güçlendiriyor*
 
 ---
 
 @component('mail::subcopy')
-**Disclaimer:** All investments carry risk, and past performance does not guarantee future results. Please ensure you understand the risks involved and consider seeking independent financial advice if needed. {{$settings->site_name}} is committed to responsible investing practices.
+**Sorumluluk Reddi:** Tüm yatırımlar risk taşır ve geçmiş performans gelecek sonuçları garanti etmez. Lütfen dahil olan riskleri anladığınızdan emin olun ve gerekirse bağımsız finansal tavsiye almayı düşünün. {{$settings->site_name}} sorumlu yatırım uygulamalarına bağlıdır.
 
-Visit our [Risk Disclosure]() page for more information.
+Daha fazla bilgi için [Risk Açıklaması]() sayfamızı ziyaret edin.
 @endcomponent
 
 @endcomponent

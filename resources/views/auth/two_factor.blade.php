@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'Two-Factor Authentication - Secure Verification')
+@section('title', 'İki Faktörlü Kimlik Doğrulama - Güvenli Doğrulama')
 @section('content')
 
 <!-- Advanced 2FA Challenge -->
@@ -18,15 +18,15 @@
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                    Two-Step Verification
+                    İki Adımlı Doğrulama
                 </h1>
 
                 <!-- Dynamic Descriptions -->
                 <p class="text-gray-400 text-sm md:text-base" x-show="!recovery">
-                    Enter the 6-digit code from your authenticator app to secure your trading account
+                    Ticaret hesabınızı güvenceye almak için kimlik doğrulayıcı uygulamanızdan 6 haneli kodu girin
                 </p>
                 <p class="text-gray-400 text-sm md:text-base" x-show="recovery">
-                    Use one of your emergency recovery codes to regain access to your account
+                    Hesabınıza erişimi geri kazanmak için acil kurtarma kodlarınızdan birini kullanın
                 </p>
             </div>
 
@@ -38,14 +38,14 @@
                     <i data-lucide="alert-triangle" x-show="recovery" class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0"></i>
                     <div class="text-sm">
                         <p class="font-bold mb-1" :class="recovery ? 'text-amber-300' : 'text-blue-300'">
-                            <span x-show="!recovery">Authenticator Required</span>
-                            <span x-show="recovery">Recovery Mode</span>
+                            <span x-show="!recovery">Kimlik Doğrulayıcı Gerekli</span>
+                            <span x-show="recovery">Kurtarma Modu</span>
                         </p>
                         <p class="text-gray-300" x-show="!recovery">
-                            Open your authenticator app (Google Authenticator, Authy, etc.) and enter the current 6-digit code.
+                            Kimlik doğrulayıcı uygulamanızı açın (Google Authenticator, Authy vb.) ve mevcut 6 haneli kodu girin.
                         </p>
                         <p class="text-gray-300" x-show="recovery">
-                            Recovery codes are single-use only. Save remaining codes in a secure location after use.
+                            Kurtarma kodları tek kullanımlıktır. Kullandıktan sonra kalan kodları güvenli bir yerde saklayın.
                         </p>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                     <div class="col-lg-12" x-show="! recovery">
                         <div class="mb-5">
                             <label class="form-label">
-                                Code
+                                Kod
                             </label>
                             <!-- Input -->
                             <input type="text" inputmode="numeric" class="form-control"
@@ -83,7 +83,7 @@
                     <div class="col-lg-12" x-show="recovery">
                         <div class="mb-5">
                             <label class="form-label">
-                                {{ __('Recovery Code') }}
+                                Kurtarma Kodu
                             </label>
                             <input id="recovery_code" class="form-control" type="text" name="recovery_code"
                                 x-ref="recovery_code" autocomplete="one-time-code">
@@ -97,7 +97,7 @@
                                     recovery = true;
                                     $nextTick(() => { $refs.recovery_code.focus() })
                                 ">
-                            {{ __('Use a recovery code') }}
+                            Bir kurtarma kodu kullan
                         </button>
                     </div>
 
@@ -107,14 +107,14 @@
                                     recovery = false;
                                     $nextTick(() => { $refs.code.focus() })
                                 ">
-                            {{ __('Use an authentication code') }}
+                            Bir kimlik doğrulama kodu kullan
                         </button>
                     </div>
                 </div>
                 <div class="row align-items-center text-center">
                     <div class="col-12">
                         <!-- Button -->
-                        <button type="submit" class="btn w-100 btn-primary mt-3 mb-2">Verify & sign in</button>
+                        <button type="submit" class="btn w-100 btn-primary mt-3 mb-2">Doğrula ve giriş yap</button>
                     </div>
                 </div> <!-- / .row -->
                 <!--end row-->

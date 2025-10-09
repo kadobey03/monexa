@@ -24,12 +24,12 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <h1 class="h2">
-                    Make payment
+                    Ödeme yap
                 </h1>
                 <div>
                     <a href="{{ route('cancelpayment') }}" class="btn btn-danger btn-sm">
                         <i class="bi bi-x"></i>
-                        Cancel payment
+                        Ödemeyi iptal et
                     </a>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     </div>
                     <!-- Title -->
                     <h3 class="card-title mt-3 mb-0 text-dark">{{ $payment_mode->name }}</h3>
-                    <span class="text-muted m-0 p-0">Pay via {{ strtolower($payment_mode->name) }}</span>
+                    <span class="text-muted m-0 p-0">{{ strtolower($payment_mode->name) }} ile öde</span>
                 </div>
             </div>
         </div>
@@ -88,8 +88,8 @@
                             <div class="col-lg-6 offset-lg-3">
                                 <div class="text-center">
                                     <h4>
-                                        Send {{ $amount }} to the below address or
-                                        scan the {{ $coin }} QR code to complete payment.
+                                        {{ $amount }} miktarını aşağıdaki adrese gönderin veya
+                                        ödemeyi tamamlamak için {{ $coin }} QR kodunu tarayın.
                                     </h4>
                                     <h4><strong>{{ $p_address }}</strong></h4>
                                     <div>
@@ -97,9 +97,8 @@
                                     </div>
                                     <div class="mt-3">
                                         <small>
-                                            you can exit this page after scanning and completed payment, the
-                                            system will keep track of your payment and update your account
-                                            accordingly
+                                            tarama ve ödeme tamamlandıktan sonra bu sayfadan çıkabilirsiniz,
+                                            sistem ödemenizi takip edecek ve hesabınızı buna göre güncelleyecektir
                                         </small>
                                     </div>
                                 </div>
@@ -133,7 +132,7 @@
             card.on('change', function(event) {
                 if (event.error) {
                     Swal.fire({
-                        title: 'Error!',
+                        title: 'Hata!',
                         text: event.error.message,
                         icon: 'error',
                     });
@@ -167,8 +166,8 @@
             }).then(function(result) {
                 if (result.error) {
                     Swal.fire({
-                        title: 'Error!',
-                        text: 'There was an error processing your payment, Please try depositing again.',
+                        title: 'Hata!',
+                        text: 'Ödemeniz işlenirken bir hata oluştu, lütfen tekrar yatırım yapmaya çalışın.',
                         icon: 'error',
                     });
                     paybtn.disabled = false;
@@ -185,7 +184,7 @@
                             data: $('#selectform').serialize(),
                             success: function(data) {
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Başarılı!',
                                     text: data.success,
                                     icon: 'success',
                                 });
@@ -196,10 +195,10 @@
                             },
                             error: function(error) {
                                 Swal.fire({
-                                    title: 'Error!',
-                                    text: 'Error Submiting Payment Data',
+                                    title: 'Hata!',
+                                    text: 'Ödeme Verilerini Gönderme Hatası',
                                     icon: 'error',
-                                    confirmButtonText: 'Okay'
+                                    confirmButtonText: 'Tamam'
                                 });
                                 console.log(error);
                                 paybtn.disabled = false;

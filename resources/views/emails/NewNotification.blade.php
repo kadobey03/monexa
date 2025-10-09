@@ -1,73 +1,73 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-# {{ $salutaion ? $salutaion : "Important Update" }} {{ $recipient}},
+# {{ $salutaion ? $salutaion : "Önemli Güncelleme" }} {{ $recipient}},
 
 @if ($attachment != null)
     @component('mail::panel')
-    **Document Attached:** Please review the attached document for additional details regarding this notification.
+    **Eklenen Belge:** Bu bildirimle ilgili ek detaylar için lütfen eklenen belgeyi inceleyin.
     @endcomponent
     <div style="text-align: center; margin: 24px 0;">
         <img src="{{ $message->embed(asset('storage/'. $attachment)) }}" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" alt="Attachment">
     </div>
 @endif
 
-## Account Notification
+## Hesap Bildirimi
 
 {!! $body !!}
 
 ---
 
-### 📞 **Need Assistance?**
+### 📞 **Yardıma İhtiyacınız Var mı?**
 
-If you have any questions regarding this notification or need clarification on any investment-related matters, our professional support team is here to help.
+Bu bildirimle ilgili sorularınız varsa veya yatırım ile ilgili konularda açıklama ihtiyacınız varsa, profesyonel destek ekibimiz burada yardımcı olmaya hazır.
 
 @component('mail::button', ['url' => config('app.url').'/support', 'color' => 'success'])
-Contact Support Team
+Destek Ekibiyle İletişime Geçin
 @endcomponent
 
-**Quick Support Options:**
-- **24/7 Live Chat:** Instant assistance through your dashboard
-- **Email Support:** {{$settings->contact_email}}
-- **Phone Support:** Available during business hours
-- **Investment Advisory:** Schedule a consultation with our experts
+**Hızlı Destek Seçenekleri:**
+- **7/24 Canlı Sohbet:** Panonuz aracılığıyla anında yardım
+- **E-posta Desteği:** {{$settings->contact_email}}
+- **Telefon Desteği:** İş saatleri boyunca mevcut
+- **Yatırım Danışmanlığı:** Uzmanlarımızla danışmanlık planlayın
 
-### 🔔 **Notification Preferences**
+### 🔔 **Bildirim Tercihleri**
 
-You can manage your notification preferences and choose which updates you'd like to receive through your account settings.
+Bildirim tercihlerinizi yönetebilir ve hesap ayarlarınız üzerinden hangi güncellemeleri almak istediğinizi seçebilirsiniz.
 
 @component('mail::button', ['url' => config('app.url').'/dashboard/settings'])
-Manage Notifications
+Bildirimleri Yönet
 @endcomponent
 
-### 📊 **Stay Informed**
+### 📊 **Bilgilendirilmiş Kalın**
 
-**Keep track of your investment journey:**
-- Portfolio performance updates
-- Market insights and analysis
-- Trading opportunities and alerts
-- Account security notifications
-- Platform updates and new features
+**Yatırım yolculuğunuzu takip edin:**
+- Portföy performans güncellemeleri
+- Piyasa içgörüleri ve analizleri
+- Ticaret fırsatları ve uyarıları
+- Hesap güvenliği bildirimleri
+- Platform güncellemeleri ve yeni özellikler
 
 ---
 
-### 🛡️ **Security Notice**
+### 🛡️ **Güvenlik Bildirimi**
 
 @component('mail::panel', ['color' => 'warning'])
-**Important:** {{config('app.name')}} will never ask for your login credentials, passwords, or sensitive account information via email. If you receive any suspicious communications, please contact our security team immediately.
+**Önemli:** {{config('app.name')}} hiçbir zaman giriş kimlik bilgilerinizi, şifrelerinizi veya hassas hesap bilgilerinizi e-posta yoluyla sormayacaktır. Şüpheli iletişimler alırsanız, lütfen güvenlik ekibimizle hemen iletişime geçin.
 @endcomponent
 
-**Best regards,**<br>
-**The {{config('app.name')}} Team**<br>
-*Your Trusted Investment Partner*
+**Saygılarımla,**<br>
+**{{config('app.name')}} Ekibi**<br>
+*Güvenilir Yatırım Ortağınız*
 
 ---
 
 @component('mail::subcopy')
-This notification was sent to you as part of your {{config('app.name')}} account communications. If you believe you received this email in error or have concerns about your account security, please contact our support team immediately.
+Bu bildirim, {{config('app.name')}} hesap iletişimlerinizin bir parçası olarak size gönderildi. Bu e-postayı yanlışlıkla aldığınızı düşünüyorsanız veya hesap güvenliğiniz hakkında endişeleriniz varsa, lütfen destek ekibimizle hemen iletişime geçin.
 
-You can update your communication preferences or unsubscribe from certain notifications through your [Account Settings]({{config('app.url')}}/dashboard/settings). For important security and account-related notifications, we recommend keeping notifications enabled.
+İletişim tercihlerinizi güncelleyebilir veya belirli bildirimlerden çıkabilirsiniz [Hesap Ayarları]({{config('app.url')}}/dashboard/settings) aracılığıyla. Önemli güvenlik ve hesap ile ilgili bildirimler için, bildirimleri etkin tutmanızı öneririz.
 
-© {{date('Y')}} {{$settings->site_name}}. All rights reserved. | [Privacy Policy]({{$settings->site_address}}/privacy) | [Terms of Service]({{$settings->site_address}}/terms) 
+© {{date('Y')}} {{$settings->site_name}}. Tüm hakları saklıdır. | [Gizlilik Politikası]({{$settings->site_address}}/privacy) | [Hizmet Şartları]({{$settings->site_address}}/terms)
 @endcomponent
 
 @endcomponent

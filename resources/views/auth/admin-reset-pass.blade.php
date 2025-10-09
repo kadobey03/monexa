@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'Admin Password Reset - Secure Recovery')
+@section('title', 'Yönetici Şifre Sıfırlama - Güvenli Kurtarma')
 @section('content')
 
 <!-- Admin Password Reset Interface -->
@@ -21,14 +21,14 @@
                 <!-- Admin Badge -->
                 <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-4">
                     <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
-                    <span class="text-red-300 text-sm font-bold">Admin Recovery</span>
+                    <span class="text-red-300 text-sm font-bold">Yönetici Kurtarma</span>
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                    Reset Admin Password
+                    Yönetici Şifresini Sıfırla
                 </h1>
                 <p class="text-gray-400 text-sm md:text-base">
-                    Secure password recovery for administrative access
+                    Yönetimsel erişim için güvenli şifre kurtarma
                 </p>
             </div>
 
@@ -38,7 +38,7 @@
                     <div class="flex items-start gap-3">
                         <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i>
                         <div class="text-sm">
-                            <p class="text-green-300 font-bold mb-1">Success</p>
+                            <p class="text-green-300 font-bold mb-1">Başarı</p>
                             <p class="text-gray-300">{{ session('status') }}</p>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                     <div class="flex items-start gap-3">
                         <i data-lucide="info" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
                         <div class="text-sm">
-                            <p class="text-blue-300 font-bold mb-1">Information</p>
+                            <p class="text-blue-300 font-bold mb-1">Bilgi</p>
                             <p class="text-gray-300">{{ Session::get('message') }}</p>
                         </div>
                     </div>
@@ -62,9 +62,9 @@
                 <div class="flex items-start gap-3">
                     <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0"></i>
                     <div class="text-sm">
-                        <p class="text-yellow-300 font-bold mb-1">Security Notice</p>
+                        <p class="text-yellow-300 font-bold mb-1">Güvenlik Bildirimi</p>
                         <p class="text-gray-300">
-                            Use the token sent to your registered admin email address along with your email and new password to reset your admin credentials.
+                            Kayıtlı yönetici e-posta adresinize gönderilen token ile e-posta ve yeni şifrenizi kullanarak yönetici kimlik bilgilerinizi sıfırlayın.
                         </p>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                 <!-- Email Address -->
                 <div class="space-y-2">
                     <label for="email" class="block text-sm font-bold text-gray-200">
-                        Admin Email Address
+                        Yönetici E-posta Adresi
                     </label>
                     <div class="relative">
                         <input
@@ -104,7 +104,7 @@
                 <!-- Security Token -->
                 <div class="space-y-2">
                     <label for="token" class="block text-sm font-bold text-gray-200">
-                        Security Token
+                        Güvenlik Token
                     </label>
                     <div class="relative">
                         <input
@@ -112,7 +112,7 @@
                             id="token"
                             name="token"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200 text-center font-mono tracking-wider"
-                            placeholder="Enter 6-digit token"
+                            placeholder="6 haneli token girin"
                             maxlength="6"
                             pattern="[0-9]{6}"
                             autocomplete="one-time-code"
@@ -128,13 +128,13 @@
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
-                    <p class="text-xs text-gray-500">Check your admin email for the 6-digit security token</p>
+                    <p class="text-xs text-gray-500">6 haneli güvenlik token için yönetici e-postanızı kontrol edin</p>
                 </div>
 
                 <!-- New Password -->
                 <div class="space-y-2">
                     <label for="password" class="block text-sm font-bold text-gray-200">
-                        New Password
+                        Yeni Şifre
                     </label>
                     <div class="relative">
                         <input
@@ -142,7 +142,7 @@
                             id="password"
                             name="password"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200 pr-12"
-                            placeholder="Create a strong password"
+                            placeholder="Güçlü bir şifre oluşturun"
                             autocomplete="new-password"
                             required
                         >
@@ -165,7 +165,7 @@
                 <!-- Confirm Password -->
                 <div class="space-y-2">
                     <label for="password_confirmation" class="block text-sm font-bold text-gray-200">
-                        Confirm New Password
+                        Yeni Şifreyi Onayla
                     </label>
                     <div class="relative">
                         <input
@@ -173,7 +173,7 @@
                             id="password_confirmation"
                             name="password_confirmation"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200 pr-12"
-                            placeholder="Confirm your password"
+                            placeholder="Şifrenizi onaylayın"
                             autocomplete="new-password"
                             required
                         >
@@ -191,24 +191,24 @@
                 <div class="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                     <h4 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
                         <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
-                        Password Requirements
+                        Şifre Gereksinimleri
                     </h4>
                     <ul class="text-gray-300 text-xs space-y-1">
                         <li class="flex items-start gap-2">
                             <span class="text-green-400 mt-1">•</span>
-                            Minimum 8 characters long
+                            Minimum 8 karakter uzunluğunda
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-400 mt-1">•</span>
-                            Include uppercase and lowercase letters
+                            Büyük ve küçük harfleri dahil edin
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-400 mt-1">•</span>
-                            Include at least one number
+                            En az bir sayı dahil edin
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-400 mt-1">•</span>
-                            Include at least one special character
+                            En az bir özel karakter dahil edin
                         </li>
                     </ul>
                 </div>
@@ -220,7 +220,7 @@
                 >
                     <span class="flex items-center justify-center gap-2">
                         <i data-lucide="shield-check" class="w-5 h-5"></i>
-                        Reset Admin Password
+                        Yönetici Şifresini Sıfırla
                     </span>
                 </button>
             </form>
@@ -230,26 +230,26 @@
                 <a href="{{ route('adminlogin') }}"
                    class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                    Back to Admin Login
+                    Yönetici Girişine Geri Dön
                 </a>
             </div>
 
             <!-- Security Features -->
             <div class="mt-8 pt-6 border-t border-gray-700">
                 <div class="text-center">
-                    <p class="text-xs text-gray-500 mb-2">Enterprise-grade admin security</p>
+                    <p class="text-xs text-gray-500 mb-2">Kurumsal düzeyde yönetici güvenliği</p>
                     <div class="flex items-center justify-center gap-4 text-gray-600">
                         <span class="flex items-center gap-1">
                             <i data-lucide="shield" class="w-3 h-3"></i>
-                            <span class="text-xs">Admin Only</span>
+                            <span class="text-xs">Sadece Yönetici</span>
                         </span>
                         <span class="flex items-center gap-1">
                             <i data-lucide="lock" class="w-3 h-3"></i>
-                            <span class="text-xs">Token Verified</span>
+                            <span class="text-xs">Token Doğrulandı</span>
                         </span>
                         <span class="flex items-center gap-1">
                             <i data-lucide="eye-off" class="w-3 h-3"></i>
-                            <span class="text-xs">Secure Reset</span>
+                            <span class="text-xs">Güvenli Sıfırlama</span>
                         </span>
                     </div>
                 </div>

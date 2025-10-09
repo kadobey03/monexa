@@ -162,7 +162,7 @@
 @section('content')
     <!-- Title -->
     <h1 class="h2">
-        Buy an investment plan
+        Bir yatırım planı satın alın
     </h1>
     <livewire:user.investment-plan />
 

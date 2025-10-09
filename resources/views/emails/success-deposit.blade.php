@@ -1,65 +1,65 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-# Deposit Confirmation - {{$foramin  ? 'Admin Notification' : 'Welcome to Your Trading Journey'}}
+# Para Yatırma Onayı - {{$foramin  ? 'Yönetici Bildirimi' : 'Ticaret Yolculuğunuza Hoş Geldiniz'}}
 
 @if ($foramin)
-## Administrative Alert: New Deposit Received
+## İdari Uyarı: Yeni Para Yatırma Alındı
 
-Dear Administrator,
+Sayın Yönetici,
 
-We are pleased to inform you that a new deposit has been successfully received:
+Yeni bir para yatırmanın başarıyla alındığını bildirmekten memnuniyet duyuyoruz:
 
-**Deposit Details:**
-- **Client:** {{$user->name}}
-- **Amount:** {{$user->currency}}{{number_format($deposit->amount, 2)}}
-- **Status:** {{$deposit->status}}
-- **Date:** {{now()->format('F j, Y \a\t g:i A')}}
+**Para Yatırma Detayları:**
+- **Müşteri:** {{$user->name}}
+- **Miktar:** {{$user->currency}}{{number_format($deposit->amount, 2)}}
+- **Durum:** {{$deposit->status}}
+- **Tarih:** {{now()->format('F j, Y \a\t g:i A')}}
 
 @if($deposit->status != "Processed")
-**Action Required:** Please review and process this deposit through the admin dashboard.
+**Eylem Gerekli:** Lütfen yönetici panosu aracılığıyla bu para yatırmayı inceleyin ve işleyin.
 
 @component('mail::button', ['url' => config('app.url').'/admin/dashboard'])
-Process Deposit
+Para Yatırmayı İşle
 @endcomponent
 @else
-This deposit has been automatically processed and the client's account has been credited.
+Bu para yatırma otomatik olarak işlendi ve müşterinin hesabına yatırıldı.
 @endif
 
 @else
-## Dear {{$user->name}},
+## Sayın {{$user->name}},
 
 @if ($deposit->status == 'Processed')
-**Congratulations! Your deposit has been successfully processed.**
+**Tebrikler! Para yatırmanız başarıyla işlendi.**
 
-We are delighted to confirm that your deposit of **{{$user->currency}}{{number_format($deposit->amount, 2)}}** has been received and processed. Your trading account has been credited with the full amount.
+**{{$user->currency}}{{number_format($deposit->amount, 2)}}** tutarındaki para yatırmanızın alındığını ve işlendiğini doğrulamaktan memnuniyet duyuyoruz. Ticaret hesabınıza tam tutar yatırıldı.
 
-**What's Next?**
-- Your funds are now available for trading
-- Explore our advanced trading tools and analytics
-- Start building your investment portfolio today
+**Sonraki Ne?**
+- Fonlarınız artık ticaret için kullanılabilir
+- Gelişmiş ticaret araçlarımızı ve analizlerimizi keşfedin
+- Bugün yatırım portföyünüzü oluşturmaya başlayın
 
 @component('mail::button', ['url' => config('app.url').'/dashboard'])
-Start Trading Now
+Şimdi Ticaret Başlat
 @endcomponent
 
-**Investment Opportunities Await:**
-- Copy successful traders with our Copy Trading feature
-- Access real-time market data and advanced charts
-- Benefit from our algorithmic trading tools
+**Yatırım Fırsatları Bekliyor:**
+- Kopya Ticaret özelliğimizle başarılı tüccarları kopyalayın
+- Gerçek zamanlı piyasa verilerine ve gelişmiş grafiklere erişin
+- Algoritmik ticaret araçlarımızdan yararlanın
 
 @else
-**Your deposit is being processed - Thank you for choosing us!**
+**Para yatırmanız işleniyor - Bizi seçtiğiniz için teşekkür ederiz!**
 
-We have successfully received your deposit of **{{$user->currency}}{{number_format($deposit->amount, 2)}}**. Our financial team is currently reviewing and confirming your transaction.
+**{{$user->currency}}{{number_format($deposit->amount, 2)}}** tutarındaki para yatırmanızı başarıyla aldık. Finans ekibimiz şu anda işleminizi inceliyor ve doğruluyor.
 
-**Processing Status:** Under Review
-**Expected Processing Time:** 1-3 business hours
+**İşleme Durumu:** İnceleme Altında
+**Beklenen İşleme Süresi:** 1-3 iş saati
 
 
-You will receive an immediate notification once your deposit is confirmed and your trading account is credited.
+Para yatırmanız doğrulandıktan ve ticaret hesabınıza yatırıldıktan sonra anında bir bildirim alacaksınız.
 
 @component('mail::panel')
-**Security Notice:** We employ bank-level security protocols to ensure your funds are safe and secure throughout the processing period.
+**Güvenlik Bildirimi:** Fonlarınızın işleme süresi boyunca güvenli ve güvende olmasını sağlamak için banka düzeyinde güvenlik protokolleri kullanıyoruz.
 @endcomponent
 
 @endif
@@ -67,19 +67,19 @@ You will receive an immediate notification once your deposit is confirmed and yo
 
 ---
 
-**Need Assistance?**
-Our dedicated support team is available 24/7 to assist you with any questions.
+**Yardıma İhtiyacınız Var mı?**
+Herhangi bir sorunuzda size yardımcı olmak için özel destek ekibimiz 7/24 hazır.
 
 @component('mail::button', ['url' => config('app.url').'/support', 'color' => 'success'])
-Contact Support
+Desteğe Başvurun
 @endcomponent
 
-Best regards,<br>
-**The {{config('app.name')}} Team**<br>
-*Your Trusted Trading Partner*
+Saygılarımla,<br>
+**{{config('app.name')}} Ekibi**<br>
+*Güvenilir Ticaret Ortağınız*
 
 @component('mail::subcopy')
-This is an automated message from {{config('app.name')}}. For security purposes, please do not share this email with anyone. If you did not initiate this deposit, please contact our support team immediately.
+Bu, {{config('app.name')}}'dan otomatik bir mesajdır. Güvenlik amacıyla, lütfen bu e-postayı kimseyle paylaşmayın. Bu para yatırmayı başlatmadıysanız, lütfen destek ekibimizle hemen iletişime geçin.
 @endcomponent
 
 @endcomponent

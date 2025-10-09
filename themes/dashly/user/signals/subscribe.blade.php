@@ -3,7 +3,7 @@
 @section('content')
     <!-- Title -->
     <h1 class="h2">
-        Signal Provider
+        Sinyal Sağlayıcı
     </h1>
     <x-danger-alert />
     <x-success-alert />
@@ -16,10 +16,10 @@
                             @if (!$subscription)
                                 <div class="text-center">
                                     <i class="bi bi-database-fill-exclamation" style="font-size: 50px"></i>
-                                    <p>You do not have have a subscription</p>
+                                    <p>Aboneliğiniz yok</p>
                                     <button type="button" class="btn btn-primary px-4 btn-sm"" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal">
-                                        Subscribe Now
+                                        Şimdi Abone Ol
                                     </button>
                                 </div>
                                 <!-- Modal -->
@@ -28,8 +28,8 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h3 class="modal-title" id="exampleModalCenterTitle">Subscribe payment
-                                                    to signal provider</h3>
+                                                <h3 class="modal-title" id="exampleModalCenterTitle">Sinyal sağlayıcısına
+                                                    abonelik ödemesi</h3>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -43,12 +43,12 @@
                                 <div class="">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <h3 class=" h5">{{ $subscription->subscription }} Subscription</h3>
+                                            <h3 class=" h5">{{ $subscription->subscription }} Abonelik</h3>
                                             <h3 class="text-primary">{{ $settings->currency . $subscription->amount_paid }}
                                             </h3>
                                         </div>
                                         <div>
-                                            <small class="text-danger">Expiring</small>
+                                            <small class="text-danger">Süresi Doluyor</small>
                                             <p class="m-0">
                                                 {{ \Carbon\Carbon::parse($subscription->expired_at)->toDayDateTimeString() }}
                                             </p>
@@ -58,7 +58,7 @@
                                                 <div>
                                                     <button type="button" class="btn btn-primary btn-sm"
                                                         data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                        Pay
+                                                        Öde
                                                         @if ($subscription->subscription == 'Monthly')
                                                             {{ $settings->currency . $set->signal_monthly_fee }}
                                                         @elseif ($subscription->subscription == 'Quarterly')
@@ -75,8 +75,8 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h6 class="modal-title fs-5" id="exampleModalLabel">
-                                                                        Renew
-                                                                        your Subscription</h6>
+                                                                        Aboneliğinizi
+                                                                        Yenileyin</h6>
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <h5>
@@ -86,17 +86,16 @@
                                                                             {{ $settings->currency . $set->signal_monthly_fee }}
                                                                         @else
                                                                             {{ $settings->currency . $set->signal_yearly_fee }}
-                                                                        @endif will be deducted from
-                                                                        your
-                                                                        account balance..
+                                                                        @endif
+                                                                        hesap bakiyenizden düşülecektir..
                                                                     </h5>
                                                                     <div class="mt-2 text-right">
                                                                         <button type="button"
                                                                             class="btn btn-secondary btn-sm"
-                                                                            data-bs-dismiss="modal">Close</button>
+                                                                            data-bs-dismiss="modal">Kapat</button>
                                                                         <a href="{{ route('renewsignals') }}"
-                                                                            class="btn btn-primary btn-sm">Yes,
-                                                                            Proceed</a>
+                                                                            class="btn btn-primary btn-sm">Evet,
+                                                                            Devam Et</a>
                                                                     </div>
                                                                 </div>
                                                             </div>

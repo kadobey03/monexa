@@ -1,6 +1,6 @@
 @extends('layouts.guest1')
 
-@section('title', 'Confirm your password')
+@section('title', 'Şifrenizi onaylayın')
 
 @section('styles')
     @parent
@@ -17,14 +17,13 @@
 
                     <div class="bg-white shadow card login-page roundedd border-1 ">
                         <div class="card-body">
-                            <p class="text-sm text-center text-primary"> This is a secure area. Please confirm your password
-                                before continuing.</h4>
+                            <p class="text-sm text-center text-primary"> Bu güvenli bir alandır. Devam etmeden önce lütfen şifrenizi onaylayın.</h4>
                             <form method="POST" action="{{ route('password.confirm') }}" class="mt-4 login-form">
                                 @csrf
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label>Enter Password <span class="text-danger">*</span></label>
+                                            <label>Şifre Girin <span class="text-danger">*</span></label>
                                             <div class="position-relative">
                                                 <i data-feather="key" class="fea icon-sm icons"></i>
                                                 <input type="password" class="pl-5 form-control" name="password" required
@@ -44,7 +43,7 @@
                                     <!--end col-->
 
                                     <div class="mb-0 col-lg-12">
-                                        <button class="btn btn-primary btn-block pad" type="submit">Confirm</button>
+                                        <button class="btn btn-primary btn-block pad" type="submit">Onayla</button>
                                     </div>
 
                                 </div>

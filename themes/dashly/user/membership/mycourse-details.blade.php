@@ -13,22 +13,22 @@
                 <div class="card-body">
                     <div class="p-2 d-lg-flex justify-content-lg-between align-items-center mt-3 mb-5">
                         <div class="mt-2 mt-lg-0">
-                            <p class="m-0 text-primary font-weight-bold">CREATED BY</p>
+                            <p class="m-0 text-primary font-weight-bold">TARAFINDAN OLUŞTURULDU</p>
                             <P class="m-0">{{ $settings->site_name }}</P>
                         </div>
                         <div class="mt-2 mt-lg-0">
-                            <p class="m-0 text-primary font-weight-bold">CATEGORY</p>
+                            <p class="m-0 text-primary font-weight-bold">KATEGORİ</p>
                             <P class="m-0">{{ $course->course->category }}</P>
                         </div>
                         <div class="mt-2 mt-lg-0">
-                            <p class="m-0 text-primary font-weight-bold">PURCHASED</p>
+                            <p class="m-0 text-primary font-weight-bold">SATIN ALINDI</p>
                             <P class="m-0">
                                 {{ \Carbon\Carbon::parse($course->course->created_at)->toDayDateTimeString() }}</P>
                         </div>
                     </div>
 
                     <div class="mt-5">
-                        <h4>Course Lessons</h4>
+                        <h4>Kurs Dersleri</h4>
                         @forelse ($lessons as $lesson)
                             <div>
                                 <a
@@ -48,7 +48,7 @@
                                         </div>
                                         <div>
                                             <a href="{{ route('user.learning', ['lesson' => $lesson->id, 'course' => $course->course->id]) }}"
-                                                class="btn btn-primary btn-sm">Watch</a>
+                                                class="btn btn-primary btn-sm">İzle</a>
                                         </div>
                                     </div>
                                 </a>
@@ -56,7 +56,7 @@
                             </div>
                         @empty
                             <div class="text-center py-3">
-                                <p>No Data Available</p>
+                                <p>Veri Mevcut Değil</p>
                             </div>
                         @endforelse
                     </div>

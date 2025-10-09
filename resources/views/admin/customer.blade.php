@@ -13,7 +13,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="content ">
             <div class="page-inner">
                 <div class="mt-2 mb-5">
-                    <h1 class="title1 ">Follow up Members </h1> <br> <br>
+                    <h1 class="title1 ">Üyeleri Takip Et </h1> <br> <br>
                 </div>
                 @if (Session::has('message'))
                     <div class="row">
@@ -46,15 +46,15 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Balance</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Inv. plan</th>
-                                        <th>Status</th>
-                                        <th>Date registered</th>
-                                        <th>Action</th>
+                                        <th>Bakiye</th>
+                                        <th>Ad</th>
+                                        <th>Soyad</th>
+                                        <th>E-posta</th>
+                                        <th>Telefon</th>
+                                        <th>Yat. planı</th>
+                                        <th>Durum</th>
+                                        <th>Kayıt Tarihi</th>
+                                        <th>Eylem</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,7 +75,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                             <td>{{ \Carbon\Carbon::parse($list->created_at)->toDayDateTimeString() }}</td>
                                             <td>
                                                 <a class="m-1 btn btn-info btn-sm" data-toggle="modal"
-                                                    data-target="#editModal{{ $list->id }}">Edit Status</a>
+                                                    data-target="#editModal{{ $list->id }}">Durumu Düzenle</a>
                                             </td>
                                         </tr>
 
@@ -84,21 +84,21 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
                                                     <div class="modal-header ">
-                                                        <h4 class="modal-title">Edit this User status</h4>
+                                                        <h4 class="modal-title">Bu Kullanıcı Durumunu Düzenle</h4>
                                                         <button type="button" class="close "
                                                             data-dismiss="modal">&times;</button>
                                                     </div>
                                                     <div class="modal-body ">
                                                         <form method="post" action="{{ route('updateuser') }}">
                                                             <div class="form-group">
-                                                                <h5 class=" ">User Status</h5>
-                                                                <textarea name="userupdate" id="" rows="5" class="form-control  " placeholder="Enter here" required>{{ $list->userupdate }}</textarea>
+                                                                <h5 class=" ">Kullanıcı Durumu</h5>
+                                                                <textarea name="userupdate" id="" rows="5" class="form-control  " placeholder="Buraya girin" required>{{ $list->userupdate }}</textarea>
                                                             </div>
                                                             <input type="hidden" name="id"
                                                                 value="{{ $list->id }}">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
-                                                            <input type="submit" class="btn btn-primary" value="Save">
+                                                            <input type="submit" class="btn btn-primary" value="Kaydet">
 
                                                         </form>
                                                     </div>

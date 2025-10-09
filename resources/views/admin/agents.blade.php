@@ -13,7 +13,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="content ">
             <div class="page-inner">
                 <div class="mt-2 mb-4">
-                    <h1 class="title1 ">Agents</h1>
+                    <h1 class="title1 ">Temsilciler</h1>
                 </div>
                 <x-danger-alert />
                 <x-success-alert />
@@ -22,13 +22,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         <div class="bs-example widget-shadow table-responsive" data-example-id="hoverable-table">
                             <a href="#" data-toggle="modal" data-target="#addagentModal" class="btn btn-lg"
                                 style="margin:10px;"> <i class="fa fa-plus"></i>
-                                Add agent</a>
+                                Temsilci Ekle</a>
                             <table id="ShipTable" class="table table-hover ">
                                 <thead>
                                     <tr>
-                                        <th>Agent name</th>
-                                        <th>Clients referred</th>
-                                        <th>Option(s)</th>
+                                        <th>Temsilci Adı</th>
+                                        <th>Yönlendirilen Müşteriler</th>
+                                        <th>Seçenek(ler)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,7 +60,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         <div class="modal-content">
                                             <div class="modal-header  ">
 
-                                                <h4 class="modal-title "><strong>Add agent.</strong></h4>
+                                                <h4 class="modal-title "><strong>Temsilci Ekle.</strong></h4>
                                                 <button type="button" class="close " data-dismiss="modal">&times;</button>
                                             </div>
                                             <div class="modal-body ">
@@ -72,11 +72,11 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                             </option>
                                                         @endforeach
                                                     </select><br>
-                                                    <input class="form-control  " placeholder="Increment referred users"
+                                                    <input class="form-control  " placeholder="Yönlendirilen kullanıcıları artır"
                                                         type="number" min="0" name="referred_users"
                                                         value="0"><br />
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn " value="Submit">
+                                                    <input type="submit" class="btn " value="Gönder">
                                                 </form>
                                             </div>
                                         </div>

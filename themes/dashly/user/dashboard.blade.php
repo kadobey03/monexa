@@ -3,7 +3,7 @@
 @section('content')
     <!-- Title -->
     <h1 class="h2">
-        Welcome, {{ Auth::user()->name }}!
+        Hoş geldiniz, {{ Auth::user()->name }}!
     </h1>
     <x-danger-alert />
     <x-success-alert />
@@ -38,7 +38,7 @@
                                 <!-- Title -->
                                 <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
                                     <span class="legend-circle-sm bg-primary"></span>
-                                    Account Balance
+                                    Hesap Bakiyesi
                                 </h5>
 
                                 <!-- Subtitle -->
@@ -47,13 +47,13 @@
                                 </h2>
 
                                 <a href="{{ route('deposits') }}" class="fs-6 btn-link mb-0 mt-2 mr-3">
-                                    Deposit
+                                    Yatırım
                                 </a>
                                 <span class="">-</span>
                                 @if ($moresettings->use_transfer)
                                     <!-- Comment -->
                                     <a href="{{ route('transferview') }}" class="fs-6 btn-link mb-0 mt-2 ml-3">
-                                        Transfer
+                                        Aktarım
                                     </a>
                                 @endif
                             </div>
@@ -77,7 +77,7 @@
                                     <!-- Title -->
                                     <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
                                         <span class="legend-circle-sm bg-success"></span>
-                                        Total Profit
+                                        Toplam Kar
                                     </h5>
                                     <!-- Subtitle -->
                                     <h2 class="mb-0">
@@ -86,7 +86,7 @@
                                     <!-- Comment -->
                                     <a href="{{ route('profithistory') }}">
                                         <p class="fs-6 btn-link mb-0 mt-2">
-                                            View profit history
+                                            Kar geçmişini görüntüle
                                         </p>
                                     </a>
                                 </div>
@@ -110,7 +110,7 @@
                                 <!-- Title -->
                                 <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
                                     <span class="legend-circle-sm bg-info"></span>
-                                    Total Bonus
+                                    Toplam Bonus
                                 </h5>
                                 <!-- Subtitle -->
                                 <h2 class="mb-0">
@@ -119,7 +119,7 @@
                                 <!-- Comment -->
                                 <a href="{{ route('otherhistory') }}">
                                     <p class="fs-6 btn-link mb-0 mt-2">
-                                        View bonus history
+                                        Bonus geçmişini görüntüle
                                     </p>
                                 </a>
                             </div>
@@ -143,7 +143,7 @@
                                 <!-- Title -->
                                 <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
                                     <span class="legend-circle-sm bg-info"></span>
-                                    Referral Bonus
+                                    Referans Bonusu
                                 </h5>
                                 <!-- Subtitle -->
                                 <h2 class="mb-0">
@@ -152,7 +152,7 @@
                                 <!-- Comment -->
                                 <a href="{{ route('referuser') }}">
                                     <p class="fs-6 btn-link mb-0 mt-2">
-                                        View referrals
+                                        Referansları görüntüle
                                     </p>
                                 </a>
                             </div>
@@ -175,7 +175,7 @@
                                 <!-- Title -->
                                 <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
                                     <span class="legend-circle-sm bg-success"></span>
-                                    Total Deposited
+                                    Toplam Yatırılan
                                 </h5>
                                 <!-- Subtitle -->
                                 <h2 class="mb-0">
@@ -184,7 +184,7 @@
                                 <!-- Comment -->
                                 <a href="{{ route('accounthistory') }}">
                                     <p class="fs-6 btn-link mb-0 mt-2">
-                                        View deposits
+                                        Yatırımları görüntüle
                                     </p>
                                 </a>
                             </div>
@@ -207,7 +207,7 @@
                                 <!-- Title -->
                                 <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
                                     <span class="legend-circle-sm bg-danger"></span>
-                                    Total Withdrawal
+                                    Toplam Çekim
                                 </h5>
                                 <!-- Subtitle -->
                                 <h2 class="mb-0">
@@ -216,7 +216,7 @@
                                 <!-- Comment -->
                                 <a href="{{ route('withdrawlhistory') }}">
                                     <p class="fs-6 btn-link mb-0 mt-2">
-                                        View withdrawals
+                                        Çekimleri görüntüle
                                     </p>
                                 </a>
                             </div>
@@ -239,7 +239,7 @@
                                 <!-- Title -->
                                 <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
                                     <span class="legend-circle-sm bg-secondary"></span>
-                                    Referrals
+                                    Referanslar
                                 </h5>
                                 <!-- Subtitle -->
                                 <h2 class="mb-0">
@@ -248,7 +248,7 @@
                                 <!-- Comment -->
                                 <a href="{{ route('referuser') }}">
                                     <p class="fs-6 btn-link mb-0 mt-2">
-                                        View referrals
+                                        Referansları görüntüle
                                     </p>
                                 </a>
                             </div>
@@ -271,7 +271,7 @@
                                     <!-- Title -->
                                     <h5 class="d-flex align-items-center text-uppercase text-muted fw-semibold mb-2">
                                         <span class="legend-circle-sm bg-info"></span>
-                                        Managed Accounts
+                                        Yönetilen Hesaplar
                                     </h5>
                                     <!-- Subtitle -->
                                     <h2 class="mb-0">
@@ -280,7 +280,7 @@
                                     <!-- Comment -->
                                     <a href="{{ route('subtrade') }}">
                                         <p class="fs-6 btn-link mb-0 mt-2">
-                                            View accounts
+                                            Hesapları görüntüle
                                         </p>
                                     </a>
                                 </div>
@@ -300,7 +300,7 @@
         <div class="mt-4 row">
             <div class="col-12">
                 <div>
-                    <h5 class="text-primary h5">Active Plan(s)
+                    <h5 class="text-primary h5">Aktif Plan(lar)
                         <span class="text-base count">({{ $plans ? count($plans) : '0' }})</span>
                     </h5>
                 </div>
@@ -323,7 +323,7 @@
                                                 <h6 class="text-black bold">
                                                     {{ $plan->created_at->toDayDateTimeString() }}
                                                 </h6>
-                                                <span class="nk-iv-scheme-value date">Start Date</span>
+                                                <span class="nk-iv-scheme-value date">Başlangıç Tarihi</span>
                                             </div>
                                             <span class="m-3">
 
@@ -332,21 +332,21 @@
                                                 <h6 class="text-black bold">
                                                     {{ \Carbon\Carbon::parse($plan->expire_date)->toDayDateTimeString() }}
                                                 </h6>
-                                                <span class="nk-iv-scheme-value date">End Date</span>
+                                                <span class="nk-iv-scheme-value date">Bitiş Tarihi</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div>
                                         <h6 class="text-black">
                                             @if ($plan->active == 'yes')
-                                                <span class="badge bg-success">Active</span>
+                                                <span class="badge bg-success">Aktif</span>
                                             @elseif($plan->active == 'expired')
-                                                <span class="badge bg-danger">Expired</span>
+                                                <span class="badge bg-danger">Süresi Doldu</span>
                                             @else
-                                                <span class="badge bg-danger">Inactive</span>
+                                                <span class="badge bg-danger">Aktif Değil</span>
                                             @endif
                                         </h6>
-                                        <span class="nk-iv-scheme-value amount">Status</span>
+                                        <span class="nk-iv-scheme-value amount">Durum</span>
                                     </div>
 
                                     <a href="{{ route('plandetails', $plan->id) }}">
@@ -362,9 +362,9 @@
                             <div class="card">
                                 <div class="text-center card-body py-4">
                                     <i class="bi bi-database-fill-exclamation" style="font-size: 50px"></i>
-                                    <p>You do not have an active investment at the moment.</p>
+                                    <p>Şu anda aktif bir yatırımınız yok.</p>
                                     <a href="{{ route('mplans') }}" class="btn btn-primary">
-                                        Invest Now
+                                        Şimdi Yatırım Yap
                                     </a>
                                 </div>
                             </div>
@@ -380,11 +380,11 @@
         <div class="col-12">
             <div class="d-flex justify-content-between">
                 <h6 class="text-primary h5">
-                    Recent transactions
+                    Son işlemler
                 </h6>
                 <div class="">
                     <a href="{{ route('accounthistory') }}" class="btn btn-primary btn-sm">
-                        View all transactions
+                        Tüm işlemleri görüntüle
                     </a>
                 </div>
             </div>
@@ -396,9 +396,9 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Type</th>
-                                    <th>Amount</th>
+                                    <th>Tarih</th>
+                                    <th>Tür</th>
+                                    <th>Miktar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -418,7 +418,7 @@
                                     </tr>
                                 @empty
                                     <td colspan="3">
-                                        No record yet
+                                        Henüz kayıt yok
                                     </td>
                                 @endforelse
                             </tbody>
@@ -433,7 +433,7 @@
                 <div class="card-header border-0 card-header-space-between">
                     <!-- Title -->
                     <h2 class="card-header-title h4 text-uppercase">
-                        Real time market data
+                        Gerçek zamanlı piyasa verileri
                     </h2>
                 </div>
                 <div class="card-body d-flex flex-column">
@@ -441,8 +441,7 @@
                     <div class="tradingview-widget-container">
                         <div class="tradingview-widget-container__widget"></div>
                         <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/"
-                                rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on
-                                    TradingView</span></a></div>
+                                rel="noopener nofollow" target="_blank"><span class="blue-text">Tüm piyasaları TradingView'de takip edin</span></a></div>
                         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js"
                             async>
                             {

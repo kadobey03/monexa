@@ -13,7 +13,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="content ">
             <div class="page-inner">
                 <div class="mt-2 mb-5">
-                    <h1 class="title1 ">Create your to do List</h1> <br> <br>
+                    <h1 class="title1 ">Yapılacaklar Listenizi Oluşturun</h1> <br> <br>
                 </div>
                 @if (Session::has('message'))
                     <div class="row">

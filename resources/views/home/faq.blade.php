@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Frequently Asked Questions')
+@section('title', 'Sık Sorulan Sorular')
 
 @inject('content', 'App\Http\Controllers\FrontController')
 @section('content')
@@ -37,14 +37,14 @@
     <div class="relative z-10 px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Knowledge Base
+                Bilgi Bankası
             </div>
             <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
-                <span class="block">Frequently Asked Questions</span>
-                <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">All You Need to Know</span>
+                <span class="block">Sık Sorulan Sorular</span>
+                <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">Bilmeniz Gereken Her Şey</span>
             </h1>
             <p class="max-w-2xl mt-5 mx-auto text-xl text-gray-300">
-                Get answers to common questions about our trading platform and services
+                Alım satım platformumuz ve hizmetlerimiz hakkında yaygın soruların cevaplarını alın
             </p>
         </div>
     </div>
@@ -58,22 +58,22 @@
             <!-- FAQ Category Tabs -->
             <div class="flex flex-wrap justify-center gap-2 md:gap-4">
                 <button @click="activeCategory = 'about'" :class="{'bg-blue-600 text-white': activeCategory === 'about', 'bg-gray-800 text-gray-300 hover:bg-gray-700': activeCategory !== 'about'}" class="px-4 py-2 rounded-lg transition-all duration-200 text-sm md:text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                    <i class="fas fa-building mr-2"></i>About Us
+                    <i class="fas fa-building mr-2"></i>Hakkımızda
                 </button>
                 <button @click="activeCategory = 'account'" :class="{'bg-blue-600 text-white': activeCategory === 'account', 'bg-gray-800 text-gray-300 hover:bg-gray-700': activeCategory !== 'account'}" class="px-4 py-2 rounded-lg transition-all duration-200 text-sm md:text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                    <i class="fas fa-user-circle mr-2"></i>My Account
+                    <i class="fas fa-user-circle mr-2"></i>Hesabım
                 </button>
                 <button @click="activeCategory = 'deposit'" :class="{'bg-blue-600 text-white': activeCategory === 'deposit', 'bg-gray-800 text-gray-300 hover:bg-gray-700': activeCategory !== 'deposit'}" class="px-4 py-2 rounded-lg transition-all duration-200 text-sm md:text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                    <i class="fas fa-wallet mr-2"></i>Deposit
+                    <i class="fas fa-wallet mr-2"></i>Para Yatırma
                 </button>
                 <button @click="activeCategory = 'withdrawal'" :class="{'bg-blue-600 text-white': activeCategory === 'withdrawal', 'bg-gray-800 text-gray-300 hover:bg-gray-700': activeCategory !== 'withdrawal'}" class="px-4 py-2 rounded-lg transition-all duration-200 text-sm md:text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                    <i class="fas fa-money-bill-wave mr-2"></i>Withdrawal
+                    <i class="fas fa-money-bill-wave mr-2"></i>Para Çekme
                 </button>
                 <button @click="activeCategory = 'referral'" :class="{'bg-blue-600 text-white': activeCategory === 'referral', 'bg-gray-800 text-gray-300 hover:bg-gray-700': activeCategory !== 'referral'}" class="px-4 py-2 rounded-lg transition-all duration-200 text-sm md:text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                    <i class="fas fa-users mr-2"></i>Referral
+                    <i class="fas fa-users mr-2"></i>Referans
                 </button>
                 <button @click="activeCategory = 'other'" :class="{'bg-blue-600 text-white': activeCategory === 'other', 'bg-gray-800 text-gray-300 hover:bg-gray-700': activeCategory !== 'other'}" class="px-4 py-2 rounded-lg transition-all duration-200 text-sm md:text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                    <i class="fas fa-question-circle mr-2"></i>Other
+                    <i class="fas fa-question-circle mr-2"></i>Diğer
                 </button>
             </div>
 
@@ -86,37 +86,37 @@
                         <!-- About Us Questions -->
                         <div class="py-4">
                             <button @click="active !== 0 ? active = 0 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">What is {{$settings->site_name}}?</h4>
+                                <h4 class="text-lg font-medium text-white">{{$settings->site_name}} nedir?</h4>
                                 <svg :class="{'rotate-180': active === 0}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 0" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>{{$settings->site_name}} - Professional team of cryptocurrency industry developers. The main advantage of the company is a unique trading bot that makes a profit at the stage of growth and market decline.</p>
+                                <p>{{$settings->site_name}} - Kripto para endüstrisi geliştiricilerinin profesyonel ekibi. Şirketin ana avantajı, büyüme ve piyasa düşüş aşamasında kar sağlayan benzersiz bir alım satım botu.</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 1 ? active = 1 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">Is {{$settings->site_name}} an officially registered company?</h4>
+                                <h4 class="text-lg font-medium text-white">{{$settings->site_name}} resmi olarak kayıtlı bir şirket mi?</h4>
                                 <svg :class="{'rotate-180': active === 1}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 1" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>Yes, we are legally binding and officially registered in the UK under the company registration number #08683932</p>
+                                <p>Evet, hukuken bağlayıcıyız ve İngiltere'de şirket kayıt numarası #08683932 altında resmi olarak kayıtlıyız</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 2 ? active = 2 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">Do you have any country restrictions?</h4>
+                                <h4 class="text-lg font-medium text-white">Ülke kısıtlamalarınız var mı?</h4>
                                 <svg :class="{'rotate-180': active === 2}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 2" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>Our company doesn't work and doesn't accept deposits from US residents. During the registration process you need to check the box that you are not a US citizen.</p>
+                                <p>Şirketimiz ABD sakinleriyle çalışmaz ve onlardan para yatırma kabul etmez. Kayıt süreci sırasında ABD vatandaşı olmadığınızı belirten kutuyu işaretlemeniz gerekir.</p>
                             </div>
                         </div>
                     </div>

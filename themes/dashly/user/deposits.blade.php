@@ -3,7 +3,7 @@
 @section('content')
     <!-- Title -->
     <h1 class="h2">
-        Deposit into your account
+        Hesabınıza yatırım yapın
     </h1>
     <livewire:user.deposit.index />
 @endsection

@@ -3,7 +3,7 @@
 @section('content')
     <!-- Title -->
     <h1 class="h2">
-        Account Settings
+        Hesap Ayarları
     </h1>
     <x-danger-alert />
     <x-success-alert />
@@ -34,7 +34,7 @@
                                 <path d="M2.25,23.25a9.75,9.75,0,0,1,19.5,0" fill="none" stroke="currentColor"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
                             </svg>
-                            Basic information
+                            Temel bilgiler
                         </a>
                     </li>
 
@@ -79,7 +79,7 @@
                                         d="M15.375 18.75C15.5821 18.75 15.75 18.5821 15.75 18.375C15.75 18.1679 15.5821 18 15.375 18" />
                                 </g>
                             </svg>
-                            Password
+                            Şifre
                         </a>
                     </li>
 
@@ -107,7 +107,7 @@
                                 <line class="a" x1="5.25" y1="12.75" x2="13.5" y2="12.75" />
                                 <line class="a" x1="5.25" y1="15.75" x2="10.5" y2="15.75" />
                             </svg>
-                            Payment methods
+                            Ödeme yöntemleri
                         </a>
                     </li>
 
@@ -133,7 +133,7 @@
                                 <path class="a"
                                     d="M18.648,11.961c.189,5.756,1.477,6.789,1.477,6.789h-18s1.5-1.916,1.5-8.25a7.507,7.507,0,0,1,9.724-7.165" />
                             </svg>
-                            Notifications
+                            Bildirimler
                         </a>
                     </li>
                     <li>
@@ -156,7 +156,7 @@
                                 <path d="M11.999 9.75L11.999 14.25" fill="none" stroke="currentColor"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
                             </svg>
-                            Privacy and Safety
+                            Gizlilik ve Güvenlik
                         </a>
                     </li>
                 </ul>
@@ -167,7 +167,7 @@
             <!-- Card -->
             <div class="card border-0 scroll-mt-3" id="basicInformationSection">
                 <div class="card-header">
-                    <h2 class="h3 mb-0">Basic information</h2>
+                    <h2 class="h3 mb-0">Temel bilgiler</h2>
                 </div>
 
                 <livewire:user.account-settings.update-profile-info>
@@ -176,7 +176,7 @@
             <!-- Card -->
             <div class="card border-0 scroll-mt-3" id="passwordSection">
                 <div class="card-header">
-                    <h2 class="h3 mb-0">Password</h2>
+                    <h2 class="h3 mb-0">Şifre</h2>
                 </div>
 
                 <livewire:user.account-settings.update-password>
@@ -186,7 +186,7 @@
             <!-- Card -->
             <div class="card border-0 scroll-mt-3" id="paymentMethodsSection">
                 <div class="card-header">
-                    <h2 class="h3 mb-0">Payment methods</h2>
+                    <h2 class="h3 mb-0">Ödeme yöntemleri</h2>
                 </div>
                 <div class="card-body">
                     <div class="d-flex justify-content-end mt-5">
@@ -198,43 +198,42 @@
             <!-- Card -->
             <div class="card border-0 scroll-mt-3" id="notificationsSection">
                 <div class="card-header">
-                    <h2 class="h3 mb-0">Notifications</h2>
+                    <h2 class="h3 mb-0">Bildirimler</h2>
                 </div>
 
                 <div class="card-body">
-                    <p class="text-muted">In this setcion you will be able to configure the behaviour of notifications
-                        in Dashly</p>
+                    <p class="text-muted">Bu bölümde Dashly'deki bildirimlerin davranışını yapılandırabileceksiniz</p>
                     <livewire:user.account-settings.update-email-pref>
                 </div>
             </div>
             <!-- Card -->
             <div class="card border-0 scroll-mt-3" id="privacyAndSafetySection">
                 <div class="card-header">
-                    <h2 class="h3 mb-0">Privacy and Safety</h2>
+                    <h2 class="h3 mb-0">Gizlilik ve Güvenlik</h2>
                 </div>
 
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             <div class="me-2">
-                                <h3 class="h4 mb-0">Use 2-Step Verification</h3>
+                                <h3 class="h4 mb-0">2 Adımlı Doğrulama Kullan</h3>
                             </div>
-                            <a href="{{ route('twofa') }}" class="btn btn-sm text-bg-info-soft border-0">View</a>
+                            <a href="{{ route('twofa') }}" class="btn btn-sm text-bg-info-soft border-0">Görüntüle</a>
                         </li>
 
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             <div class="me-2">
-                                <h3 class="h4 mb-0">Login activity</h3>
+                                <h3 class="h4 mb-0">Giriş etkinliği</h3>
                             </div>
-                            <a href="{{ route('twofa') }}" class="btn btn-sm text-bg-info-soft border-0">View</a>
+                            <a href="{{ route('twofa') }}" class="btn btn-sm text-bg-info-soft border-0">Görüntüle</a>
                         </li>
 
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             <div class="me-2">
-                                <h3 class="h4 mb-0">Delete Account</h3>
+                                <h3 class="h4 mb-0">Hesabı Sil</h3>
                             </div>
-                            <a href="{{ route('twofa') }}" class="btn btn-sm text-bg-danger-soft border-0">Delete
-                                account
+                            <a href="{{ route('twofa') }}" class="btn btn-sm text-bg-danger-soft border-0">Hesabı
+                                sil
                             </a>
                         </li>
                     </ul>
@@ -265,12 +264,12 @@
             };
 
             if (event.detail.type == 'success') {
-                Command: toastr["success"](event.detail.message, "Success")
+                Command: toastr["success"](event.detail.message, "Başarılı")
                 toastr.options = toastOptions;
             }
 
             if (event.detail.type == 'error') {
-                Command: toastr["error"](event.detail.message, "Error")
+                Command: toastr["error"](event.detail.message, "Hata")
                 toastr.options = toastOptions;
             }
 

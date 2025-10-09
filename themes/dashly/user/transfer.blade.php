@@ -4,9 +4,9 @@
     <div>
         <!-- Title -->
         <h1 class="h2 m-0">
-            Transfer funds
+            Fon transferi
         </h1>
-        <p class="m-0">You can send money to your friends and loved ones registered on {{ $settings->site_name }}.</p>
+        <p class="m-0">{{ $settings->site_name }} üzerinde kayıtlı olan arkadaşlarınıza ve sevdiklerinize para gönderebilirsiniz.</p>
     </div>
     <x-danger-alert />
     <x-success-alert />
@@ -19,25 +19,25 @@
                             <form method="post" action="javascript:void(0)" id="transferform">
                                 @csrf
                                 <div class="mb-3">
-                                    <label>Recipient Email or username</label>
+                                    <label>Alıcı E-posta veya kullanıcı adı</label>
                                     <input type="text" name="email" class="form-control mt-2" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label>Amount({{ $settings->currency }})</label>
+                                    <label>Miktar({{ $settings->currency }})</label>
                                     <input type="number" min="{{ $moresettings->min_transfer }}" name="amount"
-                                        placeholder="Enter amount you want to transfer to recipient"
+                                        placeholder="Alıcıya transfer etmek istediğiniz miktarı girin"
                                         class="form-control mt-2" required>
                                 </div>
                                 <div class="mb-3">
                                     <h6>
-                                        Transfer Charges:
+                                        Transfer Ücretleri:
                                         <strong class=" text-danger">{{ $moresettings->transfer_charges }}%</strong>
                                     </h6>
                                 </div>
                                 <input type="hidden" name="password" id="acntpass">
                                 <div>
-                                    <button type="reset" class="btn btn-dark">Clear</button>
-                                    <input type="submit" id="subbtn" class="py-2 btn btn-primary" value="Proceed">
+                                    <button type="reset" class="btn btn-dark">Temizle</button>
+                                    <input type="submit" id="subbtn" class="py-2 btn btn-primary" value="Devam Et">
                                 </div>
                             </form>
                         </div>
@@ -54,16 +54,16 @@
                 const {
                     value: password
                 } = await Swal.fire({
-                    title: 'Input your password',
+                    title: 'Şifrenizi girin',
                     input: 'password',
-                    inputLabel: 'Enter your account password to complete transfer',
-                    inputPlaceholder: 'Enter your account password'
+                    inputLabel: 'Transferi tamamlamak için hesap şifrenizi girin',
+                    inputPlaceholder: 'Hesap şifrenizi girin'
                 })
 
                 if (password) {
 
                     document.getElementById('acntpass').value = password;
-                    $("#subbtn").attr("disabled", "disabled").val('Please wait....');
+                    $("#subbtn").attr("disabled", "disabled").val('Lütfen bekleyin....');
                     $.ajax({
                         url: "{{ route('transfertouser') }}",
                         type: 'POST',
@@ -71,10 +71,10 @@
                         success: function(response) {
                             if (response.status === 200) {
                                 Swal.fire({
-                                    title: 'Success!',
+                                    title: 'Başarılı!',
                                     text: response.message,
                                     icon: 'success',
-                                    confirmButtonText: 'Cool'
+                                    confirmButtonText: 'Harika'
                                 });
                                 $("#subbtn").removeAttr("disabled").val('Proceed');
                                 setTimeout(() => {
@@ -84,7 +84,7 @@
                             } else {
                                 $("#subbtn").removeAttr("disabled").val('Proceed');
                                 Swal.fire({
-                                    title: 'Error!',
+                                    title: 'Hata!',
                                     text: response.message,
                                     icon: 'error',
                                 });
@@ -97,10 +97,10 @@
                     });
                 } else {
                     Swal.fire({
-                        title: 'Error!',
-                        text: 'Password is required',
+                        title: 'Hata!',
+                        text: 'Şifre gerekli',
                         icon: 'error',
-                        confirmButtonText: 'Alright'
+                        confirmButtonText: 'Tamam'
                     })
                 }
 

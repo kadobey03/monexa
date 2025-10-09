@@ -105,7 +105,7 @@
                                 <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400"></i>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-lg font-bold text-red-300 mb-2">Please Fix These Issues:</h4>
+                                <h4 class="text-lg font-bold text-red-300 mb-2">Lütfen Bu Sorunları Düzeltin:</h4>
                                 <ul class="space-y-1">
                                     @foreach ($errors->all() as $error)
                                         <li class="text-sm text-red-200 flex items-start gap-2">
@@ -116,7 +116,7 @@
                                 </ul>
                                 <div class="mt-3 text-xs text-red-300/80">
                                     <i data-lucide="info" class="w-3 h-3 inline mr-1"></i>
-                                    Please scroll down and correct the highlighted fields, then try again.
+                                    Lütfen aşağı kaydırarak vurgulanan alanları düzeltin, ardından tekrar deneyin.
                                 </div>
                             </div>
                         </div>
@@ -606,10 +606,10 @@
                     if (step === 0) {
                         // Validate personal information
                         const fields = [
-                            { id: 'username', name: 'Username' },
-                            { id: 'name', name: 'Full Name' },
-                            { id: 'email', name: 'Email' },
-                            { id: 'phone', name: 'Phone Number' }
+                            { id: 'username', name: 'Kullanıcı Adı' },
+                            { id: 'name', name: 'Ad Soyad' },
+                            { id: 'email', name: 'E-posta' },
+                            { id: 'phone', name: 'Telefon Numarası' }
                         ];
 
                         fields.forEach(field => {
@@ -632,7 +632,7 @@
                         const emailElement = document.getElementById('email');
                         const email = emailElement.value.trim();
                         if (email && !email.includes('@')) {
-                            missingFields.push('Valid Email Format');
+                            missingFields.push('Geçerli E-posta Formatı');
                             isValid = false;
                             emailElement.classList.add('border-red-500', 'bg-red-900/20');
                             emailElement.classList.remove('border-gray-600');
@@ -643,8 +643,8 @@
                         const countryElement = document.getElementById('country');
                         const country = countryElement.value;
 
-                        if (!country || country === 'Select your country') {
-                            missingFields.push('Country Selection');
+                        if (!country) {
+                            missingFields.push('Ülke Seçimi');
                             isValid = false;
                             countryElement.classList.add('border-red-500', 'bg-red-900/20');
                             countryElement.classList.remove('border-gray-600');
@@ -667,11 +667,11 @@
 
                         // Password validation
                         if (!password) {
-                            missingFields.push('Password');
+                            missingFields.push('Şifre');
                             isValid = false;
                             passwordElement.classList.add('border-red-500', 'bg-red-900/20');
                         } else if (password.length < 8) {
-                            missingFields.push('Password (minimum 8 characters)');
+                            missingFields.push('Şifre (minimum 8 karakter)');
                             isValid = false;
                             passwordElement.classList.add('border-red-500', 'bg-red-900/20');
                         } else {
@@ -681,11 +681,11 @@
 
                         // Confirm password validation
                         if (!confirmPassword) {
-                            missingFields.push('Password Confirmation');
+                            missingFields.push('Şifre Onaylaması');
                             isValid = false;
                             confirmPasswordElement.classList.add('border-red-500', 'bg-red-900/20');
                         } else if (password !== confirmPassword) {
-                            missingFields.push('Passwords Must Match');
+                            missingFields.push('Şifreler Eşleşmelidir');
                             isValid = false;
                             confirmPasswordElement.classList.add('border-red-500', 'bg-red-900/20');
                         } else {
@@ -695,7 +695,7 @@
 
                         // CAPTCHA validation
                         if (!captcha) {
-                            missingFields.push('Math Verification Answer');
+                            missingFields.push('Matematik Doğrulama Cevabı');
                             isValid = false;
                             captchaElement.classList.add('border-red-500', 'bg-red-900/20');
                         } else {
@@ -705,18 +705,18 @@
 
                         // Terms agreement validation
                         if (!agree) {
-                            missingFields.push('Terms & Conditions Agreement');
+                            missingFields.push('Şartlar ve Koşullar Kabulü');
                             isValid = false;
                         }
                     }
 
                     if (!isValid) {
                         const message = missingFields.length === 1
-                            ? `Please provide: ${missingFields[0]}`
-                            : `Please complete these fields: ${missingFields.join(', ')}`;
+                            ? `Lütfen sağlayın: ${missingFields[0]}`
+                            : `Lütfen bu alanları doldurun: ${missingFields.join(', ')}`;
 
                         // Show professional alert
-                        this.showAlert('Complete Required Fields', message, 'warning');
+                        this.showAlert('Gerekli Alanları Doldurun', message, 'warning');
                     }
 
                     return isValid;
@@ -729,7 +729,7 @@
                             title: title,
                             text: message,
                             icon: type,
-                            confirmButtonText: 'Got it',
+                            confirmButtonText: 'Anladım',
                             confirmButtonColor: '#3B82F6'
                         });
                     } else {
@@ -762,7 +762,7 @@
                     const submitBtn = form.querySelector('button[type="submit"]');
                     if (submitBtn) {
                         submitBtn.disabled = true;
-                        submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin mr-2"></i>Creating Account...';
+                        submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin mr-2"></i>Hesap Oluşturuluyor...';
                     }
                 });
             }

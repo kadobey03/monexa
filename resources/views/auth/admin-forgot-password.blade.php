@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'Admin Password Recovery - Secure Access Recovery')
+@section('title', 'Yönetici Şifre Kurtarma - Güvenli Erişim Kurtarma')
 @section('content')
 
 <!-- Admin Password Recovery Interface -->
@@ -19,14 +19,14 @@
                 <!-- Admin Badge -->
                 <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
                     <i data-lucide="key" class="w-4 h-4 text-orange-400"></i>
-                    <span class="text-orange-300 text-sm font-bold">Admin Recovery</span>
+                    <span class="text-orange-300 text-sm font-bold">Yönetici Kurtarma</span>
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                    Forgot Password?
+                    Şifrenizi mi Unuttunuz?
                 </h1>
                 <p class="text-gray-400 text-sm md:text-base">
-                    Secure password recovery for administrative access
+                    Yönetimsel erişim için güvenli şifre kurtarma
                 </p>
             </div>
 
@@ -39,7 +39,7 @@
                     <div class="flex items-start gap-3">
                         <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i>
                         <div class="text-sm">
-                            <p class="text-green-300 font-bold mb-1">Recovery Email Sent</p>
+                            <p class="text-green-300 font-bold mb-1">Kurtarma E-postası Gönderildi</p>
                             <p class="text-gray-300">{{ session('status') }}</p>
                         </div>
                     </div>
@@ -51,9 +51,9 @@
                 <div class="flex items-start gap-3">
                     <i data-lucide="info" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
                     <div class="text-sm">
-                        <p class="text-blue-300 font-bold mb-1">Password Recovery Process</p>
+                        <p class="text-blue-300 font-bold mb-1">Şifre Kurtarma Süreci</p>
                         <p class="text-gray-300">
-                            Enter your admin email address below. We'll send you secure instructions with a recovery token to reset your password.
+                            Aşağıya yönetici e-posta adresinizi girin. Şifrenizi sıfırlamak için kurtarma token ile güvenli talimatlar göndereceğiz.
                         </p>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <!-- Email Address -->
                 <div class="space-y-2">
                     <label for="email" class="block text-sm font-bold text-gray-200">
-                        Admin Email Address
+                        Yönetici E-posta Adresi
                     </label>
                     <div class="relative">
                         <input
@@ -75,7 +75,7 @@
                             name="email"
                             value="{{ old('email') }}"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none transition-all duration-200"
-                            placeholder="Enter your admin email address"
+                            placeholder="Yönetici e-posta adresinizi girin"
                             autocomplete="email"
                             required
                             autofocus
@@ -90,7 +90,7 @@
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
-                    <p class="text-xs text-gray-500">Enter the email address associated with your admin account</p>
+                    <p class="text-xs text-gray-500">Yönetici hesabınızla ilişkili e-posta adresini girin</p>
                 </div>
 
                 <!-- Security Notice -->
@@ -98,19 +98,19 @@
                     <div class="flex items-start gap-3">
                         <i data-lucide="shield-alert" class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0"></i>
                         <div class="text-sm">
-                            <p class="text-yellow-300 font-bold mb-1">Security Notice</p>
+                            <p class="text-yellow-300 font-bold mb-1">Güvenlik Bildirimi</p>
                             <ul class="text-gray-300 space-y-1">
                                 <li class="flex items-start gap-2">
                                     <span class="text-yellow-400 mt-1">•</span>
-                                    Recovery token will expire in 15 minutes
+                                    Kurtarma token 15 dakika içinde süresi dolacak
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-yellow-400 mt-1">•</span>
-                                    Only admin emails can request recovery
+                                    Sadece yönetici e-postaları kurtarma talebinde bulunabilir
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-yellow-400 mt-1">•</span>
-                                    All recovery attempts are logged
+                                    Tüm kurtarma girişimleri günlüğe kaydedilir
                                 </li>
                             </ul>
                         </div>
@@ -124,7 +124,7 @@
                 >
                     <span class="flex items-center justify-center gap-2">
                         <i data-lucide="send" class="w-5 h-5"></i>
-                        Send Recovery Instructions
+                        Kurtarma Talimatlarını Gönder
                     </span>
                 </button>
 
@@ -133,7 +133,7 @@
                     <a href="{{ route('adminloginform') }}"
                        class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200">
                         <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                        Back to Admin Sign In
+                        Yönetici Girişine Geri Dön
                     </a>
                 </div>
             </form>
@@ -142,24 +142,24 @@
             <div class="mt-8 bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                 <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
                     <i data-lucide="list-checks" class="w-4 h-4 text-blue-400"></i>
-                    Recovery Process
+                    Kurtarma Süreci
                 </h4>
                 <div class="space-y-3">
                     <div class="flex items-center gap-3 text-sm text-gray-300">
                         <span class="flex-shrink-0 w-6 h-6 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-400 font-bold text-xs">1</span>
-                        <span>Enter your admin email address</span>
+                        <span>Yönetici e-posta adresinizi girin</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-gray-300">
                         <span class="flex-shrink-0 w-6 h-6 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-400 font-bold text-xs">2</span>
-                        <span>Check your email for recovery instructions</span>
+                        <span>Kurtarma talimatları için e-postanızı kontrol edin</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-gray-300">
                         <span class="flex-shrink-0 w-6 h-6 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-400 font-bold text-xs">3</span>
-                        <span>Use the token to reset your password</span>
+                        <span>Şifrenizi sıfırlamak için token kullanın</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-gray-300">
                         <span class="flex-shrink-0 w-6 h-6 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-400 font-bold text-xs">4</span>
-                        <span>Access your admin account with new password</span>
+                        <span>Yeni şifre ile yönetici hesabınıza erişin</span>
                     </div>
                 </div>
             </div>
@@ -167,19 +167,19 @@
             <!-- Admin Security Features -->
             <div class="mt-6 pt-6 border-t border-gray-700">
                 <div class="text-center">
-                    <p class="text-xs text-gray-500 mb-3">Enterprise admin security</p>
+                    <p class="text-xs text-gray-500 mb-3">Kurumsal yönetici güvenliği</p>
                     <div class="flex items-center justify-center gap-4 text-gray-600">
                         <span class="flex items-center gap-1">
                             <i data-lucide="shield-check" class="w-3 h-3"></i>
-                            <span class="text-xs">Encrypted</span>
+                            <span class="text-xs">Şifrelenmiş</span>
                         </span>
                         <span class="flex items-center gap-1">
                             <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span class="text-xs">Time-Limited</span>
+                            <span class="text-xs">Zaman Sınırlı</span>
                         </span>
                         <span class="flex items-center gap-1">
                             <i data-lucide="eye" class="w-3 h-3"></i>
-                            <span class="text-xs">Audit Logged</span>
+                            <span class="text-xs">Denetim Günlüğü</span>
                         </span>
                     </div>
                 </div>
@@ -196,9 +196,9 @@
         <!-- Support Information -->
         <div class="text-center mt-6">
             <p class="text-gray-500 text-sm">
-                Need immediate assistance?
+                Hemen yardıma ihtiyacınız var mı?
                 <a href="mailto:admin-support@bluetrade.com" class="text-orange-400 hover:text-orange-300 font-medium ml-1 transition-colors duration-200">
-                    Contact Admin Support
+                    Yönetici Desteğiyle İletişime Geç
                 </a>
             </p>
         </div>
@@ -240,7 +240,7 @@
         const submitButton = form.querySelector('button[type="submit"]');
 
         form.addEventListener('submit', function() {
-            submitButton.innerHTML = '<span class="flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Sending Recovery Email...</span>';
+            submitButton.innerHTML = '<span class="flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Kurtarma E-postası Gönderiliyor...</span>';
             submitButton.disabled = true;
 
             // Re-initialize icons

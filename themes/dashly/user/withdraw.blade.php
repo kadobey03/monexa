@@ -3,15 +3,15 @@
 @section('content')
     <!-- Title -->
     <h1 class="h2">
-        Complete withdrawal request
+        Çekim talebini tamamla
     </h1>
     @if (session('status'))
         <script type="text/javascript">
             Swal.fire({
-                title: 'Error!',
+                title: 'Hata!',
                 text: "{{ session('status') }}",
                 icon: 'error',
-                confirmButtonText: 'Okay'
+                confirmButtonText: 'Tamam'
             })
         </script>
         {{ session()->forget('status') }}
@@ -33,53 +33,53 @@
                                 <form action="{{ route('completewithdrawal') }}" method="post">
                                     @csrf
                                     <div class="mb-3">
-                                        <label class="">Enter Amount to
-                                            withdraw({{ $settings->currency }})</label>
-                                        <input class="form-control " placeholder="Enter Amount" type="number"
+                                        <label class="">Çekilecek miktarı
+                                            girin({{ $settings->currency }})</label>
+                                        <input class="form-control " placeholder="Miktarı Girin" type="number"
                                             name="amount" step="any" required>
                                     </div>
                                     <input value="{{ $payment_mode }}" type="hidden" name="method">
 
                                     @if (Auth::user()->sendotpemail == 'Yes')
                                         <div class="mb-3">
-                                            <label class="m-1 d-inline">Enter OTP</label>
+                                            <label class="m-1 d-inline">OTP Girin</label>
                                             <div class="float-right m-1 btn-group d-inline">
                                                 <a class="btn btn-primary btn-sm" href="{{ route('getotp') }}"> <i
-                                                        class="fa fa-envelope"></i> Request OTP</a>
+                                                        class="fa fa-envelope"></i> OTP Talep Et</a>
                                             </div>
-                                            <input class="form-control " placeholder="Enter OTP" type="text"
+                                            <input class="form-control " placeholder="OTP Girin" type="text"
                                                 name="otpcode" required>
-                                            <small class="">OTP will be sent to your email when you
-                                                request</small>
+                                            <small class="">OTP, talep ettiğinizde
+                                                e-postanıza gönderilecektir</small>
                                         </div>
                                     @endif
                                     @if (!$default or $payment_mode == 'BUSD')
                                         @if ($methodtype == 'crypto')
                                             <div class="mb-3">
-                                                <h5 class="">Enter {{ $payment_mode }} Address </h5>
-                                                <input class="form-control " placeholder="Enter {{ $payment_mode }} Address"
+                                                <h5 class="">{{ $payment_mode }} Adresini Girin </h5>
+                                                <input class="form-control " placeholder="{{ $payment_mode }} Adresini Girin"
                                                     type="text" name="details" required>
-                                                <small class="">{{ $payment_mode }} is not a default
-                                                    withdrawal option in your account, please enter the correct
-                                                    wallet address to recieve your funds.</small>
+                                                <small class="">{{ $payment_mode }} hesabınızda varsayılan
+                                                    çekim seçeneği değildir, fonlarınızı almak için doğru
+                                                    cüzdan adresini girin.</small>
                                             </div>
                                         @else
                                             <div class="mb-3">
-                                                <label class="">Enter {{ $payment_mode }} Details </label>
+                                                <label class="">{{ $payment_mode }} Detaylarını Girin </label>
                                                 <textarea class="form-control " row="4" name="details"
-                                                    placeholder="BankName: Name, Account Number: Number, Account name: Name, Swift Code: Code" required>
-                                            
+                                                    placeholder="Banka Adı: Ad, Hesap Numarası: Numara, Hesap Adı: Ad, Swift Kodu: Kod" required>
+
                                             </textarea>
-                                                <small class="">{{ $payment_mode }} is not a default
-                                                    withdrawal option in your account, please enter the correct bank
-                                                    details seperated by comma to recieve your funds.</small> <br />
-                                                <span class="text-danger">BankName: Name, Account Number: Number,
-                                                    Account name: Name, Swift Code: Code</span>
+                                                <small class="">{{ $payment_mode }} hesabınızda varsayılan
+                                                    çekim seçeneği değildir, fonlarınızı almak için virgülle ayrılmış doğru banka
+                                                    detaylarını girin.</small> <br />
+                                                <span class="text-danger">Banka Adı: Ad, Hesap Numarası: Numara,
+                                                    Hesap Adı: Ad, Swift Kodu: Kod</span>
                                             </div>
                                         @endif
                                     @endif
                                     <div class="mb-3">
-                                        <button class="btn btn-primary" type='submit'>Complete Request</button>
+                                        <button class="btn btn-primary" type='submit'>Talebi Tamamla</button>
                                     </div>
                                 </form>
                             @endif

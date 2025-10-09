@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @inject('content', 'App\Http\Controllers\FrontController')
-@section('title', 'cTrader Automate - Algorithmic Trading')
+@section('title', 'cTrader Automate - Algoritmik Ticaret')
 
 @section('content')
 
@@ -45,21 +45,21 @@
                     class="space-y-6"
                 >
                     <div class="inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                        Automated Trading
+                        Otomatik Ticaret
                     </div>
                     <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
                         <span class="block">cTrader Automate</span>
-                        <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">Trading Algorithms Made Simple</span>
+                        <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">Alım Satım Algoritmalarını Basitleştirin</span>
                     </h1>
                     <p class="mt-3 text-lg text-gray-300">
-                        Create, customize, and deploy algorithmic trading strategies with ease. Take advantage of market opportunities 24/7 with smart automation.
+                        Kolayca algoritmik alım satım stratejileri oluşturun, özelleştirin ve dağıtın. Akıllı otomasyon ile piyasa fırsatlarından 24/7 yararlanın.
                     </p>
                     <div class="flex flex-wrap gap-4 mt-6">
                         <a href="#features" class="px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200">
-                            Explore Features
+                            Özellikleri Keşfedin
                         </a>
                         <a href="#faq" class="px-6 py-3 text-base font-medium text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200">
-                            Learn More
+                            Daha Fazla Bilgi Edinin
                         </a>
                     </div>
                 </div>
@@ -142,13 +142,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Advanced Trading Automation
+                Gelişmiş Alım Satım Otomasyonu
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Unlock the Power of Algorithmic Trading</span>
+                <span class="block">Algoritmik Ticareti Gücünü Açığa Çıkarın</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                Our automation platform enables traders of all experience levels to implement sophisticated trading strategies without extensive programming knowledge.
+                Otomasyon platformumuz, tüm deneyim seviyelerindeki traderların kapsamlı programlama bilgisi olmadan karmaşık alım satım stratejilerini uygulamalarını sağlar.
             </p>
         </div>
 
@@ -160,8 +160,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Lightning Fast Execution</h3>
-                <p class="text-gray-300">Our algorithmic trading system executes trades in milliseconds, capitalizing on market opportunities without human delay.</p>
+                <h3 class="text-xl font-bold text-white mb-3">Şimşek Hızlı Yürütme</h3>
+                <p class="text-gray-300">Algoritmik alım satım sistemimiz, işlemleri milisaniyeler içinde yürütür ve insan gecikmesi olmadan piyasa fırsatlarından yararlanır.</p>
             </div>
 
             <!-- Feature 2 -->
@@ -171,8 +171,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Backtesting & Optimization</h3>
-                <p class="text-gray-300">Test your strategies against historical data to fine-tune parameters and optimize performance before risking real capital.</p>
+                <h3 class="text-xl font-bold text-white mb-3">Geri Test ve Optimizasyon</h3>
+                <p class="text-gray-300">Gerçek sermayeyi riske atmadan önce parametreleri ince ayar yapmak ve performansı optimize etmek için stratejilerinizi geçmiş verilere karşı test edin.</p>
             </div>
 
             <!-- Feature 3 -->
@@ -182,8 +182,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Advanced Risk Management</h3>
-                <p class="text-gray-300">Implement sophisticated risk management rules including stop-loss, take-profit, and position sizing to protect your capital.</p>
+                <h3 class="text-xl font-bold text-white mb-3">Gelişmiş Risk Yönetimi</h3>
+                <p class="text-gray-300">Sermayenizi korumak için stop-loss, take-profit ve pozisyon boyutlandırma dahil olmak üzere karmaşık risk yönetimi kuralları uygulayın.</p>
             </div>
         </div>
     </div>
@@ -194,25 +194,25 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Knowledge Base
+                Bilgi Bankası
             </div>
-            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">Frequently Asked Questions</h2>
-            <p class="mt-4 text-xl text-gray-300">Everything you need to know about our automated trading solutions</p>
+            <h2 class="text-3xl font-extrabold text-white sm:text-4xl">Sık Sorulan Sorular</h2>
+            <p class="mt-4 text-xl text-gray-300">Otomatik alım satım çözümlerimiz hakkında bilmeniz gereken her şey</p>
         </div>
 
         <div class="space-y-6" x-data="{selected:null}">
             <!-- FAQ Item 1 -->
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden">
                 <button @click="selected !== 1 ? selected = 1 : selected = null" class="flex items-center justify-between w-full px-6 py-4 text-left focus:outline-none">
-                    <span class="text-lg font-medium text-white">How does a cBot work?</span>
+                    <span class="text-lg font-medium text-white">cBot nasıl çalışır?</span>
                     <svg :class="{'rotate-180': selected == 1}" class="w-5 h-5 text-gray-300 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="selected == 1" x-collapse>
                     <div class="px-6 pb-4 text-gray-300">
-                        <p class="mb-3">A cBot analyses the indicators or the other parameters that it was programmed to use and once the predefined rules are met, it takes a particular action, such as entering, exiting or modifying a trade.</p>
-                        <p>For example, if you are using a cBot that trades breakouts, your trade will be entered when the price breaks above a resistance or below a support level. Apart from rules for identifying trading opportunities, a cBot typically contains parameters for managing open positions such as Stop Loss/Take Profit Levels, trailing stops or other risk management features.</p>
+                        <p class="mb-3">Bir cBot, programlandığı göstergeleri veya diğer parametreleri analiz eder ve önceden tanımlanmış kurallar karşılandığında, bir işlem girme, çıkma veya değiştirme gibi belirli bir eylem gerçekleştirir.</p>
+                        <p>Örneğin, breakout'lar üzerine alım satım yapan bir cBot kullanıyorsanız, fiyat bir direnç seviyesinin üzerine çıkıldığında veya bir destek seviyesinin altına düştüğünde işleminiz girilir. Alım satım fırsatlarını belirleme kurallarının yanı sıra, bir cBot genellikle Stop Loss/Take Profit seviyeleri, trailing stop'lar veya diğer risk yönetimi özellikleri gibi açık pozisyonları yönetmek için parametreler içerir.</p>
                     </div>
                 </div>
             </div>
@@ -220,14 +220,14 @@
             <!-- FAQ Item 2 -->
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden">
                 <button @click="selected !== 2 ? selected = 2 : selected = null" class="flex items-center justify-between w-full px-6 py-4 text-left focus:outline-none">
-                    <span class="text-lg font-medium text-white">Can I convert an Expert Advisor that I am using on MT4 to a cBot?</span>
+                    <span class="text-lg font-medium text-white">MT4'te kullandığım bir Expert Advisor'ı cBot'a dönüştürebilir miyim?</span>
                     <svg :class="{'rotate-180': selected == 2}" class="w-5 h-5 text-gray-300 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="selected == 2" x-collapse>
                     <div class="px-6 pb-4 text-gray-300">
-                        <p>Yes, your MQL4 indicators and Expert Advisors can be converted to C#, for use on {{$settings->name}} cTrader. Please contact a consultant from the <a class="text-blue-400 hover:text-blue-300" target='_blank' href='https://ctdn.com/consultants/'>cTDN community</a>, who will be able to do this for you.</p>
+                        <p>Evet, MQL4 göstergeleriniz ve Expert Advisor'larınız C#'ye dönüştürülebilir ve {{$settings->name}} cTrader'da kullanılabilir. Lütfen bunu sizin için yapabilecek olan <a class="text-blue-400 hover:text-blue-300" target='_blank' href='https://ctdn.com/consultants/'>cTDN topluluğu</a>ndan bir danışmana başvurun.</p>
                     </div>
                 </div>
             </div>
@@ -235,16 +235,16 @@
             <!-- FAQ Item 3 -->
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden">
                 <button @click="selected !== 3 ? selected = 3 : selected = null" class="flex items-center justify-between w-full px-6 py-4 text-left focus:outline-none">
-                    <span class="text-lg font-medium text-white">Based on which criteria should I select a cBot?</span>
+                    <span class="text-lg font-medium text-white">cBot'u hangi kriterlere göre seçmeliyim?</span>
                     <svg :class="{'rotate-180': selected == 3}" class="w-5 h-5 text-gray-300 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="selected == 3" x-collapse>
                     <div class="px-6 pb-4 text-gray-300">
-                        <p class="mb-3">There is no best way to select a cBot, but it's advisable to do your research first. When you are downloading a cBot from cTDN, you can get a good idea about how it works by viewing the developer's description which includes characteristics and tips about its usage.</p>
-                        <p class="mb-3">Traders usually select a bot that suits their trading style, so if for example, you prefer trading with Fibonacci ratios, you may choose a Fibonacci cBot, and if you are into news trading, you may choose a cBot that trades when there's an important economic release.</p>
-                        <p>In cTDN, you can also rank cBots according to popularity and user rating, so this could be another deciding factor, especially if you are a beginner.</p>
+                        <p class="mb-3">cBot seçmenin en iyi yolu yoktur, ancak önce araştırmanızı yapmanız tavsiye edilir. cTDN'den bir cBot indirirken, geliştiricinin açıklamasını görüntüleyerek nasıl çalıştığı hakkında iyi bir fikir edinebilirsiniz; bu açıklama özellikler ve kullanım ipuçlarını içerir.</p>
+                        <p class="mb-3">Trader'lar genellikle alım satım tarzlarına uygun bir bot seçer, bu yüzden eğer Fibonacci oranlarıyla alım satım yapmayı tercih ediyorsanız, bir Fibonacci cBot'u seçebilirsiniz ve eğer haber ticareti ile ilgileniyorsanız, önemli bir ekonomik yayın olduğunda alım satım yapan bir cBot seçebilirsiniz.</p>
+                        <p>cTDN'de, cBot'ları popülerlik ve kullanıcı puanına göre sıralayabilirsiniz, bu yüzden bu özellikle acemiyseniz başka bir karar faktörü olabilir.</p>
                     </div>
                 </div>
             </div>
@@ -252,14 +252,14 @@
             <!-- FAQ Item 4 -->
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden">
                 <button @click="selected !== 4 ? selected = 4 : selected = null" class="flex items-center justify-between w-full px-6 py-4 text-left focus:outline-none">
-                    <span class="text-lg font-medium text-white">How do I know if my cBot is set to run correctly?</span>
+                    <span class="text-lg font-medium text-white">cBot'umun doğru şekilde çalışacak şekilde ayarlandığını nasıl anlarım?</span>
                     <svg :class="{'rotate-180': selected == 4}" class="w-5 h-5 text-gray-300 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="selected == 4" x-collapse>
                     <div class="px-6 pb-4 text-gray-300">
-                        <p>Once you download the cBot file, you will have to run and install it on your computer. You should then be able to view it on {{$settings->name}} cTrader, at the left side of your chart under the cBots column. Once you define which instrument you'd like to run it for, click the "Play" button. The cBot will start working when the right conditions are met. Please note that you can stop it anytime, just by clicking the "Stop" button.</p>
+                        <p>cBot dosyasını indirdikten sonra, onu bilgisayarınızda çalıştırmalı ve yüklemelisiniz. Daha sonra {{$settings->name}} cTrader'da, grafiğinizin sol tarafındaki cBots sütununda görebilmelisiniz. Hangi enstrüman için çalıştırmak istediğinizi tanımladıktan sonra, "Play" düğmesine tıklayın. cBot, doğru koşullar karşılandığında çalışmaya başlayacaktır. İstediğiniz zaman "Stop" düğmesine tıklayarak durdurabileceğinizi lütfen unutmayın.</p>
                     </div>
                 </div>
             </div>
@@ -267,14 +267,14 @@
             <!-- FAQ Item 5 -->
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden">
                 <button @click="selected !== 5 ? selected = 5 : selected = null" class="flex items-center justify-between w-full px-6 py-4 text-left focus:outline-none">
-                    <span class="text-lg font-medium text-white">Can I run multiple cBots at the same time?</span>
+                    <span class="text-lg font-medium text-white">Birden fazla cBot'u aynı anda çalıştırabilir miyim?</span>
                     <svg :class="{'rotate-180': selected == 5}" class="w-5 h-5 text-gray-300 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="selected == 5" x-collapse>
                     <div class="px-6 pb-4 text-gray-300">
-                        <p>Yes, you can run multiple cBots at the same time and for the same instrument.</p>
+                        <p>Evet, aynı anda birden fazla cBot çalıştırabilir ve aynı enstrüman için de kullanabilirsiniz.</p>
                     </div>
                 </div>
             </div>
@@ -282,15 +282,15 @@
             <!-- FAQ Item 6 -->
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden">
                 <button @click="selected !== 6 ? selected = 6 : selected = null" class="flex items-center justify-between w-full px-6 py-4 text-left focus:outline-none">
-                    <span class="text-lg font-medium text-white">Can I create my own cBot?</span>
+                    <span class="text-lg font-medium text-white">Kendi cBot'umu oluşturabilir miyim?</span>
                     <svg :class="{'rotate-180': selected == 6}" class="w-5 h-5 text-gray-300 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="selected == 6" x-collapse>
                     <div class="px-6 pb-4 text-gray-300">
-                        <p class="mb-3">If you have a specific trading strategy that you follow and has been proven effective, then it might be a good idea to automate it. It's important that your strategy is simple enough and that you are clear about the set of rules that your bot is going to be built on.</p>
-                        <p>If you have no coding experience yourself, you may opt to hire a developer from the <a class="text-blue-400 hover:text-blue-300" target='_blank' href='https://ctdn.com/consultants/'>cTDN community</a>. Please post your request at the forum or contact one of the expert consultants.</p>
+                        <p class="mb-3">Takip ettiğiniz ve etkili olduğu kanıtlanmış belirli bir alım satım stratejiniz varsa, onu otomatikleştirmek iyi bir fikir olabilir. Stratejinizin yeterince basit olması ve bot'unun üzerinde inşa edileceği kurallar seti hakkında net olmanız önemlidir.</p>
+                        <p>Kendi kodlama deneyiminiz yoksa, <a class="text-blue-400 hover:text-blue-300" target='_blank' href='https://ctdn.com/consultants/'>cTDN topluluğu</a>ndan bir geliştirici kiralamayı seçebilirsiniz. Lütfen isteğinizi forumda yayınlayın veya uzman danışmanlardan birine başvurun.</p>
                     </div>
                 </div>
             </div>
@@ -298,16 +298,16 @@
             <!-- FAQ Item 7 -->
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden">
                 <button @click="selected !== 7 ? selected = 7 : selected = null" class="flex items-center justify-between w-full px-6 py-4 text-left focus:outline-none">
-                    <span class="text-lg font-medium text-white">What types of custom indicators are available?</span>
+                    <span class="text-lg font-medium text-white">Hangi tür özel göstergeler mevcuttur?</span>
                     <svg :class="{'rotate-180': selected == 7}" class="w-5 h-5 text-gray-300 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="selected == 7" x-collapse>
                     <div class="px-6 pb-4 text-gray-300">
-                        <p class="mb-3">Trend indicators that are smoothened or combined versions of the standard version, such as MACD, RSI, Heiken Ashi, Ichimoku and more.</p>
-                        <p class="mb-3">Adjusted formulas of standard Volatility indicators such as Bollinger Bands, Donchian channels, Keltner channels, Average True Range etc.</p>
-                        <p>Multiple other custom indicators that are based on Support & Resistance, Pivot Points, Harmonics, Polynomial Regression, Fibonacci etc.</p>
+                        <p class="mb-3">MACD, RSI, Heiken Ashi, Ichimoku ve daha fazlası gibi standart sürümün yumuşatılmış veya birleştirilmiş sürümleri olan trend göstergeleri.</p>
+                        <p class="mb-3">Bollinger Bands, Donchian kanalları, Keltner kanalları, Average True Range vb. gibi standart Volatilite göstergelerinin ayarlanmış formülleri.</p>
+                        <p>Destek & Direnç, Pivot Noktaları, Harmonikler, Polinom Regresyon, Fibonacci vb. üzerine dayalı birden fazla diğer özel gösterge.</p>
                     </div>
                 </div>
             </div>
@@ -315,18 +315,18 @@
             <!-- FAQ Item 8 -->
             <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden">
                 <button @click="selected !== 8 ? selected = 8 : selected = null" class="flex items-center justify-between w-full px-6 py-4 text-left focus:outline-none">
-                    <span class="text-lg font-medium text-white">How can I start trading with a live account?</span>
+                    <span class="text-lg font-medium text-white">Gerçek hesapla alım satıma nasıl başlayabilirim?</span>
                     <svg :class="{'rotate-180': selected == 8}" class="w-5 h-5 text-gray-300 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="selected == 8" x-collapse>
                     <div class="px-6 pb-4 text-gray-300">
-                        <p class="mb-3">Your live trading account can be up and running in less than 2 minutes. Please follow the steps below:</p>
+                        <p class="mb-3">Gerçek alım satım hesabınız 2 dakikadan daha kısa sürede çalışır durumda olabilir. Lütfen aşağıdaki adımları takip edin:</p>
                         <ul class="list-disc pl-5 mb-3 space-y-2">
-                            <li>Step 1. Create Account.</li>
-                            <li>Step 2. Fill in your email, password and phone number.</li>
-                            <li>Step 3. Launch the platform and fund your account to start trading!</li>
+                            <li>Adım 1. Hesap Oluşturun.</li>
+                            <li>Adım 2. E-posta, şifre ve telefon numaranızı doldurun.</li>
+                            <li>Adım 3. Platformu başlatın ve alım satıma başlamak için hesabınızı fonlayın!</li>
                         </ul>
                     </div>
                 </div>
@@ -345,23 +345,23 @@
             <div class="w-full md:w-1/2 space-y-8">
                 <div>
                     <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                        Expert Support
+                        Uzman Desteği
                     </div>
-                    <h2 class="text-3xl font-extrabold text-white mb-4">STAY UP TO DATE <br>WITH OUR EXPERTS!</h2>
+                    <h2 class="text-3xl font-extrabold text-white mb-4">UZMANLARIMIZLA <br>GÜNCEL KALIN!</h2>
                     <p class="text-gray-300">
-                        Our local and international teams are here to support you on a 24/5 basis in more than 20 languages, while our wide range of payment methods gives you greater flexibility when it comes to deposits and withdrawals.
+                        Yerel ve uluslararası ekiplerimiz, 20'den fazla dilde 24/5 bazında sizi desteklemek için burada, geniş ödeme yöntemleri yelpazemiz ise para yatırma ve çekme konusunda size daha fazla esneklik sağlar.
                     </p>
                 </div>
 
                 <div>
-                    <h2 class="text-3xl font-extrabold text-white mb-4">Experience More Than Trading</h2>
+                    <h2 class="text-3xl font-extrabold text-white mb-4">Alım Satımdan Daha Fazlasını Yaşayın</h2>
                     <p class="text-gray-300">
-                        Our success is centred around a number of core values. They include providing competitive brokerage fees through tight spreads, ensuring lightning-fast execution, access to advanced trading platforms with a wide range of products, and exceptional customer service.
+                        Başarımız bir dizi temel değer etrafında toplanır. Bunlar arasında sıkı spreadler aracılığıyla rekabetçi komisyon ücretleri sağlamak, şimşek hızında yürütme sağlamak, geniş ürün yelpazesiyle gelişmiş alım satım platformlarına erişim ve üstün müşteri hizmetleri bulunur.
                     </p>
                 </div>
 
                 <a href="/about" class="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200">
-                    Learn About {{$settings->name}} Commissions
+                    {{$settings->name}} Komisyonları Hakkında Bilgi Edinin
                     <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
