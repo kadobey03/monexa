@@ -99,7 +99,7 @@
 
                                 <div class="flex items-center justify-between">
                                     <!-- Trade Details -->
-                                    <div class="flex items-center gap-3 flex-1">
+                                    <div class="flex items-center gap-3">
                                         <!-- Icon -->
                                         <div class="flex-shrink-0">
                                             @if($history->type == 'LOSE')
@@ -151,8 +151,8 @@
                                         </div>
                                     </div>
 
-                                    <!-- Amount and Actions -->
-                                    <div class="flex items-center gap-3">
+                                    <!-- Amount -->
+                                    <div class="text-right">
                                         @if($history->type == 'LOSE')
                                             <div class="text-sm font-medium text-red-600 dark:text-red-400">
                                                 -{{ Auth::user()->currency }} {{ number_format($history->amount, 2) }}
@@ -171,12 +171,6 @@
                                                 1:{{ $history->leverage }}
                                             </div>
                                         @endif
-                                        <!-- Monitor Button -->
-                                        <a href="{{ route('trade.monitor', $history->id) }}"
-                                           class="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-md text-xs font-medium transition-colors">
-                                            <i data-lucide="monitor" class="w-3 h-3"></i>
-                                            <span class="hidden sm:inline">Monitör</span>
-                                        </a>
                                     </div>
                                 </div>
                             </div>
