@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Investments')
+@section('title', 'Yatırımlar')
 
 @inject('content', 'App\Http\Controllers\FrontController')
 @section('content')
@@ -53,30 +53,30 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
                 <div class="inline-block px-3 py-1 mb-6 text-xs font-semibold tracking-wider text-emerald-400 uppercase bg-emerald-900 bg-opacity-30 rounded-full">
-                    Secure Investment Platform
+                    Güvenli Yatırım Platformu
                 </div>
                 <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl mb-4">
-                    <span class="block">RELIABLE INVESTMENT WITH</span>
+                    <span class="block">İLE GÜVENİLİR YATIRIM</span>
                     <span class="block text-emerald-400">{{$settings->site_name}}</span>
                 </h1>
                 <p class="mt-3 text-xl font-medium text-emerald-400 mb-6">
                     GET LIFETIME INCOME
                 </p>
                 <p class="text-base text-gray-300 sm:text-lg lg:text-base xl:text-lg max-w-xl">
-                    {{$settings->site_name}} developers have created a unique cryptocurrency robot. It predicts the value of Bitcoin while generating daily profit on trades. The robot is able to benefit at any stage of the market: both growth and decline.
+                    {{$settings->site_name}} geliştiricileri benzersiz bir kripto para robotu oluşturdu. İşlemler üzerinde günlük kâr üretirken Bitcoin'in değerini tahmin eder. Robot, piyasanın herhangi bir aşamasında fayda sağlayabilir: hem büyüme hem düşüş.
                 </p>
                 <p class="mt-4 text-base text-gray-300 sm:text-lg lg:text-base xl:text-lg max-w-xl">
-                    Our CFO has developed a unique marketing plan for the platform to function fully. Investors have an excellent opportunity to receive financial benefits on stable terms.
+                    CFO'muz platformun tam olarak çalışması için benzersiz bir pazarlama planı geliştirdi. Yatırımcılar, istikrarlı şartlarda finansal faydalar alma konusunda mükemmel bir fırsata sahiptir.
                 </p>
                 <div class="mt-8 flex flex-wrap gap-4">
                     <a href="#calculator" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-emerald-400 hover:bg-emerald-500 transition duration-300">
-                        Calculate Profit
+                        Kârı Hesapla
                         <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                         </svg>
                     </a>
                     <a href="#investment-plans" class="inline-flex items-center px-6 py-3 border border-gray-700 text-base font-medium rounded-md text-gray-300 bg-transparent hover:bg-gray-800 transition duration-300">
-                        Investment Plans
+                        Yatırım Planları
                     </a>
                 </div>
             </div>
@@ -86,11 +86,11 @@
                     <div class="relative bg-gray-800 bg-opacity-80 backdrop-blur-sm p-6 rounded-lg border border-gray-700">
                         <div class="flex justify-between items-center mb-6">
                             <div>
-                                <span class="text-gray-400 text-sm">Investment Overview</span>
-                                <h3 class="text-xl font-bold text-white">Smart Trading Robot</h3>
+                                <span class="text-gray-400 text-sm">Yatırım Genel Bakışı</span>
+                                <h3 class="text-xl font-bold text-white">Akıllı Ticaret Robotu</h3>
                             </div>
                             <div class="text-right">
-                                <span class="text-emerald-400 text-xl font-bold">AI-Powered</span>
+                                <span class="text-emerald-400 text-xl font-bold">AI Güçlü</span>
                             </div>
                         </div>
 
@@ -126,15 +126,15 @@
                         <!-- Stats -->
                         <div class="grid grid-cols-3 gap-2 mt-4">
                             <div class="bg-gray-900 bg-opacity-50 p-2 rounded">
-                                <div class="text-xs text-gray-400">Daily Return</div>
+                                <div class="text-xs text-gray-400">Günlük Getiri</div>
                                 <div class="text-sm text-white">1.8% - 3.3%</div>
                             </div>
                             <div class="bg-gray-900 bg-opacity-50 p-2 rounded">
-                                <div class="text-xs text-gray-400">Min Investment</div>
-                                <div class="text-sm text-white">$10 USD</div>
+                                <div class="text-xs text-gray-400">Minimum Yatırım</div>
+                                <div class="text-sm text-white">10 USD</div>
                             </div>
                             <div class="bg-gray-900 bg-opacity-50 p-2 rounded">
-                                <div class="text-xs text-gray-400">Automation</div>
+                                <div class="text-xs text-gray-400">Otomasyon</div>
                                 <div class="text-sm text-white">100%</div>
                             </div>
                         </div>
@@ -150,13 +150,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-emerald-400 uppercase bg-emerald-900 bg-opacity-30 rounded-full">
-                Our Offerings
+                Tekliflerimiz
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Investment Proposals</span>
+                <span class="block">Yatırım Teklifleri</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                {{$settings->site_name}} ensures that every investor in our company can earn money
+                {{$settings->site_name}} şirketimizin her yatırımcısının para kazanmasını sağlar
             </p>
         </div>
 
@@ -179,12 +179,12 @@
                             </div>
                             <div>
                                 <h3 class="text-lg font-bold text-white">{{ $plan->name }}</h3>
-                                <p class="text-sm text-gray-400">Investment Plan</p>
+                                <p class="text-sm text-gray-400">Yatırım Planı</p>
                             </div>
                         </div>
                         <div class="text-right">
                             <div class="text-3xl font-bold text-emerald-400">1.8<span class="text-xl">%</span></div>
-                            <p class="text-sm text-emerald-300">Daily Return</p>
+                            <p class="text-sm text-emerald-300">Günlük Getiri</p>
                         </div>
                     </div>
 
@@ -194,19 +194,19 @@
                     <!-- Plan details -->
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Deposit Range:</span>
+                            <span class="text-gray-400">Yatırım Aralığı:</span>
                             <span class="text-white font-medium">1000 - 5000 USD</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Payment Frequency:</span>
-                            <span class="text-white font-medium">Daily</span>
+                            <span class="text-gray-400">Ödeme Sıklığı:</span>
+                            <span class="text-white font-medium">Günlük</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Capital Return:</span>
-                            <span class="text-white font-medium">Included</span>
+                            <span class="text-gray-400">Sermaye İade:</span>
+                            <span class="text-white font-medium">Dahil</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Automation:</span>
+                            <span class="text-gray-400">Otomasyon:</span>
                             <span class="text-white font-medium">100%</span>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
                     <!-- CTA Button -->
                     <div class="mt-6">
                         <a href="#calculator" class="block w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg text-center transition duration-300">
-                            Invest Now
+                            Şimdi Yatır
                         </a>
                     </div>
                 </div>
@@ -232,10 +232,10 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-white">GENERAL COMMISSIONS</h3>
+                            <h3 class="text-xl font-bold text-white">GENEL KOMİSYONLAR</h3>
                         </div>
                         <p class="text-gray-300">
-                            These commissions are charged by {{$settings->site_name}} for the platform to work. They are not related to the profit received by our investors.
+                            Bu komisyonlar platformun çalışması için {{$settings->site_name}} tarafından alınır. Yatırımcılarımızın aldığı kâr ile ilgili değildir.
                         </p>
                     </div>
                 </div>
@@ -249,13 +249,13 @@
                                     @click="activeTab = 'Starting'"
                                     :class="{'text-emerald-400 border-emerald-400': activeTab === 'Starting', 'text-gray-400 border-transparent hover:text-gray-300': activeTab !== 'Starting'}"
                                     class="px-4 py-2 font-medium border-b-2 transition-all duration-200 whitespace-nowrap focus:outline-none">
-                                    Starting Plan
+                                    Başlangıç Planı
                                 </button>
                                 <button
                                     @click="activeTab = 'Standard'"
                                     :class="{'text-emerald-400 border-emerald-400': activeTab === 'Standard', 'text-gray-400 border-transparent hover:text-gray-300': activeTab !== 'Standard'}"
                                     class="px-4 py-2 font-medium border-b-2 transition-all duration-200 whitespace-nowrap focus:outline-none">
-                                    Standard Plan
+                                    Standart Plan
                                 </button>
                                 <button
                                     @click="activeTab = 'Premium'"
@@ -276,9 +276,9 @@
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <h4 class="text-lg font-medium text-white">COMPANY COMMISSION</h4>
+                                        <h4 class="text-lg font-medium text-white">ŞİRKET KOMİSYONU</h4>
                                         <p class="mt-2 text-base text-gray-300">
-                                            <span class="text-emerald-400 font-semibold">0.5%</span> from the received profit by the robot. This commission shows the earnings of the entire {{$settings->site_name}} structure, namely, each employee.
+                                            <span class="text-emerald-400 font-semibold">0.5%</span> robot tarafından alınan kârdan. Bu komisyon tüm {{$settings->site_name}} yapısının kazançlarını gösterir, yani her çalışan.
                                         </p>
                                     </div>
                                 </div>
@@ -293,9 +293,9 @@
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <h4 class="text-lg font-medium text-white">ADMINISTRATIVE COMMISSION</h4>
+                                        <h4 class="text-lg font-medium text-white">İDARİ KOMİSYON</h4>
                                         <p class="mt-2 text-base text-gray-300">
-                                            <span class="text-emerald-400 font-semibold">0.5%</span> for technical support of the robot and the company as a whole. This commission includes the development and marketing costs of the company.
+                                            <span class="text-emerald-400 font-semibold">0.5%</span> robot ve şirketin tamamının teknik desteği için. Bu komisyon şirketin geliştirme ve pazarlama giderlerini içerir.
                                         </p>
                                     </div>
                                 </div>
@@ -311,9 +311,9 @@
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <h4 class="text-lg font-medium text-white">COMPANY COMMISSION</h4>
+                                        <h4 class="text-lg font-medium text-white">ŞİRKET KOMİSYONU</h4>
                                         <p class="mt-2 text-base text-gray-300">
-                                            <span class="text-emerald-400 font-semibold">0.5%</span> from the received profit by the robot. This commission shows the earnings of the entire {{$settings->site_name}} structure, namely, each employee.
+                                            <span class="text-emerald-400 font-semibold">0.5%</span> robot tarafından alınan kârdan. Bu komisyon tüm {{$settings->site_name}} yapısının kazançlarını gösterir, yani her çalışan.
                                         </p>
                                     </div>
                                 </div>
@@ -328,9 +328,9 @@
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <h4 class="text-lg font-medium text-white">ADMINISTRATIVE COMMISSION</h4>
+                                        <h4 class="text-lg font-medium text-white">İDARİ KOMİSYON</h4>
                                         <p class="mt-2 text-base text-gray-300">
-                                            <span class="text-emerald-400 font-semibold">0.5%</span> for technical support of the robot and the company as a whole. This commission includes the development and marketing costs of the company.
+                                            <span class="text-emerald-400 font-semibold">0.5%</span> robot ve şirketin tamamının teknik desteği için. Bu komisyon şirketin geliştirme ve pazarlama giderlerini içerir.
                                         </p>
                                     </div>
                                 </div>
@@ -346,9 +346,9 @@
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <h4 class="text-lg font-medium text-white">COMPANY COMMISSION</h4>
+                                        <h4 class="text-lg font-medium text-white">ŞİRKET KOMİSYONU</h4>
                                         <p class="mt-2 text-base text-gray-300">
-                                            <span class="text-emerald-400 font-semibold">0.5%</span> from the received profit by the robot. This commission shows the earnings of the entire {{$settings->site_name}} structure, namely, each employee.
+                                            Robot tarafından alınan kârdan <span class="text-emerald-400 font-semibold">0.5%</span>. Bu komisyon tüm {{$settings->site_name}} yapısının kazançlarını gösterir, yani her çalışan.
                                         </p>
                                     </div>
                                 </div>
@@ -363,9 +363,9 @@
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <h4 class="text-lg font-medium text-white">ADMINISTRATIVE COMMISSION</h4>
+                                        <h4 class="text-lg font-medium text-white">İDARİ KOMİSYON</h4>
                                         <p class="mt-2 text-base text-gray-300">
-                                            <span class="text-emerald-400 font-semibold">0.5%</span> for technical support of the robot and the company as a whole. This commission includes the development and marketing costs of the company.
+                                            Robot ve şirketin tamamının teknik desteği için <span class="text-emerald-400 font-semibold">0.5%</span>. Bu komisyon şirketin geliştirme ve pazarlama giderlerini içerir.
                                         </p>
                                     </div>
                                 </div>
@@ -381,21 +381,21 @@
             <div class="relative bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-sm rounded-xl p-8 border border-gray-700">
                 <div class="text-center mb-8">
                     <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-emerald-400 uppercase bg-emerald-900 bg-opacity-30 rounded-full">
-                        Profit Estimation
+                        Kâr Tahmini
                     </div>
-                    <h3 class="text-2xl font-bold text-white">Calculate Your Investment Returns</h3>
-                    <p class="mt-2 text-gray-300">See exactly how much you can earn with our investment plans</p>
+                    <h3 class="text-2xl font-bold text-white">Yatırım Dönüşlerinizi Hesaplayın</h3>
+                    <p class="mt-2 text-gray-300">Tam olarak ne kadar kazanabileceğinizi görün</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" x-data="{ showCalculator: true }">
                     <div class="space-y-6">
                         <div>
-                            <label for="selectid" class="block text-sm font-medium text-gray-400 mb-2">Investment Plan</label>
+                            <label for="selectid" class="block text-sm font-medium text-gray-400 mb-2">Yatırım Planı</label>
                             <div class="relative">
                                 <select id="selectid" class="block w-full pl-4 pr-10 py-3 text-base bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 appearance-none">
-                                    <option value="2" data-percent="1.8">Starting (1.8% Daily)</option>
-                                    <option value="3" data-percent="2.5">Standard (2.5% Daily)</option>
-                                    <option value="4" data-percent="3.3">Premium (3.3% Daily)</option>
+                                    <option value="2" data-percent="1.8">Başlangıç (Günlük %1.8)</option>
+                                    <option value="3" data-percent="2.5">Standart (Günlük %2.5)</option>
+                                    <option value="4" data-percent="3.3">Premium (Günlük %3.3)</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -406,7 +406,7 @@
                         </div>
 
                         <div>
-                            <label for="sum" class="block text-sm font-medium text-gray-400 mb-2">Investment Amount (USD)</label>
+                            <label for="sum" class="block text-sm font-medium text-gray-400 mb-2">Yatırım Tutarı (USD)</label>
                             <div class="relative">
                                 <input id="sum" type="number" class="block w-full pl-4 pr-20 py-3 text-base bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" value="100">
                                 <div class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 bg-gray-700 rounded-r-lg">
@@ -418,18 +418,18 @@
 
                         <div class="pt-4">
                             <a href="login" class="block w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg text-center transition duration-300">
-                                Start Investing Now
+                                Şimdi Yatırım Yapmaya Başla
                             </a>
                         </div>
                     </div>
 
                     <div class="bg-gray-900 rounded-xl p-6">
-                        <h4 class="text-lg font-medium text-white mb-6">Projected Returns</h4>
+                        <h4 class="text-lg font-medium text-white mb-6">Tahmini Dönüşler</h4>
 
                         <div class="grid grid-cols-1 divide-y divide-gray-700">
                             <div class="py-4 flex justify-between items-center">
                                 <div>
-                                    <p class="text-sm text-gray-400">Daily Income</p>
+                                    <p class="text-sm text-gray-400">Günlük Gelir</p>
                                     <p id="daily" class="text-xl font-bold text-white">-</p>
                                 </div>
                                 <div class="w-12 h-12 bg-emerald-900 bg-opacity-30 rounded-full flex items-center justify-center">
@@ -441,7 +441,7 @@
 
                             <div class="py-4 flex justify-between items-center">
                                 <div>
-                                    <p class="text-sm text-gray-400">Weekly Income</p>
+                                    <p class="text-sm text-gray-400">Haftalık Gelir</p>
                                     <p id="weekly" class="text-xl font-bold text-white">-</p>
                                 </div>
                                 <div class="w-12 h-12 bg-blue-900 bg-opacity-30 rounded-full flex items-center justify-center">
@@ -453,7 +453,7 @@
 
                             <div class="py-4 flex justify-between items-center">
                                 <div>
-                                    <p class="text-sm text-gray-400">Monthly Income</p>
+                                    <p class="text-sm text-gray-400">Aylık Gelir</p>
                                     <p id="mountly" class="text-xl font-bold text-white">-</p>
                                 </div>
                                 <div class="w-12 h-12 bg-purple-900 bg-opacity-30 rounded-full flex items-center justify-center">
@@ -466,7 +466,7 @@
                             <div class="pt-4">
                                 <div class="p-4 bg-gray-800 rounded-lg border border-gray-700">
                                     <p class="text-sm text-gray-300">
-                                        <span class="text-emerald-400">Note:</span> These calculations are estimates based on the current rates. Actual returns may vary depending on market conditions.
+                                        <span class="text-emerald-400">Not:</span> Bu hesaplamalar mevcut oranlara dayanmaktadır. Gerçek dönüşler piyasa koşullarına bağlı olarak değişebilir.
                                     </p>
                                 </div>
                             </div>
@@ -625,11 +625,11 @@ var percent 	= [0.033];
     <div class="container mx-auto px-4 relative">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full mb-4">
-                Investment Process
+                Yatırım Süreci
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Simple Steps to Start Investing</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Yatırım Yapmaya Başlamak İçin Basit Adımlar</h2>
             <p class="max-w-3xl mx-auto text-gray-300">
-                We've designed a streamlined investment process that's efficient, quick, and straightforward. Follow these simple steps to begin your investment journey.
+                Verimli, hızlı ve basit olacak şekilde kolaylaştırılmış bir yatırım süreci tasarladık. Yatırım yolculuğunuza başlamak için bu basit adımları takip edin.
             </p>
         </div>
 
@@ -641,9 +641,9 @@ var percent 	= [0.033];
                     <div class="flex items-center justify-center w-16 h-16 bg-blue-900 bg-opacity-50 rounded-full mb-6 mx-auto">
                         <span class="text-2xl font-bold text-blue-400">1</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Registration</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Kayıt</h3>
                     <p class="text-gray-300 text-center">
-                        Click the Register button. Fill in your details to create a FREE {{$settings->site_name}} account in seconds.
+                        Kayıt butonuna tıklayın. Saniyeler içinde ÜCRETSİZ bir {{$settings->site_name}} hesabı oluşturmak için detaylarınızı doldurun.
                     </p>
 
                     <svg class="absolute -bottom-3 -right-3 h-12 w-12 text-blue-500 opacity-20" fill="currentColor" viewBox="0 0 24 24">
@@ -659,9 +659,9 @@ var percent 	= [0.033];
                     <div class="flex items-center justify-center w-16 h-16 bg-emerald-900 bg-opacity-50 rounded-full mb-6 mx-auto">
                         <span class="text-2xl font-bold text-emerald-400">2</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Choose Investment Plan</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Yatırım Planı Seç</h3>
                     <p class="text-gray-300 text-center">
-                        We offer a variety of investment plans to suit your financial goals. After reading, make a deposit.
+                        Finansal hedeflerinize uygun çeşitli yatırım planları sunuyoruz. Okuduktan sonra, bir depozito yapın.
                     </p>
 
                     <svg class="absolute -bottom-3 -right-3 h-12 w-12 text-emerald-500 opacity-20" fill="currentColor" viewBox="0 0 24 24">
@@ -677,9 +677,9 @@ var percent 	= [0.033];
                     <div class="flex items-center justify-center w-16 h-16 bg-blue-900 bg-opacity-50 rounded-full mb-6 mx-auto">
                         <span class="text-2xl font-bold text-blue-400">3</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Start Earning</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Kazanç Elde Etmeye Başla</h3>
                     <p class="text-gray-300 text-center">
-                        After making a deposit, watch your capital grow by accumulating daily profit in real time.
+                        Depozito yaptıktan sonra, günlük kârı gerçek zamanlı olarak biriktirerek sermayenizin büyümesini izleyin.
                     </p>
 
                     <svg class="absolute -bottom-3 -right-3 h-12 w-12 text-blue-500 opacity-20" fill="currentColor" viewBox="0 0 24 24">
@@ -691,7 +691,7 @@ var percent 	= [0.033];
 
         <div class="mt-12 text-center">
             <a href="register" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
-                <span>Start Your Journey Now</span>
+                <span>Yolculuğunuza Şimdi Başlayın</span>
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
@@ -701,9 +701,9 @@ var percent 	= [0.033];
 </section>            <!---->
             <section class="text-columns">
               <div class="container">
-                <h1 class="page-intro__title" id="classs"style="color: #69e2b0;">UNIQUE TRADING ROBOT FOR TRADING</h1>
+                <h1 class="page-intro__title" id="classs"style="color: #69e2b0;">TİCARET İÇİN BENZERSİZ TİCARET ROBOTU</h1>
                 <div class="typography">
-                  <p>UNIQUE TRADING ROBOT FOR TRADING{{$settings->site_name}} robot is a unique trading tool for getting profit at the stages of growth and fall of the cryptocurrency market. Operations are managed without user intervention. The work of the robot is fully automated and cannot include usage errors. The robot generates the Bitcoin exchange rate, thereby benefiting the company. The main condition for cooperation with {{$settings->site_name}} is the availability of an active deposit to obtain an investment profit in the future.</p>
+                  <p>TİCARET İÇİN BENZERSİZ TİCARET ROBOTU{{$settings->site_name}} robotu, kripto para piyasasının büyüme ve düşüş aşamalarında kâr elde etmek için benzersiz bir ticaret aracıdır. İşlemler kullanıcı müdahalesi olmadan yönetilir. Robotun çalışması tamamen otomatikleştirilmiştir ve kullanım hatalarını içeremez. Robot, Bitcoin döviz kurunu üretir, böylece şirkete fayda sağlar. {{$settings->site_name}} ile işbirliğinin ana koşulu, gelecekte yatırım kârı elde etmek için aktif bir depozitonun bulunmasıdır.</p>
                 </div>
               </div>
             </section>
@@ -727,11 +727,11 @@ var percent 	= [0.033];
     <div class="container mx-auto px-4 relative">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full mb-4">
-                Advanced Technology
+                Gelişmiş Teknoloji
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-emerald-400 mb-4">Best {{$settings->site_name}} Traders</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-emerald-400 mb-4">En İyi {{$settings->site_name}} Tüccarları</h2>
             <p class="max-w-3xl mx-auto text-gray-300">
-                The best cryptocurrency developers work in our company with a wealth of experience and deep understanding of crypto markets. They've elevated {{$settings->site_name}} to world-class development standards.
+                Şirketimizde kripto para piyasalarının zengin deneyimi ve derin anlayışı ile en iyi kripto para geliştiricileri çalışıyor. {{$settings->site_name}}'ı dünya standartlarında gelişmişliğe yükselttiler.
             </p>
         </div>
 
@@ -745,9 +745,9 @@ var percent 	= [0.033];
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Unique Trading Bot</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Benzersiz Ticaret Botu</h3>
                     <p class="text-gray-300 text-center">
-                        {{$settings->site_name}}'s team of professionals has created a unique trading robot that generates profit at any market stage: rise or fall.
+                        {{$settings->site_name}} profesyonelleri ekibi, yükseliş veya düşüş olsun her piyasa aşamasında kâr üreten benzersiz bir ticaret robotu oluşturdu.
                     </p>
                 </div>
             </div>
@@ -761,9 +761,9 @@ var percent 	= [0.033];
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Stable & Automated Investment</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Stabil ve Otomatik Yatırım</h3>
                     <p class="text-gray-300 text-center">
-                        The robot operates independently of human error, making all investments reliable and completely safe for our clients.
+                        Robot insan hatasından bağımsız olarak çalışır, tüm yatırımları güvenilir ve müşterilerimiz için tamamen güvenli kılar.
                     </p>
                 </div>
             </div>
@@ -777,19 +777,19 @@ var percent 	= [0.033];
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Expert Management</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">Uzman Yönetimi</h3>
                     <p class="text-gray-300 text-center">
-                        The highly professional {{$settings->site_name}} team controls all trading processes around the clock. Watch your capital grow in real time after investing.
+                        Yüksek profesyonel {{$settings->site_name}} ekibi tüm ticaret süreçlerini 7/24 kontrol eder. Yatırdıktan sonra sermayenizin gerçek zamanlı büyümesini izleyin.
                     </p>
                 </div>
             </div>
         </div>
         <div class="mt-12 text-center">
             <p class="text-gray-300 mb-6 max-w-3xl mx-auto">
-                {{$settings->site_name}} specialists work around the clock to ensure stable platform operation. Our trading robot ensures maximum efficiency and minimizes human factors in trading operations.
+                {{$settings->site_name}} uzmanları platformun stabil çalışmasını sağlamak için 7/24 çalışır. Ticaret robotumuz maksimum verimliliği sağlar ve ticaret işlemlerindeki insan faktörünü en aza indirir.
             </p>
             <a href="login" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
-                <span>INVEST WITH US AND GET STABLE INCOME</span>
+                <span>BİZİMLE YATIRIM YAPIN VE SABİT GELİR ELDE EDİN</span>
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
@@ -856,19 +856,19 @@ var percent 	= [0.033];
             <!-- Payment Info -->
             <div class="order-1 md:order-2">
                 <div class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full mb-4">
-                    Simple Transactions
+                    Basit İşlemler
                 </div>
-                <h2 class="text-3xl font-bold text-white mb-4">Payment Systems</h2>
+                <h2 class="text-3xl font-bold text-white mb-4">Ödeme Sistemleri</h2>
                 <p class="text-gray-300 mb-4">
-                    {{$settings->site_name}} supports a wide range of payment systems for your convenience.
+                    {{$settings->site_name}} rahatınız için geniş bir ödeme sistemi yelpazesini destekler.
                 </p>
                 <div class="bg-gray-800 bg-opacity-50 rounded-lg p-4 mb-6 border border-gray-700">
                     <p class="text-gray-300">
-                        Our company does not charge commissions for opening a deposit or withdrawing funds from the platform.
+                        Şirketimiz, depozito açma veya platformdan fon çekme için komisyon ücretlemez.
                     </p>
                 </div>
                 <a href="login" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
-                    <span>START INVESTING NOW</span>
+                    <span>ŞİMDİ YATIRIM YAPMAYA BAŞLA</span>
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                     </svg>

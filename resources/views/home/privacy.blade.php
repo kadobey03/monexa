@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Terms and Privacy And Policy')
+@section('title', 'Şartlar ve Gizlilik Politikası')
 
 @inject('content', 'App\Http\Controllers\FrontController')
 @section('content')
@@ -37,14 +37,14 @@
     <div class="relative z-10 px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Legal Documentation
+                Yasal Belgeler
             </div>
             <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
-                <span class="block">Privacy Policy</span>
-                <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">Your Data Protection</span>
+                <span class="block">Gizlilik Politikası</span>
+                <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">Verilerinizin Korunması</span>
             </h1>
             <p class="max-w-2xl mt-5 mx-auto text-xl text-gray-300">
-                Understanding how we protect your information and respect your privacy
+                Bilgilerinizi nasıl koruduğumuzu ve gizliliğinize nasıl saygı gösterdiğimizi anlama
             </p>
         </div>
     </div>
@@ -65,7 +65,7 @@
                     <button
                         @click="open = !open"
                         class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
-                        <span x-text="open ? 'Hide Data Protection Details' : 'Learn More About Data Protection'">Learn More About Data Protection</span>
+                        <span x-text="open ? 'Veri Koruma Detaylarını Gizle' : 'Veri Koruma Hakkında Daha Fazla Öğren'">Veri Koruma Hakkında Daha Fazla Öğren</span>
                         <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
@@ -80,7 +80,7 @@
                          x-transition:leave-end="opacity-0 transform scale-95"
                          class="mt-8 bg-gray-900 bg-opacity-50 p-6 rounded-xl backdrop-blur-sm border border-gray-700">
                         <p class="text-gray-300">
-                            At {{ $settings->site_name }}, we take data protection very seriously. All user data is encrypted and stored securely. We never share your personal information with third parties without your explicit consent, and we adhere strictly to international data protection regulations.
+                            {{ $settings->site_name }}'de veri korumasına çok ciddi yaklaşırız. Tüm kullanıcı verileri şifrelenir ve güvenli bir şekilde saklanır. Kişisel bilgilerinizi açık rızanız olmadan üçüncü taraflarla asla paylaşmayız ve uluslararası veri koruma düzenlemelerine sıkıca uyarız.
                         </p>
                     </div>
                 </div>
@@ -90,16 +90,16 @@
         <!-- Quick Navigation -->
         <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
             <a href="/about" class="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 hover:border-blue-500 transition-colors duration-300 group">
-                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-blue-400">About Us</h3>
-                <p class="text-gray-400">Learn more about our company and mission</p>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-blue-400">Hakkımızda</h3>
+                <p class="text-gray-400">Şirketimiz ve misyonumuz hakkında daha fazla bilgi edinin</p>
             </a>
             <a href="/contact" class="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 hover:border-blue-500 transition-colors duration-300 group">
-                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-blue-400">Contact Us</h3>
-                <p class="text-gray-400">Questions about privacy? Get in touch</p>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-blue-400">Bize Ulaşın</h3>
+                <p class="text-gray-400">Gizlilik hakkında sorularınız mı var? İletişime geçin</p>
             </a>
             <a href="/register" class="bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 hover:border-blue-500 transition-colors duration-300 group">
-                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-blue-400">Start Trading</h3>
-                <p class="text-gray-400">Create an account to begin trading</p>
+                <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-blue-400">Ticarete Başla</h3>
+                <p class="text-gray-400">Ticarete başlamak için bir hesap oluşturun</p>
             </a>
         </div>
     </div>

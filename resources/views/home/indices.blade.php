@@ -51,24 +51,24 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
                 <div class="inline-block px-3 py-1 mb-6 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                    Global Markets
+                    Küresel Piyasalar
                 </div>
                 <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl mb-6">
-                    <span class="block">Global Indices</span>
-                    <span class="block text-blue-400">Trading</span>
+                    <span class="block">Küresel Endeksler</span>
+                    <span class="block text-blue-400">Ticaret</span>
                 </h1>
                 <p class="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl max-w-xl">
-                    See the complete list of world stock indexes with points and percentage change, volume, intraday highs and lows, 52 week range, and day charts.
+                    Dünya hisse senedi endekslerinin tam listesini puanlar ve yüzde değişim, hacim, gün içi yüksekler ve düşükler, 52 haftalık aralık ve günlük grafikler ile görün.
                 </p>
                 <div class="mt-8 flex flex-wrap gap-4">
                     <a href="#indices-table" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition duration-300">
-                        View Markets
+                        Piyasaları Görüntüle
                         <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
                     </a>
                     <a href="#" class="inline-flex items-center px-6 py-3 border border-gray-700 text-base font-medium rounded-md text-gray-300 bg-transparent hover:bg-gray-800 transition duration-300">
-                        Learn More
+                        Daha Fazla Öğren
                     </a>
                 </div>
             </div>
@@ -78,8 +78,8 @@
                     <div class="relative bg-gray-800 bg-opacity-80 backdrop-blur-sm p-6 rounded-lg border border-gray-700">
                         <div class="flex justify-between items-center mb-6">
                             <div>
-                                <span class="text-gray-400 text-sm">Major Index</span>
-                                <h3 class="text-xl font-bold text-white">US 500</h3>
+                                <span class="text-gray-400 text-sm">Ana Endeks</span>
+                                <h3 class="text-xl font-bold text-white">ABD 500</h3>
                             </div>
                             <div class="text-right">
                                 <span class="text-green-400 text-xl font-bold">4,568.32</span>
@@ -123,15 +123,15 @@
                         <!-- Stats -->
                         <div class="grid grid-cols-3 gap-2 mt-4">
                             <div class="bg-gray-900 bg-opacity-50 p-2 rounded">
-                                <div class="text-xs text-gray-400">Open</div>
+                                <div class="text-xs text-gray-400">Açık</div>
                                 <div class="text-sm text-white">4,552.10</div>
                             </div>
                             <div class="bg-gray-900 bg-opacity-50 p-2 rounded">
-                                <div class="text-xs text-gray-400">High</div>
+                                <div class="text-xs text-gray-400">Yüksek</div>
                                 <div class="text-sm text-white">4,575.28</div>
                             </div>
                             <div class="bg-gray-900 bg-opacity-50 p-2 rounded">
-                                <div class="text-xs text-gray-400">Low</div>
+                                <div class="text-xs text-gray-400">Düşük</div>
                                 <div class="text-sm text-white">4,545.36</div>
                             </div>
                         </div>
@@ -152,13 +152,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Market Overview
+                Piyasa Genel Bakışı
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Indices - Spreads &amp; Trading Conditions</span>
+                <span class="block">Endeksler - Spreadler ve Ticaret Koşulları</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                Access global index markets with competitive spreads and flexible trading conditions
+                Rekabetçi spreadler ve esnek ticaret koşullarıyla küresel endeks piyasalarına erişin
             </p>
         </div>
 
@@ -170,8 +170,8 @@
                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                     </svg>
                 </div>
-                <input type="text" class="search-box block w-full pl-10 pr-3 py-3 border border-gray-700 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Search all instruments">
-                <span class="sr-only">Search instruments</span>
+                <input type="text" class="search-box block w-full pl-10 pr-3 py-3 border border-gray-700 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Tüm enstrümanları ara">
+                <span class="sr-only">Enstrümanları ara</span>
             </div>
         </div>
 
@@ -182,18 +182,18 @@
                 <div class="pat loading">
                     <div class="loader flex justify-center p-6">
                         <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                        <span class="sr-only">Loading...</span>
+                        <span class="sr-only">Yükleniyor...</span>
                     </div>
 
                     <div class="overflow-x-auto">
                         <table id="tt-spreads-6023e311aa22a" class="display no-wrap tbl-spreads min-w-full divide-y divide-gray-700">
                             <thead class="bg-gray-800">
                                 <tr>
-                                    <th scope="col" data-key="Symbol" class="symbol px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Symbol</th>
-                                    <th scope="col" data-key="Leverage" class="leverage px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Leverage</th>
-                                    <th scope="col" data-key="Lot Size" class="lot_size px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Lot Size</th>
-                                    <th scope="col" data-key="Min Lot Size" class="min_lot_size px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Min Lot Size</th>
-                                    <th scope="col" data-key="Commission" class="commission px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Commission</th>
+                                    <th scope="col" data-key="Symbol" class="symbol px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Sembol</th>
+                                    <th scope="col" data-key="Leverage" class="leverage px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Kaldıraç</th>
+                                    <th scope="col" data-key="Lot Size" class="lot_size px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Lot Boyutu</th>
+                                    <th scope="col" data-key="Min Lot Size" class="min_lot_size px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Min Lot Boyutu</th>
+                                    <th scope="col" data-key="Commission" class="commission px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Komisyon</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-gray-800 divide-y divide-gray-700 text-gray-200">
@@ -315,7 +315,7 @@ $(function() {
         "ordering": false,
         "searching": true,
         "language": {
-            "zeroRecords": "No matching records found"
+            "zeroRecords": "Eşleşen kayıt bulunamadı"
         },
         "columnDefs": [
             { targets: [ 'category', 'sub_category' ], visible: false }
@@ -369,13 +369,13 @@ $(function() {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Key Benefits
+                Ana Faydalar
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Why Trade Indices</span>
+                <span class="block">Neden Endeks Ticaret?</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                Discover the advantages of trading global indices on our platform
+                Platformumuzda küresel endeks ticaretinin avantajlarını keşfedin
             </p>
         </div>
 
@@ -387,8 +387,8 @@ $(function() {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Diversified Exposure</h3>
-                <p class="text-gray-300">Trade indices to gain exposure to entire market sectors rather than individual stocks, allowing for diversified risk and greater market opportunities.</p>
+                <h3 class="text-xl font-bold text-white mb-3">Çeşitlendirilmiş Maruziyet</h3>
+                <p class="text-gray-300">Bireysel hisse senetleri yerine tüm piyasa sektörlerine maruziyet kazanmak için endekslerde işlem yapın, çeşitlendirilmiş risk ve daha büyük piyasa fırsatları sağlar.</p>
             </div>
 
             <!-- Feature 2 -->
@@ -398,8 +398,8 @@ $(function() {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Competitive Spreads</h3>
-                <p class="text-gray-300">Trade major global indices with tight spreads and low costs, maximizing your potential returns on both long and short positions.</p>
+                <h3 class="text-xl font-bold text-white mb-3">Rekabetçi Spreadler</h3>
+                <p class="text-gray-300">Ana küresel endekslerde sıkı spreadler ve düşük maliyetlerle işlem yapın, hem uzun hem kısa pozisyonlarda potansiyel getirilerinizi maksimize edin.</p>
             </div>
 
             <!-- Feature 3 -->
@@ -409,8 +409,8 @@ $(function() {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Extended Trading Hours</h3>
-                <p class="text-gray-300">Access global indices markets with extended hours, allowing you to capitalize on opportunities around the clock across different time zones.</p>
+                <h3 class="text-xl font-bold text-white mb-3">Genişletilmiş Ticaret Saatleri</h3>
+                <p class="text-gray-300">Genişletilmiş saatlerle küresel endeks piyasalarına erişin, farklı saat dilimlerindeki fırsatları 7/24 değerlendirmenizi sağlar.</p>
             </div>
         </div>
     </div>
@@ -441,7 +441,7 @@ $(function() {
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                 </svg>
                             </div>
-                            <p class="text-white text-lg font-medium">View Market Analysis</p>
+                            <p class="text-white text-lg font-medium">Piyasa Analizini Görüntüle</p>
                         </div>
                     </div>
                 </div>
@@ -449,15 +449,15 @@ $(function() {
 
             <div>
                 <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                    Premium Trading Experience
+                    Premium Ticaret Deneyimi
                 </div>
                 <h2 class="text-3xl font-extrabold text-white sm:text-4xl mb-6">
-                    <span class="block">Trade what you want,</span>
-                    <span class="block">When you want</span>
+                    <span class="block">İstediğinizi ticaret edin,</span>
+                    <span class="block">Ne zaman istiyorsanız</span>
                 </h2>
 
                 <p class="text-xl text-gray-300 mb-6">
-                    One of the primary goals of our platform is to provide the best product in the market. Our relationships with leading tier one financial institutions mean deep liquidity and tighter spreads for indices traders.
+                    Platformumuzun birincil hedeflerinden biri piyasadaki en iyi ürünü sağlamaktır. Önde gelen birinci kademe finans kurumlarıyla ilişkilerimiz, endeks traderları için derin likidite ve daha sıkı spreadler anlamına gelir.
                 </p>
 
                 <ul class="space-y-4">
@@ -468,7 +468,7 @@ $(function() {
                             </svg>
                         </div>
                         <p class="ml-3 text-lg text-gray-300">
-                            Trade Forex, Indices, Shares & Commodities
+                            Forex, Endeksler, Hisse Senetleri ve Emtialarda İşlem Yapın
                         </p>
                     </li>
                     <li class="flex items-start">
@@ -478,7 +478,7 @@ $(function() {
                             </svg>
                         </div>
                         <p class="ml-3 text-lg text-gray-300">
-                            Access global markets 24 hours / 7 days
+                            Küresel piyasalara 24 saat / 7 gün erişim
                         </p>
                     </li>
                     <li class="flex items-start">
@@ -488,7 +488,7 @@ $(function() {
                             </svg>
                         </div>
                         <p class="ml-3 text-lg text-gray-300">
-                            Multilingual customer support
+                            Çok dilli müşteri desteği
                         </p>
                     </li>
                     <li class="flex items-start">
@@ -498,14 +498,14 @@ $(function() {
                             </svg>
                         </div>
                         <p class="ml-3 text-lg text-gray-300">
-                            Trade on the go on our mobile apps
+                            Mobil uygulamalarımızda hareket halindeyken işlem yapın
                         </p>
                     </li>
                 </ul>
 
                 <div class="mt-8">
                     <a href="trading-conditions" title="Learn About Trading Commissions" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 transition duration-300">
-                        Trading Conditions
+                        Ticaret Koşulları
                         <svg class="ml-2 -mr-1 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
@@ -541,18 +541,18 @@ $(function() {
             <div class="relative px-6 py-12 sm:py-16 sm:px-12 lg:px-16">
                 <div class="md:ml-auto md:w-1/2 md:pl-10">
                     <div class="text-base max-w-prose mx-auto lg:max-w-none">
-                        <span class="text-sm font-semibold text-white uppercase tracking-wider">Start Trading Today</span>
-                        <h2 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">Ready to Trade Indices?</h2>
+                        <span class="text-sm font-semibold text-white uppercase tracking-wider">Bugün Ticarette Başlayın</span>
+                        <h2 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">Endeks Ticaretine Hazır mısınız?</h2>
                     </div>
                     <div class="mt-6 prose prose-indigo prose-lg text-white">
-                        <p>Join thousands of traders worldwide who trade global indices on our platform. Get started with a free demo account or open a real trading account today.</p>
+                        <p>Dünya çapındaki binlerce trader'a katılın ve platformumuzda küresel endekslerde işlem yapın. Ücretsiz demo hesapla başlayın veya bugün gerçek bir ticaret hesabı açın.</p>
                     </div>
                     <div class="mt-8 flex space-x-4">
                         <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-600 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-indigo-600">
-                            Create Account
+                            Hesap Oluştur
                         </a>
                         <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-800 bg-opacity-60 hover:bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Try Demo
+                            Demo'yu Dene
                         </a>
                     </div>
                 </div>
