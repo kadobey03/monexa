@@ -723,12 +723,6 @@
   <!-- Bottom Navigation Bar with Enhanced Glassmorphism -->
   <div class="flex justify-between items-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl px-6 py-4 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] relative border-t border-gray-200/30 dark:border-gray-700/30"
     <!-- Language Selector (Mobile) -->
-    <div class="group flex flex-col items-center relative">
-      <div class="relative">
-        <span class="text-sm font-medium text-gray-900 dark:text-white">Türkçe</span>
-      </div>
-      <span class="text-xs mt-1 text-gray-500">Dil</span>
-    </div>
 
     <a href="{{ route('deposits') }}"
        class="group flex flex-col items-center relative">
@@ -791,7 +785,7 @@
           {{ request()->routeIs('support') ? 'text-blue-600 font-semibold' : 'text-gray-500' }}
           hover:text-blue-600">
   <i data-lucide="life-buoy" class="w-6 h-6"></i>
-  <span class="text-xs mt-1">Support</span>
+  <span class="text-xs mt-1">Destek</span>
 </a>
 
 
@@ -800,7 +794,7 @@
    class="flex flex-col items-center
           {{ request()->routeIs('dashboard') ? 'text-blue-600' : 'text-gray-500' }} hover:text-blue-600">
  <i data-lucide="home" class="w-6 h-6 transition-colors duration-200"></i>
-  <span class="text-xs mt-1">Home</span>
+  <span class="text-xs mt-1">Anasayfa</span>
 </a>
   </div>
 
