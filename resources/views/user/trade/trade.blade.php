@@ -1,5 +1,5 @@
 @extends('layouts.dasht')
-@section('title', 'Trading Markets')
+@section('title', 'İşlem Pazarları')
 @section('content')
 
 <div class="container mx-auto px-4 py-8" x-data="tradingMarkets()" x-cloak>
@@ -35,8 +35,8 @@
     <div class="mb-8">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Trading Markets</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-1">Choose from thousands of trading instruments across multiple asset classes</p>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">İşlem Pazarları</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-1">Çoklu varlık sınıflarında binlerce işlem enstrümanından seçin</p>
             </div>
 
             <!-- Search and Stats -->
@@ -44,7 +44,7 @@
                 <div class="relative">
                     <input type="text"
                            x-model="searchQuery"
-                           placeholder="Search instruments..."
+                           placeholder="Enstrüman ara..."
                            class="w-64 pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white">
                     <i data-lucide="search" class="absolute left-3 top-2.5 h-5 w-5 text-gray-400"></i>
                 </div>
@@ -52,12 +52,12 @@
                 <div class="hidden md:flex items-center gap-4 text-sm">
                     <div class="text-center">
                         <div class="text-gray-900 dark:text-white font-semibold" x-text="totalInstruments"></div>
-                        <div class="text-gray-500 dark:text-gray-400">Instruments</div>
+                        <div class="text-gray-500 dark:text-gray-400">Enstrümanlar</div>
                     </div>
                     <div class="w-px h-8 bg-gray-300 dark:bg-gray-600"></div>
                     <div class="text-center">
-                        <div class="text-green-600 dark:text-green-400 font-semibold">24/7</div>
-                        <div class="text-gray-500 dark:text-gray-400">Trading</div>
+                        <div class="text-green-600 dark:text-green-400 font-semibold">7/24</div>
+                        <div class="text-gray-500 dark:text-gray-400">İşlem</div>
                     </div>
                 </div>
             </div>
@@ -72,42 +72,42 @@
                         :class="selectedType === 'all' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2">
                     <i data-lucide="grid-3x3" class="w-4 h-4"></i>
-                    All Markets
+                    Tüm Pazarlar
                 </button>
 
                 <button @click="selectedType = 'crypto'"
                         :class="selectedType === 'crypto' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2">
                     <i data-lucide="bitcoin" class="w-4 h-4"></i>
-                    Cryptocurrency
+                    Kripto Para
                 </button>
 
                 <button @click="selectedType = 'stock'"
                         :class="selectedType === 'stock' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2">
                     <i data-lucide="trending-up" class="w-4 h-4"></i>
-                    Stocks
+                    Hisseler
                 </button>
 
                 <button @click="selectedType = 'forex'"
                         :class="selectedType === 'forex' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2">
                     <i data-lucide="globe" class="w-4 h-4"></i>
-                    Forex
+                    Döviz
                 </button>
 
                 <button @click="selectedType = 'commodity'"
                         :class="selectedType === 'commodity' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2">
                     <i data-lucide="zap" class="w-4 h-4"></i>
-                    Commodities
+                    Emtialar
                 </button>
 
                 <button @click="selectedType = 'bond'"
                         :class="selectedType === 'bond' ? 'bg-blue-500 text-white shadow-md' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2">
                     <i data-lucide="landmark" class="w-4 h-4"></i>
-                    Bonds
+                    Tahviller
                 </button>
             </div>
         </div>
@@ -155,7 +155,7 @@
                         </template>
 
                         <h2 class="text-xl font-bold text-gray-900 dark:text-white capitalize" x-text="getTypeDisplayName(type)"></h2>
-                        <span class="text-sm text-gray-500 dark:text-gray-400" x-text="`(${typeGroup.length} instruments)`"></span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400" x-text="`(${typeGroup.length} enstrüman)`"></span>
                     </div>
                 </div>
 
@@ -164,11 +164,11 @@
                     <!-- Table Header -->
                     <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
                         <div class="grid grid-cols-12 gap-4 items-center text-sm font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            <div class="col-span-8 md:col-span-3">Asset</div>
-                            <div class="col-span-2 text-right hidden md:block">Price</div>
-                            <div class="col-span-2 text-right hidden md:block">24h Change</div>
-                            <div class="col-span-2 text-right hidden md:block">Volume</div>
-                            <div class="col-span-4 md:col-span-3 text-right">Action</div>
+                            <div class="col-span-8 md:col-span-3">Varlık</div>
+                            <div class="col-span-2 text-right hidden md:block">Fiyat</div>
+                            <div class="col-span-2 text-right hidden md:block">24s Değişim</div>
+                            <div class="col-span-2 text-right hidden md:block">Hacim</div>
+                            <div class="col-span-4 md:col-span-3 text-right">İşlem</div>
                         </div>
                     </div>
 
@@ -228,7 +228,7 @@
                                         <a :href="`{{ route('trade.single', '') }}/${instrument.id}`"
                                            class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm hover:shadow-md">
                                             <i data-lucide="trending-up" class="w-4 h-4"></i>
-                                            <span>Trade</span>
+                                            <span>İşle</span>
                                         </a>
                                     </div>
                                 </div>
