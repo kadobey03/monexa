@@ -41,6 +41,12 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <!-- Custom Styles -->
     <style>
         /* Alpine.js x-cloak directive */
@@ -133,7 +139,6 @@
     </style>
 
     <title>{{$settings->site_name}} | CFD Ticareti — Hisse Senetleri, Altın, Petrol, Endeksler</title>
-    <link rel="manifest" href="./">
     <meta name="theme-color" content="#111827">    <meta property="x-session-id" content="ghJjEOrjZ3KUPun1UQksVUbvK88y21dgIhKtb8GT">
     <meta property="og:site_name" content="{{$settings->site_name}}">
     <meta property="og:description" content="{{$settings->site_name}} ile CFD Ticareti. Ultra hızlı execution ve 0.0 pipten başlayan spreadlerle Hisse Senetleri, Altın, Petrol, Endeksler'de işlem yapın. Tecrübeli ve yeni başlayan traderlar için haberler, makaleler ve eğitim materyalleri.">
@@ -153,6 +158,12 @@
 
     <!-- jQuery (required for some components) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css"/>
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- JavaScript utilities -->
     <script>
@@ -762,7 +773,7 @@
             <span style="font-size: 10px;">🟢 Canlı</span>
         </div>
         <div class="progress-bar" id="progressBar"></div>
-    </div>    <script data-cfasync="false" src="#"></script>
+    </div>
     <script type="text/javascript">
         class TradingNotificationManager {
             constructor() {
@@ -1068,6 +1079,11 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize any custom components
         console.log('DOM loaded, initializing components...');
+
+        // Initialize AOS
+        if (typeof AOS !== 'undefined') {
+            AOS.init();
+        }
     });
 
     // Analytics (preserved from original)
