@@ -251,6 +251,8 @@
                         $('.subselfi option[data-parent="all"]').prop('selected', true);
                     }
                 });
+                // CoinGecko API'den veri çek
+                fetchCryptoData();
             }
         });
 
@@ -281,6 +283,52 @@
                 $dttble.columns.adjust().draw();
             }, 250);
         });
+
+        // CoinGecko API'den kripto para verilerini çek
+        function fetchCryptoData() {
+            fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('API çağrısı başarısız');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Veriyi işle ve tabloya ekle
+                    var rows = [];
+                    data.forEach(coin => {
+                        var changeClass = coin.price_change_percentage_24h >= 0 ? 'text-green-400' : 'text-red-400';
+                        var changeSymbol = coin.price_change_percentage_24h >= 0 ? '+' : '';
+                        var actionButton = '<button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-1 px-3 rounded text-xs">Al</button>';
+                        var spread = '0.1%'; // Sabit spread değeri
+
+                        rows.push([
+                            coin.symbol.toUpperCase(),
+                            coin.name,
+                            '$' + coin.current_price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+                            '<span class="' + changeClass + '">' + changeSymbol + coin.price_change_percentage_24h.toFixed(2) + '%</span>',
+                            '$' + (coin.market_cap / 1000000000).toFixed(2) + 'B',
+                            spread,
+                            actionButton
+                        ]);
+                    });
+                    $dttble.rows.add(rows).draw();
+                })
+                .catch(error => {
+                    console.error('Kripto para verisi çekme hatası:', error);
+                    // Hata durumunda tabloya hata mesajı ekle
+                    var errorRow = [
+                        '',
+                        'Veri yüklenirken hata oluştu',
+                        '',
+                        '',
+                        '',
+                        '',
+                        ''
+                    ];
+                    $dttble.rows.add([errorRow]).draw();
+                });
+        }
     });
 </script>
 
