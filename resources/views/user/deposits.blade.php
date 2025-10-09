@@ -53,7 +53,7 @@
                     </h2>
                     <div class="flex items-center gap-2 px-3 py-1 bg-green-50 dark:bg-green-900/20 rounded-full">
                         <i data-lucide="shield-check" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
-                        <span class="text-sm text-green-600 dark:text-green-400">Secure</span>
+                        <span class="text-sm text-green-600 dark:text-green-400">Güvenli</span>
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@
                             @forelse ($dmethods as $method)
                                 <option value="{{$method->name}}">{{$method->name}}</option>
                             @empty
-                                <option>No Payment Method enabled at the moment, please check back later.</option>
+                                <option>Şu anda hiçbir ödeme yöntemi etkin değil, lütfen daha sonra tekrar kontrol edin.</option>
                             @endforelse
                         </select>
                     </div>
