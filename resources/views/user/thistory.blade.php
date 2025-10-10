@@ -179,7 +179,7 @@
                                         @php
                                             $planId = DB::table('user_plans')
                                                 ->where('user', auth()->id())
-                                                ->where('name', $history->plan)
+                                                ->where('plan', $history->plan)
                                                 ->first()?->id ?? $history->plan;
                                         @endphp
                                         <a href="/dashboard/trade/monitor/{{ $planId }}"
