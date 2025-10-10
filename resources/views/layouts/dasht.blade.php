@@ -11,7 +11,6 @@
 <link href="{{ asset('storage/app/public/' . $settings->favicon) }}" rel="icon" type="image/x-icon" />
     <!-- Inter Font -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -121,7 +120,6 @@
             });
         });
     </script>
-<script src="https://unpkg.com/lucide@latest"></script>
 <!-- Tailwind CDN -->
 {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
@@ -941,7 +939,6 @@
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
 <!-- Live Crypto Prices Script -->
 <script>

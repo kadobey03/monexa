@@ -1,3 +1,4 @@
+@if(!empty($settings->pp_ci) && $settings->pp_ci !== 'iidjdjdj')
 <div id="paypal-button-container"></div>
 <script
     src=" https://www.paypal.com/sdk/js?client-id={{ $settings->pp_ci }}&currency={{ strtoupper($settings->s_currency) }}">
@@ -31,3 +32,4 @@
         }
     }).render('#paypal-button-container');
 </script>
+@endif

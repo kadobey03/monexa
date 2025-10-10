@@ -52,16 +52,26 @@ $(document).ready(function() {
     });
 });
 
+// DOM elementlerini null kontrolü ile al
 let trademode = document.getElementById("trademode");
 let msgbox = document.getElementById("msgbox");
 let optionTitle = document.getElementById("optionTitle");
 let optionInput = document.getElementById("optionInput");
 let optionSelected = document.getElementById("optionSelected");
 
-trademode.addEventListener("change", tradeSizeMsgs);
-optionSelected.style.display = "none";
+// Null kontrolleri ve event listener
+if (trademode && msgbox && optionTitle && optionInput && optionSelected) {
+    trademode.addEventListener("change", tradeSizeMsgs);
+    optionSelected.style.display = "none";
+}
 
 function tradeSizeMsgs() {
+    // Tüm gerekli elementlerin var olduğunu kontrol et
+    if (!trademode || !msgbox || !optionTitle || !optionInput || !optionSelected) {
+        console.warn('tradeSizeMsgs: Bazı gerekli DOM elementleri bulunamadı');
+        return;
+    }
+
     if (trademode.value == "none") {
         optionSelected.style.display = "none";
 

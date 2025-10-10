@@ -12,7 +12,6 @@
     <link rel="icon" href="{{ asset('storage/app/public/' . $settings->favicon) }}" type="image/png" />
 
     @section('styles')
-        <script src="unpkg.com/metaapi.cloud-sdk/index.js"></script>
         <!-- Fonts and icons -->
         <script src="{{ asset('dash/js/plugin/webfont/webfont.min.js') }}"></script>
         <!-- Sweet Alert -->
@@ -43,6 +42,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
         {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
         <!--PayPal-->
+        @if(!empty($settings->pp_ci) && $settings->pp_ci !== 'iidjdjdj')
         <script>
             // Add your client ID and secret
             var PAYPAL_CLIENT = '{{ $settings->pp_ci }}';
@@ -52,6 +52,7 @@
             var PAYPAL_ORDER_API = 'https://api.paypal.com/v2/checkout/orders/';
         </script>
         <script src="https://www.paypal.com/sdk/js?client-id={{ $settings->pp_ci }}"></script>
+        @endif
     @show
     @livewireStyles
 </head>
