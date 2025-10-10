@@ -17,7 +17,7 @@
                              <label class="form-label fw-semibold">
                                  <i class="fas fa-dollar-sign me-2 text-primary"></i>Tutar
                              </label>
-                             <input class="form-control form-control-lg" placeholder="Enter amount" type="number" name="amount" min="0.01" step="0.01" required>
+                             <input class="form-control form-control-lg" placeholder="Tutar girin" type="number" name="amount" min="0.01" step="0.01" required>
                              <div class="invalid-feedback">
                                  Lütfen geçerli bir tutar giriniz (minimum 0.01).
                              </div>
@@ -27,7 +27,7 @@
                                  <i class="fas fa-exchange-alt me-2 text-primary"></i>Hesap Türü
                              </label>
                              <select class="form-select form-select-lg" name="type" required>
-                                 <option value="" selected disabled>Select Account Type</option>
+                                 <option value="" selected disabled>Hesap Türünü Seçin</option>
                                  <option value="Bonus">💰 Bonus</option>
                                  <option value="Profit">📈 Profit</option>
                                  <option value="Ref_Bonus">👥 Referral Bonus</option>
@@ -42,7 +42,7 @@
                                  <i class="fas fa-plus-circle me-2 text-primary"></i>İşlem Türü
                              </label>
                              <select class="form-select form-select-lg" name="t_type" required>
-                                 <option value="" selected disabled>Select Transaction Type</option>
+                                 <option value="" selected disabled>İşlem Türünü Seçin</option>
                                  <option value="Credit">➕ Credit (Add Funds)</option>
                                  <option value="Debit">➖ Debit (Subtract Funds)</option>
                              </select>
