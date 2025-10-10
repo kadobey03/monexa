@@ -19,16 +19,6 @@ class TradesController extends Controller
      */
     public function index(Request $request)
     {
-        // Debug: Check if user relationship is working
-        $debugTrade = User_plans::first();
-        if ($debugTrade) {
-            \Log::info('User_plans debug', [
-                'trade_user_column' => $debugTrade->user,
-                'trade_user_relationship' => $debugTrade->user()->exists() ? 'exists' : 'not exists',
-                'trade_user_data' => $debugTrade->user ? $debugTrade->user->toArray() : null
-            ]);
-        }
-
         $query = User_plans::with('user');
 
         // Apply filters
@@ -75,7 +65,7 @@ class TradesController extends Controller
     {
         try {
             $trade = User_plans::with('user')->findOrFail($id);
-            \Log::info('Trade data found for edit:', ['trade' => $trade->toArray()]);
+            Log::info('Trade data found for edit:', ['trade' => $trade->toArray()]);
 
             // If it's an AJAX request, return JSON for modal use
             if (request()->ajax()) {
