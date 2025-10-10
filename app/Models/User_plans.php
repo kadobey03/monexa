@@ -40,11 +40,35 @@ class User_plans extends Model
     }
 
     public function getUserNameAttribute(){
-        return optional($this->user)->name ?? 'Kullanıcı Bulunamadı';
+        // Önce ilişkiyi kontrol et, sonra user_name alanını kullan
+        if ($this->user) {
+            return $this->user->name;
+        }
+
+        // Eğer ilişki null ise ve user_name alanı varsa onu kullan
+        if (!empty($this->user_name)) {
+            return $this->user_name;
+        }
+
+        return 'Kullanıcı Bulunamadı';
     }
 
     public function getUserEmailAttribute(){
-        return optional($this->user)->email ?? 'Belirtilmemiş';
+        // Önce ilişkiyi kontrol et, sonra user_email alanını kullan
+        if ($this->user) {
+            return $this->user->email;
+        }
+
+        // Eğer ilişki null ise ve user_email alanı varsa onu kullan
+        if (!empty($this->user_email)) {
+            return $this->user_email;
+        }
+
+        return 'Belirtilmemiş';
+    }
+
+    public function getUserStatusAttribute(){
+        return optional($this->user)->status ?? 'Bilinmiyor';
     }
 
 }

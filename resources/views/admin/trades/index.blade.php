@@ -314,8 +314,13 @@
                                                             <i class="fas fa-user text-white fa-lg"></i>
                                                         </div>
                                                         <div>
-                                                            <strong class="text-dark">{{ $trade->user ? $trade->user->name : 'Kullanıcı Bulunamadı' }}</strong><br>
-                                                            <small class="text-muted">{{ $trade->user ? $trade->user->email : 'Belirtilmemiş' }}</small>
+                                                            <strong class="text-dark">{{ $trade->user_name }}</strong><br>
+                                                            <small class="text-muted">{{ $trade->user_email }}</small>
+                                                            @if($trade->user)
+                                                                <br><small class="text-info"><i class="fas fa-check-circle"></i> Aktif Kullanıcı</small>
+                                                            @else
+                                                                <br><small class="text-warning"><i class="fas fa-exclamation-triangle"></i> Kullanıcı Silinmiş</small>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </td>
