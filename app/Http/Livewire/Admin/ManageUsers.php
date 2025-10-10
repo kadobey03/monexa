@@ -41,6 +41,7 @@ class ManageUsers extends Component
     public $fullname;
     public $email;
     public $password;
+    public $password_confirmation;
     public $message;
     public $subject;
     public $plan;
@@ -52,9 +53,10 @@ class ManageUsers extends Component
 
     protected $rules = [
         'fullname' => 'required|max:255',
-        'username' => 'required|unique:users,username',
+        'username' => 'required|unique:users,username|regex:/^[a-zA-Z0-9_]+$/|min:3|max:50',
         'email' => 'required|email|max:255|unique:users',
-        'password' => 'required|min:8',
+        'password' => 'required|min:8|max:100',
+        'password_confirmation' => 'required|same:password',
     ];
 
 
@@ -100,7 +102,6 @@ class ManageUsers extends Component
 
     public function saveUser()
     {
-
         $this->validate();
 
         $thisid = DB::table('users')->insertGetId([
@@ -122,8 +123,14 @@ class ManageUsers extends Component
                 'ref_link' => $settings->site_address . '/ref/' . $user->username,
             ]);
 
-        session()->flash('success', 'User created Sucessfully!');
-        return redirect()->route('manageusers');
+        // Success message and form reset
+        session()->flash('success', 'Kullanıcı başarıyla oluşturuldu!');
+
+        // Reset form fields
+        $this->reset(['username', 'fullname', 'email', 'password', 'password_confirmation']);
+
+        // Emit event to close modal (if needed)
+        $this->dispatch('userAdded');
     }
 
     public function addRoi()
