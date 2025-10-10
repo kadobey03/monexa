@@ -3,10 +3,9 @@
 @section('content')
 
 @php
-    // Get current user's first active plan ID for monitor
+    // Get current user's first plan ID for monitor
     $monitorPlanId = DB::table('user_plans')
         ->where('user', auth()->id())
-        ->where('activate', 'yes')
         ->first()?->id ?? 1;
 @endphp
 
