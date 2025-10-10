@@ -276,19 +276,141 @@
 
     <!-- Custom Styles -->
     <style>
+        /* Statistics Cards - Enhanced Visibility */
         .stats-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            border: none !important;
+            border-radius: 20px !important;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+            transition: all 0.3s ease !important;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white !important;
+            min-height: 140px !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .stats-card.bg-gradient-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        }
+
+        .stats-card.bg-gradient-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+        }
+
+        .stats-card.bg-gradient-warning {
+            background: linear-gradient(135deg, #fcb045 0%, #fd1d1d 100%) !important;
+        }
+
+        .stats-card.bg-gradient-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         }
 
         .stats-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) !important;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2) !important;
+        }
+
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stats-card:hover::before {
+            opacity: 1;
+        }
+
+        .stats-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            transform: scale(0);
+        }
+
+        .stats-card:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Pulse animation for active indicators */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+
+        .stats-card:nth-child(1) {
+            animation: pulse 2s infinite;
+        }
+
+        /* Loading animation for stats values */
+        .stats-value {
+            position: relative;
+        }
+
+        .stats-value::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
         }
 
         .stats-icon {
-            opacity: 0.8;
+            opacity: 0.9;
+            font-size: 2.5rem;
+            margin-bottom: 1rem !important;
+            color: white !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .stats-value {
+            font-size: 2rem !important;
+            font-weight: 700 !important;
+            color: white !important;
+            margin-bottom: 0.5rem !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        .stats-label {
+            font-size: 0.95rem !important;
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500 !important;
+            margin: 0 !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .modern-card {
@@ -415,7 +537,22 @@
 
         @media (max-width: 768px) {
             .stats-card {
-                margin-bottom: 1rem;
+                margin-bottom: 1.5rem !important;
+                min-height: 120px !important;
+            }
+
+            .stats-icon {
+                font-size: 2rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+
+            .stats-value {
+                font-size: 1.5rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+
+            .stats-label {
+                font-size: 0.8rem !important;
             }
 
             .modern-card .card-header {
@@ -450,10 +587,6 @@
                 padding: 0.375rem 0.5rem;
             }
 
-            .stats-value {
-                font-size: 1.5rem;
-            }
-
             .page-title {
                 font-size: 1.5rem;
             }
@@ -474,6 +607,29 @@
                 margin-bottom: 1rem;
             }
 
+            .stats-card {
+                min-height: 110px !important;
+                margin-bottom: 1rem !important;
+            }
+
+            .stats-card .card-body {
+                padding: 1rem !important;
+            }
+
+            .stats-icon {
+                font-size: 1.8rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            .stats-value {
+                font-size: 1.25rem !important;
+                margin-bottom: 0.25rem !important;
+            }
+
+            .stats-label {
+                font-size: 0.75rem !important;
+            }
+
             .modern-table thead th {
                 padding: 0.75rem 0.5rem;
                 font-size: 0.75rem;
@@ -486,19 +642,6 @@
             .btn-sm {
                 padding: 0.25rem 0.5rem;
                 font-size: 0.75rem;
-            }
-
-            .stats-card .card-body {
-                padding: 1rem;
-            }
-
-            .stats-icon {
-                margin-bottom: 1rem;
-            }
-
-            .stats-value {
-                font-size: 1.25rem;
-                margin-bottom: 0.5rem;
             }
         }
     </style>
