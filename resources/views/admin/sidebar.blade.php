@@ -7,9 +7,9 @@
             <div class="user">
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                        <span>
+                        <span style="font-size: 0.9rem;">
                             {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}
-                            <span class="user-level"> Yönetici</span>
+                            <span class="user-level" style="font-size: 0.8rem;"> Yönetici</span>
                             {{-- <span class="caret"></span> --}}
                         </span>
                     </a>
@@ -18,7 +18,7 @@
 
             <ul class="nav nav-primary">
                 <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <a href="{{ url('/admin/dashboard') }}">
+                    <a href="{{ url('/admin/dashboard') }}" style="font-size: 0.9rem; padding: 0.75rem 1rem;">
                         <i class="fas fa-home"></i>
                         <p>Kontrol Paneli</p>
                     </a>
@@ -27,7 +27,7 @@
                 @if (Auth('admin')->User()->type == 'Super Admin' || Auth('admin')->User()->type == 'Admin')
                   <li
                         class="nav-item {{ request()->routeIs('manageusers') ? 'active' : '' }} {{ request()->routeIs('loginactivity') ? 'active' : '' }} {{ request()->routeIs('user.plans') ? 'active' : '' }} {{ request()->routeIs('viewuser') ? 'active' : '' }}">
-                        <a href="{{ url('/admin/dashboard/manageusers') }}">
+                        <a href="{{ url('/admin/dashboard/manageusers') }}" style="font-size: 0.85rem; padding: 0.7rem 1rem;">
                             <i class="fa fa-user-circle" aria-hidden="true"></i>
                             <p>Kullanıcıları Yönet</p>
                         </a>
@@ -35,7 +35,7 @@
 
                   <li
                         class="nav-item {{ request()->routeIs('mdeposits') ? 'active' : '' }} {{ request()->routeIs('viewdepositimage') ? 'active' : '' }} {{ request()->routeIs('mdeposits') ? 'active' : '' }}">
-                        <a href="{{ url('/admin/dashboard/mdeposits') }}">
+                        <a href="{{ url('/admin/dashboard/mdeposits') }}" style="font-size: 0.85rem; padding: 0.7rem 1rem;">
                             <i class="fa fa-download" aria-hidden="true"></i>
                             <p>Yatırımları Yönet</p>
                         </a>
@@ -43,7 +43,7 @@
 
                     <li
                         class="nav-item {{ request()->routeIs('mwithdrawals') ? 'active' : '' }}   {{ request()->routeIs('processwithdraw') ? 'active' : '' }}">
-                        <a href="{{ url('/admin/dashboard/mwithdrawals') }}">
+                        <a href="{{ url('/admin/dashboard/mwithdrawals') }}" style="font-size: 0.85rem; padding: 0.7rem 1rem;">
                             <i class="fa fa-arrow-alt-circle-up" aria-hidden="true"></i>
                             <p>Çekimleri Yönet</p>
                         </a>
@@ -51,7 +51,7 @@
 
                     <li
                         class="nav-item {{ request()->routeIs('admin.trades.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.trades.index') }}">
+                        <a href="{{ route('admin.trades.index') }}" style="font-size: 0.85rem; padding: 0.7rem 1rem;">
                             <i class="fas fa-chart-line" aria-hidden="true"></i>
                             <p>İşlemleri Yönet</p>
                         </a>

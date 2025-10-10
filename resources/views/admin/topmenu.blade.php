@@ -13,7 +13,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 <div class="main-header shadow-lg">
     <!-- Logo Header -->
     <div class="logo-header" data-background-color="{{ $bgmenu }}">
-        <a href="{{ route('admin.dashboard') }}" class="logo" style="font-size: 15px; color:#fff;">
+        <a href="{{ route('admin.dashboard') }}" class="logo" style="font-size: 14px; color:#fff;">
             <i class="fas fa-tachometer-alt me-2"></i>{{ $settings->site_name }}
         </a>
         <button class="ml-auto navbar-toggler sidenav-toggler" type="button" data-toggle="collapse" data-target="collapse"
@@ -130,16 +130,16 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     <!-- Modern Tailwind-styled Notification Dropdown -->
                     <div class="dropdown-menu dropdown-menu-right notification-dropdown animated fadeIn p-0" style="width: 380px; max-height: 500px; overflow-y: auto;">
                         <!-- Header -->
-                         <div class="px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
+                         <div class="px-3 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
                              <div class="d-flex justify-content-between align-items-center">
-                                 <h6 class="m-0 font-weight-bold d-flex align-items-center">
+                                 <h6 class="m-0 font-weight-bold d-flex align-items-center" style="font-size: 0.9rem;">
                                      <i class="fas fa-bell mr-2"></i> Bildirimler
                                      @if($notificationCount > 0)
                                          <span class="ml-2 badge badge-light">{{ $notificationCount }}</span>
                                      @endif
                                  </h6>
                                  @if($notificationCount > 0)
-                                     <a href="{{ route('admin.markallasread') }}" class="text-white small mark-all-read">Tümünü Okundu İşaretle</a>
+                                     <a href="{{ route('admin.markallasread') }}" class="text-white mark-all-read" style="font-size: 0.8rem;">Tümünü Okundu İşaretle</a>
                                  @endif
                              </div>
                          </div>
@@ -172,23 +172,23 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     };
                                 @endphp
 
-                                <div class="notification-item mb-3 p-3 bg-white rounded-lg shadow-sm border border-gray-200" data-id="{{ $notification->id }}">
+                                <div class="notification-item mb-2 p-2 bg-white rounded-lg shadow-sm border border-gray-200" data-id="{{ $notification->id }}">
                                     <div class="d-flex align-items-start">
-                                        <div class="flex-shrink-0 {{ $bootstrapBg }} p-2 mr-3 rounded-circle text-white">
-                                            <i class="fas fa-{{ $icon }}"></i>
+                                        <div class="flex-shrink-0 {{ $bootstrapBg }} p-1 mr-2 rounded-circle text-white">
+                                            <i class="fas fa-{{ $icon }}" style="font-size: 0.8rem;"></i>
                                         </div>
                                         <div class="flex-grow-1">
                                             <a href="{{ route('admin.notifications.show', $notification->id) }}" class="text-decoration-none">
-                                                <h6 class="font-weight-bold mb-1">{{ $title }}</h6>
-                                                <p class="small text-muted mb-1">{{ $message }}</p>
-                                                <div class="d-flex align-items-center text-muted small">
+                                                <h6 class="font-weight-bold mb-1" style="font-size: 0.85rem;">{{ $title }}</h6>
+                                                <p class="small text-muted mb-1" style="font-size: 0.75rem;">{{ $message }}</p>
+                                                <div class="d-flex align-items-center text-muted small" style="font-size: 0.7rem;">
                                                     <i class="fas fa-clock mr-1"></i>
                                                     {{ $notification->created_at->diffForHumans() }}
                                                 </div>
                                             </a>
                                         </div>
-                                        <div class="ml-2">
-                                            <button class="btn btn-sm btn-outline-secondary mark-as-read" title="Okundu olarak işaretle">
+                                        <div class="ml-1">
+                                            <button class="btn btn-sm btn-outline-secondary mark-as-read" title="Okundu olarak işaretle" style="font-size: 0.7rem; padding: 0.2rem 0.4rem;">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         </div>

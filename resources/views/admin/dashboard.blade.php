@@ -25,12 +25,12 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     <i class="fas fa-user-shield me-2"></i>Yönetim Paneli
                                 </span>
                             </div>
-                            <h1 class="display-4 text-white fw-bold mb-2">
+                            <h1 class="display-5 text-white fw-bold mb-2">
                                 <i class="fas fa-tachometer-alt me-3"></i>Kontrol Paneli
                             </h1>
-                            <h4 class="text-white op-8 mb-3">
+                            <h5 class="text-white op-8 mb-3">
                                 Hoş geldiniz, {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}!
-                            </h4>
+                            </h5>
                             <div class="d-flex align-items-center text-white op-7">
                                 <div class="date-time-display">
                                     <i class="far fa-calendar-alt me-2"></i>{{ date('l, F j, Y') }}
@@ -838,7 +838,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: #2d3748;
             line-height: 1.2;
@@ -1040,8 +1040,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .hero-gradient .display-4 {
-                font-size: 2rem;
+            .hero-gradient .display-5 {
+                font-size: 1.8rem;
             }
 
             .stat-wrapper {
@@ -1050,13 +1050,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
             }
 
             .stat-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
             }
 
             .stat-value {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
             }
 
             .chart-overlay-info {
