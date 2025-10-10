@@ -119,24 +119,30 @@
     <div class="container mx-auto px-4 max-w-7xl">
         <div class="grid md:grid-cols-2 gap-10 items-center">
             <div class="card-dark p-6">
-                <div class="text-sm text-emerald-300/80">Platform Özellikleri</div>
-                <h2 class="mt-2 text-2xl md:text-3xl font-extrabold heading-accent">Neden Bizimle Ticaret Yapmalısınız</h2>
-                <p class="mt-3 text-emerald-100/80">Başarılı ticaret için ihtiyacınız olan her şey</p>
+                <div class="text-sm text-emerald-300/80">Devlet Destekli Platform</div>
+                <h2 class="mt-2 text-2xl md:text-3xl font-extrabold heading-accent">Neden Devlet Destekli Platformumuzu Tercih Etmelisiniz</h2>
+                <p class="mt-3 text-emerald-100/80">Türkiye Cumhuriyeti tarafından desteklenen güvenli finans platformu ile yatırımlarınızı büyütün</p>
+                <div class="mt-4 p-3 bg-emerald-900/30 rounded-lg border border-emerald-700/50">
+                    <p class="text-emerald-200 text-sm">
+                        <i class="fas fa-shield-alt text-emerald-400 mr-2"></i>
+                        <strong>SPK Lisanslı ve Devlet Denetimli:</strong> Sermaye Piyasası Kurulu tarafından lisanslanmış ve devlet kurumları tarafından denetlenmektedir.
+                    </p>
+                </div>
                 <a href="{{ route('register') }}" class="btn-primary mt-6">Kayıt Ol</a>
             </div>
             <div class="grid sm:grid-cols-2 gap-4">
                 @php
                     $features = [
-                        ['title' => 'Gelişmiş Araçlar', 'desc' => 'Profesyonel ticaret araçları'],
-                        ['title' => 'Düşük Spreadler', 'desc' => 'Rekabetçi işlem koşulları'],
-                        ['title' => 'Hızlı Yürütme', 'desc' => 'Milisaniyelik emir iletimi'],
-                        ['title' => '7/24 Destek', 'desc' => 'Uzman müşteri hizmetleri']
+                        ['title' => 'Devlet Garantisi', 'desc' => 'Türkiye Cumhuriyeti tarafından desteklenen güvenli yatırım ortamı'],
+                        ['title' => 'SPK Lisanslı', 'desc' => 'Sermaye Piyasası Kurulu denetiminde şeffaf işlemler'],
+                        ['title' => 'Yerli Sermaye', 'desc' => 'Türk ekonomisine katkı sağlayan milli platform'],
+                        ['title' => 'Devlet Teşviki', 'desc' => 'Vergi avantajları ve devlet desteklerinden faydalanın']
                     ];
                 @endphp
                 @foreach($features as $feature)
                     <div class="card-dark p-5">
                         <div class="h-10 w-10 rounded-full bg-emerald-500/15 text-emerald-300 grid place-items-center mb-3">
-                            <i class="fas fa-check"></i>
+                            <i class="fas fa-shield-alt"></i>
                         </div>
                         <div class="text-white font-semibold">{{ $feature['title'] }}</div>
                         <div class="text-emerald-100/70 text-sm mt-1">{{ $feature['desc'] }}</div>
