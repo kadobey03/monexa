@@ -425,6 +425,8 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('export', 'export')->name('export');
         Route::get('stats', 'getStats')->name('stats');
         Route::post('bulk-action', 'bulkAction')->name('bulk-action');
+        Route::get('debug-invalid-users', 'fixInvalidUserIds')->name('debug-invalid-users');
+        Route::post('fix-missing-users', 'fixMissingUsers')->name('fix-missing-users');
     });
 
     // Notification Routes

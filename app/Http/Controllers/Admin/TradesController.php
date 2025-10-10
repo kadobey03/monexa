@@ -19,7 +19,61 @@ class TradesController extends Controller
      */
     public function index(Request $request)
     {
+        // Debug: Geçersiz user ID'leri tespit etmek için
+        $invalidUserIds = User_plans::whereNotNull('user')
+            ->where('user', '!=', 0)
+            ->whereDoesntHave('user')
+            ->pluck('user')
+            ->unique();
+
+        // Geçersiz user ID'ler için alternatif ilişki yükleme stratejisi
+        if ($invalidUserIds->isNotEmpty()) {
+            $query->with(['user' => function($q) {
+                $q->select(['id', 'name', 'email'])->whereIn('id', function($subQuery) {
+                    $subQuery->select('id')->from('users')->where('id', '>', 0);
+                });
+            }]);
+        }
+
+        // Debug: User_plans tablosunda null veya 0 user ID'leri kontrol et
+        $nullUserTrades = User_plans::where(function($q) {
+            $q->whereNull('user')->orWhere('user', 0);
+        })->count();
+
+        Log::info('User_plans tablosu analizi:', [
+            'total_trades' => User_plans::count(),
+            'null_user_trades' => $nullUserTrades,
+            'invalid_user_ids' => $invalidUserIds->toArray(),
+            'invalid_count' => $invalidUserIds->count()
+        ]);
+
+        if ($invalidUserIds->isNotEmpty()) {
+            Log::warning('Geçersiz user ID\'leri tespit edildi:', [
+                'invalid_user_ids' => $invalidUserIds->toArray(),
+                'count' => $invalidUserIds->count()
+            ]);
+        }
+
         $query = User_plans::with('user');
+
+        // Debug: İlişki yükleme sorunlarını tespit etmek için
+        $query->with(['user' => function($q) {
+            $q->select(['id', 'name', 'email'])->withoutGlobalScopes();
+        }]);
+
+        // Debug: User_plans tablosundaki tüm user ID'leri kontrol et
+        $allUserIdsInTrades = User_plans::pluck('user')->filter()->unique();
+        $existingUserIds = User::whereIn('id', $allUserIdsInTrades)->pluck('id')->toArray();
+        $missingUserIds = $allUserIdsInTrades->diff($existingUserIds)->values();
+
+        if ($missingUserIds->isNotEmpty()) {
+            Log::error('Eksik User ID\'ler tespit edildi:', [
+                'missing_user_ids' => $missingUserIds->toArray(),
+                'count' => $missingUserIds->count(),
+                'all_user_ids_in_trades' => $allUserIdsInTrades->toArray(),
+                'existing_user_ids' => $existingUserIds
+            ]);
+        }
 
         // Apply filters
         if ($request->filled('search')) {
@@ -45,6 +99,31 @@ class TradesController extends Controller
         // Get paginated trades
         $trades = $query->orderBy('created_at', 'desc')->paginate(20);
 
+        // Debug: İlişki yükleme sonuçlarını kontrol et
+        $tradesWithMissingUsers = $trades->filter(function($trade) {
+            return $trade->user === null;
+        });
+
+        if ($tradesWithMissingUsers->isNotEmpty()) {
+            Log::warning('İlişki yükleme sorunu: Bazı trade kayıtları user ile ilişkilendirilemedi', [
+                'missing_user_trades' => $tradesWithMissingUsers->pluck('id', 'user')->toArray(),
+                'count' => $tradesWithMissingUsers->count()
+            ]);
+
+            // Debug: Eksik user ID'lerin var olup olmadığını kontrol et
+            foreach ($tradesWithMissingUsers as $trade) {
+                $userId = $trade->user;
+                $userExists = User::where('id', $userId)->exists();
+
+                Log::warning("User ID {$userId} kontrolü:", [
+                    'trade_id' => $trade->id,
+                    'user_id' => $userId,
+                    'user_exists_in_db' => $userExists,
+                    'trade_data' => $trade->only(['id', 'user', 'amount', 'created_at'])
+                ]);
+            }
+        }
+
         // Calculate statistics
         $stats = [
             'total' => User_plans::count(),
@@ -56,6 +135,100 @@ class TradesController extends Controller
         $title = 'User Trades Management';
 
         return view('admin.trades.index', compact('trades', 'stats', 'title'));
+    }
+
+    /**
+     * Geçersiz user ID'lerini tespit edip düzelt
+     */
+    public function fixInvalidUserIds()
+    {
+        try {
+            // Null veya 0 olan user ID'lerini tespit et
+            $nullUserTrades = User_plans::where(function($q) {
+                $q->whereNull('user')->orWhere('user', 0);
+            })->get();
+
+            // Geçersiz user ID'lerini tespit et
+            $allUserIdsInTrades = User_plans::whereNotNull('user')
+                ->where('user', '!=', 0)
+                ->pluck('user')
+                ->unique();
+
+            $existingUserIds = User::pluck('id')->toArray();
+            $missingUserIds = $allUserIdsInTrades->diff($existingUserIds)->values();
+
+            $result = [
+                'null_user_trades' => $nullUserTrades->count(),
+                'missing_user_ids' => $missingUserIds->toArray(),
+                'total_issues' => $nullUserTrades->count() + $missingUserIds->count()
+            ];
+
+            // Log the issues
+            Log::warning('Geçersiz user ID sorunları tespit edildi:', $result);
+
+            return response()->json($result);
+
+        } catch (\Exception $e) {
+            Log::error('Geçersiz user ID kontrolü sırasında hata:', [
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json(['error' => 'Kontrol sırasında hata oluştu'], 500);
+        }
+    }
+
+    /**
+     * Geçersiz user ID'leri düzelt
+     */
+    public function fixMissingUsers()
+    {
+        try {
+            // Geçersiz user ID'lerini tespit et
+            $allUserIdsInTrades = User_plans::whereNotNull('user')
+                ->where('user', '!=', 0)
+                ->pluck('user')
+                ->unique();
+
+            $existingUserIds = User::pluck('id')->toArray();
+            $missingUserIds = $allUserIdsInTrades->diff($existingUserIds)->values();
+
+            $result = [
+                'missing_user_ids' => $missingUserIds->toArray(),
+                'fixed_count' => 0,
+                'errors' => []
+            ];
+
+            // Eksik user ID'leri null olarak işaretle veya sil
+            if ($missingUserIds->isNotEmpty()) {
+                foreach ($missingUserIds as $missingUserId) {
+                    try {
+                        // İlgili trade kayıtlarını bul ve user_id'yi null yap
+                        $affectedRows = User_plans::where('user', $missingUserId)->update(['user' => null]);
+
+                        if ($affectedRows > 0) {
+                            $result['fixed_count'] += $affectedRows;
+                            Log::warning("Geçersiz user ID düzeltildi:", [
+                                'invalid_user_id' => $missingUserId,
+                                'affected_trades' => $affectedRows
+                            ]);
+                        }
+                    } catch (\Exception $e) {
+                        $result['errors'][] = "User ID {$missingUserId} düzeltilemedi: " . $e->getMessage();
+                    }
+                }
+            }
+
+            Log::info('Geçersiz user ID düzeltme işlemi tamamlandı:', $result);
+
+            return response()->json($result);
+
+        } catch (\Exception $e) {
+            Log::error('Geçersiz user ID düzeltme sırasında hata:', [
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json(['error' => 'Düzeltme sırasında hata oluştu'], 500);
+        }
     }
 
     /**
