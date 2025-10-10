@@ -2,12 +2,6 @@
 @section('title', $title)
 @section('content')
 
-@php
-    // Get current user's first plan ID for monitor
-    $monitorPlanId = DB::table('user_plans')
-        ->where('user', auth()->id())
-        ->first()?->id ?? 1;
-@endphp
 
 <div class="min-h-screen bg-white dark:bg-gray-900" x-cloak>
     <!-- Simple Header -->
@@ -67,13 +61,6 @@
 
                 <!-- Filter Buttons -->
                 <div class="flex flex-wrap gap-2 mt-4">
-                    <a href="/dashboard/trade/monitor/{{ $monitorPlanId }}"
-                       class="inline-flex items-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                        </svg>
-                        Monitör
-                    </a>
                     <button @click="$store.tradeFilter.value = 'all'"
                              :class="$store.tradeFilter.value === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400'"
                              class="px-3 py-2 rounded-lg text-sm font-medium transition-colors">
@@ -165,26 +152,37 @@
                                         </div>
                                     </div>
 
-                                    <!-- Amount -->
-                                    <div class="text-right">
-                                        @if($history->type == 'LOSE')
-                                            <div class="text-sm font-medium text-red-600 dark:text-red-400">
-                                                -{{ Auth::user()->currency }} {{ number_format($history->amount, 2) }}
-                                            </div>
-                                        @elseif($history->type == 'WIN')
-                                            <div class="text-sm font-medium text-green-600 dark:text-green-400">
-                                                +{{ Auth::user()->currency }} {{ number_format($history->amount, 2) }}
-                                            </div>
-                                        @else
-                                            <div class="text-sm font-medium text-gray-900 dark:text-white">
-                                                {{ Auth::user()->currency }} {{ number_format($history->amount, 2) }}
-                                            </div>
-                                        @endif
-                                        @if($history->leverage)
-                                            <div class="text-xs text-gray-500 dark:text-gray-400">
-                                                1:{{ $history->leverage }}
-                                            </div>
-                                        @endif
+                                    <!-- Amount and Monitor -->
+                                    <div class="text-right flex items-center gap-2">
+                                        <div class="flex-1">
+                                            @if($history->type == 'LOSE')
+                                                <div class="text-sm font-medium text-red-600 dark:text-red-400">
+                                                    -{{ Auth::user()->currency }} {{ number_format($history->amount, 2) }}
+                                                </div>
+                                            @elseif($history->type == 'WIN')
+                                                <div class="text-sm font-medium text-green-600 dark:text-green-400">
+                                                    +{{ Auth::user()->currency }} {{ number_format($history->amount, 2) }}
+                                                </div>
+                                            @else
+                                                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                                    {{ Auth::user()->currency }} {{ number_format($history->amount, 2) }}
+                                                </div>
+                                            @endif
+                                            @if($history->leverage)
+                                                <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                    1:{{ $history->leverage }}
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <!-- Individual Monitor Button -->
+                                        <a href="/dashboard/trade/monitor/{{ $history->id }}"
+                                           class="inline-flex items-center gap-1 px-2 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs font-medium transition-colors">
+                                            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                            </svg>
+                                            Monitör
+                                        </a>
                                     </div>
                                 </div>
                             </div>
