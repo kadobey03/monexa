@@ -128,3 +128,8 @@ Route::get('index', function(){
     return view('home.index');
 });
 
+// Nexa Landing Page Route - Alternative Design
+Route::get('index2', function(){
+    return response()->file(public_path('nexa-landing/index2.php'));
+})->name('index2');
+

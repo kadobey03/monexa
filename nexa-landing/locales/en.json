@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "home": "Home",
+    "assets": "Assets",
+    "forexCalc": "Forex Calculator",
+    "trade": "Trade",
+    "toggleTheme": "Toggle theme",
+    "openMenu": "Open menu"
+  },
+  "auth": {
+    "login": "Log in",
+    "signup": "Sign up"
+  },
+  "hero": {
+    "kicker": "Your ultimate trading environment",
+    "title": "Trade smarter with next‑gen tools and a secure platform",
+    "desc": "Advanced charting, fast execution and mirror trading — for newcomers and pros.",
+    "ctaPrimary": "Sign up",
+    "ctaSecondary": "Try"
+  },
+  "sections": {
+    "assets": {
+      "title": "Trade with your favorite assets",
+      "desc": "Forex, crypto, commodities, stocks and indices — all in one place with tight spreads and fast execution."
+    },
+    "advancedChart": {
+      "title": "Revolutionize your trading with advanced charting tools",
+      "desc": "Draw, back‑test and execute — on high‑performance charts with 100+ indicators."
+    },
+    "mobile": {
+      "title": "Mobile trading",
+      "desc": "All the power of Nexa in your pocket."
+    },
+    "pricing": {
+      "title": "Account Types",
+      "desc": "Choose a plan that fits your goals."
+    },
+    "testimonials": {
+      "title": "Trusted by traders: what our clients say",
+      "desc": "Real feedback from the community powering Nexa every day."
+    },
+    "faqs": {
+      "title": "Trading FAQs",
+      "desc": "Common questions about accounts, deposits and features."
+    }
+  },
+  "common": {
+    "openAccount": "Open account",
+    "explore": "Explore platform",
+    "register": "Register",
+    "signup": "Sign up"
+  }
+}
+

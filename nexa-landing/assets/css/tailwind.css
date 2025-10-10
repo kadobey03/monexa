@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global tweaks */
+html, body, #__nuxt {
+  height: 100%;
+}
+
+/* Ensure images never overflow on small screens */
+@layer base {
+  img {
+    @apply max-w-full h-auto;
+  }
+}
+.gradient-hero {
+  background: radial-gradient(60% 60% at 10% 10%, rgba(16,185,129,0.15) 0%, rgba(16,185,129,0) 60%),
+              radial-gradient(50% 50% at 90% 20%, rgba(16,185,129,0.12) 0%, rgba(16,185,129,0) 60%),
+              linear-gradient(180deg, #0b1b16 0%, #0e1f1a 100%);
+}
+.wave-bg {
+  background-image: radial-gradient(50% 35% at 50% 0%, rgba(16,185,129,0.10) 0%, rgba(16,185,129,0.00) 100%),
+                    radial-gradient(40% 28% at 10% 20%, rgba(16,185,129,0.06) 0%, rgba(16,185,129,0.00) 100%),
+                    radial-gradient(40% 28% at 90% 20%, rgba(16,185,129,0.06) 0%, rgba(16,185,129,0.00) 100%);
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-white font-semibold shadow hover:bg-primary-dark transition-all duration-200 ease-out hover:shadow-[0_10px_30px_-10px_rgba(16,185,129,0.55)] hover:-translate-y-0.5;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-primary text-primary px-5 py-2.5 font-semibold hover:bg-primary/10 transition-all duration-200 ease-out hover:-translate-y-0.5;
+  }
+  .section {
+    @apply py-16 md:py-24;
+  }
+  .container-max {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-card border border-slate-100 dark:bg-slate-800 dark:border-slate-700;
+  }
+  .card-dark {
+    @apply rounded-2xl border border-slate-700 bg-slate-900/70 backdrop-blur-sm text-white shadow-card;
+    box-shadow: 0 10px 30px -15px rgba(16, 185, 129, 0.18);
+  }
+  .accent-dot { @apply inline-block h-2 w-2 rounded-full bg-primary align-middle mr-2; }
+  .heading-accent { @apply text-white; }
+  .muted { @apply text-emerald-100/80; }
+
+  /* Prevent very long headlines from overflowing on mobile */
+  .headline-fix {
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  /* Optional: add to any <img> to cap width on mobile */
+  .img-mobile-limit {
+    @apply w-full;
+    max-width: 320px;
+  }
+  @screen md {
+    .img-mobile-limit {
+      max-width: none;
+    }
+  }
+}

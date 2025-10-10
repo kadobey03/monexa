@@ -1,0 +1,14 @@
+---
+deployment:
+  tasks:
+    - export NVM_DIR="$HOME/.nvm"
+    - '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
+    - nvm install
+    - nvm use
+
+    - cd $DEPLOYPATH
+    - npm ci
+    - npm run build
+
+    - mkdir -p tmp
+    - touch tmp/restart.txt

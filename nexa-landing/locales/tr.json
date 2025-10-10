@@ -1,0 +1,54 @@
+{
+  "nav": {
+    "home": "Anasayfa",
+    "assets": "Varlıklar",
+    "forexCalc": "Forex Hesaplayıcı",
+    "trade": "Trade",
+    "toggleTheme": "Tema değiştir",
+    "openMenu": "Menüyü aç"
+  },
+  "auth": {
+    "login": "Giriş",
+    "signup": "Kayıt Ol"
+  },
+  "hero": {
+    "kicker": "Ultimate alım satım ortamınız",
+    "title": "Güvenli platform ve yeni nesil araçlarla daha akıllı işlem yapın",
+    "desc": "Gelişmiş grafikler, hızlı emir iletimi ve ayna işlemler — hem yeni başlayanlar hem profesyoneller için.",
+    "ctaPrimary": "Kayıt Ol",
+    "ctaSecondary": "Dene"
+  },
+  "sections": {
+    "assets": {
+      "title": "Favori varlıklarınızla işlem yapın",
+      "desc": "Forex, kripto, emtialar, hisseler ve endeksler — tek platformda, düşük spread ve hızlı işlem ile."
+    },
+    "advancedChart": {
+      "title": "Gelişmiş grafik araçlarıyla işlem deneyimini değiştirin",
+      "desc": "Çizin, back-test yapın ve uygulayın — 100+ indikatörle yüksek performanslı grafikler."
+    },
+    "mobile": {
+      "title": "Mobil işlem",
+      "desc": "Nexa gücü cebinizde."
+    },
+    "pricing": {
+      "title": "Hesap Tipleri",
+      "desc": "Hedeflerinize uygun planı seçin."
+    },
+    "testimonials": {
+      "title": "Tüccarlar güveniyor: müşterilerimiz ne diyor",
+      "desc": "Nexa topluluğundan gerçek geri bildirim."
+    },
+    "faqs": {
+      "title": "Sık Sorulan Sorular",
+      "desc": "Hesaplar, yatırma ve platform özellikleri hakkında."
+    }
+  },
+  "common": {
+    "openAccount": "Hesap Aç",
+    "explore": "Platformu Keşfet",
+    "register": "Kayıt Ol",
+    "signup": "Kayıt Ol"
+  }
+}
+

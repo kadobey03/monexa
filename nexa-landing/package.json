@@ -1,0 +1,25 @@
+{
+  "name": "nexa-landing",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev -o",
+    "build": "nuxt build",
+    "prestart": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "nuxt": "^3.12.3"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}
