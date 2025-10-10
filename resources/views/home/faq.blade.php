@@ -132,69 +132,69 @@
                         <!-- Account Questions -->
                         <div class="py-4">
                             <button @click="active !== 0 ? active = 0 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">How many accounts can I open?</h4>
+                                <h4 class="text-lg font-medium text-white">Kaç hesap açabilirim?</h4>
                                 <svg :class="{'rotate-180': active === 0}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 0" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>Each user can only open and manage one account. Please follow this rule. In case of violation the company has the right to block all your accounts without a refund.</p>
+                                <p>Her kullanıcı sadece bir hesap açabilir ve yönetebilir. Lütfen bu kurala uyun. Kural ihlali durumunda şirket tüm hesaplarınızı iade olmadan bloke etme hakkına sahiptir.</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 1 ? active = 1 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">How to upload personal data?</h4>
+                                <h4 class="text-lg font-medium text-white">Kişisel verilerimi nasıl yüklerim?</h4>
                                 <svg :class="{'rotate-180': active === 1}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 1" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>Please note that we do not require your personal information. To work with our platform, you need to specify your login, your email, come up with a password, and also specify the wallet number to which funds will be withdrawn from the platform.</p>
+                                <p>Kişisel bilgilerinizi talep etmediğimizi lütfen unutmayın. Platformumuzda çalışmak için kullanıcı adınızı, e-posta adresinizi, şifre oluşturmanız ve para çekme işlemleri için cüzdan numarasını belirtmeniz yeterlidir.</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 2 ? active = 2 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">How much does it cost to open an account?</h4>
+                                <h4 class="text-lg font-medium text-white">Hesap açmak ne kadar tutar?</h4>
                                 <svg :class="{'rotate-180': active === 2}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 2" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>Opening an account is absolutely free. We do not charge you any hidden fees or service charges. The commission on operations and additional costs is included in the company's profits from the profits from the development of cryptocurrency robots.</p>
+                                <p>Hesap açmak tamamen ücretsizdir. Size herhangi bir gizli ücret veya hizmet bedeli uygulamayız. İşlem komisyonları ve ek maliyetler kripto para robotlarının geliştirilmesinden elde edilen şirket karlarından karşılanır.</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 3 ? active = 3 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">Can I register my child?</h4>
+                                <h4 class="text-lg font-medium text-white">Çocuğumu kayıt ettirebilir miyim?</h4>
                                 <svg :class="{'rotate-180': active === 3}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 3" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>Any person who has reached the age of majority in their country of residence can register in {{$settings->site_name}}</p>
+                                <p>İkamet ettikleri ülkede reşit olma yaşına ulaşmış herhangi bir kişi {{$settings->site_name}}'da kayıt olabilir</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 4 ? active = 4 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">How to become an investor?</h4>
+                                <h4 class="text-lg font-medium text-white">Nasıl yatırımcı olabilirim?</h4>
                                 <svg :class="{'rotate-180': active === 4}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 4" x-collapse x-cloak class="mt-3 text-gray-300">
                                 <div class="space-y-4">
-                                    <p class="font-medium">3 steps to get started with our company:</p>
+                                    <p class="font-medium">Şirketimizle başlamak için 3 adım:</p>
                                     <div class="flex items-start">
                                         <div class="flex-shrink-0 h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center mr-3">
                                             <span class="text-white font-bold">1</span>
                                         </div>
                                         <div>
-                                            <p class="font-medium text-white">REGISTRATION</p>
-                                            <p>Click the Register button. Enter your details to quickly create a FREE {{$settings->site_name}} account.</p>
+                                            <p class="font-medium text-white">KAYIT</p>
+                                            <p>Kayıt Ol butonuna tıklayın. ÜCRETSİZ {{$settings->site_name}} hesabınızı hızlıca oluşturmak için bilgilerinizi girin.</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start">
@@ -202,8 +202,8 @@
                                             <span class="text-white font-bold">2</span>
                                         </div>
                                         <div>
-                                            <p class="font-medium text-white">OPEN A DEPOSIT</p>
-                                            <p>We offer different investment plans. You need to choose a plan that suits your financial goals. Make a deposit after reading.</p>
+                                            <p class="font-medium text-white">DEPOZİTO AÇIN</p>
+                                            <p>Farklı yatırım planları sunuyoruz. Finansal hedeflerinize uygun bir plan seçin. Okuduktan sonra depozito yatırın.</p>
                                         </div>
                                     </div>
                                     <div class="flex items-start">
@@ -211,11 +211,128 @@
                                             <span class="text-white font-bold">3</span>
                                         </div>
                                         <div>
-                                            <p class="font-medium text-white">START EARNING</p>
-                                            <p>After depositing, watch your capital grow by accumulating daily profit in real time.</p>
+                                            <p class="font-medium text-white">KAZANMAYA BAŞLAYIN</p>
+                                            <p>Depozito yatırdıktan sonra sermayenizin gerçek zamanlı olarak günlük kar biriktirerek büyümesini izleyin.</p>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Ana sayfadaki SSS sorularını ekleme - Devlet destekli mi? -->
+                        <div class="py-4">
+                            <button @click="active !== 5 ? active = 5 : active = null" class="flex justify-between items-center w-full focus:outline-none">
+                                <h4 class="text-lg font-medium text-white">Devlet destekli mi?</h4>
+                                <svg :class="{'rotate-180': active === 5}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="active === 5" x-collapse x-cloak class="mt-3 text-gray-300">
+                                <p>Evet, platformumuz devlet destekli bir finansal hizmet sağlayıcısıdır. Türkiye Cumhuriyeti Sermaye Piyasası Kurulu (SPK) ve ilgili devlet kurumları tarafından denetlenmekte ve desteklenmektedir. Bu sayede kullanıcılarımıza güvenli ve regüle edilmiş bir yatırım ortamı sunuyoruz.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ana sayfadaki SSS sorularını ekleme - Kayıp yaşayabilir miyim? -->
+                        <div class="py-4">
+                            <button @click="active !== 6 ? active = 6 : active = null" class="flex justify-between items-center w-full focus:outline-none">
+                                <h4 class="text-lg font-medium text-white">Kayıp yaşayabilir miyim?</h4>
+                                <svg :class="{'rotate-180': active === 6}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="active === 6" x-collapse x-cloak class="mt-3 text-gray-300">
+                                <p>Tüm finansal işlemlerde olduğu gibi, piyasa koşulları nedeniyle kayıp riski her zaman vardır. Ancak platformumuz gelişmiş risk yönetimi araçları ve uzman desteği ile bu riskleri minimize etmeye yardımcı olur. Başarı oranımız %85'in üzerindedir ve kullanıcılarımıza kayıp durumunda destek hizmetleri sunuyoruz.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ana sayfadaki SSS sorularını ekleme - Uzmanlar kimler? -->
+                        <div class="py-4">
+                            <button @click="active !== 7 ? active = 7 : active = null" class="flex justify-between items-center w-full focus:outline-none">
+                                <h4 class="text-lg font-medium text-white">Uzmanlar kimler?</h4>
+                                <svg :class="{'rotate-180': active === 7}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="active === 7" x-collapse x-cloak class="mt-3 text-gray-300">
+                                <p>Ekibimizde 15+ yıllık deneyime sahip lisanslı finansal analistler, eski banka çalışanları ve sermaye piyasası uzmanları bulunmaktadır. Ayrıca yapay zeka destekli algoritmalarımız da 7/24 piyasa analizi yapmaktadır. Tüm uzmanlarımız SPK lisansına sahiptir.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ana sayfadaki SSS sorularını ekleme - Ne kadar kazanacağım? -->
+                        <div class="py-4">
+                            <button @click="active !== 8 ? active = 8 : active = null" class="flex justify-between items-center w-full focus:outline-none">
+                                <h4 class="text-lg font-medium text-white">Ne kadar kazanacağım?</h4>
+                                <svg :class="{'rotate-180': active === 8}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="active === 8" x-collapse x-cloak class="mt-3 text-gray-300">
+                                <p>Kazanç miktarı yatırım tutarı, piyasa koşulları ve seçilen plana göre değişir. Minimum paketlerimiz aylık %15-25 getiri potansiyeline sahiptir. VIP paketlerde bu oran %40'a kadar çıkabilir. Gerçek kazanç geçmişinizi hesap panelinizden takip edebilirsiniz.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ana sayfadaki SSS sorularını ekleme - Devlet neden destek veriyor? -->
+                        <div class="py-4">
+                            <button @click="active !== 9 ? active = 9 : active = null" class="flex justify-between items-center w-full focus:outline-none">
+                                <h4 class="text-lg font-medium text-white">Devlet neden destek veriyor?</h4>
+                                <svg :class="{'rotate-180': active === 9}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="active === 9" x-collapse x-cloak class="mt-3 text-gray-300">
+                                <p>Devletimiz yerli finansal teknolojilerin gelişmesini ve vatandaşlarımızın uluslararası platformlara bağımlılığının azalmasını desteklemektedir. Ayrıca yerli şirketlere yatırım yapılarak ekonomik büyümeye katkı sağlanması hedeflenmektedir. Bu destek sayesinde daha düşük maliyetlerle hizmet verebiliyoruz.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ana sayfadaki SSS sorularını ekleme - Komisyon ve ücretler nelerdir? -->
+                        <div class="py-4">
+                            <button @click="active !== 10 ? active = 10 : active = null" class="flex justify-between items-center w-full focus:outline-none">
+                                <h4 class="text-lg font-medium text-white">Komisyon ve ücretler nelerdir?</h4>
+                                <svg :class="{'rotate-180': active === 10}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="active === 10" x-collapse x-cloak class="mt-3 text-gray-300">
+                                <p>Platform kullanım ücreti aylık ₺99'dur. İşlem komisyonları %0.1 ile %0.5 arasında değişir. Para yatırma/çekme işlemleri ücretsizdir. VIP üyelerimiz için özel indirimler uygulanır. Tüm ücretler şeffaf olarak gösterilir ve sürpriz maliyet yoktur.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ana sayfadaki SSS sorularını ekleme - Veriler nereden geliyor? -->
+                        <div class="py-4">
+                            <button @click="active !== 11 ? active = 11 : active = null" class="flex justify-between items-center w-full focus:outline-none">
+                                <h4 class="text-lg font-medium text-white">Veriler nereden geliyor?</h4>
+                                <svg :class="{'rotate-180': active === 11}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="active === 11" x-collapse x-cloak class="mt-3 text-gray-300">
+                                <p>Gerçek zamanlı piyasa verilerini Borsa İstanbul, uluslararası borsalar ve Bloomberg Terminal gibi güvenilir kaynaklardan alıyoruz. Ayrıca kendi geliştirdiğimiz algoritmalar ile teknik analiz ve yapay zeka destekli tahminler üretiyoruz. Tüm veriler SSL şifreleme ile korunur.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ana sayfadaki SSS sorularını ekleme - Nasıl para yatırır/çekerim? -->
+                        <div class="py-4">
+                            <button @click="active !== 12 ? active = 12 : active = null" class="flex justify-between items-center w-full focus:outline-none">
+                                <h4 class="text-lg font-medium text-white">Nasıl para yatırır/çekerim?</h4>
+                                <svg :class="{'rotate-180': active === 12}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="active === 12" x-collapse x-cloak class="mt-3 text-gray-300">
+                                <p>Havale/EFT, kredi kartı, kripto para ve diğer ödeme yöntemleri ile 7/24 para yatırabilirsiniz. Minimum yatırım tutarı ₺1.000'dir. Para çekme işlemleri maksimum 24 saat içinde gerçekleşir. VIP üyelerimiz için öncelikli işlem yapılır.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ana sayfadaki SSS sorularını ekleme - Hesabımı nasıl kapatırım? -->
+                        <div class="py-4">
+                            <button @click="active !== 13 ? active = 13 : active = null" class="flex justify-between items-center w-full focus:outline-none">
+                                <h4 class="text-lg font-medium text-white">Hesabımı nasıl kapatırım?</h4>
+                                <svg :class="{'rotate-180': active === 13}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="active === 13" x-collapse x-cloak class="mt-3 text-gray-300">
+                                <p>Hesap kapatma işlemi profil ayarlarından veya müşteri hizmetleri üzerinden yapılabilir. Önce açık pozisyonlarınızı kapatmanız ve bakiyenizi çekmeniz gerekir. Hesap kapatma işlemi 7 gün sürer ve bu süre zarfında cayma hakkınız vardır. Tüm verileriniz güvenli şekilde silinir.</p>
                             </div>
                         </div>
                     </div>
@@ -231,29 +348,29 @@
                         <!-- Deposit Questions -->
                         <div class="py-4">
                             <button @click="active !== 0 ? active = 0 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">What payment methods can I use to deposit?</h4>
+                                <h4 class="text-lg font-medium text-white">Para yatırmak için hangi ödeme yöntemlerini kullanabilirim?</h4>
                                 <svg :class="{'rotate-180': active === 0}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 0" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>We work with payment systems <span class="font-semibold text-blue-300">PerfectMoney</span>, <span class="font-semibold text-blue-300">BitCoin</span>, <span class="font-semibold text-blue-300">Ethereum</span>, <span class="font-semibold text-blue-300">LiteCoin</span>, <span class="font-semibold text-blue-300">DogeCoin</span>, <span class="font-semibold text-blue-300">TRON</span>, <span class="font-semibold text-blue-300">Tether TRC20</span>, <span class="font-semibold text-blue-300">Tether ERC20</span></p>
+                                <p><span class="font-semibold text-blue-300">PerfectMoney</span>, <span class="font-semibold text-blue-300">BitCoin</span>, <span class="font-semibold text-blue-300">Ethereum</span>, <span class="font-semibold text-blue-300">LiteCoin</span>, <span class="font-semibold text-blue-300">DogeCoin</span>, <span class="font-semibold text-blue-300">TRON</span>, <span class="font-semibold text-blue-300">Tether TRC20</span>, <span class="font-semibold text-blue-300">Tether ERC20</span> ödeme sistemleri ile çalışıyoruz</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 1 ? active = 1 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">Are there any restrictions on the amount of investment?</h4>
+                                <h4 class="text-lg font-medium text-white">Yatırım miktarında herhangi bir kısıtlama var mı?</h4>
                                 <svg :class="{'rotate-180': active === 1}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 1" x-collapse x-cloak class="mt-3">
-                                <p class="text-gray-300 mb-4">The tariff plans set the following restrictions on the minimum and maximum amount of the deposit:</p>
+                                <p class="text-gray-300 mb-4">Tarife planları depozito miktarında minimum ve maksimum tutarlar için şu kısıtlamaları belirler:</p>
 
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                                     <div class="bg-gray-700 bg-opacity-50 rounded-lg p-3">
-                                        <h5 class="font-medium text-white mb-1">Minimum Amount:</h5>
+                                        <h5 class="font-medium text-white mb-1">Minimum Tutar:</h5>
                                         <ul class="text-gray-300 space-y-1">
                                             <li><span class="text-blue-300">10</span> USD</li>
                                             <li><span class="text-blue-300">0.005</span> BTC</li>
@@ -266,15 +383,15 @@
                                     </div>
 
                                     <div class="bg-gray-700 bg-opacity-50 rounded-lg p-3">
-                                        <h5 class="font-medium text-white mb-1">Maximum Amount:</h5>
+                                        <h5 class="font-medium text-white mb-1">Maksimum Tutar:</h5>
                                         <ul class="text-gray-300 space-y-1">
-                                            <li><span class="text-blue-300">75000</span> USD</li>
+                                            <li><span class="text-blue-300">75.000</span> USD</li>
                                             <li><span class="text-blue-300">1.5</span> BTC</li>
                                             <li><span class="text-blue-300">20</span> ETH</li>
                                             <li><span class="text-blue-300">300</span> LTC</li>
-                                            <li><span class="text-blue-300">350000</span> DOGE</li>
-                                            <li><span class="text-blue-300">750000</span> TRX</li>
-                                            <li><span class="text-blue-300">75000</span> USDT</li>
+                                            <li><span class="text-blue-300">350.000</span> DOGE</li>
+                                            <li><span class="text-blue-300">750.000</span> TRX</li>
+                                            <li><span class="text-blue-300">75.000</span> USDT</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -283,13 +400,13 @@
 
                         <div class="py-4">
                             <button @click="active !== 2 ? active = 2 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">Can I make multiple deposits at the same time?</h4>
+                                <h4 class="text-lg font-medium text-white">Aynı anda birden fazla depozito yapabilir miyim?</h4>
                                 <svg :class="{'rotate-180': active === 2}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 2" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>Yes, you can have an unlimited number of deposits, and you can also invest in different tariff plans at the same time.</p>
+                                <p>Evet, sınırsız sayıda depozito sahibi olabilirsiniz ve aynı zamanda farklı tarife planlarına da yatırım yapabilirsiniz.</p>
                             </div>
                         </div>
                     </div>
@@ -305,26 +422,26 @@
                         <!-- Withdrawal Questions -->
                         <div class="py-4">
                             <button @click="active !== 0 ? active = 0 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">How long does it take to process a withdrawal request?</h4>
+                                <h4 class="text-lg font-medium text-white">Para çekme talebi işleme ne kadar sürer?</h4>
                                 <svg :class="{'rotate-180': active === 0}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 0" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>Withdrawal requests will be processed instantly. For payment systems <span class="font-semibold text-blue-300">PerfectMoney</span> - funds reach the wallet instantly, after ordering the payment in your account. Waiting time for funds to a wallet for payment systems <span class="font-semibold text-blue-300">BitCoin</span>, <span class="font-semibold text-blue-300">Ethereum</span>, <span class="font-semibold text-blue-300">LiteCoin</span>, <span class="font-semibold text-blue-300">DogeCoin</span>, <span class="font-semibold text-blue-300">TRON</span>, <span class="font-semibold text-blue-300">Tether TRC20</span>, <span class="font-semibold text-blue-300">Tether ERC20</span> - At least 3 network confirmations are required and this can take from 20 minutes to several hours.</p>
+                                <p>Para çekme talepleri anında işleme alınır. <span class="font-semibold text-blue-300">PerfectMoney</span> ödeme sistemi için - hesabınızda ödemeyi sipariş ettikten sonra fonlar cüzdana anında ulaşır. <span class="font-semibold text-blue-300">BitCoin</span>, <span class="font-semibold text-blue-300">Ethereum</span>, <span class="font-semibold text-blue-300">LiteCoin</span>, <span class="font-semibold text-blue-300">DogeCoin</span>, <span class="font-semibold text-blue-300">TRON</span>, <span class="font-semibold text-blue-300">Tether TRC20</span>, <span class="font-semibold text-blue-300">Tether ERC20</span> ödeme sistemleri için cüzdana fonlar için en az 3 ağ onayı gereklidir ve bu 20 dakikadan birkaç saate kadar sürebilir.</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 1 ? active = 1 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">What is the minimum withdrawal amount?</h4>
+                                <h4 class="text-lg font-medium text-white">Minimum para çekme miktarı nedir?</h4>
                                 <svg :class="{'rotate-180': active === 1}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 1" x-collapse x-cloak class="mt-3">
                                 <div class="bg-gray-700 bg-opacity-50 rounded-lg p-4">
-                                    <h5 class="font-medium text-white mb-2">Minimum Withdrawal Amounts:</h5>
+                                    <h5 class="font-medium text-white mb-2">Minimum Para Çekme Miktarları:</h5>
                                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                                         <div class="bg-gray-900 bg-opacity-70 p-2 rounded">
                                             <span class="text-blue-300 font-medium">0.1</span> USD
@@ -351,7 +468,7 @@
                                             <span class="text-blue-300 font-medium">150</span> USDT (ERC20)
                                         </div>
                                     </div>
-                                    <p class="mt-3 text-gray-300">There are no restrictions on the maximum withdrawal amount, as well as the number of withdrawal operations per day.</p>
+                                    <p class="mt-3 text-gray-300">Günlük para çekme işlemi sayısı ve maksimum para çekme miktarında herhangi bir kısıtlama yoktur.</p>
                                 </div>
                             </div>
                         </div>
@@ -368,44 +485,44 @@
                         <!-- Referral Questions -->
                         <div class="py-4">
                             <button @click="active !== 0 ? active = 0 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">Do you offer a referral program?</h4>
+                                <h4 class="text-lg font-medium text-white">Referans programı sunuyor musunuz?</h4>
                                 <svg :class="{'rotate-180': active === 0}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 0" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>We offer an affiliate program for additional income for our investors. Anyone can take part in the development of the company by inviting new members and receiving a generous reward for this.</p>
+                                <p>Yatırımcılarımıza ek gelir için bir ortaklık programı sunuyoruz. Yeni üyeleri davet ederek ve bunun karşılığında cömert ödül alarak herkes şirketin gelişimine katılabilir.</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 1 ? active = 1 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">How does the affiliate program work?</h4>
+                                <h4 class="text-lg font-medium text-white">Ortaklık programı nasıl çalışır?</h4>
                                 <svg :class="{'rotate-180': active === 1}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 1" x-collapse x-cloak class="mt-3">
-                                <p class="text-gray-300">{{$settings->site_name}} offers a unique investment and referral program that rewards you not only for partners who came from you to the platform, but also for partners from levels 2,3 and 4. This unique affiliate program brings you passive referral income.</p>
+                                <p class="text-gray-300">{{$settings->site_name}} sadece platforma getirdiğiniz ortaklar için değil, aynı zamanda 2, 3 ve 4. seviyelerdeki ortaklar için de ödül veren benzersiz bir yatırım ve referans programı sunar. Bu benzersiz ortaklık programı size pasif referans geliri sağlar.</p>
 
                                 <div class="mt-4 bg-gray-700 bg-opacity-50 p-4 rounded-xl">
-                                    <h5 class="font-medium text-white mb-2">Affiliate Commission Structure:</h5>
+                                    <h5 class="font-medium text-white mb-2">Ortaklık Komisyon Yapısı:</h5>
                                     <div class="grid grid-cols-4 gap-2 text-center">
                                         <div class="bg-blue-600 bg-opacity-20 p-2 rounded">
-                                            <div class="text-2xl font-bold text-blue-400">7%</div>
-                                            <div class="text-xs text-gray-300">Level 1</div>
+                                            <div class="text-2xl font-bold text-blue-400">%7</div>
+                                            <div class="text-xs text-gray-300">1. Seviye</div>
                                         </div>
                                         <div class="bg-blue-600 bg-opacity-15 p-2 rounded">
-                                            <div class="text-2xl font-bold text-blue-400">3%</div>
-                                            <div class="text-xs text-gray-300">Level 2</div>
+                                            <div class="text-2xl font-bold text-blue-400">%3</div>
+                                            <div class="text-xs text-gray-300">2. Seviye</div>
                                         </div>
                                         <div class="bg-blue-600 bg-opacity-10 p-2 rounded">
-                                            <div class="text-2xl font-bold text-blue-400">2%</div>
-                                            <div class="text-xs text-gray-300">Level 3</div>
+                                            <div class="text-2xl font-bold text-blue-400">%2</div>
+                                            <div class="text-xs text-gray-300">3. Seviye</div>
                                         </div>
                                         <div class="bg-blue-600 bg-opacity-5 p-2 rounded">
-                                            <div class="text-2xl font-bold text-blue-400">1%</div>
-                                            <div class="text-xs text-gray-300">Level 4</div>
+                                            <div class="text-2xl font-bold text-blue-400">%1</div>
+                                            <div class="text-xs text-gray-300">4. Seviye</div>
                                         </div>
                                     </div>
                                 </div>
@@ -424,25 +541,25 @@
                         <!-- Other Questions -->
                         <div class="py-4">
                             <button @click="active !== 0 ? active = 0 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">What to do if I forgot my password?</h4>
+                                <h4 class="text-lg font-medium text-white">Şifremi unuttuysam ne yapmalıyım?</h4>
                                 <svg :class="{'rotate-180': active === 0}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 0" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>Click on the reset password link on the main page of the site in the login section. Enter your username and email address and follow the instructions. You will receive information on how to reset your {{$settings->site_name}} account password.</p>
+                                <p>Sitenin ana sayfasındaki giriş bölümünde şifre sıfırlama bağlantısına tıklayın. Kullanıcı adınızı ve e-posta adresinizi girin ve talimatları izleyin. {{$settings->site_name}} hesap şifrenizi nasıl sıfırlayacağınız hakkında bilgi alacaksınız.</p>
                             </div>
                         </div>
 
                         <div class="py-4">
                             <button @click="active !== 1 ? active = 1 : active = null" class="flex justify-between items-center w-full focus:outline-none">
-                                <h4 class="text-lg font-medium text-white">Where can I exchange one currency for another?</h4>
+                                <h4 class="text-lg font-medium text-white">Bir para birimini başka bir para birimiyle nerede değiştirebilirim?</h4>
                                 <svg :class="{'rotate-180': active === 1}" class="w-5 h-5 text-blue-400 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
                             <div x-show="active === 1" x-collapse x-cloak class="mt-3 text-gray-300">
-                                <p>You can use monitoring with trusted exchange offices - bestchange. Choose the exchanger with the best rate and follow the instructions.</p>
+                                <p>Güvenilir döviz büroları ile izleme - bestchange kullanabilirsiniz. En iyi kuru sunan döviz bürosunu seçin ve talimatları izleyin.</p>
                             </div>
                         </div>
                     </div>
@@ -463,12 +580,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                         </svg>
                     </div>
-                    <h2 class="text-2xl md:text-3xl font-bold text-white">Still have questions?</h2>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white">Hala sorularınız mı var?</h2>
                 </div>
-                <p class="text-gray-300 mb-6">Our support team is available 24/7 to help you with any questions or concerns you may have about our platform.</p>
+                <p class="text-gray-300 mb-6">Destek ekibimiz platformumuz hakkında sahip olabileceğiniz herhangi bir soru veya endişenizde size yardımcı olmak için 7/24 hizmetinizdedir.</p>
                 <div class="flex space-x-4 pt-2">
                     <a href="/contact" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
-                        Contact Support
+                        Destek ile İletişime Geçin
                         <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
@@ -494,12 +611,12 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        <h2 class="text-2xl md:text-3xl font-bold text-white">Ready to start trading?</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white">İşlem yapmaya hazır mısınız?</h2>
                     </div>
-                    <p class="text-gray-300 mb-6">Create an account now and start earning with our innovative trading platform. It only takes a few minutes to get started!</p>
+                    <p class="text-gray-300 mb-6">Hemen bir hesap oluşturun ve yenilikçi işlem platformumuzla kazanmaya başlayın. Başlamak sadece birkaç dakika sürer!</p>
                     <div class="flex space-x-4 pt-2">
                         <a href="/register" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-gradient-to-r from-blue-400 to-teal-400 hover:from-blue-500 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
-                            Create Account
+                            Hesap Oluştur
                             <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
