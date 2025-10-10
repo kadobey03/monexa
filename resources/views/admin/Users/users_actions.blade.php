@@ -17,7 +17,10 @@
                              <label class="form-label fw-semibold">
                                  <i class="fas fa-dollar-sign me-2 text-primary"></i>Tutar
                              </label>
-                             <input class="form-control form-control-lg" placeholder="Enter amount" type="text" name="amount" required>
+                             <input class="form-control form-control-lg" placeholder="Enter amount" type="number" name="amount" min="0.01" step="0.01" required>
+                             <div class="invalid-feedback">
+                                 Lütfen geçerli bir tutar giriniz (minimum 0.01).
+                             </div>
                          </div>
                          <div class="col-md-6">
                              <label class="form-label fw-semibold">
@@ -51,7 +54,7 @@
                      <div class="row g-3 mt-4">
                          <div class="col-12">
                              <input type="hidden" name="user_id" value="{{ $user->id }}">
-                             <button type="submit" class="btn btn-primary btn-lg w-100">
+                             <button type="submit" class="btn btn-primary btn-lg w-100" data-bs-toggle="tooltip" title="Bu işlem kullanıcı hesabına kredi veya debit uygular">
                                  <i class="fas fa-check me-2"></i>İşlemi Gerçekleştir
                              </button>
                          </div>
@@ -89,11 +92,14 @@
                      </div> --}}
                      <div class="form-group">
                          <h5 class=" ">Para çekme öncesi işlem sayısı</h5>
-                         <input type="number" name="numberoftrades" class="form-control  " placeholder="{{ $user->numberoftrades }}">
+                         <input type="number" name="numberoftrades" class="form-control" placeholder="{{ $user->numberoftrades }}" min="0" required>
+                         <div class="invalid-feedback">
+                             Lütfen geçerli bir işlem sayısı giriniz.
+                         </div>
                      </div>
 
                      <div class="form-group">
-                         <input type="submit" class="btn " value="Para Çekme İçin İşlem Sayısı Belirle">
+                         <input type="submit" class="btn btn-info" value="Para Çekme İçin İşlem Sayısı Belirle" data-bs-toggle="tooltip" title="Kullanıcının para çekebilmesi için tamamlaması gereken minimum işlem sayısını belirler">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -129,11 +135,14 @@
                      </div>
                      <div class="form-group">
                          <h5 class=" ">Amount</h5>
-                         <input type="number" name="taxamount" class="form-control  ">
+                         <input type="number" name="taxamount" class="form-control" min="0" max="100" step="0.01" placeholder="0.00">
+                         <div class="invalid-feedback">
+                             Lütfen 0-100 arasında geçerli bir vergi oranı giriniz.
+                         </div>
                      </div>
 
                      <div class="form-group">
-                         <input type="submit" class="btn " value="Kullanıcı Vergisi Ekle">
+                         <input type="submit" class="btn btn-warning" value="Kullanıcı Vergisi Ekle" data-bs-toggle="tooltip" title="Kullanıcı için özel vergi oranı belirler">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -187,11 +196,14 @@
 
                      <div class="form-group">
                          <h5 class=" ">Para Çekme Kodu</h5>
-                         <input type="text" name="user_withdrawalcode" class="form-control" value="{{ $user->user_withdrawalcode }}">
+                         <input type="text" name="user_withdrawalcode" class="form-control" value="{{ $user->user_withdrawalcode }}" maxlength="50" required>
+                         <div class="invalid-feedback">
+                             Lütfen geçerli bir para çekme kodu giriniz.
+                         </div>
                      </div>
 
                      <div class="form-group">
-                         <input type="submit" class="btn " value="Kullanıcı Para Çekme Kodunu Belirle">
+                         <input type="submit" class="btn btn-success" value="Kullanıcı Para Çekme Kodunu Belirle" data-bs-toggle="tooltip" title="Kullanıcı için özel para çekme kodu ve durumunu belirler">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -199,8 +211,7 @@
          </div>
      </div>
  </div>
- </div>
-<!-- /Clear account Modal -->
+ <!-- /Clear account Modal -->
  <!-- send a single user email Modal-->
  <div id="sendmailtooneuserModal" class="modal fade" role="dialog">
      <div class="modal-dialog">
@@ -215,15 +226,21 @@
                  <form style="padding:3px;" role="form" method="post" action="{{ route('sendmailtooneuser') }}">
                      @csrf
                      <div class=" form-group">
-                         <input type="text" name="subject" class="form-control  " placeholder="Konu" required>
+                         <input type="text" name="subject" class="form-control" placeholder="E-posta konusu" maxlength="100" required>
+                         <div class="invalid-feedback">
+                             Lütfen e-posta konusu giriniz (maksimum 100 karakter).
+                         </div>
                      </div>
                      <div class=" form-group">
-                         <textarea placeholder="Mesajınızı buraya yazın" class="form-control  " name="message" row="8"
-                             placeholder="Mesajınızı buraya yazın" required></textarea>
+                         <textarea placeholder="Mesajınızı buraya yazın" class="form-control" name="message" rows="8"
+                             maxlength="1000" required></textarea>
+                         <div class="invalid-feedback">
+                             Lütfen bir mesaj giriniz (maksimum 1000 karakter).
+                         </div>
                      </div>
                      <div class=" form-group">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
-                         <input type="submit" class="btn " value="Gönder">
+                         <input type="submit" class="btn btn-primary" value="Gönder" data-bs-toggle="tooltip" title="E-posta mesajını kullanıcıya gönderir">
                      </div>
                  </form>
              </div>
@@ -245,7 +262,10 @@
                      @csrf
                      <div class="form-group">
                         <h5 class=" ">Amount</h5>
-                        <input type="number" name="amount" class="form-control  " placeholder="Enter trade amount {{ $user->currency }}" required>
+                        <input type="number" name="amount" class="form-control" placeholder="İşlem tutarını giriniz {{ $user->currency }}" min="0.01" step="0.01" required>
+                        <div class="invalid-feedback">
+                            Lütfen geçerli bir işlem tutarı giriniz (minimum 0.01 {{ $user->currency }}).
+                        </div>
                     </div>
                      <div class="form-group">
                          <h5 class=" ">Select Asset</h5>
@@ -336,7 +356,7 @@
                         </select>
                     </div>
                      <div class="form-group">
-                         <input type="submit" class="btn btn-primary" value="Trade Now">
+                         <input type="submit" class="btn btn-primary" value="İşlem Yap" data-bs-toggle="tooltip" title="Kullanıcı için manuel işlem oluşturur">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -422,7 +442,10 @@
 
                    <div class="form-group">
                     <h5 class=" ">Tutar</h5>
-                    <input type="number" name="amount" class="form-control  " placeholder="Enter amount required for signal in {{ $user->currency }}" required>
+                    <input type="number" name="amount" class="form-control" placeholder="Sinyal tutarını giriniz {{ $user->currency }}" min="0.01" step="0.01" required>
+                    <div class="invalid-feedback">
+                        Lütfen geçerli bir sinyal tutarı giriniz (minimum 0.01 {{ $user->currency }}).
+                    </div>
                 </div>
                    <div class="form-group">
                        <select class="form-control" name="expire"  required>
@@ -456,7 +479,7 @@
                        </select>
                    </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Create Signal">
+                        <input type="submit" class="btn btn-primary" value="Sinyal Oluştur" data-bs-toggle="tooltip" title="Kullanıcı için manuel sinyal oluşturur">
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
                     </div>
                 </form>
@@ -493,7 +516,10 @@
                     </div>
                     <div class="form-group">
                         <h5 class=" ">Amount</h5>
-                        <input type="number" name="amount" class="form-control  ">
+                        <input type="number" name="amount" class="form-control" placeholder="Plan tutarını giriniz" min="0.01" step="0.01" required>
+                        <div class="invalid-feedback">
+                            Lütfen geçerli bir plan tutarı giriniz (minimum 0.01).
+                        </div>
                     </div>
                     <div class="form-group">
                         <h5 class=" ">Type</h5>
@@ -504,7 +530,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn " value="Add History">
+                        <input type="submit" class="btn btn-secondary" value="Geçmiş Ekle" data-bs-toggle="tooltip" title="Kullanıcı için plan geçmiş kaydı ekler">
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
                     </div>
                 </form>
@@ -532,7 +558,10 @@
                              <label class="form-label fw-semibold">
                                  <i class="fas fa-user me-2 text-success"></i>Username
                              </label>
-                             <input class="form-control form-control-lg" id="input1" value="{{ $user->username }}" type="text" name="username" required>
+                             <input class="form-control form-control-lg" id="input1" value="{{ $user->username }}" type="text" name="username" pattern="[a-zA-Z0-9_]{3,50}" maxlength="50" required>
+                             <div class="invalid-feedback">
+                                 Kullanıcı adı 3-50 karakter arası olmalı ve sadece harf, rakam ve alt çizgi içerebilir.
+                             </div>
                              <small class="text-muted mt-1 d-block">
                                  <i class="fas fa-info-circle me-1"></i>Note: Same username should be used in the referral link.
                              </small>
@@ -549,13 +578,19 @@
                              <label class="form-label fw-semibold">
                                  <i class="fas fa-envelope me-2 text-success"></i>Email Address
                              </label>
-                             <input class="form-control form-control-lg" value="{{ $user->email }}" type="email" name="email" required>
+                             <input class="form-control form-control-lg" value="{{ $user->email }}" type="email" name="email" maxlength="100" required>
+                             <div class="invalid-feedback">
+                                 Lütfen geçerli bir e-posta adresi giriniz.
+                             </div>
                          </div>
                          <div class="col-md-6">
                              <label class="form-label fw-semibold">
                                  <i class="fas fa-phone me-2 text-success"></i>Phone Number
                              </label>
-                             <input class="form-control form-control-lg" value="{{ $user->phone }}" type="tel" name="phone" required>
+                             <input class="form-control form-control-lg" value="{{ $user->phone }}" type="tel" name="phone" pattern="[+]?[0-9\s\-\(\)]{10,20}" maxlength="20" required>
+                             <div class="invalid-feedback">
+                                 Lütfen geçerli bir telefon numarası giriniz.
+                             </div>
                          </div>
                      </div>
                      <div class="row g-4 mt-3">
@@ -590,8 +625,8 @@
                      <div class="row g-3 mt-4">
                          <div class="col-12">
                              <input type="hidden" name="user_id" value="{{ $user->id }}">
-                             <button type="submit" class="btn btn-success btn-lg w-100">
-                                 <i class="fas fa-save me-2"></i>Update User Details
+                             <button type="submit" class="btn btn-success btn-lg w-100" data-bs-toggle="tooltip" title="Kullanıcı bilgilerini günceller">
+                                 <i class="fas fa-save me-2"></i>Kullanıcı Bilgilerini Güncelle
                              </button>
                          </div>
                      </div>
@@ -629,8 +664,8 @@
                          </button>
                      </div>
                      <div class="col-6">
-                         <a class="btn btn-warning btn-lg w-100" href="{{ url('admin/dashboard/resetpswd') }}/{{ $user->id }}">
-                             <i class="fas fa-key me-2"></i>Reset Password
+                         <a class="btn btn-warning btn-lg w-100" href="{{ url('admin/dashboard/resetpswd') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısının şifresini gerçekten sıfırlamak istiyor musunuz? Yeni şifre: user01236')">
+                             <i class="fas fa-key me-2"></i>Şifreyi Sıfırla
                          </a>
                      </div>
                  </div>
@@ -654,15 +689,18 @@
                 <form role="form" method="post" action="{{route('tradingprogress')}}">
                     <div class="form-group">
                         <h5 class=" text-{{$text}}">Trading Signal %</h5>
-                        <input class="form-control bg-{{$bg}} text-{{$text}}"  value="{{$user->progress}}" type="number" name="progress" required>
+                        <input class="form-control bg-{{$bg}} text-{{$text}}" value="{{$user->progress}}" type="number" name="progress" min="0" max="100" step="0.1" required>
+                        <div class="invalid-feedback">
+                            Lütfen 0-100 arasında geçerli bir yüzde değeri giriniz.
+                        </div>
                          <small>Signal strength in %. For signal strength to show on user dashoard increase its value </small>
                     </div>
 
 
                     <div class="form-group">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        @csrf
                         <input type="hidden" name="user_id" value="{{$user->id}}">
-                        <input type="submit" class="btn btn-{{$text}}" value="Update Trading Signal">
+                        <input type="submit" class="btn btn-{{$text}}" value="Sinyal Gücünü Güncelle" data-bs-toggle="tooltip" title="Kullanıcı için sinyal gücünü belirler">
                     </div>
                 </form>
             </div>
@@ -697,8 +735,8 @@
                          </button>
                      </div>
                      <div class="col-6">
-                         <a class="btn btn-info btn-lg w-100" href="{{ url('admin/dashboard/switchuser') }}/{{ $user->id }}">
-                             <i class="fas fa-sign-in-alt me-2"></i>Switch Account
+                         <a class="btn btn-info btn-lg w-100" href="{{ url('admin/dashboard/switchuser') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısı olarak giriş yapmak istediğinizden emin misiniz? Yönetici paneline istediğiniz zaman dönebilirsiniz.')">
+                             <i class="fas fa-sign-in-alt me-2"></i>Kullanıcı Hesabına Geç
                          </a>
                      </div>
                  </div>
@@ -730,12 +768,15 @@
                         </select>
                     </div>
                     <div class=" form-group">
-                        <textarea placeholder="Type your message here" class="form-control  " name="notify" row="8"
-                            placeholder="Type your message here" required></textarea>
+                        <textarea placeholder="Bildirim mesajınızı yazınız" class="form-control" name="notify" rows="8"
+                            maxlength="500" required></textarea>
+                        <div class="invalid-feedback">
+                            Lütfen bir bildirim mesajı giriniz (maksimum 500 karakter).
+                        </div>
                     </div>
                     <div class=" form-group">
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                        <input type="submit" class="btn " value="Send">
+                        <input type="submit" class="btn btn-info" value="Gönder" data-bs-toggle="tooltip" title="Bildirim mesajını kullanıcı paneline gönderir">
                     </div>
                 </form>
             </div>
@@ -776,7 +817,7 @@
                     </div>
                     <div class=" form-group">
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                        <input type="submit" class="btn " value="Upgrade Plan">
+                        <input type="submit" class="btn btn-warning" value="Planı Yükselt" data-bs-toggle="tooltip" title="Kullanıcı için plan yükseltme durumunu ayarlar">
                     </div>
                 </form>
             </div>
@@ -819,7 +860,7 @@
                     </div>
                     <div class=" form-group">
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                        <input type="submit" class="btn " value="Upgrade Signal">
+                        <input type="submit" class="btn btn-info" value="Sinyali Yükselt" data-bs-toggle="tooltip" title="Kullanıcı için sinyal yükseltme durumunu ayarlar">
                     </div>
                 </form>
             </div>
@@ -852,8 +893,8 @@
                          </button>
                      </div>
                      <div class="col-6">
-                         <a class="btn btn-danger btn-lg w-100" href="{{ url('admin/dashboard/delsystemuser') }}/{{ $user->id }}">
-                             <i class="fas fa-trash me-2"></i>Yes, Delete Account
+                         <a class="btn btn-danger btn-lg w-100" href="{{ url('admin/dashboard/delsystemuser') }}/{{ $user->id }}" onclick="return confirm('Bu işlem geri alınamaz. {{ $user->name }} kullanıcısını gerçekten silmek istiyor musunuz?')">
+                             <i class="fas fa-trash me-2"></i>Evet, Hesabı Sil
                          </a>
                      </div>
                  </div>

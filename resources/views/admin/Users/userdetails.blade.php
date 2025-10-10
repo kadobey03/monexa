@@ -1,5 +1,8 @@
 <?php
-if (Auth('admin')->User()->dashboard_style == 'light') {
+$admin = Auth::guard('admin')->user();
+$dashboard_style = $admin->dashboard_style ?? 'dark';
+
+if ($dashboard_style === 'light') {
     $text = 'dark';
     $bg = 'light';
 } else {
@@ -26,8 +29,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         <h1 class="d-inline text-primary">{{ $user->name }}</h1><span></span>
                                         <div class="d-inline">
                                             <div class="float-right btn-group">
-                                                <a class="btn btn-primary btn-sm" href="{{ route('manageusers') }}"> <i
-                                                        class="fa fa-arrow-left"></i> geri</a> &nbsp;
+                                                <a class="btn btn-primary btn-sm" href="{{ route('manageusers') }}" data-bs-toggle="tooltip" title="Kullanıcılar sayfasına geri dön"> <i
+                                                        class="fa fa-arrow-left"></i> Geri</a> &nbsp;
                                                 <button type="button" class="btn btn-secondary dropdown-toggle btn-sm"
                                                     data-toggle="dropdown" data-display="static" aria-haspopup="true"
                                                     aria-expanded="false">
@@ -35,17 +38,17 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-lg-right">
                                                     <a class="dropdown-item"
-                                                    href="{{ route('loginactivity', $user->id) }}">Giriş Aktivitesi</a>
+                                                    href="{{ route('loginactivity', $user->id) }}" data-bs-toggle="tooltip" title="Kullanıcının giriş aktivitelerini gösterir">Giriş Aktivitesi</a>
                                                     @if ($user->status == null || $user->status == 'blocked' || $user->status == 'banned' || $user->status == 'disabled')
                                                         <a class="dropdown-item text-success"
-                                                            href="{{ url('admin/dashboard/uunblock') }}/{{ $user->id }}">
-                                                            <i class="fas fa-unlock mr-2"></i>Yasağı Kaldır / Hesabı Etkinleştir
-                                                        </a>
+                                                                href="{{ url('admin/dashboard/uunblock') }}/{{ $user->id }}" data-bs-toggle="tooltip" title="Engellenmiş kullanıcı hesabını etkinleştirir">
+                                                                <i class="fas fa-unlock mr-2"></i>Yasağı Kaldır / Hesabı Etkinleştir
+                                                            </a>
                                                     @else
                                                         <a class="dropdown-item text-warning"
-                                                            href="{{ url('admin/dashboard/uublock') }}/{{ $user->id }}">
-                                                            <i class="fas fa-ban mr-2"></i>Yasakla / Hesabı Devre Dışı Bırak
-                                                        </a>
+                                                                href="{{ url('admin/dashboard/uublock') }}/{{ $user->id }}" data-bs-toggle="tooltip" title="Kullanıcı hesabını engeller veya devre dışı bırakır">
+                                                                <i class="fas fa-ban mr-2"></i>Yasakla / Hesabı Devre Dışı Bırak
+                                                            </a>
                                                     @endif
                                                     <!--@if ($user->tradetype == 'Profit')-->
                                                     <!--    <a class="dropdown-item"-->
@@ -58,7 +61,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                     @if ($user->email_verified_at)
                                                     @else
                                                         <a href="{{ url('admin/dashboard/email-verify') }}/{{ $user->id }}"
-                                                            class="dropdown-item">E-postayı Doğrula</a>
+                                                                class="dropdown-item" data-bs-toggle="tooltip" title="Kullanıcının e-posta adresini doğrular">E-postayı Doğrula</a>
                                                     @endif
                                                     <a href="#" data-toggle="modal" data-target="#topupModal"
                                                         class="dropdown-item">Kredi/Debit</a>
@@ -251,7 +254,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         <div class="card border-0 shadow-sm h-100">
                                             <div class="card-body text-center">
                                                 <div class="mb-2">
-                                                    @if ($user->tradetype == 'Loss' || $user->trade_mode == null)
+                                                    @if ($user->tradetype == 'Loss' || $user->tradetype == null)
                                                         <i class="fas fa-arrow-down fa-2x text-danger"></i>
                                                     @else
                                                         <i class="fas fa-arrow-up fa-2x text-success"></i>
@@ -441,6 +444,50 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         </style>
 
         <script>
+            // Toast notification system
+            function showToast(message, type = 'success') {
+                const toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    },
+                    customClass: {
+                        popup: `swal-${type}`,
+                        title: `swal-${type}-title`,
+                        timerProgressBar: `swal-${type}-progress`
+                    }
+                });
+
+                toast.fire({
+                    icon: type,
+                    title: message
+                });
+            }
+
+            // Show loading spinner
+            function showLoading(button, originalText = null) {
+                if (!originalText) {
+                    originalText = button.innerHTML;
+                }
+                button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>İşleniyor...';
+                button.disabled = true;
+                button.dataset.originalText = originalText;
+                return originalText;
+            }
+
+            // Hide loading spinner
+            function hideLoading(button) {
+                const originalText = button.dataset.originalText || button.innerHTML;
+                button.innerHTML = originalText;
+                button.disabled = false;
+                delete button.dataset.originalText;
+            }
+
             // Add fade-in animation on page load
             document.addEventListener('DOMContentLoaded', function() {
                 const cards = document.querySelectorAll('.card');
@@ -448,6 +495,17 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     setTimeout(() => {
                         card.classList.add('fade-in');
                     }, index * 100);
+                });
+
+                // Form submission handlers with loading states
+                const forms = document.querySelectorAll('form');
+                forms.forEach(form => {
+                    form.addEventListener('submit', function(e) {
+                        const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+                        if (submitButton && !submitButton.hasAttribute('data-no-loading')) {
+                            showLoading(submitButton);
+                        }
+                    });
                 });
             });
 
@@ -457,5 +515,49 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 document.getElementById("s_c").value = selected;
                 console.log(selected);
             }
+
+            // Enhanced confirm dialogs
+            function confirmAction(message, callback, options = {}) {
+                const defaultOptions = {
+                    title: 'Emin misiniz?',
+                    text: message,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Evet, devam et!',
+                    cancelButtonText: 'İptal',
+                    customClass: {
+                        popup: 'enhanced-confirm-dialog',
+                        title: 'enhanced-confirm-title',
+                        content: 'enhanced-confirm-content'
+                    }
+                };
+
+                const finalOptions = { ...defaultOptions, ...options };
+
+                Swal.fire(finalOptions).then((result) => {
+                    if (result.isConfirmed && callback) {
+                        callback();
+                    }
+                });
+            }
+
+            // Initialize tooltips
+            document.addEventListener('DOMContentLoaded', function() {
+                // Initialize Bootstrap tooltips
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl)
+                });
+
+                // Re-initialize tooltips after modal opens
+                $('[data-toggle="modal"]').on('shown.bs.modal', function() {
+                    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                        return new bootstrap.Tooltip(tooltipTriggerEl)
+                    });
+                });
+            });
         </script>
     @endsection
