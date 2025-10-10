@@ -2,6 +2,14 @@
 @section('title', $title)
 @section('content')
 
+@php
+    // Get current user's first active plan ID for monitor
+    $monitorPlanId = DB::table('user_plans')
+        ->where('user', auth()->id())
+        ->where('activate', 'yes')
+        ->first()?->id ?? 1;
+@endphp
+
 <div class="min-h-screen bg-white dark:bg-gray-900" x-cloak>
     <!-- Simple Header -->
     <div class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
@@ -60,6 +68,13 @@
 
                 <!-- Filter Buttons -->
                 <div class="flex flex-wrap gap-2 mt-4">
+                    <a href="/dashboard/trade/monitor/{{ $monitorPlanId }}"
+                       class="inline-flex items-center gap-2 px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                        Monitör
+                    </a>
                     <button @click="$store.tradeFilter.value = 'all'"
                              :class="$store.tradeFilter.value === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400'"
                              class="px-3 py-2 rounded-lg text-sm font-medium transition-colors">
