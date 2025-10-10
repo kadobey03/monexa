@@ -1,23 +1,32 @@
 <?php
-// Nexa Landing Page - Alternative Design
-// Bu dosya mevcut sistem kodlarını değiştirmeden alternatif bir index sayfası sağlar
+/**
+ * Nexa Landing Page - Alternative Design
+ * Bu dosya mevcut sistem kodlarını değiştirmeden alternatif bir index sayfası sağlar
+ */
 
 // Laravel bootstrap dosyası dahil et
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Laravel uygulama instance'ı oluştur
-$app = require_once __DIR__ . '/../bootstrap/app.php';
+try {
+    // Laravel uygulama instance'ı oluştur
+    $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// Kernel'i yükle
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+    // Kernel'i yükle
+    $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-// Request oluştur
-$request = Illuminate\Http\Request::capture();
+    // Request oluştur
+    $request = Illuminate\Http\Request::capture();
 
-// Sistem ayarlarını al (Laravel Settings modeli kullanılacak)
-$settings = null;
-if (class_exists('\App\Models\Settings')) {
-    $settings = \App\Models\Settings::first();
+    // Sistem ayarlarını al (Laravel Settings modeli kullanılacak)
+    $settings = null;
+    if (class_exists('\App\Models\Settings')) {
+        $settings = \App\Models\Settings::first();
+    }
+
+} catch (Exception $e) {
+    // Hata durumunda varsayılan değerler
+    $settings = null;
+    $app_url = getenv('APP_URL') ?: 'http://localhost';
 }
 
 // Sayfa başlığı
@@ -27,7 +36,7 @@ $title = $settings ? $settings->site_name : 'Nexa Finans';
 $description = $settings ? $settings->site_desc : 'Modern finans platformu';
 
 // Ana sayfa URL'si
-$home_url = env('APP_URL', 'http://localhost');
+$home_url = isset($app_url) ? $app_url : (isset($app) ? env('APP_URL', 'http://localhost') : 'http://localhost');
 ?>
 
 <!DOCTYPE html>
