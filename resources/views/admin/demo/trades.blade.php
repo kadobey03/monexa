@@ -164,8 +164,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     @forelse($demoTrades as $trade)
                                     <tr>
                                         <td>{{ $trade->id }}</td>
-                                        <td>{{ $trade->user->name ?? 'N/A' }}</td>
-                                        <td>{{ $trade->user->email ?? 'N/A' }}</td>
+                                        <td>{{ $trade->user ? $trade->user->name : 'Kullanıcı Bulunamadı' }}</td>
+                                        <td>{{ $trade->user ? $trade->user->email : 'Belirtilmemiş' }}</td>
                                         <td>
                                             <span class="badge badge-info">{{ $trade->assets }}</span>
                                         </td>
@@ -204,7 +204,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                     </button>
                                                 </form>
                                             @endif
-                                            <a href="{{ route('admin.demo.users') }}?search={{ $trade->user->email ?? '' }}"
+                                            <a href="{{ route('admin.demo.users') }}?search={{ $trade->user ? $trade->user->email : '' }}"
                                                class="btn btn-info btn-sm m-1" title="View User">
                                                 <i class="fa fa-user"></i> View User
                                             </a>
