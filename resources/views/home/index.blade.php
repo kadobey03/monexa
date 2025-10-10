@@ -307,28 +307,31 @@
             @endphp
 
             @foreach($companies as $company)
-                <div class="card-dark p-4 hover:scale-105 transition-transform duration-300">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-8 rounded overflow-hidden border border-emerald-700/40">
-                                <img src="{{ $company['logo'] }}" alt="{{ $company['name'] }}" class="w-full h-full object-cover" loading="lazy"/>
-                            </div>
-                            <div>
-                                <div class="text-white font-semibold text-sm">{{ $company['name'] }}</div>
-                                <div class="text-emerald-300/60 text-xs">{{ $company['symbol'] }}</div>
+                <div class="card-dark hover:scale-105 transition-transform duration-300 overflow-hidden">
+                    <!-- Ana Resim -->
+                    <div class="relative h-32 bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 mb-3">
+                        <img src="{{ $company['logo'] }}" alt="{{ $company['name'] }}" class="w-full h-full object-cover" loading="lazy"/>
+
+                        <!-- Sol üst köşedeki logo/balon -->
+                        <div class="absolute top-2 left-2">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500/80 backdrop-blur-sm border border-emerald-400/50 flex items-center justify-center">
+                                <div class="w-4 h-4 rounded-full bg-white/90"></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <div class="text-2xl font-bold text-white">${{ number_format($company['price'], 2) }}</div>
-                        <div class="flex items-center gap-1 {{ $company['isPositive'] ? 'text-emerald-400' : 'text-red-400' }}">
-                            <i class="fas fa-{{ $company['isPositive'] ? 'caret-up' : 'caret-down' }} text-xs"></i>
-                            <span class="text-sm font-medium">{{ $company['change'] }}%</span>
-                        </div>
-                    </div>
+                    <!-- Kart bilgileri -->
+                    <div class="p-4">
+                        <div class="text-white font-semibold text-sm mb-2">{{ $company['name'] }}</div>
 
-                    <div class="text-center">
+                        <div class="mb-3">
+                            <div class="text-xl font-bold text-white">${{ number_format($company['price'], 2) }}</div>
+                            <div class="flex items-center gap-1 {{ $company['isPositive'] ? 'text-emerald-400' : 'text-red-400' }}">
+                                <i class="fas fa-{{ $company['isPositive'] ? 'caret-up' : 'caret-down' }} text-xs"></i>
+                                <span class="text-sm font-medium">{{ $company['change'] }}%</span>
+                            </div>
+                        </div>
+
                         <button class="btn-primary text-sm px-4 py-2 w-full">
                             İşlem Yap
                         </button>
