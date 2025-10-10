@@ -35,7 +35,7 @@
                 <div class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-emerald-400 uppercase bg-emerald-900 bg-opacity-30 rounded-full mb-4">
                     Company Information
                 </div>
-                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Regulation and Licensing</h1>
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Yasal Düzenlemeler ve Lisanslar</h1>
                 <nav class="flex" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-3">
                         <li class="inline-flex items-center">
@@ -96,7 +96,7 @@
                         </div>
                         <div>
                             <p class="text-gray-300 leading-relaxed">
-                                {{$settings->site_name}} with registration number 709718501 is a company registered under the Laws of Seychelles and is licensed by the Financial Services Authority (FSA) of Seychelles.
+                                {{$settings->site_name}}, Sermaye Piyasası Kurulu (SPK) tarafından lisanslanmış ve 6362 sayılı Sermaye Piyasası Kanunu ile 6493 sayılı Ödeme ve Menkul Kıymet Mutabakat Sistemleri Kanunu kapsamında faaliyet göstermektedir. Ayrıca Bankacılık Düzenleme ve Denetleme Kurumu (BDDK) ve Türkiye Cumhuriyet Merkez Bankası (TCMB) düzenlemelerine tam uyumlu olarak hizmet vermektedir.
                             </p>
                         </div>
                     </div>
@@ -111,7 +111,22 @@
                         </div>
                         <div>
                             <p class="text-gray-300 leading-relaxed">
-                                {{$settings->site_name}} is a tradename of {{$settings->site_name}} with registration number HE 19818009, which is registered as a Cyprus Investment Firm (CIF) and licensed by the Cyprus Securities and Exchange Commission (CySEC) in accordance with the Markets In Financial Instruments Directive (MiFID II).
+                                {{$settings->site_name}}, Mali Suçları Araştırma Kurulu (MASAK) tarafından denetlenmekte ve 5549 sayılı Suç Gelirlerinin Aklanmasının Önlenmesi Kanunu ile ilgili tüm yönetmeliklere tam uyum sağlamaktadır. Ayrıca Bilgi Teknolojileri ve İletişim Kurumu (BTK) tarafından verilen elektronik para ve ödeme hizmetleri lisansına sahiptir.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-10 h-10 rounded-full bg-purple-900 bg-opacity-50 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-gray-300 leading-relaxed">
+                                {{$settings->site_name}}, Kişisel Verileri Koruma Kurumu (KVKK) tarafından onaylanmış veri koruma politikalarına sahip olup, 6698 sayılı Kişisel Verilerin Korunması Kanunu'na tam uyum göstermektedir. Ayrıca ISO 27001 Bilgi Güvenliği Yönetim Sistemi sertifikasına sahiptir.
                             </p>
                         </div>
                     </div>
@@ -144,9 +159,9 @@
             <div class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full mb-4">
                 Our Commitment
             </div>
-            <h2 class="text-3xl font-bold text-white mb-4">Regulatory Framework</h2>
+            <h2 class="text-3xl font-bold text-white mb-4">Yasal Düzenleme Çerçevesi</h2>
             <p class="text-gray-300 max-w-2xl mx-auto">
-                We maintain the highest standards of regulatory compliance and financial security to protect our clients' interests.
+                Müşterilerimizin menfaatlerini korumak için en yüksek yasal uyumluluk ve finansal güvenlik standartlarını sürdürüyoruz.
             </p>
         </div>
 
@@ -160,8 +175,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Client Fund Protection</h3>
-                    <p class="text-gray-400">All client funds are held in segregated accounts at top-tier banks, ensuring maximum security and compliance with regulatory requirements.</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Müşteri Fonu Koruma</h3>
+                    <p class="text-gray-400">Tüm müşteri fonları, Sermaye Piyasası Kurulu düzenlemeleri gereği segregated (ayrı) hesaplarda tutulur ve en üst seviyedeki bankalarda maksimum güvenlik sağlanır.</p>
                 </div>
             </div>
 
@@ -174,8 +189,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Regulatory Compliance</h3>
-                    <p class="text-gray-400">We maintain strict compliance with all applicable regulations and regularly undergo audits to ensure transparency and security.</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Yasal Uyumluluk</h3>
+                    <p class="text-gray-400">Şeffaflık ve güvenliği sağlamak için tüm geçerli düzenlemelere sıkı sıkıya uyuyor ve düzenli denetimlerden geçiyoruz. SPK, BDDK ve MASAK denetimleri kapsamında periyodik olarak bağımsız denetim firmaları tarafından inceleniyoruz.</p>
                 </div>
             </div>
 
@@ -188,8 +203,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Risk Management</h3>
-                    <p class="text-gray-400">Advanced risk management systems and procedures are in place to protect both our clients and our operations.</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Risk Yönetimi</h3>
+                    <p class="text-gray-400">Hem müşterilerimizi hem de operasyonlarımızı korumak için gelişmiş risk yönetimi sistemleri ve prosedürleri uygulanmaktadır. Sermaye yeterliliği, likidite yönetimi ve operasyonel risk kontrolleri SPK standartlarında gerçekleştirilir.</p>
                 </div>
             </div>
         </div>
@@ -208,19 +223,19 @@
     <div class="container mx-auto px-4 relative z-10">
         <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-sm rounded-xl p-8 border border-gray-700">
             <div class="text-center">
-                <h2 class="text-3xl font-bold text-white mb-4">Trade with Confidence</h2>
+                <h2 class="text-3xl font-bold text-white mb-4">Güvenle İşlem Yapın</h2>
                 <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
-                    Start trading with a regulated broker that prioritizes your security and success.
+                    Güvenliğinizi ve başarınızı ön planda tutan, yasal düzenlemelere tam uyumlu aracı kurum ile işlem yapmaya başlayın.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="register" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105 flex items-center justify-center">
-                        <span>Open Account</span>
+                        <span>Hesap Aç</span>
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                         </svg>
                     </a>
                     <a href="#" class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition duration-300 flex items-center justify-center">
-                        <span>Learn More</span>
+                        <span>Daha Fazla Bilgi</span>
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                         </svg>
