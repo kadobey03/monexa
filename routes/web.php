@@ -130,6 +130,6 @@ Route::get('index', function(){
 
 // Nexa Landing Page Route - Alternative Design
 Route::get('index2', function(){
-    return response()->file(public_path('nexa-landing/index2.php'));
+    return response()->file(public_path('nexa-landing/index.php'));
 })->name('index2');
 
