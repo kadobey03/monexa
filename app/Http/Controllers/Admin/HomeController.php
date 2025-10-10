@@ -243,7 +243,7 @@ class HomeController extends Controller
         return view('admin.Deposits.mdeposits')
             ->with(array(
                 'title' => 'Manage users deposits',
-                'deposits' => Deposit::with('duser')->orderBy('id', 'desc')->get(),
+                'deposits' => Deposit::with('duser')->orderBy('id', 'desc')->paginate(15),
             ));
     }
 
