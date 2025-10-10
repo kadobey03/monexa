@@ -80,7 +80,7 @@
 
         <div class="hidden md:block relative md:mt-0">
             <div class="card-dark p-2 sm:p-3 md:p-5 animate-float max-w-xs sm:max-w-sm md:max-w-none mx-auto md:mx-0">
-                <img class="w-full h-auto rounded-xl aspect-video sm:aspect-[16/10] object-cover" loading="eager" decoding="async" alt="Trading platform screenshot" src="https://hayatestate.com/wp-content/uploads/2022/07/photo1658916471.jpeg"/>
+                <img class="w-full h-auto rounded-xl aspect-video sm:aspect-[16/10] object-cover" loading="eager" decoding="async" alt="Trading platform screenshot" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3"/>
             </div>
 
             <div class="absolute -bottom-6 -left-6 md:block">
@@ -261,7 +261,7 @@
                         'price' => '485.08',
                         'change' => '-1.01',
                         'isPositive' => false,
-                        'logo' => 'https://via.placeholder.com/60x40/10b981/ffffff?text=Baykar'
+                        'logo' => 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
                     ],
                     [
                         'name' => 'Koç Holding',
@@ -269,7 +269,7 @@
                         'price' => '473.78',
                         'change' => '+0.35',
                         'isPositive' => true,
-                        'logo' => 'https://via.placeholder.com/60x40/059669/ffffff?text=Koç'
+                        'logo' => 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
                     ],
                     [
                         'name' => 'Türkiye Petrolleri',
@@ -277,7 +277,7 @@
                         'price' => '68.41',
                         'change' => '+0.92',
                         'isPositive' => true,
-                        'logo' => 'https://via.placeholder.com/60x40/047857/ffffff?text=TPAO'
+                        'logo' => 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
                     ],
                     [
                         'name' => 'Aselsan',
@@ -285,7 +285,7 @@
                         'price' => '173.44',
                         'change' => '-0.43',
                         'isPositive' => false,
-                        'logo' => 'https://via.placeholder.com/60x40/065f46/ffffff?text=ASEL'
+                        'logo' => 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
                     ],
                     [
                         'name' => 'Havelsan',
@@ -293,7 +293,7 @@
                         'price' => '337.97',
                         'change' => '+1.99',
                         'isPositive' => true,
-                        'logo' => 'https://via.placeholder.com/60x40/064e3b/ffffff?text=HVL'
+                        'logo' => 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
                     ],
                     [
                         'name' => 'Togg',
@@ -301,7 +301,7 @@
                         'price' => '388.28',
                         'change' => '+1.42',
                         'isPositive' => true,
-                        'logo' => 'https://via.placeholder.com/60x40/166534/ffffff?text=TOGG'
+                        'logo' => 'https://images.unsplash.com/photo-1549317336-206569e8475c?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
                     ]
                 ];
             @endphp
