@@ -11,7 +11,6 @@ class User_plans extends Model
 
     protected $fillable = [
         'plan',
-        'user',
         'amount',
         'activate',
         'inv_duration',
@@ -36,20 +35,16 @@ class User_plans extends Model
         return $this->belongsTo(Plans::class, 'plan', 'id');
     }
 
-    public function duser(){
-    	return $this->belongsTo(User::class, 'user', 'id');
-    }
-
     public function user(){
         return $this->belongsTo(User::class, 'user', 'id');
     }
 
     public function getUserNameAttribute(){
-        return $this->user ? $this->user->name : 'Kullanıcı Bulunamadı';
+        return optional($this->user)->name ?? 'Kullanıcı Bulunamadı';
     }
 
     public function getUserEmailAttribute(){
-        return $this->user ? $this->user->email : 'Belirtilmemiş';
+        return optional($this->user)->email ?? 'Belirtilmemiş';
     }
 
 }
