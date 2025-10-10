@@ -315,6 +315,33 @@
 
     {{-- Modern Modals --}}
     <!-- Kullanıcı Ekle Modal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modal açılışını dinle
+            const addUserBtn = document.querySelector('[data-bs-target="#adduser"]');
+            const addUserModal = document.getElementById('adduser');
+
+            if (addUserBtn && addUserModal) {
+                addUserBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const modal = new bootstrap.Modal(addUserModal);
+                    modal.show();
+                });
+            }
+
+            // Kullanıcı başarıyla eklendiğinde modal'ı kapat
+            document.addEventListener('livewire:init', function () {
+                Livewire.on('userAdded', function() {
+                    if (addUserModal) {
+                        const modal = bootstrap.Modal.getInstance(addUserModal);
+                        if (modal) {
+                            modal.hide();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
     <div class="modal fade" tabindex="-1" id="adduser" aria-labelledby="addUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">

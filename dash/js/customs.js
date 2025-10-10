@@ -59,10 +59,19 @@ let optionTitle = document.getElementById("optionTitle");
 let optionInput = document.getElementById("optionInput");
 let optionSelected = document.getElementById("optionSelected");
 
-// Null kontrolleri ve event listener
+// Null kontrolleri ve event listener - daha kapsamlı kontrol
 if (trademode && msgbox && optionTitle && optionInput && optionSelected) {
+    console.log('Tüm gerekli DOM elementleri bulundu');
     trademode.addEventListener("change", tradeSizeMsgs);
     optionSelected.style.display = "none";
+} else {
+    console.warn('Bazı DOM elementleri bulunamadı:', {
+        trademode: !!trademode,
+        msgbox: !!msgbox,
+        optionTitle: !!optionTitle,
+        optionInput: !!optionInput,
+        optionSelected: !!optionSelected
+    });
 }
 
 function tradeSizeMsgs() {
