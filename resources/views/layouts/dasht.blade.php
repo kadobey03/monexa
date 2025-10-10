@@ -130,14 +130,49 @@
       :class="{ 'dark': darkMode }"
       class="dark text-gray-100 bg-gray-900" x-cloak>
       <style>
-       body {
-    overflow-x: hidden;
-  }
-
-  [x-cloak] {
-    display: none !important;
-  }
-        </style>
+          body {
+      overflow-x: hidden;
+    }
+  
+    [x-cloak] {
+      display: none !important;
+    }
+  
+    /* Custom CSS Classes for Dark Theme */
+    .card-dark {
+      @apply bg-gray-800/50 border border-gray-700/50 rounded-lg backdrop-blur-sm;
+    }
+  
+    .btn-primary {
+      @apply bg-primary hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200;
+    }
+  
+    .btn-secondary {
+      @apply bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200;
+    }
+  
+    .heading-accent {
+      @apply text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400;
+    }
+  
+    .animate-ticker {
+      animation: ticker 60s linear infinite;
+    }
+  
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+  
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+  
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+          </style>
 <!-- Professional Trading Navbar -->
 <nav x-data="{
   open: false,

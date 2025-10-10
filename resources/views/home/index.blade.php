@@ -215,4 +215,128 @@
     </div>
 </section>
 
+<!-- Türkiye Piyasaları Section -->
+<section class="py-12 bg-gray-800">
+    <div class="container mx-auto px-4 max-w-7xl">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl md:text-3xl font-extrabold heading-accent mb-4">Türkiye Piyasaları</h2>
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-lg md:text-xl font-semibold text-white mb-4">Bu Şirketlerde İşlem Yapabilirsiniz</h3>
+                <p class="text-emerald-100/80 mb-6">
+                    Baykar, Koç, Türkiye Petrolleri, Aselsan, Havelsan ve Togg gibi yerli liderlerde pozisyon açın.
+                    Her yatırım ülke ekonomisine katkıdır; destek olurken kazanç potansiyelini keşfedin.
+                    Bağımsız uzmanlarla çalışarak bilinçli kararlar verin.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="card-dark p-5">
+                        <div class="text-emerald-300 font-semibold mb-2">Devlete Destek</div>
+                        <div class="text-emerald-100/70 text-sm">
+                            Yerli şirketlere yatırım ekonomiye kaynak sağlar, sürdürülebilir büyümeye katkı sunar.
+                        </div>
+                    </div>
+                    <div class="card-dark p-5">
+                        <div class="text-emerald-300 font-semibold mb-2">Desteklerken Kazanç</div>
+                        <div class="text-emerald-100/70 text-sm">
+                            Uzun vadeli değer yaratımından faydalanırken portföyünüzü büyütme fırsatı.
+                        </div>
+                    </div>
+                    <div class="card-dark p-5">
+                        <div class="text-emerald-300 font-semibold mb-2">Bağımsız Uzmanlar</div>
+                        <div class="text-emerald-100/70 text-sm">
+                            Araştırma ve risk yönetiminde uzman ekiple objektif bakış açısı.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Şirket Kartları -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            @php
+                $companies = [
+                    [
+                        'name' => 'Baykar',
+                        'symbol' => 'BAYKAR',
+                        'price' => '485.08',
+                        'change' => '-1.01',
+                        'isPositive' => false,
+                        'logo' => 'https://via.placeholder.com/60x40/10b981/ffffff?text=Baykar'
+                    ],
+                    [
+                        'name' => 'Koç Holding',
+                        'symbol' => 'KCHOL',
+                        'price' => '473.78',
+                        'change' => '+0.35',
+                        'isPositive' => true,
+                        'logo' => 'https://via.placeholder.com/60x40/059669/ffffff?text=Koç'
+                    ],
+                    [
+                        'name' => 'Türkiye Petrolleri',
+                        'symbol' => 'TPAO',
+                        'price' => '68.41',
+                        'change' => '+0.92',
+                        'isPositive' => true,
+                        'logo' => 'https://via.placeholder.com/60x40/047857/ffffff?text=TPAO'
+                    ],
+                    [
+                        'name' => 'Aselsan',
+                        'symbol' => 'ASELS',
+                        'price' => '173.44',
+                        'change' => '-0.43',
+                        'isPositive' => false,
+                        'logo' => 'https://via.placeholder.com/60x40/065f46/ffffff?text=ASEL'
+                    ],
+                    [
+                        'name' => 'Havelsan',
+                        'symbol' => 'HAVELSAN',
+                        'price' => '337.97',
+                        'change' => '+1.99',
+                        'isPositive' => true,
+                        'logo' => 'https://via.placeholder.com/60x40/064e3b/ffffff?text=HVL'
+                    ],
+                    [
+                        'name' => 'Togg',
+                        'symbol' => 'TOGG',
+                        'price' => '388.28',
+                        'change' => '+1.42',
+                        'isPositive' => true,
+                        'logo' => 'https://via.placeholder.com/60x40/166534/ffffff?text=TOGG'
+                    ]
+                ];
+            @endphp
+
+            @foreach($companies as $company)
+                <div class="card-dark p-4 hover:scale-105 transition-transform duration-300">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-8 rounded overflow-hidden border border-emerald-700/40">
+                                <img src="{{ $company['logo'] }}" alt="{{ $company['name'] }}" class="w-full h-full object-cover" loading="lazy"/>
+                            </div>
+                            <div>
+                                <div class="text-white font-semibold text-sm">{{ $company['name'] }}</div>
+                                <div class="text-emerald-300/60 text-xs">{{ $company['symbol'] }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="text-2xl font-bold text-white">${{ number_format($company['price'], 2) }}</div>
+                        <div class="flex items-center gap-1 {{ $company['isPositive'] ? 'text-emerald-400' : 'text-red-400' }}">
+                            <i class="fas fa-{{ $company['isPositive'] ? 'caret-up' : 'caret-down' }} text-xs"></i>
+                            <span class="text-sm font-medium">{{ $company['change'] }}%</span>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn-primary text-sm px-4 py-2 w-full">
+                            İşlem Yap
+                        </button>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
 @endsection
