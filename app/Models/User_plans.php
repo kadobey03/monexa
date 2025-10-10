@@ -44,4 +44,12 @@ class User_plans extends Model
         return $this->belongsTo(User::class, 'user', 'id');
     }
 
+    public function getUserNameAttribute(){
+        return $this->user ? $this->user->name : 'Kullanıcı Bulunamadı';
+    }
+
+    public function getUserEmailAttribute(){
+        return $this->user ? $this->user->email : 'Belirtilmemiş';
+    }
+
 }

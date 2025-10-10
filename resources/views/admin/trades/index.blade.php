@@ -314,8 +314,8 @@
                                                             <i class="fas fa-user text-white fa-lg"></i>
                                                         </div>
                                                         <div>
-                                                            <strong class="text-dark">{{ $trade->user->name ?? 'Belirtilmemiş' }}</strong><br>
-                                                            <small class="text-muted">{{ $trade->user->email ?? 'Belirtilmemiş' }}</small>
+                                                            <strong class="text-dark">{{ $trade->user_name ?? 'Kullanıcı Bulunamadı' }}</strong><br>
+                                                            <small class="text-muted">{{ $trade->user_email ?? 'Belirtilmemiş' }}</small>
                                                         </div>
                                                     </div>
                                                 </td>

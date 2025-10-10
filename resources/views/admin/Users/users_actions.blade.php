@@ -28,11 +28,11 @@
                              </label>
                              <select class="form-select form-select-lg" name="type" required>
                                  <option value="" selected disabled>Hesap Türünü Seçin</option>
-                                 <option value="Bonus">💰 Bonus</option>
-                                 <option value="Profit">📈 Profit</option>
-                                 <option value="Ref_Bonus">👥 Referral Bonus</option>
-                                 <option value="balance">💳 Account Balance</option>
-                                 <option value="Deposit">🏦 Deposit</option>
+                        <option value="Bonus">💰 Prim</option>
+<option value="Profit">📈 Kâr</option>
+<option value="Ref_Bonus">👥 Referans Primi</option>
+<option value="balance">💳 Hesap Bakiyesi</option>
+<option value="Deposit">🏦 Yatırılan Tutar</option>
                              </select>
                          </div>
                      </div>
@@ -43,8 +43,9 @@
                              </label>
                              <select class="form-select form-select-lg" name="t_type" required>
                                  <option value="" selected disabled>İşlem Türünü Seçin</option>
-                                 <option value="Credit">➕ Credit (Add Funds)</option>
-                                 <option value="Debit">➖ Debit (Subtract Funds)</option>
+<option value="Credit">➕ Bakiye Ekle</option>
+<option value="Debit">➖ Bakiye Azalt</option>
+
                              </select>
                              <div class="alert alert-warning mt-2 py-2">
                                  <small><i class="fas fa-exclamation-triangle me-1"></i> <strong>Not:</strong> Depozitoları borçlandıramazsınız</small>
@@ -81,12 +82,12 @@
                  <form role="form" method="post" action="{{ route('numberoftrades') }}">
                      @csrf
                      {{-- <div class="form-group">
-                         <h5 class=" ">On/Off</h5>
+                         <h5 class=" ">Aktif/Deaktif</h5>
                          <select class="form-control" name="taxtype">
                              <option value="" selected disabled></option>
 
-                                 <option value="on">On</option>
-                                 <option value="off">Off</option>
+                                 <option value="on">Aktif</option>
+                                 <option value="off">Kapalı</option>
 
                          </select>
                      </div> --}}
@@ -128,13 +129,13 @@
                          <select class="form-control" name="taxtype">
                              <option value="" selected disabled></option>
 
-                                 <option value="on">On</option>
-                                 <option value="off">Off</option>
+                                 <option value="on">Açık</option>
+                                 <option value="off">Kapalı</option>
 
                          </select>
                      </div>
                      <div class="form-group">
-                         <h5 class=" ">Amount</h5>
+                         <h5 class=" ">Miktar</h5>
                          <input type="number" name="taxamount" class="form-control" min="0" max="100" step="0.01" placeholder="0.00">
                          <div class="invalid-feedback">
                              Lütfen 0-100 arasında geçerli bir vergi oranı giriniz.
@@ -188,8 +189,8 @@
                          <select class="form-control  " name="withdrawal_code">
 
 
-                                 <option value="on">On</option>
-                                  <option value="off">Off</option>
+                                 <option value="on">Açık</option>
+                                  <option value="off">Kapalı</option>
 
                          </select>
                      </div>
