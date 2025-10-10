@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>{{$title}}</title>
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" <head>
-<meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{ asset('storage/app/public/' . $settings->favicon) }}" rel="icon" type="image/x-icon" />
     <!-- Inter Font -->
