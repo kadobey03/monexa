@@ -19,6 +19,16 @@ class TradesController extends Controller
      */
     public function index(Request $request)
     {
+        // Debug: Check if user relationship is working
+        $debugTrade = User_plans::first();
+        if ($debugTrade) {
+            \Log::info('User_plans debug', [
+                'trade_user_column' => $debugTrade->user,
+                'trade_user_relationship' => $debugTrade->user()->exists() ? 'exists' : 'not exists',
+                'trade_user_data' => $debugTrade->user ? $debugTrade->user->toArray() : null
+            ]);
+        }
+
         $query = User_plans::with('user');
 
         // Apply filters
@@ -305,7 +315,7 @@ class TradesController extends Controller
                                     ->selectRaw('COUNT(user_plans.id) as trade_count')
                                     ->selectRaw('SUM(user_plans.amount) as total_volume')
                                     ->selectRaw('SUM(user_plans.profit_earned) as total_profit')
-                                    ->join('user_plans', 'users.id', '=', 'user_plans.user_id')
+                                    ->join('user_plans', 'users.id', '=', 'user_plans.user')
                                     ->groupBy('users.id')
                                     ->orderBy('total_volume', 'desc')
                                     ->limit(10)
