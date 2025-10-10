@@ -270,19 +270,6 @@
                         </div>
                     </div>
 
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" @click.away="open = false" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
-                            <span>Sistem</span>
-                            <svg class="ml-2 h-4 w-4 text-gray-400 group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-300 ring-1 ring-black ring-opacity-5 z-50" style="display: none;">
-                            <a href="trade" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Ticaret</a>
-                            <a href="copy" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Kopya Ticaret</a>
-                            <a href="automate" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Otomatik Ticaret</a>
-                        </div>
-                    </div>
 
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" @click.away="open = false" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
@@ -390,19 +377,6 @@
                     </div>
                 </div>
 
-                <div x-data="{ open: false }" class="py-1">
-                    <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
-                        <span>Sistem</span>
-                        <svg class="h-4 w-4 text-gray-400" :class="{'transform rotate-180': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                    <div x-show="open" class="pl-4">
-                        <a href="trade" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Ticaret</a>
-                        <a href="copy" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Kopya Ticaret</a>
-                        <a href="automate" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Otomatik Ticaret</a>
-                    </div>
-                </div>
 
                 <div x-data="{ open: false }" class="py-1">
                     <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
