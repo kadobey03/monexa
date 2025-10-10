@@ -67,22 +67,6 @@ if ($dashboard_style === 'light') {
                                                         class="dropdown-item">Kredi/Debit</a>
 
 
-                                                        @if ($user->signal_status == 'on')
-                                                        <a href="#" data-toggle="modal" data-target="#ugpradeSignalStatus"
-                                                        class="dropdown-item">Sinyal Yükseltme Durumunu Kapat</a>
-                                                        @else
-                                                        <a href="#" data-toggle="modal" data-target="#ugpradeSignalStatus"
-                                                        class="dropdown-item">Sinyal Yükseltme Durumunu Aç</a>
-                                                        @endif
-
-
-                                                        @if ($user->plan_status=='on')
-                                                        <a href="#" data-toggle="modal" data-target="#ugpradePlanStatus"
-                                                        class="dropdown-item">Plan Yükseltme Durumunu Kapat</a>
-                                                        @else
-                                                        <a href="#" data-toggle="modal" data-target="#ugpradePlanStatus"
-                                                        class="dropdown-item">Plan Yükseltme Durumunu Aç</a>
-                                                        @endif
 
                                                          {{-- <a href="#" data-toggle="modal" data-target="#userTax"
                                                         class="dropdown-item">On/Off Tax </a> --}}
@@ -96,9 +80,6 @@ if ($dashboard_style === 'light') {
                                                         <a href="#" data-toggle="modal" data-target="#Nostrades"
                                                         class="dropdown-item">Para Çekme İçin İşlem Sayısı Belirle </a>
 
-                                                        <a href="#" data-toggle="modal" data-target="#Planhistory"
-                                                        class="dropdown-item">Plan Geçmişi Ekle</a>
-                                                        <a href="#" data-toggle="modal" data-target="#tradingProgressModal"  class="dropdown-item">Sinyal Gücü</a>
                                                <a href="#" data-toggle="modal" data-target="#withdrawalcode"
                                                         class="dropdown-item">Müşteri İçin Para Çekme Kodu Belirle </a>
                                                     <a href="#" data-toggle="modal" data-target="#resetpswdModal"
@@ -154,23 +135,6 @@ if ($dashboard_style === 'light') {
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-3">
-                                        <div class="card border-0 shadow-lg h-100 hover-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-                                            <div class="card-body text-center">
-                                                <div class="mb-3">
-                                                    <i class="fas fa-signal fa-2x" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));"></i>
-                                                </div>
-                                                <h6 class="mb-2 opacity-75 small text-uppercase" style="letter-spacing: 0.5px;">Mevcut Sinyal</h6>
-                                                <div class="mt-2">
-                                                    @if($user->signals==Null)
-                                                        <span class="badge bg-white bg-opacity-25 px-3 py-2 small fw-semibold" style="backdrop-filter: blur(10px);">Henüz Sinyal Yok</span>
-                                                    @else
-                                                        <span class="badge bg-white bg-opacity-25 px-3 py-2 small fw-semibold" style="backdrop-filter: blur(10px);">{{ $user->signals }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-md-3">
                                         <div class="card border-0 shadow-lg h-100 hover-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
                                             <div class="card-body text-center">
                                                 <div class="mb-3">
@@ -187,27 +151,7 @@ if ($dashboard_style === 'light') {
 
                                 <!-- User Plans & Trades Section - Enhanced Design -->
                                 <div class="row g-3 mb-4">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="card border-0 shadow-lg h-100 hover-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center mb-3">
-                                                    <i class="fas fa-chart-pie fa-lg me-3" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));"></i>
-                                                    <h6 class="mb-0 fw-semibold">Müşteri Planları</h6>
-                                                </div>
-                                                @if ($user->plan != null)
-                                                    <a class="btn btn-light btn-sm w-100 fw-semibold" href="{{ route('user.investments', $user->id) }}" style="box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                                                        <i class="fas fa-eye me-2"></i>Planları Görüntüle
-                                                    </a>
-                                                @else
-                                                    <div class="text-center py-4">
-                                                        <i class="fas fa-inbox fa-3x mb-3 opacity-75" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));"></i>
-                                                        <p class="mb-0 small opacity-75">Aktif Plan Yok</p>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-12">
                                         <div class="card border-0 shadow-lg h-100 hover-card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white;">
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center mb-3">
