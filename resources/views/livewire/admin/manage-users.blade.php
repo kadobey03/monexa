@@ -329,7 +329,7 @@
                 });
             }
 
-            // Kullanıcı başarıyla eklendiğinde modal'ı kapat
+            // Kullanıcı başarıyla eklendiğinde modal'ı kapat ve başarı mesajı göster
             document.addEventListener('livewire:init', function () {
                 Livewire.on('userAdded', function() {
                     if (addUserModal) {
@@ -337,6 +337,22 @@
                         if (modal) {
                             modal.hide();
                         }
+                    }
+                });
+
+                // Başarı mesajını göster
+                Livewire.on('showSuccessMessage', function() {
+                    const successAlert = document.getElementById('success-alert');
+                    const successMessageText = document.getElementById('success-message-text');
+
+                    if (successAlert && successMessageText) {
+                        successMessageText.textContent = 'Kullanıcı başarıyla oluşturuldu!';
+                        successAlert.style.display = 'block';
+
+                        // 5 saniye sonra otomatik gizle
+                        setTimeout(function() {
+                            successAlert.style.display = 'none';
+                        }, 5000);
                     }
                 });
             });
@@ -444,6 +460,77 @@
                                         <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
                                     </div>
                                 @enderror
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-mobile-alt me-2 text-primary"></i>Cep Telefonu (İsteğe bağlı)
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-phone text-muted"></i>
+                                    </span>
+                                    <input type="tel" class="form-control form-control-lg border-0 shadow-sm @error('mobile_number') is-invalid @enderror"
+                                        name="mobile_number" wire:model.defer='mobile_number'
+                                        placeholder="+90 5XX XXX XX XX">
+                                </div>
+                                @error('mobile_number')
+                                    <div class="text-danger mt-1">
+                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
+                                    </div>
+                                @enderror
+                                <div class="form-text">
+                                    <small class="text-muted">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Ülke kodu ile birlikte girin (örnek: +90 5XX XXX XX XX)
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-birthday-cake me-2 text-primary"></i>Doğum Tarihi (İsteğe bağlı)
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-calendar text-muted"></i>
+                                    </span>
+                                    <input type="date" class="form-control form-control-lg border-0 shadow-sm @error('date_of_birth') is-invalid @enderror"
+                                        name="date_of_birth" wire:model.defer='date_of_birth'>
+                                </div>
+                                @error('date_of_birth')
+                                    <div class="text-danger mt-1">
+                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
+                                    </div>
+                                @enderror
+                                <div class="form-text">
+                                    <small class="text-muted">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Doğum tarihi bilgisi profil için kullanılır
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-flag me-2 text-primary"></i>Uyruk (İsteğe bağlı)
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-globe text-muted"></i>
+                                    </span>
+                                    <input type="text" class="form-control form-control-lg border-0 shadow-sm @error('nationality') is-invalid @enderror"
+                                        name="nationality" wire:model.defer='nationality'
+                                        placeholder="Türk">
+                                </div>
+                                @error('nationality')
+                                    <div class="text-danger mt-1">
+                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
+                                    </div>
+                                @enderror
+                                <div class="form-text">
+                                    <small class="text-muted">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Uyruk bilgisini girin (örnek: Türk)
+                                    </small>
+                                </div>
                             </div>
                         </div>
                         <div class="d-grid mt-4">

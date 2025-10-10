@@ -42,6 +42,9 @@ class ManageUsers extends Component
     public $email;
     public $password;
     public $password_confirmation;
+    public $mobile_number;
+    public $date_of_birth;
+    public $nationality;
     public $message;
     public $subject;
     public $plan;
@@ -50,6 +53,7 @@ class ManageUsers extends Component
     public $toptype;
     public $topcolumn = "Bonus";
     public $userTypes = "All";
+    public $success = '';
 
     protected $rules = [
         'fullname' => 'required|max:255',
@@ -57,6 +61,9 @@ class ManageUsers extends Component
         'email' => 'required|email|max:255|unique:users',
         'password' => 'required|max:100',
         'password_confirmation' => 'required|same:password',
+        'mobile_number' => 'nullable|string|max:20',
+        'date_of_birth' => 'nullable|date|before:today',
+        'nationality' => 'nullable|string|max:100',
     ];
 
 
@@ -110,6 +117,9 @@ class ManageUsers extends Component
             'ref_by' => NULL,
             'username' => $this->username,
             'password' => Hash::make($this->password),
+            'phone' => $this->mobile_number ?: NULL,
+            'dob' => $this->date_of_birth ?: NULL,
+            'nationality' => $this->nationality ?: NULL,
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
@@ -124,13 +134,15 @@ class ManageUsers extends Component
             ]);
 
         // Success message and form reset
+        $this->success = 'Kullanıcı başarıyla oluşturuldu!';
         session()->flash('success', 'Kullanıcı başarıyla oluşturuldu!');
 
         // Reset form fields
-        $this->reset(['username', 'fullname', 'email', 'password', 'password_confirmation']);
+        $this->reset(['username', 'fullname', 'email', 'password', 'password_confirmation', 'mobile_number', 'date_of_birth', 'nationality']);
 
-        // Emit event to close modal (if needed)
+        // Emit event to close modal and show success message
         $this->dispatch('userAdded');
+        $this->dispatch('showSuccessMessage');
     }
 
     public function addRoi()
