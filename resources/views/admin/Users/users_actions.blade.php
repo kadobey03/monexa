@@ -1,49 +1,67 @@
  <!-- Top Up Modal -->
  <div id="topupModal" class="modal fade" role="dialog">
-     <div class="modal-dialog">
+     <div class="modal-dialog modal-lg modal-dialog-centered">
          <!-- Modal content-->
          <div class="modal-content">
-             <div class="modal-header ">
-                 <h4 class="modal-title ">Credit/Debit {{ $user->name }} account.</strong></h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
+             <div class="modal-header bg-primary text-white">
+                 <h4 class="modal-title">
+                     <i class="fas fa-wallet me-2"></i>{{ $user->name }} Hesabına Kredi/Debit Uygula
+                 </h4>
+                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body ">
+             <div class="modal-body p-4">
                  <form method="post" action="{{ route('topup') }}">
                      @csrf
-                     <div class="form-group">
-                         <input class="form-control  " placeholder="Enter amount" type="text" name="amount"
-                             required>
+                     <div class="row g-4">
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-dollar-sign me-2 text-primary"></i>Tutar
+                             </label>
+                             <input class="form-control form-control-lg" placeholder="Enter amount" type="text" name="amount" required>
+                         </div>
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-exchange-alt me-2 text-primary"></i>Hesap Türü
+                             </label>
+                             <select class="form-select form-select-lg" name="type" required>
+                                 <option value="" selected disabled>Select Account Type</option>
+                                 <option value="Bonus">💰 Bonus</option>
+                                 <option value="Profit">📈 Profit</option>
+                                 <option value="Ref_Bonus">👥 Referral Bonus</option>
+                                 <option value="balance">💳 Account Balance</option>
+                                 <option value="Deposit">🏦 Deposit</option>
+                             </select>
+                         </div>
                      </div>
-                     <div class="form-group">
-                         <h5 class="">Select where to Credit/Debit</h5>
-                         <select class="form-control  " name="type" required>
-                             <option value="" selected disabled>Select Column</option>
-                             <option value="Bonus">Bonus</option>
-                             <option value="Profit">Profit</option>
-                             <option value="Ref_Bonus">Ref_Bonus</option>
-                             <option value="balance">Account Balance</option>
-                             <option value="Deposit">Deposit</option>
-                         </select>
+                     <div class="row g-4 mt-3">
+                         <div class="col-12">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-plus-circle me-2 text-primary"></i>İşlem Türü
+                             </label>
+                             <select class="form-select form-select-lg" name="t_type" required>
+                                 <option value="" selected disabled>Select Transaction Type</option>
+                                 <option value="Credit">➕ Credit (Add Funds)</option>
+                                 <option value="Debit">➖ Debit (Subtract Funds)</option>
+                             </select>
+                             <div class="alert alert-warning mt-2 py-2">
+                                 <small><i class="fas fa-exclamation-triangle me-1"></i> <strong>Not:</strong> Depozitoları borçlandıramazsınız</small>
+                             </div>
+                         </div>
                      </div>
-                     <div class="form-group">
-                         <h5 class="">Select credit to add, debit to subtract.</h5>
-                         <select class="form-control  " name="t_type" required>
-                             <option value="">Select type</option>
-                             <option value="Credit">Credit</option>
-                             <option value="Debit">Debit</option>
-                         </select>
-                         <small> <b>NOTE:</b> You cannot debit deposit</small>
-                     </div>
-                     <div class="form-group">
-                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                         <input type="submit" class="btn " value="Submit">
+                     <div class="row g-3 mt-4">
+                         <div class="col-12">
+                             <input type="hidden" name="user_id" value="{{ $user->id }}">
+                             <button type="submit" class="btn btn-primary btn-lg w-100">
+                                 <i class="fas fa-check me-2"></i>İşlemi Gerçekleştir
+                             </button>
+                         </div>
                      </div>
                  </form>
              </div>
          </div>
      </div>
  </div>
- <!-- /deposit for a plan Modal -->
+ <!-- /Top Up Modal -->
 
 
 
@@ -53,7 +71,7 @@
          <!-- Modal content-->
          <div class="modal-content">
              <div class="modal-header ">
-                 <h4 class="modal-title ">Set number of trade before withdrawal for {{ $user->name }} {{ $user->l_name }} </h4>
+                 <h4 class="modal-title ">{{ $user->name }} {{ $user->l_name }} için para çekme öncesi işlem sayısı belirle </h4>
                  <button type="button" class="close " data-dismiss="modal">&times;</button>
              </div>
              <div class="modal-body ">
@@ -70,12 +88,12 @@
                          </select>
                      </div> --}}
                      <div class="form-group">
-                         <h5 class=" ">Number of trades before withdrawal</h5>
+                         <h5 class=" ">Para çekme öncesi işlem sayısı</h5>
                          <input type="number" name="numberoftrades" class="form-control  " placeholder="{{ $user->numberoftrades }}">
                      </div>
 
                      <div class="form-group">
-                         <input type="submit" class="btn " value="Set Number of Trades for Withdrawal">
+                         <input type="submit" class="btn " value="Para Çekme İçin İşlem Sayısı Belirle">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -93,14 +111,14 @@
          <!-- Modal content-->
          <div class="modal-content">
              <div class="modal-header ">
-                 <h4 class="modal-title ">On/ Off User Tax  for {{ $user->name }} {{ $user->l_name }} </h4>
+                 <h4 class="modal-title ">{{ $user->name }} {{ $user->l_name }} için kullanıcı vergisini aç/kapat </h4>
                  <button type="button" class="close " data-dismiss="modal">&times;</button>
              </div>
              <div class="modal-body ">
                  <form role="form" method="post" action="{{ route('usertax') }}">
                      @csrf
                      <div class="form-group">
-                         <h5 class=" ">On/Off</h5>
+                         <h5 class=" ">Açık/Kapalı</h5>
                          <select class="form-control" name="taxtype">
                              <option value="" selected disabled></option>
 
@@ -115,7 +133,7 @@
                      </div>
 
                      <div class="form-group">
-                         <input type="submit" class="btn " value="Add User Tax">
+                         <input type="submit" class="btn " value="Kullanıcı Vergisi Ekle">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -132,13 +150,13 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header ">
-                <h4 class="modal-title ">Clear Account</strong></h4>
+                <h4 class="modal-title ">Hesabı Temizle</strong></h4>
                 <button type="button" class="close " data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body ">
-                <p class="">You are clearing account for {{ $user->name }} to {{ $user->currency }}0.00
+                <p class="">{{ $user->name }} kullanıcısının hesabını {{ $user->currency }}0.00 olarak temizliyorsunuz
                 </p>
-                <a class="btn " href="{{ url('admin/dashboard/clearacct') }}/{{ $user->id }}">Proceed</a>
+                <a class="btn " href="{{ url('admin/dashboard/clearacct') }}/{{ $user->id }}">Devam Et</a>
             </div>
         </div>
     </div>
@@ -150,14 +168,14 @@
          <!-- Modal content-->
          <div class="modal-content">
              <div class="modal-header ">
-                 <h4 class="modal-title ">Enter {{ $user->name }} {{ $user->l_name }} Withdrawal Code </h4>
+                 <h4 class="modal-title ">{{ $user->name }} {{ $user->l_name }} için para çekme kodunu girin </h4>
                  <button type="button" class="close " data-dismiss="modal">&times;</button>
              </div>
              <div class="modal-body ">
                  <form role="form" method="post" action="{{ route('withdrawalcode') }}">
                      @csrf
                       <div class="form-group">
-                         <h5 class=" ">Select Withdrawal Code Status</h5>
+                         <h5 class=" ">Para Çekme Kodu Durumunu Seçin</h5>
                          <select class="form-control  " name="withdrawal_code">
 
 
@@ -168,12 +186,12 @@
                      </div>
 
                      <div class="form-group">
-                         <h5 class=" ">Withdrawal Code</h5>
+                         <h5 class=" ">Para Çekme Kodu</h5>
                          <input type="text" name="user_withdrawalcode" class="form-control" value="{{ $user->user_withdrawalcode }}">
                      </div>
 
                      <div class="form-group">
-                         <input type="submit" class="btn " value="Set User Withdrawal Code">
+                         <input type="submit" class="btn " value="Kullanıcı Para Çekme Kodunu Belirle">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -189,23 +207,23 @@
          <!-- Modal content-->
          <div class="modal-content">
              <div class="modal-header ">
-                 <h4 class="modal-title ">Send Email</h4>
+                 <h4 class="modal-title ">E-posta Gönder</h4>
                  <button type="button" class="close " data-dismiss="modal">&times;</button>
              </div>
              <div class="modal-body ">
-                 <p class="">This message will be sent to {{ $user->name }}</p>
+                 <p class="">Bu mesaj {{ $user->name }} kullanıcısına gönderilecek</p>
                  <form style="padding:3px;" role="form" method="post" action="{{ route('sendmailtooneuser') }}">
                      @csrf
                      <div class=" form-group">
-                         <input type="text" name="subject" class="form-control  " placeholder="Subject" required>
+                         <input type="text" name="subject" class="form-control  " placeholder="Konu" required>
                      </div>
                      <div class=" form-group">
-                         <textarea placeholder="Type your message here" class="form-control  " name="message" row="8"
-                             placeholder="Type your message here" required></textarea>
+                         <textarea placeholder="Mesajınızı buraya yazın" class="form-control  " name="message" row="8"
+                             placeholder="Mesajınızı buraya yazın" required></textarea>
                      </div>
                      <div class=" form-group">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
-                         <input type="submit" class="btn " value="Send">
+                         <input type="submit" class="btn " value="Gönder">
                      </div>
                  </form>
              </div>
@@ -403,7 +421,7 @@
                    </div>
 
                    <div class="form-group">
-                    <h5 class=" ">Amount</h5>
+                    <h5 class=" ">Tutar</h5>
                     <input type="number" name="amount" class="form-control  " placeholder="Enter amount required for signal in {{ $user->currency }}" required>
                 </div>
                    <div class="form-group">
@@ -497,72 +515,88 @@
 {{-- End plan  History --}}
  <!-- Edit user Modal -->
  <div id="edituser" class="modal fade" role="dialog">
-     <div class="modal-dialog">
+     <div class="modal-dialog modal-lg modal-dialog-centered">
          <!-- Modal content-->
          <div class="modal-content">
-             <div class="modal-header ">
-                 <h4 class="modal-title ">Edit {{ $user->name }} details.</strong></h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
+             <div class="modal-header bg-success text-white">
+                 <h4 class="modal-title">
+                     <i class="fas fa-user-edit me-2"></i>Edit {{ $user->name }} Details
+                 </h4>
+                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body ">
+             <div class="modal-body p-4">
                  <form role="form" method="post" action="{{ route('edituser') }}">
-                     <div class="form-group">
-                         <h5 class=" ">Username</h5>
-                         <input class="form-control  " id="input1" value="{{ $user->username }}" type="text"
-                             name="username" required>
-                         <small>Note: same username should be use in the referral link.</small>
+                     @csrf
+                     <div class="row g-4">
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-user me-2 text-success"></i>Username
+                             </label>
+                             <input class="form-control form-control-lg" id="input1" value="{{ $user->username }}" type="text" name="username" required>
+                             <small class="text-muted mt-1 d-block">
+                                 <i class="fas fa-info-circle me-1"></i>Note: Same username should be used in the referral link.
+                             </small>
+                         </div>
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-signature me-2 text-success"></i>Full Name
+                             </label>
+                             <input class="form-control form-control-lg" value="{{ $user->name }}" type="text" name="name" required>
+                         </div>
                      </div>
-                     <div class="form-group">
-                         <h5 class=" ">Fullname</h5>
-                         <input class="form-control  " value="{{ $user->name }}" type="text" name="name"
-                             required>
+                     <div class="row g-4 mt-3">
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-envelope me-2 text-success"></i>Email Address
+                             </label>
+                             <input class="form-control form-control-lg" value="{{ $user->email }}" type="email" name="email" required>
+                         </div>
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-phone me-2 text-success"></i>Phone Number
+                             </label>
+                             <input class="form-control form-control-lg" value="{{ $user->phone }}" type="tel" name="phone" required>
+                         </div>
                      </div>
-                     <div class="form-group">
-                         <h5 class=" ">Email</h5>
-                         <input class="form-control  " value="{{ $user->email }}" type="text" name="email"
-                             required>
+                     <div class="row g-4 mt-3">
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-flag me-2 text-success"></i>Country
+                             </label>
+                             <input class="form-control form-control-lg" value="{{ $user->country }}" type="text" name="country">
+                         </div>
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-money-bill me-2 text-success"></i>Currency
+                             </label>
+                             <input name="s_currency" value="{{$user->currency}}" id="s_c" type="hidden">
+                             <select name="currency" id="select_c" class="form-select form-select-lg select2" onchange="changecurr()" style="width: 100%">
+                                 <option value="{{$user->currency}}">{{ $user->currency }}</option>
+                                 @foreach ($currencies as $key => $currency)
+                                     <option id="{{ $key }}" value="<?php echo html_entity_decode($currency); ?>">
+                                         {{ $key . ' (' . html_entity_decode($currency) . ')' }}</option>
+                                 @endforeach
+                             </select>
+                         </div>
                      </div>
-                     <div class="form-group">
-                         <h5 class=" ">Phone Number</h5>
-                         <input class="form-control  " value="{{ $user->phone }}" type="text" name="phone"
-                             required>
+                     <div class="row g-4 mt-3">
+                         <div class="col-12">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-link me-2 text-success"></i>Referral Link
+                             </label>
+                             <input class="form-control form-control-lg" value="{{ $user->ref_link }}" type="url" name="ref_link" required>
+                         </div>
                      </div>
-                     <div class="form-group">
-                         <h5 class=" ">Country</h5>
-                         <input class="form-control  " value="{{ $user->country }}" type="text" name="country">
-                     </div>
-
-                     <div class="form-group text-black-50 mt-3 ">
-                <input name="s_currency" value="{{$user->currency}}" id="s_c" type="hidden">
-                <div class="form-group ">
-                    <select name="currency" id="select_c" class="form-control   select2" onchange="changecurr()"
-                        style="width: 100%">
-                        {{-- <option disabled>Select Currency </option> --}}
-                        <option value="{{$user->currency}}">{{ $user->currency }}</option>
-                        @foreach ($currencies as $key => $currency)
-                            <option id="{{ $key }}" value="<?php echo html_entity_decode($currency); ?>">
-                                {{ $key . ' (' . html_entity_decode($currency) . ')' }}</option>
-                        @endforeach
-                    </select>
-            </div>
-        </div>
-                     <div class="form-group">
-                         <h5 class=" ">Referral link</h5>
-                         <input class="form-control  " value="{{ $user->ref_link }}" type="text" name="ref_link"
-                             required>
-                     </div>
-                     <div class="form-group">
-                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                         <input type="submit" class="btn " value="Update">
+                     <div class="row g-3 mt-4">
+                         <div class="col-12">
+                             <input type="hidden" name="user_id" value="{{ $user->id }}">
+                             <button type="submit" class="btn btn-success btn-lg w-100">
+                                 <i class="fas fa-save me-2"></i>Update User Details
+                             </button>
+                         </div>
                      </div>
                  </form>
              </div>
-             <script>
-                 $('#input1').on('keypress', function(e) {
-                     return e.which !== 32;
-                 });
-             </script>
          </div>
      </div>
  </div>
@@ -570,17 +604,36 @@
 
  <!-- Reset user password Modal -->
  <div id="resetpswdModal" class="modal fade" role="dialog">
-     <div class="modal-dialog">
+     <div class="modal-dialog modal-dialog-centered">
          <!-- Modal content-->
          <div class="modal-content">
-             <div class="modal-header ">
-                 <h4 class="modal-title ">Reset Password</strong></h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
+             <div class="modal-header bg-warning text-dark">
+                 <h4 class="modal-title">
+                     <i class="fas fa-key me-2"></i>Reset User Password
+                 </h4>
+                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body ">
-                 <p class="">Are you sure you want to reset password for {{ $user->name }} to <span
-                         class="text-primary font-weight-bolder">user01236</span></p>
-                 <a class="btn " href="{{ url('admin/dashboard/resetpswd') }}/{{ $user->id }}">Reset Now</a>
+             <div class="modal-body p-4 text-center">
+                 <div class="mb-4">
+                     <i class="fas fa-lock fa-4x text-warning mb-3"></i>
+                     <h5 class="mb-3">Reset Password for {{ $user->name }}?</h5>
+                     <div class="alert alert-warning py-3">
+                         <p class="mb-2">The password will be reset to: <strong>user01236</strong></p>
+                         <small class="text-muted">Make sure to inform the user about this change.</small>
+                     </div>
+                 </div>
+                 <div class="row g-3">
+                     <div class="col-6">
+                         <button type="button" class="btn btn-secondary btn-lg w-100" data-dismiss="modal">
+                             <i class="fas fa-times me-2"></i>Cancel
+                         </button>
+                     </div>
+                     <div class="col-6">
+                         <a class="btn btn-warning btn-lg w-100" href="{{ url('admin/dashboard/resetpswd') }}/{{ $user->id }}">
+                             <i class="fas fa-key me-2"></i>Reset Password
+                         </a>
+                     </div>
+                 </div>
              </div>
          </div>
      </div>
@@ -620,16 +673,35 @@
 
  <!-- Switch useraccount Modal -->
  <div id="switchuserModal" class="modal fade" role="dialog">
-     <div class="modal-dialog">
+     <div class="modal-dialog modal-dialog-centered">
          <!-- Modal content-->
          <div class="modal-content">
-             <div class="modal-header ">
-                 <h4 class="modal-title ">You are about to login as {{ $user->name }}.</strong></h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
+             <div class="modal-header bg-info text-white">
+                 <h4 class="modal-title">
+                     <i class="fas fa-exchange-alt me-2"></i>Login as {{ $user->name }}
+                 </h4>
+                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body ">
-                 <a class="btn btn-success"
-                     href="{{ url('admin/dashboard/switchuser') }}/{{ $user->id }}">Proceed</a>
+             <div class="modal-body p-4 text-center">
+                 <div class="mb-4">
+                     <i class="fas fa-user-circle fa-4x text-info mb-3"></i>
+                     <h5 class="mb-3">Switch to {{ $user->name }}'s Account?</h5>
+                     <p class="text-muted mb-0">
+                         You will be logged in as this user. You can return to admin panel anytime.
+                     </p>
+                 </div>
+                 <div class="row g-3">
+                     <div class="col-6">
+                         <button type="button" class="btn btn-secondary btn-lg w-100" data-dismiss="modal">
+                             <i class="fas fa-times me-2"></i>Cancel
+                         </button>
+                     </div>
+                     <div class="col-6">
+                         <a class="btn btn-info btn-lg w-100" href="{{ url('admin/dashboard/switchuser') }}/{{ $user->id }}">
+                             <i class="fas fa-sign-in-alt me-2"></i>Switch Account
+                         </a>
+                     </div>
+                 </div>
              </div>
          </div>
      </div>
@@ -756,19 +828,35 @@
 </div>
  <!-- Delete user Modal -->
  <div id="deleteModal" class="modal fade" role="dialog">
-     <div class="modal-dialog">
+     <div class="modal-dialog modal-dialog-centered">
          <!-- Modal content-->
          <div class="modal-content">
-             <div class="modal-header ">
-
-                 <h4 class="modal-title ">Delete User</strong></h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
+             <div class="modal-header bg-danger text-white">
+                 <h4 class="modal-title">
+                     <i class="fas fa-exclamation-triangle me-2"></i>Delete User Account
+                 </h4>
+                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body  p-3">
-                 <p class="">Are you sure you want to delete {{ $user->name }} Account? Everything associated
-                     with this account will be loss.</p>
-                 <a class="btn btn-danger" href="{{ url('admin/dashboard/delsystemuser') }}/{{ $user->id }}">Yes
-                     i'm sure</a>
+             <div class="modal-body p-4 text-center">
+                 <div class="mb-4">
+                     <i class="fas fa-user-times fa-4x text-danger mb-3"></i>
+                     <h5 class="mb-3">Delete {{ $user->name }}'s Account?</h5>
+                     <p class="text-muted mb-0">
+                         This action is irreversible. All data associated with this account will be permanently lost.
+                     </p>
+                 </div>
+                 <div class="row g-3">
+                     <div class="col-6">
+                         <button type="button" class="btn btn-secondary btn-lg w-100" data-dismiss="modal">
+                             <i class="fas fa-times me-2"></i>Cancel
+                         </button>
+                     </div>
+                     <div class="col-6">
+                         <a class="btn btn-danger btn-lg w-100" href="{{ url('admin/dashboard/delsystemuser') }}/{{ $user->id }}">
+                             <i class="fas fa-trash me-2"></i>Yes, Delete Account
+                         </a>
+                     </div>
+                 </div>
              </div>
          </div>
      </div>
