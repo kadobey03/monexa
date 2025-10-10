@@ -188,7 +188,7 @@ class TradesController extends Controller
     public function edit($id)
     {
         try {
-            $trade = User_plans::with('user')->findOrFail($id);
+            $trade = User_plans::with('user:id,name,email')->findOrFail($id);
             Log::info('Trade data found for edit:', ['trade' => $trade->toArray()]);
 
             // If it's an AJAX request, return JSON for modal use
@@ -370,7 +370,7 @@ class TradesController extends Controller
             $filename = 'trades_export_' . date('Y-m-d_H-i-s');
 
             // Apply same filters as index method
-            $query = User_plans::with('user');
+            $query = User_plans::with('user:id,name,email');
 
             if ($request->filled('search')) {
                 $search = $request->search;
@@ -421,7 +421,7 @@ class TradesController extends Controller
                 'total_volume' => User_plans::sum('amount'),
                 'total_profit' => User_plans::sum('profit_earned'),
                 'avg_trade_size' => User_plans::avg('amount'),
-                'recent_trades' => User_plans::with('user')
+                'recent_trades' => User_plans::with('user:id,name,email')
                                             ->orderBy('created_at', 'desc')
                                             ->limit(5)
                                             ->get(),
