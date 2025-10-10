@@ -2,8 +2,17 @@
 // Nexa Landing Page - Alternative Design
 // Bu dosya mevcut sistem kodlarını değiştirmeden alternatif bir index sayfası sağlar
 
-// Oturum başlatma (Laravel session sistemi kullanılacak)
-session_start();
+// Laravel bootstrap dosyası dahil et
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Laravel uygulama instance'ı oluştur
+$app = require_once __DIR__ . '/../bootstrap/app.php';
+
+// Kernel'i yükle
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+
+// Request oluştur
+$request = Illuminate\Http\Request::capture();
 
 // Sistem ayarlarını al (Laravel Settings modeli kullanılacak)
 $settings = null;
@@ -18,7 +27,7 @@ $title = $settings ? $settings->site_name : 'Nexa Finans';
 $description = $settings ? $settings->site_desc : 'Modern finans platformu';
 
 // Ana sayfa URL'si
-$home_url = url('/');
+$home_url = env('APP_URL', 'http://localhost');
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +40,7 @@ $home_url = url('/');
     <title><?php echo htmlspecialchars($title); ?> - Alternatif Tasarım</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="<?php echo asset('favicon.ico'); ?>" type="image/x-icon">
+    <link rel="icon" href="<?php echo $home_url; ?>/favicon.ico" type="image/x-icon">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -324,10 +333,10 @@ $home_url = url('/');
             <p>Modern teknoloji ile güçlendirilmiş, kullanıcı dostu arayüzü ile forex ve crypto trading deneyimini yeniden tanımlıyoruz.</p>
 
             <div class="cta-buttons">
-                <a href="<?php echo route('login'); ?>" class="btn btn-primary">
+                <a href="<?php echo $home_url; ?>/login" class="btn btn-primary">
                     <i class="fas fa-sign-in-alt"></i> Giriş Yap
                 </a>
-                <a href="<?php echo route('register'); ?>" class="btn btn-secondary">
+                <a href="<?php echo $home_url; ?>/register" class="btn btn-secondary">
                     <i class="fas fa-user-plus"></i> Kayıt Ol
                 </a>
                 <a href="<?php echo $home_url; ?>" class="btn btn-secondary">
@@ -413,17 +422,17 @@ $home_url = url('/');
 
                 <div class="footer-section">
                     <h4>Hızlı Erişim</h4>
-                    <a href="<?php echo route('login'); ?>">Giriş Yap</a>
-                    <a href="<?php echo route('register'); ?>">Kayıt Ol</a>
-                    <a href="<?php echo route('about'); ?>">Hakkımızda</a>
-                    <a href="<?php echo route('contact'); ?>">İletişim</a>
+                    <a href="<?php echo $home_url; ?>/login">Giriş Yap</a>
+                    <a href="<?php echo $home_url; ?>/register">Kayıt Ol</a>
+                    <a href="<?php echo $home_url; ?>/about">Hakkımızda</a>
+                    <a href="<?php echo $home_url; ?>/contact">İletişim</a>
                 </div>
 
                 <div class="footer-section">
                     <h4>Hizmetler</h4>
-                    <a href="<?php echo route('trade'); ?>">Trading</a>
-                    <a href="<?php echo route('automate'); ?>">Otomatik Trading</a>
-                    <a href="<?php echo route('copy'); ?>">Copy Trading</a>
+                    <a href="<?php echo $home_url; ?>/trade">Trading</a>
+                    <a href="<?php echo $home_url; ?>/automate">Otomatik Trading</a>
+                    <a href="<?php echo $home_url; ?>/copy">Copy Trading</a>
                     <a href="#">Eğitim</a>
                 </div>
 
@@ -443,8 +452,8 @@ $home_url = url('/');
             <div class="footer-bottom">
                 <p>&copy; 2024 <?php echo htmlspecialchars($title); ?>. Tüm hakları saklıdır.</p>
                 <p>
-                    <a href="<?php echo route('terms'); ?>">Kullanım Şartları</a> |
-                    <a href="<?php echo route('privacy'); ?>">Gizlilik Politikası</a>
+                    <a href="<?php echo $home_url; ?>/terms">Kullanım Şartları</a> |
+                    <a href="<?php echo $home_url; ?>/privacy">Gizlilik Politikası</a>
                 </p>
             </div>
         </div>
