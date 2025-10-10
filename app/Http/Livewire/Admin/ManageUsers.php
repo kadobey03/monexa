@@ -55,7 +55,7 @@ class ManageUsers extends Component
         'fullname' => 'required|max:255',
         'username' => 'required|unique:users,username|regex:/^[a-zA-Z0-9_]+$/|min:3|max:50',
         'email' => 'required|email|max:255|unique:users',
-        'password' => 'required|min:8|max:100',
+        'password' => 'required|max:100',
         'password_confirmation' => 'required|same:password',
     ];
 
