@@ -269,7 +269,7 @@
                         'price' => '473.78',
                         'change' => '+0.35',
                         'isPositive' => true,
-                        'logo' => 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
+                        'logo' => 'https://bursaajansi.com/wp-content/uploads/2024/05/koc-holding-o-sektore-giris-yapiyor-milyarlarca-dolar-yatirim-yapacaklar-IRAEw5Sw.jpg'
                     ],
                     [
                         'name' => 'Türkiye Petrolleri',
@@ -277,7 +277,7 @@
                         'price' => '68.41',
                         'change' => '+0.92',
                         'isPositive' => true,
-                        'logo' => 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
+                        'logo' => 'https://beypet.com/storage/420/WhatsApp-Image-2024-08-14-at-14.50.54-(2).jpeg.jpeg'
                     ],
                     [
                         'name' => 'Aselsan',
@@ -285,7 +285,7 @@
                         'price' => '173.44',
                         'change' => '-0.43',
                         'isPositive' => false,
-                        'logo' => 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
+                        'logo' => 'https://image.hurimg.com/i/hurriyet/75/0x0/68c11a9f292d8a4321ac6929.jpg'
                     ],
                     [
                         'name' => 'Havelsan',
@@ -293,7 +293,7 @@
                         'price' => '337.97',
                         'change' => '+1.99',
                         'isPositive' => true,
-                        'logo' => 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
+                        'logo' => 'https://www.savunmasanayist.com/wp-content/uploads/2022/05/HAVELSAN-780x470.jpg'
                     ],
                     [
                         'name' => 'Togg',
@@ -301,7 +301,7 @@
                         'price' => '388.28',
                         'change' => '+1.42',
                         'isPositive' => true,
-                        'logo' => 'https://images.unsplash.com/photo-1549317336-206569e8475c?q=80&w=60&h=40&auto=format&fit=crop&ixlib=rb-4.0.3'
+                        'logo' => 'https://nextcar.ua/images/blog/548/265874.jpg'
                     ]
                 ];
             @endphp
