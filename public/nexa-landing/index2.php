@@ -4,39 +4,19 @@
  * Bu dosya mevcut sistem kodlarını değiştirmeden alternatif bir index sayfası sağlar
  */
 
-// Laravel bootstrap dosyası dahil et
-require_once __DIR__ . '/../vendor/autoload.php';
+// Sabit değerler tanımla
+$title = 'Nexa Finans';
+$description = 'Modern finans platformu';
+$home_url = 'https://monexafinans.com';
 
-try {
-    // Laravel uygulama instance'ı oluştur
-    $app = require_once __DIR__ . '/../bootstrap/app.php';
+// Sayfa başlığı (artık sabit)
+$title = 'Nexa Finans';
 
-    // Kernel'i yükle
-    $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+// Meta açıklaması (artık sabit)
+$description = 'Modern finans platformu';
 
-    // Request oluştur
-    $request = Illuminate\Http\Request::capture();
-
-    // Sistem ayarlarını al (Laravel Settings modeli kullanılacak)
-    $settings = null;
-    if (class_exists('\App\Models\Settings')) {
-        $settings = \App\Models\Settings::first();
-    }
-
-} catch (Exception $e) {
-    // Hata durumunda varsayılan değerler
-    $settings = null;
-    $app_url = getenv('APP_URL') ?: 'http://localhost';
-}
-
-// Sayfa başlığı
-$title = $settings ? $settings->site_name : 'Nexa Finans';
-
-// Meta açıklaması
-$description = $settings ? $settings->site_desc : 'Modern finans platformu';
-
-// Ana sayfa URL'si
-$home_url = isset($app_url) ? $app_url : (isset($app) ? env('APP_URL', 'http://localhost') : 'http://localhost');
+// Ana sayfa URL'si (artık sabit)
+$home_url = 'https://monexafinans.com';
 ?>
 
 <!DOCTYPE html>
@@ -449,11 +429,11 @@ $home_url = isset($app_url) ? $app_url : (isset($app) ? env('APP_URL', 'http://l
                     <h4>İletişim</h4>
                     <p>
                         <i class="fas fa-envelope"></i>
-                        <?php echo $settings ? $settings->contact_email : 'info@nexa-finans.com'; ?>
+                        info@monexafinans.com
                     </p>
                     <p>
                         <i class="fas fa-phone"></i>
-                        <?php echo $settings ? $settings->phone : '+90 555 123 4567'; ?>
+                        +90 555 123 4567
                     </p>
                 </div>
             </div>
@@ -494,5 +474,7 @@ $home_url = isset($app_url) ? $app_url : (isset($app) ? env('APP_URL', 'http://l
             }
         });
     </script>
+</body>
+</html>
 </body>
 </html>
