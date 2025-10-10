@@ -8,15 +8,6 @@
 $title = 'Nexa Finans';
 $description = 'Modern finans platformu';
 $home_url = 'https://monexafinans.com';
-
-// Sayfa başlığı (artık sabit)
-$title = 'Nexa Finans';
-
-// Meta açıklaması (artık sabit)
-$description = 'Modern finans platformu';
-
-// Ana sayfa URL'si (artık sabit)
-$home_url = 'https://monexafinans.com';
 ?>
 
 <!DOCTYPE html>
