@@ -9,14 +9,14 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h1 class="page-title text-primary mb-2">
-                            <i class="fas fa-chart-line mr-2"></i>Müşteri Yatırımlarını Yönet
+                            <i class="fas fa-chart-line mr-2"></i>Müşteri Yatırımlarını Yönetin
                         </h1>
-                        <p class="text-muted mb-0">Tüm müşteri yatırımlarını görüntüleyin ve yönetin</p>
+                        <p class="text-muted mb-0">Sistemdeki tüm müşteri yatırımlarını görüntüleyin, onaylayın ve yönetin</p>
                     </div>
                     <div class="d-flex align-items-center">
                         <span class="badge badge-info px-3 py-2 mr-2">
-                            <i class="fas fa-database mr-1"></i>{{ $deposits->count() }} Toplam Yatırım
-                        </span>
+                             <i class="fas fa-database mr-1"></i>{{ $deposits->count() }} Toplam Kayıt
+                         </span>
                         <button class="btn btn-outline-primary" onclick="window.location.reload()">
                             <i class="fas fa-sync-alt mr-2"></i>Yenile
                         </button>
@@ -51,7 +51,7 @@
                                 <h3 class="stats-value">
                                     {{ $deposits->where('status', 'Processed')->count() }}
                                 </h3>
-                                <p class="stats-label">İşlenen</p>
+                                <p class="stats-label">İşlenmiş</p>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                                 <h3 class="stats-value">
                                     {{ $deposits->where('status', '!=', 'Processed')->count() }}
                                 </h3>
-                                <p class="stats-label">Bekleyen</p>
+                                <p class="stats-label">Beklemede</p>
                             </div>
                         </div>
                     </div>
@@ -90,13 +90,26 @@
                             <h5 class="card-title mb-0 text-dark font-weight-bold">
                                 <i class="fas fa-list mr-2 text-primary"></i>Yatırım Listesi
                             </h5>
-                            <div class="card-header-actions">
+                            <div class="card-header-actions d-flex align-items-center gap-3">
                                 <div class="input-group" style="width: 300px;">
-                                    <input type="text" class="form-control" id="searchInput" placeholder="Yatırım ara...">
+                                    <input type="text" class="form-control" id="searchInput" placeholder="Müşteri, tutar veya durum ara..." aria-label="Yatırım arama" autocomplete="off">
                                     <div class="input-group-append">
-                                        <span class="input-group-text bg-primary text-white">
+                                        <span class="input-group-text bg-primary text-white" aria-hidden="true">
                                             <i class="fas fa-search"></i>
                                         </span>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="filterDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-filter mr-2"></i>Filtrele
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="filterDropdown">
+                                        <a class="dropdown-item" href="#" onclick="filterDeposits('all')">Tümü</a>
+                                        <a class="dropdown-item" href="#" onclick="filterDeposits('Processed')">İşlenmiş</a>
+                                        <a class="dropdown-item" href="#" onclick="filterDeposits('pending')">Beklemede</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" onclick="filterDeposits('investment')">Yatırım Ödemesi</a>
+                                        <a class="dropdown-item" href="#" onclick="filterDeposits('signal')">Sinyal Ödemesi</a>
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +119,7 @@
                     <div class="card-body p-0">
                         <div class="table-container">
                             <div class="table-responsive">
-                                <table id="depositsTable" class="table modern-table mb-0">
+                                <table id="depositsTable" class="table modern-table mb-0" role="table" aria-label="Müşteri yatırımları tablosu">
                                     <thead class="thead-light">
                                         <tr>
                                             <th class="border-0">
@@ -200,7 +213,7 @@
                                                         <a href="{{ route('viewdepositimage', $deposit->id) }}"
                                                            class="btn btn-info btn-sm mb-1"
                                                            title="Ödeme ekran görüntüsünü görüntüle">
-                                                            <i class="fas fa-image mr-1"></i>Düzenle
+                                                            <i class="fas fa-image mr-1"></i>Görüntüle
                                                         </a>
                                                         <a href="{{ url('admin/dashboard/deldeposit') }}/{{ $deposit->id }}"
                                                            class="btn btn-danger btn-sm mb-1"
@@ -210,7 +223,7 @@
                                                         @if ($deposit->status != 'Processed')
                                                             <a class="btn btn-success btn-sm"
                                                                href="{{ url('admin/dashboard/pdeposit') }}/{{ $deposit->id }}">
-                                                                <i class="fas fa-play mr-1"></i>İşle
+                                                                <i class="fas fa-play mr-1"></i>Onayla
                                                             </a>
                                                         @endif
                                                     </div>
@@ -219,10 +232,13 @@
                                         @empty
                                             <tr>
                                                 <td colspan="8" class="text-center py-5">
-                                                    <div class="empty-state">
-                                                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                                                        <h5 class="text-muted">Henüz yatırım bulunmamaktadır</h5>
-                                                        <p class="text-muted">İlk yatırım yapıldığında burada görünecektir.</p>
+                                                    <div class="empty-state text-center">
+                                                        <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                                                        <h5 class="text-muted">Henüz yatırım kaydı bulunmamaktadır</h5>
+                                                        <p class="text-muted">Müşteriler yatırım yaptığında kayıtlar burada görünecektir.</p>
+                                                        <button class="btn btn-primary mt-3" onclick="window.location.reload()">
+                                                            <i class="fas fa-sync-alt mr-2"></i>Sayfayı Yenile
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -238,8 +254,18 @@
                 @if($deposits->hasPages())
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="text-muted">
+                            <i class="fas fa-info-circle mr-1"></i>
                             {{ $deposits->firstItem() ?? 0 }} - {{ $deposits->lastItem() ?? 0 }} arası kayıt gösteriliyor
                             (Toplam {{ $deposits->total() ?? 0 }} kayıt)
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <label class="mr-2 mb-0 text-muted">Sayfa başına:</label>
+                            <select class="form-control form-control-sm" style="width: 80px;" onchange="changePerPage(this.value)">
+                                <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
+                                <option value="25" {{ request('per_page', 10) == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ request('per_page', 10) == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ request('per_page', 10) == 100 ? 'selected' : '' }}>100</option>
+                            </select>
                         </div>
                         {{ $deposits->appends(request()->query())->links() }}
                     </div>
@@ -406,14 +432,80 @@
                 width: 100%;
             }
 
+            .card-header-actions .gap-3 {
+                flex-direction: column;
+                gap: 1rem !important;
+            }
+
             .input-group {
                 width: 100% !important;
+            }
+
+            .table-responsive {
+                font-size: 0.875rem;
+            }
+
+            .btn-group-vertical .btn {
+                font-size: 0.75rem;
+                padding: 0.375rem 0.5rem;
+            }
+
+            .stats-value {
+                font-size: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .dropdown-menu {
+                font-size: 0.875rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .d-flex.justify-content-between {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .d-flex.justify-content-between .text-muted {
+                margin-bottom: 1rem;
+            }
+
+            .modern-table thead th {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .modern-table tbody td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .btn-sm {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .stats-card .card-body {
+                padding: 1rem;
+            }
+
+            .stats-icon {
+                margin-bottom: 1rem;
+            }
+
+            .stats-value {
+                font-size: 1.25rem;
+                margin-bottom: 0.5rem;
             }
         }
     </style>
 
-    <!-- Search Functionality -->
+    <!-- Search and Filter Functionality -->
     <script>
+        // Search functionality
         document.getElementById('searchInput').addEventListener('keyup', function() {
             const searchTerm = this.value.toLowerCase();
             const tableRows = document.querySelectorAll('#depositsTable tbody tr');
@@ -425,5 +517,56 @@
                 }
             });
         });
+
+        // Filter functionality
+        function filterDeposits(type) {
+            const tableRows = document.querySelectorAll('#depositsTable tbody tr');
+
+            tableRows.forEach(row => {
+                if (row.cells.length > 1) { // Skip empty state row
+                    let showRow = true;
+
+                    switch(type) {
+                        case 'Processed':
+                            const statusText = row.cells[5].textContent.trim();
+                            showRow = statusText.includes('İşlenmiş') || statusText.includes('Processed');
+                            break;
+                        case 'pending':
+                            const statusTextPending = row.cells[5].textContent.trim();
+                            showRow = !statusTextPending.includes('İşlenmiş') && !statusTextPending.includes('Processed');
+                            break;
+                        case 'investment':
+                            const investmentText = row.cells[4].textContent.trim();
+                            showRow = investmentText.includes('Yatırım Ödemesi');
+                            break;
+                        case 'signal':
+                            const signalText = row.cells[4].textContent.trim();
+                            showRow = signalText.includes('Sinyal Ödemesi');
+                            break;
+                        case 'all':
+                        default:
+                            showRow = true;
+                            break;
+                    }
+
+                    row.style.display = showRow ? '' : 'none';
+                }
+            });
+        }
+
+        // Change per page functionality
+        function changePerPage(perPage) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('per_page', perPage);
+            window.location.href = url.toString();
+        }
+
+        // Auto-hide alerts after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.display = 'none';
+            });
+        }, 5000);
     </script>
 @endsection
