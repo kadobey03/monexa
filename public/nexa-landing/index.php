@@ -476,5 +476,3 @@ $home_url = 'https://monexafinans.com';
     </script>
 </body>
 </html>
-</body>
-</html>
