@@ -338,9 +338,9 @@
                             </div>
                         </div>
 
-                        <button class="btn-primary text-sm px-4 py-2 w-full">
+                        <a href="/giris" class="btn-secondary text-sm px-4 py-2 w-full inline-block text-center">
                             İşlem Yap
-                        </button>
+                        </a>
                     </div>
                 </div>
             @endforeach
