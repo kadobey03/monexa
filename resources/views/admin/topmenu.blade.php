@@ -10,11 +10,11 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 }
 
 ?>
-<div class="main-header">
+<div class="main-header shadow-lg">
     <!-- Logo Header -->
     <div class="logo-header" data-background-color="{{ $bgmenu }}">
-        <a href="/" class="logo" style="font-size: 15px; color:#fff;">
-            {{ $settings->site_name }}
+        <a href="{{ route('admin.dashboard') }}" class="logo" style="font-size: 15px; color:#fff;">
+            <i class="fas fa-tachometer-alt me-2"></i>{{ $settings->site_name }}
         </a>
         <button class="ml-auto navbar-toggler sidenav-toggler" type="button" data-toggle="collapse" data-target="collapse"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -48,18 +48,18 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     <i class="fa fa-search search-icon"></i>
                                 </button>
                             </div>
-                            <input type="text" placeholder="Manage users"
+                            <input type="text" placeholder="Kullanıcıları yönet"
                                 class="form-control text-{{ $text }} ">
                         </div>
                     </form>
                 </a>
 
                 <script>
-                    document.getElementById('searchform').addEventListener('subit'
+                    document.getElementById('searchform').addEventListener('submit',
                         searchuser);
 
                     function searchuser() {
-                        console.log('ddj');
+                        console.log('Kullanıcı arama');
                         let url = "{{ route('manageusers') }}";
                         window.location.href = url;
                     }
@@ -130,19 +130,19 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     <!-- Modern Tailwind-styled Notification Dropdown -->
                     <div class="dropdown-menu dropdown-menu-right notification-dropdown animated fadeIn p-0" style="width: 380px; max-height: 500px; overflow-y: auto;">
                         <!-- Header -->
-                        <div class="px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="m-0 font-weight-bold d-flex align-items-center">
-                                    <i class="fas fa-bell mr-2"></i> Notifications
-                                    @if($notificationCount > 0)
-                                        <span class="ml-2 badge badge-light">{{ $notificationCount }}</span>
-                                    @endif
-                                </h6>
-                                @if($notificationCount > 0)
-                                    <a href="{{ route('admin.markallasread') }}" class="text-white small mark-all-read">Mark all as read</a>
-                                @endif
-                            </div>
-                        </div>
+                         <div class="px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-t-lg">
+                             <div class="d-flex justify-content-between align-items-center">
+                                 <h6 class="m-0 font-weight-bold d-flex align-items-center">
+                                     <i class="fas fa-bell mr-2"></i> Bildirimler
+                                     @if($notificationCount > 0)
+                                         <span class="ml-2 badge badge-light">{{ $notificationCount }}</span>
+                                     @endif
+                                 </h6>
+                                 @if($notificationCount > 0)
+                                     <a href="{{ route('admin.markallasread') }}" class="text-white small mark-all-read">Tümünü Okundu İşaretle</a>
+                                 @endif
+                             </div>
+                         </div>
 
                         <!-- Notifications List -->
                         <div class="notification-list p-3">
@@ -188,7 +188,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                             </a>
                                         </div>
                                         <div class="ml-2">
-                                            <button class="btn btn-sm btn-outline-secondary mark-as-read" title="Mark as read">
+                                            <button class="btn btn-sm btn-outline-secondary mark-as-read" title="Okundu olarak işaretle">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         </div>
@@ -196,13 +196,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 </div>
                             @empty
                                 <!-- Empty Notifications -->
-                                <div class="text-center py-4">
-                                    <div class="text-muted mb-3">
-                                        <i class="fas fa-bell-slash fa-3x"></i>
-                                    </div>
-                                    <h6 class="font-weight-bold">No new notifications</h6>
-                                    <p class="small text-muted">You're all caught up!</p>
-                                </div>
+                                 <div class="text-center py-4">
+                                     <div class="text-muted mb-3">
+                                         <i class="fas fa-bell-slash fa-3x"></i>
+                                     </div>
+                                     <h6 class="font-weight-bold">Yeni bildirim yok</h6>
+                                     <p class="small text-muted">Her şey güncel!</p>
+                                 </div>
                             @endforelse
                         </div>
 
@@ -210,7 +210,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         @if($notificationCount > 0)
                             <div class="p-3 bg-light border-top">
                                 <a href="{{ route('admin.notifications') }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-list mr-2"></i> View All Notifications
+                                    <i class="fas fa-list mr-2"></i> Tüm Bildirimleri Görüntüle
                                 </a>
                             </div>
                         @endif
@@ -225,15 +225,15 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     <ul class="dropdown-menu dropdown-user animated fadeIn">
                         <div class="dropdown-user-scroll scrollbar-outer">
                             <li>
-                                <a class="dropdown-item" href="{{ url('admin/dashboard/adminprofile') }}">Account
-                                    Settings</a>
-                                <a class="dropdown-item" href="{{ url('admin/dashboard/adminchangepassword') }}">Change
-                                    Password</a>
+                                <a class="dropdown-item" href="{{ url('admin/dashboard/adminprofile') }}">Hesap
+                                    Ayarları</a>
+                                <a class="dropdown-item" href="{{ url('admin/dashboard/adminchangepassword') }}">Şifre
+                                    Değiştir</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('adminlogout') }}"
                                     onclick="event.preventDefault();
                                 document.getElementById('logoutform').submit();">
-                                    Logout
+                                    Çıkış Yap
                                 </a>
                                 <form id="logoutform" action="{{ route('adminlogout') }}" method="POST"
                                     style="display: none;">
@@ -349,6 +349,43 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
 .py-3 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
 .mb-3 { margin-bottom: 0.75rem !important; }
+
+/* Modern Admin Panel Enhancements */
+.main-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+}
+
+.logo-header {
+    background: rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar-header {
+    background: rgba(255,255,255,0.05);
+}
+
+.notification-dropdown {
+    border: none !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* Smooth transitions */
+.nav-link {
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+}
+
+.dropdown-menu {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+}
 </style>
 
 <script>
@@ -385,8 +422,8 @@ $(document).ready(function() {
                 if(typeof Swal !== 'undefined') {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Success',
-                        text: 'All notifications marked as read!',
+                        title: 'Başarılı',
+                        text: 'Tüm bildirimler okundu olarak işaretlendi!',
                         timer: 2000,
                         showConfirmButton: false
                     });
@@ -397,8 +434,8 @@ $(document).ready(function() {
                 if(typeof Swal !== 'undefined') {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
-                        text: 'Failed to mark notifications as read. Please try again.',
+                        title: 'Hata',
+                        text: 'Bildirimler okundu olarak işaretlenemedi. Lütfen tekrar deneyin.',
                     });
                 }
             }
