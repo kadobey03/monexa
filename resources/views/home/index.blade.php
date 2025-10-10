@@ -353,122 +353,139 @@
         <div class="space-y-4">
             <!-- Soru 1: Devlet destekli mi? -->
             <div class="card-dark p-6">
-                <div class="flex items-start justify-between">
+                <div class="d-flex justify-content-between align-items-start">
                     <h3 class="text-white font-semibold text-lg">Devlet destekli mi?</h3>
-                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors">
+                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors" onclick="toggleFaq(this)">
                         <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                <div class="faq-answer mt-3 text-emerald-100/80 hidden">
+                <div class="faq-answer mt-3 text-emerald-100/80 d-none">
                     Evet, platformumuz devlet destekli bir finansal hizmet sağlayıcısıdır. Türkiye Cumhuriyeti Sermaye Piyasası Kurulu (SPK) ve ilgili devlet kurumları tarafından denetlenmekte ve desteklenmektedir. Bu sayede kullanıcılarımıza güvenli ve regüle edilmiş bir yatırım ortamı sunuyoruz.
                 </div>
             </div>
 
             <!-- Soru 2: Kayıp yaşayabilir miyim? -->
             <div class="card-dark p-6">
-                <div class="flex items-start justify-between">
+                <div class="d-flex justify-content-between align-items-start">
                     <h3 class="text-white font-semibold text-lg">Kayıp yaşayabilir miyim?</h3>
-                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors">
+                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors" onclick="toggleFaq(this)">
                         <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                <div class="faq-answer mt-3 text-emerald-100/80 hidden">
+                <div class="faq-answer mt-3 text-emerald-100/80 d-none">
                     Tüm finansal işlemlerde olduğu gibi, piyasa koşulları nedeniyle kayıp riski her zaman vardır. Ancak platformumuz gelişmiş risk yönetimi araçları ve uzman desteği ile bu riskleri minimize etmeye yardımcı olur. Başarı oranımız %85'in üzerindedir ve kullanıcılarımıza kayıp durumunda destek hizmetleri sunuyoruz.
                 </div>
             </div>
 
             <!-- Soru 3: Uzmanlar kimler? -->
             <div class="card-dark p-6">
-                <div class="flex items-start justify-between">
+                <div class="d-flex justify-content-between align-items-start">
                     <h3 class="text-white font-semibold text-lg">Uzmanlar kimler?</h3>
-                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors">
+                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors" onclick="toggleFaq(this)">
                         <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                <div class="faq-answer mt-3 text-emerald-100/80 hidden">
+                <div class="faq-answer mt-3 text-emerald-100/80 d-none">
                     Ekibimizde 15+ yıllık deneyime sahip lisanslı finansal analistler, eski banka çalışanları ve sermaye piyasası uzmanları bulunmaktadır. Ayrıca yapay zeka destekli algoritmalarımız da 7/24 piyasa analizi yapmaktadır. Tüm uzmanlarımız SPK lisansına sahiptir.
                 </div>
             </div>
 
             <!-- Soru 4: Ne kadar kazanacağım? -->
             <div class="card-dark p-6">
-                <div class="flex items-start justify-between">
+                <div class="d-flex justify-content-between align-items-start">
                     <h3 class="text-white font-semibold text-lg">Ne kadar kazanacağım?</h3>
-                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors">
+                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors" onclick="toggleFaq(this)">
                         <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                <div class="faq-answer mt-3 text-emerald-100/80 hidden">
+                <div class="faq-answer mt-3 text-emerald-100/80 d-none">
                     Kazanç miktarı yatırım tutarı, piyasa koşulları ve seçilen plana göre değişir. Minimum paketlerimiz aylık %15-25 getiri potansiyeline sahiptir. VIP paketlerde bu oran %40'a kadar çıkabilir. Gerçek kazanç geçmişinizi hesap panelinizden takip edebilirsiniz.
                 </div>
             </div>
 
             <!-- Soru 5: Devlet neden destek veriyor? -->
             <div class="card-dark p-6">
-                <div class="flex items-start justify-between">
+                <div class="d-flex justify-content-between align-items-start">
                     <h3 class="text-white font-semibold text-lg">Devlet neden destek veriyor?</h3>
-                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors">
+                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors" onclick="toggleFaq(this)">
                         <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                <div class="faq-answer mt-3 text-emerald-100/80 hidden">
+                <div class="faq-answer mt-3 text-emerald-100/80 d-none">
                     Devletimiz yerli finansal teknolojilerin gelişmesini ve vatandaşlarımızın uluslararası platformlara bağımlılığının azalmasını desteklemektedir. Ayrıca yerli şirketlere yatırım yapılarak ekonomik büyümeye katkı sağlanması hedeflenmektedir. Bu destek sayesinde daha düşük maliyetlerle hizmet verebiliyoruz.
                 </div>
             </div>
 
             <!-- Soru 6: Komisyon ve ücretler nelerdir? -->
             <div class="card-dark p-6">
-                <div class="flex items-start justify-between">
+                <div class="d-flex justify-content-between align-items-start">
                     <h3 class="text-white font-semibold text-lg">Komisyon ve ücretler nelerdir?</h3>
-                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors">
+                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors" onclick="toggleFaq(this)">
                         <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                <div class="faq-answer mt-3 text-emerald-100/80 hidden">
+                <div class="faq-answer mt-3 text-emerald-100/80 d-none">
                     Platform kullanım ücreti aylık ₺99'dur. İşlem komisyonları %0.1 ile %0.5 arasında değişir. Para yatırma/çekme işlemleri ücretsizdir. VIP üyelerimiz için özel indirimler uygulanır. Tüm ücretler şeffaf olarak gösterilir ve sürpriz maliyet yoktur.
                 </div>
             </div>
 
             <!-- Soru 7: Veriler nereden geliyor? -->
             <div class="card-dark p-6">
-                <div class="flex items-start justify-between">
+                <div class="d-flex justify-content-between align-items-start">
                     <h3 class="text-white font-semibold text-lg">Veriler nereden geliyor?</h3>
-                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors">
+                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors" onclick="toggleFaq(this)">
                         <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                <div class="faq-answer mt-3 text-emerald-100/80 hidden">
+                <div class="faq-answer mt-3 text-emerald-100/80 d-none">
                     Gerçek zamanlı piyasa verilerini Borsa İstanbul, uluslararası borsalar ve Bloomberg Terminal gibi güvenilir kaynaklardan alıyoruz. Ayrıca kendi geliştirdiğimiz algoritmalar ile teknik analiz ve yapay zeka destekli tahminler üretiyoruz. Tüm veriler SSL şifreleme ile korunur.
                 </div>
             </div>
 
             <!-- Soru 8: Nasıl para yatırır/çekerim? -->
             <div class="card-dark p-6">
-                <div class="flex items-start justify-between">
+                <div class="d-flex justify-content-between align-items-start">
                     <h3 class="text-white font-semibold text-lg">Nasıl para yatırır/çekerim?</h3>
-                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors">
+                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors" onclick="toggleFaq(this)">
                         <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                <div class="faq-answer mt-3 text-emerald-100/80 hidden">
+                <div class="faq-answer mt-3 text-emerald-100/80 d-none">
                     Havale/EFT, kredi kartı, kripto para ve diğer ödeme yöntemleri ile 7/24 para yatırabilirsiniz. Minimum yatırım tutarı ₺1.000'dir. Para çekme işlemleri maksimum 24 saat içinde gerçekleşir. VIP üyelerimiz için öncelikli işlem yapılır.
                 </div>
             </div>
 
             <!-- Soru 9: Hesabımı nasıl kapatırım? -->
             <div class="card-dark p-6">
-                <div class="flex items-start justify-between">
+                <div class="d-flex justify-content-between align-items-start">
                     <h3 class="text-white font-semibold text-lg">Hesabımı nasıl kapatırım?</h3>
-                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors">
+                    <button class="faq-toggle text-emerald-400 hover:text-emerald-300 transition-colors" onclick="toggleFaq(this)">
                         <i class="fas fa-chevron-down"></i>
                     </button>
                 </div>
-                <div class="faq-answer mt-3 text-emerald-100/80 hidden">
+                <div class="faq-answer mt-3 text-emerald-100/80 d-none">
                     Hesap kapatma işlemi profil ayarlarından veya müşteri hizmetleri üzerinden yapılabilir. Önce açık pozisyonlarınızı kapatmanız ve bakiyenizi çekmeniz gerekir. Hesap kapatma işlemi 7 gün sürer ve bu süre zarfında cayma hakkınız vardır. Tüm verileriniz güvenli şekilde silinir.
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+function toggleFaq(button) {
+    const faqAnswer = button.parentElement.nextElementSibling;
+    const icon = button.querySelector('i');
+
+    if (faqAnswer.classList.contains('d-none')) {
+        faqAnswer.classList.remove('d-none');
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+    } else {
+        faqAnswer.classList.add('d-none');
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+    }
+}
+</script>
 
 @endsection
