@@ -19,7 +19,7 @@ if ($dashboard_style === 'light') {
             <div class="page-inner">
                 <x-danger-alert />
                 <x-success-alert />
-                <!-- Beginning of  Dashboard Stats  -->
+                <!-- Kullanıcı Paneli İstatistikleri Başlangıcı  -->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="p-3 card ">
@@ -106,7 +106,7 @@ if ($dashboard_style === 'light') {
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Modern User Stats Cards - Enhanced Design -->
+                                <!-- Modern Kullanıcı İstatistikleri Kartları - Gelişmiş Tasarım -->
                                 <div class="row g-3 mb-4">
                                     <div class="col-12 col-sm-6 col-md-3">
                                         <div class="card border-0 shadow-lg h-100 hover-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
@@ -149,7 +149,7 @@ if ($dashboard_style === 'light') {
                                     </div>
                                 </div>
 
-                                <!-- User Plans & Trades Section - Enhanced Design -->
+                                <!-- Kullanıcı Planları ve İşlemleri Bölümü - Gelişmiş Tasarım -->
                                 <div class="row g-3 mb-4">
                                     <div class="col-12">
                                         <div class="card border-0 shadow-lg h-100 hover-card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white;">
@@ -173,7 +173,7 @@ if ($dashboard_style === 'light') {
                                     </div>
                                 </div>
 
-                                <!-- Account Status Cards -->
+                                <!-- Hesap Durumu Kartları -->
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <div class="card border-0 shadow-sm h-100">
@@ -232,18 +232,18 @@ if ($dashboard_style === 'light') {
                                                     </span>
                                                 @elseif ($user->status == 'active')
                                                     <span class="badge bg-success px-3 py-2">
-                                                        <i class="fas fa-check-circle me-1"></i>Active
+                                                        <i class="fas fa-check-circle me-1"></i>Aktif
                                                     </span>
                                                 @else
                                                     <span class="badge bg-warning px-3 py-2">
-                                                        <i class="fas fa-clock me-1"></i>Pending
+                                                        <i class="fas fa-clock me-1"></i>Beklemede
                                                     </span>
                                                 @endif
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Modern User Information Section -->
+                                <!-- Modern Kullanıcı Bilgileri Bölümü -->
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-header bg-primary text-white">
                                         <h5 class="mb-0">
