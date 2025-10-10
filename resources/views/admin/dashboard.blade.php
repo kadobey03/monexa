@@ -22,14 +22,14 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         <div class="flex-grow-1">
                             <div class="welcome-badge mb-3">
                                 <span class="badge bg-white bg-opacity-20 text-white px-3 py-2">
-                                    <i class="fas fa-user-shield me-2"></i>Admin Dashboard
+                                    <i class="fas fa-user-shield me-2"></i>Yönetim Paneli
                                 </span>
                             </div>
                             <h1 class="display-4 text-white fw-bold mb-2">
-                                <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+                                <i class="fas fa-tachometer-alt me-3"></i>Kontrol Paneli
                             </h1>
                             <h4 class="text-white op-8 mb-3">
-                                Welcome back, {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}!
+                                Hoş geldiniz, {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}!
                             </h4>
                             <div class="d-flex align-items-center text-white op-7">
                                 <div class="date-time-display">
@@ -43,13 +43,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <div class="py-2 ml-md-auto py-md-0">
                                 <div class="btn-group-vertical btn-group-lg" role="group">
                                     <a href="{{ route('mdeposits') }}" class="btn btn-success mb-2 modern-btn shadow-sm">
-                                        <i class="fas fa-arrow-down me-2"></i>Deposits
+                                        <i class="fas fa-arrow-down me-2"></i>Yatırımlar
                                     </a>
                                     <a href="{{ route('mwithdrawals') }}" class="btn btn-danger mb-2 modern-btn shadow-sm">
-                                        <i class="fas fa-arrow-up me-2"></i>Withdrawals
+                                        <i class="fas fa-arrow-up me-2"></i>Çekimler
                                     </a>
                                     <a href="{{ route('manageusers') }}" class="btn btn-info modern-btn shadow-sm">
-                                        <i class="fas fa-users me-2"></i>Users
+                                        <i class="fas fa-users me-2"></i>Kullanıcılar
                                     </a>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     </div>
                                     <div class="stat-content">
                                         <div class="stat-header">
-                                            <span class="stat-label">Total Deposits</span>
+                                            <span class="stat-label">Toplam Yatırımlar</span>
                                             <div class="stat-badge">
                                                 <i class="fas fa-arrow-up text-success"></i>
                                             </div>
@@ -92,7 +92,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         </div>
                                         <div class="stat-footer">
                                             <small class="text-muted">
-                                                <i class="fas fa-calendar-alt me-1"></i>All time total
+                                                <i class="fas fa-calendar-alt me-1"></i>Tüm zamanlar toplamı
                                             </small>
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     </div>
                                     <div class="stat-content">
                                         <div class="stat-header">
-                                            <span class="stat-label">Pending Deposits</span>
+                                            <span class="stat-label">Bekleyen Yatırımlar</span>
                                             <div class="stat-badge">
                                                 <i class="fas fa-clock text-warning"></i>
                                             </div>
@@ -129,7 +129,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         </div>
                                         <div class="stat-footer">
                                             <small class="text-muted">
-                                                <i class="fas fa-exclamation-circle me-1"></i>Awaiting approval
+                                                <i class="fas fa-exclamation-circle me-1"></i>Onay bekliyor
                                             </small>
                                         </div>
                                     </div>
@@ -150,7 +150,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     </div>
                                     <div class="stat-content">
                                         <div class="stat-header">
-                                            <span class="stat-label">Total Withdrawals</span>
+                                            <span class="stat-label">Toplam Çekimler</span>
                                             <div class="stat-badge">
                                                 <i class="fas fa-arrow-down text-danger"></i>
                                             </div>
@@ -166,7 +166,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         </div>
                                         <div class="stat-footer">
                                             <small class="text-muted">
-                                                <i class="fas fa-calendar-alt me-1"></i>All time total
+                                                <i class="fas fa-calendar-alt me-1"></i>Tüm zamanlar toplamı
                                             </small>
                                         </div>
                                     </div>
@@ -187,7 +187,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     </div>
                                     <div class="stat-content">
                                         <div class="stat-header">
-                                            <span class="stat-label">Pending Withdrawals</span>
+                                            <span class="stat-label">Bekleyen Çekimler</span>
                                             <div class="stat-badge">
                                                 <i class="fas fa-cog text-info"></i>
                                             </div>
@@ -203,7 +203,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         </div>
                                         <div class="stat-footer">
                                             <small class="text-muted">
-                                                <i class="fas fa-clock me-1"></i>Processing
+                                                <i class="fas fa-clock me-1"></i>İşleniyor
                                             </small>
                                         </div>
                                     </div>
@@ -226,7 +226,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     </div>
                                     <div class="stat-content">
                                         <div class="stat-header">
-                                            <span class="stat-label">Total Users</span>
+                                            <span class="stat-label">Toplam Kullanıcılar</span>
                                             <div class="stat-badge">
                                                 <i class="fas fa-user-plus text-primary"></i>
                                             </div>
@@ -234,7 +234,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         <div class="stat-value">{{ number_format($user_count) }}</div>
                                         <div class="stat-footer">
                                             <small class="text-muted">
-                                                <i class="fas fa-chart-line me-1"></i>Total registered
+                                                <i class="fas fa-chart-line me-1"></i>Toplam kayıtlı
                                             </small>
                                         </div>
                                     </div>
@@ -254,7 +254,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     </div>
                                     <div class="stat-content">
                                         <div class="stat-header">
-                                            <span class="stat-label">Active Users</span>
+                                            <span class="stat-label">Aktif Kullanıcılar</span>
                                             <div class="stat-badge">
                                                 <i class="fas fa-circle text-success"></i>
                                             </div>
@@ -262,7 +262,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         <div class="stat-value">{{ $activeusers }}</div>
                                         <div class="stat-footer">
                                             <small class="text-muted">
-                                                <i class="fas fa-bolt me-1"></i>Currently online
+                                                <i class="fas fa-bolt me-1"></i>Şu anda çevrimiçi
                                             </small>
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     </div>
                                     <div class="stat-content">
                                         <div class="stat-header">
-                                            <span class="stat-label">Blocked Users</span>
+                                            <span class="stat-label">Engellenen Kullanıcılar</span>
                                             <div class="stat-badge">
                                                 <i class="fas fa-ban text-danger"></i>
                                             </div>
@@ -290,7 +290,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         <div class="stat-value">{{ $blockeusers }}</div>
                                         <div class="stat-footer">
                                             <small class="text-muted">
-                                                <i class="fas fa-shield-alt me-1"></i>Suspended accounts
+                                                <i class="fas fa-shield-alt me-1"></i>Askıya alınmış hesaplar
                                             </small>
                                         </div>
                                     </div>
@@ -310,7 +310,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     </div>
                                     <div class="stat-content">
                                         <div class="stat-header">
-                                            <span class="stat-label">Investment Plans</span>
+                                            <span class="stat-label">Yatırım Planları</span>
                                             <div class="stat-badge">
                                                 <i class="fas fa-chart-line text-warning"></i>
                                             </div>
@@ -318,7 +318,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         <div class="stat-value">{{ $plans }}</div>
                                         <div class="stat-footer">
                                             <small class="text-muted">
-                                                <i class="fas fa-boxes me-1"></i>Available plans
+                                                <i class="fas fa-boxes me-1"></i>Mevcut planlar
                                             </small>
                                         </div>
                                     </div>
@@ -337,24 +337,24 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     <div class="chart-header-info">
                                         <div class="chart-title">
                                             <h4 class="fw-bold mb-1">
-                                                <i class="fas fa-chart-line me-2 gradient-text"></i>System Analytics
+                                                <i class="fas fa-chart-line me-2 gradient-text"></i>Sistem Analitiği
                                             </h4>
-                                            <p class="text-muted mb-0">Financial overview and transaction analytics</p>
+                                            <p class="text-muted mb-0">Finansal genel bakış ve işlem analitiği</p>
                                         </div>
                                     </div>
                                     <div class="chart-controls">
                                         <div class="btn-group chart-period-selector" role="group">
                                             <input type="radio" class="btn-check" name="chartPeriod" id="today" autocomplete="off">
-                                            <label class="btn btn-outline-primary btn-sm" for="today">Today</label>
+                                            <label class="btn btn-outline-primary btn-sm" for="today">Bugün</label>
 
                                             <input type="radio" class="btn-check" name="chartPeriod" id="week" autocomplete="off">
-                                            <label class="btn btn-outline-primary btn-sm" for="week">This Week</label>
+                                            <label class="btn btn-outline-primary btn-sm" for="week">Bu Hafta</label>
 
                                             <input type="radio" class="btn-check" name="chartPeriod" id="month" autocomplete="off" checked>
-                                            <label class="btn btn-primary btn-sm" for="month">This Month</label>
+                                            <label class="btn btn-primary btn-sm" for="month">Bu Ay</label>
 
                                             <input type="radio" class="btn-check" name="chartPeriod" id="year" autocomplete="off">
-                                            <label class="btn btn-outline-primary btn-sm" for="year">This Year</label>
+                                            <label class="btn btn-outline-primary btn-sm" for="year">Bu Yıl</label>
                                         </div>
                                     </div>
                                 </div>
@@ -369,25 +369,25 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                             <div class="col-md-3">
                                                 <div class="chart-info-item">
                                                     <span class="chart-info-value">{{ $settings->currency }}{{ number_format($chart_pdepsoit) }}</span>
-                                                    <span class="chart-info-label">Total Deposits</span>
+                                                    <span class="chart-info-label">Toplam Yatırımlar</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="chart-info-item">
                                                     <span class="chart-info-value">{{ $settings->currency }}{{ number_format($chart_pwithdraw) }}</span>
-                                                    <span class="chart-info-label">Total Withdrawals</span>
+                                                    <span class="chart-info-label">Toplam Çekimler</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="chart-info-item">
                                                     <span class="chart-info-value">{{ $settings->currency }}{{ number_format($chart_pendepsoit) }}</span>
-                                                    <span class="chart-info-label">Pending Deposits</span>
+                                                    <span class="chart-info-label">Bekleyen Yatırımlar</span>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="chart-info-item">
                                                     <span class="chart-info-value">{{ $settings->currency }}{{ number_format($chart_trans) }}</span>
-                                                    <span class="chart-info-label">Transactions</span>
+                                                    <span class="chart-info-label">İşlemler</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -472,7 +472,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 const myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Total Deposits', 'Pending Deposits', 'Total Withdrawals', 'Pending Withdrawals', 'Total Transactions'],
+                        labels: ['Toplam Yatırımlar', 'Bekleyen Yatırımlar', 'Toplam Çekimler', 'Bekleyen Çekimler', 'Toplam İşlemler'],
                         datasets: [{
                             label: `Amount in {{ $settings->currency }}`,
                             data: chartData,
@@ -659,6 +659,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
             --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
             --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
             --shadow-xl: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
         }
 
         /* Hero Section */
@@ -697,12 +699,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         /* Premium Cards */
         .premium-card {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
             background: rgba(255, 255, 255, 0.95);
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .premium-card::before {
@@ -716,8 +719,9 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         }
 
         .premium-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-xl);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.98);
         }
 
         .premium-card.deposit-card::before {
@@ -764,16 +768,18 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         }
 
         .stat-icon {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 18px;
-            font-size: 1.8rem;
+            border-radius: 20px;
+            font-size: 2rem;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
         }
 
         .bg-gradient-success { background: var(--success-gradient); }
@@ -799,7 +805,12 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         }
 
         .premium-card:hover .stat-icon {
-            transform: scale(1.1) rotate(5deg);
+            transform: scale(1.15) rotate(5deg);
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .premium-card:nth-child(odd) {
+            animation: glow 4s ease-in-out infinite;
         }
 
         /* Stat Content */
@@ -872,9 +883,24 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         /* Analytics Card */
         .analytics-card {
             background: linear-gradient(145deg, #ffffff, #f8f9fa);
-            border-radius: 25px;
-            box-shadow: var(--shadow-lg);
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .analytics-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease-in-out infinite;
         }
 
         .premium-header {
@@ -956,7 +982,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
             letter-spacing: 0.05em;
         }
 
-        /* Animations */
+        /* Modern Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -976,6 +1002,39 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
             to {
                 opacity: 1;
                 transform: translateX(0);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.5); }
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes slideInScale {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
             }
         }
 
