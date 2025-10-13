@@ -581,24 +581,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Image error handling - daha güvenli yöntem
-    document.querySelectorAll('.document-image').forEach(img => {
-        if (img.complete) {
-            if (img.naturalWidth === 0) {
-                img.src = '/themes/dashly/assets/images/no-image.png';
-                img.alt = 'Image not available';
-            }
-        } else {
-            img.addEventListener('load', function() {
-                if (this.naturalWidth === 0) {
-                    this.src = '/themes/dashly/assets/images/no-image.png';
-                    this.alt = 'Image not available';
+    const imageElements = document.querySelectorAll('.document-image');
+    imageElements.forEach(img => {
+        if (img && img instanceof HTMLImageElement) {
+            if (img.complete) {
+                if (img.naturalWidth === 0) {
+                    img.src = '/themes/dashly/assets/images/no-image.png';
+                    img.alt = 'Image not available';
                 }
-            });
+            } else {
+                img.addEventListener('load', function() {
+                    if (this && this.naturalWidth === 0) {
+                        this.src = '/themes/dashly/assets/images/no-image.png';
+                        this.alt = 'Image not available';
+                    }
+                });
 
-            img.addEventListener('error', function() {
-                this.src = '/themes/dashly/assets/images/no-image.png';
-                this.alt = 'Image not available';
-            });
+                img.addEventListener('error', function() {
+                    if (this) {
+                        this.src = '/themes/dashly/assets/images/no-image.png';
+                        this.alt = 'Image not available';
+                    }
+                });
+            }
         }
     });
 
