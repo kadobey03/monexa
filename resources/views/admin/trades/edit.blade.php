@@ -86,8 +86,8 @@
                                 <div class="col-md-12">
                                     <div class="alert alert-info">
                                         <h6><i class="fas fa-user mr-2"></i>Trade Owner Information</h6>
-                                        <strong>Name:</strong> {{ $trade->user ? $trade->user->name : 'Kullanıcı Bulunamadı' }}<br>
-                                        <strong>Email:</strong> {{ $trade->user ? $trade->user->email : 'Belirtilmemiş' }}<br>
+                                        <strong>Name:</strong> {{ $trade->user->name ?? 'N/A' }}<br>
+                                        <strong>Email:</strong> {{ $trade->user->email ?? 'N/A' }}<br>
                                         <strong>Created:</strong> {{ $trade->created_at->format('M d, Y H:i') }}
                                     </div>
                                 </div>
