@@ -22,7 +22,10 @@ class User_plans extends Model
         'leverage',
         'profit_earned',
         'active',
-        'symbol'
+        'symbol',
+        'user',
+        'user_name',
+        'user_email'
     ];
 
     protected $casts = [
@@ -74,6 +77,62 @@ class User_plans extends Model
         }
 
         return 'Bilinmiyor';
+    }
+
+    /**
+     * Geçersiz user ID'leri otomatik düzelt ve user_name/user_email'i güncelle
+     */
+    public static function fixInvalidUserIds()
+    {
+        $allUserIdsInTrades = self::whereNotNull('user')->where('user', '!=', 0)->pluck('user')->unique();
+        $existingUserIds = User::pluck('id')->toArray();
+        $missingUserIds = $allUserIdsInTrades->diff($existingUserIds)->values();
+
+        if ($missingUserIds->isNotEmpty()) {
+            foreach ($missingUserIds as $invalidId) {
+                $tradeCount = self::where('user', $invalidId)->count();
+
+                if ($tradeCount > 0) {
+                    // Geçersiz user ID'yi null yap
+                    self::where('user', $invalidId)->update(['user' => null]);
+                    \Log::info("Geçersiz user ID {$invalidId} düzeltildi. {$tradeCount} kayıt etkilendi.");
+                }
+            }
+
+            return $missingUserIds->sum(function($id) {
+                return self::where('user', $id)->count();
+            });
+        }
+
+        return 0;
+    }
+
+    /**
+     * User ilişkisi yüklenemediğinde user_name ve user_email alanlarını güncelle
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            // Eğer user ilişkisi yüklenmiş ve null ise, user_name ve user_email alanlarını temizle
+            if ($model->relationLoaded('user') && is_null($model->user)) {
+                $model->user = null;
+                $model->user_name = null;
+                $model->user_email = null;
+            }
+        });
+
+        static::retrieved(function ($model) {
+            // Eğer user ilişkisi yüklenmiş ve geçersiz ise, otomatik düzelt
+            if ($model->relationLoaded('user') && $model->user === null && !is_null($model->getOriginal('user'))) {
+                // Geçersiz user ID'yi tespit ettik, düzeltelim
+                $model->user = null;
+                $model->user_name = null;
+                $model->user_email = null;
+                $model->save();
+            }
+        });
     }
 
 }
