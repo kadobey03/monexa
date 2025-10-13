@@ -19,6 +19,14 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         --info-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
     }
 
+    /* Dark mode variables */
+    :root.dark {
+        --text-color: #f8fafc;
+        --bg-color: #1e293b;
+        --card-bg: #334155;
+        --border-color: #475569;
+    }
+
     .kyc-header {
         background: var(--primary-gradient);
         border-radius: 12px;
@@ -74,6 +82,16 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     .info-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Dark mode styles */
+    :root.dark .info-card {
+        background: var(--card-bg);
+        border-left-color: var(--border-color);
+    }
+
+    :root.dark .info-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .info-icon {
@@ -140,6 +158,37 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         .document-image {
             max-height: 150px;
         }
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+        }
+        .section-title {
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+        }
+    }
+
+    /* Genel görünüm düzeltmeleri */
+    .main-panel {
+        background: transparent;
+    }
+
+    .content {
+        background: transparent;
+    }
+
+    .page-inner {
+        padding: 1.5rem;
+    }
+
+    /* Dark mode için genel düzeltmeler */
+    :root.dark .main-panel {
+        background: var(--bg-color);
+    }
+
+    :root.dark .page-inner {
+        background: transparent;
     }
 </style>
 @endsection
@@ -275,7 +324,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="card shadow-sm border-0">
-                            <div class="section-title">
+                            <div class="section-title d-flex align-items-center">
                                 <i class="fas fa-user-circle me-3"></i>Personal Information
                             </div>
                             <div class="card-body p-4">
@@ -368,7 +417,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="card shadow-sm border-0">
-                            <div class="section-title">
+                            <div class="section-title d-flex align-items-center">
                                 <i class="fas fa-map-marker-alt me-3"></i>Address Information
                             </div>
                             <div class="card-body p-4">
@@ -435,7 +484,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="card shadow-sm border-0">
-                            <div class="section-title">
+                            <div class="section-title d-flex align-items-center">
                                 <i class="fas fa-id-card me-3"></i>Document Information
                             </div>
                             <div class="card-body p-4">
@@ -463,7 +512,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 <div class="row">
                     <div class="col-12">
                         <div class="card shadow-sm border-0">
-                            <div class="section-title">
+                            <div class="section-title d-flex align-items-center">
                                 <i class="fas fa-images me-3"></i>Document Images
                             </div>
                             <div class="card-body p-4">
@@ -475,9 +524,16 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 <h6 class="mb-0">Front Side</h6>
                                             </div>
                                             <div class="document-body p-3 text-center">
-                                                <img src="{{ asset('storage/app/public/' . $kyc->frontimg) }}"
-                                                     alt="Document Front Side"
-                                                     class="document-image">
+                                                @if($kyc->frontimg)
+                                                    <img src="{{ asset('storage/app/public/' . $kyc->frontimg) }}"
+                                                         alt="Document Front Side"
+                                                         class="document-image"
+                                                         onerror="this.src='/themes/dashly/assets/images/no-image.png'; this.alt='Image not available';">
+                                                @else
+                                                    <img src="/themes/dashly/assets/images/no-image.png"
+                                                         alt="No image available"
+                                                         class="document-image">
+                                                @endif
                                                 <small class="text-muted d-block mt-2">Document Front View</small>
                                             </div>
                                         </div>
@@ -489,9 +545,16 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 <h6 class="mb-0">Back Side</h6>
                                             </div>
                                             <div class="document-body p-3 text-center">
-                                                <img src="{{ asset('storage/app/public/' . $kyc->backimg) }}"
-                                                     alt="Document Back Side"
-                                                     class="document-image">
+                                                @if($kyc->backimg)
+                                                    <img src="{{ asset('storage/app/public/' . $kyc->backimg) }}"
+                                                         alt="Document Back Side"
+                                                         class="document-image"
+                                                         onerror="this.src='/themes/dashly/assets/images/no-image.png'; this.alt='Image not available';">
+                                                @else
+                                                    <img src="/themes/dashly/assets/images/no-image.png"
+                                                         alt="No image available"
+                                                         class="document-image">
+                                                @endif
                                                 <small class="text-muted d-block mt-2">Document Back View</small>
                                             </div>
                                         </div>
@@ -503,18 +566,40 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 @section('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Modal action selection
+    // Modal action selection - jQuery ile daha uyumlu
     window.selectAction = function(action) {
-        document.getElementById('kycAction').value = action;
+        $('#kycAction').val(action);
     };
 
-    // Image error handling
-    const images = document.querySelectorAll('.document-image');
-    images.forEach(img => {
-        img.addEventListener('error', function() {
-            this.src = '/themes/dashly/assets/images/no-image.png';
-            this.alt = 'Image not available';
-        });
+    // Bootstrap modal event listeners - jQuery ile
+    $(document).on('show.bs.modal', '#actionModal', function() {
+        // Modal açıldığında yapılacak işlemler
+    });
+
+    $(document).on('hidden.bs.modal', '#actionModal', function() {
+        // Modal kapatıldığında yapılacak işlemler
+    });
+
+    // Image error handling - daha güvenli yöntem
+    document.querySelectorAll('.document-image').forEach(img => {
+        if (img.complete) {
+            if (img.naturalWidth === 0) {
+                img.src = '/themes/dashly/assets/images/no-image.png';
+                img.alt = 'Image not available';
+            }
+        } else {
+            img.addEventListener('load', function() {
+                if (this.naturalWidth === 0) {
+                    this.src = '/themes/dashly/assets/images/no-image.png';
+                    this.alt = 'Image not available';
+                }
+            });
+
+            img.addEventListener('error', function() {
+                this.src = '/themes/dashly/assets/images/no-image.png';
+                this.alt = 'Image not available';
+            });
+        }
     });
 
     // Smooth scrolling for better UX
