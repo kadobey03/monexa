@@ -11,86 +11,136 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 @section('content')
 @section('styles')
 <style>
-   .bg-gradient-primary {
-       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-   }
-   .bg-gradient-info {
-       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-   }
-   .bg-gradient-warning {
-       background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-   }
-   .bg-light-success {
-       background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
-       color: white;
-   }
-   .bg-light-danger {
-       background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
-       color: white;
-   }
-   .user-avatar-wrapper {
-       position: relative;
-   }
-   .user-avatar {
-       width: 60px;
-       height: 60px;
-       border-radius: 50%;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-   }
-   .info-card {
-       transition: transform 0.2s ease, box-shadow 0.2s ease;
-   }
-   .info-card:hover {
-       transform: translateY(-2px);
-       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-   }
-   .info-icon {
-       flex-shrink: 0;
-   }
-   .section-divider {
-       margin-bottom: 1.5rem;
-   }
-   .document-card {
-       transition: transform 0.2s ease, box-shadow 0.2s ease;
-   }
-   .document-card:hover {
-       transform: translateY(-2px);
-       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-   }
-   .document-image {
-       max-height: 200px;
-       width: auto;
-       border: 2px solid #e9ecef;
-   }
-   .modal-icon-wrapper {
-       background: rgba(255,255,255,0.2);
-       padding: 10px;
-       border-radius: 50%;
-   }
-   .status-card {
-       transition: transform 0.2s ease;
-       cursor: pointer;
-   }
-   .status-card:hover {
-       transform: translateY(-2px);
-   }
-   .form-control-lg {
-       padding: 0.75rem 1rem;
-       font-size: 1.1rem;
-   }
-   .border-2 {
-       border-width: 2px;
-   }
-   .text-underline {
-       text-decoration: underline;
-       color: #007bff;
-   }
-   .text-underline:hover {
-       color: #0056b3;
-   }
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        --info-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    }
+
+    .kyc-header {
+        background: var(--primary-gradient);
+        border-radius: 12px;
+        color: white;
+    }
+
+    .user-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .status-badge {
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .status-verified {
+        background: var(--success-gradient);
+        color: white;
+    }
+
+    .status-pending {
+        background: var(--warning-gradient);
+        color: white;
+    }
+
+    .status-rejected {
+        background: var(--danger-gradient);
+        color: white;
+    }
+
+    .info-card {
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.2s ease;
+        border-left: 4px solid #e2e8f0;
+    }
+
+    .info-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .info-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+    }
+
+    .document-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: all 0.2s ease;
+    }
+
+    .document-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .document-image {
+        max-height: 200px;
+        width: 100%;
+        object-fit: contain;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+    }
+
+    .modal-header-custom {
+        background: var(--primary-gradient);
+        color: white;
+    }
+
+    .status-option {
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border-radius: 8px;
+    }
+
+    .status-option:hover {
+        transform: translateY(-2px);
+    }
+
+    .section-title {
+        background: var(--info-gradient);
+        color: white;
+        padding: 1rem 1.5rem;
+        margin: 0 -1.5rem 1.5rem -1.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 8px 8px 0 0;
+    }
+
+    @media (max-width: 768px) {
+        .info-card {
+            padding: 1rem;
+        }
+        .document-image {
+            max-height: 150px;
+        }
+    }
 </style>
 @endsection
     @include('admin.topmenu')
@@ -104,114 +154,113 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     </a>
                 </p>
 
-                <div class="mt-2 mb-5 d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <div class="user-avatar-wrapper me-3">
-                            <div class="user-avatar bg-gradient-primary">
-                                <i class="fas fa-user-check fa-2x text-white"></i>
+                <!-- Header Section -->
+                <div class="kyc-header p-4 mb-4">
+                    <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center gap-3">
+                        <div class="d-flex align-items-center">
+                            <div class="user-avatar me-3">
+                                {{ strtoupper(substr($kyc->user->name, 0, 1)) }}
+                            </div>
+                            <div>
+                                <h1 class="mb-1 h3">{{ $kyc->user->name }} - KYC Application</h1>
+                                <div class="d-flex flex-wrap align-items-center gap-3">
+                                    <span class="status-badge
+                                        @if($kyc->status == 'Verified') status-verified
+                                        @elseif($kyc->status == 'Pending') status-pending
+                                        @else status-rejected
+                                        @endif">
+                                        <i class="fas
+                                            @if($kyc->status == 'Verified') fa-check-circle
+                                            @elseif($kyc->status == 'Pending') fa-clock
+                                            @else fa-times-circle
+                                            @endif"></i>
+                                        @if($kyc->status == 'Verified') Verified
+                                        @elseif($kyc->status == 'Pending') Under Review
+                                        @else Rejected
+                                        @endif
+                                    </span>
+                                    <small class="text-white-50">
+                                        <i class="fas fa-calendar me-1"></i>Submitted: {{ $kyc->created_at->format('M d, Y') }}
+                                    </small>
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            <h1 class="title1 text-{{ $text }} mb-1">{{ $kyc->user->name }} KYC Başvurusu</h1>
-                            <div class="d-flex align-items-center gap-2">
-                                @if ($kyc->status == 'Verified')
-                                    <span class="badge badge-success px-3 py-2 fs-6">
-                                        <i class="fas fa-check-circle me-1"></i>Doğrulandı
-                                    </span>
-                                @else
-                                    <span class="badge badge-danger px-3 py-2 fs-6">
-                                        <i class="fas fa-clock me-1"></i>{{ $kyc->status }}
-                                    </span>
-                                @endif
-                                <small class="text-muted">
-                                    <i class="fas fa-calendar me-1"></i>{{ $kyc->created_at->format('d M Y') }}
-                                </small>
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-light btn-lg px-4 py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#actionModal">
+                            <i class="fas fa-cogs me-2"></i>Take Action
+                        </button>
                     </div>
-                    <a href="#" data-toggle="modal" data-target="#action" class="btn btn-primary btn-lg px-4 py-2 shadow-sm">
-                        <i class="fas fa-cogs me-2"></i>İşlem
-                    </a>
                 </div>
-                <div id="action" class="modal fade" role="dialog">
+                <!-- Action Modal -->
+                <div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="actionModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
-                        <!-- Modal content-->
-                        <div class="modal-content border-0 shadow-lg">
-                            <div class="modal-header bg-gradient-primary text-white">
+                        <div class="modal-content">
+                            <div class="modal-header modal-header-custom">
                                 <div class="d-flex align-items-center">
-                                    <div class="modal-icon-wrapper me-3">
-                                        <i class="fas fa-user-shield fa-2x"></i>
-                                    </div>
+                                    <i class="fas fa-user-shield fa-2x me-3"></i>
                                     <div>
-                                        <h3 class="mb-0 text-white">KYC İşlem Paneli</h3>
-                                        <small class="text-white-50">{{ $kyc->user->name }} kullanıcısı için işlem yapın</small>
+                                        <h5 class="modal-title text-white" id="actionModalLabel">KYC Application Review</h5>
+                                        <small class="text-white-50">Review and take action on {{ $kyc->user->name }}'s application</small>
                                     </div>
                                 </div>
-                                <button type="button" class="close text-white" data-dismiss="modal"
-                                    aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body p-4">
                                 <form action="{{ route('processkyc') }}" method="post">
                                     @csrf
 
-                                    <!-- Status Cards -->
+                                    <!-- Action Selection -->
                                     <div class="row mb-4">
                                         <div class="col-md-6">
-                                            <div class="status-card bg-light-success text-center p-3 rounded-lg border-success">
-                                                <i class="fas fa-check-circle fa-3x text-success mb-2"></i>
-                                                <h6 class="text-success mb-0">Kabul Et</h6>
-                                                <small class="text-muted">Kullanıcıyı doğrula</small>
+                                            <div class="status-option bg-light-success text-center p-4 rounded-lg border h-100" role="button" onclick="selectAction('Accept')">
+                                                <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                                                <h6 class="text-success mb-2">Approve</h6>
+                                                <small class="text-muted">Verify and approve the user</small>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="status-card bg-light-danger text-center p-3 rounded-lg border-danger">
-                                                <i class="fas fa-times-circle fa-3x text-danger mb-2"></i>
-                                                <h6 class="text-danger mb-0">Reddet</h6>
-                                                <small class="text-muted">Doğrulanmamış kal</small>
+                                            <div class="status-option bg-light-danger text-center p-4 rounded-lg border h-100" role="button" onclick="selectAction('Reject')">
+                                                <i class="fas fa-times-circle fa-3x text-danger mb-3"></i>
+                                                <h6 class="text-danger mb-2">Reject</h6>
+                                                <small class="text-muted">Reject and keep unverified</small>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group mb-4">
-                                        <label class="form-label text-primary font-weight-bold">
-                                            <i class="fas fa-tasks me-2"></i>İşlem Seçimi
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold">
+                                            <i class="fas fa-tasks me-2"></i>Selected Action
                                         </label>
-                                        <select name="action" id="kycAction" class="form-control form-control-lg border-2"
-                                            required>
-                                            <option value="Accept">✅ Kabul et ve kullanıcıyı doğrula</option>
-                                            <option value="Reject">❌ Reddet ve doğrulanmamış olarak kal</option>
+                                        <select name="action" id="kycAction" class="form-select form-select-lg" required>
+                                            <option value="">Choose an action...</option>
+                                            <option value="Accept">✅ Approve and Verify User</option>
+                                            <option value="Reject">❌ Reject Application</option>
                                         </select>
                                     </div>
 
-                                    <div class="form-group mb-4">
-                                        <label class="form-label text-primary font-weight-bold">
-                                            <i class="fas fa-envelope me-2"></i>E-posta Mesajı
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold">
+                                            <i class="fas fa-envelope me-2"></i>Email Message
                                         </label>
-                                        <textarea name="message" placeholder="Kullanıcıya gönderilecek mesajı buraya yazın..."
-                                            class="form-control border-2"
-                                            rows="4" required>Bu, gönderdiğiniz belgeler doğrultusunda hesabınızın doğrulandığını bildirmek içindir. Artık tüm hizmetlerimizi kısıtlama olmadan kullanabilirsiniz. Tebrikler!!</textarea>
+                                        <textarea name="message" class="form-control"
+                                            rows="4" required placeholder="Enter message to send to user...">Thank you for your KYC application. After reviewing your submitted documents, your account has been successfully verified. You can now access all platform features without restrictions. Congratulations!!</textarea>
                                     </div>
 
-                                    <div class="form-group mb-4">
-                                        <label class="form-label text-primary font-weight-bold">
-                                            <i class="fas fa-heading me-2"></i>E-posta Konusu
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold">
+                                            <i class="fas fa-heading me-2"></i>Email Subject
                                         </label>
-                                        <input type="text" name="subject" id=""
-                                            class="form-control form-control-lg border-2"
-                                            placeholder="E-posta konusu"
-                                            value="Hesap başarıyla doğrulandı" required>
+                                        <input type="text" name="subject" class="form-control form-control-lg"
+                                            placeholder="Email subject" value="KYC Application Update" required>
                                     </div>
 
                                     <input type="hidden" name="kyc_id" value="{{ $kyc->id }}">
 
-                                    <div class="form-group d-flex gap-2">
-                                        <button type="submit" class="btn btn-primary btn-lg px-5 flex-fill">
-                                            <i class="fas fa-paper-plane me-2"></i>Onayla ve Gönder
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" class="btn btn-primary btn-lg flex-fill">
+                                            <i class="fas fa-paper-plane me-2"></i>Confirm and Send
                                         </button>
-                                        <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">
-                                            <i class="fas fa-times me-2"></i>İptal
+                                        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">
+                                            <i class="fas fa-times me-2"></i>Cancel
                                         </button>
                                     </div>
                                 </form>
@@ -222,211 +271,90 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 <!-- /view KYC ID Modal -->
                 <x-danger-alert />
                 <x-success-alert />
-                <div class="mb-5 row">
-                    <div class="col-md-12">
-                        <div class="card shadow-lg border-0 overflow-hidden">
-                            <div class="card-header bg-gradient-primary text-white py-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-user-circle fa-2x me-3"></i>
-                                    <div>
-                                        <h4 class="mb-0 text-white">Kişisel Bilgiler</h4>
-                                        <small class="text-white-50">Kullanıcının temel bilgileri</small>
-                                    </div>
-                                </div>
+                <!-- Personal Information Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="section-title">
+                                <i class="fas fa-user-circle me-3"></i>Personal Information
                             </div>
                             <div class="card-body p-4">
-                                <div class="row">
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-primary">
                                                     <i class="fas fa-user"></i>
                                                 </div>
-                                                <div>
-                                                    <h4 class="text-primary mb-0">{{ $kyc->first_name }}</h4>
-                                                    <small class="text-muted font-weight-bold">İlk Ad</small>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->first_name }}</h6>
+                                                    <small class="text-muted">First Name</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-info">
                                                     <i class="fas fa-user"></i>
                                                 </div>
-                                                <div>
-                                                    <h4 class="text-info mb-0">{{ $kyc->last_name }}</h4>
-                                                    <small class="text-muted font-weight-bold">Soyadı</small>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->last_name }}</h6>
+                                                    <small class="text-muted">Last Name</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-success">
                                                     <i class="fas fa-envelope"></i>
                                                 </div>
-                                                <div>
-                                                    <h4 class="text-success mb-0">{{ $kyc->email }}</h4>
-                                                    <small class="text-muted font-weight-bold">E-posta</small>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->email }}</h6>
+                                                    <small class="text-muted">Email Address</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-warning">
                                                     <i class="fas fa-phone"></i>
                                                 </div>
-                                                <div>
-                                                    <h4 class="text-warning mb-0">{{ $kyc->phone_number }}</h4>
-                                                    <small class="text-muted font-weight-bold">Telefon Numarası</small>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->phone_number }}</h6>
+                                                    <small class="text-muted">Phone Number</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-danger text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-danger">
                                                     <i class="fas fa-calendar"></i>
                                                 </div>
-                                                <div>
-                                                    <h4 class="text-danger mb-0">{{ $kyc->dob }}</h4>
-                                                    <small class="text-muted font-weight-bold">Doğum Tarihi</small>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->dob }}</h6>
+                                                    <small class="text-muted">Date of Birth</small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-secondary">
                                                     <i class="fab fa-instagram"></i>
                                                 </div>
-                                                <div>
-                                                    <h4 class="text-secondary mb-0">{{ $kyc->social_media }}</h4>
-                                                    <small class="text-muted font-weight-bold">Sosyal Medya Kullanıcı Adı</small>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->social_media }}</h6>
+                                                    <small class="text-muted">Social Media Username</small>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 mb-4">
-                                        <div class="section-divider bg-gradient-info p-3 rounded-lg text-white">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fas fa-map-marker-alt fa-2x me-3"></i>
-                                                <div>
-                                                    <h5 class="mb-0 text-white">Adres Bilgileri</h5>
-                                                    <small class="text-white-50">Kullanıcının adres detayları</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                    <i class="fas fa-home"></i>
-                                                </div>
-                                                <div>
-                                                    <h5 class="text-primary mb-0">{{ $kyc->address }}</h5>
-                                                    <small class="text-muted font-weight-bold">Adres Satırı</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-info text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                    <i class="fas fa-city"></i>
-                                                </div>
-                                                <div>
-                                                    <h5 class="text-info mb-0">{{ $kyc->city }}</h5>
-                                                    <small class="text-muted font-weight-bold">Şehir</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                    <i class="fas fa-map"></i>
-                                                </div>
-                                                <div>
-                                                    <h5 class="text-warning mb-0">{{ $kyc->state }}</h5>
-                                                    <small class="text-muted font-weight-bold">Eyalet</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-4 col-md-6">
-                                        <div class="info-card bg-light p-3 rounded-lg h-100">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                    <i class="fas fa-flag"></i>
-                                                </div>
-                                                <div>
-                                                    <h5 class="text-success mb-0">{{ $kyc->country }}</h5>
-                                                    <small class="text-muted font-weight-bold">Uyruk</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 mb-4">
-                                        <div class="section-divider bg-gradient-warning p-3 rounded-lg text-white">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fas fa-id-card fa-2x me-3"></i>
-                                                <div>
-                                                    <h5 class="mb-0 text-white">Belge Bilgileri</h5>
-                                                    <small class="text-white-50">Kimlik doğrulama belgeleri</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-5 col-md-12">
-                                        <div class="info-card bg-light p-3 rounded-lg">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="info-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                    <i class="fas fa-file-alt"></i>
-                                                </div>
-                                                <div>
-                                                    <h5 class="text-warning mb-0">{{ $kyc->document_type }}</h5>
-                                                    <small class="text-muted font-weight-bold">Belge Türü</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-4 col-md-6">
-                                        <div class="document-card bg-light p-3 rounded-lg text-center h-100">
-                                            <div class="document-header bg-primary text-white p-2 rounded-top">
-                                                <i class="fas fa-address-card fa-2x mb-2"></i>
-                                                <h6 class="mb-0 text-white">Ön Görünüm</h6>
-                                            </div>
-                                            <div class="document-body p-3">
-                                                <img src="{{ asset('storage/app/public/' . $kyc->frontimg) }}" alt="Belge Ön Yüz"
-                                                    class="img-fluid rounded shadow-sm document-image">
-                                                <small class="text-muted d-block mt-2 font-weight-bold">Belgenin Ön Görünümü</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-4 col-md-6">
-                                        <div class="document-card bg-light p-3 rounded-lg text-center h-100">
-                                            <div class="document-header bg-info text-white p-2 rounded-top">
-                                                <i class="fas fa-address-card fa-2x mb-2"></i>
-                                                <h6 class="mb-0 text-white">Arka Görünüm</h6>
-                                            </div>
-                                            <div class="document-body p-3">
-                                                <img src="{{ asset('storage/app/public/' . $kyc->backimg) }}" alt="Belge Arka Yüz"
-                                                    class="img-fluid rounded shadow-sm document-image">
-                                                <small class="text-muted d-block mt-2 font-weight-bold">Belgenin Arka Görünümü</small>
                                             </div>
                                         </div>
                                     </div>
@@ -435,6 +363,182 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         </div>
                     </div>
                 </div>
+
+                <!-- Address Information Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="section-title">
+                                <i class="fas fa-map-marker-alt me-3"></i>Address Information
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-primary">
+                                                    <i class="fas fa-home"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->address }}</h6>
+                                                    <small class="text-muted">Address Line</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-info">
+                                                    <i class="fas fa-city"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->city }}</h6>
+                                                    <small class="text-muted">City</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-warning">
+                                                    <i class="fas fa-map"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->state }}</h6>
+                                                    <small class="text-muted">State</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-success">
+                                                    <i class="fas fa-flag"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->country }}</h6>
+                                                    <small class="text-muted">Country</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Information Section -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="section-title">
+                                <i class="fas fa-id-card me-3"></i>Document Information
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-4">
+                                    <div class="col-12">
+                                        <div class="info-card">
+                                            <div class="d-flex align-items-center">
+                                                <div class="info-icon bg-warning">
+                                                    <i class="fas fa-file-alt"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="mb-1">{{ $kyc->document_type }}</h6>
+                                                    <small class="text-muted">Document Type</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Images Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="section-title">
+                                <i class="fas fa-images me-3"></i>Document Images
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="row g-4">
+                                    <div class="col-lg-6">
+                                        <div class="document-card">
+                                            <div class="document-header bg-primary text-white p-3">
+                                                <i class="fas fa-address-card fa-2x mb-2"></i>
+                                                <h6 class="mb-0">Front Side</h6>
+                                            </div>
+                                            <div class="document-body p-3 text-center">
+                                                <img src="{{ asset('storage/app/public/' . $kyc->frontimg) }}"
+                                                     alt="Document Front Side"
+                                                     class="document-image">
+                                                <small class="text-muted d-block mt-2">Document Front View</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="document-card">
+                                            <div class="document-header bg-info text-white p-3">
+                                                <i class="fas fa-address-card fa-2x mb-2"></i>
+                                                <h6 class="mb-0">Back Side</h6>
+                                            </div>
+                                            <div class="document-body p-3 text-center">
+                                                <img src="{{ asset('storage/app/public/' . $kyc->backimg) }}"
+                                                     alt="Document Back Side"
+                                                     class="document-image">
+                                                <small class="text-muted d-block mt-2">Document Back View</small>
+                                            </div>
+                                        </div>
+                                    </div>
             </div>
         </div>
-    @endsection
+    </div>
+
+@section('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Modal action selection
+    window.selectAction = function(action) {
+        document.getElementById('kycAction').value = action;
+    };
+
+    // Image error handling
+    const images = document.querySelectorAll('.document-image');
+    images.forEach(img => {
+        img.addEventListener('error', function() {
+            this.src = '/themes/dashly/assets/images/no-image.png';
+            this.alt = 'Image not available';
+        });
+    });
+
+    // Smooth scrolling for better UX
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Auto-resize textareas
+    document.querySelectorAll('textarea').forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    });
+});
+</script>
+@endsection
+@endsection
