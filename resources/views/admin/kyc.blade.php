@@ -15,7 +15,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="content ">
             <div class="page-inner">
                 <div class="mt-2 mb-4">
-                    <h1 class="title1 text-{{ $text }}">{{ $settings->site_name }} KYC Application list</h1>
+                    <h1 class="title1 text-{{ $text }}">{{ $settings->site_name }} KYC Başvuru Listesi</h1>
                 </div>
                 <x-danger-alert />
                 <x-success-alert />
@@ -25,8 +25,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <table id="ShipTable" class="table table-hover  text-{{ $text }}">
                                 <thead>
                                     <tr>
-                                        <th>User</th>
-                                        <th>KYC Status</th>
+                                        <th>Kullanıcı</th>
+                                        <th>KYC Durumu</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -37,14 +37,14 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 
                                             <td>
                                                 @if ($list->status == 'Verified')
-                                                    <span class="badge badge-success">Verified</span>
+                                                    <span class="badge badge-success">Doğrulandı</span>
                                                 @else
                                                     <span class="badge badge-danger">{{ $list->status }}</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 <a href="{{ route('viewkyc', $list->id) }}"
-                                                    class="btn btn-primary btn-sm">View application</a>
+                                                    class="btn btn-primary btn-sm">Başvuruyu Görüntüle</a>
 
                                             </td>
                                         </tr>
