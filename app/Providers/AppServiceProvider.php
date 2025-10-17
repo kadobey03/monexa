@@ -41,13 +41,21 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         // Sharing settings with all view
-        $settings = Settings::where('id', '1')->first();
-        $terms =  TermsPrivacy::find(1);
-        $moreset =  SettingsCont::find(1);
+        try {
+            $settings = Settings::where('id', '1')->first();
+            $terms = TermsPrivacy::find(1);
+            $moreset = SettingsCont::find(1);
 
-        View::share('settings', $settings);
-        View::share('terms', $terms);
-        View::share('moresettings', $moreset);
-        View::share('mod', $settings->modules);
+            View::share('settings', $settings);
+            View::share('terms', $terms);
+            View::share('moresettings', $moreset);
+            View::share('mod', $settings->modules ?? null);
+        } catch (\Exception $e) {
+            // Database might not be ready during migrations or initial setup
+            View::share('settings', null);
+            View::share('terms', null);
+            View::share('moresettings', null);
+            View::share('mod', null);
+        }
     }
 }

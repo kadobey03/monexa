@@ -162,15 +162,11 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Unicodeveloper\Paystack\PaystackServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-        Jenssegers\Agent\AgentServiceProvider::class,
-        App\Providers\SettingsServiceProvider::class,
+        // App\Providers\SettingsServiceProvider::class,
         /*
          * Package Service Providers...
          */
-        KingFlamez\Rave\RaveServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -234,10 +230,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'Agent' => Jenssegers\Agent\Facades\Agent::class,
-        'Rave' => KingFlamez\Rave\Facades\Rave::class,
     ],
 
 ];
