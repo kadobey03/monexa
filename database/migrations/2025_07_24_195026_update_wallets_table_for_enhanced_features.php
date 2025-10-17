@@ -23,8 +23,8 @@ class UpdateWalletsTableForEnhancedFeatures extends Migration
                 $table->timestamp('last_validated')->nullable()->after('status');
             }
 
-            // Ensure user column has proper indexing for performance
-            $table->index('user');
+            // Ensure user_id column has proper indexing for performance
+            $table->index('user_id');
         });
     }
 
@@ -37,7 +37,7 @@ class UpdateWalletsTableForEnhancedFeatures extends Migration
     {
         Schema::table('wallets', function (Blueprint $table) {
             $table->dropColumn(['status', 'last_validated']);
-            $table->dropIndex(['user']);
+            $table->dropIndex(['user_id']);
         });
     }
 }

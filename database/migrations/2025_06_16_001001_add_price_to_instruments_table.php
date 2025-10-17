@@ -14,9 +14,11 @@ class AddPriceToInstrumentsTable extends Migration
     public function up()
     {
         Schema::table('instruments', function (Blueprint $table) {
-    $table->decimal('price', 20, 8)->nullable();
-});
-
+            // Check if price column doesn't exist before adding it
+            if (!Schema::hasColumn('instruments', 'price')) {
+                $table->decimal('price', 20, 8)->nullable();
+            }
+        });
     }
 
     /**

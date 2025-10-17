@@ -3,7 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\EnsureKycIsCompleted;
-use App\Http\Middleware\RedirectIfAdminIsLoggedIIn;
+use App\Http\Middleware\RedirectIfAdminIsLoggedIn;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -64,7 +64,7 @@ class Kernel extends HttpKernel
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'adminguest' => \App\Http\Middleware\RedirectIfAdminIsLoggedIIn::class,
+        'adminguest' => \App\Http\Middleware\RedirectIfAdminIsLoggedIn::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,

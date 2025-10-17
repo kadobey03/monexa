@@ -37,22 +37,22 @@
 
             <script type="application/ld+json">
                 {
-                    "@context": "http://schema.org",
-                    "@type": "BreadcrumbList",
+                    "@@context": "http://schema.org",
+                    "@@type": "BreadcrumbList",
                     "itemListElement": [
                         {
-                            "@type": "ListItem",
+                            "@@type": "ListItem",
                             "position": 1,
                             "item": {
-                                "@id": "{{$settings->site_address}}",
+                                "@@id": "{{$settings->site_address}}",
                                 "name": "{{$settings->name}}"
                             }
                         },
                         {
-                            "@type": "ListItem",
+                            "@@type": "ListItem",
                             "position": 2,
                             "item": {
-                                "@id": "{{$settings->site_address}}for-traders",
+                                "@@id": "{{$settings->site_address}}for-traders",
                                 "name": "Traderlar İçin"
                             }
                         }

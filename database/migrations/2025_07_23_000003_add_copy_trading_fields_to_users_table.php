@@ -17,7 +17,7 @@ return new class extends Migration
             // Add copy trading fields
             // $table->string('copy')->nullable()->after('trade_mode'); // Current copied trader name
             // $table->integer('copy_plan')->nullable()->after('copy'); // Current copy trading plan ID
-            $table->integer('trade')->default(0)->after('copy_plan'); // Is user currently trading (0 or 1)
+            $table->integer('trade')->default(0); // Is user currently trading (0 or 1)
             // $table->string('sendroiemail')->default('No')->after('trade'); // Send ROI emails setting
         });
     }

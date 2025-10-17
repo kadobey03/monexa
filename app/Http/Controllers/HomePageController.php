@@ -34,6 +34,25 @@ class HomePageController extends Controller
 {
     public function index(){
         $settings=Settings::where('id', '=', '1')->first();
+        
+        // Handle case where settings record doesn't exist
+        if (!$settings) {
+            // Create default settings record
+            $settings = Settings::create([
+                'id' => 1,
+                'site_title' => 'Trading Platform',
+                'site_name' => 'Trading Platform',
+                'currency' => 'USD',
+                'referral_commission' => '10',
+                'contact_email' => 'admin@example.com',
+                'trade_mode' => 'on',
+                'enable_2fa' => 'no',
+                'enable_kyc' => 'no',
+                'enable_verification' => 'true',
+                'withdrawal_option' => 'auto'
+            ]);
+        }
+        
         //sum total deposited
         $total_deposits = DB::table('deposits')->select(DB::raw("SUM(amount) as total"))->
         where('status','Processed')->get();

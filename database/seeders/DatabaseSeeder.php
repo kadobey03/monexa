@@ -13,6 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\Adverts::factory(7)->create();
+        $this->call([
+            SettingsSeeder::class,
+        ]);
+        
+        \App\Models\Adverts::factory(7)->create();
     }
 }

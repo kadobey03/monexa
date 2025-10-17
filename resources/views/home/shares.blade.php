@@ -95,14 +95,6 @@
     </div>
 </section>
 
-
-</div></div></div></section>
-
-
-
-
-
-
 <!-- Share Trading Table Section -->
 <section class="py-16 bg-gray-900">
     <div class="container mx-auto px-4">
@@ -228,7 +220,6 @@ $(function() {
 });
 </script>
 
-
 <!-- Features Section -->
 <section class="py-16 bg-gray-900">
     <div class="container mx-auto px-4">
@@ -293,13 +284,6 @@ $(function() {
         </div>
     </div>
 </section>
-
-
-
-
-
-
-
 
 <!-- CTA Section -->
 <section class="py-16 bg-gray-900">

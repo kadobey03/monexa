@@ -75,40 +75,35 @@
 
 <script type="application/ld+json">
 {
-    "@context": "http://schema.org",
-    "@type": "BreadcrumbList",
+    "@@context": "http://schema.org",
+    "@@type": "BreadcrumbList",
     "itemListElement": [
         {
-            "@type": "ListItem",
+            "@@type": "ListItem",
             "position": 1,
             "item": {
-                "@id": "{{$settings->site_address}}",
+                "@@id": "{{$settings->site_address}}",
                 "name": "{{$settings->site_name}}"
             }
         },
         {
-            "@type": "ListItem",
+            "@@type": "ListItem",
             "position": 2,
             "item": {
-                "@id": "{{$settings->site_address}}company",
+                "@@id": "{{$settings->site_address}}company",
                 "name": "Şirket"
             }
         },
         {
-            "@type": "ListItem",
+            "@@type": "ListItem",
             "position": 3,
             "item": {
-                "@id": "{{$settings->site_address}}/why-us",
+                "@@id": "{{$settings->site_address}}/why-us",
                 "name": "Neden Biz"
             }
         }
     ]
 }</script>
-
-</div></div></div></div>
-
-
-
 
 <!-- Features Grid Section -->
 <section class="py-16 bg-gray-900">
