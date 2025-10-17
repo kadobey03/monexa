@@ -1,0 +1,55 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentation
+README.md
+*.md
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node modules and build artifacts
+node_modules
+npm-debug.log
+yarn-error.log
+.npm
+.yarn-integrity
+
+# Laravel specific
+/storage/app/*
+!/storage/app/public
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+/bootstrap/cache/*
+.env.backup
+.phpunit.result.cache
+
+# Composer
+/vendor
+
+# Testing
+.phpunit.result.cache
+phpunit.xml
+
+# Misc
+*.log
+*.cache
+.sass-cache
