@@ -50,7 +50,7 @@ services:
   # PhpMyAdmin Service (optional for database management)
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: laravel_phpmyadmin
+    container_name: monexa-phpmyadmin
     restart: unless-stopped
     ports:
       - "8111:80"
