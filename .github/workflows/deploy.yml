@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/kadir/web/monexa.prozone.dev/public_html/monexa
+            cd /home/monexa
             git pull origin main
             composer install --no-interaction --no-dev --optimize-autoloader
             php artisan migrate --force
