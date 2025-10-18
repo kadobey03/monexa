@@ -16,7 +16,7 @@ services:
   # Nginx Service
   nginx:
     image: nginx:alpine
-    container_name: laravel_nginx
+    container_name: monexa-nginx
     restart: unless-stopped
     ports:
       - "8211:80"
