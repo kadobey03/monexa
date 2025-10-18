@@ -63,6 +63,9 @@ services:
       APACHE_HTTPS_PORT_NUMBER: 443
       PMA_CONTROLUSER: monexa_user
       PMA_CONTROLPASS: sPl2ltlt1emaV5t9
+      UPLOAD_LIMIT: 100M
+      MEMORY_LIMIT: 512M
+      MAX_EXECUTION_TIME: 300
     depends_on:
       - mysql
 
