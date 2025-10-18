@@ -33,9 +33,9 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: monexa
-      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_ROOT_PASSWORD: si6echoYuc98asti
       MYSQL_USER: monexa_user
-      MYSQL_PASSWORD: monexa_password
+      MYSQL_PASSWORD: sPl2ltlt1emaV5t9
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
@@ -61,8 +61,8 @@ services:
       PMA_ABSOLUTE_URI: http://localhost:8111/
       APACHE_HTTP_PORT_NUMBER: 80
       APACHE_HTTPS_PORT_NUMBER: 443
-      PMA_CONTROLUSER: pma_admin
-      PMA_CONTROLPASS: rrrjJ1Hd|Tgy5u75.*>S1w#>F&{K[83H
+      PMA_CONTROLUSER: monexa_user
+      PMA_CONTROLPASS: sPl2ltlt1emaV5t9
     depends_on:
       - mysql
 
