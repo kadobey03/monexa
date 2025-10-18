@@ -13,13 +13,15 @@ class CreateCopytradingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('copytradings', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('tag')->nullable();
-            $table->decimal('price', 8, 2)->default(0);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('copytradings')) {
+            Schema::create('copytradings', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name');
+                $table->string('tag')->nullable();
+                $table->decimal('price', 8, 2)->default(0);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
