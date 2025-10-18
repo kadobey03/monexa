@@ -16,7 +16,7 @@
         <div>
             <p class="text-primary font-semibold uppercase tracking-wide mb-3">Ultimate Alım Satım Platformu</p>
             <h1 class="text-3xl md:text-5xl font-extrabold leading-tight heading-accent headline-fix max-w-[22ch]">
-                Ultimate Alım Satım Ortamınız
+                Ultimate Alım Satım Ortamınız2
             </h1>
             <p class="mt-4 muted max-w-xl">
                 Güvenli platform ve yeni nesil araçlarla daha akıllı işlem yapın. Gelişmiş grafikler, hızlı emir iletimi ve ayna işlemler — hem yeni başlayanlar hem profesyoneller için.
