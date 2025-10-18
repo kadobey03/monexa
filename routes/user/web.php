@@ -24,7 +24,7 @@ use App\Http\Controllers\User\TransferController;
 use Illuminate\Support\Facades\Route;
 
 // Email verification routes
-Route::get('/verify-email', 'App\Http\Controllers\User\UsersController@verifyemail')->middleware('auth')->name('verification.notice');;
+Route::get('/verify-email', 'App\Http\Controllers\User\UsersController@verifyemail')->middleware('auth')->name('verify-email');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
