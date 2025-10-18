@@ -58,7 +58,6 @@ services:
       PMA_HOST: mysql-monexa
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
-      PMA_ABSOLUTE_URI: http://localhost:8111/
       APACHE_HTTP_PORT_NUMBER: 80
       APACHE_HTTPS_PORT_NUMBER: 443
       PMA_CONTROLUSER: monexa_user
