@@ -11,7 +11,7 @@ services:
       - ./:/var/www/html
       - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
     depends_on:
-      - mysql
+      - mysql-monexa
 
   # Nginx Service
   nginx:
@@ -27,7 +27,7 @@ services:
       - app
 
   # MySQL Service
-  mysql:
+  mysql-monexa:
     image: mysql:8.0
     container_name: monexa-mysql
     restart: unless-stopped
@@ -55,7 +55,7 @@ services:
     ports:
       - "8111:80"
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: mysql-monexa
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
       PMA_ABSOLUTE_URI: http://localhost:8111/
@@ -67,7 +67,7 @@ services:
       MEMORY_LIMIT: 512M
       MAX_EXECUTION_TIME: 300
     depends_on:
-      - mysql
+      - mysql-monexa
 
 # Docker Networks
 networks:
