@@ -17,7 +17,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/monexa
+            docker-compose down --remove-orphans
             git pull origin main
-            docker-compose up -d
+            docker-compose up -d --remove-orphans
             docker-compose exec app composer install --no-interaction --no-dev --optimize-autoloader
             docker-compose exec app php artisan optimize
