@@ -57,8 +57,12 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
-      PMA_USER: root
-      PMA_PASSWORD: root_password
+      PMA_ARBITRARY: 1
+      PMA_ABSOLUTE_URI: http://localhost:8111/
+      APACHE_HTTP_PORT_NUMBER: 80
+      APACHE_HTTPS_PORT_NUMBER: 443
+      PMA_CONTROLUSER: pma_admin
+      PMA_CONTROLPASS: rrrjJ1Hd|Tgy5u75.*>S1w#>F&{K[83H
     depends_on:
       - mysql
 
