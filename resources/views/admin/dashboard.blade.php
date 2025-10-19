@@ -13,386 +13,399 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 @section('content')
     @include('admin.topmenu')
     @include('admin.sidebar')
-    <div class="main-panel">
-        <div class="content">
-            <!-- Modern Header Section -->
-            <div class="panel-header hero-gradient">
-                <div class="py-5 page-inner">
-                    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                        <div class="flex-grow-1">
-                            <div class="welcome-badge mb-3">
-                                <span class="badge bg-white bg-opacity-20 text-white px-3 py-2">
-                                    <i class="fas fa-user-shield me-2"></i>Yönetim Paneli
-                                </span>
+    
+    <!-- Main Content -->
+    <div class="flex-1 ml-0 md:ml-64 transition-all duration-300">
+        <!-- Hero Header Section -->
+        <div class="relative min-h-[300px] bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 overflow-hidden">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;><defs><pattern id=&quot;grain&quot; width=&quot;100&quot; height=&quot;100&quot; patternUnits=&quot;userSpaceOnUse&quot;><circle cx=&quot;50&quot; cy=&quot;50&quot; r=&quot;1&quot; fill=&quot;%23ffffff&quot; opacity=&quot;0.02&quot;/></pattern></defs><rect width=&quot;100&quot; height=&quot;100&quot; fill=&quot;url(%23grain)&quot;/></svg>');"></div>
+            </div>
+            
+            <!-- Content -->
+            <div class="relative z-10 px-4 py-8 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                    <div class="flex-1 mb-8 lg:mb-0">
+                        <!-- Welcome Badge -->
+                        <div class="inline-flex items-center px-4 py-2 mb-6 rounded-full bg-white/20 backdrop-blur-sm text-white text-sm font-medium animate-fade-in-up">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                            </svg>
+                            Yönetim Paneli
+                        </div>
+                        
+                        <!-- Title -->
+                        <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-in-left">
+                            <svg class="w-10 h-10 lg:w-12 lg:h-12 mr-3 inline-block" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                            </svg>
+                            Kontrol Paneli
+                        </h1>
+                        
+                        <!-- Greeting -->
+                        <h2 class="text-xl lg:text-2xl text-white/90 mb-4 animate-fade-in-left animation-delay-200">
+                            Hoş geldiniz, {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}!
+                        </h2>
+                        
+                        <!-- Date Time -->
+                        <div class="flex items-center text-white/80 text-lg animate-fade-in-left animation-delay-400">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            {{ date('l, F j, Y') }}
+                            <span class="mx-3">•</span>
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span id="current-time" class="font-medium"></span>
+                        </div>
+                    </div>
+                    
+                    @if (Auth('admin')->User()->type == 'Super Admin' || Auth('admin')->User()->type == 'Admin')
+                        <!-- Action Buttons -->
+                        <div class="flex flex-col space-y-3 lg:space-y-4">
+                            <a href="{{ route('mdeposits') }}" class="group inline-flex items-center justify-center px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                                <svg class="w-5 h-5 mr-2 group-hover:animate-bounce" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                                Yatırımlar
+                            </a>
+                            <a href="{{ route('mwithdrawals') }}" class="group inline-flex items-center justify-center px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                                <svg class="w-5 h-5 mr-2 group-hover:animate-bounce" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 11-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Çekimler
+                            </a>
+                            <a href="{{ route('manageusers') }}" class="group inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                                <svg class="w-5 h-5 mr-2 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                                </svg>
+                                Kullanıcılar
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        
+        <!-- Alert Messages -->
+        <div class="px-4 sm:px-6 lg:px-8">
+            <x-danger-alert />
+            <x-success-alert />
+        </div>
+        
+        <!-- Main Dashboard Content -->
+        <div class="px-4 py-8 sm:px-6 lg:px-8 -mt-20 relative z-20">
+            <!-- Financial Statistics Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Total Deposits -->
+                <div class="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-emerald-500 animate-fade-in-up">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-transparent rounded-2xl opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M4 7a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V7zM6 5a2 2 0 012-2h4a2 2 0 012 2v1H6V5z"></path>
+                                </svg>
                             </div>
-                            <h1 class="display-5 text-white fw-bold mb-2">
-                                <i class="fas fa-tachometer-alt me-3"></i>Kontrol Paneli
-                            </h1>
-                            <h5 class="text-white op-8 mb-3">
-                                Hoş geldiniz, {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}!
-                            </h5>
-                            <div class="d-flex align-items-center text-white op-7">
-                                <div class="date-time-display">
-                                    <i class="far fa-calendar-alt me-2"></i>{{ date('l, F j, Y') }}
-                                    <span class="mx-2">•</span>
-                                    <i class="far fa-clock me-2"></i><span id="current-time"></span>
-                                </div>
+                            <div class="p-1 bg-emerald-100 rounded-full">
+                                <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
                             </div>
                         </div>
-                        @if (Auth('admin')->User()->type == 'Super Admin' || Auth('admin')->User()->type == 'Admin')
-                            <div class="py-2 ml-md-auto py-md-0">
-                                <div class="btn-group-vertical btn-group-lg" role="group">
-                                    <a href="{{ route('mdeposits') }}" class="btn btn-success mb-2 modern-btn shadow-sm">
-                                        <i class="fas fa-arrow-down me-2"></i>Yatırımlar
-                                    </a>
-                                    <a href="{{ route('mwithdrawals') }}" class="btn btn-danger mb-2 modern-btn shadow-sm">
-                                        <i class="fas fa-arrow-up me-2"></i>Çekimler
-                                    </a>
-                                    <a href="{{ route('manageusers') }}" class="btn btn-info modern-btn shadow-sm">
-                                        <i class="fas fa-users me-2"></i>Kullanıcılar
-                                    </a>
-                                </div>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Toplam Yatırımlar</h3>
+                        <p class="text-2xl font-bold text-gray-900 mb-2">
+                            @foreach ($total_deposited as $deposited)
+                                @if (!empty($deposited->count))
+                                    {{ $settings->currency }}{{ number_format($deposited->count) }}
+                                @else
+                                    {{ $settings->currency }}0.00
+                                @endif
+                            @endforeach
+                        </p>
+                        <p class="text-xs text-gray-500 flex items-center">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                            </svg>
+                            Tüm zamanlar toplamı
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Pending Deposits -->
+                <div class="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-amber-500 animate-fade-in-up animation-delay-100">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-50 to-transparent rounded-2xl opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                </svg>
                             </div>
-                        @endif
+                            <div class="p-1 bg-amber-100 rounded-full">
+                                <svg class="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Bekleyen Yatırımlar</h3>
+                        <p class="text-2xl font-bold text-gray-900 mb-2">
+                            @foreach ($pending_deposited as $deposited)
+                                @if (!empty($deposited->count))
+                                    {{ $settings->currency }}{{ number_format($deposited->count) }}
+                                @else
+                                    {{ $settings->currency }}0.00
+                                @endif
+                            @endforeach
+                        </p>
+                        <p class="text-xs text-gray-500 flex items-center">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            Onay bekliyor
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Total Withdrawals -->
+                <div class="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-rose-500 animate-fade-in-up animation-delay-200">
+                    <div class="absolute inset-0 bg-gradient-to-br from-rose-50 to-transparent rounded-2xl opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zM14 6a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h10zM4 8a1 1 0 011-1h1a1 1 0 010 2H5a1 1 0 01-1-1zm5 1a1 1 0 100 2h1a1 1 0 100-2H9z"></path>
+                                </svg>
+                            </div>
+                            <div class="p-1 bg-rose-100 rounded-full">
+                                <svg class="w-4 h-4 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 11-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Toplam Çekimler</h3>
+                        <p class="text-2xl font-bold text-gray-900 mb-2">
+                            @foreach ($total_withdrawn as $deposited)
+                                @if (!empty($deposited->count))
+                                    {{ $settings->currency }}{{ number_format($deposited->count) }}
+                                @else
+                                    {{ $settings->currency }}0.00
+                                @endif
+                            @endforeach
+                        </p>
+                        <p class="text-xs text-gray-500 flex items-center">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                            </svg>
+                            Tüm zamanlar toplamı
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Pending Withdrawals -->
+                <div class="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-blue-500 animate-fade-in-up animation-delay-300">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent rounded-2xl opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="p-1 bg-blue-100 rounded-full">
+                                <svg class="w-4 h-4 text-blue-600 animate-spin" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Bekleyen Çekimler</h3>
+                        <p class="text-2xl font-bold text-gray-900 mb-2">
+                            @foreach ($pending_withdrawn as $deposited)
+                                @if (!empty($deposited->count))
+                                    {{ $settings->currency }}{{ number_format($deposited->count) }}
+                                @else
+                                    {{ $settings->currency }}0.00
+                                @endif
+                            @endforeach
+                        </p>
+                        <p class="text-xs text-gray-500 flex items-center">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                            </svg>
+                            İşleniyor
+                        </p>
                     </div>
                 </div>
             </div>
-
-            <x-danger-alert />
-            <x-success-alert />
-
-            <div class="page-inner mt--5">
-                <!-- Enhanced Statistics Cards -->
-                <div class="row g-4 mb-5">
-                    <!-- Total Deposit Card -->
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card premium-card deposit-card border-0 h-100">
-                            <div class="card-body p-4">
-                                <div class="stat-wrapper">
-                                    <div class="stat-icon-wrapper">
-                                        <div class="stat-icon bg-gradient-success">
-                                            <i class="fas fa-wallet fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-header">
-                                            <span class="stat-label">Toplam Yatırımlar</span>
-                                            <div class="stat-badge">
-                                                <i class="fas fa-arrow-up text-success"></i>
-                                            </div>
-                                        </div>
-                                        <div class="stat-value">
-                                            @foreach ($total_deposited as $deposited)
-                                                @if (!empty($deposited->count))
-                                                    {{ $settings->currency }}{{ number_format($deposited->count) }}
-                                                @else
-                                                    {{ $settings->currency }}0.00
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                        <div class="stat-footer">
-                                            <small class="text-muted">
-                                                <i class="fas fa-calendar-alt me-1"></i>Tüm zamanlar toplamı
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
+            
+            <!-- User Statistics Section -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Total Users -->
+                <div class="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-purple-500 animate-fade-in-up animation-delay-400">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-50 to-transparent rounded-2xl opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+                                </svg>
+                            </div>
+                            <div class="p-1 bg-purple-100 rounded-full">
+                                <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
+                                </svg>
                             </div>
                         </div>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Toplam Kullanıcılar</h3>
+                        <p class="text-2xl font-bold text-gray-900 mb-2">{{ number_format($user_count) }}</p>
+                        <p class="text-xs text-gray-500 flex items-center">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            </svg>
+                            Toplam kayıtlı
+                        </p>
                     </div>
-
-                    <!-- Pending Deposits Card -->
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card premium-card pending-card border-0 h-100">
-                            <div class="card-body p-4">
-                                <div class="stat-wrapper">
-                                    <div class="stat-icon-wrapper">
-                                        <div class="stat-icon bg-gradient-warning">
-                                            <i class="fas fa-hourglass-half fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-header">
-                                            <span class="stat-label">Bekleyen Yatırımlar</span>
-                                            <div class="stat-badge">
-                                                <i class="fas fa-clock text-warning"></i>
-                                            </div>
-                                        </div>
-                                        <div class="stat-value">
-                                            @foreach ($pending_deposited as $deposited)
-                                                @if (!empty($deposited->count))
-                                                    {{ $settings->currency }}{{ number_format($deposited->count) }}
-                                                @else
-                                                    {{ $settings->currency }}0.00
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                        <div class="stat-footer">
-                                            <small class="text-muted">
-                                                <i class="fas fa-exclamation-circle me-1"></i>Onay bekliyor
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
+                </div>
+                
+                <!-- Active Users -->
+                <div class="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-emerald-500 animate-fade-in-up animation-delay-500">
+                    <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-transparent rounded-2xl opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="p-1 bg-emerald-100 rounded-full">
+                                <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
                             </div>
                         </div>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Aktif Kullanıcılar</h3>
+                        <p class="text-2xl font-bold text-gray-900 mb-2">{{ $activeusers }}</p>
+                        <p class="text-xs text-gray-500 flex items-center">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
+                            </svg>
+                            Şu anda çevrimiçi
+                        </p>
                     </div>
-
-                    <!-- Total Withdrawals Card -->
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card premium-card withdrawal-card border-0 h-100">
-                            <div class="card-body p-4">
-                                <div class="stat-wrapper">
-                                    <div class="stat-icon-wrapper">
-                                        <div class="stat-icon bg-gradient-danger">
-                                            <i class="fas fa-credit-card fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-header">
-                                            <span class="stat-label">Toplam Çekimler</span>
-                                            <div class="stat-badge">
-                                                <i class="fas fa-arrow-down text-danger"></i>
-                                            </div>
-                                        </div>
-                                        <div class="stat-value">
-                                            @foreach ($total_withdrawn as $deposited)
-                                                @if (!empty($deposited->count))
-                                                    {{ $settings->currency }}{{ number_format($deposited->count) }}
-                                                @else
-                                                    {{ $settings->currency }}0.00
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                        <div class="stat-footer">
-                                            <small class="text-muted">
-                                                <i class="fas fa-calendar-alt me-1"></i>Tüm zamanlar toplamı
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
+                </div>
+                
+                <!-- Blocked Users -->
+                <div class="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-rose-500 animate-fade-in-up animation-delay-600">
+                    <div class="absolute inset-0 bg-gradient-to-br from-rose-50 to-transparent rounded-2xl opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="p-1 bg-rose-100 rounded-full">
+                                <svg class="w-4 h-4 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd"></path>
+                                </svg>
                             </div>
                         </div>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Engellenen Kullanıcılar</h3>
+                        <p class="text-2xl font-bold text-gray-900 mb-2">{{ $blockeusers }}</p>
+                        <p class="text-xs text-gray-500 flex items-center">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            </svg>
+                            Askıya alınmış hesaplar
+                        </p>
                     </div>
-
-                    <!-- Pending Withdrawals Card -->
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card premium-card processing-card border-0 h-100">
-                            <div class="card-body p-4">
-                                <div class="stat-wrapper">
-                                    <div class="stat-icon-wrapper">
-                                        <div class="stat-icon bg-gradient-info">
-                                            <i class="fas fa-pause-circle fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-header">
-                                            <span class="stat-label">Bekleyen Çekimler</span>
-                                            <div class="stat-badge">
-                                                <i class="fas fa-cog text-info"></i>
-                                            </div>
-                                        </div>
-                                        <div class="stat-value">
-                                            @foreach ($pending_withdrawn as $deposited)
-                                                @if (!empty($deposited->count))
-                                                    {{ $settings->currency }}{{ number_format($deposited->count) }}
-                                                @else
-                                                    {{ $settings->currency }}0.00
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                        <div class="stat-footer">
-                                            <small class="text-muted">
-                                                <i class="fas fa-clock me-1"></i>İşleniyor
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
+                </div>
+                
+                <!-- Investment Plans -->
+                <div class="group relative bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-amber-500 animate-fade-in-up animation-delay-700">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-50 to-transparent rounded-2xl opacity-50"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="p-3 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
+                                </svg>
                             </div>
+                            <div class="p-1 bg-amber-100 rounded-full">
+                                <svg class="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Yatırım Planları</h3>
+                        <p class="text-2xl font-bold text-gray-900 mb-2">{{ $plans }}</p>
+                        <p class="text-xs text-gray-500 flex items-center">
+                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                            </svg>
+                            Mevcut planlar
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Analytics Chart Section -->
+            <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 overflow-hidden animate-fade-in-up animation-delay-800">
+                <!-- Chart Header -->
+                <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200/50">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <div class="mb-4 sm:mb-0">
+                            <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                                <svg class="w-6 h-6 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path>
+                                </svg>
+                                Sistem Analitiği
+                            </h2>
+                            <p class="text-gray-600 text-sm">Finansal genel bakış ve işlem analitiği</p>
+                        </div>
+                        
+                        <!-- Period Selector -->
+                        <div class="inline-flex rounded-lg bg-gray-100 p-1" role="group">
+                            <button type="button" class="px-4 py-2 text-sm font-medium text-gray-500 bg-transparent rounded-md hover:bg-white hover:text-gray-900 transition-all duration-200">
+                                Bugün
+                            </button>
+                            <button type="button" class="px-4 py-2 text-sm font-medium text-gray-500 bg-transparent rounded-md hover:bg-white hover:text-gray-900 transition-all duration-200">
+                                Bu Hafta
+                            </button>
+                            <button type="button" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm transition-all duration-200">
+                                Bu Ay
+                            </button>
+                            <button type="button" class="px-4 py-2 text-sm font-medium text-gray-500 bg-transparent rounded-md hover:bg-white hover:text-gray-900 transition-all duration-200">
+                                Bu Yıl
+                            </button>
                         </div>
                     </div>
                 </div>
-
-                <!-- User Statistics Section -->
-                <div class="row g-4 mb-5">
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card premium-card users-card border-0 h-100">
-                            <div class="card-body p-4">
-                                <div class="stat-wrapper">
-                                    <div class="stat-icon-wrapper">
-                                        <div class="stat-icon bg-gradient-primary">
-                                            <i class="fas fa-users fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-header">
-                                            <span class="stat-label">Toplam Kullanıcılar</span>
-                                            <div class="stat-badge">
-                                                <i class="fas fa-user-plus text-primary"></i>
-                                            </div>
-                                        </div>
-                                        <div class="stat-value">{{ number_format($user_count) }}</div>
-                                        <div class="stat-footer">
-                                            <small class="text-muted">
-                                                <i class="fas fa-chart-line me-1"></i>Toplam kayıtlı
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                
+                <!-- Chart Content -->
+                <div class="p-6">
+                    <div class="relative">
+                        <canvas id="myChart" class="w-full h-96"></canvas>
                     </div>
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card premium-card active-card border-0 h-100">
-                            <div class="card-body p-4">
-                                <div class="stat-wrapper">
-                                    <div class="stat-icon-wrapper">
-                                        <div class="stat-icon bg-gradient-success">
-                                            <i class="fas fa-user-check fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-header">
-                                            <span class="stat-label">Aktif Kullanıcılar</span>
-                                            <div class="stat-badge">
-                                                <i class="fas fa-circle text-success"></i>
-                                            </div>
-                                        </div>
-                                        <div class="stat-value">{{ $activeusers }}</div>
-                                        <div class="stat-footer">
-                                            <small class="text-muted">
-                                                <i class="fas fa-bolt me-1"></i>Şu anda çevrimiçi
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
+                    
+                    <!-- Chart Summary -->
+                    <div class="mt-8 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                            <div class="flex flex-col">
+                                <span class="text-lg font-bold text-gray-900">{{ $settings->currency }}{{ number_format($chart_pdepsoit) }}</span>
+                                <span class="text-xs text-gray-600 uppercase tracking-wider">Toplam Yatırımlar</span>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card premium-card blocked-card border-0 h-100">
-                            <div class="card-body p-4">
-                                <div class="stat-wrapper">
-                                    <div class="stat-icon-wrapper">
-                                        <div class="stat-icon bg-gradient-danger">
-                                            <i class="fas fa-user-times fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-header">
-                                            <span class="stat-label">Engellenen Kullanıcılar</span>
-                                            <div class="stat-badge">
-                                                <i class="fas fa-ban text-danger"></i>
-                                            </div>
-                                        </div>
-                                        <div class="stat-value">{{ $blockeusers }}</div>
-                                        <div class="stat-footer">
-                                            <small class="text-muted">
-                                                <i class="fas fa-shield-alt me-1"></i>Askıya alınmış hesaplar
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="flex flex-col">
+                                <span class="text-lg font-bold text-gray-900">{{ $settings->currency }}{{ number_format($chart_pwithdraw) }}</span>
+                                <span class="text-xs text-gray-600 uppercase tracking-wider">Toplam Çekimler</span>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card premium-card plans-card border-0 h-100">
-                            <div class="card-body p-4">
-                                <div class="stat-wrapper">
-                                    <div class="stat-icon-wrapper">
-                                        <div class="stat-icon bg-gradient-warning">
-                                            <i class="fas fa-layer-group fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="stat-header">
-                                            <span class="stat-label">Yatırım Planları</span>
-                                            <div class="stat-badge">
-                                                <i class="fas fa-chart-line text-warning"></i>
-                                            </div>
-                                        </div>
-                                        <div class="stat-value">{{ $plans }}</div>
-                                        <div class="stat-footer">
-                                            <small class="text-muted">
-                                                <i class="fas fa-boxes me-1"></i>Mevcut planlar
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="flex flex-col">
+                                <span class="text-lg font-bold text-gray-900">{{ $settings->currency }}{{ number_format($chart_pendepsoit) }}</span>
+                                <span class="text-xs text-gray-600 uppercase tracking-wider">Bekleyen Yatırımlar</span>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Enhanced Chart Section -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card analytics-card border-0">
-                            <div class="card-header premium-header">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="chart-header-info">
-                                        <div class="chart-title">
-                                            <h4 class="fw-bold mb-1">
-                                                <i class="fas fa-chart-line me-2 gradient-text"></i>Sistem Analitiği
-                                            </h4>
-                                            <p class="text-muted mb-0">Finansal genel bakış ve işlem analitiği</p>
-                                        </div>
-                                    </div>
-                                    <div class="chart-controls">
-                                        <div class="btn-group chart-period-selector" role="group">
-                                            <input type="radio" class="btn-check" name="chartPeriod" id="today" autocomplete="off">
-                                            <label class="btn btn-outline-primary btn-sm" for="today">Bugün</label>
-
-                                            <input type="radio" class="btn-check" name="chartPeriod" id="week" autocomplete="off">
-                                            <label class="btn btn-outline-primary btn-sm" for="week">Bu Hafta</label>
-
-                                            <input type="radio" class="btn-check" name="chartPeriod" id="month" autocomplete="off" checked>
-                                            <label class="btn btn-primary btn-sm" for="month">Bu Ay</label>
-
-                                            <input type="radio" class="btn-check" name="chartPeriod" id="year" autocomplete="off">
-                                            <label class="btn btn-outline-primary btn-sm" for="year">Bu Yıl</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body p-4">
-                                <div class="chart-wrapper">
-                                    <div class="chart-container position-relative">
-                                        <canvas id="myChart" height="120"></canvas>
-                                    </div>
-                                    <div class="chart-overlay-info">
-                                        <div class="row text-center">
-                                            <div class="col-md-3">
-                                                <div class="chart-info-item">
-                                                    <span class="chart-info-value">{{ $settings->currency }}{{ number_format($chart_pdepsoit) }}</span>
-                                                    <span class="chart-info-label">Toplam Yatırımlar</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="chart-info-item">
-                                                    <span class="chart-info-value">{{ $settings->currency }}{{ number_format($chart_pwithdraw) }}</span>
-                                                    <span class="chart-info-label">Toplam Çekimler</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="chart-info-item">
-                                                    <span class="chart-info-value">{{ $settings->currency }}{{ number_format($chart_pendepsoit) }}</span>
-                                                    <span class="chart-info-label">Bekleyen Yatırımlar</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="chart-info-item">
-                                                    <span class="chart-info-value">{{ $settings->currency }}{{ number_format($chart_trans) }}</span>
-                                                    <span class="chart-info-label">İşlemler</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="flex flex-col">
+                                <span class="text-lg font-bold text-gray-900">{{ $settings->currency }}{{ number_format($chart_trans) }}</span>
+                                <span class="text-xs text-gray-600 uppercase tracking-wider">İşlemler</span>
                             </div>
                         </div>
                     </div>
@@ -401,50 +414,36 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         </div>
     </div>
 
-    <!-- Enhanced Chart Script -->
+    <!-- Enhanced Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Real-time clock with enhanced formatting
             function updateTime() {
                 const now = new Date();
                 const timeOptions = {
-                    hour12: true,
+                    hour12: false,
                     hour: '2-digit',
                     minute: '2-digit',
                     second: '2-digit'
                 };
-                const timeString = now.toLocaleTimeString('en-US', timeOptions);
+                const timeString = now.toLocaleTimeString('tr-TR', timeOptions);
                 const timeElement = document.getElementById('current-time');
-
+                
                 if (timeElement) {
                     timeElement.textContent = timeString;
-                    timeElement.style.color = `hsl(${now.getSeconds() * 6}, 70%, 60%)`;
+                    // Add subtle color animation based on seconds
+                    const hue = (now.getSeconds() * 6) % 360;
+                    timeElement.style.color = `hsl(${hue}, 60%, 60%)`;
                 }
             }
-
+            
             updateTime();
             setInterval(updateTime, 1000);
-
-            // Chart period selector functionality
-            const periodButtons = document.querySelectorAll('input[name="chartPeriod"]');
-            periodButtons.forEach(button => {
-                button.addEventListener('change', function() {
-                    // Add loading animation
-                    const chartContainer = document.getElementById('myChart');
-                    chartContainer.style.opacity = '0.5';
-
-                    // Simulate API call delay
-                    setTimeout(() => {
-                        chartContainer.style.opacity = '1';
-                        // Here you would typically fetch new data based on selected period
-                    }, 300);
-                });
-            });
-
-            // Enhanced Chart with modern styling
+            
+            // Chart setup with modern styling
             const ctx = document.getElementById('myChart')?.getContext('2d');
             if (ctx) {
-                // Chart data with enhanced styling
                 const chartData = [
                     "{{ $chart_pdepsoit }}",
                     "{{ $chart_pendepsoit }}",
@@ -452,42 +451,42 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     "{{ $chart_pendwithdraw }}",
                     "{{ $chart_trans }}"
                 ];
-
+                
                 // Create gradient backgrounds
                 const createGradient = (ctx, color1, color2) => {
-                    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
                     gradient.addColorStop(0, color1);
                     gradient.addColorStop(1, color2);
                     return gradient;
                 };
-
+                
                 const gradients = [
-                    createGradient(ctx, 'rgba(40, 167, 69, 0.9)', 'rgba(40, 167, 69, 0.7)'),
-                    createGradient(ctx, 'rgba(255, 193, 7, 0.9)', 'rgba(255, 193, 7, 0.7)'),
-                    createGradient(ctx, 'rgba(220, 53, 69, 0.9)', 'rgba(220, 53, 69, 0.7)'),
-                    createGradient(ctx, 'rgba(23, 162, 184, 0.9)', 'rgba(23, 162, 184, 0.7)'),
-                    createGradient(ctx, 'rgba(108, 117, 125, 0.9)', 'rgba(108, 117, 125, 0.7)')
+                    createGradient(ctx, 'rgba(16, 185, 129, 0.8)', 'rgba(16, 185, 129, 0.2)'),
+                    createGradient(ctx, 'rgba(245, 158, 11, 0.8)', 'rgba(245, 158, 11, 0.2)'),
+                    createGradient(ctx, 'rgba(239, 68, 68, 0.8)', 'rgba(239, 68, 68, 0.2)'),
+                    createGradient(ctx, 'rgba(59, 130, 246, 0.8)', 'rgba(59, 130, 246, 0.2)'),
+                    createGradient(ctx, 'rgba(139, 92, 246, 0.8)', 'rgba(139, 92, 246, 0.2)')
                 ];
-
-                const myChart = new Chart(ctx, {
+                
+                new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: ['Toplam Yatırımlar', 'Bekleyen Yatırımlar', 'Toplam Çekimler', 'Bekleyen Çekimler', 'Toplam İşlemler'],
                         datasets: [{
-                            label: `Amount in {{ $settings->currency }}`,
+                            label: `Tutar ({{ $settings->currency }})`,
                             data: chartData,
                             backgroundColor: gradients,
                             borderColor: [
-                                'rgba(40, 167, 69, 1)',
-                                'rgba(255, 193, 7, 1)',
-                                'rgba(220, 53, 69, 1)',
-                                'rgba(23, 162, 184, 1)',
-                                'rgba(108, 117, 125, 1)'
+                                'rgb(16, 185, 129)',
+                                'rgb(245, 158, 11)',
+                                'rgb(239, 68, 68)',
+                                'rgb(59, 130, 246)',
+                                'rgb(139, 92, 246)'
                             ],
-                            borderWidth: 0,
+                            borderWidth: 2,
                             borderRadius: 12,
                             borderSkipped: false,
-                            hoverBorderRadius: 8,
+                            hoverBorderRadius: 16,
                             hoverBorderWidth: 3,
                         }]
                     },
@@ -495,11 +494,9 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                display: false
-                            },
+                            legend: { display: false },
                             tooltip: {
-                                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
                                 titleColor: '#ffffff',
                                 bodyColor: '#ffffff',
                                 borderColor: 'rgba(255, 255, 255, 0.2)',
@@ -507,17 +504,12 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 cornerRadius: 12,
                                 displayColors: true,
                                 padding: 12,
-                                titleFont: {
-                                    size: 14,
-                                    weight: '600'
-                                },
-                                bodyFont: {
-                                    size: 13
-                                },
+                                titleFont: { size: 14, weight: '600' },
+                                bodyFont: { size: 13 },
                                 callbacks: {
                                     label: function(context) {
-                                        const value = new Intl.NumberFormat().format(context.parsed.y);
-                                        return `Amount: {{ $settings->currency }}${value}`;
+                                        const value = new Intl.NumberFormat('tr-TR').format(context.parsed.y);
+                                        return `Tutar: {{ $settings->currency }}${value}`;
                                     }
                                 }
                             }
@@ -526,16 +518,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             y: {
                                 beginAtZero: true,
                                 grid: {
-                                    color: 'rgba(0, 0, 0, 0.03)',
+                                    color: 'rgba(0, 0, 0, 0.05)',
                                     drawBorder: false,
                                     lineWidth: 1
                                 },
                                 ticks: {
-                                    font: {
-                                        size: 12,
-                                        family: "'Inter', sans-serif"
-                                    },
-                                    color: '#6c757d',
+                                    font: { size: 12, family: "'Inter', sans-serif" },
+                                    color: '#6b7280',
                                     padding: 10,
                                     callback: function(value) {
                                         if (value >= 1000000) {
@@ -543,446 +532,57 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         } else if (value >= 1000) {
                                             return '{{ $settings->currency }}' + (value / 1000).toFixed(1) + 'K';
                                         }
-                                        return '{{ $settings->currency }}' + new Intl.NumberFormat().format(value);
+                                        return '{{ $settings->currency }}' + new Intl.NumberFormat('tr-TR').format(value);
                                     }
                                 }
                             },
                             x: {
-                                grid: {
-                                    display: false
-                                },
+                                grid: { display: false },
                                 ticks: {
-                                    font: {
-                                        size: 12,
-                                        weight: '600',
-                                        family: "'Inter', sans-serif"
-                                    },
-                                    color: '#495057',
+                                    font: { size: 12, weight: '600', family: "'Inter', sans-serif" },
+                                    color: '#374151',
                                     padding: 15
                                 }
                             }
                         },
                         animation: {
                             duration: 1500,
-                            easing: 'easeOutQuart',
-                            onComplete: function() {
-                                // Add pulse animation to high-value bars
-                                chartData.forEach((value, index) => {
-                                    if (parseFloat(value) > 10000) {
-                                        const bar = document.querySelector(`[data-index="${index}"]`);
-                                        if (bar) {
-                                            bar.style.animation = 'pulse 2s infinite';
-                                        }
-                                    }
-                                });
-                            }
+                            easing: 'easeOutQuart'
                         },
-                        interaction: {
-                            intersect: false,
-                            mode: 'index'
-                        },
-                        elements: {
-                            bar: {
-                                hoverBorderRadius: 8
-                            }
-                        }
+                        interaction: { intersect: false, mode: 'index' },
+                        elements: { bar: { hoverBorderRadius: 16 } }
                     }
                 });
-
-                // Add hover effects to chart container
-                const chartContainer = document.querySelector('.chart-container');
-                if (chartContainer) {
-                    chartContainer.addEventListener('mouseenter', function() {
-                        this.style.filter = 'brightness(1.05)';
-                        this.style.transition = 'filter 0.3s ease';
-                    });
-
-                    chartContainer.addEventListener('mouseleave', function() {
-                        this.style.filter = 'brightness(1)';
-                    });
-                }
-            }
-
-            // Add stagger animation to stat cards
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const cards = entry.target.querySelectorAll('.premium-card');
-                        cards.forEach((card, index) => {
-                            setTimeout(() => {
-                                card.style.opacity = '1';
-                                card.style.transform = 'translateY(0)';
-                            }, index * 100);
-                        });
-                    }
-                });
-            }, observerOptions);
-
-            const statsSection = document.querySelector('.row.g-4.mb-5');
-            if (statsSection) {
-                // Initially hide cards
-                statsSection.querySelectorAll('.premium-card').forEach(card => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                });
-
-                observer.observe(statsSection);
             }
         });
-
-        // Add pulse animation keyframes
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
-
+    
     <style>
-        /* Modern Dashboard Styles */
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            --warning-gradient: linear-gradient(135deg, #fcb045 0%, #fd1d1d 100%);
-            --danger-gradient: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
-            --info-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-            --shadow-xl: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
+        /* Modern Tailwind Extensions */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
         }
-
-        /* Hero Section */
-        .hero-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            overflow: hidden;
+        
+        /* Animation Classes */
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
         }
-
-        .hero-gradient::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            pointer-events: none;
+        
+        .animate-fade-in-left {
+            animation: fadeInLeft 0.8s ease-out;
         }
-
-        .welcome-badge {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .display-4 {
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            animation: fadeInLeft 0.8s ease-out 0.2s both;
-        }
-
-        .date-time-display {
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        /* Premium Cards */
-        .premium-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 24px;
-            backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .premium-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-primary);
-        }
-
-        .premium-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            background: rgba(255, 255, 255, 0.98);
-        }
-
-        .premium-card.deposit-card::before {
-            background: var(--success-gradient);
-        }
-
-        .premium-card.pending-card::before {
-            background: var(--warning-gradient);
-        }
-
-        .premium-card.withdrawal-card::before {
-            background: var(--danger-gradient);
-        }
-
-        .premium-card.processing-card::before {
-            background: var(--info-gradient);
-        }
-
-        .premium-card.users-card::before {
-            background: var(--primary-gradient);
-        }
-
-        .premium-card.active-card::before {
-            background: var(--success-gradient);
-        }
-
-        .premium-card.blocked-card::before {
-            background: var(--danger-gradient);
-        }
-
-        .premium-card.plans-card::before {
-            background: var(--warning-gradient);
-        }
-
-        /* Stat Wrapper */
-        .stat-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .stat-icon-wrapper {
-            flex-shrink: 0;
-        }
-
-        .stat-icon {
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            font-size: 2rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
-        }
-
-        .bg-gradient-success { background: var(--success-gradient); }
-        .bg-gradient-warning { background: var(--warning-gradient); }
-        .bg-gradient-danger { background: var(--danger-gradient); }
-        .bg-gradient-info { background: var(--info-gradient); }
-        .bg-gradient-primary { background: var(--primary-gradient); }
-
-        .stat-icon::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.1);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .premium-card:hover .stat-icon::before {
-            opacity: 1;
-        }
-
-        .premium-card:hover .stat-icon {
-            transform: scale(1.15) rotate(5deg);
-            animation: float 2s ease-in-out infinite;
-        }
-
-        .premium-card:nth-child(odd) {
-            animation: glow 4s ease-in-out infinite;
-        }
-
-        /* Stat Content */
-        .stat-content {
-            flex-grow: 1;
-        }
-
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #6c757d;
-            letter-spacing: 0.025em;
-        }
-
-        .stat-badge {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-
-        .stat-value {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #2d3748;
-            line-height: 1.2;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.025em;
-        }
-
-        .stat-footer {
-            margin-top: auto;
-        }
-
-        .stat-footer small {
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        /* Modern Buttons */
-        .modern-btn {
-            border-radius: 12px !important;
-            font-weight: 600;
-            letter-spacing: 0.025em;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modern-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .modern-btn:hover::before {
-            left: 100%;
-        }
-
-        /* Analytics Card */
-        .analytics-card {
-            background: linear-gradient(145deg, #ffffff, #f8f9fa);
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .analytics-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
-            background-size: 200% 100%;
-            animation: gradientMove 3s ease-in-out infinite;
-        }
-
-        .premium-header {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Chart Controls */
-        .chart-period-selector {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .chart-period-selector .btn {
-            border-radius: 0;
-            border: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .chart-period-selector .btn:hover {
-            transform: translateY(-1px);
-        }
-
-        .btn-check:checked + .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-color: #667eea;
-        }
-
-        /* Chart Wrapper */
-        .chart-wrapper {
-            position: relative;
-        }
-
-        .chart-container {
-            height: 450px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .chart-overlay-info {
-            position: absolute;
-            bottom: 2rem;
-            left: 2rem;
-            right: 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            z-index: 1;
-        }
-
-        .chart-info-item {
-            text-align: center;
-        }
-
-        .chart-info-value {
-            display: block;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 0.25rem;
-        }
-
-        .chart-info-label {
-            font-size: 0.8rem;
-            color: #6c757d;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Modern Animations */
+        
+        .animation-delay-100 { animation-delay: 100ms; }
+        .animation-delay-200 { animation-delay: 200ms; }
+        .animation-delay-300 { animation-delay: 300ms; }
+        .animation-delay-400 { animation-delay: 400ms; }
+        .animation-delay-500 { animation-delay: 500ms; }
+        .animation-delay-600 { animation-delay: 600ms; }
+        .animation-delay-700 { animation-delay: 700ms; }
+        .animation-delay-800 { animation-delay: 800ms; }
+        
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -993,7 +593,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 transform: translateY(0);
             }
         }
-
+        
         @keyframes fadeInLeft {
             from {
                 opacity: 0;
@@ -1004,80 +604,62 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 transform: translateX(0);
             }
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        
+        /* Glass morphism effect */
+        .backdrop-blur-sm {
+            backdrop-filter: blur(4px);
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        
+        /* Responsive Design Enhancements */
+        @media (max-width: 640px) {
+            .text-4xl { font-size: 2rem; }
+            .text-5xl { font-size: 2.5rem; }
+            
+            /* Stack financial cards vertically on mobile */
+            .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+            
+            /* Adjust padding for mobile */
+            .px-4 { padding-left: 1rem; padding-right: 1rem; }
+            .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
         }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(102, 126, 234, 0.5); }
+        
+        @media (min-width: 640px) {
+            .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
         }
-
-        @keyframes slideInScale {
-            0% {
-                opacity: 0;
-                transform: translateY(50px) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        
+        /* Hover effects for cards */
+        .group:hover .group-hover\:scale-110 {
+            transform: scale(1.1);
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero-gradient .display-5 {
-                font-size: 1.8rem;
-            }
-
-            .stat-wrapper {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .stat-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-
-            .stat-value {
-                font-size: 1.2rem;
-            }
-
-            .chart-overlay-info {
-                position: static;
-                margin-top: 2rem;
-            }
+        
+        .group:hover .group-hover\:animate-bounce {
+            animation: bounce 1s infinite;
         }
-
-        /* Dark Mode Support */
+        
+        .group:hover .group-hover\:animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        /* Dark mode support */
         @media (prefers-color-scheme: dark) {
-            .premium-card {
-                background: rgba(45, 55, 72, 0.95);
-                color: #e2e8f0;
+            .bg-white\/95 {
+                background-color: rgba(31, 41, 55, 0.95);
             }
-
-            .stat-value {
-                color: #e2e8f0;
+            
+            .text-gray-900 {
+                color: rgb(243, 244, 246);
             }
-
-            .stat-label {
-                color: #a0aec0;
+            
+            .text-gray-600 {
+                color: rgb(156, 163, 175);
+            }
+            
+            .border-gray-200\/50 {
+                border-color: rgba(75, 85, 99, 0.5);
             }
         }
     </style>
