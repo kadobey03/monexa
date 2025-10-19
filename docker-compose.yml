@@ -15,6 +15,7 @@ services:
   # Nginx Service
   nginx-monexa:
     image: nginx:alpine
+    container_name: nginx-monexa
     restart: unless-stopped
     ports:
       - "8211:80"
@@ -46,6 +47,7 @@ services:
   # PhpMyAdmin Service (optional for database management)
   phpmyadmin-monexa:
     image: phpmyadmin/phpmyadmin
+    container_name: pma-monexa
     restart: unless-stopped
     ports:
       - "8111:80"
