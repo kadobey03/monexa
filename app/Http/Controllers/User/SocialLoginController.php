@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Jenssegers\Agent\Agent;
+use hisorange\BrowserDetect\Parser as Browser;
 use App\Models\Settings;
 use App\Models\CryptoAccount;
 use Illuminate\Http\Request;
@@ -51,16 +51,15 @@ class SocialLoginController extends Controller
         $settings = settings::where('id', '1')->first();
         $userSocial = Socialite::driver($social)->user();
         $user = User::where(['email' => $userSocial->getEmail()])->first();
-        $agent = new Agent();
 
         if ($user) {
             Auth::login($user);
             DB::table('activities')->insert([
                 'user' => $user->id,
                 'ip_address' => $request->ip(),
-                'device' => $agent->device(),
-                'browser' => $agent->browser(),
-                'os' => $agent->platform(),
+                'device' => Browser::deviceType(),
+                'browser' => Browser::browserName(),
+                'os' => Browser::platformName(),
             ]);
             return redirect()->route('dashboard');
         } else {
