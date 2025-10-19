@@ -97,8 +97,11 @@
                         100px.)</h5>
                     <input name="logo" class="form-control " type="file">
                     <div class="text-center border p-2 mt-2 rounded-none">
-                        <img src="{{ asset('storage/app/public/' . $settings->logo) }}" alt=""
-                            class="w-25 img-fluid">
+                        @if($settings->logo)
+                            <img src="/storage/{{ $settings->logo }}" alt="Logo" class="w-25 img-fluid" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkxvZ28gTm90IEZvdW5kPC90ZXh0Pjwvc3ZnPg=='">
+                        @else
+                            <div class="p-3 bg-light text-center text-muted">No logo uploaded</div>
+                        @endif
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -106,8 +109,11 @@
                         height 32px.)</h5>
                     <input name="favicon" class="form-control " type="file">
                     <div class="text-center border p-2 mt-2 rounded-none">
-                        <img src="{{ asset('storage/app/public/' . $settings->favicon) }}" alt=""
-                            class="w-25 img-fluid">
+                        @if($settings->favicon)
+                            <img src="/storage/{{ $settings->favicon }}" alt="Favicon" class="w-25 img-fluid" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2RkZCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5GYXZpY29uPC90ZXh0Pjwvc3ZnPg=='">
+                        @else
+                            <div class="p-3 bg-light text-center text-muted">No favicon uploaded</div>
+                        @endif
                     </div>
                 </div>
             </div>
