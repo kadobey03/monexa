@@ -344,38 +344,101 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         @endforeach
 
         <script>
-            // Modal functionality
+            // Wait for DOM to be fully loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                
+                // Modal functionality with null checks
+                window.openModal = function(modalId) {
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.remove('hidden');
+                        modal.classList.add('flex');
+                        document.body.style.overflow = 'hidden';
+                    }
+                }
+
+                window.closeModal = function(modalId) {
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('flex');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+
+                // Initialize modal event listeners safely
+                function initializeModals() {
+                    const modals = document.querySelectorAll('[id*="Modal"]');
+                    modals.forEach(modal => {
+                        if (modal) {
+                            // Close modal when clicking backdrop
+                            modal.addEventListener('click', function(e) {
+                                if (e.target === modal) {
+                                    window.closeModal(modal.id);
+                                }
+                            });
+                        }
+                    });
+                }
+
+                // Initialize modals
+                initializeModals();
+
+                // Close modal with Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        const allModals = document.querySelectorAll('[id*="Modal"]:not(.hidden)');
+                        allModals.forEach(modal => {
+                            if (modal) {
+                                window.closeModal(modal.id);
+                            }
+                        });
+                    }
+                });
+
+                // Add loading states to action buttons
+                const actionButtons = document.querySelectorAll('a[href*="/admin/dashboard/"]');
+                actionButtons.forEach(button => {
+                    if (button) {
+                        button.addEventListener('click', function() {
+                            const icon = this.querySelector('i');
+                            if (icon && !icon.classList.contains('fa-spinner')) {
+                                const originalClass = icon.className;
+                                icon.className = 'fas fa-spinner fa-spin';
+                                
+                                // Restore original icon after 3 seconds if page hasn't changed
+                                setTimeout(() => {
+                                    if (icon) {
+                                        icon.className = originalClass;
+                                    }
+                                }, 3000);
+                            }
+                        });
+                    }
+                });
+
+                console.log('Admin panel loaded successfully');
+            });
+
+            // Global functions for backward compatibility
             function openModal(modalId) {
-                const modal = document.getElementById(modalId);
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-                document.body.style.overflow = 'hidden';
+                if (window.openModal) {
+                    window.openModal(modalId);
+                }
             }
 
             function closeModal(modalId) {
-                const modal = document.getElementById(modalId);
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-                document.body.style.overflow = 'auto';
+                if (window.closeModal) {
+                    window.closeModal(modalId);
+                }
             }
 
-            // Close modal when clicking backdrop
-            document.querySelectorAll('[id*="Modal"]').forEach(modal => {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        closeModal(modal.id);
-                    }
-                });
-            });
-
-            // Close modal with Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    document.querySelectorAll('[id*="Modal"]').forEach(modal => {
-                        if (!modal.classList.contains('hidden')) {
-                            closeModal(modal.id);
-                        }
-                    });
+            // Error handling for missing dependencies
+            window.addEventListener('error', function(e) {
+                if (e.message.includes('$ is not defined') ||
+                    e.message.includes('jQuery') ||
+                    e.message.includes('livewire')) {
+                    console.warn('Some external dependencies are missing, but core functionality should work');
                 }
             });
         </script>
