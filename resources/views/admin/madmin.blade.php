@@ -151,192 +151,6 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 </div>
                                             </td>
                                         </tr>
-
-
-                                        <!-- Reset user password Modal -->
-                                        <div id="resetpswdModal{{ $admin->id }}" class="modal fade" role="dialog">
-                                            <div class="modal-dialog modal-lg">
-                                                <!-- Modal content-->
-                                                <div class="modal-content border-0 shadow-lg">
-                                                    <div class="modal-header bg-gradient-warning text-white">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="modal-icon-wrapper mr-3">
-                                                                <i class="fas fa-key fa-2x"></i>
-                                                            </div>
-                                                            <div>
-                                                                <h4 class="modal-title mb-0 text-white">Şifre Sıfırlama</h4>
-                                                                <small class="text-white-50">{{ $admin->firstName }} {{ $admin->lastName }} için şifre sıfırlama</small>
-                                                            </div>
-                                                        </div>
-                                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body p-4">
-                                                        <div class="alert alert-warning">
-                                                            <i class="fas fa-exclamation-triangle mr-2"></i>
-                                                            <strong>Dikkat!</strong> Bu işlem kullanıcının şifresini varsayılan değer olarak değiştirecek.
-                                                        </div>
-
-                                                        <div class="password-info bg-light p-3 rounded-lg mb-3">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="info-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 40px; height: 40px;">
-                                                                    <i class="fas fa-lock"></i>
-                                                                </div>
-                                                                <div>
-                                                                    <h6 class="mb-1">Yeni Şifre</h6>
-                                                                    <p class="mb-0 text-muted">Kullanıcı şifresi: <strong class="text-primary">admin01236</strong></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <p class="mb-4">{{ $admin->firstName }} için şifreyi varsayılan değer olarak sıfırlamak istediğinizden emin misiniz?</p>
-
-                                                        <div class="d-flex">
-                                                            <a class="btn btn-warning btn-lg px-4 mr-2 flex-fill"
-                                                                href="{{ url('admin/dashboard/resetadpwd') }}/{{ $admin->id }}">
-                                                                <i class="fas fa-key mr-2"></i>Evet, Sıfırla
-                                                            </a>
-                                                            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">
-                                                                <i class="fas fa-times mr-2"></i>İptal
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /Reset user password Modal -->
-
-                                        <!-- Delete user Modal -->
-                                        <div id="deleteModal{{ $admin->id }}" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
-
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header bg-gradient-danger text-white">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="modal-icon-wrapper mr-3">
-                                                                <i class="fas fa-trash-alt fa-2x"></i>
-                                                            </div>
-                                                            <div>
-                                                                <h4 class="modal-title text-white">Yöneticileri Sil</h4>
-                                                            </div>
-                                                        </div>
-                                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body  p-3">
-                                                        <p class="">{{ $admin->firstName }} kullanıcısını silmek istediğinizden emin misiniz?</p>
-                                                        <a class="btn btn-danger"
-                                                            href="{{ url('admin/dashboard/deleletadmin') }}/{{ $admin->id }}">Evet, eminim</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /Delete user Modal -->
-
-                                        <!-- Edit user Modal -->
-                                        <div id="edituser{{ $admin->id }}" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header bg-gradient-info text-white">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="modal-icon-wrapper mr-3">
-                                                                <i class="fas fa-user-edit fa-2x"></i>
-                                                            </div>
-                                                            <div>
-                                                                <h4 class="modal-title text-white">Kullanıcı Detaylarını Düzenle</h4>
-                                                            </div>
-                                                        </div>
-                                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body ">
-                                                        <form style="padding:3px;" role="form" method="post"
-                                                            action="{{ route('editadmin') }}">
-                                                            <h5 class=" ">Ad</h5>
-                                                            <input style="padding:5px;" class="form-control  "
-                                                                value="{{ $admin->firstName }}" type="text"
-                                                                name="fname" required><br />
-                                                            <h5 class=" ">Soyad</h5>
-                                                            <input style="padding:5px;" class="form-control  "
-                                                                value="{{ $admin->lastName }}" type="text"
-                                                                name="l_name" required><br />
-                                                            <h5 class=" ">E-posta</h5>
-                                                            <input style="padding:5px;" class="form-control  "
-                                                                value="{{ $admin->email }}" type="email"
-                                                                name="email" required><br />
-                                                            <h5 class=" ">Telefon Numarası</h5>
-                                                            <input style="padding:5px;" class="form-control  "
-                                                                value="{{ $admin->phone }}" type="text"
-                                                                name="phone" required>
-                                                            <br>
-                                                            <h5 class=" ">Tür</h5>
-                                                            <select class="form-control  " name="type">
-                                                                <option>{{ $admin->type }}</option>
-                                                                <option>Süper Yönetici</option>
-                                                                <option>Yönetici</option>
-                                                                <option>Dönüşüm Aracısı</option>
-                                                            </select><br>
-                                                            <input type="hidden" name="_token"
-                                                                value="{{ csrf_token() }}">
-                                                            <input type="hidden" name="user_id"
-                                                                value="{{ $admin->id }}">
-                                                            <input type="submit" class="btn btn-info"
-                                                                value="Hesabı Güncelle">
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /Edit user Modal -->
-                                        <!-- send a single user email Modal-->
-                                        <div id="sendmailModal{{ $admin->id }}" class="modal fade" role="dialog">
-                                            <div class="modal-dialog">
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header bg-gradient-primary text-white">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="modal-icon-wrapper mr-3">
-                                                                <i class="fas fa-envelope fa-2x"></i>
-                                                            </div>
-                                                            <div>
-                                                                <h4 class="modal-title text-white">E-posta Mesajı Gönder</h4>
-                                                            </div>
-                                                        </div>
-                                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="modal-body ">
-                                                        <p class="">Bu mesaj {{ $admin->firstName }} {{ $admin->lastName }} kullanıcısına gönderilecek.</p>
-                                                        <form role="form" method="post"
-                                                            action="{{ route('sendmailtoadmin') }}">
-                                                            <input type="hidden" name="user_id"
-                                                                value="{{ $admin->id }}">
-                                                            <div class="form-group">
-                                                                <input type="text" name="subject"
-                                                                    class="form-control  "
-                                                                    placeholder="E-posta Konusu Girin">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <textarea class="form-control  " name="message " row="3" placeholder="Mesajınızı buraya yazın" required></textarea>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <input type="hidden" name="_token"
-                                                                    value="{{ csrf_token() }}">
-                                                                <input type="submit" class="btn btn-primary"
-                                                                    value="Gönder">
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -345,4 +159,217 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 </div>
             </div>
         </div>
+
+        <!-- All Modals Outside Table -->
+        @foreach ($admins as $admin)
+            <!-- Reset user password Modal -->
+            <div id="resetpswdModal{{ $admin->id }}" class="modal fade" role="dialog" style="display: none;">
+                <div class="modal-dialog modal-lg">
+                    <!-- Modal content-->
+                    <div class="modal-content border-0 shadow-lg">
+                        <div class="modal-header bg-gradient-warning text-white">
+                            <div class="d-flex align-items-center">
+                                <div class="modal-icon-wrapper mr-3">
+                                    <i class="fas fa-key fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h4 class="modal-title mb-0 text-white">Şifre Sıfırlama</h4>
+                                    <small class="text-white-50">{{ $admin->firstName }} {{ $admin->lastName }} için şifre sıfırlama</small>
+                                </div>
+                            </div>
+                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-4">
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                <strong>Dikkat!</strong> Bu işlem kullanıcının şifresini varsayılan değer olarak değiştirecek.
+                            </div>
+
+                            <div class="password-info bg-light p-3 rounded-lg mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="info-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 40px; height: 40px;">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Yeni Şifre</h6>
+                                        <p class="mb-0 text-muted">Kullanıcı şifresi: <strong class="text-primary">admin01236</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="mb-4">{{ $admin->firstName }} için şifreyi varsayılan değer olarak sıfırlamak istediğinizden emin misiniz?</p>
+
+                            <div class="d-flex">
+                                <a class="btn btn-warning btn-lg px-4 mr-2 flex-fill"
+                                    href="{{ url('admin/dashboard/resetadpwd') }}/{{ $admin->id }}">
+                                    <i class="fas fa-key mr-2"></i>Evet, Sıfırla
+                                </a>
+                                <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">
+                                    <i class="fas fa-times mr-2"></i>İptal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete user Modal -->
+            <div id="deleteModal{{ $admin->id }}" class="modal fade" role="dialog" style="display: none;">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header bg-gradient-danger text-white">
+                            <div class="d-flex align-items-center">
+                                <div class="modal-icon-wrapper mr-3">
+                                    <i class="fas fa-trash-alt fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h4 class="modal-title text-white">Yöneticileri Sil</h4>
+                                </div>
+                            </div>
+                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-3">
+                            <p class="">{{ $admin->firstName }} kullanıcısını silmek istediğinizden emin misiniz?</p>
+                            <a class="btn btn-danger"
+                                href="{{ url('admin/dashboard/deleletadmin') }}/{{ $admin->id }}">Evet, eminim</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit user Modal -->
+            <div id="edituser{{ $admin->id }}" class="modal fade" role="dialog" style="display: none;">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header bg-gradient-info text-white">
+                            <div class="d-flex align-items-center">
+                                <div class="modal-icon-wrapper mr-3">
+                                    <i class="fas fa-user-edit fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h4 class="modal-title text-white">Kullanıcı Detaylarını Düzenle</h4>
+                                </div>
+                            </div>
+                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form style="padding:3px;" role="form" method="post"
+                                action="{{ route('editadmin') }}">
+                                <h5 class="">Ad</h5>
+                                <input style="padding:5px;" class="form-control"
+                                    value="{{ $admin->firstName }}" type="text"
+                                    name="fname" required><br />
+                                <h5 class="">Soyad</h5>
+                                <input style="padding:5px;" class="form-control"
+                                    value="{{ $admin->lastName }}" type="text"
+                                    name="l_name" required><br />
+                                <h5 class="">E-posta</h5>
+                                <input style="padding:5px;" class="form-control"
+                                    value="{{ $admin->email }}" type="email"
+                                    name="email" required><br />
+                                <h5 class="">Telefon Numarası</h5>
+                                <input style="padding:5px;" class="form-control"
+                                    value="{{ $admin->phone }}" type="text"
+                                    name="phone" required>
+                                <br>
+                                <h5 class="">Tür</h5>
+                                <select class="form-control" name="type">
+                                    <option>{{ $admin->type }}</option>
+                                    <option>Süper Yönetici</option>
+                                    <option>Yönetici</option>
+                                    <option>Dönüşüm Aracısı</option>
+                                </select><br>
+                                <input type="hidden" name="_token"
+                                    value="{{ csrf_token() }}">
+                                <input type="hidden" name="user_id"
+                                    value="{{ $admin->id }}">
+                                <input type="submit" class="btn btn-info"
+                                    value="Hesabı Güncelle">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- send a single user email Modal-->
+            <div id="sendmailModal{{ $admin->id }}" class="modal fade" role="dialog" style="display: none;">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header bg-gradient-primary text-white">
+                            <div class="d-flex align-items-center">
+                                <div class="modal-icon-wrapper mr-3">
+                                    <i class="fas fa-envelope fa-2x"></i>
+                                </div>
+                                <div>
+                                    <h4 class="modal-title text-white">E-posta Mesajı Gönder</h4>
+                                </div>
+                            </div>
+                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <p class="">Bu mesaj {{ $admin->firstName }} {{ $admin->lastName }} kullanıcısına gönderilecek.</p>
+                            <form role="form" method="post"
+                                action="{{ route('sendmailtoadmin') }}">
+                                <input type="hidden" name="user_id"
+                                    value="{{ $admin->id }}">
+                                <div class="form-group">
+                                    <input type="text" name="subject"
+                                        class="form-control"
+                                        placeholder="E-posta Konusu Girin">
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" name="message " row="3" placeholder="Mesajınızı buraya yazın" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="_token"
+                                        value="{{ csrf_token() }}">
+                                    <input type="submit" class="btn btn-primary"
+                                        value="Gönder">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
+        <script>
+            $(document).ready(function() {
+                // DataTable initialization
+                $('#ShipTable').DataTable({
+                    responsive: true,
+                    order: [[ 0, "desc" ]],
+                    language: {
+                        url: "//cdn.datatables.net/plug-ins/1.10.25/i18n/Turkish.json"
+                    }
+                });
+
+                // Ensure modals are hidden on page load
+                $('.modal').each(function() {
+                    $(this).modal('hide');
+                });
+
+                // Fix modal backdrop issues
+                $('.modal').on('show.bs.modal', function () {
+                    $('body').addClass('modal-open');
+                });
+
+                $('.modal').on('hide.bs.modal', function () {
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                });
+            });
+        </script>
     @endsection
