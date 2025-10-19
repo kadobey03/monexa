@@ -35,43 +35,41 @@ class JetstreamServiceProvider extends ServiceProvider
         $this->configurePermissions();
         Jetstream::deleteUsersUsing(DeleteUser::class);
 
-        Fortify::loginView(function () {
-            return view('auth.login', [
-                'title' => 'Sign In to Continue',
-                'settings' => Settings::where('id', '1')->first(),
-            ]);
-        });
-
-
         Fortify::authenticateUsing(function (Request $request) {
              $user = User::where('email', $request->email) ->orWhere('username', $request->email)->first();
             // $user = User::where('email', $request->email)->first();
-            $agent = new Agent();
-
+            
             if (
                 $user &&
                 Hash::check($request->password, $user->password)
             ) {
                 $request->session()->put('getAnouc', 'true');
+                
+                // Agent bilgilerini güvenli şekilde al
+                $device = 'Unknown';
+                $browser = 'Unknown';
+                $os = 'Unknown';
+                
+                try {
+                    if (class_exists('Jenssegers\Agent\Agent')) {
+                        $agent = new Agent();
+                        $device = $agent->device() ?: 'Unknown';
+                        $browser = $agent->browser() ?: 'Unknown';
+                        $os = $agent->platform() ?: 'Unknown';
+                    }
+                } catch (\Exception $e) {
+                    // Agent paketi yoksa varsayılan değerler kullan
+                }
+                
                 DB::table('activities')->insert([
                     'user' => $user->id,
                     'ip_address' => $request->ip(),
-                    'device' => $agent->device(),
-                    'browser' => $agent->browser(),
-                    'os' => $agent->platform(),
+                    'device' => $device,
+                    'browser' => $browser,
+                    'os' => $os,
                 ]);
                 return $user;
             }
-        });
-
-
-        Fortify::registerView(function () {
-            include 'currencies.php';
-            return view('auth.register', [
-                'title' => 'Register an Account',
-                'currencies' => $currencies,
-                'settings' => Settings::where('id', '1')->first(),
-            ]);
         });
     }
 

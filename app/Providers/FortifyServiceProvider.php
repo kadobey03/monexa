@@ -61,6 +61,51 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::requestPasswordResetLinkView(function () {
             return view('auth.forgot-password',[
                 'title' => 'Enter email to reset your password',
+                'settings' => Settings::first(),
+            ]);
+        });
+
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset-password', [
+                'title' => 'Reset Password',
+                'settings' => Settings::first(),
+                'request' => $request,
+            ]);
+        });
+
+        Fortify::twoFactorChallengeView(function () {
+            return view('auth.two-factor-challenge', [
+                'title' => 'Two Factor Authentication',
+                'settings' => Settings::first(),
+            ]);
+        });
+
+        Fortify::confirmPasswordView(function () {
+            return view('auth.confirm-password', [
+                'title' => 'Password Confirmation',
+                'settings' => Settings::first(),
+            ]);
+        });
+
+        Fortify::loginView(function () {
+            return view('auth.login', [
+                'title' => 'Giriş Yap',
+                'settings' => Settings::first(),
+            ]);
+        });
+
+        Fortify::registerView(function () {
+            // Include currencies if the file exists
+            $currencies = [];
+            $currenciesFile = app_path('Providers/currencies.php');
+            if (file_exists($currenciesFile)) {
+                include $currenciesFile;
+            }
+            
+            return view('auth.register', [
+                'title' => 'Kayıt Ol',
+                'settings' => Settings::first(),
+                'currencies' => $currencies ?? [],
             ]);
         });
 
