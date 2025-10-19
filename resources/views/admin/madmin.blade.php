@@ -55,7 +55,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="content ">
             <div class="page-inner">
                 <div class="mt-2 mb-5 d-flex align-items-center">
-                    <div class="page-icon-wrapper me-3">
+                    <div class="page-icon-wrapper mr-3">
                         <div class="page-icon bg-gradient-primary text-white rounded-circle d-flex align-items-center justify-content-center">
                             <i class="fas fa-user-shield fa-2x"></i>
                         </div>
@@ -73,7 +73,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         <div class="card shadow-lg border-0 overflow-hidden">
                             <div class="card-header bg-gradient-primary text-white py-3">
                                 <div class="d-flex align-items-center">
-                                    <i class="fas fa-table fa-lg me-2"></i>
+                                    <i class="fas fa-table fa-lg mr-2"></i>
                                     <h5 class="mb-0 text-white">Yönetici Listesi</h5>
                                 </div>
                             </div>
@@ -83,28 +83,28 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         <thead class="bg-light">
                                             <tr>
                                                 <th class="border-0 py-3">
-                                                    <i class="fas fa-id-badge me-2 text-primary"></i>ID
+                                                    <i class="fas fa-id-badge mr-2 text-primary"></i>ID
                                                 </th>
                                                 <th class="border-0 py-3">
-                                                    <i class="fas fa-user me-2 text-success"></i>Ad
+                                                    <i class="fas fa-user mr-2 text-success"></i>Ad
                                                 </th>
                                                 <th class="border-0 py-3">
-                                                    <i class="fas fa-user me-2 text-info"></i>Soyad
+                                                    <i class="fas fa-user mr-2 text-info"></i>Soyad
                                                 </th>
                                                 <th class="border-0 py-3">
-                                                    <i class="fas fa-envelope me-2 text-warning"></i>E-posta
+                                                    <i class="fas fa-envelope mr-2 text-warning"></i>E-posta
                                                 </th>
                                                 <th class="border-0 py-3">
-                                                    <i class="fas fa-phone me-2 text-danger"></i>Telefon
+                                                    <i class="fas fa-phone mr-2 text-danger"></i>Telefon
                                                 </th>
                                                 <th class="border-0 py-3">
-                                                    <i class="fas fa-tag me-2 text-secondary"></i>Tür
+                                                    <i class="fas fa-tag mr-2 text-secondary"></i>Tür
                                                 </th>
                                                 <th class="border-0 py-3">
-                                                    <i class="fas fa-toggle-on me-2 text-primary"></i>Durum
+                                                    <i class="fas fa-toggle-on mr-2 text-primary"></i>Durum
                                                 </th>
                                                 <th class="border-0 py-3 text-center">
-                                                    <i class="fas fa-cogs me-2 text-primary"></i>Eylemler
+                                                    <i class="fas fa-cogs mr-2 text-primary"></i>Eylemler
                                                 </th>
                                             </tr>
                                         </thead>
@@ -123,7 +123,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                    <a class="btn btn-primary btn-sm dropdown-toggle px-3" href="#"
                                                        role="button" id="dropdownMenuLink" data-toggle="dropdown"
                                                        aria-haspopup="true" aria-expanded="false">
-                                                       <i class="fas fa-cogs me-1"></i>Eylemler
+                                                       <i class="fas fa-cogs mr-1"></i>Eylemler
                                                    </a>
                                                     <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
 
@@ -160,7 +160,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 <div class="modal-content border-0 shadow-lg">
                                                     <div class="modal-header bg-gradient-warning text-white">
                                                         <div class="d-flex align-items-center">
-                                                            <div class="modal-icon-wrapper me-3">
+                                                            <div class="modal-icon-wrapper mr-3">
                                                                 <i class="fas fa-key fa-2x"></i>
                                                             </div>
                                                             <div>
@@ -174,13 +174,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                     </div>
                                                     <div class="modal-body p-4">
                                                         <div class="alert alert-warning">
-                                                            <i class="fas fa-exclamation-triangle me-2"></i>
+                                                            <i class="fas fa-exclamation-triangle mr-2"></i>
                                                             <strong>Dikkat!</strong> Bu işlem kullanıcının şifresini varsayılan değer olarak değiştirecek.
                                                         </div>
 
                                                         <div class="password-info bg-light p-3 rounded-lg mb-3">
                                                             <div class="d-flex align-items-center">
-                                                                <div class="info-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                                                <div class="info-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center mr-3" style="width: 40px; height: 40px;">
                                                                     <i class="fas fa-lock"></i>
                                                                 </div>
                                                                 <div>
@@ -192,13 +192,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 
                                                         <p class="mb-4">{{ $admin->firstName }} için şifreyi varsayılan değer olarak sıfırlamak istediğinizden emin misiniz?</p>
 
-                                                        <div class="d-flex gap-2">
-                                                            <a class="btn btn-warning btn-lg px-4 flex-fill"
+                                                        <div class="d-flex">
+                                                            <a class="btn btn-warning btn-lg px-4 mr-2 flex-fill"
                                                                 href="{{ url('admin/dashboard/resetadpwd') }}/{{ $admin->id }}">
-                                                                <i class="fas fa-key me-2"></i>Evet, Sıfırla
+                                                                <i class="fas fa-key mr-2"></i>Evet, Sıfırla
                                                             </a>
                                                             <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">
-                                                                <i class="fas fa-times me-2"></i>İptal
+                                                                <i class="fas fa-times mr-2"></i>İptal
                                                             </button>
                                                         </div>
                                                     </div>
@@ -215,7 +215,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 <div class="modal-content">
                                                     <div class="modal-header bg-gradient-danger text-white">
                                                         <div class="d-flex align-items-center">
-                                                            <div class="modal-icon-wrapper me-3">
+                                                            <div class="modal-icon-wrapper mr-3">
                                                                 <i class="fas fa-trash-alt fa-2x"></i>
                                                             </div>
                                                             <div>
@@ -243,7 +243,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 <div class="modal-content">
                                                     <div class="modal-header bg-gradient-info text-white">
                                                         <div class="d-flex align-items-center">
-                                                            <div class="modal-icon-wrapper me-3">
+                                                            <div class="modal-icon-wrapper mr-3">
                                                                 <i class="fas fa-user-edit fa-2x"></i>
                                                             </div>
                                                             <div>
@@ -300,7 +300,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 <div class="modal-content">
                                                     <div class="modal-header bg-gradient-primary text-white">
                                                         <div class="d-flex align-items-center">
-                                                            <div class="modal-icon-wrapper me-3">
+                                                            <div class="modal-icon-wrapper mr-3">
                                                                 <i class="fas fa-envelope fa-2x"></i>
                                                             </div>
                                                             <div>
