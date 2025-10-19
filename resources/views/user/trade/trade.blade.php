@@ -225,7 +225,7 @@
 
                                     <!-- Trade Button -->
                                     <div class="col-span-4 md:col-span-3 text-right">
-                                        <a :href="`{{ route('trade.single', '') }}/${instrument.id}`"
+                                        <a :href="`{{ url('/dashboard/trade') }}/${instrument.id}`"
                                            class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm hover:shadow-md">
                                             <i data-lucide="trending-up" class="w-4 h-4"></i>
                                             <span>İşle</span>
