@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
 use Illuminate\Support\Facades\DB;
 use App\Models\Settings;
-use Jenssegers\Agent\Agent;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -45,20 +44,39 @@ class JetstreamServiceProvider extends ServiceProvider
             ) {
                 $request->session()->put('getAnouc', 'true');
                 
-                // Agent bilgilerini güvenli şekilde al
-                $device = 'Unknown';
+                // Request'ten temel bilgileri al
+                $userAgent = $request->header('User-Agent', 'Unknown');
+                $device = 'Web Browser';
                 $browser = 'Unknown';
                 $os = 'Unknown';
                 
-                try {
-                    if (class_exists('Jenssegers\Agent\Agent')) {
-                        $agent = new Agent();
-                        $device = $agent->device() ?: 'Unknown';
-                        $browser = $agent->browser() ?: 'Unknown';
-                        $os = $agent->platform() ?: 'Unknown';
-                    }
-                } catch (\Exception $e) {
-                    // Agent paketi yoksa varsayılan değerler kullan
+                // Basit user agent parsing
+                if (strpos($userAgent, 'Mobile') !== false) {
+                    $device = 'Mobile';
+                } elseif (strpos($userAgent, 'Tablet') !== false) {
+                    $device = 'Tablet';
+                }
+                
+                if (strpos($userAgent, 'Chrome') !== false) {
+                    $browser = 'Chrome';
+                } elseif (strpos($userAgent, 'Firefox') !== false) {
+                    $browser = 'Firefox';
+                } elseif (strpos($userAgent, 'Safari') !== false) {
+                    $browser = 'Safari';
+                } elseif (strpos($userAgent, 'Edge') !== false) {
+                    $browser = 'Edge';
+                }
+                
+                if (strpos($userAgent, 'Windows') !== false) {
+                    $os = 'Windows';
+                } elseif (strpos($userAgent, 'Mac') !== false) {
+                    $os = 'macOS';
+                } elseif (strpos($userAgent, 'Linux') !== false) {
+                    $os = 'Linux';
+                } elseif (strpos($userAgent, 'Android') !== false) {
+                    $os = 'Android';
+                } elseif (strpos($userAgent, 'iOS') !== false) {
+                    $os = 'iOS';
                 }
                 
                 DB::table('activities')->insert([
