@@ -24,6 +24,9 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
        background: rgba(255,255,255,0.2);
        padding: 12px;
        border-radius: 50%;
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
    }
    .table th {
        font-weight: 600;
@@ -210,11 +213,18 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
-                                                    <div class="modal-header ">
-
-                                                        <h4 class="modal-title ">Yöneticileri Sil</strong></h4>
-                                                        <button type="button" class="close "
-                                                            data-dismiss="modal">&times;</button>
+                                                    <div class="modal-header bg-gradient-danger text-white">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="modal-icon-wrapper me-3">
+                                                                <i class="fas fa-trash-alt fa-2x"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h4 class="modal-title text-white">Yöneticileri Sil</h4>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
                                                     <div class="modal-body  p-3">
                                                         <p class="">{{ $admin->firstName }} kullanıcısını silmek istediğinizden emin misiniz?</p>
@@ -231,11 +241,18 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
-                                                    <div class="modal-header ">
-
-                                                        <h4 class="modal-title ">Kullanıcı detaylarını düzenle.</strong></h4>
-                                                        <button type="button" class="close "
-                                                            data-dismiss="modal">&times;</button>
+                                                    <div class="modal-header bg-gradient-info text-white">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="modal-icon-wrapper me-3">
+                                                                <i class="fas fa-user-edit fa-2x"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h4 class="modal-title text-white">Kullanıcı Detaylarını Düzenle</h4>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
                                                     <div class="modal-body ">
                                                         <form style="padding:3px;" role="form" method="post"
@@ -281,10 +298,18 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                             <div class="modal-dialog">
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
-                                                    <div class="modal-header ">
-                                                        <h4 class="modal-title ">E-posta Mesajı Gönder</h4>
-                                                        <button type="button" class="close "
-                                                            data-dismiss="modal">&times;</button>
+                                                    <div class="modal-header bg-gradient-primary text-white">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="modal-icon-wrapper me-3">
+                                                                <i class="fas fa-envelope fa-2x"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h4 class="modal-title text-white">E-posta Mesajı Gönder</h4>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
                                                     </div>
 
                                                     <div class="modal-body ">
