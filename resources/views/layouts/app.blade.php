@@ -12,6 +12,25 @@
     <link rel="icon" href="{{ asset('storage/app/public/' . $settings->favicon) }}" type="image/png" />
 
     @section('styles')
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: {
+                                50: '#eff6ff',
+                                500: '#3b82f6',
+                                600: '#2563eb',
+                                700: '#1d4ed8'
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+        
         <!-- Fonts and icons -->
         <script src="{{ asset('dash/js/plugin/webfont/webfont.min.js') }}"></script>
         <!-- Sweet Alert -->
@@ -38,7 +57,8 @@
         <!-- Bootstrap Notify -->
         <script src="{{ asset('dash/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }} "></script>
         <script src="{{ asset('dash/js/plugin/sweetalert/sweetalert.min.js') }} "></script>
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.1/dist/alpine.min.js" defer></script>
+        <!-- Alpine.js for modern interactivity -->
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
         {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
         <!--PayPal-->

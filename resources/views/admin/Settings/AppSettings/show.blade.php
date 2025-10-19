@@ -11,207 +11,286 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 @section('content')
     @include('admin.topmenu')
     @include('admin.sidebar')
-    <div class="main-panel ">
-        <div class="content ">
-            <div class="page-inner">
-                <div class="mt-2 mb-3 d-inline">
-                    <h1 class="title1 text-{{ $text }} d-inline mr-4">App Settings</h1>
-                </div>
-
-                <x-danger-alert />
-                <x-success-alert />
-                @if (count($errors) > 0)
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="alert alert-danger alert-dismissable" role="alert">
-                                <button type="button" clsass="close" data-dismiss="alert"
-                                    aria-hidden="true">&times;</button>
-                                @foreach ($errors->all() as $error)
-                                    <i class="fa fa-warning"></i> {{ $error }}
-                                @endforeach
+    
+    <!-- Main Content -->
+    <div class="flex-1 ml-0 md:ml-64 transition-all duration-300">
+        <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+            <!-- Header Section -->
+            <div class="bg-white border-b border-gray-200 shadow-sm">
+                <div class="px-4 py-6 sm:px-6 lg:px-8">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                                </svg>
                             </div>
-                        </div>
-                    </div>
-                @endif
-                <div class="mt-2 mb-5 row">
-                    <div class="col-12">
-                        <di>
-                            <!--<a class='btn btn-primary' href='https://t.me/Nightcrawlery'>-->
-                            <!--   Chat the developer for More scripts/help-->
-                            <!--</a>-->
-                        </di>
-                        <div class="card p-md-5 p-2 shadow-lg ">
-                            <ul class="nav nav-pills">
-                                <li class="nav-item">
-                                    <a href="#module" class="nav-link " data-toggle="tab">Module</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#info" class="nav-link  active" data-toggle="tab">Website Information</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#pref" class="nav-link" data-toggle="tab">Preference</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#email" class="nav-link" data-toggle="tab">Email/Google Login-Captcha</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#display" class="nav-link" data-toggle="tab">Theme/Display</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane fade  " id="module">
-                                    <livewire:admin.software-module />
-                                </div>
-                                <div class="tab-pane fade show active" id="info">
-                                    @include('admin.Settings.AppSettings.webinfo')
-                                </div>
-                                <div class="tab-pane fade" id="pref">
-                                    @include('admin.Settings.AppSettings.webpreference')
-                                </div>
-                                <div class="tab-pane fade" id="email">
-                                    @include('admin.Settings.AppSettings.email')
-                                </div>
-                                <div class="tab-pane fade" id='display'>
-                                     @include('admin.Settings.AppSettings.theme')
-                                </div>
+                            <div>
+                                <h1 class="text-3xl font-bold text-gray-900">Uygulama Ayarları</h1>
+                                <p class="text-gray-600 mt-1">Sistem yapılandırması ve tercihlerini yönetin</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <!-- Alert Messages -->
+            <div class="px-4 sm:px-6 lg:px-8 pt-4">
+                <x-danger-alert />
+                <x-success-alert />
+                @if (count($errors) > 0)
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded-r-lg">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-red-800">Aşağıdaki hatalar oluştu:</h3>
+                                <div class="mt-2 text-sm text-red-700">
+                                    <ul class="list-disc list-inside space-y-1">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+            
+            <!-- Main Settings Content -->
+            <div class="px-4 py-6 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+                    <!-- Tab Navigation -->
+                    <div class="border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+                        <nav class="flex flex-wrap" x-data="{ activeTab: 'info' }">
+                            <button @click="activeTab = 'module'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'module', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'module' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
+                                    </svg>
+                                    <span>Modül</span>
+                                </div>
+                            </button>
+                            
+                            <button @click="activeTab = 'info'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'info', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'info' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Site Bilgileri</span>
+                                </div>
+                            </button>
+                            
+                            <button @click="activeTab = 'pref'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'pref', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'pref' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Tercihler</span>
+                                </div>
+                            </button>
+                            
+                            <button @click="activeTab = 'email'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'email', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'email' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                                    </svg>
+                                    <span>E-posta/Google</span>
+                                </div>
+                            </button>
+                            
+                            <button @click="activeTab = 'display'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'display', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'display' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm12 12H4v-5h12v5z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span>Tema/Görünüm</span>
+                                </div>
+                            </button>
+                        </nav>
+                    </div>
+                    
+                    <!-- Tab Content -->
+                    <div class="p-6 sm:p-8 lg:p-10" x-data="{ activeTab: 'info' }">
+                        <!-- Module Tab -->
+                        <div x-show="activeTab === 'module'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                            <livewire:admin.software-module />
+                        </div>
+                        
+                        <!-- Website Information Tab -->
+                        <div x-show="activeTab === 'info'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                            @include('admin.Settings.AppSettings.webinfo')
+                        </div>
+                        
+                        <!-- Preferences Tab -->
+                        <div x-show="activeTab === 'pref'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                            @include('admin.Settings.AppSettings.webpreference')
+                        </div>
+                        
+                        <!-- Email/Google Tab -->
+                        <div x-show="activeTab === 'email'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                            @include('admin.Settings.AppSettings.email')
+                        </div>
+                        
+                        <!-- Theme/Display Tab -->
+                        <div x-show="activeTab === 'display'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                            @include('admin.Settings.AppSettings.theme')
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <script>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script>
+        // Select2 initialization if needed
+        if (typeof $ !== 'undefined' && $.fn.select2) {
             $('.select2').select2();
-            document.getElementById("themeForm").addEventListener('submit', function(){
-                document.getElementById("themeBtn").disabled = true;
-                var element = document.getElementById("loadingTheme");
-                element.classList.remove("d-none");
-            });
+        }
+        
+        // Theme form handling
+        document.getElementById("themeForm")?.addEventListener('submit', function(){
+            const themeBtn = document.getElementById("themeBtn");
+            if (themeBtn) themeBtn.disabled = true;
             
-            function changecurr() {
-                var e = document.getElementById("select_c");
-                var selected = e.options[e.selectedIndex].id;
-                document.getElementById("s_c").value = selected;
-                console.log(selected);
+            const loadingElement = document.getElementById("loadingTheme");
+            if (loadingElement) loadingElement.classList.remove("hidden");
+        });
+        
+        // Currency change handler
+        function changecurr() {
+            const selectElement = document.getElementById("select_c");
+            const hiddenElement = document.getElementById("s_c");
+            if (selectElement && hiddenElement) {
+                const selected = selectElement.options[selectElement.selectedIndex].id;
+                hiddenElement.value = selected;
+                console.log('Currency changed to:', selected);
             }
-            
-            
+        }
 
-            $('#updatepreference').on('submit', function() {
-                //alert('love');
-                $.ajax({
-                    url: "{{ route('updatepreference') }}",
-                    type: 'POST',
-                    data: $('#updatepreference').serialize(),
-                    success: function(response) {
-                        if (response.status === 200) {
-                            $.notify({
-                                // options
-                                icon: 'flaticon-alarm-1',
-                                title: 'Success',
-                                message: response.success,
-                            }, {
-                                // settings
-                                type: 'success',
-                                allow_dismiss: true,
-                                newest_on_top: false,
-                                placement: {
-                                    from: "top",
-                                    align: "right"
-                                },
-                                offset: 20,
-                                spacing: 10,
-                                z_index: 1031,
-                                delay: 5000,
-                                timer: 1000,
-                                animate: {
-                                    enter: 'animated fadeInDown',
-                                    exit: 'animated fadeOutUp'
-                                },
-
-                            });
-                        } else {
-
+        // AJAX form submissions with modern fetch API
+        const updatepreference = document.getElementById('updatepreference');
+        if (updatepreference) {
+            updatepreference.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData(this);
+                    const response = await fetch("{{ route('updatepreference') }}", {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
                         }
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    },
-
-                });
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.status === 200) {
+                        showNotification('success', 'Başarılı', result.success);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('error', 'Hata', 'Bir hata oluştu');
+                }
             });
+        }
 
-            let sendmail = document.querySelector('#sendmailserver');
-            let smtp = document.querySelector('#smtpserver');
-            let smtptext = document.querySelectorAll('.smtp');
-            //console.log(sendmail);
-            sendmail.addEventListener('click', sortform);
-            smtp.addEventListener('click', sortform);
-
-            if (smtp.checked) {
-                smtptext.forEach(smtps => {
-                    smtps.classList.remove('d-none');
-                    smtps.setAttribute('required', '');
-                });
-            }
-
-            function sortform() {
-                if (sendmail.checked) {
-                    smtptext.forEach(element => {
-                        element.classList.add('d-none');
-                        element.removeAttribute('required', '');
-                    });
-                }
-                if (smtp.checked) {
-                    smtptext.forEach(smtps => {
-                        smtps.classList.remove('d-none');
-                        smtps.setAttribute('required', '');
-                    });
-                }
-            }
-
-            // Submit email preference form
-            $('#emailform').on('submit', function() {
-                //alert('love');
-                $.ajax({
-                    url: "{{ route('updateemailpreference') }}",
-                    type: 'POST',
-                    data: $('#emailform').serialize(),
-                    success: function(response) {
-                        if (response.status === 200) {
-                            $.notify({
-                                // options
-                                icon: 'flaticon-alarm-1',
-                                title: 'Success',
-                                message: response.success,
-                            }, {
-                                // settings
-                                type: 'success',
-                                allow_dismiss: true,
-                                newest_on_top: false,
-                                placement: {
-                                    from: "top",
-                                    align: "right"
-                                },
-                                offset: 20,
-                                spacing: 10,
-                                z_index: 1031,
-                                delay: 5000,
-                                timer: 1000,
-                                animate: {
-                                    enter: 'animated fadeInDown',
-                                    exit: 'animated fadeOutUp'
-                                },
-
-                            });
-                        } else {
-
+        const emailform = document.getElementById('emailform');
+        if (emailform) {
+            emailform.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                try {
+                    const formData = new FormData(this);
+                    const response = await fetch("{{ route('updateemailpreference') }}", {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
                         }
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    },
-                });
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.status === 200) {
+                        showNotification('success', 'Başarılı', result.success);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showNotification('error', 'Hata', 'Bir hata oluştu');
+                }
             });
-        </script>
-    @endsection
+        }
+
+        // SMTP form toggle functionality
+        const sendmailRadio = document.querySelector('#sendmailserver');
+        const smtpRadio = document.querySelector('#smtpserver');
+        const smtpFields = document.querySelectorAll('.smtp');
+        
+        function toggleSmtpFields() {
+            smtpFields.forEach(field => {
+                if (smtpRadio && smtpRadio.checked) {
+                    field.classList.remove('hidden');
+                    const input = field.querySelector('input');
+                    if (input) input.setAttribute('required', '');
+                } else {
+                    field.classList.add('hidden');
+                    const input = field.querySelector('input');
+                    if (input) input.removeAttribute('required');
+                }
+            });
+        }
+        
+        if (sendmailRadio) sendmailRadio.addEventListener('click', toggleSmtpFields);
+        if (smtpRadio) smtpRadio.addEventListener('click', toggleSmtpFields);
+        
+        // Initialize SMTP fields based on current selection
+        if (smtpRadio && smtpRadio.checked) {
+            toggleSmtpFields();
+        }
+
+        // Modern notification system
+        function showNotification(type, title, message) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } text-white`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        ${type === 'success' ? 
+                            '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>' :
+                            '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>'
+                        }
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium">${title}</h3>
+                        <div class="mt-1 text-sm">${message}</div>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200 focus:outline-none">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(100%)';
+                    notification.style.opacity = '0';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+    </script>
+@endsection
