@@ -14,7 +14,7 @@ echo "MySQL is ready!"
 
 # Wait for Redis to be ready
 echo "Waiting for Redis to be ready..."
-while ! nc -z redis 6379; do
+while ! nc -z redis-monexa 6379; do
     sleep 1
 done
 echo "Redis is ready!"
