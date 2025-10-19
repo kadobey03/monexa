@@ -94,7 +94,7 @@ Route::get('/account-blocked', function () {
 Route::get('terms', [HomePageController::class, 'terms'] )->name('terms');
 Route::get('privacy',[HomePageController::class, 'privacy'])->name('privacy');
 Route::get('about', [HomePageController::class, 'about'])->name('about');
-Route::get('contacts',[HomePageController::class, 'contact'])->name('contact');
+Route::get('contacts',[HomePageController::class, 'contact'])->name('contacts');
 Route::get('contact',[HomePageController::class, 'contact'])->name('contact');
 Route::get('faq', [HomePageController::class, 'faq'])->name('faq');
 Route::get('why-us', [HomePageController::class, 'whyus'])->name('why-us');
