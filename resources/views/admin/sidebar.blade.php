@@ -1,449 +1,403 @@
-<!-- Stored in resources/views/child.blade.php -->
+<!-- Modern Tailwind Sidebar -->
+<aside id="admin-sidebar" class="fixed left-0 top-16 h-screen w-64 bg-white shadow-2xl z-20 transform transition-transform duration-300 ease-in-out md:translate-x-0 -translate-x-full">
+    
+    <!-- Sidebar Header -->
+    <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
+        <div class="flex items-center space-x-3">
+            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-3 rounded-xl text-white">
+                <i class="fas fa-user-shield text-lg"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-800">{{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}</h3>
+                <p class="text-sm text-gray-600">{{ Auth('admin')->User()->type }}</p>
+            </div>
+        </div>
+    </div>
 
-<!-- Sidebar -->
-<div class="sidebar sidebar-style-2" data-background-color="{{ Auth('admin')->User()->dashboard_style }}">
-    <div class="sidebar-wrapper scrollbar scrollbar-inner">
-        <div class="sidebar-content">
-            <div class="user">
-                <div class="info">
-                    <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                        <span style="font-size: 0.9rem;">
-                            {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}
-                            <span class="user-level" style="font-size: 0.8rem;"> Yönetici</span>
-                            {{-- <span class="caret"></span> --}}
-                        </span>
+    <!-- Navigation Menu -->
+    <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+        
+        <!-- Dashboard -->
+        <a href="{{ url('/admin/dashboard') }}" 
+           class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-indigo-600' }}">
+            <i class="fas fa-home mr-3 text-lg {{ request()->routeIs('admin.dashboard') ? 'text-white' : 'text-gray-400 group-hover:text-indigo-500' }}"></i>
+            <span>Kontrol Paneli</span>
+            @if(request()->routeIs('admin.dashboard'))
+                <div class="ml-auto w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            @endif
+        </a>
+
+        @if (Auth('admin')->User()->type == 'Super Admin' || Auth('admin')->User()->type == 'Admin')
+            <!-- Users Management -->
+            <div x-data="{ open: {{ request()->routeIs(['manageusers', 'loginactivity', 'user.plans', 'viewuser']) ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['manageusers', 'loginactivity', 'user.plans', 'viewuser']) ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100 hover:text-indigo-600' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-users mr-3 text-lg {{ request()->routeIs(['manageusers', 'loginactivity', 'user.plans', 'viewuser']) ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-500' }}"></i>
+                        <span>Kullanıcıları Yönet</span>
+                    </div>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ url('/admin/dashboard/manageusers') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors duration-200">
+                        Tüm Kullanıcılar
                     </a>
                 </div>
             </div>
 
-            <ul class="nav nav-primary">
-                <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <a href="{{ url('/admin/dashboard') }}" style="font-size: 0.9rem; padding: 0.75rem 1rem;">
-                        <i class="fas fa-home"></i>
-                        <p>Kontrol Paneli</p>
-                    </a>
-                </li>
+            <!-- Deposits Management -->
+            <a href="{{ url('/admin/dashboard/mdeposits') }}" 
+               class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['mdeposits', 'viewdepositimage']) ? 'bg-gradient-to-r from-green-500 to-teal-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-green-600' }}">
+                <i class="fas fa-download mr-3 text-lg {{ request()->routeIs(['mdeposits', 'viewdepositimage']) ? 'text-white' : 'text-gray-400 group-hover:text-green-500' }}"></i>
+                <span>Yatırımları Yönet</span>
+            </a>
 
-                @if (Auth('admin')->User()->type == 'Super Admin' || Auth('admin')->User()->type == 'Admin')
-                  <li
-                        class="nav-item {{ request()->routeIs('manageusers') ? 'active' : '' }} {{ request()->routeIs('loginactivity') ? 'active' : '' }} {{ request()->routeIs('user.plans') ? 'active' : '' }} {{ request()->routeIs('viewuser') ? 'active' : '' }}">
-                        <a href="{{ url('/admin/dashboard/manageusers') }}" style="font-size: 0.85rem; padding: 0.7rem 1rem;">
-                            <i class="fa fa-user-circle" aria-hidden="true"></i>
-                            <p>Kullanıcıları Yönet</p>
-                        </a>
-                    </li>
+            <!-- Withdrawals Management -->
+            <a href="{{ url('/admin/dashboard/mwithdrawals') }}" 
+               class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['mwithdrawals', 'processwithdraw']) ? 'bg-gradient-to-r from-red-500 to-pink-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-red-600' }}">
+                <i class="fas fa-arrow-alt-circle-up mr-3 text-lg {{ request()->routeIs(['mwithdrawals', 'processwithdraw']) ? 'text-white' : 'text-gray-400 group-hover:text-red-500' }}"></i>
+                <span>Çekimleri Yönet</span>
+            </a>
 
-                  <li
-                        class="nav-item {{ request()->routeIs('mdeposits') ? 'active' : '' }} {{ request()->routeIs('viewdepositimage') ? 'active' : '' }} {{ request()->routeIs('mdeposits') ? 'active' : '' }}">
-                        <a href="{{ url('/admin/dashboard/mdeposits') }}" style="font-size: 0.85rem; padding: 0.7rem 1rem;">
-                            <i class="fa fa-download" aria-hidden="true"></i>
-                            <p>Yatırımları Yönet</p>
-                        </a>
-                    </li>
+            <!-- Trades Management -->
+            <a href="{{ route('admin.trades.index') }}" 
+               class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('admin.trades.*') ? 'bg-gradient-to-r from-blue-500 to-cyan-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600' }}">
+                <i class="fas fa-chart-line mr-3 text-lg {{ request()->routeIs('admin.trades.*') ? 'text-white' : 'text-gray-400 group-hover:text-blue-500' }}"></i>
+                <span>İşlemleri Yönet</span>
+            </a>
 
-                    <li
-                        class="nav-item {{ request()->routeIs('mwithdrawals') ? 'active' : '' }}   {{ request()->routeIs('processwithdraw') ? 'active' : '' }}">
-                        <a href="{{ url('/admin/dashboard/mwithdrawals') }}" style="font-size: 0.85rem; padding: 0.7rem 1rem;">
-                            <i class="fa fa-arrow-alt-circle-up" aria-hidden="true"></i>
-                            <p>Çekimleri Yönet</p>
-                        </a>
-                    </li>
-
-                    <li
-                        class="nav-item {{ request()->routeIs('admin.trades.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.trades.index') }}" style="font-size: 0.85rem; padding: 0.7rem 1rem;">
-                            <i class="fas fa-chart-line" aria-hidden="true"></i>
-                            <p>İşlemleri Yönet</p>
-                        </a>
-                    </li>
-
-                  <li
-                        class="nav-item {{ request()->routeIs('admin.bots.*') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#bots">
-                            <i class="fas fa-robot"></i>
-                            <p>Bot Ticareti</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="bots">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ route('admin.bots.index') }}">
-                                        <span class="sub-item">Tüm Ticaret Botları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('admin.bots.create') }}">
-                                        <span class="sub-item">Yeni Bot Ekle</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('admin.bots.dashboard') }}">
-                                        <span class="sub-item">Bot Analitiği</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                <li
-                    class="nav-item {{ request()->routeIs('plans') ? 'active' : '' }} {{ request()->routeIs('newplan') ? 'active' : '' }} {{ request()->routeIs('editplan') ? 'active' : '' }} {{ request()->routeIs('investments') ? 'active' : '' }} {{ request()->routeIs('admin.plans.*') ? 'active' : '' }}">
-                    <a data-toggle="collapse" href="#pln">
-                        <i class="fas fa-cubes "></i>
-                        <p>Yatırım</p>
-                        <span class="caret"></span>
-                    </a>
-                    <div class="collapse" id="pln">
-                        <ul class="nav nav-collapse">
-                            {{-- <li>
-                                <a href="{{ route('admin.plans.index') }}">
-                                    <span class="sub-item">New Investment Plans <span class="badge badge-success">New</span></span>
-                                </a>
-                            </li> --}}
-                            <li>
-                                <a href="{{ url('/admin/dashboard/plans') }}">
-                                    <span class="sub-item">Eski Planlar</span>
-                                </a>
-                            </li>
-                            {{-- <li>
-                                <a href="{{ route('admin.plans.categories') }}">
-                                    <span class="sub-item">Plan Categories</span>
-                                </a>
-                            </li>  --}}
-                            <li>
-                                <a href="{{ url('/admin/dashboard/active-investments') }}">
-                                    <span class="sub-item">Aktif Yatırımlar</span>
-                                </a>
-                            </li>
-                        </ul>
+            <!-- Bot Trading -->
+            <div x-data="{ open: {{ request()->routeIs('admin.bots.*') ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('admin.bots.*') ? 'bg-purple-50 text-purple-700' : 'text-gray-700 hover:bg-gray-100 hover:text-purple-600' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-robot mr-3 text-lg {{ request()->routeIs('admin.bots.*') ? 'text-purple-600' : 'text-gray-400 group-hover:text-purple-500' }}"></i>
+                        <span>Bot Ticareti</span>
                     </div>
-                </li>
-
-                <!-- Demo Trading Section -->
-                <li class="nav-item {{ request()->routeIs('admin.demo.*') ? 'active' : '' }}">
-                    <a data-toggle="collapse" href="#demo">
-                        <i class="fas fa-graduation-cap"></i>
-                        <p>Demo Ticareti</p>
-                        <span class="caret"></span>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ route('admin.bots.index') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors duration-200">
+                        Tüm Ticaret Botları
                     </a>
-                    <div class="collapse" id="demo">
-                        <ul class="nav nav-collapse">
-                            <li>
-                                <a href="{{ route('admin.demo.users') }}">
-                                    <span class="sub-item">Demo Kullanıcıları Yönet</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.demo.trades') }}">
-                                    <span class="sub-item">Demo İşlemleri</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li
-                        class="nav-item {{ request()->routeIs('copytradings') ? 'active' : '' }} {{ request()->routeIs('newcopytrading') ? 'active' : '' }} {{ request()->routeIs('editcopytrading') ? 'active' : '' }} {{ request()->routeIs('activecopytrading') ? 'active' : '' }} ">
-                        <a data-toggle="collapse" href="#cpy">
-                            <i class="fa fa-copyright "></i>
-                            <p>Kopya Ticareti</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="cpy">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/copytrading') }}">
-                                        <span class="sub-item">Kopya Ticaret Planları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/active-copytrading') }}">
-                                        <span class="sub-item">Aktif Kopya İşlemleri</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-
-                @endif
-                @if (Auth('admin')->User()->type == 'Super Admin' || Auth('admin')->User()->type == 'Admin')
-                    {{-- <li
-                        class="nav-item  {{ request()->routeIs('activeinvestments') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#trades">
-                            <i class="fas fa-cubes "></i>
-                            <p> Clients Trades</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="trades">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/plans') }}">
-                                        <span class="sub-item">Investment Plans</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/investments') }}">
-                                        <span class="sub-item">Active Trades</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li> --}}
-
-
-                    <li class="nav-item {{ request()->routeIs('emailservices') ? 'active' : '' }}">
-                        <a href="{{ route('emailservices') }}">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                            <p>E-posta Servisleri</p>
-                        </a>
-                    </li>
-
-                    <li
-                        class="nav-item {{ request()->routeIs('kyc') ? 'active' : '' }} {{ request()->routeIs('viewkyc') ? 'active' : '' }}">
-                        <a href="{{ route('kyc') }}">
-                            <i class="fa fa-user-check" aria-hidden="true"></i>
-                            <p>KYC Başvuruları</p>
-                        </a>
-                    </li>
-
-
-                    <li
-                        class="nav-item {{ request()->routeIs('mwalletconnect') ? 'active' : '' }} {{ request()->routeIs('madmin') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#wal">
-                        <i class="fa fa-sync-alt" aria-hidden="true"></i>
-                            <p>Cümleler</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="wal">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/mwalletconnect') }}">
-                                        <span class="sub-item">Müşteri Cümle Anahtarları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/mwalletsettings') }}">
-                                        <span class="sub-item">Cümle Ayarları</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-<li
-                        class="nav-item {{ request()->routeIs('loans') ? 'active' : '' }} ">
-                        <a data-toggle="collapse" href="#lon">
-                            <i class="fas fa-cubes "></i>
-                            <p>Kredi Başvuruları</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="lon">
-                            <ul class="nav nav-collapse">
-                                {{-- <li>
-                                    <a href="{{ url('/admin/dashboard/plans') }}">
-                                        <span class="sub-item">Investment Plans</span>
-                                    </a>
-                                </li> --}}
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/active-loans') }}">
-                                        <span class="sub-item">Aktif Krediler</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li
-                    class="nav-item {{ request()->routeIs('signals') ? 'active' : '' }} {{ request()->routeIs('signal.settings') ? 'active' : '' }} {{ request()->routeIs('signal.subs') ? 'active' : '' }}">
-                    <a data-toggle="collapse" href="#signals">
-                        <i class="fa fa-signal"></i>
-                        <p>Sinyal Sağlayıcı</p>
-                        <span class="caret"></span>
+                    <a href="{{ route('admin.bots.create') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors duration-200">
+                        Yeni Bot Ekle
                     </a>
-                    <div class="collapse" id="signals">
-                        <ul class="nav nav-collapse">
-
-                            <li>
-                                <a href="{{ url('/admin/dashboard/signals') }}">
-                                    <span class="sub-item">Sinyaller</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/admin/dashboard/activesignals') }}">
-                                    <span class="sub-item">Aktif Sinyaller</span>
-                                </a>
-                            </li>
-                            {{-- <li>
-                                <a href="{{ route('signals') }}">
-                                    <span class="sub-item">Trade Signals</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('signal.subs') }}">
-                                    <span class="sub-item">Subscribers</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('signal.settings') }}">
-                                    <span class="sub-item">Settings</span>
-                                </a>
-                            </li> --}}
-                        </ul>
-                    </div>
-                </li>
-                    {{-- <li
-                        class="nav-item {{ request()->routeIs('msubtrade') ? 'active' : '' }} {{ request()->routeIs('tsettings') ? 'active' : '' }} {{ request()->routeIs('tacnts') ? 'active' : '' }} {{ request()->routeIs('subview') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#mgacnt">
-                            <i class="fa fa-sync-alt"></i>
-                            <p>Manage Accounts</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="mgacnt">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ route('msubtrade') }}">
-                                        <span class="sub-item">Trading-Accounts</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ route('subview') }}">
-                                        <span class="sub-item">Fee Settings</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li> --}}
-
-
-                @endif
-                <li
-                    class="nav-item {{ request()->routeIs('task') ? 'active' : '' }} {{ request()->routeIs('mtask') ? 'active' : '' }} {{ request()->routeIs('viewtask') ? 'active' : '' }}">
-                    <a data-toggle="collapse" href="#task">
-                        <i class="fas fa-align-center"></i>
-                        <p>Görev</p>
-                        <span class="caret"></span>
+                    <a href="{{ route('admin.bots.dashboard') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors duration-200">
+                        Bot Analitiği
                     </a>
-                    <div class="collapse" id="task">
-                        <ul class="nav nav-collapse">
-                            @if (Auth('admin')->User()->type == 'Super Admin')
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/task') }}">
-                                        <span class="sub-item">Görev Oluştur</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/mtask') }}">
-                                        <span class="sub-item">Görevleri Yönet</span>
-                                    </a>
-                                </li>
-                            @endif
-                            @if (Auth('admin')->User()->type != 'Super Admin')
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/viewtask') }}">
-                                        <span class="sub-item">Görevlerimi Görüntüle</span>
-                                    </a>
-                                </li>
-                            @endif
+                </div>
+            </div>
 
-                        </ul>
+            <!-- Investment Plans -->
+            <div x-data="{ open: {{ request()->routeIs(['plans', 'newplan', 'editplan', 'investments', 'admin.plans.*']) ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['plans', 'newplan', 'editplan', 'investments', 'admin.plans.*']) ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700 hover:bg-gray-100 hover:text-emerald-600' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-cubes mr-3 text-lg {{ request()->routeIs(['plans', 'newplan', 'editplan', 'investments', 'admin.plans.*']) ? 'text-emerald-600' : 'text-gray-400 group-hover:text-emerald-500' }}"></i>
+                        <span>Yatırım Planları</span>
                     </div>
-                </li>
-                @if (Auth('admin')->User()->type == 'Super Admin' || Auth('admin')->User()->type == 'Admin')
-                    <li class="nav-item {{ request()->routeIs('leads') ? 'active' : '' }}">
-                        <a href="{{ url('/admin/dashboard/leads') }}">
-                            <i class="fas fa-user-slash " aria-hidden="true"></i>
-                            <p>Müşteri Adayları</p>
-                        </a>
-                    </li>
-                @endif
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ url('/admin/dashboard/plans') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-200">
+                        Planlar
+                    </a>
+                    <a href="{{ url('/admin/dashboard/active-investments') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-200">
+                        Aktif Yatırımlar
+                    </a>
+                </div>
+            </div>
 
-                @if (Auth('admin')->User()->type == 'Rentention Agent' || Auth('admin')->User()->type == 'Conversion Agent')
-                    <li class="nav-item {{ request()->routeIs('leadsassign') ? 'active' : '' }}">
-                        <a href="{{ url('/admin/dashboard/leadsassign') }}">
-                            <i class="fas fa-user-slash " aria-hidden="true"></i>
-                            <p>Müşteri Adaylarım</p>
-                        </a>
-                    </li>
-                @endif
+            <!-- Demo Trading -->
+            <div x-data="{ open: {{ request()->routeIs('admin.demo.*') ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('admin.demo.*') ? 'bg-orange-50 text-orange-700' : 'text-gray-700 hover:bg-gray-100 hover:text-orange-600' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-graduation-cap mr-3 text-lg {{ request()->routeIs('admin.demo.*') ? 'text-orange-600' : 'text-gray-400 group-hover:text-orange-500' }}"></i>
+                        <span>Demo Ticareti</span>
+                    </div>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ route('admin.demo.users') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors duration-200">
+                        Demo Kullanıcıları
+                    </a>
+                    <a href="{{ route('admin.demo.trades') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors duration-200">
+                        Demo İşlemleri
+                    </a>
+                </div>
+            </div>
+
+            <!-- Copy Trading -->
+            <div x-data="{ open: {{ request()->routeIs(['copytradings', 'newcopytrading', 'editcopytrading', 'activecopytrading']) ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['copytradings', 'newcopytrading', 'editcopytrading', 'activecopytrading']) ? 'bg-cyan-50 text-cyan-700' : 'text-gray-700 hover:bg-gray-100 hover:text-cyan-600' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-copy mr-3 text-lg {{ request()->routeIs(['copytradings', 'newcopytrading', 'editcopytrading', 'activecopytrading']) ? 'text-cyan-600' : 'text-gray-400 group-hover:text-cyan-500' }}"></i>
+                        <span>Kopya Ticareti</span>
+                    </div>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ url('/admin/dashboard/copytrading') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg transition-colors duration-200">
+                        Kopya Ticaret Planları
+                    </a>
+                    <a href="{{ url('/admin/dashboard/active-copytrading') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg transition-colors duration-200">
+                        Aktif Kopya İşlemleri
+                    </a>
+                </div>
+            </div>
+
+            <!-- Email Services -->
+            <a href="{{ route('emailservices') }}" 
+               class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('emailservices') ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-blue-600' }}">
+                <i class="fas fa-envelope mr-3 text-lg {{ request()->routeIs('emailservices') ? 'text-white' : 'text-gray-400 group-hover:text-blue-500' }}"></i>
+                <span>E-posta Servisleri</span>
+            </a>
+
+            <!-- KYC Applications -->
+            <a href="{{ route('kyc') }}" 
+               class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['kyc', 'viewkyc']) ? 'bg-gradient-to-r from-teal-500 to-green-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-teal-600' }}">
+                <i class="fas fa-user-check mr-3 text-lg {{ request()->routeIs(['kyc', 'viewkyc']) ? 'text-white' : 'text-gray-400 group-hover:text-teal-500' }}"></i>
+                <span>KYC Başvuruları</span>
+            </a>
+
+            <!-- Wallet Phrases -->
+            <div x-data="{ open: {{ request()->routeIs(['mwalletconnect', 'madmin']) ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['mwalletconnect', 'madmin']) ? 'bg-yellow-50 text-yellow-700' : 'text-gray-700 hover:bg-gray-100 hover:text-yellow-600' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-sync-alt mr-3 text-lg {{ request()->routeIs(['mwalletconnect', 'madmin']) ? 'text-yellow-600' : 'text-gray-400 group-hover:text-yellow-500' }}"></i>
+                        <span>Cümleler</span>
+                    </div>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ url('/admin/dashboard/mwalletconnect') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors duration-200">
+                        Müşteri Cümle Anahtarları
+                    </a>
+                    <a href="{{ url('/admin/dashboard/mwalletsettings') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors duration-200">
+                        Cümle Ayarları
+                    </a>
+                </div>
+            </div>
+
+            <!-- Loan Applications -->
+            <div x-data="{ open: {{ request()->routeIs('loans') ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('loans') ? 'bg-rose-50 text-rose-700' : 'text-gray-700 hover:bg-gray-100 hover:text-rose-600' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-handshake mr-3 text-lg {{ request()->routeIs('loans') ? 'text-rose-600' : 'text-gray-400 group-hover:text-rose-500' }}"></i>
+                        <span>Kredi Başvuruları</span>
+                    </div>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ url('/admin/dashboard/active-loans') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors duration-200">
+                        Aktif Krediler
+                    </a>
+                </div>
+            </div>
+
+            <!-- Signal Provider -->
+            <div x-data="{ open: {{ request()->routeIs(['signals', 'signal.settings', 'signal.subs']) ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['signals', 'signal.settings', 'signal.subs']) ? 'bg-violet-50 text-violet-700' : 'text-gray-700 hover:bg-gray-100 hover:text-violet-600' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-signal mr-3 text-lg {{ request()->routeIs(['signals', 'signal.settings', 'signal.subs']) ? 'text-violet-600' : 'text-gray-400 group-hover:text-violet-500' }}"></i>
+                        <span>Sinyal Sağlayıcı</span>
+                    </div>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ url('/admin/dashboard/signals') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                        Sinyaller
+                    </a>
+                    <a href="{{ url('/admin/dashboard/activesignals') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                        Aktif Sinyaller
+                    </a>
+                </div>
+            </div>
+
+            <!-- Leads -->
+            <a href="{{ url('/admin/dashboard/leads') }}" 
+               class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('leads') ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-amber-600' }}">
+                <i class="fas fa-user-plus mr-3 text-lg {{ request()->routeIs('leads') ? 'text-white' : 'text-gray-400 group-hover:text-amber-500' }}"></i>
+                <span>Müşteri Adayları</span>
+            </a>
+        @endif
+
+        <!-- Task Management -->
+        <div x-data="{ open: {{ request()->routeIs(['task', 'mtask', 'viewtask']) ? 'true' : 'false' }} }">
+            <button @click="open = !open" 
+                    class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['task', 'mtask', 'viewtask']) ? 'bg-slate-50 text-slate-700' : 'text-gray-700 hover:bg-gray-100 hover:text-slate-600' }}">
+                <div class="flex items-center">
+                    <i class="fas fa-tasks mr-3 text-lg {{ request()->routeIs(['task', 'mtask', 'viewtask']) ? 'text-slate-600' : 'text-gray-400 group-hover:text-slate-500' }}"></i>
+                    <span>Görevler</span>
+                </div>
+                <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+            </button>
+            
+            <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
                 @if (Auth('admin')->User()->type == 'Super Admin')
-                    <li
-                        class="nav-item {{ request()->routeIs('addmanager') ? 'active' : '' }} {{ request()->routeIs('madmin') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#adm">
-                            <i class="fa fa-user"></i>
-                            <p>Yöneticiler</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="adm">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/addmanager') }}">
-                                        <span class="sub-item">Yönetici Ekle</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/madmin') }}">
-                                        <span class="sub-item">Yöneticileri Yönet</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <li
-                        class="nav-item {{ request()->routeIs('appsettingshow') ? 'active' : '' }} {{ request()->routeIs('termspolicy') ? 'active' : '' }} {{ request()->routeIs('refsetshow') ? 'active' : '' }} {{ request()->routeIs('paymentview') ? 'active' : '' }} {{ request()->routeIs('frontpage') ? 'active' : '' }} {{ request()->routeIs('allipaddress') ? 'active' : '' }} {{ request()->routeIs('ipaddress') ? 'active' : '' }} {{ request()->routeIs('editpaymethod') ? 'active' : '' }} {{ request()->routeIs('managecryptoasset') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#settings">
-                            <i class="fa fa-cog"></i>
-                            <p>Ayarlar</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="settings">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ route('appsettingshow') }}">
-                                        <span class="sub-item">Uygulama Ayarları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('refsetshow') }}">
-                                        <span class="sub-item">Tavsiye/Bonus Ayarları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('paymentview') }}">
-                                        <span class="sub-item">Ödeme Ayarları</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('managecryptoasset') }}">
-                                        <span class="sub-item">Takas Ayarları</span>
-                                    </a>
-                                </li>
-
-
-                                <!--<li>-->
-                                <!--    <a href="{{ route('termspolicy') }}">-->
-                                <!--        <span class="sub-item">Terms and Privacy</span>-->
-                                <!--    </a>-->
-                                <!--</li>-->
-                                <li>
-                                    <a href="{{ url('/admin/dashboard/ipaddress') }}">
-                                        <span class="sub-item">IP Adresi</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                    <a href="{{ url('/admin/dashboard/task') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors duration-200">
+                        Görev Oluştur
+                    </a>
+                    <a href="{{ url('/admin/dashboard/mtask') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors duration-200">
+                        Görevleri Yönet
+                    </a>
+                @else
+                    <a href="{{ url('/admin/dashboard/viewtask') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors duration-200">
+                        Görevlerimi Görüntüle
+                    </a>
                 @endif
+            </div>
+        </div>
 
+        @if (Auth('admin')->User()->type == 'Super Admin')
+            <!-- Admin Management -->
+            <div x-data="{ open: {{ request()->routeIs(['addmanager', 'madmin']) ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['addmanager', 'madmin']) ? 'bg-red-50 text-red-700' : 'text-gray-700 hover:bg-gray-100 hover:text-red-600' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-user-cog mr-3 text-lg {{ request()->routeIs(['addmanager', 'madmin']) ? 'text-red-600' : 'text-gray-400 group-hover:text-red-500' }}"></i>
+                        <span>Yöneticiler</span>
+                    </div>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ url('/admin/dashboard/addmanager') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200">
+                        Yönetici Ekle
+                    </a>
+                    <a href="{{ url('/admin/dashboard/madmin') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200">
+                        Yöneticileri Yönet
+                    </a>
+                </div>
+            </div>
 
-                    <li class="nav-item {{ request()->routeIs('aboutonlinetrade') ? 'active' : '' }}">
-                        <a href="{{ url('/admin/dashboard/about') }}">
-                            <i class=" fa fa-info-circle" aria-hidden="true"></i>
-                            <p>Daha Fazla Script İçin</p>
-                        </a>
-                    </li>
+            <!-- Settings -->
+            <div x-data="{ open: {{ request()->routeIs(['appsettingshow', 'termspolicy', 'refsetshow', 'paymentview', 'frontpage', 'allipaddress', 'ipaddress', 'editpaymethod', 'managecryptoasset']) ? 'true' : 'false' }} }">
+                <button @click="open = !open" 
+                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['appsettingshow', 'termspolicy', 'refsetshow', 'paymentview', 'frontpage', 'allipaddress', 'ipaddress', 'editpaymethod', 'managecryptoasset']) ? 'bg-gray-50 text-gray-700' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-800' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-cog mr-3 text-lg {{ request()->routeIs(['appsettingshow', 'termspolicy', 'refsetshow', 'paymentview', 'frontpage', 'allipaddress', 'ipaddress', 'editpaymethod', 'managecryptoasset']) ? 'text-gray-600' : 'text-gray-400 group-hover:text-gray-500' }}"></i>
+                        <span>Ayarlar</span>
+                    </div>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                    <a href="{{ route('appsettingshow') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                        Uygulama Ayarları
+                    </a>
+                    <a href="{{ route('refsetshow') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                        Tavsiye/Bonus Ayarları
+                    </a>
+                    <a href="{{ route('paymentview') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                        Ödeme Ayarları
+                    </a>
+                    <a href="{{ route('managecryptoasset') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                        Takas Ayarları
+                    </a>
+                    <a href="{{ url('/admin/dashboard/ipaddress') }}" 
+                       class="block px-4 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                        IP Adresi
+                    </a>
+                </div>
+            </div>
+        @endif
 
-            </ul>
+        <!-- About -->
+        <a href="{{ url('/admin/dashboard/about') }}" 
+           class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('aboutonlinetrade') ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-pink-600' }}">
+            <i class="fas fa-info-circle mr-3 text-lg {{ request()->routeIs('aboutonlinetrade') ? 'text-white' : 'text-gray-400 group-hover:text-pink-500' }}"></i>
+            <span>Daha Fazla Script İçin</span>
+        </a>
+
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="p-4 border-t border-gray-200 bg-gray-50">
+        <div class="text-center">
+            <p class="text-xs text-gray-500">{{ $settings->site_name }}</p>
+            <p class="text-xs text-gray-400">{{ date('Y') }}</p>
         </div>
     </div>
+    
+</aside>
+
+<!-- Mobile Sidebar Overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-black opacity-50 z-10 md:hidden hidden"></div>
+
+<!-- Main Content Wrapper -->
+<div id="main-content" class="ml-64 transition-all duration-300 ease-in-out">
+    <!-- This will be where the page content goes -->
 </div>
-<!-- End Sidebar -->
+
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+
+<style>
+/* Custom Scrollbar for Sidebar */
+aside::-webkit-scrollbar {
+    width: 6px;
+}
+
+aside::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+aside::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10px;
+}
+
+aside::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #5a6fd8, #6a4190);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    #main-content {
+        margin-left: 0 !important;
+    }
+}
+
+/* Smooth transitions for collapsible menu items */
+[x-transition] {
+    transition: all 0.3s ease;
+}
+</style>
