@@ -1,58 +1,175 @@
 @extends('layouts.app')
 @section('content')
 @section('styles')
+<!-- Tailwind ve Bootstrap uyumlu hybrid stil -->
 <style>
+    /* Lead Card Styles */
     .lead-card {
-        @apply transition-all duration-300 ease-in-out border-l-4 border-gray-300;
+        transition: all 0.3s ease;
+        border-left: 4px solid #dee2e6;
+        border-radius: 0.75rem;
+        overflow: hidden;
     }
     .lead-card:hover {
-        @apply -translate-y-1 shadow-lg;
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
+
+    /* Status Badge */
     .status-badge {
-        @apply text-xs px-3 py-1.5 rounded-full font-semibold uppercase tracking-wide;
+        font-size: 0.75rem;
+        padding: 0.375rem 0.75rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: inline-block;
     }
+
+    /* Lead Score Circle */
     .lead-score {
-        @apply w-10 h-10 rounded-full inline-flex items-center justify-center font-bold text-sm;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.875rem;
     }
-    .lead-score.high { @apply bg-green-100 text-green-800; }
-    .lead-score.medium { @apply bg-yellow-100 text-yellow-800; }
-    .lead-score.low { @apply bg-red-100 text-red-800; }
+    .lead-score.high {
+        background-color: #dcfce7;
+        color: #166534;
+        border: 2px solid #22c55e;
+    }
+    .lead-score.medium {
+        background-color: #fef3c7;
+        color: #92400e;
+        border: 2px solid #f59e0b;
+    }
+    .lead-score.low {
+        background-color: #fee2e2;
+        color: #991b1b;
+        border: 2px solid #ef4444;
+    }
+
+    /* Cards */
     .filters-card {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        @apply text-white;
+        color: white;
+        border-radius: 1rem;
+        border: none;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
+    
     .stat-card {
-        @apply rounded-2xl overflow-hidden relative;
+        border-radius: 1rem;
+        overflow: hidden;
+        position: relative;
+        border: none;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
     .stat-card::before {
         content: '';
-        @apply absolute top-0 left-0 right-0 h-1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
         background: linear-gradient(90deg, #667eea, #764ba2);
     }
+
+    /* Table Actions */
     .table-actions {
-        @apply whitespace-nowrap;
+        white-space: nowrap;
     }
+
+    /* Bulk Actions */
     .bulk-actions {
-        @apply bg-gray-50 rounded-lg p-4 mb-4 hidden;
+        background: #f8fafc;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: none;
+        border: 2px dashed #cbd5e1;
     }
     .bulk-actions.show {
-        @apply block;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
+
+    /* Contact Method Icon */
     .contact-method-icon {
-        @apply w-5 h-5 rounded-full inline-flex items-center justify-center text-xs;
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
     }
-    
-    /* Tailwind utility classes for better compatibility */
-    .tw-shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important; }
-    .tw-bg-gradient-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; }
-    .tw-rounded-xl { border-radius: 0.75rem !important; }
-    .tw-text-white { color: white !important; }
-    .tw-p-4 { padding: 1rem !important; }
-    .tw-mb-4 { margin-bottom: 1rem !important; }
-    .tw-flex { display: flex !important; }
-    .tw-items-center { align-items: center !important; }
-    .tw-justify-between { justify-content: space-between !important; }
-    .tw-gap-2 { gap: 0.5rem !important; }
+
+    /* Modern Button Styles */
+    .btn-modern {
+        border-radius: 0.5rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: none;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+    .btn-modern:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Input Styles */
+    .form-control-modern {
+        border-radius: 0.5rem;
+        border: 2px solid #e2e8f0;
+        transition: all 0.2s ease;
+    }
+    .form-control-modern:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    /* Table Enhancements */
+    .table-modern {
+        border-radius: 0.75rem;
+        overflow: hidden;
+    }
+    .table-modern thead th {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        padding: 1rem;
+        border: none;
+    }
+    .table-modern tbody tr {
+        transition: all 0.2s ease;
+    }
+    .table-modern tbody tr:hover {
+        background-color: #f8fafc;
+        transform: scale(1.001);
+    }
+
+    /* Responsive helpers */
+    @media (max-width: 768px) {
+        .stat-card {
+            margin-bottom: 1rem;
+        }
+        .filters-card .row {
+            gap: 1rem;
+        }
+    }
 </style>
 @endsection
 
@@ -308,7 +425,8 @@
                                                 <div class="d-flex align-items-center mb-1">
                                                     <strong class="me-2">{{ $lead->name }}</strong>
                                                     @if($lead->preferred_contact_method)
-                                                    <span class="contact-method-icon bg-info text-white" 
+                                                    <span class="contact-method-icon text-white"
+                                                          style="background-color: {{ $lead->preferred_contact_method === 'phone' ? '#0d6efd' : '#198754' }};"
                                                           title="{{ ucfirst($lead->preferred_contact_method) }}">
                                                         <i class="fas fa-{{ $lead->preferred_contact_method === 'phone' ? 'phone' : 'envelope' }}"></i>
                                                     </span>
@@ -339,7 +457,7 @@
                                     </td>
                                     <td>
                                         @if($lead->leadStatus)
-                                        <span class="status-badge" style="background-color: {{ $lead->leadStatus->color }}20; color: {{ $lead->leadStatus->color }};">
+                                        <span class="status-badge" style="background-color: {{ $lead->leadStatus->color }}; color: white;">
                                             {{ $lead->leadStatus->display_name }}
                                         </span>
                                         @else
@@ -386,7 +504,7 @@
                                     </td>
                                     <td>
                                         @if($lead->lead_source)
-                                        <span class="badge badge-outline-secondary">
+                                        <span class="badge bg-secondary text-white">
                                             {{ ucfirst($lead->lead_source) }}
                                         </span>
                                         @endif

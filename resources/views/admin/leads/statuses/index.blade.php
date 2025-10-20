@@ -159,19 +159,19 @@
                                     </td>
                                     <td>
                                         @if($status->user_count > 0)
-                                            <span class="badge badge-info badge-lg">{{ $status->user_count }} lead</span>
+                                            <span class="badge bg-info text-white badge-lg">{{ $status->user_count }} lead</span>
                                         @else
                                             <span class="text-muted">0 lead</span>
                                         @endif
                                     </td>
                                     <td>
-                                        <span class="badge badge-secondary">{{ $status->sort_order }}</span>
+                                        <span class="badge bg-secondary text-white">{{ $status->sort_order }}</span>
                                     </td>
                                     <td>
                                         @if($status->is_active)
-                                            <span class="badge badge-success">Aktif</span>
+                                            <span class="badge bg-success text-white">Aktif</span>
                                         @else
-                                            <span class="badge badge-warning">Pasif</span>
+                                            <span class="badge bg-warning text-dark">Pasif</span>
                                         @endif
                                     </td>
                                     <td class="text-center">

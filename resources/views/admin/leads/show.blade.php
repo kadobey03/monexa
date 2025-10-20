@@ -184,7 +184,7 @@
                                         </div>
                                         <div class="col-6">
                                             @if($lead->lead_source)
-                                            <span class="badge badge-secondary">{{ ucfirst($lead->lead_source) }}</span>
+                                            <span class="badge bg-secondary text-white">{{ ucfirst($lead->lead_source) }}</span>
                                             @else
                                             <span class="text-muted">Bilinmiyor</span>
                                             @endif
@@ -196,7 +196,7 @@
                                         </div>
                                         <div class="col-6">
                                             @if($lead->preferred_contact_method)
-                                            <span class="badge badge-info">
+                                            <span class="badge bg-info text-white">
                                                 <i class="fas fa-{{ $lead->preferred_contact_method === 'phone' ? 'phone' : 'envelope' }} me-1"></i>
                                                 {{ ucfirst($lead->preferred_contact_method) }}
                                             </span>
@@ -248,7 +248,7 @@
                                         <div class="col-6">
                                             @if($lead->next_follow_up_date)
                                             <div>
-                                                <span class="badge badge-{{ $lead->next_follow_up_date->isPast() ? 'danger' : 'success' }}">
+                                                <span class="badge bg-{{ $lead->next_follow_up_date->isPast() ? 'danger' : 'success' }} text-white">
                                                     {{ $lead->next_follow_up_date->format('d.m.Y') }}
                                                 </span>
                                             </div>
@@ -267,7 +267,7 @@
                                             <strong>İletişim Sayısı:</strong>
                                         </div>
                                         <div class="col-6">
-                                            <span class="badge badge-primary">{{ count($lead->contact_history ?? []) }}</span>
+                                            <span class="badge bg-primary text-white">{{ count($lead->contact_history ?? []) }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -378,13 +378,13 @@
                             </div>
                             <div class="card-body text-center">
                                 @if($lead->leadStatus)
-                                <div class="status-badge mb-3" 
-                                     style="background-color: {{ $lead->leadStatus->color }}20; color: {{ $lead->leadStatus->color }}; border: 2px solid {{ $lead->leadStatus->color }};">
+                                <div class="status-badge mb-3"
+                                     style="background-color: {{ $lead->leadStatus->color }}; color: white; border: 2px solid {{ $lead->leadStatus->color }};">
                                     {{ $lead->leadStatus->display_name }}
                                 </div>
                                 <p class="text-muted small">{{ $lead->leadStatus->description }}</p>
                                 @else
-                                <div class="status-badge mb-3 bg-secondary text-white">
+                                <div class="status-badge mb-3" style="background-color: #6c757d; color: white;">
                                     Belirlenmemiş
                                 </div>
                                 @endif
