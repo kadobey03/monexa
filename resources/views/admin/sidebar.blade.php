@@ -1,5 +1,5 @@
 <!-- Modern Tailwind Sidebar -->
-<aside id="admin-sidebar" class="fixed left-0 top-16 w-64 bg-white shadow-2xl z-20 transform transition-transform duration-300 ease-in-out md:translate-x-0 -translate-x-full flex flex-col" style="height: calc(100vh - 4rem);">
+<aside id="admin-sidebar" class="fixed left-0 top-16 w-64 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out md:translate-x-0 -translate-x-full flex flex-col" style="height: calc(100vh - 4rem);">
     
     <!-- Sidebar Header -->
     <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100 flex-shrink-0">
@@ -361,7 +361,7 @@
 </aside>
 
 <!-- Mobile Sidebar Overlay -->
-<div id="sidebar-overlay" class="fixed inset-0 bg-black opacity-50 z-10 md:hidden hidden"></div>
+<div id="sidebar-overlay" class="fixed inset-0 bg-black opacity-50 z-40 md:hidden hidden"></div>
 
 <!-- Main Content Wrapper -->
 <div id="main-content" class="ml-64 transition-all duration-300 ease-in-out">
@@ -371,6 +371,23 @@
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
 
 <style>
+/* Sidebar Critical Fixes */
+#admin-sidebar {
+    z-index: 9999 !important;
+    pointer-events: all !important;
+    position: fixed !important;
+    visibility: visible !important;
+}
+
+#admin-sidebar * {
+    pointer-events: all !important;
+}
+
+/* Ensure sidebar stays on top */
+#admin-sidebar {
+    isolation: isolate;
+}
+
 /* Custom Scrollbar for Sidebar */
 aside::-webkit-scrollbar {
     width: 6px;
@@ -399,5 +416,16 @@ aside::-webkit-scrollbar-thumb:hover {
 /* Smooth transitions for collapsible menu items */
 [x-transition] {
     transition: all 0.3s ease;
+}
+
+/* Force sidebar interaction */
+.sidebar-nav-item {
+    position: relative;
+    z-index: 10000 !important;
+}
+
+.sidebar-nav-item:hover {
+    transform: scale(1.02);
+    z-index: 10001 !important;
 }
 </style>
