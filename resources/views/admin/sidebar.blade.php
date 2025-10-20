@@ -1,8 +1,8 @@
 <!-- Modern Tailwind Sidebar -->
-<aside id="admin-sidebar" class="fixed left-0 top-16 h-screen w-64 bg-white shadow-2xl z-20 transform transition-transform duration-300 ease-in-out md:translate-x-0 -translate-x-full">
+<aside id="admin-sidebar" class="fixed left-0 top-16 w-64 bg-white shadow-2xl z-20 transform transition-transform duration-300 ease-in-out md:translate-x-0 -translate-x-full flex flex-col" style="height: calc(100vh - 4rem);">
     
     <!-- Sidebar Header -->
-    <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100">
+    <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100 flex-shrink-0">
         <div class="flex items-center space-x-3">
             <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-3 rounded-xl text-white">
                 <i class="fas fa-user-shield text-lg"></i>
@@ -15,7 +15,7 @@
     </div>
 
     <!-- Navigation Menu -->
-    <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+    <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1 min-h-0">
         
         <!-- Dashboard -->
         <a href="{{ url('/admin/dashboard') }}" 
@@ -351,7 +351,7 @@
     </nav>
 
     <!-- Sidebar Footer -->
-    <div class="p-4 border-t border-gray-200 bg-gray-50">
+    <div class="p-4 border-t border-gray-200 bg-gray-50 flex-shrink-0">
         <div class="text-center">
             <p class="text-xs text-gray-500">{{ $settings->site_name }}</p>
             <p class="text-xs text-gray-400">{{ date('Y') }}</p>

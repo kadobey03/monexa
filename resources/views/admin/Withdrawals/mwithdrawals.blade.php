@@ -1,418 +1,386 @@
-<?php
-if (Auth('admin')->User()->dashboard_style == 'light') {
-    $text = 'dark';
-} else {
-    $text = 'light';
-}
-?>
 @extends('layouts.app')
 @section('content')
     @include('admin.topmenu')
     @include('admin.sidebar')
-    <div class="main-panel">
-        <div class="content">
-            <div class="page-inner">
-                <!-- Modern Header Section -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h1 class="mb-2" style="color: #2c3e50; font-weight: 700; font-size: 2.2rem;">
-                            <i class="fas fa-wallet mr-3" style="color: #007bff;"></i>
-                            Müşteri Çekimlerini Yönet
-                        </h1>
-                        <p class="text-muted" style="font-size: 1.1rem; margin-bottom: 0;">
-                            Tüm müşteri çekim taleplerini buradan yönetebilirsiniz
-                        </p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="stats-card bg-gradient-primary text-white p-3 rounded-lg mr-3">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-chart-line mr-2"></i>
-                                <div>
-                                    <div style="font-size: 1.5rem; font-weight: bold;">{{ count($withdrawals) }}</div>
-                                    <div style="font-size: 0.85rem; opacity: 0.9;">Toplam Talep</div>
-                                </div>
+    
+    <!-- Main Content -->
+    <div class="flex-1 ml-0 md:ml-64 transition-all duration-300">
+        <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+            <!-- Header Section -->
+            <div class="bg-white border-b border-gray-200 shadow-sm">
+                <div class="px-4 py-6 sm:px-6 lg:px-8">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                        <div class="flex items-center space-x-4 mb-4 lg:mb-0">
+                            <div class="p-3 bg-gradient-to-r from-red-500 to-rose-600 rounded-xl shadow-lg">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                </svg>
                             </div>
+                            <div>
+                                <h1 class="text-3xl font-bold text-gray-900">Müşteri Çekimlerini Yönet</h1>
+                                <p class="text-gray-600 mt-1">Tüm müşteri çekim taleplerini buradan yönetebilirsiniz</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-red-100 text-red-800 px-4 py-2 rounded-full font-semibold">
+                                <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"></path>
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path>
+                                </svg>
+                                {{ count($withdrawals) }} Toplam Talep
+                            </div>
+                            <button onclick="refreshTable()" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200">
+                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                                </svg>
+                                Yenile
+                            </button>
                         </div>
                     </div>
                 </div>
-
+            </div>
+            
+            <!-- Alert Messages -->
+            <div class="px-4 sm:px-6 lg:px-8 pt-4">
                 <x-danger-alert />
                 <x-success-alert />
-
-                <!-- Modern Stats Cards -->
-                <div class="row mb-4">
-                    <div class="col-md-3">
-                        <div class="card stats-card bg-gradient-info text-white shadow-sm">
-                            <div class="card-body p-3">
-                                <div class="d-flex justify-content-between align-items-center">
+            </div>
+            
+            <!-- Statistics Cards -->
+            <div class="px-4 py-6 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <!-- Pending -->
+                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 overflow-hidden">
+                        <div class="bg-gradient-to-br from-yellow-500 to-orange-600 p-6 text-white relative">
+                            <div class="absolute inset-0 bg-white/10 transform -skew-y-3 translate-y-8"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between">
                                     <div>
-                                        <h6 class="mb-1">Bekleyen</h6>
-                                        <h3 class="mb-0">{{ collect($withdrawals)->where('status', '!=', 'Processed')->count() }}</h3>
+                                        <p class="text-yellow-100 text-sm font-medium">Bekleyen</p>
+                                        <p class="text-2xl font-bold mt-1">{{ collect($withdrawals)->where('status', '!=', 'Processed')->count() }}</p>
                                     </div>
-                                    <i class="fas fa-clock fa-2x opacity-75"></i>
+                                    <div class="p-3 bg-white/20 rounded-full">
+                                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card stats-card bg-gradient-success text-white shadow-sm">
-                            <div class="card-body p-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="mb-1">İşlenen</h6>
-                                        <h3 class="mb-0">{{ collect($withdrawals)->where('status', 'Processed')->count() }}</h3>
-                                    </div>
-                                    <i class="fas fa-check-circle fa-2x opacity-75"></i>
-                                </div>
+                        <div class="px-6 py-4 bg-yellow-50">
+                            <div class="flex items-center text-yellow-600 text-sm">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                </svg>
+                                Onay bekliyor
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card stats-card bg-gradient-warning text-white shadow-sm">
-                            <div class="card-body p-3">
-                                <div class="d-flex justify-content-between align-items-center">
+                    
+                    <!-- Processed -->
+                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 overflow-hidden">
+                        <div class="bg-gradient-to-br from-green-500 to-emerald-600 p-6 text-white relative">
+                            <div class="absolute inset-0 bg-white/10 transform -skew-y-3 translate-y-8"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between">
                                     <div>
-                                        <h6 class="mb-1">Toplam Tutar</h6>
-                                        <h3 class="mb-0">{{ $settings->currency }}{{ number_format(collect($withdrawals)->sum('amount')) }}</h3>
+                                        <p class="text-green-100 text-sm font-medium">İşlenen</p>
+                                        <p class="text-2xl font-bold mt-1">{{ collect($withdrawals)->where('status', 'Processed')->count() }}</p>
                                     </div>
-                                    <i class="fas fa-dollar-sign fa-2x opacity-75"></i>
+                                    <div class="p-3 bg-white/20 rounded-full">
+                                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="px-6 py-4 bg-green-50">
+                            <div class="flex items-center text-green-600 text-sm">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                Tamamlananlar
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card stats-card bg-gradient-danger text-white shadow-sm">
-                            <div class="card-body p-3">
-                                <div class="d-flex justify-content-between align-items-center">
+                    
+                    <!-- Total Amount -->
+                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 overflow-hidden">
+                        <div class="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 text-white relative">
+                            <div class="absolute inset-0 bg-white/10 transform -skew-y-3 translate-y-8"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between">
                                     <div>
-                                        <h6 class="mb-1">Bu Ay</h6>
-                                        <h3 class="mb-0">{{ collect($withdrawals)->where('created_at', '>=', now()->startOfMonth())->count() }}</h3>
+                                        <p class="text-blue-100 text-sm font-medium">Toplam Tutar</p>
+                                        <p class="text-2xl font-bold mt-1">{{ $settings->currency }}{{ number_format(collect($withdrawals)->sum('amount')) }}</p>
                                     </div>
-                                    <i class="fas fa-calendar-alt fa-2x opacity-75"></i>
+                                    <div class="p-3 bg-white/20 rounded-full">
+                                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
+                                        </svg>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 bg-blue-50">
+                            <div class="flex items-center text-blue-600 text-sm">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
+                                </svg>
+                                Tüm çekimler
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- This Month -->
+                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 overflow-hidden">
+                        <div class="bg-gradient-to-br from-purple-500 to-pink-600 p-6 text-white relative">
+                            <div class="absolute inset-0 bg-white/10 transform -skew-y-3 translate-y-8"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-purple-100 text-sm font-medium">Bu Ay</p>
+                                        <p class="text-2xl font-bold mt-1">{{ collect($withdrawals)->where('created_at', '>=', now()->startOfMonth())->count() }}</p>
+                                    </div>
+                                    <div class="p-3 bg-white/20 rounded-full">
+                                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 bg-purple-50">
+                            <div class="flex items-center text-purple-600 text-sm">
+                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                </svg>
+                                Son 30 gün
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Modern Table Card -->
-                <div class="card shadow-lg border-0">
-                    <div class="card-header bg-gradient-primary text-white py-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">
-                                <i class="fas fa-list mr-2"></i>
-                                Çekim Talepleri
-                            </h5>
-                            <div class="card-header-actions">
-                                <button class="btn btn-light btn-sm" onclick="refreshTable()">
-                                    <i class="fas fa-sync-alt mr-1"></i>
-                                    Yenile
-                                </button>
+                
+                <!-- Main Table -->
+                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                    <!-- Table Header -->
+                    <div class="bg-gradient-to-r from-gray-50 to-blue-50 px-6 py-4 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-gray-900">Çekim Talepleri</h2>
+                            <div class="flex items-center space-x-2">
+                                <div class="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg border border-gray-200">
+                                    <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <input type="text" placeholder="Çekim ara..." class="border-0 focus:ring-0 focus:outline-none text-sm w-32" id="searchInput">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table id="withdrawalsTable" class="table table-hover mb-0 modern-table">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th class="border-0 py-3 px-4">
-                                            <i class="fas fa-user mr-2 text-primary"></i>
-                                            Müşteri Adı
-                                        </th>
-                                        <th class="border-0 py-3 px-4 text-center">
-                                            <i class="fas fa-money-bill-wave mr-2 text-success"></i>
-                                            Talep Edilen Tutar
-                                        </th>
-                                        <th class="border-0 py-3 px-4 text-center">
-                                            <i class="fas fa-calculator mr-2 text-info"></i>
-                                            Tutar + Masraflar
-                                        </th>
-                                        <th class="border-0 py-3 px-4 text-center">
-                                            <i class="fas fa-credit-card mr-2 text-warning"></i>
-                                            Ödeme Yöntemi
-                                        </th>
-                                        <th class="border-0 py-3 px-4">
-                                            <i class="fas fa-envelope mr-2 text-secondary"></i>
-                                            E-posta
-                                        </th>
-                                        <th class="border-0 py-3 px-4 text-center">
-                                            <i class="fas fa-info-circle mr-2 text-primary"></i>
-                                            Durum
-                                        </th>
-                                        <th class="border-0 py-3 px-4 text-center">
-                                            <i class="fas fa-calendar mr-2 text-muted"></i>
-                                            Tarih
-                                        </th>
-                                        <th class="border-0 py-3 px-4 text-center">
-                                            <i class="fas fa-cogs mr-2 text-dark"></i>
-                                            İşlemler
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse ($withdrawals as $withdrawal)
-                                        <tr class="table-row-hover">
-                                            @if (isset($withdrawal->duser->name) && $withdrawal->duser->name != null)
-                                                <td class="py-3 px-4">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="user-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mr-3"
-                                                             style="width: 40px; height: 40px; font-size: 0.9rem; font-weight: bold;">
-                                                            {{ strtoupper(substr($withdrawal->duser->name, 0, 2)) }}
-                                                        </div>
-                                                        <div>
-                                                            <div class="font-weight-bold">{{ $withdrawal->duser->name }}</div>
-                                                            <small class="text-muted">ID: {{ $withdrawal->duser->id ?? 'N/A' }}</small>
+                    
+                    <!-- Table Content -->
+                    <div class="overflow-x-auto">
+                        <table id="withdrawalsTable" class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Müşteri Adı
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Talep Edilen Tutar
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tutar + Masraflar
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Ödeme Yöntemi
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        E-posta
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Durum
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Tarih
+                                    </th>
+                                    <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        İşlemler
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse ($withdrawals as $withdrawal)
+                                    <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                        <!-- Customer Name -->
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                @if (isset($withdrawal->duser->name) && $withdrawal->duser->name != null)
+                                                    <div class="h-10 w-10 flex-shrink-0">
+                                                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                                            <span class="text-sm font-medium text-white">{{ strtoupper(substr($withdrawal->duser->name, 0, 2)) }}</span>
                                                         </div>
                                                     </div>
-                                                </td>
-                                            @else
-                                                <td class="py-3 px-4">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="user-avatar bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center mr-3"
-                                                             style="width: 40px; height: 40px;">
-                                                            <i class="fas fa-user-slash"></i>
-                                                        </div>
-                                                        <div>
-                                                            <div class="font-weight-bold text-muted">Kullanıcı Silindi</div>
-                                                            <small class="text-muted">Hesap mevcut değil</small>
-                                                        </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">{{ $withdrawal->duser->name }}</div>
+                                                        <div class="text-sm text-gray-500">ID: {{ $withdrawal->duser->id ?? 'N/A' }}</div>
                                                     </div>
-                                                </td>
-                                            @endif
-
-                                            <td class="py-3 px-4 text-center">
-                                                <div class="amount-badge bg-success-light text-success px-3 py-2 rounded-lg">
-                                                    <strong>{{ $settings->currency }}{{ number_format($withdrawal->amount) }}</strong>
-                                                </div>
-                                            </td>
-
-                                            <td class="py-3 px-4 text-center">
-                                                <div class="amount-badge bg-info-light text-info px-3 py-2 rounded-lg">
-                                                    <strong>{{ $settings->currency }}{{ number_format($withdrawal->to_deduct) }}</strong>
-                                                </div>
-                                            </td>
-
-                                            <td class="py-3 px-4 text-center">
-                                                <span class="payment-method-badge bg-light border px-3 py-2 rounded-lg">
-                                                    <i class="fas fa-{{ strtolower($withdrawal->payment_mode) == 'bank' ? 'university' : 'wallet' }} mr-2"></i>
-                                                    {{ $withdrawal->payment_mode }}
-                                                </span>
-                                            </td>
-
-                                            <td class="py-3 px-4">
-                                                <span class="email-text" title="{{ $withdrawal->duser->email ?? 'N/A' }}">
-                                                    {{ Str::limit($withdrawal->duser->email ?? 'N/A', 20) }}
-                                                </span>
-                                            </td>
-
-                                            <td class="py-3 px-4 text-center">
-                                                @if ($withdrawal->status == 'Processed')
-                                                    <span class="status-badge badge-success-modern px-3 py-2 rounded-pill">
-                                                        <i class="fas fa-check-circle mr-1"></i>
-                                                        İşlendi
-                                                    </span>
                                                 @else
-                                                    <span class="status-badge badge-danger-modern px-3 py-2 rounded-pill">
-                                                        <i class="fas fa-clock mr-1"></i>
-                                                        Bekliyor
-                                                    </span>
+                                                    <div class="h-10 w-10 flex-shrink-0">
+                                                        <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+                                                            <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-500">Kullanıcı Silindi</div>
+                                                        <div class="text-sm text-gray-400">Hesap mevcut değil</div>
+                                                    </div>
                                                 @endif
-                                            </td>
-
-                                            <td class="py-3 px-4 text-center">
-                                                <div class="date-info">
-                                                    <div class="font-weight-bold">{{ \Carbon\Carbon::parse($withdrawal->created_at)->format('d M Y') }}</div>
-                                                    <small class="text-muted">{{ \Carbon\Carbon::parse($withdrawal->created_at)->format('H:i') }}</small>
+                                            </div>
+                                        </td>
+                                        
+                                        <!-- Requested Amount -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                                                {{ $settings->currency }}{{ number_format($withdrawal->amount) }}
+                                            </div>
+                                        </td>
+                                        
+                                        <!-- Amount + Fees -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">
+                                                {{ $settings->currency }}{{ number_format($withdrawal->to_deduct) }}
+                                            </div>
+                                        </td>
+                                        
+                                        <!-- Payment Method -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    @if(strtolower($withdrawal->payment_mode) == 'bank')
+                                                        <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"></path>
+                                                    @else
+                                                        <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
+                                                    @endif
+                                                </svg>
+                                                {{ $withdrawal->payment_mode }}
+                                            </span>
+                                        </td>
+                                        
+                                        <!-- Email -->
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900" title="{{ $withdrawal->duser->email ?? 'N/A' }}">
+                                                {{ Str::limit($withdrawal->duser->email ?? 'N/A', 25) }}
+                                            </div>
+                                        </td>
+                                        
+                                        <!-- Status -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            @if ($withdrawal->status == 'Processed')
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    İşlendi
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    Bekliyor
+                                                </span>
+                                            @endif
+                                        </td>
+                                        
+                                        <!-- Date -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <div class="flex items-center justify-center text-sm text-gray-900">
+                                                <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                                </svg>
+                                                <div>
+                                                    <div class="font-medium">{{ \Carbon\Carbon::parse($withdrawal->created_at)->format('d M Y') }}</div>
+                                                    <div class="text-xs text-gray-500">{{ \Carbon\Carbon::parse($withdrawal->created_at)->format('H:i') }}</div>
                                                 </div>
-                                            </td>
-
-                                            <td class="py-3 px-4 text-center">
-                                                <div class="action-buttons">
-                                                    <a href="{{ route('processwithdraw', $withdrawal->id) }}"
-                                                       class="btn btn-primary btn-sm btn-action"
-                                                       title="Çekim talebini görüntüle ve işle">
-                                                        <i class="fas fa-eye mr-1"></i>
-                                                        Görüntüle
-                                                    </a>
+                                            </div>
+                                        </td>
+                                        
+                                        <!-- Actions -->
+                                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                                            <a href="{{ route('processwithdraw', $withdrawal->id) }}"
+                                               class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105">
+                                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                                                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
+                                                </svg>
+                                                Görüntüle
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8" class="px-6 py-12 text-center">
+                                            <div class="flex flex-col items-center">
+                                                <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                                                    <svg class="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                    </svg>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="8" class="text-center py-5">
-                                                <div class="empty-state">
-                                                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                                                    <h5 class="text-muted">Henüz çekim talebi yok</h5>
-                                                    <p class="text-muted">Müşterilerden gelen çekim talepleri burada listelenecek.</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
+                                                <h3 class="text-lg font-medium text-gray-900 mb-2">Henüz Çekim Talebi Yok</h3>
+                                                <p class="text-gray-500 mb-6">Müşterilerden gelen çekim talepleri burada listelenecek.</p>
+                                                <button onclick="refreshTable()" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                                                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    Sayfayı Yenile
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                <!-- Custom Styles -->
-                <style>
-                    .stats-card {
-                        transition: transform 0.2s ease, box-shadow 0.2s ease;
-                    }
-                    .stats-card:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-                    }
-
-                    .bg-gradient-primary {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    }
-
-                    .bg-gradient-info {
-                        background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
-                    }
-
-                    .bg-gradient-success {
-                        background: linear-gradient(135deg, #4CAF50 0%, #45B7D1 100%);
-                    }
-
-                    .bg-gradient-warning {
-                        background: linear-gradient(135deg, #ff9800 0%, #f44336 100%);
-                    }
-
-                    .bg-gradient-danger {
-                        background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
-                    }
-
-                    .modern-table {
-                        border-radius: 0;
-                    }
-
-                    .modern-table thead th {
-                        background-color: #f8f9fa;
-                        border-bottom: 2px solid #dee2e6;
-                        font-weight: 600;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                        font-size: 0.85rem;
-                    }
-
-                    .table-row-hover {
-                        transition: all 0.2s ease;
-                    }
-
-                    .table-row-hover:hover {
-                        background-color: #f8f9fa;
-                        transform: scale(1.01);
-                        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                    }
-
-                    .user-avatar {
-                        transition: transform 0.2s ease;
-                    }
-
-                    .user-avatar:hover {
-                        transform: scale(1.1);
-                    }
-
-                    .amount-badge {
-                        display: inline-block;
-                        min-width: 80px;
-                        text-align: center;
-                    }
-
-                    .bg-success-light {
-                        background-color: rgba(76, 175, 80, 0.1);
-                    }
-
-                    .bg-info-light {
-                        background-color: rgba(33, 150, 243, 0.1);
-                    }
-
-                    .payment-method-badge {
-                        font-size: 0.85rem;
-                        font-weight: 500;
-                    }
-
-                    .status-badge {
-                        font-size: 0.8rem;
-                        font-weight: 600;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                    }
-
-                    .badge-success-modern {
-                        background-color: #28a745;
-                        color: white;
-                    }
-
-                    .badge-danger-modern {
-                        background-color: #dc3545;
-                        color: white;
-                    }
-
-                    .btn-action {
-                        transition: all 0.2s ease;
-                        border-radius: 20px;
-                        padding: 0.5rem 1rem;
-                    }
-
-                    .btn-action:hover {
-                        transform: translateY(-1px);
-                        box-shadow: 0 4px 12px rgba(0,123,255,0.3);
-                    }
-
-                    .empty-state {
-                        padding: 3rem 1rem;
-                    }
-
-                    .card-header-actions .btn {
-                        border-radius: 20px;
-                    }
-
-                    .email-text {
-                        font-family: 'Courier New', monospace;
-                        font-size: 0.9rem;
-                    }
-
-                    .date-info {
-                        line-height: 1.2;
-                    }
-
-                    @media (max-width: 768px) {
-                        .stats-card h3 {
-                            font-size: 1.5rem !important;
-                        }
-
-                        .amount-badge {
-                            min-width: 60px;
-                            font-size: 0.85rem;
-                        }
-
-                        .btn-action {
-                            padding: 0.4rem 0.8rem;
-                            font-size: 0.8rem;
-                        }
-                    }
-                </style>
             </div>
         </div>
     </div>
-
+    
+    <!-- JavaScript -->
     <script>
         function refreshTable() {
             // Add loading state
-            document.getElementById('withdrawalsTable').style.opacity = '0.6';
-
-            // Simulate refresh (you can replace this with actual AJAX call)
+            const table = document.getElementById('withdrawalsTable');
+            table.style.opacity = '0.6';
+            
+            // Simulate refresh (replace with actual AJAX call if needed)
             setTimeout(() => {
-                document.getElementById('withdrawalsTable').style.opacity = '1';
-                // Show success message
-                if (typeof toastr !== 'undefined') {
-                    toastr.success('Tablo yenilendi');
-                }
+                table.style.opacity = '1';
+                // Show success message if you have a notification system
+                console.log('Tablo yenilendi');
             }, 1000);
         }
+        
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#withdrawalsTable tbody tr');
+            
+            rows.forEach(row => {
+                if (row.cells.length > 1) { // Skip empty state row
+                    const text = row.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+        });
     </script>
 @endsection
