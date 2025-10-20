@@ -24,6 +24,8 @@ use App\Http\Controllers\Admin\IpaddressController;
 use App\Http\Controllers\Admin\TwoFactorController;
 use App\Http\Controllers\Admin\ClearCacheController;
 use App\Http\Controllers\Admin\ImportController;
+use App\Http\Controllers\Admin\LeadsController;
+use App\Http\Controllers\Admin\LeadStatusController;
 use App\Http\Controllers\Admin\KycController;
 use App\Http\Controllers\Admin\ManageAssetController;
 use App\Http\Controllers\Admin\MembershipController;
@@ -104,8 +106,6 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('dashboard/mtask', 'mtask')->name('mtask');
         Route::get('dashboard/viewtask', 'viewtask')->name('viewtask');
         Route::get('dashboard/customer', 'customer')->name('customer');
-        Route::get('dashboard/leads', 'customer')->name('leads');
-        Route::get('dashboard/leadsassign', 'customer')->name('leadsassign');
         Route::get('dashboard/user-plans/{id}',  'userplans')->name('user.plans');
         Route::get('dashboard/investments/{id}',  'investmentplans')->name('user.investments');
         Route::get('dashboard/email-services',  'emailServices')->name('emailservices');
@@ -314,6 +314,29 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('download-doc', 'downloadDoc')->name('downlddoc');
         // This route is to import data from excel
         Route::post('dashboard/fileImport', 'fileImport')->name('fileImport');
+    });
+
+    // New Leads Management Routes
+    Route::prefix('dashboard/leads')->name('admin.leads.')->controller(LeadsController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/my-leads', 'myLeads')->name('my-leads');
+        Route::get('/{id}', 'show')->name('show');
+        Route::put('/{id}', 'update')->name('update');
+        Route::post('/{id}/contact', 'addContact')->name('add-contact');
+        Route::post('/bulk-assign', 'bulkAssign')->name('bulk-assign');
+        Route::get('/export', 'export')->name('export');
+    });
+
+    // Lead Status Management Routes
+    Route::prefix('dashboard/lead-statuses')->name('admin.lead-statuses.')->controller(LeadStatusController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'store')->name('store');
+        Route::put('/{leadStatus}', 'update')->name('update');
+        Route::delete('/{leadStatus}', 'destroy')->name('destroy');
+        Route::patch('/{leadStatus}/toggle', 'toggleStatus')->name('toggle');
+        Route::patch('/{leadStatus}/move-up', 'moveUp')->name('move-up');
+        Route::patch('/{leadStatus}/move-down', 'moveDown')->name('move-down');
+        Route::get('/active', 'getActiveStatuses')->name('active');
     });
 
     Route::controller(SubscriptionSettings::class)->group(function () {
