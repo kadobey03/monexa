@@ -60,7 +60,7 @@ class HomeController extends Controller
         $chart_pendwithdraw = DB::table('withdrawals')->where('status', 'Pending')->sum('amount');
         $chart_trans = Tp_Transaction::sum('amount');
 
-        return view('admin.dashboard', [
+        return view('admin.dashboard-modern', [
             'title' => 'Admin Dashboard',
             'total_deposited' => $total_deposited,
             'pending_deposited' => $pending_deposited,
@@ -157,7 +157,7 @@ class HomeController extends Controller
     //Return manage users route
     public function manageusers()
     {
-        return view('admin.Users.users')
+        return view('admin.users-modern')
             ->with(array(
                 'title' => 'All users',
 
