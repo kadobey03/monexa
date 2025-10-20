@@ -71,36 +71,33 @@
 
 <!-- send a single user email Modal-->
 <div id="Nostrades" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
          <!-- Modal content-->
          <div class="modal-content">
-             <div class="modal-header ">
-                 <h4 class="modal-title ">{{ $user->name }} {{ $user->l_name }} için para çekme öncesi işlem sayısı belirle </h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
+             <div class="modal-header bg-info text-white">
+                 <h4 class="modal-title">
+                     <i class="fas fa-chart-line me-2"></i>{{ $user->name }} {{ $user->l_name }} için para çekme öncesi işlem sayısı belirle
+                 </h4>
+                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body ">
+             <div class="modal-body p-4">
                  <form role="form" method="post" action="{{ route('numberoftrades') }}">
                      @csrf
-                     {{-- <div class="form-group">
-                         <h5 class=" ">Aktif/Deaktif</h5>
-                         <select class="form-control" name="taxtype">
-                             <option value="" selected disabled></option>
-
-                                 <option value="on">Aktif</option>
-                                 <option value="off">Kapalı</option>
-
-                         </select>
-                     </div> --}}
-                     <div class="form-group">
-                         <h5 class=" ">Para çekme öncesi işlem sayısı</h5>
-                         <input type="number" name="numberoftrades" class="form-control" placeholder="{{ $user->numberoftrades }}" min="0" required>
+                     <div class="mb-4">
+                         <label class="form-label fw-semibold">
+                             <i class="fas fa-exchange-alt me-2 text-info"></i>Para çekme öncesi işlem sayısı
+                         </label>
+                         <input type="number" name="numberoftrades" class="form-control form-control-lg" placeholder="{{ $user->numberoftrades }}" min="0" required>
                          <div class="invalid-feedback">
                              Lütfen geçerli bir işlem sayısı giriniz.
                          </div>
+                         <small class="text-muted mt-1 d-block">
+                             Kullanıcının para çekebilmesi için tamamlaması gereken minimum işlem sayısı
+                         </small>
                      </div>
 
-                     <div class="form-group">
-                         <input type="submit" class="btn btn-info" value="Para Çekme İçin İşlem Sayısı Belirle" data-bs-toggle="tooltip" title="Kullanıcının para çekebilmesi için tamamlaması gereken minimum işlem sayısını belirler">
+                     <div class="d-grid">
+                         <input type="submit" class="btn btn-info btn-lg" value="Para Çekme İçin İşlem Sayısı Belirle" data-bs-toggle="tooltip" title="Kullanıcının para çekebilmesi için tamamlaması gereken minimum işlem sayısını belirler">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -114,36 +111,42 @@
 
 <!-- send a single user email Modal-->
  <div id="userTax" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
          <!-- Modal content-->
          <div class="modal-content">
-             <div class="modal-header ">
-                 <h4 class="modal-title ">{{ $user->name }} {{ $user->l_name }} için kullanıcı vergisini aç/kapat </h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
+             <div class="modal-header bg-warning">
+                 <h4 class="modal-title text-dark">
+                     <i class="fas fa-calculator me-2"></i>{{ $user->name }} {{ $user->l_name }} için kullanıcı vergisini aç/kapat
+                 </h4>
+                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body ">
+             <div class="modal-body p-4">
                  <form role="form" method="post" action="{{ route('usertax') }}">
                      @csrf
-                     <div class="form-group">
-                         <h5 class=" ">Açık/Kapalı</h5>
-                         <select class="form-control" name="taxtype">
-                             <option value="" selected disabled></option>
-
-                                 <option value="on">Açık</option>
-                                 <option value="off">Kapalı</option>
-
-                         </select>
-                     </div>
-                     <div class="form-group">
-                         <h5 class=" ">Miktar</h5>
-                         <input type="number" name="taxamount" class="form-control" min="0" max="100" step="0.01" placeholder="0.00">
-                         <div class="invalid-feedback">
-                             Lütfen 0-100 arasında geçerli bir vergi oranı giriniz.
+                     <div class="row g-4">
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-toggle-on me-2 text-warning"></i>Açık/Kapalı
+                             </label>
+                             <select class="form-select form-select-lg" name="taxtype" required>
+                                 <option value="" selected disabled>Durumu seçin</option>
+                                 <option value="on">🟢 Açık</option>
+                                 <option value="off">🔴 Kapalı</option>
+                             </select>
+                         </div>
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-percent me-2 text-warning"></i>Vergi Oranı (%)
+                             </label>
+                             <input type="number" name="taxamount" class="form-control form-control-lg" min="0" max="100" step="0.01" placeholder="0.00">
+                             <div class="invalid-feedback">
+                                 Lütfen 0-100 arasında geçerli bir vergi oranı giriniz.
+                             </div>
                          </div>
                      </div>
 
-                     <div class="form-group">
-                         <input type="submit" class="btn btn-warning" value="Kullanıcı Vergisi Ekle" data-bs-toggle="tooltip" title="Kullanıcı için özel vergi oranı belirler">
+                     <div class="d-grid mt-4">
+                         <input type="submit" class="btn btn-warning btn-lg" value="Kullanıcı Vergisi Ekle" data-bs-toggle="tooltip" title="Kullanıcı için özel vergi oranı belirler">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -174,37 +177,42 @@
 
 
 <div id="withdrawalcode" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
          <!-- Modal content-->
          <div class="modal-content">
-             <div class="modal-header ">
-                 <h4 class="modal-title ">{{ $user->name }} {{ $user->l_name }} için para çekme kodunu girin </h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
+             <div class="modal-header bg-success text-white">
+                 <h4 class="modal-title">
+                     <i class="fas fa-key me-2"></i>{{ $user->name }} {{ $user->l_name }} için para çekme kodunu girin
+                 </h4>
+                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body ">
+             <div class="modal-body p-4">
                  <form role="form" method="post" action="{{ route('withdrawalcode') }}">
                      @csrf
-                      <div class="form-group">
-                         <h5 class=" ">Para Çekme Kodu Durumunu Seçin</h5>
-                         <select class="form-control  " name="withdrawal_code">
-
-
-                                 <option value="on">Açık</option>
-                                  <option value="off">Kapalı</option>
-
-                         </select>
-                     </div>
-
-                     <div class="form-group">
-                         <h5 class=" ">Para Çekme Kodu</h5>
-                         <input type="text" name="user_withdrawalcode" class="form-control" value="{{ $user->user_withdrawalcode }}" maxlength="50" required>
-                         <div class="invalid-feedback">
-                             Lütfen geçerli bir para çekme kodu giriniz.
+                     <div class="row g-4">
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-toggle-on me-2 text-success"></i>Para Çekme Kodu Durumu
+                             </label>
+                             <select class="form-select form-select-lg" name="withdrawal_code" required>
+                                 <option value="" selected disabled>Durumu seçin</option>
+                                 <option value="on">🟢 Açık</option>
+                                 <option value="off">🔴 Kapalı</option>
+                             </select>
+                         </div>
+                         <div class="col-md-6">
+                             <label class="form-label fw-semibold">
+                                 <i class="fas fa-code me-2 text-success"></i>Para Çekme Kodu
+                             </label>
+                             <input type="text" name="user_withdrawalcode" class="form-control form-control-lg" value="{{ $user->user_withdrawalcode }}" maxlength="50" required>
+                             <div class="invalid-feedback">
+                                 Lütfen geçerli bir para çekme kodu giriniz.
+                             </div>
                          </div>
                      </div>
 
-                     <div class="form-group">
-                         <input type="submit" class="btn btn-success" value="Kullanıcı Para Çekme Kodunu Belirle" data-bs-toggle="tooltip" title="Kullanıcı için özel para çekme kodu ve durumunu belirler">
+                     <div class="d-grid mt-4">
+                         <input type="submit" class="btn btn-success btn-lg" value="Kullanıcı Para Çekme Kodunu Belirle" data-bs-toggle="tooltip" title="Kullanıcı için özel para çekme kodu ve durumunu belirler">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                      </div>
                  </form>
@@ -215,33 +223,48 @@
  <!-- /Clear account Modal -->
  <!-- send a single user email Modal-->
  <div id="sendmailtooneuserModal" class="modal fade" role="dialog">
-     <div class="modal-dialog">
+     <div class="modal-dialog modal-lg modal-dialog-centered">
          <!-- Modal content-->
          <div class="modal-content">
-             <div class="modal-header ">
-                 <h4 class="modal-title ">E-posta Gönder</h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
+             <div class="modal-header bg-primary text-white">
+                 <h4 class="modal-title">
+                     <i class="fas fa-envelope me-2"></i>E-posta Gönder
+                 </h4>
+                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
              </div>
-             <div class="modal-body ">
-                 <p class="">Bu mesaj {{ $user->name }} kullanıcısına gönderilecek</p>
-                 <form style="padding:3px;" role="form" method="post" action="{{ route('sendmailtooneuser') }}">
+             <div class="modal-body p-4">
+                 <div class="alert alert-info py-2 mb-4">
+                     <i class="fas fa-info-circle me-2"></i>Bu mesaj <strong>{{ $user->name }}</strong> kullanıcısına gönderilecek
+                 </div>
+                 <form role="form" method="post" action="{{ route('sendmailtooneuser') }}">
                      @csrf
-                     <div class=" form-group">
-                         <input type="text" name="subject" class="form-control" placeholder="E-posta konusu" maxlength="100" required>
+                     <div class="mb-4">
+                         <label class="form-label fw-semibold">
+                             <i class="fas fa-heading me-2 text-primary"></i>E-posta Konusu
+                         </label>
+                         <input type="text" name="subject" class="form-control form-control-lg" placeholder="E-posta konusu" maxlength="100" required>
                          <div class="invalid-feedback">
                              Lütfen e-posta konusu giriniz (maksimum 100 karakter).
                          </div>
                      </div>
-                     <div class=" form-group">
-                         <textarea placeholder="Mesajınızı buraya yazın" class="form-control" name="message" rows="8"
-                             maxlength="1000" required></textarea>
+                     <div class="mb-4">
+                         <label class="form-label fw-semibold">
+                             <i class="fas fa-message me-2 text-primary"></i>Mesaj İçeriği
+                         </label>
+                         <textarea placeholder="Mesajınızı buraya yazın..." class="form-control" name="message" rows="8"
+                             maxlength="1000" required style="resize: vertical;"></textarea>
                          <div class="invalid-feedback">
                              Lütfen bir mesaj giriniz (maksimum 1000 karakter).
                          </div>
+                         <div class="form-text">
+                             <small class="text-muted">Kalan karakter: <span id="charCount">1000</span></small>
+                         </div>
                      </div>
-                     <div class=" form-group">
+                     <div class="d-grid">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
-                         <input type="submit" class="btn btn-primary" value="Gönder" data-bs-toggle="tooltip" title="E-posta mesajını kullanıcıya gönderir">
+                         <button type="submit" class="btn btn-primary btn-lg" data-bs-toggle="tooltip" title="E-posta mesajını kullanıcıya gönderir">
+                             <i class="fas fa-paper-plane me-2"></i>E-postayı Gönder
+                         </button>
                      </div>
                  </form>
              </div>

@@ -68,21 +68,38 @@
                             <div class="card-body p-4">
                                 <form method="post" action="{{ route('addtask') }}" enctype="multipart/form-data">
 
-                                    <div class="row mb-4">
-                                        <div class="col-md-6">
-                                            <div class="form-card bg-light p-3 rounded-lg h-100">
-                                                <i class="fas fa-heading text-primary fa-2x mb-3"></i>
-                                                <h6 class="text-primary mb-2">Görev Başlığı</h6>
-                                                <input type="text" name="tasktitle" class="form-control form-control-lg"
-                                                    placeholder="Görev başlığını buraya yazın..." required>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                        <div class="space-y-4">
+                                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-100 hover:shadow-md transition-all duration-200">
+                                                <div class="flex items-center mb-3">
+                                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-3">
+                                                        <i class="fas fa-heading text-white"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-blue-700 font-semibold mb-1">Görev Başlığı</h6>
+                                                        <p class="text-blue-600 text-sm">Görev için açıklayıcı başlık</p>
+                                                    </div>
+                                                </div>
+                                                <input type="text" name="tasktitle"
+                                                       class="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm"
+                                                       placeholder="Görev başlığını buraya yazın..." required>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-card bg-light p-3 rounded-lg h-100">
-                                                <i class="fas fa-user-tie text-success fa-2x mb-3"></i>
-                                                <h6 class="text-success mb-2">Sorumlu Yönetici</h6>
-                                                <select class="form-control form-control-lg" name="delegation" required>
+                                        <div class="space-y-4">
+                                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border border-green-100 hover:shadow-md transition-all duration-200">
+                                                <div class="flex items-center mb-3">
+                                                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-3">
+                                                        <i class="fas fa-user-tie text-white"></i>
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="text-green-700 font-semibold mb-1">Sorumlu Yönetici</h6>
+                                                        <p class="text-green-600 text-sm">Görev atanacak yönetici</p>
+                                                    </div>
+                                                </div>
+                                                <select name="delegation"
+                                                        class="w-full px-4 py-3 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm" required>
+                                                    <option value="" disabled selected>Yönetici seçin...</option>
                                                     @foreach ($admin as $user)
                                                         <option value="{{ $user->id }}">{{ $user->firstName }} {{ $user->lastName }}</option>
                                                     @endforeach
@@ -91,73 +108,78 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group mb-4">
-                                        <label class="form-label text-primary font-weight-bold">
-                                            <i class="fas fa-align-left me-2"></i>Görev Açıklaması
-                                        </label>
-                                        <textarea name="note" id="" rows="5"
-                                            class="form-control form-control-lg"
-                                            placeholder="Görev ile ilgili detaylı açıklamayı buraya yazın..."
-                                            required></textarea>
-                                    </div>
-
-                                    <div class="row mb-4">
-                                    <div class="row mb-4">
-                                        <div class="col-md-6">
-                                            <div class="form-card bg-light p-3 rounded-lg h-100">
-                                                <div class="d-flex align-items-center mb-3">
-                                                    <div class="date-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                        <i class="fas fa-play"></i>
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="text-success mb-0">Başlangıç Tarihi</h6>
-                                                        <small class="text-muted">Görev başlangıç zamanı</small>
-                                                    </div>
+                                    <div class="mb-6">
+                                        <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100">
+                                            <label class="flex items-center text-purple-700 font-semibold mb-3">
+                                                <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mr-3">
+                                                    <i class="fas fa-align-left text-white text-sm"></i>
                                                 </div>
-                                                <input type="date" name="start_date" class="form-control form-control-lg" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-card bg-light p-3 rounded-lg h-100">
-                                                <div class="d-flex align-items-center mb-3">
-                                                    <div class="date-icon bg-danger text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                        <i class="fas fa-stop"></i>
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="text-danger mb-0">Bitiş Tarihi</h6>
-                                                        <small class="text-muted">Görev bitiş zamanı</small>
-                                                    </div>
-                                                </div>
-                                                <input type="date" name="end_date" class="form-control form-control-lg" required>
-                                            </div>
+                                                Görev Açıklaması
+                                            </label>
+                                            <textarea name="note" rows="5"
+                                                      class="w-full px-4 py-3 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm resize-none"
+                                                      placeholder="Görev ile ilgili detaylı açıklamayı buraya yazın..." required></textarea>
                                         </div>
                                     </div>
 
-                                    <div class="form-group mb-4">
-                                        <div class="form-card bg-light p-3 rounded-lg">
-                                            <div class="d-flex align-items-center mb-3">
-                                                <div class="priority-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-                                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                        <div class="bg-gradient-to-r from-green-50 to-teal-50 p-4 rounded-xl border border-green-100">
+                                            <div class="flex items-center mb-3">
+                                                <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center mr-3">
+                                                    <i class="fas fa-play text-white"></i>
                                                 </div>
                                                 <div>
-                                                    <h6 class="text-warning mb-0">Öncelik Seviyesi</h6>
-                                                    <small class="text-muted">Görevin aciliyet derecesi</small>
+                                                    <h6 class="text-green-700 font-semibold">Başlangıç Tarihi</h6>
+                                                    <small class="text-green-600">Görev başlangıç zamanı</small>
                                                 </div>
                                             </div>
-                                            <select class="form-control form-control-lg" name="priority" required>
-                                                <option value="Hemen">🚨 Hemen</option>
-                                                <option value="Yüksek">🔥 Yüksek</option>
-                                                <option value="Orta">⚡ Orta</option>
-                                                <option value="Düşük">⏰ Düşük</option>
+                                            <input type="date" name="start_date"
+                                                   class="w-full px-4 py-3 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm" required>
+                                        </div>
+
+                                        <div class="bg-gradient-to-r from-red-50 to-pink-50 p-4 rounded-xl border border-red-100">
+                                            <div class="flex items-center mb-3">
+                                                <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-600 rounded-full flex items-center justify-center mr-3">
+                                                    <i class="fas fa-stop text-white"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="text-red-700 font-semibold">Bitiş Tarihi</h6>
+                                                    <small class="text-red-600">Görev bitiş zamanı</small>
+                                                </div>
+                                            </div>
+                                            <input type="date" name="end_date"
+                                                   class="w-full px-4 py-3 border border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-6">
+                                        <div class="bg-gradient-to-r from-amber-50 to-yellow-50 p-4 rounded-xl border border-amber-100">
+                                            <div class="flex items-center mb-3">
+                                                <div class="w-10 h-10 bg-gradient-to-r from-amber-500 to-yellow-600 rounded-full flex items-center justify-center mr-3">
+                                                    <i class="fas fa-exclamation-triangle text-white"></i>
+                                                </div>
+                                                <div>
+                                                    <h6 class="text-amber-700 font-semibold">Öncelik Seviyesi</h6>
+                                                    <small class="text-amber-600">Görevin aciliyet derecesi</small>
+                                                </div>
+                                            </div>
+                                            <select name="priority"
+                                                    class="w-full px-4 py-3 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm" required>
+                                                <option value="" disabled selected>Öncelik seviyesi seçin...</option>
+                                                <option value="Hemen" class="bg-red-50 text-red-700">🚨 Hemen - Kritik</option>
+                                                <option value="Yüksek" class="bg-orange-50 text-orange-700">🔥 Yüksek - Acil</option>
+                                                <option value="Orta" class="bg-yellow-50 text-yellow-700">⚡ Orta - Normal</option>
+                                                <option value="Düşük" class="bg-green-50 text-green-700">⏰ Düşük - Ertelenebilir</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="form-group text-center">
+                                    <div class="text-center">
                                         <input type="hidden" name="id" value="{{ Auth('admin')->User()->id }}">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <button type="submit" class="btn btn-primary btn-lg px-5 py-3">
-                                            <i class="fas fa-paper-plane me-2"></i>Görev Oluştur
+                                        <button type="submit" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 inline-flex items-center">
+                                            <i class="fas fa-paper-plane mr-2"></i>
+                                            Görev Oluştur
                                         </button>
                                     </div>
 

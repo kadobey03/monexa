@@ -118,19 +118,10 @@
         <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         
-        <!-- jQuery for existing functionality compatibility -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- jQuery (minimal for legacy compatibility) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         
-        <!-- Select2 for enhanced select dropdowns -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-        
-        <!-- DataTables for table functionality -->
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/af-2.3.5/b-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/r-2.2.5/datatables.min.css" />
-        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/af-2.3.5/b-1.6.3/b-flash-1.6.3/b-html5-1.6.3/b-print-1.6.3/r-2.2.5/datatables.min.js"></script>
-
-        <!-- Sweet Alert for beautiful alerts -->
+        <!-- Sweet Alert for notifications -->
         <script src="{{ asset('dash/js/plugin/sweetalert/sweetalert.min.js') }} "></script>
         
         <!-- Alpine.js for modern interactivity -->
@@ -498,12 +489,9 @@
             window.showSuccess = (message) => showNotification(message, 'success');
             window.showError = (message) => showNotification(message, 'error');
             
-            // Initialize Select2 with Tailwind styling
+            // jQuery ready function for legacy compatibility
             $(document).ready(function() {
-                $('.select2').select2({
-                    theme: 'default',
-                    width: '100%'
-                });
+                console.log('Admin panel initialized');
             });
         </script>
     @show
