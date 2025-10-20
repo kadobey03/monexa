@@ -343,6 +343,41 @@
                 transition: all 0.2s ease;
             }
             
+            /* Fix menu underline issues */
+            .sidebar nav a,
+            .sidebar nav button {
+                text-decoration: none !important;
+                border-bottom: none !important;
+            }
+            
+            /* Fix dropdown styling */
+            .sidebar-dropdown-btn:focus,
+            .sidebar-dropdown-btn:active {
+                box-shadow: none !important;
+                outline: none !important;
+            }
+            
+            /* Ensure proper background for dropdowns */
+            .sidebar [id$="-dropdown"] {
+                background-color: white !important;
+            }
+            
+            /* Header improvements */
+            header {
+                backdrop-filter: blur(10px);
+                background-color: rgba(255, 255, 255, 0.95) !important;
+            }
+            
+            /* Remove any unwanted borders or underlines */
+            .no-underline {
+                text-decoration: none !important;
+            }
+            
+            /* Sidebar background improvements */
+            #sidebar {
+                background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            }
+            
             /* Custom scrollbar */
             ::-webkit-scrollbar {
                 width: 8px;

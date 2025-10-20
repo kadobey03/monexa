@@ -20,8 +20,8 @@
     <nav class="flex-1 px-4 py-4 overflow-y-auto">
         
         <!-- Dashboard -->
-        <a href="{{ url('/admin/dashboard') }}" 
-           class="flex items-center px-4 py-2 mt-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200">
+        <a href="{{ url('/admin/dashboard') }}"
+           class="no-underline flex items-center px-4 py-2 mt-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200">
             <i class="fas fa-home w-5 h-5 mr-3 text-blue-500"></i>
             <span class="font-medium">Kontrol Paneli</span>
         </a>
@@ -30,8 +30,8 @@
             
             <!-- Users Management -->
             <div class="mt-4">
-                <button type="button" 
-                        class="sidebar-dropdown-btn w-full flex items-center justify-between px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none" 
+                <button type="button"
+                        class="sidebar-dropdown-btn w-full flex items-center justify-between px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:bg-blue-50 focus:text-blue-700 transition-colors duration-200"
                         data-target="users-dropdown">
                     <div class="flex items-center">
                         <i class="fas fa-users w-5 h-5 mr-3 text-green-500"></i>
@@ -40,54 +40,54 @@
                     <i class="fas fa-chevron-down transition-transform duration-200"></i>
                 </button>
                 
-                <div id="users-dropdown" class="hidden mt-2 ml-8">
-                    <a href="{{ url('/admin/dashboard/manageusers') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                <div id="users-dropdown" class="hidden mt-2 ml-8 bg-white rounded-lg shadow-sm border-l-2 border-blue-200">
+                    <a href="{{ url('/admin/dashboard/manageusers') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Tüm Kullanıcılar
                     </a>
                 </div>
             </div>
 
             <!-- Deposits Management -->
-            <a href="{{ url('/admin/dashboard/mdeposits') }}" 
-               class="flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+            <a href="{{ url('/admin/dashboard/mdeposits') }}"
+               class="no-underline flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                 <i class="fas fa-download w-5 h-5 mr-3 text-green-500"></i>
                 <span class="font-medium">Yatırımları Yönet</span>
             </a>
 
             <!-- Withdrawals Management -->
-            <a href="{{ url('/admin/dashboard/mwithdrawals') }}" 
-               class="flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+            <a href="{{ url('/admin/dashboard/mwithdrawals') }}"
+               class="no-underline flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                 <i class="fas fa-arrow-alt-circle-up w-5 h-5 mr-3 text-red-500"></i>
                 <span class="font-medium">Çekimleri Yönet</span>
             </a>
 
             <!-- Trades Management -->
-            <a href="{{ route('admin.trades.index') }}" 
-               class="flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+            <a href="{{ route('admin.trades.index') }}"
+               class="no-underline flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                 <i class="fas fa-chart-line w-5 h-5 mr-3 text-blue-500"></i>
                 <span class="font-medium">İşlemleri Yönet</span>
             </a>
 
 
             <!-- Email Services -->
-            <a href="{{ route('emailservices') }}" 
-               class="flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+            <a href="{{ route('emailservices') }}"
+               class="no-underline flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                 <i class="fas fa-envelope w-5 h-5 mr-3 text-blue-500"></i>
                 <span class="font-medium">E-posta Servisleri</span>
             </a>
 
             <!-- KYC Applications -->
-            <a href="{{ route('kyc') }}" 
-               class="flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+            <a href="{{ route('kyc') }}"
+               class="no-underline flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                 <i class="fas fa-user-check w-5 h-5 mr-3 text-teal-500"></i>
                 <span class="font-medium">KYC Başvuruları</span>
             </a>
 
 
             <!-- Leads -->
-            <a href="{{ url('/admin/dashboard/leads') }}" 
-               class="flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+            <a href="{{ url('/admin/dashboard/leads') }}"
+               class="no-underline flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                 <i class="fas fa-user-plus w-5 h-5 mr-3 text-amber-500"></i>
                 <span class="font-medium">Müşteri Adayları</span>
             </a>
@@ -95,8 +95,8 @@
 
         <!-- Task Management -->
         <div class="mt-4">
-            <button type="button" 
-                    class="sidebar-dropdown-btn w-full flex items-center justify-between px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none" 
+            <button type="button"
+                    class="sidebar-dropdown-btn w-full flex items-center justify-between px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:bg-blue-50 focus:text-blue-700 transition-colors duration-200"
                     data-target="tasks-dropdown">
                 <div class="flex items-center">
                     <i class="fas fa-tasks w-5 h-5 mr-3 text-slate-500"></i>
@@ -105,19 +105,19 @@
                 <i class="fas fa-chevron-down transition-transform duration-200"></i>
             </button>
             
-            <div id="tasks-dropdown" class="hidden mt-2 ml-8">
+            <div id="tasks-dropdown" class="hidden mt-2 ml-8 bg-white rounded-lg shadow-sm border-l-2 border-slate-200">
                 @if (Auth('admin')->user()->type == 'Super Admin')
-                    <a href="{{ url('/admin/dashboard/task') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                    <a href="{{ url('/admin/dashboard/task') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Görev Oluştur
                     </a>
-                    <a href="{{ url('/admin/dashboard/mtask') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                    <a href="{{ url('/admin/dashboard/mtask') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Görevleri Yönet
                     </a>
                 @else
-                    <a href="{{ url('/admin/dashboard/viewtask') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                    <a href="{{ url('/admin/dashboard/viewtask') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Görevlerimi Görüntüle
                     </a>
                 @endif
@@ -127,8 +127,8 @@
         @if (Auth('admin')->user()->type == 'Super Admin')
             <!-- Admin Management -->
             <div class="mt-4">
-                <button type="button" 
-                        class="sidebar-dropdown-btn w-full flex items-center justify-between px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none" 
+                <button type="button"
+                        class="sidebar-dropdown-btn w-full flex items-center justify-between px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:bg-blue-50 focus:text-blue-700 transition-colors duration-200"
                         data-target="admins-dropdown">
                     <div class="flex items-center">
                         <i class="fas fa-user-cog w-5 h-5 mr-3 text-red-500"></i>
@@ -137,13 +137,13 @@
                     <i class="fas fa-chevron-down transition-transform duration-200"></i>
                 </button>
                 
-                <div id="admins-dropdown" class="hidden mt-2 ml-8">
-                    <a href="{{ url('/admin/dashboard/addmanager') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                <div id="admins-dropdown" class="hidden mt-2 ml-8 bg-white rounded-lg shadow-sm border-l-2 border-red-200">
+                    <a href="{{ url('/admin/dashboard/addmanager') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Yönetici Ekle
                     </a>
-                    <a href="{{ url('/admin/dashboard/madmin') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                    <a href="{{ url('/admin/dashboard/madmin') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Yöneticileri Yönet
                     </a>
                 </div>
@@ -151,8 +151,8 @@
 
             <!-- Settings -->
             <div class="mt-4">
-                <button type="button" 
-                        class="sidebar-dropdown-btn w-full flex items-center justify-between px-4 py-2 text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none" 
+                <button type="button"
+                        class="sidebar-dropdown-btn w-full flex items-center justify-between px-4 py-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:bg-blue-50 focus:text-blue-700 transition-colors duration-200"
                         data-target="settings-dropdown">
                     <div class="flex items-center">
                         <i class="fas fa-cog w-5 h-5 mr-3 text-gray-500"></i>
@@ -161,25 +161,25 @@
                     <i class="fas fa-chevron-down transition-transform duration-200"></i>
                 </button>
                 
-                <div id="settings-dropdown" class="hidden mt-2 ml-8">
-                    <a href="{{ route('appsettingshow') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                <div id="settings-dropdown" class="hidden mt-2 ml-8 bg-white rounded-lg shadow-sm border-l-2 border-gray-300">
+                    <a href="{{ route('appsettingshow') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Uygulama Ayarları
                     </a>
-                    <a href="{{ route('refsetshow') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                    <a href="{{ route('refsetshow') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Tavsiye/Bonus Ayarları
                     </a>
-                    <a href="{{ route('paymentview') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                    <a href="{{ route('paymentview') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Ödeme Ayarları
                     </a>
-                    <a href="{{ route('managecryptoasset') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                    <a href="{{ route('managecryptoasset') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         Takas Ayarları
                     </a>
-                    <a href="{{ url('/admin/dashboard/ipaddress') }}" 
-                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 hover:text-gray-900">
+                    <a href="{{ url('/admin/dashboard/ipaddress') }}"
+                       class="block px-4 py-2 text-sm text-gray-600 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
                         IP Adresi
                     </a>
                 </div>
@@ -187,8 +187,8 @@
         @endif
 
         <!-- About -->
-        <a href="{{ url('/admin/dashboard/about') }}" 
-           class="flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200">
+        <a href="{{ url('/admin/dashboard/about') }}"
+           class="no-underline flex items-center px-4 py-2 mt-2 text-gray-700 rounded-lg hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200">
             <i class="fas fa-info-circle w-5 h-5 mr-3 text-pink-500"></i>
             <span class="font-medium">Daha Fazla Script İçin</span>
         </a>
