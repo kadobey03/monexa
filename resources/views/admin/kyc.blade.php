@@ -2,9 +2,8 @@
 @section('content')
     @include('admin.topmenu')
     @include('admin.sidebar')
-    <div class="main-panel">
-        <div class="content">
-            <div class="page-inner">
+    <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
+        <div class="min-h-screen bg-gray-50 p-4">
                 <!-- Header Section -->
                 <div class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-2xl p-8 mb-8">
                     <div class="absolute inset-0 bg-black opacity-20"></div>
@@ -167,7 +166,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 

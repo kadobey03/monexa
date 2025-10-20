@@ -50,9 +50,12 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 @endsection
     @include('admin.topmenu')
     @include('admin.sidebar')
-    <div class="main-panel ">
-        <div class="content">
-            <div class="page-inner">
+    <!-- Admin Layout Container -->
+    <div class="min-h-screen bg-gray-50">
+        <!-- Main Content -->
+        <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
+            <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+                <div class="px-4 py-6 sm:px-6 lg:px-8">
                 <div class="mt-2 mb-5 d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center">
                         <div class="page-icon-wrapper me-3">
@@ -189,6 +192,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

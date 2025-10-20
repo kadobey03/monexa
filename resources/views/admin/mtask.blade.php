@@ -2,9 +2,12 @@
 @section('content')
     @include('admin.topmenu')
     @include('admin.sidebar')
-    <div class="main-panel ">
-        <div class="content ">
-            <div class="page-inner">
+    <!-- Admin Layout Container -->
+    <div class="min-h-screen bg-gray-50">
+        <!-- Main Content -->
+        <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
+            <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+                <div class="px-4 py-6 sm:px-6 lg:px-8">
                 <div class="my-2 mb-4">
                     <h1 class="title1 ">Manage All Task</h1>
                 </div>
@@ -155,6 +158,8 @@
 
                     </div>
                 </div>
+                </div>
             </div>
         </div>
+    </div>
     @endsection
