@@ -1,5 +1,5 @@
 <!-- Admin Sidebar -->
-<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out sidebar-default">
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out">
     
     <!-- Sidebar Header -->
     <div class="flex items-center justify-center h-16 px-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
@@ -258,13 +258,12 @@ function toggleSidebar() {
     const header = document.querySelector('header');
     
     if (window.innerWidth >= 1024) {
-        // Desktop behavior - use custom CSS classes
+        // Desktop behavior
         const isHidden = sidebar.classList.contains('sidebar-hidden');
         
         if (isHidden) {
             // Show sidebar
             sidebar.classList.remove('sidebar-hidden');
-            sidebar.classList.add('sidebar-visible');
             if (mainContent) {
                 mainContent.classList.remove('lg:ml-0');
                 mainContent.classList.add('lg:ml-64');
@@ -275,7 +274,6 @@ function toggleSidebar() {
             }
         } else {
             // Hide sidebar
-            sidebar.classList.remove('sidebar-visible', 'sidebar-default');
             sidebar.classList.add('sidebar-hidden');
             if (mainContent) {
                 mainContent.classList.remove('lg:ml-64');
@@ -288,17 +286,8 @@ function toggleSidebar() {
         }
     } else {
         // Mobile behavior
-        const isHidden = sidebar.classList.contains('sidebar-visible');
-        
-        if (isHidden) {
-            sidebar.classList.remove('sidebar-visible');
-            sidebar.classList.add('sidebar-default');
-            if (overlay) overlay.classList.add('hidden');
-        } else {
-            sidebar.classList.remove('sidebar-default');
-            sidebar.classList.add('sidebar-visible');
-            if (overlay) overlay.classList.remove('hidden');
-        }
+        sidebar.classList.toggle('sidebar-open');
+        if (overlay) overlay.classList.toggle('hidden');
     }
 }
 
@@ -308,8 +297,7 @@ document.addEventListener('click', function(event) {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebar-overlay');
         
-        sidebar.classList.remove('sidebar-visible');
-        sidebar.classList.add('sidebar-default');
+        sidebar.classList.remove('sidebar-open');
         if (overlay) overlay.classList.add('hidden');
     }
 });
@@ -322,18 +310,12 @@ window.addEventListener('resize', function() {
     const header = document.querySelector('header');
     
     if (window.innerWidth >= 1024) {
-        // Desktop - ensure proper state
+        // Desktop - clean up mobile classes
+        sidebar.classList.remove('sidebar-open');
         if (overlay) overlay.classList.add('hidden');
         
-        const isHidden = sidebar.classList.contains('sidebar-hidden');
-        if (!isHidden && !sidebar.classList.contains('sidebar-visible')) {
-            // Default state - show sidebar
-            sidebar.classList.remove('sidebar-default');
-            sidebar.classList.add('sidebar-visible');
-        }
-        
-        if (sidebar.classList.contains('sidebar-visible')) {
-            // Sidebar is visible
+        // Ensure proper desktop state
+        if (!sidebar.classList.contains('sidebar-hidden')) {
             if (mainContent) {
                 mainContent.classList.add('lg:ml-64');
                 mainContent.classList.remove('lg:ml-0');
@@ -342,21 +324,10 @@ window.addEventListener('resize', function() {
                 header.classList.add('lg:left-64', 'lg:w-[calc(100%-16rem)]');
                 header.classList.remove('lg:left-0', 'lg:w-full');
             }
-        } else {
-            // Sidebar is hidden
-            if (mainContent) {
-                mainContent.classList.remove('lg:ml-64');
-                mainContent.classList.add('lg:ml-0');
-            }
-            if (header) {
-                header.classList.remove('lg:left-64', 'lg:w-[calc(100%-16rem)]');
-                header.classList.add('lg:left-0', 'lg:w-full');
-            }
         }
     } else {
-        // Mobile - reset to default
-        sidebar.className = sidebar.className.replace(/sidebar-(visible|hidden)/g, '');
-        sidebar.classList.add('sidebar-default');
+        // Mobile - clean up desktop classes
+        sidebar.classList.remove('sidebar-hidden');
         if (mainContent) {
             mainContent.classList.remove('lg:ml-64', 'lg:ml-0');
         }
