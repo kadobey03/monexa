@@ -1,6 +1,16 @@
 @extends('layouts.app')
 @section('content')
 @section('styles')
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    corePlugins: {
+      preflight: false,
+    }
+  }
+</script>
+
 <style>
     .lead-header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
