@@ -3,22 +3,91 @@ name: Deploy Laravel via SSH
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Deploy to HestiaCP server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout: 300s
           script: |
+            set -e
             cd /home/monexa
-            docker-compose down --remove-orphans
-            git pull origin main
-            docker-compose up -d --remove-orphans --build
-            docker-compose exec app-monexa composer install --no-interaction --no-dev --optimize-autoloader
-            docker-compose exec app-monexa php artisan optimize
+            
+            # Pull latest changes first
+            echo "🔄 Pulling latest changes..."
+            git pull origin main || { echo "❌ Git pull failed"; exit 1; }
+            
+            # Stop containers gracefully
+            echo "⏹️ Stopping containers..."
+            docker-compose down --remove-orphans || true
+            
+            # Clean up Docker system to free space
+            echo "🧹 Cleaning up Docker..."
+            docker system prune -f || true
+            
+            # Build with retry mechanism for Docker Hub issues
+            echo "🔨 Building containers with retry..."
+            for i in {1..3}; do
+              echo "Attempt $i/3..."
+              if docker-compose build --no-cache; then
+                echo "✅ Build successful!"
+                break
+              else
+                echo "❌ Build attempt $i failed"
+                if [ $i -eq 3 ]; then
+                  echo "❌ All build attempts failed"
+                  exit 1
+                fi
+                echo "⏳ Waiting 30 seconds before retry..."
+                sleep 30
+              fi
+            done
+            
+            # Start containers
+            echo "🚀 Starting containers..."
+            docker-compose up -d --remove-orphans || { echo "❌ Container start failed"; exit 1; }
+            
+            # Wait for app container to be ready
+            echo "⏳ Waiting for app container..."
+            for i in {1..30}; do
+              if docker-compose exec -T app-monexa php --version >/dev/null 2>&1; then
+                echo "✅ App container is ready!"
+                break
+              fi
+              if [ $i -eq 30 ]; then
+                echo "❌ App container failed to start"
+                docker-compose logs app-monexa
+                exit 1
+              fi
+              sleep 2
+            done
+            
+            # Run post-deployment commands
+            echo "🔧 Running post-deployment commands..."
+            docker-compose exec -T app-monexa composer install --no-interaction --no-dev --optimize-autoloader || true
+            docker-compose exec -T app-monexa php artisan config:clear || true
+            docker-compose exec -T app-monexa php artisan cache:clear || true
+            docker-compose exec -T app-monexa php artisan route:clear || true
+            docker-compose exec -T app-monexa php artisan view:clear || true
+            docker-compose exec -T app-monexa php artisan optimize || true
+            
+            # Check if containers are running
+            echo "🔍 Checking deployment status..."
+            if docker-compose ps | grep -q "Up"; then
+              echo "🎉 Deployment completed successfully!"
+              docker-compose ps
+            else
+              echo "❌ Some containers are not running!"
+              docker-compose ps
+              docker-compose logs --tail=20
+              exit 1
+            fi

@@ -41,8 +41,8 @@ RUN pecl install redis && docker-php-ext-enable redis
 # Install OPcache extension
 RUN docker-php-ext-install opcache
 
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Get latest Composer - with fallback for Docker Hub issues
+COPY --from=composer:2.7.1 /usr/bin/composer /usr/bin/composer
 
 # Copy existing application directory contents
 COPY . /var/www/html
@@ -51,7 +51,8 @@ COPY . /var/www/html
 COPY --chown=www-data:www-data . /var/www/html
 
 # Install PHP dependencies for Laravel 12
-RUN composer update --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-gmp --ignore-platform-req=php --no-scripts
+RUN composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-gmp --ignore-platform-req=php --no-scripts || \
+    composer update --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-gmp --ignore-platform-req=php --no-scripts
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/www/html/storage/logs \

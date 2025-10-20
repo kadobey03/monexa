@@ -1,55 +1,70 @@
-# Git
+# Git files
 .git
 .gitignore
-.gitattributes
+README.md
+.github/
 
-# Docker
+# Docker files
 Dockerfile
 docker-compose.yml
-.dockerignore
+docker/
 
-# Documentation
-README.md
-*.md
+# Node modules and build artifacts
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+build/
 
-# IDE
-.vscode
-.idea
+# Laravel specific
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/testing/*
+!/storage/logs/.gitkeep
+!/storage/framework/cache/.gitkeep
+!/storage/framework/sessions/.gitkeep
+!/storage/framework/views/.gitkeep
+!/storage/framework/testing/.gitkeep
+
+# Environment files
+.env*
+!.env.example
+
+# IDE files
+.vscode/
+.idea/
 *.swp
 *.swo
 *~
 
-# OS
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
-# Node modules and build artifacts
-node_modules
-npm-debug.log
-yarn-error.log
-.npm
-.yarn-integrity
-
-# Laravel specific
-/storage/app/*
-!/storage/app/public
-/storage/framework/cache/*
-/storage/framework/sessions/*
-/storage/framework/testing/*
-/storage/framework/views/*
-/storage/logs/*
-/bootstrap/cache/*
-.env.backup
-.phpunit.result.cache
-
-# Composer
-/vendor
-
-# Testing
-.phpunit.result.cache
-phpunit.xml
-
-# Misc
+# Logs
 *.log
-*.cache
-.sass-cache
+logs/
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Dependency directories
+vendor/
+composer.phar
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Cache files
+.cache/
+tmp/
+temp/
