@@ -5,7 +5,7 @@
 @include('admin.topmenu')
 @include('admin.sidebar')
 
-<div class="flex-1 lg:ml-64 transition-all duration-300">
+<div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
     <div class="p-6">
         <!-- Page Header -->
         <div class="mb-6">

@@ -4,7 +4,7 @@
     @include('admin.sidebar')
 
     <!-- Main Content -->
-    <div class="flex-1 ml-0 md:ml-64 transition-all duration-300">
+    <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
         <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
             <!-- Header Section -->
             <div class="bg-white border-b border-gray-200 shadow-sm">
