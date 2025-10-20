@@ -1,15 +1,7 @@
 @extends('layouts.app')
 @section('content')
 @section('styles')
-<!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    corePlugins: {
-      preflight: false,
-    }
-  }
-</script>
+@parent
 
 <style>
     .status-card {

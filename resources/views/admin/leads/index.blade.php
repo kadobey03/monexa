@@ -1,17 +1,9 @@
 @extends('layouts.app')
 @section('content')
 @section('styles')
-<!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    corePlugins: {
-      preflight: false,
-    }
-  }
-</script>
+@parent
 
-<!-- Tailwind ve Bootstrap uyumlu hybrid stil -->
+<!-- Bootstrap ile uyumlu modern CSS -->
 <style>
     /* Lead Card Styles */
     .lead-card {
