@@ -5,421 +5,361 @@
 @include('admin.topmenu')
 @include('admin.sidebar')
 
-<div class="main-panel">
-    <div class="content">
-        <div class="page-inner">
-            <div class="page-header">
-                <h4 class="page-title">User Trades Management</h4>
-                <ul class="breadcrumbs">
-                    <li class="nav-home">
-                        <a href="{{ route('admin.dashboard') }}">
-                            <i class="flaticon-home"></i>
-                        </a>
-                    </li>
-                    <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Management</a>
-                    </li>
-                    <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Trades</a>
-                    </li>
-                </ul>
-            </div>
+<div class="flex-1 lg:ml-64 transition-all duration-300">
+    <div class="p-6">
+        <!-- Page Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">User Trades Management</h1>
+            <nav class="flex text-sm text-gray-500">
+                <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-700">
+                    <i class="fas fa-home mr-1"></i>Dashboard
+                </a>
+                <span class="mx-2">/</span>
+                <span>Management</span>
+                <span class="mx-2">/</span>
+                <span class="text-gray-900">Trades</span>
+            </nav>
+        </div>
 
-            <!-- Success/Error Messages -->
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+        <!-- Success/Error Messages -->
+        @if(session('success'))
+            <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span class="text-green-800">{{ session('success') }}</span>
+                </div>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                    <span class="text-red-800">{{ session('error') }}</span>
+                </div>
+            </div>
+        @endif
+
+        <!-- Statistics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center">
+                    <div class="p-3 bg-blue-100 rounded-lg">
+                        <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-500">Total Trades</p>
+                        <h3 class="text-2xl font-bold text-gray-900">{{ number_format($stats['total'] ?? 0) }}</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center">
+                    <div class="p-3 bg-yellow-100 rounded-lg">
+                        <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-500">Active Trades</p>
+                        <h3 class="text-2xl font-bold text-gray-900">{{ number_format($stats['active'] ?? 0) }}</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center">
+                    <div class="p-3 bg-green-100 rounded-lg">
+                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-500">Completed</p>
+                        <h3 class="text-2xl font-bold text-gray-900">{{ number_format($stats['expired'] ?? 0) }}</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <div class="flex items-center">
+                    <div class="p-3 bg-gray-100 rounded-lg">
+                        <i class="fas fa-dollar-sign text-gray-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-500">Total Volume</p>
+                        <h3 class="text-2xl font-bold text-gray-900">${{ number_format($stats['total_volume'] ?? 0, 2) }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+            <div class="p-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        <i class="fas fa-filter mr-2"></i>Filters & Search
+                    </h2>
+                    <button id="toggleFilters" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-search mr-2"></i>Toggle Filters
                     </button>
                 </div>
-            @endif
+            </div>
+            <div id="filtersPanel" class="hidden p-4">
+                <form method="GET" action="{{ route('admin.trades.index') }}">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Search User</label>
+                            <input type="text" name="search" value="{{ request('search') }}" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   placeholder="Username or Email">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                            <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">All</option>
+                                <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>Active</option>
+                                <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Expired</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Trade Type</label>
+                            <select name="type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">All</option>
+                                <option value="Buy" {{ request('type') == 'Buy' ? 'selected' : '' }}>Buy</option>
+                                <option value="Sell" {{ request('type') == 'Sell' ? 'selected' : '' }}>Sell</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Asset</label>
+                            <input type="text" name="asset" value="{{ request('asset') }}" 
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                   placeholder="Asset name">
+                        </div>
+                        <div class="flex items-end">
+                            <button type="submit" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-search mr-2"></i>Filter
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-            @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>{{ session('error') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-
-            <!-- Trades Statistics -->
-            <div class="row">
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-icon">
-                                    <div class="icon-big text-center icon-info bubble-shadow-small">
-                                        <i class="fas fa-chart-line"></i>
-                                    </div>
-                                </div>
-                                <div class="col col-stats ml-3 ml-sm-0">
-                                    <div class="numbers">
-                                        <p class="card-category">Total Trades</p>
-                                        <h4 class="card-title">{{ number_format($stats['total'] ?? 0) }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-icon">
-                                    <div class="icon-big text-center icon-warning bubble-shadow-small">
-                                        <i class="fas fa-clock"></i>
-                                    </div>
-                                </div>
-                                <div class="col col-stats ml-3 ml-sm-0">
-                                    <div class="numbers">
-                                        <p class="card-category">Active Trades</p>
-                                        <h4 class="card-title">{{ number_format($stats['active'] ?? 0) }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-icon">
-                                    <div class="icon-big text-center icon-success bubble-shadow-small">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div>
-                                </div>
-                                <div class="col col-stats ml-3 ml-sm-0">
-                                    <div class="numbers">
-                                        <p class="card-category">Completed</p>
-                                        <h4 class="card-title">{{ number_format($stats['expired'] ?? 0) }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-icon">
-                                    <div class="icon-big text-center icon-secondary bubble-shadow-small">
-                                        <i class="fas fa-dollar-sign"></i>
-                                    </div>
-                                </div>
-                                <div class="col col-stats ml-3 ml-sm-0">
-                                    <div class="numbers">
-                                        <p class="card-category">Total Volume</p>
-                                        <h4 class="card-title">${{ number_format($stats['total_volume'] ?? 0, 2) }}</h4>
-                                    </div>
-                                </div>
+        <!-- Trades Table -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+            <div class="p-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        <i class="fas fa-table mr-2"></i>User Trades ({{ $trades->total() }} records)
+                    </h2>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="testRoutes()" class="px-3 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors">
+                            <i class="fas fa-bug mr-1"></i>Test Routes
+                        </button>
+                        <div class="relative">
+                            <button id="exportDropdown" class="px-3 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-download mr-1"></i>Export
+                            </button>
+                            <div id="exportMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+                                <a href="{{ route('admin.trades.export', ['format' => 'csv'] + request()->all()) }}" 
+                                   class="block px-4 py-2 text-gray-700 hover:bg-gray-50">
+                                    <i class="fas fa-file-csv mr-2"></i>CSV
+                                </a>
+                                <a href="{{ route('admin.trades.export', ['format' => 'excel'] + request()->all()) }}" 
+                                   class="block px-4 py-2 text-gray-700 hover:bg-gray-50">
+                                    <i class="fas fa-file-excel mr-2"></i>Excel
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Filters and Search -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <h4 class="card-title">
-                                    <i class="fas fa-filter mr-2"></i>Filters & Search
-                                </h4>
-                                <button class="btn btn-primary btn-round ml-auto" data-toggle="collapse" data-target="#filtersCollapse" aria-expanded="false">
-                                    <i class="fas fa-search"></i>
-                                    Toggle Filters
-                                </button>
-                            </div>
-                        </div>
-                        <div class="collapse" id="filtersCollapse">
-                            <div class="card-body">
-                                <form method="GET" action="{{ route('admin.trades.index') }}">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="search">Search User</label>
-                                                <input type="text" class="form-control" id="search" name="search"
-                                                       value="{{ request('search') }}" placeholder="Username or Email">
-                                            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Asset</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Leverage</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Profit/Loss</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expires</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @forelse($trades as $trade)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded">#{{ $trade->id }}</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-8 w-8">
+                                            <i class="fas fa-user-circle text-2xl text-gray-400"></i>
                                         </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="status">Status</label>
-                                                <select class="form-control" id="status" name="status">
-                                                    <option value="">All</option>
-                                                    <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>Active</option>
-                                                    <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Expired</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="type">Trade Type</label>
-                                                <select class="form-control" id="type" name="type">
-                                                    <option value="">All</option>
-                                                    <option value="Buy" {{ request('type') == 'Buy' ? 'selected' : '' }}>Buy</option>
-                                                    <option value="Sell" {{ request('type') == 'Sell' ? 'selected' : '' }}>Sell</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="asset">Asset</label>
-                                                <input type="text" class="form-control" id="asset" name="asset"
-                                                       value="{{ request('asset') }}" placeholder="Asset name">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label>&nbsp;</label>
-                                                <div>
-                                                    <button type="submit" class="btn btn-primary btn-block">
-                                                        <i class="fas fa-search mr-1"></i>Filter
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        <div class="ml-3">
+                                            <div class="text-sm font-medium text-gray-900">{{ $trade->user->name ?? 'N/A' }}</div>
+                                            <div class="text-sm text-gray-500">{{ $trade->user->email ?? 'N/A' }}</div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trades Table -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <h4 class="card-title">
-                                    <i class="fas fa-table mr-2"></i>User Trades ({{ $trades->total() }} records)
-                                </h4>
-                                <div class="ml-auto">
-                                    <!-- Test URL Button -->
-                                    <button type="button" class="btn btn-info btn-sm mr-2" onclick="testRoutes()">
-                                        <i class="fas fa-bug mr-1"></i>Test Routes
-                                    </button>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fas fa-download mr-1"></i>Export
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">{{ $trade->assets ?? 'N/A' }}</span>
+                                    @if($trade->symbol)
+                                        <div class="text-xs text-gray-500 mt-1">{{ $trade->symbol }}</div>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($trade->type)
+                                        <span class="px-2 py-1 text-xs rounded {{ $trade->type == 'Buy' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                            <i class="fas {{ $trade->type == 'Buy' ? 'fa-arrow-up' : 'fa-arrow-down' }} mr-1"></i>
+                                            {{ $trade->type }}
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded">N/A</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    ${{ number_format($trade->amount, 2) }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">1:{{ $trade->leverage ?? 'N/A' }}</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    @if($trade->profit_earned)
+                                        @if($trade->profit_earned > 0)
+                                            <span class="text-green-600 font-medium">
+                                                <i class="fas fa-arrow-up mr-1"></i>
+                                                +${{ number_format($trade->profit_earned, 2) }}
+                                            </span>
+                                        @else
+                                            <span class="text-red-600 font-medium">
+                                                <i class="fas fa-arrow-down mr-1"></i>
+                                                ${{ number_format($trade->profit_earned, 2) }}
+                                            </span>
+                                        @endif
+                                    @else
+                                        <span class="text-gray-400">$0.00</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($trade->active == 'yes')
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">
+                                            <i class="fas fa-clock mr-1"></i>Active
+                                        </span>
+                                    @elseif($trade->active == 'expired')
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
+                                            <i class="fas fa-check mr-1"></i>Completed
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-800 text-xs rounded">{{ ucfirst($trade->active ?? 'N/A') }}</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    <div>{{ $trade->created_at->format('M d, Y') }}</div>
+                                    <div class="text-xs text-gray-500">{{ $trade->created_at->format('H:i') }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    @if($trade->expire_date)
+                                        <div>{{ \Carbon\Carbon::parse($trade->expire_date)->format('M d, Y') }}</div>
+                                        <div class="text-xs text-gray-500">{{ \Carbon\Carbon::parse($trade->expire_date)->format('H:i') }}</div>
+                                    @else
+                                        <span class="text-gray-400">N/A</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <div class="flex items-center space-x-2">
+                                        <a href="{{ route('admin.trades.edit', $trade->id) }}" 
+                                           class="text-blue-600 hover:text-blue-900" title="Edit Trade">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button onclick="showAddProfitForm({{ $trade->id }})" 
+                                                class="text-green-600 hover:text-green-900" title="Add Profit">
+                                            <i class="fas fa-plus"></i>
                                         </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="{{ route('admin.trades.export', ['format' => 'csv'] + request()->all()) }}">
-                                                <i class="fas fa-file-csv mr-2"></i>CSV
-                                            </a>
-                                            <a class="dropdown-item" href="{{ route('admin.trades.export', ['format' => 'excel'] + request()->all()) }}">
-                                                <i class="fas fa-file-excel mr-2"></i>Excel
-                                            </a>
-                                        </div>
+                                        <button onclick="deleteTrade({{ $trade->id }})" 
+                                                class="text-red-600 hover:text-red-900" title="Delete Trade">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="tradesTable" class="display table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>User</th>
-                                            <th>Asset</th>
-                                            <th>Type</th>
-                                            <th>Amount</th>
-                                            <th>Leverage</th>
-                                            <th>Profit/Loss</th>
-                                            <th>Status</th>
-                                            <th>Created</th>
-                                            <th>Expires</th>
-                                            <th class="no-sort">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse($trades as $trade)
-                                            <tr>
-                                                <td>
-                                                    <span class="badge badge-secondary">#{{ $trade->id }}</span>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="avatar avatar-sm mr-2">
-                                                            <i class="fas fa-user-circle fa-2x text-muted"></i>
-                                                        </div>
-                                                        <div>
-                                                            <strong>{{ $trade->user->name ?? 'N/A' }}</strong><br>
-                                                            <small class="text-muted">{{ $trade->user->email ?? 'N/A' }}</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <span class="badge badge-info">{{ $trade->assets ?? 'N/A' }}</span>
-                                                    @if($trade->symbol)
-                                                        <br><small class="text-muted">{{ $trade->symbol }}</small>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($trade->type)
-                                                        <span class="badge {{ $trade->type == 'Buy' ? 'badge-success' : 'badge-danger' }}">
-                                                            <i class="fas {{ $trade->type == 'Buy' ? 'fa-arrow-up' : 'fa-arrow-down' }} mr-1"></i>
-                                                            {{ $trade->type }}
-                                                        </span>
-                                                    @else
-                                                        <span class="badge badge-secondary">N/A</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <strong>${{ number_format($trade->amount, 2) }}</strong>
-                                                </td>
-                                                <td>
-                                                    <span class="badge badge-warning">1:{{ $trade->leverage ?? 'N/A' }}</span>
-                                                </td>
-                                                <td>
-                                                    @if($trade->profit_earned)
-                                                        @if($trade->profit_earned > 0)
-                                                            <span class="text-success">
-                                                                <i class="fas fa-arrow-up mr-1"></i>
-                                                                +${{ number_format($trade->profit_earned, 2) }}
-                                                            </span>
-                                                        @else
-                                                            <span class="text-danger">
-                                                                <i class="fas fa-arrow-down mr-1"></i>
-                                                                ${{ number_format($trade->profit_earned, 2) }}
-                                                            </span>
-                                                        @endif
-                                                    @else
-                                                        <span class="text-muted">$0.00</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($trade->active == 'yes')
-                                                        <span class="badge badge-warning">
-                                                            <i class="fas fa-clock mr-1"></i>Active
-                                                        </span>
-                                                    @elseif($trade->active == 'expired')
-                                                        <span class="badge badge-success">
-                                                            <i class="fas fa-check mr-1"></i>Completed
-                                                        </span>
-                                                    @else
-                                                        <span class="badge badge-secondary">{{ ucfirst($trade->active ?? 'N/A') }}</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <small>{{ $trade->created_at->format('M d, Y') }}</small><br>
-                                                    <small class="text-muted">{{ $trade->created_at->format('H:i') }}</small>
-                                                </td>
-                                                <td>
-                                                    @if($trade->expire_date)
-                                                        <small>{{ \Carbon\Carbon::parse($trade->expire_date)->format('M d, Y') }}</small><br>
-                                                        <small class="text-muted">{{ \Carbon\Carbon::parse($trade->expire_date)->format('H:i') }}</small>
-                                                    @else
-                                                        <span class="text-muted">N/A</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <div class="form-button-action">
-                                                        <a href="{{ route('admin.trades.edit', $trade->id) }}"
-                                                           class="btn btn-link btn-primary btn-lg"
-                                                           data-original-title="Edit Trade"
-                                                           title="Edit Trade">
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-                                                        <button type="button" class="btn btn-link btn-success btn-lg"
-                                                                onclick="showAddProfitForm({{ $trade->id }})"
-                                                                data-original-title="Add Profit"
-                                                                title="Add Profit">
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-link btn-danger"
-                                                                onclick="deleteTrade({{ $trade->id }})"
-                                                                data-original-title="Delete"
-                                                                title="Delete Trade">
-                                                            <i class="fa fa-times"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="11" class="text-center py-4">
-                                                    <div class="empty-state" style="padding: 40px;">
-                                                        <div class="empty-state-icon">
-                                                            <i class="fas fa-chart-line fa-4x text-muted mb-3"></i>
-                                                        </div>
-                                                        <div class="empty-state-title">
-                                                            <h3 class="text-muted">No trades found</h3>
-                                                        </div>
-                                                        <div class="empty-state-subtitle text-muted">
-                                                            Try adjusting your filters or search criteria.
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                            @if($trades->hasPages())
-                                <div class="d-flex justify-content-center">
-                                    {{ $trades->appends(request()->query())->links() }}
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="11" class="px-6 py-12 text-center">
+                                    <div class="flex flex-col items-center">
+                                        <i class="fas fa-chart-line text-4xl text-gray-300 mb-4"></i>
+                                        <h3 class="text-lg font-medium text-gray-900 mb-2">No trades found</h3>
+                                        <p class="text-gray-500">Try adjusting your filters or search criteria.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
+            
+            @if($trades->hasPages())
+                <div class="px-6 py-4 border-t border-gray-200">
+                    {{ $trades->appends(request()->query())->links() }}
+                </div>
+            @endif
         </div>
     </div>
 </div>
 
 <!-- Add Profit Modal -->
-<div class="modal fade" id="addProfitModal" tabindex="-1" role="dialog" aria-labelledby="addProfitModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addProfitModalLabel">
-                    <i class="fas fa-plus-circle mr-2"></i>Add Profit to User ROI
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div id="addProfitModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-900">
+                        <i class="fas fa-plus-circle mr-2"></i>Add Profit to User ROI
+                    </h3>
+                    <button onclick="closeModal('addProfitModal')" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
+            
             <form id="addProfitForm" method="POST" action="">
                 @csrf
-                <div class="modal-body">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle mr-2"></i>
-                        This will add the specified amount to both the trade's profit_earned and the user's ROI.
+                <div class="p-6">
+                    <div class="mb-4 p-4 bg-blue-50 rounded-lg">
+                        <p class="text-sm text-blue-800">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            This will add the specified amount to both the trade's profit_earned and the user's ROI.
+                        </p>
                     </div>
-                    <div class="form-group">
-                        <label for="profit_amount">Profit Amount ($)</label>
-                        <input type="number" class="form-control" id="profit_amount" name="profit_amount"
-                               step="0.01" required placeholder="Enter amount to add">
-                        <small class="form-text text-muted">Use positive numbers for profit, negative for loss</small>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Profit Amount ($)</label>
+                        <input type="number" id="profit_amount" name="profit_amount" step="0.01" required
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               placeholder="Enter amount to add">
+                        <p class="text-xs text-gray-500 mt-1">Use positive numbers for profit, negative for loss</p>
                     </div>
-                    <div class="form-group">
-                        <label for="profit_note">Note (Optional)</label>
-                        <textarea class="form-control" id="profit_note" name="note" rows="3"
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Note (Optional)</label>
+                        <textarea id="profit_note" name="note" rows="3"
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                   placeholder="Add a note about this profit adjustment..."></textarea>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">
+                
+                <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModal('addProfitModal')" 
+                            class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                         <i class="fas fa-plus mr-1"></i>Add Profit
                     </button>
                 </div>
@@ -431,58 +371,52 @@
 @endsection
 
 @section('scripts')
-<style>
-/* Sidebar Toggle Styles */
-.sidebar {
-    transition: all 0.3s ease;
-}
-
-.main-panel {
-    transition: all 0.3s ease;
-}
-
-/* When sidebar is hidden */
-body.sidebar-hide .sidebar {
-    transform: translateX(-100%);
-}
-
-body.sidebar-hide .main-panel {
-    margin-left: 0 !important;
-    width: 100% !important;
-}
-
-/* Mobile sidebar overlay */
-.sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1040;
-}
-
-/* Responsive behavior */
-@media (max-width: 768px) {
-    .sidebar {
-        position: fixed;
-        left: -270px;
-        z-index: 1050;
-    }
-
-    .sidebar.sidebar-show {
-        left: 0;
-    }
-
-    .main-panel {
-        margin-left: 0 !important;
-    }
-}
-</style>
-
 <script>
-// Test Routes function
-window.testRoutes = function() {
+// Modal functions
+function closeModal(modalId) {
+    document.getElementById(modalId).classList.add('hidden');
+}
+
+function showAddProfitForm(tradeId) {
+    const form = document.getElementById('addProfitForm');
+    const profitUrl = '{{ url("/admin/trades") }}/' + tradeId + '/add-profit';
+    form.setAttribute('action', profitUrl);
+    
+    // Clear form
+    document.getElementById('profit_amount').value = '';
+    document.getElementById('profit_note').value = '';
+    
+    // Show modal
+    document.getElementById('addProfitModal').classList.remove('hidden');
+}
+
+function deleteTrade(tradeId) {
+    const deleteUrl = '{{ url("/admin/trades") }}/' + tradeId;
+    
+    if (confirm('Are you sure you want to delete this trade? This action cannot be undone.')) {
+        // Create and submit form
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = deleteUrl;
+        
+        const csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = '{{ csrf_token() }}';
+        
+        const methodField = document.createElement('input');
+        methodField.type = 'hidden';
+        methodField.name = '_method';
+        methodField.value = 'DELETE';
+        
+        form.appendChild(csrfToken);
+        form.appendChild(methodField);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+function testRoutes() {
     console.log('Testing routes...');
     const baseUrl = '{{ url('/') }}';
     const routes = [
@@ -506,145 +440,32 @@ window.testRoutes = function() {
             console.log(`Route ${url}: Error ${error.message}`);
         });
     });
-};
+}
 
-$(document).ready(function() {
-    // Debug button clicks
-    $('button[data-toggle="modal"]').on('click', function() {
-        console.log('Modal button clicked:', $(this).data());
-        console.log('Button target:', $(this).data('target'));
-    });
-
-    // Test onclick buttons
-    $('button[onclick]').on('click', function() {
-        console.log('Onclick button clicked:', this.getAttribute('onclick'));
-    });
-
-    // Atlantis Theme Sidebar Toggle Functionality
-    $('.toggle-sidebar').on('click', function(e) {
-        e.preventDefault();
-        console.log('Sidebar toggle clicked');
-
-        // Toggle sidebar classes
-        $('body').toggleClass('sidebar-hide');
-        $('.sidebar').toggleClass('sidebar-show');
-        $('.main-panel').toggleClass('full-height');
-
-        // Check if sidebar is now hidden/shown
-        if ($('body').hasClass('sidebar-hide')) {
-            console.log('Sidebar hidden');
-        } else {
-            console.log('Sidebar shown');
-        }
-    });
-
-    // Mobile sidebar toggle (sidenav-toggler)
-    $('.sidenav-toggler').on('click', function(e) {
-        e.preventDefault();
-        console.log('Mobile sidebar toggle clicked');
-
-        // For mobile, use different classes
-        $('.sidebar').toggleClass('sidebar-show');
-        $('body').toggleClass('sidebar-show');
-
-        // Add overlay for mobile
-        if ($('.sidebar').hasClass('sidebar-show')) {
-            if (!$('.sidebar-overlay').length) {
-                $('<div class="sidebar-overlay"></div>').appendTo('body');
-            }
-        } else {
-            $('.sidebar-overlay').remove();
-        }
-    });
-
-    // Close sidebar when clicking overlay (mobile)
-    $(document).on('click', '.sidebar-overlay', function() {
-        $('.sidebar').removeClass('sidebar-show');
-        $('body').removeClass('sidebar-show');
-        $(this).remove();
-    });
-
-    // Initialize DataTable with responsive design
-    $('#tradesTable').DataTable({
-        "pageLength": 25,
-        "responsive": true,
-        "order": [[ 0, "desc" ]],
-        "columnDefs": [
-            { "orderable": false, "targets": [-1] } // Disable ordering on Actions column
-        ],
-        "language": {
-            "emptyTable": "No trades found"
-        }
-    });    // Auto-dismiss alerts after 5 seconds
-    setTimeout(function() {
-        $('.alert').fadeOut('slow');
-    }, 5000);
-
-    // Debug: Log base URL
-    console.log('Base URL: {{ url("/") }}');
-    console.log('Admin Trades URL: {{ url("/admin/trades") }}');
-
-    // Make functions globally available
-    window.showAddProfitForm = showAddProfitForm;
-    window.deleteTrade = deleteTrade;
-
-    console.log('Functions assigned to window:', {
-        showAddProfitForm: typeof window.showAddProfitForm,
-        deleteTrade: typeof window.deleteTrade
-    });
+// Toggle filters
+document.getElementById('toggleFilters').addEventListener('click', function() {
+    const panel = document.getElementById('filtersPanel');
+    panel.classList.toggle('hidden');
 });
 
-// Simple function to show add profit modal
-function showAddProfitForm(tradeId) {
-    console.log('Opening add profit form for trade ID:', tradeId);
+// Export dropdown
+document.getElementById('exportDropdown').addEventListener('click', function() {
+    const menu = document.getElementById('exportMenu');
+    menu.classList.toggle('hidden');
+});
 
-    // Set form action
-    var profitUrl = '{{ url("/admin/trades") }}/' + tradeId + '/add-profit';
-    $('#addProfitForm').attr('action', profitUrl);
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('#exportDropdown')) {
+        document.getElementById('exportMenu').classList.add('hidden');
+    }
+});
 
-    // Clear form
-    $('#profit_amount').val('');
-    $('#profit_note').val('');
-
-    // Show the modal
-    $('#addProfitModal').modal('show');
-}
-
-// Delete Trade Function
-function deleteTrade(tradeId) {
-    console.log('Delete Trade ID:', tradeId);
-
-    var deleteUrl = '{{ url("/admin/trades") }}/' + tradeId;
-    console.log('Delete URL:', deleteUrl);
-
-    swal({
-        title: "Delete Trade?",
-        text: "This action cannot be undone. The trade record will be permanently deleted.",
-        type: "warning",
-        buttons: {
-            cancel: {
-                visible: true,
-                text: "Cancel",
-                className: "btn btn-secondary"
-            },
-            confirm: {
-                text: "Yes, delete it!",
-                className: "btn btn-danger"
-            }
-        }
-    }).then((willDelete) => {
-        if (willDelete) {
-            console.log('Deleting trade with URL:', deleteUrl);
-
-            // Create and submit form with proper Laravel URL
-            var form = $('<form method="POST" action="' + deleteUrl + '">' +
-                        '<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
-                        '<input type="hidden" name="_method" value="DELETE">' +
-                        '</form>');
-            $('body').append(form);
-            form.submit();
-        }
+// Auto-dismiss alerts
+setTimeout(function() {
+    document.querySelectorAll('.alert').forEach(function(alert) {
+        alert.style.display = 'none';
     });
-}
+}, 5000);
 </script>
 @endsection
