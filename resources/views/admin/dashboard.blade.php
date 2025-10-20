@@ -15,7 +15,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     @include('admin.sidebar')
     
     <!-- Main Content -->
-    <div class="flex-1 ml-0 md:ml-64 transition-all duration-300">
+    <div class="flex-1 lg:ml-64 transition-all duration-300">
         <!-- Hero Header Section -->
         <div class="relative min-h-[300px] bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 overflow-hidden">
             <!-- Background Pattern -->
