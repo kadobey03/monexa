@@ -420,24 +420,49 @@ document.addEventListener('DOMContentLoaded', function() {
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
+    const mainContent = document.querySelector('.admin-main-content');
     
-    sidebar.classList.toggle('-translate-x-full');
-    overlay.classList.toggle('hidden');
+    if (window.innerWidth >= 1024) {
+        // Desktop behavior - toggle margin
+        sidebar.classList.toggle('-translate-x-full');
+        if (mainContent) {
+            mainContent.classList.toggle('lg:ml-64');
+            mainContent.classList.toggle('lg:ml-0');
+        }
+    } else {
+        // Mobile behavior - show/hide with overlay
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    }
 }
 
-// Close sidebar when clicking overlay
-document.getElementById('sidebar-overlay').addEventListener('click', function() {
-    toggleSidebar();
+// Close sidebar when clicking overlay (mobile only)
+document.addEventListener('click', function(event) {
+    if (event.target.id === 'sidebar-overlay') {
+        toggleSidebar();
+    }
 });
 
 // Handle window resize
 window.addEventListener('resize', function() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
+    const mainContent = document.querySelector('.admin-main-content');
     
     if (window.innerWidth >= 1024) {
-        sidebar.classList.remove('-translate-x-full');
+        // Desktop - ensure proper state
         overlay.classList.add('hidden');
+        if (!sidebar.classList.contains('-translate-x-full')) {
+            if (mainContent) {
+                mainContent.classList.add('lg:ml-64');
+                mainContent.classList.remove('lg:ml-0');
+            }
+        }
+    } else {
+        // Mobile - reset to default
+        if (mainContent) {
+            mainContent.classList.remove('lg:ml-64', 'lg:ml-0');
+        }
     }
 });
 </script>
