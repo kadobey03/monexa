@@ -2,7 +2,7 @@
 @section('content')
 @section('styles')
 @parent
-<script src="https://cdn.tailwindcss.com"></script>
+<!-- Tailwind CSS artık app.blade.php'den gelir -->
 <script>
   tailwind.config = {
     important: true,
