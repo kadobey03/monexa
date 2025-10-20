@@ -1,5 +1,5 @@
 <!-- Admin Sidebar -->
-<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0">
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out sidebar-default">
     
     <!-- Sidebar Header -->
     <div class="flex items-center justify-center h-16 px-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
@@ -258,12 +258,13 @@ function toggleSidebar() {
     const header = document.querySelector('header');
     
     if (window.innerWidth >= 1024) {
-        // Desktop behavior - toggle sidebar visibility and adjust content
-        const isHidden = sidebar.classList.contains('-translate-x-full');
+        // Desktop behavior - use custom CSS classes
+        const isHidden = sidebar.classList.contains('sidebar-hidden');
         
         if (isHidden) {
             // Show sidebar
-            sidebar.classList.remove('-translate-x-full');
+            sidebar.classList.remove('sidebar-hidden');
+            sidebar.classList.add('sidebar-visible');
             if (mainContent) {
                 mainContent.classList.remove('lg:ml-0');
                 mainContent.classList.add('lg:ml-64');
@@ -274,7 +275,8 @@ function toggleSidebar() {
             }
         } else {
             // Hide sidebar
-            sidebar.classList.add('-translate-x-full');
+            sidebar.classList.remove('sidebar-visible', 'sidebar-default');
+            sidebar.classList.add('sidebar-hidden');
             if (mainContent) {
                 mainContent.classList.remove('lg:ml-64');
                 mainContent.classList.add('lg:ml-0');
@@ -285,10 +287,17 @@ function toggleSidebar() {
             }
         }
     } else {
-        // Mobile behavior - show/hide with overlay
-        sidebar.classList.toggle('-translate-x-full');
-        if (overlay) {
-            overlay.classList.toggle('hidden');
+        // Mobile behavior
+        const isHidden = sidebar.classList.contains('sidebar-visible');
+        
+        if (isHidden) {
+            sidebar.classList.remove('sidebar-visible');
+            sidebar.classList.add('sidebar-default');
+            if (overlay) overlay.classList.add('hidden');
+        } else {
+            sidebar.classList.remove('sidebar-default');
+            sidebar.classList.add('sidebar-visible');
+            if (overlay) overlay.classList.remove('hidden');
         }
     }
 }
@@ -296,7 +305,12 @@ function toggleSidebar() {
 // Close sidebar when clicking overlay (mobile only)
 document.addEventListener('click', function(event) {
     if (event.target.id === 'sidebar-overlay') {
-        toggleSidebar();
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        
+        sidebar.classList.remove('sidebar-visible');
+        sidebar.classList.add('sidebar-default');
+        if (overlay) overlay.classList.add('hidden');
     }
 });
 
@@ -311,8 +325,14 @@ window.addEventListener('resize', function() {
         // Desktop - ensure proper state
         if (overlay) overlay.classList.add('hidden');
         
-        const isHidden = sidebar.classList.contains('-translate-x-full');
-        if (!isHidden) {
+        const isHidden = sidebar.classList.contains('sidebar-hidden');
+        if (!isHidden && !sidebar.classList.contains('sidebar-visible')) {
+            // Default state - show sidebar
+            sidebar.classList.remove('sidebar-default');
+            sidebar.classList.add('sidebar-visible');
+        }
+        
+        if (sidebar.classList.contains('sidebar-visible')) {
             // Sidebar is visible
             if (mainContent) {
                 mainContent.classList.add('lg:ml-64');
@@ -335,7 +355,8 @@ window.addEventListener('resize', function() {
         }
     } else {
         // Mobile - reset to default
-        sidebar.classList.add('-translate-x-full');
+        sidebar.className = sidebar.className.replace(/sidebar-(visible|hidden)/g, '');
+        sidebar.classList.add('sidebar-default');
         if (mainContent) {
             mainContent.classList.remove('lg:ml-64', 'lg:ml-0');
         }

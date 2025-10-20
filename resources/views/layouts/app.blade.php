@@ -378,6 +378,35 @@
                 background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
             }
             
+            /* Sidebar toggle states with higher specificity */
+            .sidebar-default {
+                transform: translateX(-100%) !important;
+            }
+            
+            @media (min-width: 1024px) {
+                .sidebar-default {
+                    transform: translateX(0) !important;
+                }
+                
+                .sidebar-hidden {
+                    transform: translateX(-100%) !important;
+                }
+                
+                .sidebar-visible {
+                    transform: translateX(0) !important;
+                }
+            }
+            
+            @media (max-width: 1023px) {
+                .sidebar-default {
+                    transform: translateX(-100%) !important;
+                }
+                
+                .sidebar-visible {
+                    transform: translateX(0) !important;
+                }
+            }
+            
             /* Custom scrollbar */
             ::-webkit-scrollbar {
                 width: 8px;
