@@ -11,13 +11,15 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 ?>
 @extends('layouts.app')
 @section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
-    
-    <!-- Main Content -->
-    <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
-        <!-- Hero Header Section -->
-        <div class="relative min-h-[300px] bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 overflow-hidden">
+    <!-- Admin Layout Container -->
+    <div class="min-h-screen bg-gray-50">
+        @include('admin.topmenu')
+        @include('admin.sidebar')
+        
+        <!-- Main Content -->
+        <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300 pt-16 lg:pt-0">
+            <!-- Hero Header Section -->
+            <div class="relative min-h-[300px] bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 overflow-hidden mt-0 lg:mt-16">
             <!-- Background Pattern -->
             <div class="absolute inset-0 opacity-10">
                 <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;><defs><pattern id=&quot;grain&quot; width=&quot;100&quot; height=&quot;100&quot; patternUnits=&quot;userSpaceOnUse&quot;><circle cx=&quot;50&quot; cy=&quot;50&quot; r=&quot;1&quot; fill=&quot;%23ffffff&quot; opacity=&quot;0.02&quot;/></pattern></defs><rect width=&quot;100&quot; height=&quot;100&quot; fill=&quot;url(%23grain)&quot;/></svg>');"></div>
@@ -412,6 +414,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 </div>
             </div>
         </div>
+    </div>
+    <!-- End Admin Layout Container -->
     </div>
 
     <!-- Enhanced Scripts -->

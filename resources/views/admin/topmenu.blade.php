@@ -1,5 +1,5 @@
 <!-- Admin Header -->
-<header class="bg-white shadow-sm border-b border-gray-200 fixed w-full top-0 z-30">
+<header class="bg-white shadow-sm border-b border-gray-200 fixed w-full top-0 z-40 lg:z-30 lg:left-64 lg:w-[calc(100%-16rem)]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
             
@@ -8,7 +8,7 @@
                 <!-- Sidebar toggle button - both mobile and desktop -->
                 <button type="button"
                         id="sidebar-toggle"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors duration-200"
+                        class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors duration-200"
                         onclick="toggleSidebar()">
                     <span class="sr-only">Menüyü aç/kapat</span>
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
