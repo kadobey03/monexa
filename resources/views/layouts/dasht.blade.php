@@ -17,8 +17,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS Local -->
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <!-- Enable dark mode class strategy -->
     <script>
@@ -122,8 +122,6 @@
             });
         });
     </script>
-<!-- Tailwind CDN -->
-{{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
 </head>
 <body x-data="{ darkMode: localStorage.theme === 'dark' || !localStorage.theme, sidebarOpen: false }"
