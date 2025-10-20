@@ -279,33 +279,78 @@
                 @apply bg-blue-100 text-blue-800 border border-blue-200;
             }
 
-            /* Modal compatibility */
+            /* Modal compatibility - Fixed Z-Index Issues */
             .modal {
-                @apply fixed inset-0 z-50 overflow-y-auto;
+                @apply fixed inset-0 overflow-y-auto;
+                z-index: 9999 !important;
+                background-color: rgba(0, 0, 0, 0.5);
             }
             
             .modal-dialog {
                 @apply flex min-h-full items-center justify-center p-4;
+                z-index: 10000 !important;
             }
             
             .modal-content {
                 @apply bg-white rounded-2xl shadow-2xl max-w-lg w-full;
+                z-index: 10001 !important;
+                position: relative;
+            }
+            
+            .modal-lg .modal-content {
+                max-width: 800px !important;
             }
             
             .modal-header {
                 @apply px-6 py-4 border-b border-gray-200;
+                position: relative;
+                z-index: 10002 !important;
             }
             
             .modal-body {
                 @apply px-6 py-4;
+                position: relative;
+                z-index: 10002 !important;
             }
             
             .modal-footer {
                 @apply px-6 py-4 border-t border-gray-200 flex justify-end space-x-3;
+                position: relative;
+                z-index: 10002 !important;
             }
             
             .modal-title {
                 @apply text-lg font-semibold text-gray-900;
+            }
+            
+            /* Bootstrap Modal Backdrop Fix */
+            .modal-backdrop {
+                z-index: 9998 !important;
+                background-color: rgba(0, 0, 0, 0.5) !important;
+            }
+            
+            /* Ensure modal shows above navbar and sidebar */
+            .modal.show {
+                display: block !important;
+                z-index: 9999 !important;
+            }
+            
+            /* Fix for dropdown menus inside modals */
+            .modal .dropdown-menu {
+                z-index: 10003 !important;
+            }
+            
+            /* Additional positioning fixes */
+            .modal-dialog-centered {
+                display: flex;
+                align-items: center;
+                min-height: calc(100vh - 1rem);
+            }
+            
+            /* Prevent body scroll when modal is open */
+            body.modal-open {
+                overflow: hidden;
+                padding-right: 0 !important;
             }
             
             /* Footer styles */
