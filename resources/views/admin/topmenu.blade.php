@@ -205,8 +205,8 @@
     </div>
 </header>
 
-<!-- Header spacer -->
-<div class="h-16"></div>
+<!-- Header spacer - only for mobile -->
+<div class="h-16 lg:hidden"></div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
