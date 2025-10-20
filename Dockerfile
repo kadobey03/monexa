@@ -41,8 +41,10 @@ RUN pecl install redis && docker-php-ext-enable redis
 # Install OPcache extension
 RUN docker-php-ext-install opcache
 
-# Get latest Composer - with fallback for Docker Hub issues
-COPY --from=composer:2.7.1 /usr/bin/composer /usr/bin/composer
+# Install Composer manually to avoid Docker Hub dependency
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && chmod +x /usr/local/bin/composer \
+    && composer --version
 
 # Copy existing application directory contents
 COPY . /var/www/html

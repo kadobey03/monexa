@@ -26,35 +26,56 @@ jobs:
             echo "🔄 Pulling latest changes..."
             git pull origin main || { echo "❌ Git pull failed"; exit 1; }
             
+            # Check if Docker Hub is accessible
+            echo "🔍 Checking Docker Hub connectivity..."
+            DOCKER_HUB_OK=false
+            if docker pull hello-world:latest >/dev/null 2>&1; then
+              echo "✅ Docker Hub is accessible"
+              DOCKER_HUB_OK=true
+            else
+              echo "⚠️ Docker Hub is not accessible, using no-build strategy"
+            fi
+            
             # Stop containers gracefully
             echo "⏹️ Stopping containers..."
             docker-compose down --remove-orphans || true
             
-            # Clean up Docker system to free space
-            echo "🧹 Cleaning up Docker..."
-            docker system prune -f || true
-            
-            # Build with retry mechanism for Docker Hub issues
-            echo "🔨 Building containers with retry..."
-            for i in {1..3}; do
-              echo "Attempt $i/3..."
-              if docker-compose build --no-cache; then
-                echo "✅ Build successful!"
-                break
-              else
-                echo "❌ Build attempt $i failed"
-                if [ $i -eq 3 ]; then
-                  echo "❌ All build attempts failed"
-                  exit 1
+            if [ "$DOCKER_HUB_OK" = true ]; then
+              # If Docker Hub is working, try to build
+              echo "🔨 Building containers..."
+              for i in {1..2}; do
+                echo "Build attempt $i/2..."
+                if docker-compose build --no-cache; then
+                  echo "✅ Build successful!"
+                  break
+                else
+                  echo "❌ Build attempt $i failed"
+                  if [ $i -eq 2 ]; then
+                    echo "❌ Build failed, falling back to no-build strategy"
+                    DOCKER_HUB_OK=false
+                  else
+                    echo "⏳ Waiting 15 seconds before retry..."
+                    sleep 15
+                  fi
                 fi
-                echo "⏳ Waiting 30 seconds before retry..."
-                sleep 30
-              fi
-            done
+              done
+            fi
             
-            # Start containers
-            echo "🚀 Starting containers..."
-            docker-compose up -d --remove-orphans || { echo "❌ Container start failed"; exit 1; }
+            if [ "$DOCKER_HUB_OK" = false ]; then
+              # No-build strategy: Use existing images and update code
+              echo "🔄 Using no-build deployment strategy..."
+              
+              # Start containers without building
+              echo "🚀 Starting existing containers..."
+              docker-compose up -d --remove-orphans --no-build || {
+                echo "❌ No-build start failed, will try to build anyway"
+                docker-compose up -d --remove-orphans --build || { echo "❌ Container start failed"; exit 1; }
+              }
+            else
+              # Start newly built containers
+              echo "🚀 Starting newly built containers..."
+              docker-compose up -d --remove-orphans || { echo "❌ Container start failed"; exit 1; }
+            fi
             
             # Wait for app container to be ready
             echo "⏳ Waiting for app container..."
