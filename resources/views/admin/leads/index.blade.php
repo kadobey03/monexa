@@ -3,74 +3,56 @@
 @section('styles')
 <style>
     .lead-card {
-        transition: all 0.3s ease;
-        border-left: 4px solid #dee2e6;
+        @apply transition-all duration-300 ease-in-out border-l-4 border-gray-300;
     }
     .lead-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        @apply -translate-y-1 shadow-lg;
     }
     .status-badge {
-        font-size: 0.75rem;
-        padding: 0.375rem 0.75rem;
-        border-radius: 50px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        @apply text-xs px-3 py-1.5 rounded-full font-semibold uppercase tracking-wide;
     }
     .lead-score {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 0.875rem;
+        @apply w-10 h-10 rounded-full inline-flex items-center justify-center font-bold text-sm;
     }
-    .lead-score.high { background: #d4edda; color: #155724; }
-    .lead-score.medium { background: #fff3cd; color: #856404; }
-    .lead-score.low { background: #f8d7da; color: #721c24; }
+    .lead-score.high { @apply bg-green-100 text-green-800; }
+    .lead-score.medium { @apply bg-yellow-100 text-yellow-800; }
+    .lead-score.low { @apply bg-red-100 text-red-800; }
     .filters-card {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
+        @apply text-white;
     }
     .stat-card {
-        border-radius: 15px;
-        overflow: hidden;
-        position: relative;
+        @apply rounded-2xl overflow-hidden relative;
     }
     .stat-card::before {
         content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
+        @apply absolute top-0 left-0 right-0 h-1;
         background: linear-gradient(90deg, #667eea, #764ba2);
     }
     .table-actions {
-        white-space: nowrap;
+        @apply whitespace-nowrap;
     }
     .bulk-actions {
-        background: #f8f9fa;
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        display: none;
+        @apply bg-gray-50 rounded-lg p-4 mb-4 hidden;
     }
     .bulk-actions.show {
-        display: block;
+        @apply block;
     }
     .contact-method-icon {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
+        @apply w-5 h-5 rounded-full inline-flex items-center justify-center text-xs;
     }
+    
+    /* Tailwind utility classes for better compatibility */
+    .tw-shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important; }
+    .tw-bg-gradient-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; }
+    .tw-rounded-xl { border-radius: 0.75rem !important; }
+    .tw-text-white { color: white !important; }
+    .tw-p-4 { padding: 1rem !important; }
+    .tw-mb-4 { margin-bottom: 1rem !important; }
+    .tw-flex { display: flex !important; }
+    .tw-items-center { align-items: center !important; }
+    .tw-justify-between { justify-content: space-between !important; }
+    .tw-gap-2 { gap: 0.5rem !important; }
 </style>
 @endsection
 

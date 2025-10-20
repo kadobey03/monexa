@@ -16,17 +16,32 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
+                important: true,
                 theme: {
                     extend: {
                         colors: {
                             primary: {
                                 50: '#eff6ff',
+                                100: '#dbeafe',
+                                200: '#bfdbfe',
+                                300: '#93c5fd',
+                                400: '#60a5fa',
                                 500: '#3b82f6',
                                 600: '#2563eb',
-                                700: '#1d4ed8'
-                            }
+                                700: '#1d4ed8',
+                                800: '#1e40af',
+                                900: '#1e3a8a'
+                            },
+                            success: '#28a745',
+                            warning: '#ffc107',
+                            danger: '#dc3545',
+                            info: '#17a2b8',
+                            secondary: '#6c757d'
                         }
                     }
+                },
+                corePlugins: {
+                    preflight: false // Prevents Tailwind from resetting styles
                 }
             }
         </script>
