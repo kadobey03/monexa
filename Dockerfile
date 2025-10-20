@@ -3,7 +3,7 @@ FROM php:8.3-fpm
 # Set working directory
 WORKDIR /var/www/html
 
-# Install system dependencies
+# Install system dependencies including Node.js
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -23,7 +23,9 @@ RUN apt-get update && apt-get install -y \
     nano \
     cron \
     supervisor \
-    netcat-openbsd
+    netcat-openbsd \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -56,6 +58,10 @@ COPY --chown=www-data:www-data . /var/www/html
 RUN composer install --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-gmp --ignore-platform-req=php --no-scripts || \
     composer update --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-gmp --ignore-platform-req=php --no-scripts
 
+# Install Node.js dependencies and build assets
+RUN npm install --production=false \
+    && npm run production
+
 # Create necessary directories and set permissions
 RUN mkdir -p /var/www/html/storage/logs \
     && mkdir -p /var/www/html/storage/framework/cache \
@@ -68,7 +74,8 @@ RUN mkdir -p /var/www/html/storage/logs \
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
+    && chmod -R 775 /var/www/html/bootstrap/cache \
+    && chmod -R 755 /var/www/html/public
 
 # Copy the startup script
 COPY docker/scripts/start.sh /usr/local/bin/start.sh

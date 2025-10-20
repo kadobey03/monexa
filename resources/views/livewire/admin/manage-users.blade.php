@@ -324,7 +324,7 @@
             if (addUserBtn && addUserModal) {
                 addUserBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const modal = new bootstrap.Modal(addUserModal);
+                    // Modal functionality replaced with Alpine.js in new layout
                     modal.show();
                 });
             }
@@ -333,7 +333,7 @@
             document.addEventListener('livewire:init', function () {
                 Livewire.on('userAdded', function() {
                     if (addUserModal) {
-                        const modal = bootstrap.Modal.getInstance(addUserModal);
+                        // Modal functionality replaced with Alpine.js in new layout
                         if (modal) {
                             modal.hide();
                         }

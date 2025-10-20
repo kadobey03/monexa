@@ -1,3 +1,284 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* Custom admin styles */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply antialiased;
+  }
+  
+  * {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  /* Loading Animation */
+  .loading-dots {
+    @apply inline-flex space-x-1;
+  }
+  
+  .loading-dots > div {
+    @apply w-2 h-2 bg-primary-600 rounded-full animate-bounce;
+    animation-delay: calc(var(--i) * 0.1s);
+  }
+  
+  /* Custom Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-admin-400/50 rounded-full;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-admin-500/70;
+  }
+  
+  /* Table Styles */
+  .admin-table {
+    @apply w-full text-sm text-left;
+  }
+  
+  .admin-table th {
+    @apply px-6 py-4 font-medium text-admin-900 dark:text-admin-100 bg-admin-50 dark:bg-admin-800 border-b border-admin-200 dark:border-admin-700;
+  }
+  
+  .admin-table td {
+    @apply px-6 py-4 border-b border-admin-200 dark:border-admin-700;
+  }
+  
+  .admin-table tr:hover {
+    @apply bg-admin-50 dark:bg-admin-800/50;
+  }
+  
+  /* Form Elements */
+  .form-group {
+    @apply space-y-2;
+  }
+  
+  .form-label {
+    @apply block text-sm font-medium text-admin-700 dark:text-admin-300;
+  }
+  
+  .form-input {
+    @apply admin-input w-full px-4 py-2;
+  }
+  
+  .form-select {
+    @apply admin-input w-full px-4 py-2 bg-white dark:bg-admin-800;
+  }
+  
+  .form-textarea {
+    @apply admin-input w-full px-4 py-2 resize-y min-h-[120px];
+  }
+  
+  /* Modal Styles */
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-40;
+  }
+  
+  .modal-content {
+    @apply relative bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark max-h-[90vh] overflow-y-auto;
+  }
+  
+  .modal-header {
+    @apply flex items-center justify-between p-6 border-b border-admin-200 dark:border-admin-700;
+  }
+  
+  .modal-body {
+    @apply p-6;
+  }
+  
+  .modal-footer {
+    @apply flex items-center justify-end space-x-3 p-6 border-t border-admin-200 dark:border-admin-700 bg-admin-50 dark:bg-admin-900/50;
+  }
+  
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .badge-success {
+    @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-200;
+  }
+  
+  .badge-warning {
+    @apply bg-amber-100 text-amber-800 dark:bg-amber-900/20 dark:text-amber-200;
+  }
+  
+  .badge-error {
+    @apply bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-200;
+  }
+  
+  .badge-info {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-200;
+  }
+  
+  /* Alert Styles */
+  .alert {
+    @apply p-4 rounded-2xl border;
+  }
+  
+  .alert-success {
+    @apply bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-900/20 dark:border-emerald-800 dark:text-emerald-200;
+  }
+  
+  .alert-warning {
+    @apply bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-900/20 dark:border-amber-800 dark:text-amber-200;
+  }
+  
+  .alert-error {
+    @apply bg-red-50 border-red-200 text-red-800 dark:bg-red-900/20 dark:border-red-800 dark:text-red-200;
+  }
+  
+  .alert-info {
+    @apply bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-200;
+  }
+  
+  /* Dropdown Styles */
+  .dropdown-menu {
+    @apply absolute right-0 mt-2 py-2 bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700 min-w-[200px] z-50;
+  }
+  
+  .dropdown-item {
+    @apply flex items-center px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors;
+  }
+  
+  /* Animation Utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+}
+
+@layer utilities {
+  /* Custom utilities */
+  .text-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-shadow-lg {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Gradient text utilities */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-success {
+    @apply bg-gradient-to-r from-emerald-600 to-emerald-700 bg-clip-text text-transparent;
+  }
+  
+  /* Border gradient utilities */
+  .border-gradient-primary {
+    border-image: linear-gradient(90deg, theme('colors.primary.600'), theme('colors.primary.700')) 1;
+  }
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from { 
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    @apply hidden;
+  }
+  
+  .print-only {
+    @apply block;
+  }
+  
+  body {
+    @apply text-black bg-white;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .admin-card {
+    @apply border-2;
+  }
+  
+  .admin-btn {
+    @apply border-2;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .loading-spinner {
+    animation: none;
+  }
+}
