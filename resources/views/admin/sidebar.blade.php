@@ -29,17 +29,16 @@
 
         @if (Auth('admin')->User()->type == 'Super Admin' || Auth('admin')->User()->type == 'Admin')
             <!-- Users Management -->
-            <div x-data="{ open: {{ request()->routeIs(['manageusers', 'loginactivity', 'user.plans', 'viewuser']) ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['manageusers', 'loginactivity', 'user.plans', 'viewuser']) ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100 hover:text-indigo-600' }}">
+            <div class="sidebar-dropdown" data-dropdown="users">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['manageusers', 'loginactivity', 'user.plans', 'viewuser']) ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700 hover:bg-gray-100 hover:text-indigo-600' }}">
                     <div class="flex items-center">
                         <i class="fas fa-users mr-3 text-lg {{ request()->routeIs(['manageusers', 'loginactivity', 'user.plans', 'viewuser']) ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-500' }}"></i>
                         <span>Kullanıcıları Yönet</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs(['manageusers', 'loginactivity', 'user.plans', 'viewuser']) ? '' : 'hidden' }}">
                     <a href="{{ url('/admin/dashboard/manageusers') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors duration-200">
                         Tüm Kullanıcılar
@@ -69,17 +68,16 @@
             </a>
 
             <!-- Bot Trading -->
-            <div x-data="{ open: {{ request()->routeIs('admin.bots.*') ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('admin.bots.*') ? 'bg-purple-50 text-purple-700' : 'text-gray-700 hover:bg-gray-100 hover:text-purple-600' }}">
+            <div class="sidebar-dropdown" data-dropdown="bots">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('admin.bots.*') ? 'bg-purple-50 text-purple-700' : 'text-gray-700 hover:bg-gray-100 hover:text-purple-600' }}">
                     <div class="flex items-center">
                         <i class="fas fa-robot mr-3 text-lg {{ request()->routeIs('admin.bots.*') ? 'text-purple-600' : 'text-gray-400 group-hover:text-purple-500' }}"></i>
                         <span>Bot Ticareti</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs('admin.bots.*') ? '' : 'hidden' }}">
                     <a href="{{ route('admin.bots.index') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors duration-200">
                         Tüm Ticaret Botları
@@ -96,17 +94,16 @@
             </div>
 
             <!-- Investment Plans -->
-            <div x-data="{ open: {{ request()->routeIs(['plans', 'newplan', 'editplan', 'investments', 'admin.plans.*']) ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['plans', 'newplan', 'editplan', 'investments', 'admin.plans.*']) ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700 hover:bg-gray-100 hover:text-emerald-600' }}">
+            <div class="sidebar-dropdown" data-dropdown="plans">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['plans', 'newplan', 'editplan', 'investments', 'admin.plans.*']) ? 'bg-emerald-50 text-emerald-700' : 'text-gray-700 hover:bg-gray-100 hover:text-emerald-600' }}">
                     <div class="flex items-center">
                         <i class="fas fa-cubes mr-3 text-lg {{ request()->routeIs(['plans', 'newplan', 'editplan', 'investments', 'admin.plans.*']) ? 'text-emerald-600' : 'text-gray-400 group-hover:text-emerald-500' }}"></i>
                         <span>Yatırım Planları</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs(['plans', 'newplan', 'editplan', 'investments', 'admin.plans.*']) ? '' : 'hidden' }}">
                     <a href="{{ url('/admin/dashboard/plans') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors duration-200">
                         Planlar
@@ -119,17 +116,16 @@
             </div>
 
             <!-- Demo Trading -->
-            <div x-data="{ open: {{ request()->routeIs('admin.demo.*') ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('admin.demo.*') ? 'bg-orange-50 text-orange-700' : 'text-gray-700 hover:bg-gray-100 hover:text-orange-600' }}">
+            <div class="sidebar-dropdown" data-dropdown="demo">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('admin.demo.*') ? 'bg-orange-50 text-orange-700' : 'text-gray-700 hover:bg-gray-100 hover:text-orange-600' }}">
                     <div class="flex items-center">
                         <i class="fas fa-graduation-cap mr-3 text-lg {{ request()->routeIs('admin.demo.*') ? 'text-orange-600' : 'text-gray-400 group-hover:text-orange-500' }}"></i>
                         <span>Demo Ticareti</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs('admin.demo.*') ? '' : 'hidden' }}">
                     <a href="{{ route('admin.demo.users') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors duration-200">
                         Demo Kullanıcıları
@@ -142,17 +138,16 @@
             </div>
 
             <!-- Copy Trading -->
-            <div x-data="{ open: {{ request()->routeIs(['copytradings', 'newcopytrading', 'editcopytrading', 'activecopytrading']) ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['copytradings', 'newcopytrading', 'editcopytrading', 'activecopytrading']) ? 'bg-cyan-50 text-cyan-700' : 'text-gray-700 hover:bg-gray-100 hover:text-cyan-600' }}">
+            <div class="sidebar-dropdown" data-dropdown="copy">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['copytradings', 'newcopytrading', 'editcopytrading', 'activecopytrading']) ? 'bg-cyan-50 text-cyan-700' : 'text-gray-700 hover:bg-gray-100 hover:text-cyan-600' }}">
                     <div class="flex items-center">
                         <i class="fas fa-copy mr-3 text-lg {{ request()->routeIs(['copytradings', 'newcopytrading', 'editcopytrading', 'activecopytrading']) ? 'text-cyan-600' : 'text-gray-400 group-hover:text-cyan-500' }}"></i>
                         <span>Kopya Ticareti</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs(['copytradings', 'newcopytrading', 'editcopytrading', 'activecopytrading']) ? '' : 'hidden' }}">
                     <a href="{{ url('/admin/dashboard/copytrading') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg transition-colors duration-200">
                         Kopya Ticaret Planları
@@ -179,17 +174,16 @@
             </a>
 
             <!-- Wallet Phrases -->
-            <div x-data="{ open: {{ request()->routeIs(['mwalletconnect', 'madmin']) ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['mwalletconnect', 'madmin']) ? 'bg-yellow-50 text-yellow-700' : 'text-gray-700 hover:bg-gray-100 hover:text-yellow-600' }}">
+            <div class="sidebar-dropdown" data-dropdown="wallet">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['mwalletconnect', 'madmin']) ? 'bg-yellow-50 text-yellow-700' : 'text-gray-700 hover:bg-gray-100 hover:text-yellow-600' }}">
                     <div class="flex items-center">
                         <i class="fas fa-sync-alt mr-3 text-lg {{ request()->routeIs(['mwalletconnect', 'madmin']) ? 'text-yellow-600' : 'text-gray-400 group-hover:text-yellow-500' }}"></i>
                         <span>Cümleler</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs(['mwalletconnect', 'madmin']) ? '' : 'hidden' }}">
                     <a href="{{ url('/admin/dashboard/mwalletconnect') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors duration-200">
                         Müşteri Cümle Anahtarları
@@ -202,17 +196,16 @@
             </div>
 
             <!-- Loan Applications -->
-            <div x-data="{ open: {{ request()->routeIs('loans') ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('loans') ? 'bg-rose-50 text-rose-700' : 'text-gray-700 hover:bg-gray-100 hover:text-rose-600' }}">
+            <div class="sidebar-dropdown" data-dropdown="loans">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('loans') ? 'bg-rose-50 text-rose-700' : 'text-gray-700 hover:bg-gray-100 hover:text-rose-600' }}">
                     <div class="flex items-center">
                         <i class="fas fa-handshake mr-3 text-lg {{ request()->routeIs('loans') ? 'text-rose-600' : 'text-gray-400 group-hover:text-rose-500' }}"></i>
                         <span>Kredi Başvuruları</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs('loans') ? '' : 'hidden' }}">
                     <a href="{{ url('/admin/dashboard/active-loans') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors duration-200">
                         Aktif Krediler
@@ -221,17 +214,16 @@
             </div>
 
             <!-- Signal Provider -->
-            <div x-data="{ open: {{ request()->routeIs(['signals', 'signal.settings', 'signal.subs']) ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['signals', 'signal.settings', 'signal.subs']) ? 'bg-violet-50 text-violet-700' : 'text-gray-700 hover:bg-gray-100 hover:text-violet-600' }}">
+            <div class="sidebar-dropdown" data-dropdown="signals">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['signals', 'signal.settings', 'signal.subs']) ? 'bg-violet-50 text-violet-700' : 'text-gray-700 hover:bg-gray-100 hover:text-violet-600' }}">
                     <div class="flex items-center">
                         <i class="fas fa-signal mr-3 text-lg {{ request()->routeIs(['signals', 'signal.settings', 'signal.subs']) ? 'text-violet-600' : 'text-gray-400 group-hover:text-violet-500' }}"></i>
                         <span>Sinyal Sağlayıcı</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs(['signals', 'signal.settings', 'signal.subs']) ? '' : 'hidden' }}">
                     <a href="{{ url('/admin/dashboard/signals') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-violet-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
                         Sinyaller
@@ -245,24 +237,23 @@
 
             <!-- Leads -->
             <a href="{{ url('/admin/dashboard/leads') }}" 
-               class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs('leads') ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-amber-600' }}">
-                <i class="fas fa-user-plus mr-3 text-lg {{ request()->routeIs('leads') ? 'text-white' : 'text-gray-400 group-hover:text-amber-500' }}"></i>
+               class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['admin.leads.*', 'leads']) ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg' : 'text-gray-700 hover:bg-gray-100 hover:text-amber-600' }}">
+                <i class="fas fa-user-plus mr-3 text-lg {{ request()->routeIs(['admin.leads.*', 'leads']) ? 'text-white' : 'text-gray-400 group-hover:text-amber-500' }}"></i>
                 <span>Müşteri Adayları</span>
             </a>
         @endif
 
         <!-- Task Management -->
-        <div x-data="{ open: {{ request()->routeIs(['task', 'mtask', 'viewtask']) ? 'true' : 'false' }} }">
-            <button @click="open = !open" 
-                    class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['task', 'mtask', 'viewtask']) ? 'bg-slate-50 text-slate-700' : 'text-gray-700 hover:bg-gray-100 hover:text-slate-600' }}">
+        <div class="sidebar-dropdown" data-dropdown="tasks">
+            <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['task', 'mtask', 'viewtask']) ? 'bg-slate-50 text-slate-700' : 'text-gray-700 hover:bg-gray-100 hover:text-slate-600' }}">
                 <div class="flex items-center">
                     <i class="fas fa-tasks mr-3 text-lg {{ request()->routeIs(['task', 'mtask', 'viewtask']) ? 'text-slate-600' : 'text-gray-400 group-hover:text-slate-500' }}"></i>
                     <span>Görevler</span>
                 </div>
-                <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
             </button>
             
-            <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+            <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs(['task', 'mtask', 'viewtask']) ? '' : 'hidden' }}">
                 @if (Auth('admin')->User()->type == 'Super Admin')
                     <a href="{{ url('/admin/dashboard/task') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors duration-200">
@@ -283,17 +274,16 @@
 
         @if (Auth('admin')->User()->type == 'Super Admin')
             <!-- Admin Management -->
-            <div x-data="{ open: {{ request()->routeIs(['addmanager', 'madmin']) ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['addmanager', 'madmin']) ? 'bg-red-50 text-red-700' : 'text-gray-700 hover:bg-gray-100 hover:text-red-600' }}">
+            <div class="sidebar-dropdown" data-dropdown="admins">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['addmanager', 'madmin']) ? 'bg-red-50 text-red-700' : 'text-gray-700 hover:bg-gray-100 hover:text-red-600' }}">
                     <div class="flex items-center">
                         <i class="fas fa-user-cog mr-3 text-lg {{ request()->routeIs(['addmanager', 'madmin']) ? 'text-red-600' : 'text-gray-400 group-hover:text-red-500' }}"></i>
                         <span>Yöneticiler</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs(['addmanager', 'madmin']) ? '' : 'hidden' }}">
                     <a href="{{ url('/admin/dashboard/addmanager') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-200">
                         Yönetici Ekle
@@ -306,17 +296,16 @@
             </div>
 
             <!-- Settings -->
-            <div x-data="{ open: {{ request()->routeIs(['appsettingshow', 'termspolicy', 'refsetshow', 'paymentview', 'frontpage', 'allipaddress', 'ipaddress', 'editpaymethod', 'managecryptoasset']) ? 'true' : 'false' }} }">
-                <button @click="open = !open" 
-                        class="group w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['appsettingshow', 'termspolicy', 'refsetshow', 'paymentview', 'frontpage', 'allipaddress', 'ipaddress', 'editpaymethod', 'managecryptoasset']) ? 'bg-gray-50 text-gray-700' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-800' }}">
+            <div class="sidebar-dropdown" data-dropdown="settings">
+                <button class="dropdown-toggle w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 {{ request()->routeIs(['appsettingshow', 'termspolicy', 'refsetshow', 'paymentview', 'frontpage', 'allipaddress', 'ipaddress', 'editpaymethod', 'managecryptoasset']) ? 'bg-gray-50 text-gray-700' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-800' }}">
                     <div class="flex items-center">
                         <i class="fas fa-cog mr-3 text-lg {{ request()->routeIs(['appsettingshow', 'termspolicy', 'refsetshow', 'paymentview', 'frontpage', 'allipaddress', 'ipaddress', 'editpaymethod', 'managecryptoasset']) ? 'text-gray-600' : 'text-gray-400 group-hover:text-gray-500' }}"></i>
                         <span>Ayarlar</span>
                     </div>
-                    <i class="fas fa-chevron-down transform transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    <i class="fas fa-chevron-down transform transition-transform duration-200"></i>
                 </button>
                 
-                <div x-show="open" x-transition class="mt-1 ml-8 space-y-1">
+                <div class="dropdown-content mt-1 ml-8 space-y-1 {{ request()->routeIs(['appsettingshow', 'termspolicy', 'refsetshow', 'paymentview', 'frontpage', 'allipaddress', 'ipaddress', 'editpaymethod', 'managecryptoasset']) ? '' : 'hidden' }}">
                     <a href="{{ route('appsettingshow') }}" 
                        class="block px-4 py-2 text-sm text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                         Uygulama Ayarları
@@ -363,12 +352,87 @@
 <!-- Mobile Sidebar Overlay -->
 <div id="sidebar-overlay" class="fixed inset-0 bg-black opacity-50 z-40 md:hidden hidden"></div>
 
-<!-- Main Content Wrapper -->
-<div id="main-content" class="ml-64 transition-all duration-300 ease-in-out">
-    <!-- This will be where the page content goes -->
-</div>
+<script>
+// Sidebar functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize sidebar dropdowns
+    const sidebarDropdowns = document.querySelectorAll('.sidebar-dropdown');
+    
+    sidebarDropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        const content = dropdown.querySelector('.dropdown-content');
+        const chevron = toggle.querySelector('.fas.fa-chevron-down');
+        
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const isOpen = !content.classList.contains('hidden');
+            
+            if (isOpen) {
+                // Close
+                content.classList.add('hidden');
+                chevron.classList.remove('rotate-180');
+            } else {
+                // Open
+                content.classList.remove('hidden');
+                chevron.classList.add('rotate-180');
+            }
+        });
+    });
+});
 
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+// Global sidebar control functions
+window.toggleSidebar = function() {
+    const sidebar = document.getElementById('admin-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    if (window.innerWidth < 768) {
+        // Mobile behavior
+        sidebar.classList.toggle('-translate-x-full');
+        sidebar.classList.toggle('translate-x-0');
+        overlay.classList.toggle('hidden');
+    } else {
+        // Desktop behavior
+        sidebar.classList.toggle('-translate-x-full');
+        const mainContent = document.querySelector('.main-panel');
+        if (mainContent) {
+            mainContent.classList.toggle('ml-0');
+            mainContent.classList.toggle('ml-64');
+        }
+    }
+};
+
+window.closeSidebar = function() {
+    const sidebar = document.getElementById('admin-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    if (window.innerWidth < 768) {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+    }
+};
+
+// Close sidebar when clicking overlay
+document.getElementById('sidebar-overlay')?.addEventListener('click', window.closeSidebar);
+
+// Handle window resize
+window.addEventListener('resize', function() {
+    const sidebar = document.getElementById('admin-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    if (window.innerWidth >= 768) {
+        // Desktop - always show sidebar
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.add('hidden');
+    } else {
+        // Mobile - hide sidebar by default
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+    }
+});
+</script>
 
 <style>
 /* Sidebar Critical Fixes */
@@ -408,14 +472,16 @@ aside::-webkit-scrollbar-thumb:hover {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    #main-content {
+    .main-panel {
         margin-left: 0 !important;
     }
 }
 
-/* Smooth transitions for collapsible menu items */
-[x-transition] {
-    transition: all 0.3s ease;
+/* Smooth transitions */
+.transition-transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
 }
 
 /* Force sidebar interaction */

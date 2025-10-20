@@ -17,14 +17,14 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <!-- Left Side - Logo & Menu Toggle -->
         <div class="flex items-center space-x-4">
             <!-- Mobile Menu Toggle -->
-            <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white">
+            <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white" onclick="toggleSidebar()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
             
             <!-- Desktop Sidebar Toggle -->
-            <button id="sidebar-toggle" class="hidden md:block p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white">
+            <button id="sidebar-toggle" class="hidden md:block p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white" onclick="toggleSidebar()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
@@ -61,9 +61,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
             </button>
 
             <!-- Notifications -->
-            <div class="relative" x-data="{ open: false }">
-                <button @click="open = !open" 
-                        class="relative p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white">
+            <div class="relative dropdown-container">
+                <button class="dropdown-toggle relative p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white" data-dropdown="notifications">
                     <i class="fas fa-bell text-lg"></i>
                     @php
                         try {
@@ -97,22 +96,14 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     @endphp
                     
                     @if($notificationCount > 0)
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold animate-pulse">
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold animate-pulse notification-badge">
                             {{ $notificationCount > 99 ? '99+' : $notificationCount }}
                         </span>
                     @endif
                 </button>
 
                 <!-- Notifications Dropdown -->
-                <div x-show="open" 
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="opacity-0 transform scale-95"
-                     x-transition:enter-end="opacity-100 transform scale-100"
-                     x-transition:leave="transition ease-in duration-200"
-                     x-transition:leave-start="opacity-100 transform scale-100"
-                     x-transition:leave-end="opacity-0 transform scale-95"
-                     @click.outside="open = false"
-                     class="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border-0 backdrop-blur-xl z-50 max-h-96 overflow-y-auto">
+                <div class="dropdown-content absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border-0 backdrop-blur-xl z-50 max-h-96 overflow-y-auto hidden">
                      
                     <!-- Header -->
                     <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-2xl">
@@ -194,26 +185,17 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
             </div>
 
             <!-- User Profile -->
-            <div class="relative" x-data="{ open: false }">
-                <button @click="open = !open" 
-                        class="flex items-center space-x-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white">
+            <div class="relative dropdown-container">
+                <button class="dropdown-toggle flex items-center space-x-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 text-white" data-dropdown="profile">
                     <div class="bg-white/20 p-2 rounded-lg">
                         <i class="fas fa-user"></i>
                     </div>
                     <span class="hidden sm:block font-medium">{{ Auth('admin')->user()->firstName }}</span>
-                    <i class="fas fa-chevron-down text-xs"></i>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
                 </button>
 
                 <!-- User Dropdown -->
-                <div x-show="open" 
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="opacity-0 transform scale-95"
-                     x-transition:enter-end="opacity-100 transform scale-100"
-                     x-transition:leave="transition ease-in duration-200"
-                     x-transition:leave-start="opacity-100 transform scale-100"
-                     x-transition:leave-end="opacity-0 transform scale-95"
-                     @click.outside="open = false"
-                     class="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-2xl border-0 backdrop-blur-xl z-50">
+                <div class="dropdown-content absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-2xl border-0 backdrop-blur-xl z-50 hidden">
                      
                     <div class="p-2">
                         <a href="{{ url('admin/dashboard/adminprofile') }}" 
@@ -250,31 +232,67 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
 <!-- Spacer for fixed header -->
 <div class="h-16"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
-
 <script>
-// Mobile menu toggle functionality
-document.getElementById('mobile-menu-toggle')?.addEventListener('click', function() {
-    const sidebar = document.getElementById('admin-sidebar');
-    if (sidebar) {
-        sidebar.classList.toggle('-translate-x-full');
-        sidebar.classList.toggle('translate-x-0');
-    }
-});
-
-// Desktop sidebar toggle functionality  
-document.getElementById('sidebar-toggle')?.addEventListener('click', function() {
-    const sidebar = document.getElementById('admin-sidebar');
-    const mainContent = document.getElementById('main-content');
-    
-    if (sidebar && mainContent) {
-        sidebar.classList.toggle('sidebar-collapsed');
-        mainContent.classList.toggle('content-expanded');
-    }
-});
-
-// Notification mark as read functionality
+// Header dropdown functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize header dropdowns
+    const dropdownContainers = document.querySelectorAll('.dropdown-container');
+    
+    dropdownContainers.forEach(container => {
+        const toggle = container.querySelector('.dropdown-toggle');
+        const content = container.querySelector('.dropdown-content');
+        const chevron = toggle.querySelector('.fas.fa-chevron-down');
+        
+        if (toggle && content) {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Close all other dropdowns
+                dropdownContainers.forEach(otherContainer => {
+                    if (otherContainer !== container) {
+                        const otherContent = otherContainer.querySelector('.dropdown-content');
+                        const otherChevron = otherContainer.querySelector('.fas.fa-chevron-down');
+                        if (otherContent) {
+                            otherContent.classList.add('hidden');
+                        }
+                        if (otherChevron) {
+                            otherChevron.classList.remove('rotate-180');
+                        }
+                    }
+                });
+                
+                const isOpen = !content.classList.contains('hidden');
+                
+                if (isOpen) {
+                    // Close
+                    content.classList.add('hidden');
+                    if (chevron) chevron.classList.remove('rotate-180');
+                } else {
+                    // Open
+                    content.classList.remove('hidden');
+                    if (chevron) chevron.classList.add('rotate-180');
+                }
+            });
+        }
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown-container')) {
+            dropdownContainers.forEach(container => {
+                const content = container.querySelector('.dropdown-content');
+                const chevron = container.querySelector('.fas.fa-chevron-down');
+                if (content) {
+                    content.classList.add('hidden');
+                }
+                if (chevron) {
+                    chevron.classList.remove('rotate-180');
+                }
+            });
+        }
+    });
+    
     // Auto-refresh notifications every 30 seconds
     setInterval(refreshNotificationCount, 30000);
     
@@ -289,9 +307,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (!badge) {
                         // Create badge if it doesn't exist
                         const newBadge = document.createElement('span');
-                        newBadge.className = 'absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold animate-pulse';
+                        newBadge.className = 'absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold animate-pulse notification-badge';
                         newBadge.textContent = count > 99 ? '99+' : count;
-                        document.querySelector('[data-notification-button]').appendChild(newBadge);
+                        document.querySelector('[data-dropdown="notifications"]').appendChild(newBadge);
                     } else {
                         badge.textContent = count > 99 ? '99+' : count;
                         badge.classList.remove('hidden');
@@ -309,14 +327,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <style>
 /* Custom animations and effects */
-.sidebar-collapsed {
-    transform: translateX(-200px);
-}
-
-.content-expanded {
-    margin-left: 0 !important;
-}
-
 /* Glass morphism effect */
 .backdrop-blur-xl {
     backdrop-filter: blur(20px);
@@ -339,5 +349,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .max-h-96::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, #5a6fd8, #6a4190);
+}
+
+/* Dropdown transitions */
+.dropdown-content {
+    transition: all 0.3s ease;
+    transform-origin: top;
+}
+
+.dropdown-content.hidden {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+    pointer-events: none;
+}
+
+.dropdown-content:not(.hidden) {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: all;
+}
+
+/* Button hover effects */
+button {
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
 }
 </style>
