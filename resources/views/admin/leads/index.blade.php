@@ -2,177 +2,15 @@
 @section('content')
 @section('styles')
 @parent
-
-<!-- Bootstrap ile uyumlu modern CSS -->
-<style>
-    /* Lead Card Styles */
-    .lead-card {
-        transition: all 0.3s ease;
-        border-left: 4px solid #dee2e6;
-        border-radius: 0.75rem;
-        overflow: hidden;
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    important: true,
+    corePlugins: {
+      preflight: false,
     }
-    .lead-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
-
-    /* Status Badge */
-    .status-badge {
-        font-size: 0.75rem;
-        padding: 0.375rem 0.75rem;
-        border-radius: 9999px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        display: inline-block;
-    }
-
-    /* Lead Score Circle */
-    .lead-score {
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 0.875rem;
-    }
-    .lead-score.high {
-        background-color: #dcfce7;
-        color: #166534;
-        border: 2px solid #22c55e;
-    }
-    .lead-score.medium {
-        background-color: #fef3c7;
-        color: #92400e;
-        border: 2px solid #f59e0b;
-    }
-    .lead-score.low {
-        background-color: #fee2e2;
-        color: #991b1b;
-        border: 2px solid #ef4444;
-    }
-
-    /* Cards */
-    .filters-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-radius: 1rem;
-        border: none;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    }
-    
-    .stat-card {
-        border-radius: 1rem;
-        overflow: hidden;
-        position: relative;
-        border: none;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-    }
-    .stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    }
-    .stat-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #667eea, #764ba2);
-    }
-
-    /* Table Actions */
-    .table-actions {
-        white-space: nowrap;
-    }
-
-    /* Bulk Actions */
-    .bulk-actions {
-        background: #f8fafc;
-        border-radius: 0.75rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        display: none;
-        border: 2px dashed #cbd5e1;
-    }
-    .bulk-actions.show {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    /* Contact Method Icon */
-    .contact-method-icon {
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
-    }
-
-    /* Modern Button Styles */
-    .btn-modern {
-        border-radius: 0.5rem;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        border: none;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    }
-    .btn-modern:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Input Styles */
-    .form-control-modern {
-        border-radius: 0.5rem;
-        border: 2px solid #e2e8f0;
-        transition: all 0.2s ease;
-    }
-    .form-control-modern:focus {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-
-    /* Table Enhancements */
-    .table-modern {
-        border-radius: 0.75rem;
-        overflow: hidden;
-    }
-    .table-modern thead th {
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-        letter-spacing: 0.05em;
-        padding: 1rem;
-        border: none;
-    }
-    .table-modern tbody tr {
-        transition: all 0.2s ease;
-    }
-    .table-modern tbody tr:hover {
-        background-color: #f8fafc;
-        transform: scale(1.001);
-    }
-
-    /* Responsive helpers */
-    @media (max-width: 768px) {
-        .stat-card {
-            margin-bottom: 1rem;
-        }
-        .filters-card .row {
-            gap: 1rem;
-        }
-    }
-</style>
+  }
+</script>
 @endsection
 
 @include('admin.topmenu')
@@ -182,29 +20,32 @@
     <div class="content">
         <div class="page-inner">
             <!-- Header -->
-            <div class="page-header mb-4">
-                <div class="d-flex align-items-center">
-                    <div class="page-icon-wrapper me-3">
-                        <div class="page-icon bg-gradient-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 70px; height: 70px;">
-                            <i class="fas fa-users-cog fa-2x"></i>
-                        </div>
+            <div class="flex items-center justify-between mb-8 p-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl text-white">
+                <div class="flex items-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-users-cog text-2xl text-white"></i>
                     </div>
                     <div>
-                        <h1 class="title1 mb-1">Lead Yönetimi</h1>
-                        <p class="text-muted mb-0">Potansiyel müşterilerinizi yönetin ve takip edin</p>
+                        <h1 class="text-3xl font-bold">Lead Yönetimi</h1>
+                        <p class="text-blue-100">Potansiyel müşterilerinizi yönetin ve takip edin</p>
                     </div>
                 </div>
-                <div class="ml-auto d-flex gap-2">
+                <div class="flex space-x-3">
                     @if($isSuperAdmin)
-                    <a href="{{ route('admin.leads.export', request()->query()) }}" class="btn btn-success">
-                        <i class="fas fa-download me-2"></i>Export
+                    <a href="{{ route('admin.leads.export', request()->query()) }}" 
+                       class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg transition-colors flex items-center">
+                        <i class="fas fa-download mr-2"></i>Export
                     </a>
-                    <a href="{{ route('admin.lead-statuses.index') }}" class="btn btn-info">
-                        <i class="fas fa-tags me-2"></i>Status Yönetimi
+                    <a href="{{ route('admin.lead-statuses.index') }}" 
+                       class="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors flex items-center">
+                        <i class="fas fa-tags mr-2"></i>Status Yönetimi
                     </a>
                     @endif
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">
-                        <i class="fas fa-upload me-2"></i>Import
+                    <button type="button" 
+                            class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors flex items-center" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#importModal">
+                        <i class="fas fa-upload mr-2"></i>Import
                     </button>
                 </div>
             </div>
@@ -212,346 +53,370 @@
             <x-danger-alert />
             <x-success-alert />
 
-            <!-- Statistics -->
-            <div class="row mb-4">
-                <div class="col-xl-3 col-md-6 mb-3">
-                    <div class="card stat-card border-0 shadow-sm h-100">
-                        <div class="card-body text-center p-4">
-                            <div class="text-primary mb-3">
-                                <i class="fas fa-users fa-3x"></i>
-                            </div>
-                            <h2 class="mb-1 font-weight-bold">{{ number_format($stats['total_leads']) }}</h2>
-                            <p class="text-muted mb-0">Toplam Lead</p>
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Toplam Lead</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['total_leads']) }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-blue-600 text-xl"></i>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-3">
-                    <div class="card stat-card border-0 shadow-sm h-100">
-                        <div class="card-body text-center p-4">
-                            <div class="text-warning mb-3">
-                                <i class="fas fa-user-plus fa-3x"></i>
-                            </div>
-                            <h2 class="mb-1 font-weight-bold">{{ number_format($stats['new_leads_today']) }}</h2>
-                            <p class="text-muted mb-0">Bugünkü Yeni Lead</p>
-                        </div>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-full bg-blue-600 rounded-full" style="width: 100%"></div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-3">
-                    <div class="card stat-card border-0 shadow-sm h-100">
-                        <div class="card-body text-center p-4">
-                            <div class="text-danger mb-3">
-                                <i class="fas fa-user-times fa-3x"></i>
-                            </div>
-                            <h2 class="mb-1 font-weight-bold">{{ number_format($stats['unassigned_leads']) }}</h2>
-                            <p class="text-muted mb-0">Atanmamış Lead</p>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Bugünkü Yeni</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['new_leads_today']) }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-plus text-amber-600 text-xl"></i>
                         </div>
                     </div>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-full bg-amber-600 rounded-full" style="width: {{ $stats['total_leads'] > 0 ? ($stats['new_leads_today'] / $stats['total_leads'] * 100) : 0 }}%"></div>
+                    </div>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-3">
-                    <div class="card stat-card border-0 shadow-sm h-100">
-                        <div class="card-body text-center p-4">
-                            <div class="text-success mb-3">
-                                <i class="fas fa-trophy fa-3x"></i>
-                            </div>
-                            <h2 class="mb-1 font-weight-bold">{{ number_format($stats['high_score_leads']) }}</h2>
-                            <p class="text-muted mb-0">Yüksek Skor Lead</p>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Atanmamış</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['unassigned_leads']) }}</p>
                         </div>
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-times text-red-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-full bg-red-600 rounded-full" style="width: {{ $stats['total_leads'] > 0 ? ($stats['unassigned_leads'] / $stats['total_leads'] * 100) : 0 }}%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium">Yüksek Skor</p>
+                            <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['high_score_leads']) }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-trophy text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-full bg-green-600 rounded-full" style="width: {{ $stats['total_leads'] > 0 ? ($stats['high_score_leads'] / $stats['total_leads'] * 100) : 0 }}%"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Quick Actions -->
-            <div class="row mb-4">
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-clock text-info fa-2x mb-2"></i>
-                            <h5>{{ number_format($stats['follow_ups_today']) }}</h5>
-                            <p class="text-muted mb-0">Bugünkü Takipler</p>
+            <!-- Quick Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl p-6 text-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-cyan-100 text-sm">Bugünkü Takipler</p>
+                            <p class="text-3xl font-bold">{{ number_format($stats['follow_ups_today']) }}</p>
                         </div>
+                        <i class="fas fa-clock text-4xl text-cyan-200"></i>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-exclamation-triangle text-warning fa-2x mb-2"></i>
-                            <h5>{{ number_format($stats['overdue_follow_ups']) }}</h5>
-                            <p class="text-muted mb-0">Gecikmiş Takipler</p>
+
+                <div class="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-6 text-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-orange-100 text-sm">Gecikmiş Takipler</p>
+                            <p class="text-3xl font-bold">{{ number_format($stats['overdue_follow_ups']) }}</p>
                         </div>
+                        <i class="fas fa-exclamation-triangle text-4xl text-orange-200"></i>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body text-center">
-                            <i class="fas fa-calendar-week text-primary fa-2x mb-2"></i>
-                            <h5>{{ number_format($stats['new_leads_this_week']) }}</h5>
-                            <p class="text-muted mb-0">Bu Haftaki Yeni Leadler</p>
+
+                <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-6 text-white">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-purple-100 text-sm">Bu Haftaki Yeni</p>
+                            <p class="text-3xl font-bold">{{ number_format($stats['new_leads_this_week']) }}</p>
                         </div>
+                        <i class="fas fa-calendar-week text-4xl text-purple-200"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Filters -->
-            <div class="card filters-card mb-4">
-                <div class="card-body">
-                    <form method="GET" action="{{ route('admin.leads.index') }}">
-                        <div class="row align-items-end">
-                            <div class="col-md-2">
-                                <label class="form-label text-white-50">Status</label>
-                                <select name="status" class="form-control">
-                                    <option value="">Tüm Statuslar</option>
-                                    @foreach($leadStatuses as $status)
-                                    <option value="{{ $status->id }}" {{ request('status') == $status->id ? 'selected' : '' }}>
-                                        {{ $status->display_name }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label text-white-50">Atama</label>
-                                <select name="assigned" class="form-control">
-                                    <option value="">Tümü</option>
-                                    <option value="unassigned" {{ request('assigned') == 'unassigned' ? 'selected' : '' }}>Atanmamış</option>
-                                    @foreach($admins as $admin)
-                                    <option value="{{ $admin->id }}" {{ request('assigned') == $admin->id ? 'selected' : '' }}>
-                                        {{ $admin->firstName }} {{ $admin->lastName }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label text-white-50">Kaynak</label>
-                                <select name="source" class="form-control">
-                                    <option value="">Tüm Kaynaklar</option>
-                                    <option value="import" {{ request('source') == 'import' ? 'selected' : '' }}>Import</option>
-                                    <option value="manual" {{ request('source') == 'manual' ? 'selected' : '' }}>Manuel</option>
-                                    <option value="web_form" {{ request('source') == 'web_form' ? 'selected' : '' }}>Web Formu</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label text-white-50">Başlangıç</label>
-                                <input type="date" name="date_from" class="form-control" value="{{ request('date_from') }}">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label text-white-50">Bitiş</label>
-                                <input type="date" name="date_to" class="form-control" value="{{ request('date_to') }}">
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-light w-100">
-                                    <i class="fas fa-search me-2"></i>Filtrele
-                                </button>
-                            </div>
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 mb-6">
+                <form method="GET" action="{{ route('admin.leads.index') }}" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+                        <div>
+                            <label class="block text-white/70 text-sm font-medium mb-2">Status</label>
+                            <select name="status" class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
+                                <option value="">Tüm Statuslar</option>
+                                @foreach($leadStatuses as $status)
+                                <option value="{{ $status->id }}" {{ request('status') == $status->id ? 'selected' : '' }}>
+                                    {{ $status->display_name }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
-                        
-                        <div class="row mt-3">
-                            <div class="col-md-10">
-                                <input type="text" name="search" class="form-control" 
-                                       placeholder="Ad, e-posta veya telefon ile ara..." 
-                                       value="{{ request('search') }}">
-                            </div>
-                            <div class="col-md-2">
-                                <a href="{{ route('admin.leads.index') }}" class="btn btn-outline-light w-100">
-                                    <i class="fas fa-times me-2"></i>Temizle
-                                </a>
-                            </div>
+                        <div>
+                            <label class="block text-white/70 text-sm font-medium mb-2">Atama</label>
+                            <select name="assigned" class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
+                                <option value="">Tümü</option>
+                                <option value="unassigned" {{ request('assigned') == 'unassigned' ? 'selected' : '' }}>Atanmamış</option>
+                                @foreach($admins as $admin)
+                                <option value="{{ $admin->id }}" {{ request('assigned') == $admin->id ? 'selected' : '' }}>
+                                    {{ $admin->firstName }} {{ $admin->lastName }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
-                    </form>
-                </div>
+                        <div>
+                            <label class="block text-white/70 text-sm font-medium mb-2">Kaynak</label>
+                            <select name="source" class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
+                                <option value="">Tüm Kaynaklar</option>
+                                <option value="import" {{ request('source') == 'import' ? 'selected' : '' }}>Import</option>
+                                <option value="manual" {{ request('source') == 'manual' ? 'selected' : '' }}>Manuel</option>
+                                <option value="web_form" {{ request('source') == 'web_form' ? 'selected' : '' }}>Web Formu</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white/70 text-sm font-medium mb-2">Başlangıç</label>
+                            <input type="date" name="date_from" value="{{ request('date_from') }}"
+                                   class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
+                        </div>
+                        <div>
+                            <label class="block text-white/70 text-sm font-medium mb-2">Bitiş</label>
+                            <input type="date" name="date_to" value="{{ request('date_to') }}"
+                                   class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
+                        </div>
+                        <div class="flex items-end">
+                            <button type="submit" class="w-full px-4 py-2 bg-white text-indigo-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+                                <i class="fas fa-search mr-2"></i>Filtrele
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+                        <div class="md:col-span-5">
+                            <input type="text" name="search" placeholder="Ad, e-posta veya telefon ile ara..." value="{{ request('search') }}"
+                                   class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
+                        </div>
+                        <div>
+                            <a href="{{ route('admin.leads.index') }}" class="w-full px-4 py-3 bg-white/20 text-white font-semibold rounded-lg hover:bg-white/30 transition-colors flex items-center justify-center">
+                                <i class="fas fa-times mr-2"></i>Temizle
+                            </a>
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <!-- Bulk Actions -->
-            <div class="bulk-actions" id="bulkActions">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
+            <div id="bulkActions" class="hidden bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl p-4 mb-6">
+                <div class="flex items-center justify-between">
+                    <div class="text-gray-700">
                         <strong><span id="selectedCount">0</span></strong> lead seçildi
                     </div>
-                    <div>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#bulkAssignModal">
-                            <i class="fas fa-user-plus me-1"></i>Toplu Atama
+                    <div class="flex space-x-3">
+                        <button type="button" 
+                                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#bulkAssignModal">
+                            <i class="fas fa-user-plus mr-2"></i>Toplu Atama
                         </button>
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="clearSelection()">
-                            <i class="fas fa-times me-1"></i>Seçimi Temizle
+                        <button type="button" 
+                                onclick="clearSelection()" 
+                                class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors flex items-center">
+                            <i class="fas fa-times mr-2"></i>Seçimi Temizle
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Leads Table -->
-            <div class="card border-0 shadow-lg">
-                <div class="card-header bg-white py-3 border-0">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">
-                            <i class="fas fa-list me-2 text-primary"></i>Lead Listesi
-                            <span class="text-muted">({{ $leads->total() }} toplam)</span>
-                        </h5>
-                        <div class="d-flex gap-2">
-                            <div class="btn-group btn-group-sm">
-                                <a href="{{ request()->fullUrlWithQuery(['sort' => 'created_at', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}" 
-                                   class="btn btn-outline-primary">
-                                    <i class="fas fa-sort me-1"></i>Tarih
-                                </a>
-                                <a href="{{ request()->fullUrlWithQuery(['sort' => 'lead_score', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}" 
-                                   class="btn btn-outline-primary">
-                                    <i class="fas fa-star me-1"></i>Skor
-                                </a>
-                            </div>
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-list text-blue-600 text-xl mr-3"></i>
+                            <h3 class="text-xl font-semibold text-gray-900">Lead Listesi</h3>
+                            <span class="ml-2 text-gray-500">({{ $leads->total() }} toplam)</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'created_at', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}" 
+                               class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
+                                <i class="fas fa-sort mr-1"></i>Tarih
+                            </a>
+                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'lead_score', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}" 
+                               class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
+                                <i class="fas fa-star mr-1"></i>Skor
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th class="border-0 py-3" style="width: 30px;">
-                                        <input type="checkbox" class="form-check-input" id="selectAll">
-                                    </th>
-                                    <th class="border-0 py-3">Lead Bilgileri</th>
-                                    <th class="border-0 py-3">Status</th>
-                                    <th class="border-0 py-3">Skor</th>
-                                    <th class="border-0 py-3">Atanan</th>
-                                    <th class="border-0 py-3">Son İletişim</th>
-                                    <th class="border-0 py-3">Kaynak</th>
-                                    <th class="border-0 py-3 text-center">İşlemler</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($leads as $lead)
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" class="form-check-input lead-checkbox" value="{{ $lead->id }}">
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-start">
-                                            <div class="flex-fill">
-                                                <div class="d-flex align-items-center mb-1">
-                                                    <strong class="me-2">{{ $lead->name }}</strong>
-                                                    @if($lead->preferred_contact_method)
-                                                    <span class="contact-method-icon text-white"
-                                                          style="background-color: {{ $lead->preferred_contact_method === 'phone' ? '#0d6efd' : '#198754' }};"
-                                                          title="{{ ucfirst($lead->preferred_contact_method) }}">
-                                                        <i class="fas fa-{{ $lead->preferred_contact_method === 'phone' ? 'phone' : 'envelope' }}"></i>
-                                                    </span>
-                                                    @endif
-                                                </div>
-                                                <div class="text-muted small">
-                                                    <i class="fas fa-envelope me-1"></i>{{ $lead->email }}
-                                                </div>
-                                                @if($lead->phone)
-                                                <div class="text-muted small">
-                                                    <i class="fas fa-phone me-1"></i>{{ $lead->phone }}
-                                                </div>
-                                                @endif
-                                                @if($lead->country)
-                                                <div class="text-muted small">
-                                                    <i class="fas fa-flag me-1"></i>{{ $lead->country }}
-                                                </div>
-                                                @endif
-                                                @if($lead->lead_tags)
-                                                <div class="mt-1">
-                                                    @foreach($lead->lead_tags as $tag)
-                                                    <span class="badge badge-light badge-sm">{{ $tag }}</span>
-                                                    @endforeach
-                                                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
+                            <tr>
+                                <th class="px-6 py-4 text-left">
+                                    <input type="checkbox" id="selectAll" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lead Bilgileri</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Skor</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Atanan</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Son İletişim</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kaynak</th>
+                                <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @forelse($leads as $lead)
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="lead-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" value="{{ $lead->id }}">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-start">
+                                        <div>
+                                            <div class="flex items-center">
+                                                <div class="text-sm font-medium text-gray-900">{{ $lead->name }}</div>
+                                                @if($lead->preferred_contact_method)
+                                                <span class="ml-2 inline-flex items-center justify-center w-5 h-5 text-xs text-white rounded-full {{ $lead->preferred_contact_method === 'phone' ? 'bg-blue-500' : 'bg-green-500' }}">
+                                                    <i class="fas fa-{{ $lead->preferred_contact_method === 'phone' ? 'phone' : 'envelope' }}"></i>
+                                                </span>
                                                 @endif
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @if($lead->leadStatus)
-                                        <span class="status-badge" style="background-color: {{ $lead->leadStatus->color }}; color: white;">
-                                            {{ $lead->leadStatus->display_name }}
-                                        </span>
-                                        @else
-                                        <span class="badge badge-secondary">Belirlenmemiş</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div class="lead-score {{ $lead->lead_score >= 70 ? 'high' : ($lead->lead_score >= 40 ? 'medium' : 'low') }}">
-                                            {{ $lead->lead_score }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @if($lead->assignedAdmin)
-                                        <div class="d-flex align-items-center">
-                                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2" 
-                                                 style="width: 32px; height: 32px; font-size: 0.8rem;">
-                                                {{ substr($lead->assignedAdmin->firstName, 0, 1) }}{{ substr($lead->assignedAdmin->lastName, 0, 1) }}
+                                            <div class="text-sm text-gray-500">
+                                                <i class="fas fa-envelope mr-1"></i>{{ $lead->email }}
                                             </div>
-                                            <div>
-                                                <div class="small font-weight-bold">{{ $lead->assignedAdmin->firstName }} {{ $lead->assignedAdmin->lastName }}</div>
+                                            @if($lead->phone)
+                                            <div class="text-sm text-gray-500">
+                                                <i class="fas fa-phone mr-1"></i>{{ $lead->phone }}
                                             </div>
-                                        </div>
-                                        @else
-                                        <span class="text-muted small">Atanmamış</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($lead->last_contact_date)
-                                        <div class="small">
-                                            <div>{{ $lead->last_contact_date->format('d.m.Y') }}</div>
-                                            <div class="text-muted">{{ $lead->last_contact_date->diffForHumans() }}</div>
-                                        </div>
-                                        @else
-                                        <span class="text-muted small">Hiçbir zaman</span>
-                                        @endif
-                                        
-                                        @if($lead->next_follow_up_date)
-                                        <div class="small mt-1">
-                                            <span class="badge badge-{{ $lead->next_follow_up_date->isPast() ? 'danger' : 'info' }} badge-sm">
-                                                Sonraki: {{ $lead->next_follow_up_date->format('d.m.Y') }}
-                                            </span>
-                                        </div>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($lead->lead_source)
-                                        <span class="badge bg-secondary text-white">
-                                            {{ ucfirst($lead->lead_source) }}
-                                        </span>
-                                        @endif
-                                        <div class="text-muted small">
-                                            {{ $lead->created_at->format('d.m.Y H:i') }}
-                                        </div>
-                                    </td>
-                                    <td class="text-center table-actions">
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('admin.leads.show', $lead->id) }}" 
-                                               class="btn btn-outline-primary btn-sm" 
-                                               title="Detaylar">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            @if(!$lead->isAssigned() || $isSuperAdmin || $lead->assign_to === auth('admin')->id())
-                                            <button type="button" 
-                                                    class="btn btn-outline-success btn-sm" 
-                                                    onclick="quickAssign({{ $lead->id }}, '{{ $lead->name }}')"
-                                                    title="Hızlı Atama">
-                                                <i class="fas fa-user-plus"></i>
-                                            </button>
+                                            @endif
+                                            @if($lead->country)
+                                            <div class="text-sm text-gray-500">
+                                                <i class="fas fa-flag mr-1"></i>{{ $lead->country }}
+                                            </div>
+                                            @endif
+                                            @if($lead->lead_tags)
+                                            <div class="flex flex-wrap gap-1 mt-1">
+                                                @foreach($lead->lead_tags as $tag)
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">{{ $tag }}</span>
+                                                @endforeach
+                                            </div>
                                             @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="8" class="text-center py-5">
-                                        <div class="text-muted">
-                                            <i class="fas fa-inbox fa-3x mb-3"></i>
-                                            <h5>Henüz lead bulunmuyor</h5>
-                                            <p>Filtreleri değiştirmeyi deneyin veya yeni lead ekleyin.</p>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($lead->leadStatus)
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium text-white"
+                                          style="background-color: {{ $lead->leadStatus->color }};">
+                                        {{ $lead->leadStatus->display_name }}
+                                    </span>
+                                    @else
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-500 text-white">
+                                        Belirlenmemiş
+                                    </span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center justify-center w-10 h-10 rounded-full text-sm font-bold border-2
+                                                {{ $lead->lead_score >= 70 ? 'bg-green-100 text-green-800 border-green-400' : 
+                                                   ($lead->lead_score >= 40 ? 'bg-yellow-100 text-yellow-800 border-yellow-400' : 'bg-red-100 text-red-800 border-red-400') }}">
+                                        {{ $lead->lead_score }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($lead->assignedAdmin)
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-8 h-8">
+                                            <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-medium">
+                                                {{ substr($lead->assignedAdmin->firstName, 0, 1) }}{{ substr($lead->assignedAdmin->lastName, 0, 1) }}
+                                            </div>
                                         </div>
-                                    </td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+                                        <div class="ml-2">
+                                            <div class="text-sm font-medium text-gray-900">{{ $lead->assignedAdmin->firstName }} {{ $lead->assignedAdmin->lastName }}</div>
+                                        </div>
+                                    </div>
+                                    @else
+                                    <span class="text-sm text-gray-500">Atanmamış</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    @if($lead->last_contact_date)
+                                    <div>
+                                        <div>{{ $lead->last_contact_date->format('d.m.Y') }}</div>
+                                        <div class="text-gray-500">{{ $lead->last_contact_date->diffForHumans() }}</div>
+                                    </div>
+                                    @else
+                                    <span class="text-gray-500">Hiçbir zaman</span>
+                                    @endif
+                                    
+                                    @if($lead->next_follow_up_date)
+                                    <div class="mt-1">
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
+                                                     {{ $lead->next_follow_up_date->isPast() ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800' }}">
+                                            Sonraki: {{ $lead->next_follow_up_date->format('d.m.Y') }}
+                                        </span>
+                                    </div>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($lead->lead_source)
+                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                        {{ ucfirst($lead->lead_source) }}
+                                    </span>
+                                    @endif
+                                    <div class="text-sm text-gray-500 mt-1">
+                                        {{ $lead->created_at->format('d.m.Y H:i') }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    <div class="flex items-center justify-center space-x-2">
+                                        <a href="{{ route('admin.leads.show', $lead->id) }}" 
+                                           class="text-blue-600 hover:text-blue-900 transition-colors" 
+                                           title="Detaylar">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        @if(!$lead->isAssigned() || $isSuperAdmin || $lead->assign_to === auth('admin')->id())
+                                        <button type="button" 
+                                                onclick="quickAssign({{ $lead->id }}, '{{ $lead->name }}')" 
+                                                class="text-green-600 hover:text-green-900 transition-colors" 
+                                                title="Hızlı Atama">
+                                            <i class="fas fa-user-plus"></i>
+                                        </button>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="8" class="px-6 py-12 text-center">
+                                    <div class="text-gray-400">
+                                        <i class="fas fa-inbox text-4xl mb-4"></i>
+                                        <h3 class="text-lg font-medium text-gray-900 mb-1">Henüz lead bulunmuyor</h3>
+                                        <p class="text-gray-500">Filtreleri değiştirmeyi deneyin veya yeni lead ekleyin.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <!-- Pagination -->
             @if($leads->hasPages())
-            <div class="d-flex justify-content-center mt-4">
+            <div class="flex justify-center mt-6">
                 {{ $leads->appends(request()->query())->links() }}
             </div>
             @endif
@@ -705,9 +570,9 @@ function toggleBulkActions() {
     const bulkActions = document.getElementById('bulkActions');
     
     if (checkedBoxes.length > 0) {
-        bulkActions.classList.add('show');
+        bulkActions.classList.remove('hidden');
     } else {
-        bulkActions.classList.remove('show');
+        bulkActions.classList.add('hidden');
     }
 }
 
@@ -722,8 +587,6 @@ function clearSelection() {
 }
 
 function quickAssign(leadId, leadName) {
-    // This could open a quick assign modal or dropdown
-    // For now, redirect to detail page
     window.location.href = `/admin/dashboard/leads/${leadId}`;
 }
 
