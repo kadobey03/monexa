@@ -548,9 +548,10 @@ class ViewsController extends Controller
 
     // Referral Page
     public function referuser()
-    {$this->profitreturn(auth()->user()->id);
-
-
+    {
+        // Remove performance-killing profitreturn call from here
+        // This should be handled by scheduled tasks, not on every page load
+        
         return view("user.referuser", [
             'title' => 'Kullanıcıyı Referans Et',
         ]);
@@ -621,67 +622,92 @@ class ViewsController extends Controller
 
     public function profitreturn($user)
     {
-        $settings = Settings::where('id', 1)->first();
-        $trades = User_plans::where('active', 'yes')->where('user', $user)->get();
-        $used = User::find($user);
-
-        $roi = $used->roi;
-        $account_bal = $used->account_bal;
-        $now = now();
-
-        foreach ($trades as $trade){
-            if($trade->active=='yes'){
-
-                if (!($now->lessThanOrEqualTo($trade->expire_date))) {
-
-
-                    if($used->tradetype=='Profit'){
-
-                        $profit = $trade->leverage*$trade->amount*0.01;
-
-                        User::where('id', $used->id)
-                    ->update([
-                        'roi' => $roi + $profit,
-                        'account_bal' => $account_bal + $trade->amount,
-                    ]);
-                    sleep(2);
-                    //create history
-                    Tp_Transaction::create([
+        // OPTIMIZED VERSION - Removed sleep() and batch operations for performance
+        try {
+            $settings = Settings::where('id', 1)->first();
+            $now = now();
+            
+            // Only get expired trades that are still active
+            $trades = User_plans::where('active', 'yes')
+                ->where('user', $user)
+                ->where('expire_date', '<', $now)
+                ->get();
+            
+            if ($trades->isEmpty()) {
+                return; // Early exit if no expired trades
+            }
+            
+            $used = User::find($user);
+            if (!$used) {
+                return; // User not found
+            }
+            
+            // Batch operations for better performance
+            $totalProfit = 0;
+            $totalBalance = 0;
+            $tradeIds = [];
+            $transactions = [];
+            
+            foreach ($trades as $trade) {
+                $tradeIds[] = $trade->id;
+                
+                if ($used->tradetype == 'Profit') {
+                    $profit = $trade->leverage * $trade->amount * 0.01;
+                    $totalProfit += $profit;
+                    $totalBalance += $trade->amount; // Return original investment
+                    
+                    $transactions[] = [
                         'user' => $used->id,
                         'plan' => $trade->assets,
-                        'amount'=>$profit,
-                        'type'=>'WIN',
-                        'leverage'=>$trade->leverage,
-                    ]);
-
-                    }else{
-                            $loss = (100-$trade->leverage)*$trade->amount*0.01;
-                           $amountloss = ($trade->leverage)*$trade->amount*0.01;
-                            User::where('id', $user)
-                            ->update([
-                                'account_bal' => $account_bal + $loss,
-                            ]);
-
-                            Tp_Transaction::create([
-                                'user' => $used->id,
-                                'plan' => $trade->assets,
-                                'amount'=>$amountloss,
-                                'type'=>'LOSE',
-                                'leverage'=> $trade->leverage,
-                            ]);
-                    }
-
-
-                    User_plans::where('id', $trade->id)
-                        ->update([
-                            'active' => "expired",
-                        ]);
+                        'amount' => $profit,
+                        'type' => 'WIN',
+                        'leverage' => $trade->leverage,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                } else {
+                    $loss = (100 - $trade->leverage) * $trade->amount * 0.01;
+                    $amountloss = $trade->leverage * $trade->amount * 0.01;
+                    $totalBalance += $loss;
+                    
+                    $transactions[] = [
+                        'user' => $used->id,
+                        'plan' => $trade->assets,
+                        'amount' => $amountloss,
+                        'type' => 'LOSE',
+                        'leverage' => $trade->leverage,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
                 }
             }
-        //    dd($now->lessThanOrEqualTo($trade->expire_date));
-
-
+            
+            // Perform all database operations in a single transaction for atomicity
+            DB::transaction(function () use ($used, $totalProfit, $totalBalance, $tradeIds, $transactions, $now) {
+                // Update user balance in single query
+                User::where('id', $used->id)->update([
+                    'roi' => $used->roi + $totalProfit,
+                    'account_bal' => $used->account_bal + $totalBalance,
+                    'updated_at' => $now,
+                ]);
+                
+                // Batch insert transactions (much faster than individual creates)
+                if (!empty($transactions)) {
+                    Tp_Transaction::insert($transactions);
+                }
+                
+                // Batch update trade status (single query instead of multiple)
+                if (!empty($tradeIds)) {
+                    User_plans::whereIn('id', $tradeIds)->update([
+                        'active' => 'expired',
+                        'updated_at' => $now,
+                    ]);
+                }
+            });
+            
+        } catch (\Exception $e) {
+            // Log error but don't break the application
+            \Log::error('Error in profitreturn method: ' . $e->getMessage());
         }
-
     }
 }
