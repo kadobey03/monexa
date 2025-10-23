@@ -43,7 +43,9 @@ class CheckBannedUser
         }
 
         return $next($request);
-    }    /**
+    }
+
+    /**
      * Get a user-friendly reason for the ban
      */
     private function getBannedReason($status)
