@@ -19,16 +19,17 @@ class EnsureIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        $api = new meta();
+        // License check temporarily disabled for development
+        // $api = new meta();
         
         if (Auth::guard('admin')->check()) {
             
-            $res = $api->verify_license();
-            if($res != true){
-              die("
-              <h3>Sorry for interrupting! Please check back later.</h3>
-              ");
-            }
+            // $res = $api->verify_license();
+            // if($res != true){
+            //   die("
+            //   <h3>Sorry for interrupting! Please check back later.</h3>
+            //   ");
+            // }
 
         return $next($request);
         } else {
