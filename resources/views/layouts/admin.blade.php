@@ -387,11 +387,11 @@ x-init="
                             </div>
 
                             <div class="p-2">
-                                <a href="{{ route('admin.profile') }}" class="flex items-center px-3 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
+                                <a href="{{ route('adminprofile') }}" class="flex items-center px-3 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
                                     <i data-lucide="user-cog" class="w-4 h-4 mr-3"></i>
                                     Hesap Ayarları
                                 </a>
-                                <a href="{{ route('admin.password.change') }}" class="flex items-center px-3 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
+                                <a href="{{ url('admin/dashboard/adminchangepassword') }}" class="flex items-center px-3 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
                                     <i data-lucide="key" class="w-4 h-4 mr-3"></i>
                                     Şifre Değiştir
                                 </a>
