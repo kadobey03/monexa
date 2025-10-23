@@ -13,7 +13,3 @@ const axios = require("axios");
 //         console.log(error);
 //     });
 
-let MetaApi = require("metaapi.cloud-sdk").default;
-let CopyFactory = require("metaapi.cloud-sdk").CopyFactory;
-console.log("Hello");
-alert("jelldl");

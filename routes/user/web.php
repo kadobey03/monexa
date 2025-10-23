@@ -21,6 +21,7 @@ use App\Http\Controllers\User\FlutterwaveController;
 use App\Http\Controllers\User\UserNotificationController;
 use App\Http\Controllers\User\MembershipController;
 use App\Http\Controllers\User\TransferController;
+use App\Http\Controllers\User\CryptoController;
 use Illuminate\Support\Facades\Route;
 
 // Email verification routes
@@ -232,6 +233,11 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('notifications')->group(
     Route::post('/mark-all-read', [UserNotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
     Route::delete('/delete', [UserNotificationController::class, 'webDeleteNotification'])->name('notifications.delete');
     Route::get('/count', [UserNotificationController::class, 'getUnreadCount'])->name('notifications.count');
+});
+
+// Crypto API Routes (for CORS bypass)
+Route::middleware(['auth:sanctum', 'verified'])->prefix('api/crypto')->group(function () {
+    Route::get('/prices', [CryptoController::class, 'getPrices'])->name('api.crypto.prices');
 });
 
 // Include demo trading routes

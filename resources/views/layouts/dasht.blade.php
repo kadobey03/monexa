@@ -19,80 +19,7 @@
     <!-- Tailwind CSS Local -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
-    <!-- Enable dark mode class strategy -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            200: '#c7d2fe',
-                            300: '#a5b4fc',
-                            400: '#818cf8',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
-                            900: '#312e81',
-                        },
-                        'glass': 'rgba(255, 255, 255, 0.05)',
-                    },
-                    backdropBlur: {
-                        'xs': '2px',
-                    },
-                    animation: {
-                        'gradient-x': 'gradient-x 15s ease infinite',
-                        'gradient-y': 'gradient-y 15s ease infinite',
-                        'gradient-xy': 'gradient-xy 15s ease infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        'gradient-y': {
-                            '0%, 100%': {
-                                'background-size': '400% 400%',
-                                'background-position': 'center top'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'center center'
-                            }
-                        },
-                        'gradient-x': {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
-                        },
-                        'gradient-xy': {
-                            '0%, 100%': {
-                                'background-size': '400% 400%',
-                                'background-position': 'left center'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
-                        },
-                        'float': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind configured via Laravel Mix - no CDN config needed -->
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
@@ -756,7 +683,6 @@
 
 
 <!-- Modern Mobile Navigation with Glassmorphism -->
-<link href="https://unpkg.com/lucide@latest" rel="stylesheet">
 
 <div class="fixed bottom-0 w-full z-30 md:hidden" x-data="{ fabOpen: false }" x-cloak>
   <!-- Bottom Navigation Bar with Enhanced Glassmorphism -->
@@ -952,8 +878,8 @@ function cryptoPrices() {
 
     async fetchPrices() {
       try {
-        // Using CoinGecko API (free, no API key required)
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true');
+        // Using Laravel proxy to avoid CORS issues
+        const response = await fetch('/api/crypto/prices');
         const data = await response.json();
 
         if (data.bitcoin && data.ethereum) {

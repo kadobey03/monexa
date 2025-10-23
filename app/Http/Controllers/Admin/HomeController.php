@@ -62,6 +62,7 @@ class HomeController extends Controller
 
         return view('admin.dashboard-modern', [
             'title' => 'Admin Dashboard',
+            'settings' => Settings::find(1),
             'total_deposited' => $total_deposited,
             'pending_deposited' => $pending_deposited,
             'total_withdrawn' => $total_withdrawn,
