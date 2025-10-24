@@ -1,13 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Müşteri Yatırımları'])
+
 @section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
-    
-    <!-- Main Content -->
-    <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+<div class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 min-h-screen">
             <!-- Header Section -->
-            <div class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="bg-white dark:bg-admin-800 border-b border-admin-200 dark:border-admin-700 shadow-sm">
                 <div class="px-4 py-6 sm:px-6 lg:px-8">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                         <div class="flex items-center space-x-4 mb-4 lg:mb-0">
@@ -17,8 +13,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <h1 class="text-3xl font-bold text-gray-900">Müşteri Yatırımlarını Yönet</h1>
-                                <p class="text-gray-600 mt-1">Sistemdeki tüm müşteri yatırımlarını görüntüleyin, onaylayın ve yönetin</p>
+                                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Müşteri Yatırımlarını Yönet</h1>
+                                <p class="text-gray-600 dark:text-gray-400 mt-1">Sistemdeki tüm müşteri yatırımlarını görüntüleyin, onaylayın ve yönetin</p>
                             </div>
                         </div>
                         
@@ -50,7 +46,7 @@
             <div class="px-4 py-6 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                     <!-- Total Amount -->
-                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 overflow-hidden">
+                    <div class="bg-white dark:bg-admin-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-admin-200 dark:border-admin-700 overflow-hidden">
                         <div class="bg-gradient-to-br from-green-500 to-emerald-600 p-6 text-white relative">
                             <div class="absolute inset-0 bg-white/10 transform -skew-y-3 translate-y-8"></div>
                             <div class="relative z-10">
@@ -78,7 +74,7 @@
                     </div>
                     
                     <!-- Processed -->
-                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 overflow-hidden">
+                    <div class="bg-white dark:bg-admin-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-admin-200 dark:border-admin-700 overflow-hidden">
                         <div class="bg-gradient-to-br from-blue-500 to-indigo-600 p-6 text-white relative">
                             <div class="absolute inset-0 bg-white/10 transform -skew-y-3 translate-y-8"></div>
                             <div class="relative z-10">
@@ -106,7 +102,7 @@
                     </div>
                     
                     <!-- Pending -->
-                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 overflow-hidden">
+                    <div class="bg-white dark:bg-admin-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-admin-200 dark:border-admin-700 overflow-hidden">
                         <div class="bg-gradient-to-br from-yellow-500 to-orange-600 p-6 text-white relative">
                             <div class="absolute inset-0 bg-white/10 transform -skew-y-3 translate-y-8"></div>
                             <div class="relative z-10">
@@ -134,7 +130,7 @@
                     </div>
                     
                     <!-- Active Users -->
-                    <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200 overflow-hidden">
+                    <div class="bg-white dark:bg-admin-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-admin-200 dark:border-admin-700 overflow-hidden">
                         <div class="bg-gradient-to-br from-purple-500 to-pink-600 p-6 text-white relative">
                             <div class="absolute inset-0 bg-white/10 transform -skew-y-3 translate-y-8"></div>
                             <div class="relative z-10">
@@ -163,11 +159,11 @@
                 </div>
                 
                 <!-- Main Table -->
-                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                <div class="bg-white dark:bg-admin-800 rounded-xl shadow-lg border border-admin-200 dark:border-admin-700 overflow-hidden">
                     <!-- Table Header -->
-                    <div class="bg-gradient-to-r from-gray-50 to-blue-50 px-6 py-4 border-b border-gray-200">
+                    <div class="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-admin-900 dark:to-admin-800 px-6 py-4 border-b border-admin-200 dark:border-admin-700">
                         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4 lg:mb-0">Yatırım Listesi</h2>
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 lg:mb-0">Yatırım Listesi</h2>
                             <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                                 <div class="relative">
                                     <input type="text" id="searchInput" placeholder="Müşteri, tutar veya durum ara..." 
@@ -194,8 +190,8 @@
                     
                     <!-- Table Content -->
                     <div class="overflow-x-auto">
-                        <table id="depositsTable" class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                        <table id="depositsTable" class="min-w-full divide-y divide-admin-200 dark:divide-admin-700">
+                            <thead class="bg-gray-50 dark:bg-admin-900">
                                 <tr>
                                     <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Müşteri
@@ -223,7 +219,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tbody class="bg-white dark:bg-admin-800 divide-y divide-admin-200 dark:divide-admin-700">
                                 @forelse ($deposits as $deposit)
                                     <tr class="hover:bg-gray-50 transition-colors duration-200">
                                         <!-- Customer -->
@@ -243,7 +239,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-white">
                                                         {{ isset($deposit->duser->name) && $deposit->duser->name != null ? $deposit->duser->name : "Kullanıcı silinmiş" }}
                                                     </div>
                                                 </div>
@@ -252,7 +248,7 @@
                                         
                                         <!-- Email -->
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm text-gray-900">
+                                            <div class="text-sm text-gray-900 dark:text-white">
                                                 {{ isset($deposit->duser->email) && $deposit->duser->email != null ? $deposit->duser->email : "Kullanıcı silinmiş" }}
                                             </div>
                                         </td>
@@ -314,7 +310,7 @@
                                         
                                         <!-- Date -->
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="flex items-center text-sm text-gray-900">
+                                            <div class="flex items-center text-sm text-gray-900 dark:text-white">
                                                 <svg class="w-4 h-4 mr-2 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                                                 </svg>
@@ -365,7 +361,7 @@
                                                         <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
                                                     </svg>
                                                 </div>
-                                                <h3 class="text-lg font-medium text-gray-900 mb-2">Henüz Yatırım Kaydı Bulunmuyor</h3>
+                                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Henüz Yatırım Kaydı Bulunmuyor</h3>
                                                 <p class="text-gray-500 mb-6">Müşteriler yatırım yaptığında kayıtlar burada görünecektir.</p>
                                                 <button onclick="window.location.reload()" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
                                                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -383,7 +379,7 @@
                     
                     <!-- Pagination -->
                     @if($deposits->hasPages())
-                        <div class="bg-white px-6 py-4 border-t border-gray-200">
+                        <div class="bg-white dark:bg-admin-800 px-6 py-4 border-t border-admin-200 dark:border-admin-700">
                             <div class="flex items-center justify-between">
                                 <div class="text-sm text-gray-700">
                                     <span>Gösterilen:</span>
@@ -410,10 +406,10 @@
                     @endif
                 </div>
             </div>
-        </div>
     </div>
-    
-    <!-- JavaScript -->
+</div>
+
+<!-- JavaScript -->
     <script>
         // Search functionality
         document.getElementById('searchInput').addEventListener('input', function(e) {

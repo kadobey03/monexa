@@ -1,140 +1,223 @@
-<?php
-if (Auth('admin')->User()->dashboard_style == 'light') {
-    $text = 'dark';
-} else {
-    $text = 'light';
-}
-?>
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Yeni Kullanıcı Ekle'])
+
 @section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
-    <div class="main-panel ">
-        <div class="content  ">
-            <div class="page-inner">
-                <div class="mt-2 mb-4">
-                    <h1 class="title1 ">Add New users to {{ $settings->site_name }} community</h1>
-                </div>
-                @if (Session::has('message'))
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="alert alert-info alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <i class="fa fa-info-circle"></i> {{ Session::get('message') }}
-                            </div>
-                        </div>
-                    </div>
-                @endif
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Yeni Kullanıcı Ekle</h1>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ $settings->site_name }} topluluğuna yeni kullanıcılar ekleyin</p>
+        </div>
+        <div class="flex items-center space-x-2">
+            <i data-lucide="user-plus" class="h-5 w-5 text-gray-500 dark:text-gray-400"></i>
+            <span class="text-sm text-gray-500 dark:text-gray-400">Manuel Kayıt</span>
+        </div>
+    </div>
 
-                @if (count($errors) > 0)
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="alert alert-danger alert-dismissable" role="alert">
-                                <button type="button" class="close" data-dismiss="alert"
-                                    aria-hidden="true">&times;</button>
-                                @foreach ($errors->all() as $error)
-                                    <i class="fa fa-warning"></i> {{ $error }}
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                <div class="mb-5 row">
-                    <div class="col-lg-8 offset-lg-2 card p-3  shadow">
-                        <form method="POST" action="{{ url('admin/dashboard/saveuser') }}">
-                            {{ csrf_field() }}
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="f_name">Username</label>
-                                    <input type="text" class="mr-2 form-control" name="username"
-                                        placeholder="Enter Unique Username" required>
-                                    @if ($errors->has('username'))
-                                        <small class="text-danger">{{ $errors->first('username') }}</small>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <h4 class="">FullName</h4>
-                                <div>
-                                    <input id="name" type="text" class="form-control  " name="name"
-                                        value="{{ old('name') }}" required>
-                                    @if ($errors->has('name'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('name') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
+    <!-- Alert Messages -->
+    @if (Session::has('message'))
+        <div class="rounded-md bg-blue-50 dark:bg-blue-900/50 p-4 border border-blue-200 dark:border-blue-700">
+            <div class="flex">
+                <i data-lucide="info" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3"></i>
+                <div class="text-sm text-blue-700 dark:text-blue-300">{{ Session::get('message') }}</div>
+            </div>
+        </div>
+    @endif
 
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-
-                                <h4 class="">E-Mail Address</h4>
-                                <div>
-                                    <input id="email" type="email" class="form-control  " name="email"
-                                        value="{{ old('email') }}" required>
-
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-
-                                <h4 class="">Phone number</h4>
-                                <div>
-                                    <input id="phone" type="number" class="form-control  " name="phone"
-                                        value="{{ old('phone') }}" required>
-
-                                    @if ($errors->has('phone'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('phone') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-
-                                <h4 class="">Password</h4>
-                                <div>
-                                    <input id="password" type="password" class="form-control  " name="password" required>
-
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                <h4 class="">Confirm Password</h4>
-
-                                <div>
-                                    <input id="password-confirm" type="password" class="form-control  "
-                                        name="password_confirmation" required>
-
-                                    @if ($errors->has('password_confirmation'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div>
-                                    <button type="submit" class="px-5 btn btn-primary btn-lg">
-                                        <i class="fa fa-btn fa-user"></i> Save User
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+    @if (count($errors) > 0)
+        <div class="rounded-md bg-red-50 dark:bg-red-900/50 p-4 border border-red-200 dark:border-red-700">
+            <div class="flex">
+                <i data-lucide="alert-triangle" class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 mr-3"></i>
+                <div class="text-sm text-red-700 dark:text-red-300">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
                 </div>
             </div>
         </div>
-    @endsection
+    @endif
+
+    <!-- User Registration Form -->
+    <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                <i data-lucide="user-plus" class="h-5 w-5 mr-2"></i>
+                Kullanıcı Bilgileri
+            </h2>
+        </div>
+
+        <div class="p-6">
+            <form method="POST" action="{{ url('admin/dashboard/saveuser') }}" class="space-y-6">
+                @csrf
+
+                <!-- Username -->
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i data-lucide="at-sign" class="h-4 w-4 inline mr-1"></i>
+                        Kullanıcı Adı
+                    </label>
+                    <input type="text"
+                           id="username"
+                           name="username"
+                           value="{{ old('username') }}"
+                           placeholder="Benzersiz kullanıcı adı girin"
+                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('username') border-red-300 @enderror"
+                           required>
+                    @error('username')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Full Name -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i data-lucide="user" class="h-4 w-4 inline mr-1"></i>
+                        Ad Soyad
+                    </label>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           value="{{ old('name') }}"
+                           placeholder="Tam adını girin"
+                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('name') border-red-300 @enderror"
+                           required>
+                    @error('name')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Email Address -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i data-lucide="mail" class="h-4 w-4 inline mr-1"></i>
+                        E-posta Adresi
+                    </label>
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           value="{{ old('email') }}"
+                           placeholder="email@example.com"
+                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('email') border-red-300 @enderror"
+                           required>
+                    @error('email')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Phone Number -->
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i data-lucide="phone" class="h-4 w-4 inline mr-1"></i>
+                        Telefon Numarası
+                    </label>
+                    <input type="tel"
+                           id="phone"
+                           name="phone"
+                           value="{{ old('phone') }}"
+                           placeholder="Telefon numarasını girin"
+                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('phone') border-red-300 @enderror"
+                           required>
+                    @error('phone')
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Password Fields -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i data-lucide="lock" class="h-4 w-4 inline mr-1"></i>
+                            Şifre
+                        </label>
+                        <div class="relative">
+                            <input type="password"
+                                   id="password"
+                                   name="password"
+                                   placeholder="Güçlü şifre girin"
+                                   class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('password') border-red-300 @enderror"
+                                   required>
+                            <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i data-lucide="eye" class="h-4 w-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" id="password-eye"></i>
+                            </button>
+                        </div>
+                        @error('password')
+                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <i data-lucide="lock" class="h-4 w-4 inline mr-1"></i>
+                            Şifre Onayı
+                        </label>
+                        <div class="relative">
+                            <input type="password"
+                                   id="password_confirmation"
+                                   name="password_confirmation"
+                                   placeholder="Şifreyi tekrar girin"
+                                   class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('password_confirmation') border-red-300 @enderror"
+                                   required>
+                            <button type="button" onclick="togglePassword('password_confirmation')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i data-lucide="eye" class="h-4 w-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" id="password_confirmation-eye"></i>
+                            </button>
+                        </div>
+                        @error('password_confirmation')
+                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200 dark:border-admin-700">
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:bg-admin-700 dark:border-admin-600 dark:text-gray-300 dark:hover:bg-admin-600">
+                        <i data-lucide="arrow-left" class="h-4 w-4 mr-2"></i>
+                        İptal
+                    </a>
+                    <button type="submit"
+                            class="inline-flex items-center px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
+                        <i data-lucide="user-plus" class="h-4 w-4 mr-2"></i>
+                        Kullanıcıyı Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Information Card -->
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-lg p-6 border border-blue-200 dark:border-blue-700">
+        <div class="flex items-start">
+            <i data-lucide="info" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3"></i>
+            <div>
+                <h3 class="font-medium text-blue-900 dark:text-blue-100">Önemli Bilgiler</h3>
+                <div class="mt-2 text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                    <p>• Kullanıcı adı benzersiz olmalıdır</p>
+                    <p>• E-posta adresi geçerli ve aktif olmalıdır</p>
+                    <p>• Şifre en az 8 karakter olmalıdır</p>
+                    <p>• Telefon numarası doğru formatta girilmelidir</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePassword(fieldId) {
+    const field = document.getElementById(fieldId);
+    const eye = document.getElementById(fieldId + '-eye');
+    
+    if (field.type === 'password') {
+        field.type = 'text';
+        eye.setAttribute('data-lucide', 'eye-off');
+    } else {
+        field.type = 'password';
+        eye.setAttribute('data-lucide', 'eye');
+    }
+    
+    // Refresh Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+</script>
+@endsection

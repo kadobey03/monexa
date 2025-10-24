@@ -1,110 +1,86 @@
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Yeni Görev Oluştur'])
+
 @section('content')
-@section('styles')
-<style>
-    .bg-gradient-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-    .page-icon-wrapper {
-        position: relative;
-    }
-    .page-icon {
-        width: 70px;
-        height: 70px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    .form-card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .form-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    .date-icon {
-        flex-shrink: 0;
-    }
-    .priority-icon {
-        flex-shrink: 0;
-    }
-    .form-control-lg {
-        padding: 0.75rem 1rem;
-        font-size: 1.1rem;
-    }
-    .btn-lg {
-        font-size: 1.1rem;
-    }
-</style>
-@endsection
-@include('admin.topmenu')
-@include('admin.sidebar')
-<!-- Admin Layout Container -->
-<div class="min-h-screen bg-gray-50">
-    <!-- Main Content -->
-    <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
+        <!-- Header Section -->
+        <div class="bg-white dark:bg-admin-800 border-b border-gray-200 dark:border-admin-700 shadow-sm">
             <div class="px-4 py-6 sm:px-6 lg:px-8">
-            <div class="mt-2 mb-5 d-flex align-items-center">
-                <div class="page-icon-wrapper me-3">
-                    <div class="page-icon bg-gradient-primary text-white rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="fas fa-tasks fa-2x"></i>
+                <div class="flex items-center space-x-4">
+                    <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
+                        <i data-lucide="clipboard-list" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Yeni Görev Oluştur</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">Sistemde yeni görev tanımlayın ve yöneticiye atayın</p>
                     </div>
                 </div>
-                <div>
-                    <h1 class="title1 mb-1">Yeni Görev Oluştur</h1>
-                    <p class="text-muted mb-0">Sistemde yeni görev tanımlayın ve yöneticiye atayın</p>
-                </div>
             </div>
-                <x-danger-alert />
-                <x-success-alert />
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="card shadow-lg border-0 overflow-hidden">
-                            <div class="card-header bg-gradient-primary text-white py-3">
-                                <div class="d-flex align-items-center">
-                                    <i class="fas fa-plus-circle fa-lg me-2"></i>
-                                    <h4 class="mb-0 text-white">Görev Bilgileri</h4>
-                                </div>
-                            </div>
-                            <div class="card-body p-4">
-                                <form method="post" action="{{ route('addtask') }}" enctype="multipart/form-data">
+        </div>
+        
+        <!-- Alert Messages -->
+        <div class="px-4 sm:px-6 lg:px-8 pt-4">
+            <x-danger-alert />
+            <x-success-alert />
+        </div>
+        
+        <!-- Form Content -->
+        <div class="px-4 py-6 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-xl border border-gray-200 dark:border-admin-700 overflow-hidden">
+                    <!-- Form Header -->
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-6 text-white">
+                        <div class="flex items-center">
+                            <i data-lucide="plus-circle" class="w-6 h-6 mr-3"></i>
+                            <h2 class="text-xl font-bold">Görev Bilgileri</h2>
+                        </div>
+                    </div>
+                    
+                    <!-- Form Body -->
+                    <div class="p-6">
+                        <form method="post" action="{{ route('addtask') }}" enctype="multipart/form-data">
+                            @csrf
 
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                                         <div class="space-y-4">
-                                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-100 hover:shadow-md transition-all duration-200">
-                                                <div class="flex items-center mb-3">
-                                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-3">
-                                                        <i class="fas fa-heading text-white"></i>
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="text-blue-700 font-semibold mb-1">Görev Başlığı</h6>
-                                                        <p class="text-blue-600 text-sm">Görev için açıklayıcı başlık</p>
-                                                    </div>
-                                                </div>
-                                                <input type="text" name="tasktitle"
-                                                       class="w-full px-4 py-3 border border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm"
-                                                       placeholder="Görev başlığını buraya yazın..." required>
-                                            </div>
+                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-800 hover:shadow-md transition-all duration-200">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-3">
+                                        <i data-lucide="type" class="w-5 h-5 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-blue-700 dark:text-blue-300 font-semibold mb-1">Görev Başlığı</h6>
+                                        <p class="text-blue-600 dark:text-blue-400 text-sm">Görev için açıklayıcı başlık</p>
+                                    </div>
+                                </div>
+                                <input type="text" name="tasktitle"
+                                       class="w-full px-4 py-3 border border-blue-200 dark:border-blue-700 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                       placeholder="Görev başlığını buraya yazın..." required>
+                            </div>
                                         </div>
 
                                         <div class="space-y-4">
-                                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-xl border border-green-100 hover:shadow-md transition-all duration-200">
-                                                <div class="flex items-center mb-3">
-                                                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-3">
-                                                        <i class="fas fa-user-tie text-white"></i>
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="text-green-700 font-semibold mb-1">Sorumlu Yönetici</h6>
-                                                        <p class="text-green-600 text-sm">Görev atanacak yönetici</p>
-                                                    </div>
-                                                </div>
-                                                <select name="delegation"
-                                                        class="w-full px-4 py-3 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm" required>
-                                                    <option value="" disabled selected>Yönetici seçin...</option>
-                                                    @foreach ($admin as $user)
-                                                        <option value="{{ $user->id }}">{{ $user->firstName }} {{ $user->lastName }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-4 rounded-xl border border-green-100 dark:border-green-800 hover:shadow-md transition-all duration-200">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-3">
+                                        <i data-lucide="user-check" class="w-5 h-5 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-green-700 dark:text-green-300 font-semibold mb-1">Sorumlu Yönetici</h6>
+                                        <p class="text-green-600 dark:text-green-400 text-sm">Görev atanacak yönetici</p>
+                                    </div>
+                                </div>
+                                <select name="delegation"
+                                        class="w-full px-4 py-3 border border-green-200 dark:border-green-700 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200" required>
+                                    <option value="" disabled selected>Yönetici seçin...</option>
+                                    @foreach ($admin as $user)
+                                        <option value="{{ $user->id }}">{{ $user->firstName }} {{ $user->lastName }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                                         </div>
                                     </div>
 
@@ -185,12 +161,10 @@
 
                                 </form>
                             </div>
-                        </div>
-
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-    @endsection
+@endsection

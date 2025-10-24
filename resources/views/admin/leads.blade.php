@@ -1,13 +1,9 @@
-@extends('layouts.app')
-@section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
+@extends('layouts.admin', ['title' => 'Lead Yönetimi'])
 
-    <!-- Main Content -->
-    <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+@section('content')
+<div class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 min-h-screen">
             <!-- Header Section -->
-            <div class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="bg-white dark:bg-admin-800 border-b border-admin-200 dark:border-admin-700 shadow-sm">
                 <div class="px-4 py-6 sm:px-6 lg:px-8">
                     <div class="flex items-center space-x-4">
                         <div class="p-3 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl shadow-lg">
@@ -16,8 +12,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-3xl font-bold text-gray-900">Lead Yönetimi</h1>
-                            <p class="text-gray-600 mt-1">Sistem güncellemesi - Yeni arayüz kullanılabilir</p>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Lead Yönetimi</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">Sistem güncellemesi - Yeni arayüz kullanılabilir</p>
                         </div>
                     </div>
                 </div>
@@ -138,77 +134,77 @@
 
                 <!-- Info Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-6xl mx-auto">
-                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50">
+                    <div class="bg-white/80 dark:bg-admin-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50 dark:border-admin-700/50">
                         <div class="text-center">
                             <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                                 <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Güvenli</h3>
-                            <p class="text-gray-600">Tüm verileriniz güvende, modern güvenlik standartları ile korunmaktadır.</p>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Güvenli</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Tüm verileriniz güvende, modern güvenlik standartları ile korunmaktadır.</p>
                         </div>
                     </div>
                     
-                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50">
+                    <div class="bg-white/80 dark:bg-admin-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50 dark:border-admin-700/50">
                         <div class="text-center">
                             <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                                 <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Hızlı</h3>
-                            <p class="text-gray-600">Optimize edilmiş performans ile anlık yükleme ve tepki süreleri.</p>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Hızlı</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Optimize edilmiş performans ile anlık yükleme ve tepki süreleri.</p>
                         </div>
                     </div>
                     
-                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50">
+                    <div class="bg-white/80 dark:bg-admin-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50 dark:border-admin-700/50">
                         <div class="text-center">
                             <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                                 <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900 mb-3">Responsive</h3>
-                            <p class="text-gray-600">Her cihazda mükemmel görünüm ve kullanıcı deneyimi sağlar.</p>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Responsive</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Her cihazda mükemmel görünüm ve kullanıcı deneyimi sağlar.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Additional Benefits -->
                 <div class="mt-12 max-w-4xl mx-auto text-center">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-8">Neden Yeni Sisteme Geçmelisiniz?</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">Neden Yeni Sisteme Geçmelisiniz?</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="flex items-start space-x-4 p-6 bg-white/60 backdrop-blur-sm rounded-xl">
+                        <div class="flex items-start space-x-4 p-6 bg-white/60 dark:bg-admin-800/60 backdrop-blur-sm rounded-xl">
                             <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                 </svg>
                             </div>
                             <div class="text-left">
-                                <h4 class="font-semibold text-gray-900 mb-2">Gelişmiş Özellikler</h4>
-                                <p class="text-gray-600 text-sm">Yeni sistem ile daha fazla özellik ve kontrol imkanı.</p>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Gelişmiş Özellikler</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Yeni sistem ile daha fazla özellik ve kontrol imkanı.</p>
                             </div>
                         </div>
                         
-                        <div class="flex items-start space-x-4 p-6 bg-white/60 backdrop-blur-sm rounded-xl">
+                        <div class="flex items-start space-x-4 p-6 bg-white/60 dark:bg-admin-800/60 backdrop-blur-sm rounded-xl">
                             <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center">
                                 <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
                             <div class="text-left">
-                                <h4 class="font-semibold text-gray-900 mb-2">Kolay Kullanım</h4>
-                                <p class="text-gray-600 text-sm">Sezgisel arayüz ile daha kolay ve verimli çalışma.</p>
+                                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Kolay Kullanım</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Sezgisel arayüz ile daha kolay ve verimli çalışma.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
+</div>
 
-    <!-- Scripts -->
+<!-- Scripts -->
     <script>
         // Auto-redirect countdown and functionality
         let countdown = 10;

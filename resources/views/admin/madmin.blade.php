@@ -5,45 +5,25 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     $text = 'light';
 }
 ?>
-@extends('layouts.app')
-
-@section('styles')
-    @parent
-    <!-- Tailwind CSS artık app.blade.php'den gelir -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#667eea',
-                        secondary: '#764ba2'
-                    }
-                }
-            }
-        }
-    </script>
-@endsection
+@extends('layouts.admin', ['title' => 'Yöneticiler Paneli'])
 
 @section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
-    
     <!-- Main Content Area with Tailwind -->
-    <main class="ml-64 p-8 bg-gray-50 min-h-screen transition-all duration-300">
+    <div class="p-8 bg-gray-50 dark:bg-admin-900 min-h-screen transition-all duration-300">
         
         <!-- Page Header -->
         <div class="mb-8">
-            <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800 rounded-2xl p-6 text-white shadow-2xl">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-white/20 p-4 rounded-xl backdrop-blur-sm">
-                        <i class="fas fa-users-cog text-3xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-3xl font-bold mb-2">Yöneticiler Paneli</h1>
-                        <p class="text-white/80 text-lg">Sistem yöneticilerini yönetin ve kontrol edin</p>
-                    </div>
+        <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800 rounded-2xl p-6 text-white shadow-2xl">
+            <div class="flex items-center space-x-4">
+                <div class="bg-white/20 p-4 rounded-xl backdrop-blur-sm">
+                    <i data-lucide="users-cog" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold mb-2">Yöneticiler Paneli</h1>
+                    <p class="text-white/80 text-lg">Sistem yöneticilerini yönetin ve kontrol edin</p>
                 </div>
             </div>
+        </div>
         </div>
 
         <!-- Alerts -->
@@ -55,19 +35,19 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <!-- Admin Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($admins as $admin)
-            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+        <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
                 
                 <!-- Card Header -->
                 <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-6 text-white">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="bg-white/20 p-3 rounded-full backdrop-blur-sm">
-                                <i class="fas fa-user-shield text-xl"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg">{{ $admin->firstName }} {{ $admin->lastName }}</h3>
-                                <p class="text-white/70 text-sm">ID: #{{ $admin->id }}</p>
-                            </div>
+                        <div class="bg-white/20 p-3 rounded-full backdrop-blur-sm">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">{{ $admin->firstName }} {{ $admin->lastName }}</h3>
+                            <p class="text-white/70 text-sm">ID: #{{ $admin->id }}</p>
+                        </div>
                         </div>
                         <div>
                             @if ($admin->acnt_type_active == null || $admin->acnt_type_active == 'blocked')
@@ -86,47 +66,47 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 <!-- Card Body -->
                 <div class="p-6 space-y-4">
                     <div class="flex items-center space-x-3 group">
-                        <div class="bg-blue-100 p-2 rounded-lg group-hover:bg-blue-200 transition-colors">
-                            <i class="fas fa-envelope text-blue-600"></i>
-                        </div>
-                        <span class="text-gray-700 group-hover:text-blue-600 transition-colors">{{ $admin->email }}</span>
+                    <div class="bg-blue-100 dark:bg-blue-900 p-2 rounded-lg group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors">
+                        <i data-lucide="mail" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300 group-hover:text-blue-600 transition-colors">{{ $admin->email }}</span>
                     </div>
                     
                     <div class="flex items-center space-x-3 group">
-                        <div class="bg-green-100 p-2 rounded-lg group-hover:bg-green-200 transition-colors">
-                            <i class="fas fa-phone text-green-600"></i>
-                        </div>
-                        <span class="text-gray-700 group-hover:text-green-600 transition-colors">{{ $admin->phone ?: 'Telefon yok' }}</span>
+                    <div class="bg-green-100 dark:bg-green-900 p-2 rounded-lg group-hover:bg-green-200 dark:group-hover:bg-green-800 transition-colors">
+                        <i data-lucide="phone" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                    </div>
+                    <span class="text-gray-700 dark:text-gray-300 group-hover:text-green-600 transition-colors">{{ $admin->phone ?: 'Telefon yok' }}</span>
                     </div>
                     
                     <div class="flex items-center space-x-3 group">
-                        <div class="bg-purple-100 p-2 rounded-lg group-hover:bg-purple-200 transition-colors">
-                            <i class="fas fa-tag text-purple-600"></i>
-                        </div>
-                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">{{ $admin->type }}</span>
+                    <div class="bg-purple-100 dark:bg-purple-900 p-2 rounded-lg group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors">
+                        <i data-lucide="tag" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
+                    </div>
+                    <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium">{{ $admin->type }}</span>
                     </div>
                 </div>
 
                 <!-- Card Footer - Action Buttons -->
-                <div class="bg-gray-50 p-6 border-t">
+            <div class="bg-gray-50 dark:bg-admin-700 p-6 border-t border-gray-200 dark:border-admin-600">
                     <!-- Primary Actions -->
                     <div class="grid grid-cols-2 gap-3 mb-4">
                         @if ($admin->acnt_type_active == null || $admin->acnt_type_active == 'blocked')
-                            <a href="{{ url('admin/dashboard/unblock') }}/{{ $admin->id }}"
-                               class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 text-center transform hover:scale-105 shadow-lg">
-                                <i class="fas fa-unlock mr-2"></i>Engeli Kaldır
-                            </a>
+                        <a href="{{ url('admin/dashboard/unblock') }}/{{ $admin->id }}"
+                           class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 text-center transform hover:scale-105 shadow-lg">
+                            <i data-lucide="unlock" class="w-4 h-4 mr-2 inline"></i>Engeli Kaldır
+                        </a>
                         @else
-                            <a href="{{ url('admin/dashboard/ublock') }}/{{ $admin->id }}"
-                               class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 text-center transform hover:scale-105 shadow-lg">
-                                <i class="fas fa-lock mr-2"></i>Engelle
-                            </a>
+                        <a href="{{ url('admin/dashboard/ublock') }}/{{ $admin->id }}"
+                           class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 text-center transform hover:scale-105 shadow-lg">
+                            <i data-lucide="lock" class="w-4 h-4 mr-2 inline"></i>Engelle
+                        </a>
                         @endif
                         
-                        <button onclick="openModal('editModal{{ $admin->id }}')"
-                                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <i class="fas fa-edit mr-2"></i>Düzenle
-                        </button>
+                    <button onclick="openModal('editModal{{ $admin->id }}')"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i data-lucide="edit" class="w-4 h-4 mr-2 inline"></i>Düzenle
+                    </button>
                     </div>
                     
                     <!-- Secondary Actions -->
@@ -153,8 +133,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 
             </div>
             @endforeach
-        </div>
-    </main>
+    </div>
+    </div>
 
         <!-- Modern Tailwind Modals -->
         @foreach ($admins as $admin)
@@ -494,6 +474,6 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 });
 
                 console.log('Modern admin panel loaded successfully');
-            });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection

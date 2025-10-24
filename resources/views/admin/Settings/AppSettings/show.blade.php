@@ -7,32 +7,26 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     $bg = 'dark';
 }
 ?>
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Uygulama Ayarları'])
+
 @section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
-    
-    <!-- Main Content -->
-    <div class="flex-1 ml-0 md:ml-64 transition-all duration-300">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
             <!-- Header Section -->
-            <div class="bg-white border-b border-gray-200 shadow-sm">
-                <div class="px-4 py-6 sm:px-6 lg:px-8">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
-                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h1 class="text-3xl font-bold text-gray-900">Uygulama Ayarları</h1>
-                                <p class="text-gray-600 mt-1">Sistem yapılandırması ve tercihlerini yönetin</p>
-                            </div>
+        <div class="bg-white dark:bg-admin-800 border-b border-gray-200 dark:border-admin-700 shadow-sm">
+            <div class="px-4 py-6 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
+                            <i data-lucide="settings" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Uygulama Ayarları</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">Sistem yapılandırması ve tercihlerini yönetin</p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
             
             <!-- Alert Messages -->
             <div class="px-4 sm:px-6 lg:px-8 pt-4">
@@ -63,27 +57,23 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
             
             <!-- Main Settings Content -->
             <div class="px-4 py-6 sm:px-6 lg:px-8">
-                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-                    <!-- Tab Navigation -->
-                    <div class="border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
+            <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-xl border border-gray-200 dark:border-admin-700 overflow-hidden">
+                <!-- Tab Navigation -->
+                <div class="border-b border-gray-200 dark:border-admin-600 bg-gradient-to-r from-gray-50 to-white dark:from-admin-700 dark:to-admin-800">
                         <nav class="flex flex-wrap" x-data="{ activeTab: 'info' }">
-                            <button @click="activeTab = 'module'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'module', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'module' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
-                                    </svg>
-                                    <span>Modül</span>
-                                </div>
-                            </button>
+                        <button @click="activeTab = 'module'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900': activeTab === 'module', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300': activeTab !== 'module' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                            <div class="flex items-center justify-center space-x-2">
+                                <i data-lucide="grid-3x3" class="w-5 h-5"></i>
+                                <span>Modül</span>
+                            </div>
+                        </button>
                             
-                            <button @click="activeTab = 'info'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'info', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'info' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span>Site Bilgileri</span>
-                                </div>
-                            </button>
+                        <button @click="activeTab = 'info'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900': activeTab === 'info', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300': activeTab !== 'info' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                            <div class="flex items-center justify-center space-x-2">
+                                <i data-lucide="info" class="w-5 h-5"></i>
+                                <span>Site Bilgileri</span>
+                            </div>
+                        </button>
                             
                             <button @click="activeTab = 'pref'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'pref', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'pref' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
                                 <div class="flex items-center justify-center space-x-2">
@@ -143,7 +133,6 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 

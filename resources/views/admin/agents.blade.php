@@ -1,38 +1,31 @@
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Temsilci Yönetimi'])
+
 @section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
-    
-    <!-- Main Content -->
-    <div class="flex-1 ml-0 md:ml-64 transition-all duration-300">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
             <!-- Header Section -->
-            <div class="bg-white border-b border-gray-200 shadow-sm">
-                <div class="px-4 py-6 sm:px-6 lg:px-8">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="p-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl shadow-lg">
-                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h1 class="text-3xl font-bold text-gray-900">Temsilci Yönetimi</h1>
-                                <p class="text-gray-600 mt-1">Sistem temsilcilerini ve performanslarını yönetin</p>
-                            </div>
+        <div class="bg-white dark:bg-admin-800 border-b border-gray-200 dark:border-admin-700 shadow-sm">
+            <div class="px-4 py-6 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="p-3 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl shadow-lg">
+                            <i data-lucide="users" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Temsilci Yönetimi</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">Sistem temsilcilerini ve performanslarını yönetin</p>
+                        </div>
                         </div>
                         
                         <!-- Add Agent Button -->
                         <button onclick="openAddModal()" 
-                                class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
-                            </svg>
+                               class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                            <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
                             Temsilci Ekle
                         </button>
                     </div>
                 </div>
             </div>
+        </div>
             
             <!-- Alert Messages -->
             <div class="px-4 sm:px-6 lg:px-8 pt-4">
@@ -125,18 +118,16 @@
                 </div>
                 
                 <!-- Main Table -->
-                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                    <!-- Table Header -->
-                    <div class="bg-gradient-to-r from-gray-50 to-orange-50 px-6 py-4 border-b border-gray-200">
-                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4 lg:mb-0">Temsilci Listesi</h2>
+            <div class="bg-white dark:bg-admin-800 rounded-xl shadow-lg border border-gray-200 dark:border-admin-700 overflow-hidden">
+                <!-- Table Header -->
+                <div class="bg-gradient-to-r from-gray-50 to-orange-50 dark:from-admin-700 dark:to-admin-600 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 lg:mb-0">Temsilci Listesi</h2>
                             <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                                 <div class="relative">
-                                    <input type="text" id="searchInput" placeholder="Temsilci ara..." 
-                                           class="w-full sm:w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                    <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                                    </svg>
+                                <input type="text" id="searchInput" placeholder="Temsilci ara..."
+                                       class="w-full sm:w-64 pl-10 pr-4 py-2 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                <i data-lucide="search" class="absolute left-3 top-2.5 h-4 w-4 text-gray-400"></i>
                                 </div>
                             </div>
                         </div>

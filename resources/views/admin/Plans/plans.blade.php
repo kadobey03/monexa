@@ -1,36 +1,28 @@
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Sistem Planları'])
+
 @section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
-    
-    <!-- Main Content -->
-    <div class="flex-1 ml-0 md:ml-64 transition-all duration-300">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
             <!-- Header Section -->
-            <div class="bg-white border-b border-gray-200 shadow-sm">
-                <div class="px-4 py-6 sm:px-6 lg:px-8">
-                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                        <div class="flex items-center space-x-4 mb-4 lg:mb-0">
-                            <div class="p-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl shadow-lg">
-                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h1 class="text-3xl font-bold text-gray-900">Sistem Planları</h1>
-                                <p class="text-gray-600 mt-1">Yatırım planlarını görüntüleyin ve yönetin</p>
-                            </div>
+        <div class="bg-white dark:bg-admin-800 border-b border-gray-200 dark:border-admin-700 shadow-sm">
+            <div class="px-4 py-6 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                    <div class="flex items-center space-x-4 mb-4 lg:mb-0">
+                        <div class="p-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl shadow-lg">
+                            <i data-lucide="credit-card" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Sistem Planları</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">Yatırım planlarını görüntüleyin ve yönetin</p>
+                        </div>
                         </div>
                         
-                        <a href="{{ route('newplan') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
-                            </svg>
-                            Yeni Plan
-                        </a>
-                    </div>
+                    <a href="{{ route('newplan') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
+                        <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+                        Yeni Plan
+                    </a>
                 </div>
             </div>
+        </div>
             
             <!-- Alert Messages -->
             <div class="px-4 sm:px-6 lg:px-8 pt-4">
@@ -44,7 +36,7 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-8">
                         @foreach ($plans->chunk(3) as $planChunk)
                             @foreach ($planChunk as $plan)
-                                <div class="group relative bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 border border-gray-200 overflow-hidden">
+                            <div class="group relative bg-white dark:bg-admin-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-4 border border-gray-200 dark:border-admin-700 overflow-hidden">
                                     <!-- Gradient Header -->
                                     <div class="bg-gradient-to-br from-purple-600 to-blue-600 p-6 text-white relative overflow-hidden">
                                         <div class="absolute inset-0 bg-white/10 transform -skew-y-3 translate-y-8"></div>
@@ -176,10 +168,8 @@
                                 </svg>
                                 İlk Planı Oluştur
                             </a>
-                        </div>
                     </div>
                 @endforelse
-            </div>
         </div>
     </div>
 @endsection

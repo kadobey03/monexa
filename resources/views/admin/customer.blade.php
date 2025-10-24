@@ -1,27 +1,21 @@
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Üye Takip Sistemi'])
+
 @section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
-    
-    <!-- Main Content -->
-    <div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
-        <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
             <!-- Header Section -->
-            <div class="bg-white border-b border-gray-200 shadow-sm">
-                <div class="px-4 py-6 sm:px-6 lg:px-8">
-                    <div class="flex items-center space-x-4">
-                        <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h1 class="text-3xl font-bold text-gray-900">Üye Takip Sistemi</h1>
-                            <p class="text-gray-600 mt-1">Tüm sistem üyelerini görüntüleyin ve yönetin</p>
-                        </div>
+        <div class="bg-white dark:bg-admin-800 border-b border-gray-200 dark:border-admin-700 shadow-sm">
+            <div class="px-4 py-6 sm:px-6 lg:px-8">
+                <div class="flex items-center space-x-4">
+                    <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
+                        <i data-lucide="users" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Üye Takip Sistemi</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">Tüm sistem üyelerini görüntüleyin ve yönetin</p>
                     </div>
                 </div>
             </div>
+        </div>
             
             <!-- Alert Messages -->
             <div class="px-4 sm:px-6 lg:px-8 pt-4">
@@ -114,29 +108,25 @@
                 </div>
                 
                 <!-- Main Table -->
-                <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                    <!-- Table Header -->
-                    <div class="bg-gradient-to-r from-gray-50 to-blue-50 px-6 py-4 border-b border-gray-200">
-                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                            <h2 class="text-xl font-bold text-gray-900 mb-4 lg:mb-0">Üye Listesi</h2>
+            <div class="bg-white dark:bg-admin-800 rounded-xl shadow-lg border border-gray-200 dark:border-admin-700 overflow-hidden">
+                <!-- Table Header -->
+                <div class="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-admin-700 dark:to-admin-600 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 lg:mb-0">Üye Listesi</h2>
                             <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                                 <div class="relative">
-                                    <input type="text" id="searchInput" placeholder="Üye ara..." 
-                                           class="w-full sm:w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                                    </svg>
+                                <input type="text" id="searchInput" placeholder="Üye ara..."
+                                       class="w-full sm:w-64 pl-10 pr-4 py-2 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <i data-lucide="search" class="absolute left-3 top-2.5 h-4 w-4 text-gray-400"></i>
                                 </div>
                                 <div class="relative">
-                                    <select id="statusFilter" class="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <select id="statusFilter" class="appearance-none bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg px-4 py-2 pr-8 text-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                         <option value="all">Tüm Durumlar</option>
                                         <option value="active">Aktif</option>
                                         <option value="blocked">Engellenmiş</option>
                                         <option value="pending">Beklemede</option>
                                     </select>
-                                    <svg class="absolute right-2 top-2.5 h-4 w-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                    </svg>
+                                <i data-lucide="chevron-down" class="absolute right-2 top-2.5 h-4 w-4 text-gray-400"></i>
                                 </div>
                             </div>
                         </div>

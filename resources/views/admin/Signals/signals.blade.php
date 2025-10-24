@@ -1,70 +1,68 @@
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Sinyal Yönetimi'])
+
 @section('content')
-    @include('admin.topmenu')
-    @include('admin.sidebar')
-    <div class="main-panel">
-        <div class="content">
-            <div class="page-inner">
-                <!-- Header Section -->
-                <div class="relative overflow-hidden bg-gradient-to-br from-green-600 via-teal-600 to-blue-700 rounded-2xl p-8 mb-8">
-                    <div class="absolute inset-0 bg-black opacity-20"></div>
-                    <div class="absolute inset-0 bg-gradient-to-r from-green-600/10 to-blue-600/10"></div>
-                    <div class="relative">
-                        <div class="flex flex-col md:flex-row md:items-center justify-between">
-                            <div>
-                                <h1 class="text-4xl font-bold text-white mb-2">
-                                    <i class="fas fa-chart-line mr-3 text-green-200"></i>
-                                    Sinyal Yönetimi
-                                </h1>
-                                <p class="text-green-100 text-lg">
-                                    Trading sinyallerini oluşturun ve yönetin
-                                </p>
-                            </div>
-                            <div class="mt-4 md:mt-0">
-                                <a href="{{ route('newsignal') }}"
-                                   class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                                    <i class="fas fa-plus mr-2"></i>
-                                    Yeni Sinyal Ekle
-                                </a>
-                            </div>
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
+        <!-- Header Section -->
+        <div class="bg-white dark:bg-admin-800 border-b border-gray-200 dark:border-admin-700 shadow-sm">
+            <div class="px-4 py-6 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between">
+                    <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                        <div class="p-3 bg-gradient-to-r from-green-500 to-teal-600 rounded-xl shadow-lg">
+                            <i data-lucide="trending-up" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Sinyal Yönetimi</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">Trading sinyallerini oluşturun ve yönetin</p>
                         </div>
                     </div>
-                    <div class="absolute -right-16 -bottom-16 w-32 h-32 bg-gradient-to-br from-white/10 to-blue-300/20 rounded-full blur-2xl"></div>
-                    <div class="absolute -left-16 -top-16 w-24 h-24 bg-gradient-to-br from-green-400/20 to-teal-400/20 rounded-full blur-xl"></div>
+                    <div>
+                        <a href="{{ route('newsignal') }}"
+                           class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
+                            <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+                            Yeni Sinyal Ekle
+                        </a>
+                    </div>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Alert Messages -->
+        <div class="px-4 sm:px-6 lg:px-8 pt-4">
+            <x-danger-alert />
+            <x-success-alert />
+        </div>
 
-                <x-danger-alert />
-                <x-success-alert />
-
-                <!-- Statistics Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+        <!-- Statistics Cards -->
+        <div class="px-4 py-6 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white dark:bg-admin-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-admin-700 hover:shadow-xl transition-all duration-300">
                         <div class="flex items-center">
-                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
-                                <i class="fas fa-signal text-blue-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-bold text-gray-900">{{ $signals->count() }}</div>
-                                <div class="text-gray-500 text-sm">Toplam Sinyal</div>
-                            </div>
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mr-4">
+                            <i data-lucide="radio" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-gray-900 dark:text-white">{{ $signals->count() }}</div>
+                            <div class="text-gray-500 dark:text-gray-400 text-sm">Toplam Sinyal</div>
+                        </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
-                                <i class="fas fa-chart-line text-green-600 text-xl"></i>
-                            </div>
-                            <div>
-                                <div class="text-2xl font-bold text-gray-900">
+                </div>
+                <div class="bg-white dark:bg-admin-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-admin-700 hover:shadow-xl transition-all duration-300">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center mr-4">
+                            <i data-lucide="trending-up" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-gray-900 dark:text-white">
                                     {{ $signals->where('increment_amount', '>', 0)->count() }}
                                 </div>
-                                <div class="text-gray-500 text-sm">Aktif Sinyal</div>
-                            </div>
+                            <div class="text-gray-500 dark:text-gray-400 text-sm">Aktif Sinyal</div>
                         </div>
                     </div>
-
-                    <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                </div>
+                
+                <div class="bg-white dark:bg-admin-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-admin-700 hover:shadow-xl transition-all duration-300">
                         <div class="flex items-center">
                             <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
                                 <i class="fas fa-percentage text-purple-600 text-xl"></i>
@@ -186,8 +184,7 @@
                                 İlk Sinyali Oluştur
                             </a>
                         </div>
-                    @endforelse
-                </div>
+                @endforelse
             </div>
         </div>
     </div>
