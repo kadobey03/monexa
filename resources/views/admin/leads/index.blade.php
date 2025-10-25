@@ -1,120 +1,110 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
 @section('content')
 @section('styles')
 @parent
-<!-- Tailwind CSS artık app.blade.php'den gelir -->
-<script>
-  tailwind.config = {
-    important: true,
-    corePlugins: {
-      preflight: false,
+<style>
+    .form-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-  }
-</script>
+    .form-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+</style>
 @endsection
 
-@include('admin.topmenu')
-@include('admin.sidebar')
-
-<div class="main-panel">
-    <div class="content">
-        <div class="page-inner">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-8 p-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl text-white">
-                <div class="flex items-center">
-                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-4">
-                        <i class="fas fa-users-cog text-2xl text-white"></i>
-                    </div>
-                    <div>
-                        <h1 class="text-3xl font-bold">Lead Yönetimi</h1>
-                        <p class="text-blue-100">Potansiyel müşterilerinizi yönetin ve takip edin</p>
-                    </div>
-                </div>
-                <div class="flex space-x-3">
-                    @if($isSuperAdmin)
-                    <a href="{{ route('admin.leads.export', request()->query()) }}" 
-                       class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg transition-colors flex items-center">
-                        <i class="fas fa-download mr-2"></i>Export
-                    </a>
-                    <a href="{{ route('admin.lead-statuses.index') }}" 
-                       class="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors flex items-center">
-                        <i class="fas fa-tags mr-2"></i>Status Yönetimi
-                    </a>
-                    @endif
-                    <button type="button" 
-                            class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors flex items-center" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#importModal">
-                        <i class="fas fa-upload mr-2"></i>Import
-                    </button>
-                </div>
+<!-- Page Header -->
+<div class="mb-8">
+    <div class="flex items-center justify-between bg-gradient-to-r from-amber-600 via-orange-700 to-red-600 rounded-2xl p-6 text-white shadow-lg">
+        <div class="flex items-center space-x-4">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                <i data-lucide="users" class="w-8 h-8 text-white"></i>
             </div>
-
-            <x-danger-alert />
-            <x-success-alert />
-
-            <!-- Statistics Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-500 text-sm font-medium">Toplam Lead</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['total_leads']) }}</p>
-                        </div>
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                            <i class="fas fa-users text-blue-600 text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
-                        <div class="h-full bg-blue-600 rounded-full" style="width: 100%"></div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-500 text-sm font-medium">Bugünkü Yeni</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['new_leads_today']) }}</p>
-                        </div>
-                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
-                            <i class="fas fa-user-plus text-amber-600 text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
-                        <div class="h-full bg-amber-600 rounded-full" style="width: {{ $stats['total_leads'] > 0 ? ($stats['new_leads_today'] / $stats['total_leads'] * 100) : 0 }}%"></div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-500 text-sm font-medium">Atanmamış</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['unassigned_leads']) }}</p>
-                        </div>
-                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                            <i class="fas fa-user-times text-red-600 text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
-                        <div class="h-full bg-red-600 rounded-full" style="width: {{ $stats['total_leads'] > 0 ? ($stats['unassigned_leads'] / $stats['total_leads'] * 100) : 0 }}%"></div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-gray-500 text-sm font-medium">Yüksek Skor</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['high_score_leads']) }}</p>
-                        </div>
-                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                            <i class="fas fa-trophy text-green-600 text-xl"></i>
-                        </div>
-                    </div>
-                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
-                        <div class="h-full bg-green-600 rounded-full" style="width: {{ $stats['total_leads'] > 0 ? ($stats['high_score_leads'] / $stats['total_leads'] * 100) : 0 }}%"></div>
-                    </div>
-                </div>
+            <div>
+                <h1 class="text-3xl font-bold mb-1">Lead Yönetimi</h1>
+                <p class="text-amber-100 text-lg">Potansiyel müşterilerinizi yönetin ve takip edin</p>
             </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            @if($isSuperAdmin)
+            <a href="{{ route('admin.leads.export', request()->query()) }}"
+               class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors flex items-center text-white shadow-lg">
+                <i data-lucide="download" class="w-4 h-4 mr-2"></i>Export
+            </a>
+            <a href="{{ route('admin.lead-statuses.index') }}"
+               class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors flex items-center text-white shadow-lg">
+                <i data-lucide="tags" class="w-4 h-4 mr-2"></i>Status Yönetimi
+            </a>
+            @endif
+            <button type="button"
+                    class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-xl transition-colors flex items-center text-white shadow-lg"
+                    data-bs-toggle="modal"
+                    data-bs-target="#importModal">
+                <i data-lucide="upload" class="w-4 h-4 mr-2"></i>Import
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Alert Messages -->
+<x-danger-alert />
+<x-success-alert />
+
+<!-- Statistics Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Toplam Lead</p>
+                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['total_leads']) }}</h3>
+                <p class="text-xs text-admin-400 mt-1">Tüm müşteri adayları</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
+                <i data-lucide="users" class="w-7 h-7 text-white"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Bugünkü Yeni</p>
+                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['new_leads_today']) }}</h3>
+                <p class="text-xs text-admin-400 mt-1">Yeni kayıtlar</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center">
+                <i data-lucide="user-plus" class="w-7 h-7 text-white"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Atanmamış</p>
+                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['unassigned_leads']) }}</h3>
+                <p class="text-xs text-admin-400 mt-1">Atama bekliyor</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center">
+                <i data-lucide="user-x" class="w-7 h-7 text-white"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Yüksek Skor</p>
+                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['high_score_leads']) }}</h3>
+                <p class="text-xs text-admin-400 mt-1">Potansiyel yüksek</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center">
+                <i data-lucide="trophy" class="w-7 h-7 text-white"></i>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!-- Quick Stats Row -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -504,97 +494,117 @@
     </div>
 </div>
 
+@push('scripts')
 <script>
-// Checkbox handling
-document.getElementById('selectAll').addEventListener('change', function() {
-    const checkboxes = document.querySelectorAll('.lead-checkbox');
-    const bulkActions = document.getElementById('bulkActions');
-    
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = this.checked;
-    });
-    
-    updateSelectedCount();
-    toggleBulkActions();
-});
+document.addEventListener('DOMContentLoaded', function() {
+    // Checkbox handling
+    const selectAllCheckbox = document.getElementById('selectAll');
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.lead-checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            
+            updateSelectedCount();
+            toggleBulkActions();
+        });
+    }
 
-document.querySelectorAll('.lead-checkbox').forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
+    document.querySelectorAll('.lead-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            updateSelectedCount();
+            toggleBulkActions();
+            
+            // Update select all checkbox
+            const allCheckboxes = document.querySelectorAll('.lead-checkbox');
+            const checkedCheckboxes = document.querySelectorAll('.lead-checkbox:checked');
+            const selectAllCheckbox = document.getElementById('selectAll');
+            
+            if (selectAllCheckbox) {
+                if (checkedCheckboxes.length === allCheckboxes.length) {
+                    selectAllCheckbox.checked = true;
+                    selectAllCheckbox.indeterminate = false;
+                } else if (checkedCheckboxes.length > 0) {
+                    selectAllCheckbox.checked = false;
+                    selectAllCheckbox.indeterminate = true;
+                } else {
+                    selectAllCheckbox.checked = false;
+                    selectAllCheckbox.indeterminate = false;
+                }
+            }
+        });
+    });
+
+    function updateSelectedCount() {
+        const checkedBoxes = document.querySelectorAll('.lead-checkbox:checked');
+        const count = checkedBoxes.length;
+        
+        const selectedCountEl = document.getElementById('selectedCount');
+        const bulkSelectedCountEl = document.getElementById('bulkSelectedCount');
+        
+        if (selectedCountEl) selectedCountEl.textContent = count;
+        if (bulkSelectedCountEl) bulkSelectedCountEl.textContent = count;
+        
+        // Update form with selected IDs
+        const form = document.getElementById('bulkAssignForm');
+        if (form) {
+            // Remove existing hidden inputs
+            const existingInputs = form.querySelectorAll('input[name="lead_ids[]"]');
+            existingInputs.forEach(input => input.remove());
+            
+            // Add new hidden inputs
+            checkedBoxes.forEach(checkbox => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'lead_ids[]';
+                input.value = checkbox.value;
+                form.appendChild(input);
+            });
+        }
+    }
+
+    function toggleBulkActions() {
+        const checkedBoxes = document.querySelectorAll('.lead-checkbox:checked');
+        const bulkActions = document.getElementById('bulkActions');
+        
+        if (bulkActions) {
+            if (checkedBoxes.length > 0) {
+                bulkActions.classList.remove('hidden');
+            } else {
+                bulkActions.classList.add('hidden');
+            }
+        }
+    }
+
+    window.clearSelection = function() {
+        document.querySelectorAll('.lead-checkbox').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        const selectAll = document.getElementById('selectAll');
+        if (selectAll) {
+            selectAll.checked = false;
+            selectAll.indeterminate = false;
+        }
         updateSelectedCount();
         toggleBulkActions();
-        
-        // Update select all checkbox
-        const allCheckboxes = document.querySelectorAll('.lead-checkbox');
-        const checkedCheckboxes = document.querySelectorAll('.lead-checkbox:checked');
-        const selectAllCheckbox = document.getElementById('selectAll');
-        
-        if (checkedCheckboxes.length === allCheckboxes.length) {
-            selectAllCheckbox.checked = true;
-            selectAllCheckbox.indeterminate = false;
-        } else if (checkedCheckboxes.length > 0) {
-            selectAllCheckbox.checked = false;
-            selectAllCheckbox.indeterminate = true;
-        } else {
-            selectAllCheckbox.checked = false;
-            selectAllCheckbox.indeterminate = false;
-        }
-    });
-});
+    };
 
-function updateSelectedCount() {
-    const checkedBoxes = document.querySelectorAll('.lead-checkbox:checked');
-    const count = checkedBoxes.length;
-    
-    document.getElementById('selectedCount').textContent = count;
-    document.getElementById('bulkSelectedCount').textContent = count;
-    
-    // Update form with selected IDs
-    const form = document.getElementById('bulkAssignForm');
-    
-    // Remove existing hidden inputs
-    const existingInputs = form.querySelectorAll('input[name="lead_ids[]"]');
-    existingInputs.forEach(input => input.remove());
-    
-    // Add new hidden inputs
-    checkedBoxes.forEach(checkbox => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'lead_ids[]';
-        input.value = checkbox.value;
-        form.appendChild(input);
-    });
-}
+    window.quickAssign = function(leadId, leadName) {
+        window.location.href = `/admin/dashboard/leads/${leadId}`;
+    };
 
-function toggleBulkActions() {
-    const checkedBoxes = document.querySelectorAll('.lead-checkbox:checked');
-    const bulkActions = document.getElementById('bulkActions');
-    
-    if (checkedBoxes.length > 0) {
-        bulkActions.classList.remove('hidden');
-    } else {
-        bulkActions.classList.add('hidden');
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
     }
-}
 
-function clearSelection() {
-    document.querySelectorAll('.lead-checkbox').forEach(checkbox => {
-        checkbox.checked = false;
-    });
-    document.getElementById('selectAll').checked = false;
-    document.getElementById('selectAll').indeterminate = false;
-    updateSelectedCount();
-    toggleBulkActions();
-}
-
-function quickAssign(leadId, leadName) {
-    window.location.href = `/admin/dashboard/leads/${leadId}`;
-}
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
+    // Initialize counts
     updateSelectedCount();
     toggleBulkActions();
 });
 </script>
+@endpush
 
 @endsection

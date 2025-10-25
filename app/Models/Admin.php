@@ -4,14 +4,614 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 
 class Admin extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes, Notifiable;
+
+    /**
+     * The guard associated with the model.
+     *
+     * @var string
+     */
     protected $guard = 'admin';
-    
-    protected $hidden = [
-        'password', 'remember_token',
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'firstName',
+        'lastName',
+        'email',
+        'password',
+        'phone',
+        'dashboard_style',
+        'status',
+        'type',
+        'role_id',
+        'admin_group_id',
+        'supervisor_id',
+        'subordinate_ids',
+        'hired_at',
+        'employee_id',
+        'department',
+        'position',
+        'hierarchy_level',
+        'monthly_target',
+        'current_performance',
+        'leads_assigned_count',
+        'leads_converted_count',
+        'work_schedule',
+        'time_zone',
+        'is_available',
+        'last_activity',
+        'lead_assignment_rules',
+        'max_leads_per_day',
+        'preferred_lead_sources',
+        'lead_categories',
+        'notification_preferences',
+        'dashboard_settings',
+        'language',
+        'last_login_at',
+        'last_login_ip',
+        'two_factor_enabled',
+        'login_history',
+        'bio',
+        'avatar',
+        'social_links',
+        'emergency_contact',
     ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'login_history',
+        'emergency_contact',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'hired_at' => 'date',
+        'monthly_target' => 'decimal:2',
+        'current_performance' => 'decimal:2',
+        'hierarchy_level' => 'integer',
+        'leads_assigned_count' => 'integer',
+        'leads_converted_count' => 'integer',
+        'max_leads_per_day' => 'integer',
+        'is_available' => 'boolean',
+        'two_factor_enabled' => 'boolean',
+        'last_activity' => 'datetime',
+        'last_login_at' => 'datetime',
+        'subordinate_ids' => 'array',
+        'work_schedule' => 'array',
+        'lead_assignment_rules' => 'array',
+        'preferred_lead_sources' => 'array',
+        'lead_categories' => 'array',
+        'notification_preferences' => 'array',
+        'dashboard_settings' => 'array',
+        'login_history' => 'array',
+        'social_links' => 'array',
+        'emergency_contact' => 'array',
+    ];
+
+    /**
+     * Available admin statuses.
+     */
+    public const STATUS_ACTIVE = 'Active';
+    public const STATUS_INACTIVE = 'Inactive';
+    public const STATUS_SUSPENDED = 'Suspended';
+
+    /**
+     * Available admin types.
+     */
+    public const TYPE_ADMIN = 'admin';
+    public const TYPE_MANAGER = 'manager';
+    public const TYPE_SUPERVISOR = 'supervisor';
+
+    /**
+     * Get the role that belongs to the admin.
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    /**
+     * Get the admin group that belongs to the admin.
+     */
+    public function adminGroup(): BelongsTo
+    {
+        return $this->belongsTo(AdminGroup::class, 'admin_group_id');
+    }
+
+    /**
+     * Get the supervisor of this admin.
+     */
+    public function supervisor(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class, 'supervisor_id');
+    }
+
+    /**
+     * Get the subordinates of this admin.
+     */
+    public function subordinates(): HasMany
+    {
+        return $this->hasMany(Admin::class, 'supervisor_id');
+    }
+
+    /**
+     * Get the users assigned to this admin.
+     */
+    public function assignedUsers(): HasMany
+    {
+        return $this->hasMany(User::class, 'assign_to');
+    }
+
+    /**
+     * Get the active leads assigned to this admin.
+     */
+    public function activeLeads(): HasMany
+    {
+        return $this->hasMany(User::class, 'assign_to')->whereNull('cstatus')->orWhere('cstatus', '!=', 'Customer');
+    }
+
+    /**
+     * Get the audit logs for this admin.
+     */
+    public function auditLogs(): HasMany
+    {
+        return $this->hasMany(AdminAuditLog::class, 'admin_id');
+    }
+
+    /**
+     * Get the lead assignment history for this admin.
+     */
+    public function leadAssignmentHistory(): HasMany
+    {
+        return $this->hasMany(LeadAssignmentHistory::class, 'assigned_to_admin_id');
+    }
+
+    /**
+     * Scope a query to only include active admins.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::STATUS_ACTIVE);
+    }
+
+    /**
+     * Scope a query to only include available admins.
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->where('is_available', true)->where('status', self::STATUS_ACTIVE);
+    }
+
+    /**
+     * Scope a query to filter by department.
+     */
+    public function scopeByDepartment($query, string $department)
+    {
+        return $query->where('department', $department);
+    }
+
+    /**
+     * Scope a query to filter by role.
+     */
+    public function scopeByRole($query, $roleId)
+    {
+        return $query->where('role_id', $roleId);
+    }
+
+    /**
+     * Scope a query to filter by admin group.
+     */
+    public function scopeByGroup($query, $groupId)
+    {
+        return $query->where('admin_group_id', $groupId);
+    }
+
+    /**
+     * Scope a query to get admins with capacity for new leads.
+     */
+    public function scopeWithCapacity($query)
+    {
+        return $query->whereRaw('leads_assigned_count < COALESCE(max_leads_per_day, 999999)');
+    }
+
+    /**
+     * Check if admin has a specific permission.
+     */
+    public function hasPermission(string $permissionName): bool
+    {
+        if (!$this->role) {
+            return false;
+        }
+
+        return $this->role->hasPermission($permissionName);
+    }
+
+    /**
+     * Check if admin has any of the specified permissions.
+     */
+    public function hasAnyPermission(array $permissions): bool
+    {
+        if (!$this->role) {
+            return false;
+        }
+
+        return $this->role->hasAnyPermission($permissions);
+    }
+
+    /**
+     * Check if admin has all of the specified permissions.
+     */
+    public function hasAllPermissions(array $permissions): bool
+    {
+        if (!$this->role) {
+            return false;
+        }
+
+        return $this->role->hasAllPermissions($permissions);
+    }
+
+    /**
+     * Check if admin can manage another admin.
+     */
+    public function canManageAdmin(Admin $admin): bool
+    {
+        // Can't manage self
+        if ($this->id === $admin->id) {
+            return false;
+        }
+
+        // Super admin can manage everyone
+        if ($this->role && $this->role->isSuperAdmin()) {
+            return true;
+        }
+
+        // Check if admin is a subordinate
+        if ($this->isSubordinate($admin)) {
+            return true;
+        }
+
+        // Check role hierarchy
+        if ($this->role && $admin->role) {
+            return $this->role->canManage($admin->role);
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if admin can manage a specific user/lead.
+     */
+    public function canManageUser(User $user): bool
+    {
+        // Can manage if user is assigned to this admin
+        if ($user->assign_to === $this->id) {
+            return true;
+        }
+
+        // Can manage if user is assigned to a subordinate
+        $subordinateIds = $this->getSubordinateIds();
+        if ($user->assign_to && in_array($user->assign_to, $subordinateIds)) {
+            return true;
+        }
+
+        // Check permissions
+        return $this->hasPermission('user_view') &&
+               ($this->hasPermission('user_update') || $this->hasPermission('lead_update'));
+    }
+
+    /**
+     * Get all subordinate admin IDs.
+     */
+    public function getSubordinateIds(): array
+    {
+        if ($this->subordinate_ids) {
+            return $this->subordinate_ids;
+        }
+
+        // Fallback: get from relationship
+        return $this->subordinates->pluck('id')->toArray();
+    }
+
+    /**
+     * Get all subordinates recursively.
+     */
+    public function getAllSubordinates(): array
+    {
+        $subordinates = [];
+        
+        foreach ($this->subordinates as $subordinate) {
+            $subordinates[] = $subordinate->id;
+            $subordinates = array_merge($subordinates, $subordinate->getAllSubordinates());
+        }
+        
+        return array_unique($subordinates);
+    }
+
+    /**
+     * Check if another admin is a subordinate of this admin.
+     */
+    public function isSubordinate(Admin $admin): bool
+    {
+        return in_array($admin->id, $this->getAllSubordinates());
+    }
+
+    /**
+     * Check if this admin is available for lead assignment.
+     */
+    public function isAvailableForAssignment(): bool
+    {
+        if (!$this->is_available || $this->status !== self::STATUS_ACTIVE) {
+            return false;
+        }
+
+        // Check if at capacity
+        if ($this->max_leads_per_day && $this->leads_assigned_count >= $this->max_leads_per_day) {
+            return false;
+        }
+
+        // Check working hours if admin group has schedule
+        if ($this->adminGroup) {
+            return $this->adminGroup->isInWorkingHours();
+        }
+
+        return true;
+    }
+
+    /**
+     * Get current lead assignment capacity.
+     */
+    public function getAssignmentCapacity(): array
+    {
+        $maxLeads = $this->max_leads_per_day ?: 50; // Default capacity
+        $currentLeads = $this->leads_assigned_count;
+        
+        return [
+            'max_capacity' => $maxLeads,
+            'current_assigned' => $currentLeads,
+            'remaining_capacity' => max(0, $maxLeads - $currentLeads),
+            'capacity_percentage' => ($currentLeads / $maxLeads) * 100,
+        ];
+    }
+
+    /**
+     * Assign a user to this admin.
+     */
+    public function assignUser(User $user, Admin $assignedBy = null): bool
+    {
+        if (!$this->isAvailableForAssignment()) {
+            return false;
+        }
+
+        $user->assign_to = $this->id;
+        $user->save();
+
+        // Update counters
+        $this->increment('leads_assigned_count');
+
+        // Create assignment history record
+        LeadAssignmentHistory::createAssignment([
+            'user_id' => $user->id,
+            'assigned_to_admin_id' => $this->id,
+            'assigned_by_admin_id' => $assignedBy?->id,
+            'assignment_type' => LeadAssignmentHistory::TYPE_INITIAL,
+            'admin_lead_count_before' => $this->leads_assigned_count - 1,
+            'admin_lead_count_after' => $this->leads_assigned_count,
+            'department' => $this->department,
+            'admin_group_id' => $this->admin_group_id,
+        ]);
+
+        return true;
+    }
+
+    /**
+     * Update performance metrics.
+     */
+    public function updatePerformance(float $performance, bool $isConversion = false): bool
+    {
+        $this->current_performance = $performance;
+        
+        if ($isConversion) {
+            $this->increment('leads_converted_count');
+        }
+        
+        return $this->save();
+    }
+
+    /**
+     * Get performance metrics.
+     */
+    public function getPerformanceMetrics(Carbon $startDate = null, Carbon $endDate = null): array
+    {
+        $startDate = $startDate ?? Carbon::now()->subMonth();
+        $endDate = $endDate ?? Carbon::now();
+
+        $assignmentStats = LeadAssignmentHistory::getAdminStats($this->id, $startDate, $endDate);
+        
+        return array_merge($assignmentStats, [
+            'current_performance' => $this->current_performance,
+            'target_achievement' => $this->monthly_target ?
+                ($this->current_performance / $this->monthly_target * 100) : 0,
+            'efficiency_rating' => $this->calculateEfficiencyRating(),
+        ]);
+    }
+
+    /**
+     * Calculate efficiency rating based on various factors.
+     */
+    public function calculateEfficiencyRating(): float
+    {
+        $rating = 0;
+        
+        // Conversion rate (0-40 points)
+        if ($this->leads_assigned_count > 0) {
+            $conversionRate = ($this->leads_converted_count / $this->leads_assigned_count) * 100;
+            $rating += min(40, $conversionRate);
+        }
+        
+        // Target achievement (0-30 points)
+        if ($this->monthly_target > 0) {
+            $targetAchievement = ($this->current_performance / $this->monthly_target) * 100;
+            $rating += min(30, $targetAchievement * 0.3);
+        }
+        
+        // Activity level (0-20 points)
+        if ($this->last_activity) {
+            $daysSinceActivity = Carbon::now()->diffInDays($this->last_activity);
+            $activityScore = max(0, 20 - ($daysSinceActivity * 2));
+            $rating += $activityScore;
+        }
+        
+        // Workload management (0-10 points)
+        $capacity = $this->getAssignmentCapacity();
+        if ($capacity['capacity_percentage'] <= 80) {
+            $rating += 10; // Good workload management
+        } elseif ($capacity['capacity_percentage'] <= 100) {
+            $rating += 5; // At capacity but manageable
+        }
+        
+        return min(100, $rating);
+    }
+
+    /**
+     * Get the admin's full name.
+     */
+    public function getFullName(): string
+    {
+        return trim($this->firstName . ' ' . $this->lastName);
+    }
+
+    /**
+     * Get display name for the admin.
+     */
+    public function getDisplayName(): string
+    {
+        return $this->getFullName();
+    }
+
+    /**
+     * Check if admin is a super admin.
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role && $this->role->isSuperAdmin();
+    }
+
+    /**
+     * Check if admin is in management role.
+     */
+    public function isManager(): bool
+    {
+        return $this->role && $this->role->isManagementRole();
+    }
+
+    /**
+     * Update last activity timestamp.
+     */
+    public function updateLastActivity(): bool
+    {
+        $this->last_activity = now();
+        return $this->save();
+    }
+
+    /**
+     * Update availability status.
+     */
+    public function setAvailability(bool $isAvailable): bool
+    {
+        $this->is_available = $isAvailable;
+        return $this->save();
+    }
+
+    /**
+     * Get notification preferences for a specific type.
+     */
+    public function getNotificationPreference(string $type, bool $default = true): bool
+    {
+        $preferences = $this->notification_preferences ?? [];
+        return $preferences[$type] ?? $default;
+    }
+
+    /**
+     * Set notification preference for a specific type.
+     */
+    public function setNotificationPreference(string $type, bool $enabled): bool
+    {
+        $preferences = $this->notification_preferences ?? [];
+        $preferences[$type] = $enabled;
+        $this->notification_preferences = $preferences;
+        
+        return $this->save();
+    }
+
+    /**
+     * Get dashboard setting.
+     */
+    public function getDashboardSetting(string $key, $default = null)
+    {
+        $settings = $this->dashboard_settings ?? [];
+        return data_get($settings, $key, $default);
+    }
+
+    /**
+     * Set dashboard setting.
+     */
+    public function setDashboardSetting(string $key, $value): bool
+    {
+        $settings = $this->dashboard_settings ?? [];
+        data_set($settings, $key, $value);
+        $this->dashboard_settings = $settings;
+        
+        return $this->save();
+    }
+
+    /**
+     * Log admin activity.
+     */
+    public function logActivity(string $action, array $data = []): void
+    {
+        if (class_exists(AdminAuditLog::class)) {
+            AdminAuditLog::logAction(array_merge([
+                'admin_id' => $this->id,
+                'admin_name' => $this->getFullName(),
+                'admin_email' => $this->email,
+                'action' => $action,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+            ], $data));
+        }
+        
+        $this->updateLastActivity();
+    }
+
+    /**
+     * Convert the model to its string representation.
+     */
+    public function __toString(): string
+    {
+        return $this->getDisplayName();
+    }
 }

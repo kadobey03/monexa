@@ -71,5 +71,11 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'complete.kyc' => \App\Http\Middleware\EnsureKycIsCompleted::class,
         'check.banned' => \App\Http\Middleware\CheckBannedUser::class,
+        
+        // Hiyerarşik Rol Sistemi Middleware'leri
+        'role' => \App\Http\Middleware\RoleMiddleware::class,
+        'permission' => \App\Http\Middleware\PermissionMiddleware::class,
+        'hierarchy' => \App\Http\Middleware\HierarchyMiddleware::class,
+        'admin.activity' => \App\Http\Middleware\AdminActivityMiddleware::class,
     ];
 }

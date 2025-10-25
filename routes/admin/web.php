@@ -463,6 +463,9 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('/delete/{id}', [AdminNotificationController::class, 'delete'])->name('admin.deletenotification');
         Route::get('/count', [AdminNotificationController::class, 'getUnreadCount'])->name('admin.notifications.count');
     });
+
+    // CKEditor file upload route
+    Route::post('ckeditor/upload', [HomeController::class, 'ckeditorUpload'])->name('ckeditor.upload');
 });
 
 // Missing Routes for Sidebar Menu Items

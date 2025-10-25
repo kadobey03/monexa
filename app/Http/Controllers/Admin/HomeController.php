@@ -562,4 +562,38 @@ class HomeController extends Controller
 
             ));
     }
+
+    /**
+     * Handle CKEditor file upload
+     */
+    public function ckeditorUpload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $file = $request->file('upload');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            
+            // Uploads klasörünü oluştur
+            $uploadPath = public_path('uploads');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+            
+            // Dosyayı kaydet
+            $file->move($uploadPath, $filename);
+            
+            $url = asset('uploads/' . $filename);
+            
+            return response()->json([
+                'uploaded' => true,
+                'url' => $url
+            ]);
+        }
+        
+        return response()->json([
+            'uploaded' => false,
+            'error' => [
+                'message' => 'Upload failed'
+            ]
+        ]);
+    }
 }

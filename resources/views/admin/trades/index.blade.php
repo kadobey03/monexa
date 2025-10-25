@@ -1,178 +1,189 @@
-@extends('layouts.app')
-@section('title', $title)
+@extends('layouts.admin')
+
 @section('content')
 
-@include('admin.topmenu')
-@include('admin.sidebar')
-
-<div class="admin-main-content flex-1 lg:ml-64 transition-all duration-300">
-    <div class="p-6">
-        <!-- Page Header -->
-        <div class="mb-6">
-            <h1 class="text-2xl font-bold text-gray-900">User Trades Management</h1>
-            <nav class="flex text-sm text-gray-500">
-                <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-700">
-                    <i class="fas fa-home mr-1"></i>Dashboard
-                </a>
-                <span class="mx-2">/</span>
-                <span>Management</span>
-                <span class="mx-2">/</span>
-                <span class="text-gray-900">Trades</span>
-            </nav>
-        </div>
-
-        <!-- Success/Error Messages -->
-        @if(session('success'))
-            <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <div class="flex items-center">
-                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                    <span class="text-green-800">{{ session('success') }}</span>
-                </div>
+<!-- Page Header -->
+<div class="mb-8">
+    <div class="flex items-center justify-between bg-gradient-to-r from-violet-600 via-purple-700 to-indigo-600 rounded-2xl p-6 text-white shadow-lg">
+        <div class="flex items-center space-x-4">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                <i data-lucide="trending-up" class="w-8 h-8 text-white"></i>
             </div>
-        @endif
-
-        @if(session('error'))
-            <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <div class="flex items-center">
-                    <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
-                    <span class="text-red-800">{{ session('error') }}</span>
-                </div>
-            </div>
-        @endif
-
-        <!-- Statistics Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                <div class="flex items-center">
-                    <div class="p-3 bg-blue-100 rounded-lg">
-                        <i class="fas fa-chart-line text-blue-600 text-xl"></i>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm text-gray-500">Total Trades</p>
-                        <h3 class="text-2xl font-bold text-gray-900">{{ number_format($stats['total'] ?? 0) }}</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                <div class="flex items-center">
-                    <div class="p-3 bg-yellow-100 rounded-lg">
-                        <i class="fas fa-clock text-yellow-600 text-xl"></i>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm text-gray-500">Active Trades</p>
-                        <h3 class="text-2xl font-bold text-gray-900">{{ number_format($stats['active'] ?? 0) }}</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                <div class="flex items-center">
-                    <div class="p-3 bg-green-100 rounded-lg">
-                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm text-gray-500">Completed</p>
-                        <h3 class="text-2xl font-bold text-gray-900">{{ number_format($stats['expired'] ?? 0) }}</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-                <div class="flex items-center">
-                    <div class="p-3 bg-gray-100 rounded-lg">
-                        <i class="fas fa-dollar-sign text-gray-600 text-xl"></i>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm text-gray-500">Total Volume</p>
-                        <h3 class="text-2xl font-bold text-gray-900">${{ number_format($stats['total_volume'] ?? 0, 2) }}</h3>
-                    </div>
-                </div>
+            <div>
+                <h1 class="text-3xl font-bold mb-1">İşlem Yönetimi</h1>
+                <p class="text-violet-100 text-lg">Kullanıcı işlemlerini izleyin ve yönetin</p>
             </div>
         </div>
+        <div class="flex items-center space-x-3">
+            <div class="hidden md:flex items-center space-x-2 text-white/80">
+                <i data-lucide="home" class="w-4 h-4"></i>
+                <span>Dashboard</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span>Yönetim</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span class="text-white font-semibold">İşlemler</span>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <!-- Filters -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
-            <div class="p-4 border-b border-gray-200">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-semibold text-gray-900">
-                        <i class="fas fa-filter mr-2"></i>Filters & Search
-                    </h2>
-                    <button id="toggleFilters" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                        <i class="fas fa-search mr-2"></i>Toggle Filters
+<!-- Alert Messages -->
+<x-success-alert />
+<x-danger-alert />
+
+<!-- Statistics Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-shadow">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Toplam İşlem</p>
+                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['total'] ?? 0) }}</h3>
+                <p class="text-xs text-admin-400 mt-1">Tüm işlemler</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
+                <i data-lucide="trending-up" class="w-7 h-7 text-white"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-shadow">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Aktif İşlemler</p>
+                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['active'] ?? 0) }}</h3>
+                <p class="text-xs text-admin-400 mt-1">Devam eden</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center">
+                <i data-lucide="clock" class="w-7 h-7 text-white"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-shadow">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Tamamlanan</p>
+                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['expired'] ?? 0) }}</h3>
+                <p class="text-xs text-admin-400 mt-1">Bitmiş işlemler</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center">
+                <i data-lucide="check-circle" class="w-7 h-7 text-white"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-shadow">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Toplam Hacim</p>
+                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">${{ number_format($stats['total_volume'] ?? 0, 2) }}</h3>
+                <p class="text-xs text-admin-400 mt-1">USD değeri</p>
+            </div>
+            <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center">
+                <i data-lucide="dollar-sign" class="w-7 h-7 text-white"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg border border-admin-200 dark:border-admin-700 mb-8">
+    <div class="p-6 border-b border-admin-200 dark:border-admin-700">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                    <i data-lucide="search" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">Filtreler ve Arama</h2>
+                    <p class="text-admin-500 dark:text-admin-400 text-sm">İşlemleri filtreleyin ve arayın</p>
+                </div>
+            </div>
+            <button id="toggleFilters" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-lg">
+                <i data-lucide="filter" class="w-4 h-4 mr-2"></i>
+                Filtreleri Aç/Kapat
+            </button>
+        </div>
+    </div>
+    <div id="filtersPanel" class="hidden p-6">
+        <form method="GET" action="{{ route('admin.trades.index') }}" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">Kullanıcı Ara</label>
+                    <input type="text" name="search" value="{{ request('search') }}"
+                           class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-admin-900 dark:text-admin-100"
+                           placeholder="Kullanıcı adı veya e-posta">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">Durum</label>
+                    <select name="status" class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-admin-900 dark:text-admin-100">
+                        <option value="">Tümü</option>
+                        <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>Aktif</option>
+                        <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Tamamlandı</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">İşlem Türü</label>
+                    <select name="type" class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-admin-900 dark:text-admin-100">
+                        <option value="">Tümü</option>
+                        <option value="Buy" {{ request('type') == 'Buy' ? 'selected' : '' }}>Alış</option>
+                        <option value="Sell" {{ request('type') == 'Sell' ? 'selected' : '' }}>Satış</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">Varlık</label>
+                    <input type="text" name="asset" value="{{ request('asset') }}"
+                           class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-admin-900 dark:text-admin-100"
+                           placeholder="Varlık adı">
+                </div>
+                <div class="flex items-end">
+                    <button type="submit" class="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-lg">
+                        <i data-lucide="search" class="w-4 h-4 mr-2"></i>
+                        Filtrele
                     </button>
                 </div>
             </div>
-            <div id="filtersPanel" class="hidden p-4">
-                <form method="GET" action="{{ route('admin.trades.index') }}">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Search User</label>
-                            <input type="text" name="search" value="{{ request('search') }}" 
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                                   placeholder="Username or Email">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                            <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="">All</option>
-                                <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>Active</option>
-                                <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Expired</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Trade Type</label>
-                            <select name="type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <option value="">All</option>
-                                <option value="Buy" {{ request('type') == 'Buy' ? 'selected' : '' }}>Buy</option>
-                                <option value="Sell" {{ request('type') == 'Sell' ? 'selected' : '' }}>Sell</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Asset</label>
-                            <input type="text" name="asset" value="{{ request('asset') }}" 
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                                   placeholder="Asset name">
-                        </div>
-                        <div class="flex items-end">
-                            <button type="submit" class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                                <i class="fas fa-search mr-2"></i>Filter
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </form>
+    </div>
+</div>
 
-        <!-- Trades Table -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-            <div class="p-4 border-b border-gray-200">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-semibold text-gray-900">
-                        <i class="fas fa-table mr-2"></i>User Trades ({{ $trades->total() }} records)
-                    </h2>
-                    <div class="flex items-center space-x-2">
-                        <button onclick="testRoutes()" class="px-3 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition-colors">
-                            <i class="fas fa-bug mr-1"></i>Test Routes
-                        </button>
-                        <div class="relative">
-                            <button id="exportDropdown" class="px-3 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                                <i class="fas fa-download mr-1"></i>Export
-                            </button>
-                            <div id="exportMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                                <a href="{{ route('admin.trades.export', ['format' => 'csv'] + request()->all()) }}" 
-                                   class="block px-4 py-2 text-gray-700 hover:bg-gray-50">
-                                    <i class="fas fa-file-csv mr-2"></i>CSV
-                                </a>
-                                <a href="{{ route('admin.trades.export', ['format' => 'excel'] + request()->all()) }}" 
-                                   class="block px-4 py-2 text-gray-700 hover:bg-gray-50">
-                                    <i class="fas fa-file-excel mr-2"></i>Excel
-                                </a>
-                            </div>
-                        </div>
+<!-- Trades Table -->
+<div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg border border-admin-200 dark:border-admin-700">
+    <div class="p-6 border-b border-admin-200 dark:border-admin-700">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">Kullanıcı İşlemleri</h2>
+                    <p class="text-admin-500 dark:text-admin-400 text-sm">{{ $trades->total() }} toplam kayıt</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="testRoutes()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl transition-colors shadow-lg">
+                    <i data-lucide="bug" class="w-4 h-4 mr-2"></i>
+                    Test
+                </button>
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" id="exportDropdown" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-xl transition-colors shadow-lg">
+                        <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                        Dışa Aktar
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-transition id="exportMenu" class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-xl border border-admin-200 dark:border-admin-700 z-50">
+                        <a href="{{ route('admin.trades.export', ['format' => 'csv'] + request()->all()) }}"
+                           class="flex items-center px-4 py-3 text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700 rounded-t-xl transition-colors">
+                            <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>CSV
+                        </a>
+                        <a href="{{ route('admin.trades.export', ['format' => 'excel'] + request()->all()) }}"
+                           class="flex items-center px-4 py-3 text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700 rounded-b-xl transition-colors">
+                            <i data-lucide="file-spreadsheet" class="w-4 h-4 mr-2"></i>Excel
+                        </a>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
             
             <div class="overflow-x-auto">
                 <table class="w-full">
@@ -370,102 +381,110 @@
 
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script>
-// Modal functions
-function closeModal(modalId) {
-    document.getElementById(modalId).classList.add('hidden');
-}
+document.addEventListener('DOMContentLoaded', function() {
+    // Modal functions
+    window.closeModal = function(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+    };
 
-function showAddProfitForm(tradeId) {
-    const form = document.getElementById('addProfitForm');
-    const profitUrl = '{{ url("/admin/trades") }}/' + tradeId + '/add-profit';
-    form.setAttribute('action', profitUrl);
-    
-    // Clear form
-    document.getElementById('profit_amount').value = '';
-    document.getElementById('profit_note').value = '';
-    
-    // Show modal
-    document.getElementById('addProfitModal').classList.remove('hidden');
-}
-
-function deleteTrade(tradeId) {
-    const deleteUrl = '{{ url("/admin/trades") }}/' + tradeId;
-    
-    if (confirm('Are you sure you want to delete this trade? This action cannot be undone.')) {
-        // Create and submit form
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = deleteUrl;
+    window.showAddProfitForm = function(tradeId) {
+        const form = document.getElementById('addProfitForm');
+        const profitUrl = '{{ url("/admin/trades") }}/' + tradeId + '/add-profit';
+        form.setAttribute('action', profitUrl);
         
-        const csrfToken = document.createElement('input');
-        csrfToken.type = 'hidden';
-        csrfToken.name = '_token';
-        csrfToken.value = '{{ csrf_token() }}';
+        // Clear form
+        document.getElementById('profit_amount').value = '';
+        document.getElementById('profit_note').value = '';
         
-        const methodField = document.createElement('input');
-        methodField.type = 'hidden';
-        methodField.name = '_method';
-        methodField.value = 'DELETE';
+        // Show modal
+        document.getElementById('addProfitModal').classList.remove('hidden');
+    };
+
+    window.deleteTrade = function(tradeId) {
+        const deleteUrl = '{{ url("/admin/trades") }}/' + tradeId;
         
-        form.appendChild(csrfToken);
-        form.appendChild(methodField);
-        document.body.appendChild(form);
-        form.submit();
-    }
-}
-
-function testRoutes() {
-    console.log('Testing routes...');
-    const baseUrl = '{{ url('/') }}';
-    const routes = [
-        baseUrl + '/admin/trades',
-        baseUrl + '/admin/trades/1',
-        baseUrl + '/admin/trades/1/edit'
-    ];
-
-    routes.forEach(url => {
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
+        Swal.fire({
+            title: 'İşlemi Sil?',
+            text: 'Bu işlem geri alınamaz. Devam etmek istiyor musunuz?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Evet, Sil',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Create and submit form
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = deleteUrl;
+                
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+                
+                const methodField = document.createElement('input');
+                methodField.type = 'hidden';
+                methodField.name = '_method';
+                methodField.value = 'DELETE';
+                
+                form.appendChild(csrfToken);
+                form.appendChild(methodField);
+                document.body.appendChild(form);
+                form.submit();
             }
-        })
-        .then(response => {
-            console.log(`Route ${url}: Status ${response.status}`);
-        })
-        .catch(error => {
-            console.log(`Route ${url}: Error ${error.message}`);
         });
-    });
-}
+    };
 
-// Toggle filters
-document.getElementById('toggleFilters').addEventListener('click', function() {
-    const panel = document.getElementById('filtersPanel');
-    panel.classList.toggle('hidden');
-});
+    window.testRoutes = function() {
+        console.log('Route testi başlatılıyor...');
+        const baseUrl = '{{ url('/') }}';
+        const routes = [
+            baseUrl + '/admin/trades',
+            baseUrl + '/admin/trades/1',
+            baseUrl + '/admin/trades/1/edit'
+        ];
 
-// Export dropdown
-document.getElementById('exportDropdown').addEventListener('click', function() {
-    const menu = document.getElementById('exportMenu');
-    menu.classList.toggle('hidden');
-});
+        routes.forEach(url => {
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                console.log(`Route ${url}: Status ${response.status}`);
+            })
+            .catch(error => {
+                console.log(`Route ${url}: Hata ${error.message}`);
+            });
+        });
+    };
 
-// Close dropdowns when clicking outside
-document.addEventListener('click', function(event) {
-    if (!event.target.closest('#exportDropdown')) {
-        document.getElementById('exportMenu').classList.add('hidden');
+    // Toggle filters
+    const toggleFilters = document.getElementById('toggleFilters');
+    if (toggleFilters) {
+        toggleFilters.addEventListener('click', function() {
+            const panel = document.getElementById('filtersPanel');
+            panel.classList.toggle('hidden');
+        });
     }
-});
 
-// Auto-dismiss alerts
-setTimeout(function() {
-    document.querySelectorAll('.alert').forEach(function(alert) {
-        alert.style.display = 'none';
-    });
-}, 5000);
+    // Initialize Lucide icons after content is loaded
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    // Auto-dismiss alerts
+    setTimeout(function() {
+        document.querySelectorAll('.alert').forEach(function(alert) {
+            alert.style.display = 'none';
+        });
+    }, 5000);
+});
 </script>
-@endsection
+@endpush
