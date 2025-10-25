@@ -33,6 +33,8 @@ use App\Http\Controllers\Admin\SignalProvderController;
 use App\Http\Controllers\Admin\TopupController;
 use App\Http\Controllers\Admin\TradingAccountController;
 use App\Http\Controllers\Admin\TradesController;
+use App\Http\Controllers\Admin\PhrasesController;
+use App\Http\Controllers\Admin\CreditApplicationController;
 use Illuminate\Support\Facades\Route;
 
 // Include admin plan routes
@@ -461,6 +463,49 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('/delete/{id}', [AdminNotificationController::class, 'delete'])->name('admin.deletenotification');
         Route::get('/count', [AdminNotificationController::class, 'getUnreadCount'])->name('admin.notifications.count');
     });
+});
+
+// Missing Routes for Sidebar Menu Items
+Route::middleware(['isadmin', '2fa'])->prefix('admin/dashboard')->group(function () {
+    
+    // Bot Trading Routes (placeholder)
+    Route::get('bot-trading', function () {
+        return redirect()->route('admin.bots.index');
+    })->name('admin.bot-trading');
+    
+    // Demo Trading Routes (placeholder)
+    Route::get('demo-trading', function () {
+        return view('admin.demo.index', ['title' => 'Demo Trading Yönetimi']);
+    })->name('admin.demo-trading');
+    
+    // Copy Trading Routes (redirect to existing)
+    Route::get('copy-trading', function () {
+        return redirect()->route('copytrading');
+    })->name('admin.copy-trading');
+    
+    // Signal Provider Routes (redirect to existing)
+    Route::get('signal-provider', function () {
+        return redirect()->route('msignals');
+    })->name('admin.signal-provider');
+    
+    // Phrases/Language Management Routes
+    Route::controller(PhrasesController::class)->group(function () {
+        Route::get('phrases', 'index')->name('admin.phrases');
+        Route::post('phrases', 'store')->name('admin.phrases.store');
+        Route::put('phrases/{key}', 'update')->name('admin.phrases.update');
+        Route::delete('phrases/{language}/{key}', 'destroy')->name('admin.phrases.destroy');
+    });
+    
+    // Credit Applications Routes
+    Route::controller(CreditApplicationController::class)->group(function () {
+        Route::get('credit-applications', 'index')->name('admin.credit-applications');
+        Route::get('credit-applications/{id}', 'show')->name('admin.credit-applications.show');
+        Route::put('credit-applications/{id}', 'update')->name('admin.credit-applications.update');
+        Route::post('credit-applications/{id}/approve', 'approve')->name('admin.credit-applications.approve');
+        Route::post('credit-applications/{id}/reject', 'reject')->name('admin.credit-applications.reject');
+        Route::get('credit-applications/export', 'export')->name('admin.credit-applications.export');
+    });
+    
 });
 
 // Include demo management routes

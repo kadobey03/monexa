@@ -419,7 +419,6 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     </div>
 
     <!-- Enhanced Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Real-time clock with enhanced formatting
@@ -445,9 +444,32 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
             updateTime();
             setInterval(updateTime, 1000);
             
+            // Check if Chart.js is loaded
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js is not loaded. Please check the CDN link.');
+                return;
+            }
+
             // Chart setup with modern styling
             const ctx = document.getElementById('myChart')?.getContext('2d');
             if (ctx) {
+                // Ensure Chart.js is loaded before creating chart
+                if (typeof Chart === 'undefined') {
+                    console.error('Chart.js is not loaded yet, retrying...');
+                    setTimeout(() => {
+                        if (typeof Chart !== 'undefined') {
+                            createChart();
+                        } else {
+                            console.error('Chart.js failed to load after retry');
+                        }
+                    }, 100);
+                    return;
+                }
+
+                createChart();
+            }
+
+            function createChart() {
                 const chartData = [
                     "{{ $chart_pdepsoit }}",
                     "{{ $chart_pendepsoit }}",
@@ -558,6 +580,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     }
                 });
             }
+        });
         });
     </script>
     

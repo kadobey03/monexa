@@ -60,10 +60,89 @@
                             </a>
                         @endif
                         
+                        <div class="border-t border-gray-200 dark:border-admin-600 my-1"></div>
+                        
                         <button onclick="openTopupModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <i data-lucide="credit-card" class="w-4 h-4 mr-3"></i>
                             Kredi/Debit
+                        </button>
+                        
+                        <button onclick="openEditModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
+                            <i data-lucide="user-pen" class="w-4 h-4 mr-3"></i>
+                            Kullanıcı Düzenle
+                        </button>
+                        
+                        <button onclick="openTradingModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-3"></i>
+                            Manuel İşlem Yap
+                        </button>
+                        
+                        <button onclick="openSignalModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
+                            <i data-lucide="radio" class="w-4 h-4 mr-3"></i>
+                            Sinyal Oluştur
+                        </button>
+                        
+                        <div class="border-t border-gray-200 dark:border-admin-600 my-1"></div>
+                        
+                        <button onclick="openEmailModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
+                            <i data-lucide="mail" class="w-4 h-4 mr-3"></i>
+                            E-posta Gönder
+                        </button>
+                        
+                        <button onclick="openNotifyModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
+                            <i data-lucide="bell" class="w-4 h-4 mr-3"></i>
+                            Bildirim Gönder
+                        </button>
+                        
+                        <button onclick="openTaxModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
+                            <i data-lucide="calculator" class="w-4 h-4 mr-3"></i>
+                            Kullanıcı Vergisi
+                        </button>
+                        
+                        <button onclick="openWithdrawalCodeModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
+                            <i data-lucide="key" class="w-4 h-4 mr-3"></i>
+                            Para Çekme Kodu
+                        </button>
+                        
+                        <button onclick="openTradesModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
+                            <i data-lucide="hash" class="w-4 h-4 mr-3"></i>
+                            İşlem Sayısı Belirle
+                        </button>
+                        
+                        <div class="border-t border-gray-200 dark:border-admin-600 my-1"></div>
+                        
+                        <button onclick="openSwitchUserModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
+                            <i data-lucide="user-switch" class="w-4 h-4 mr-3"></i>
+                            Kullanıcı Hesabına Geç
+                        </button>
+                        
+                        <button onclick="openResetPasswordModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-orange-700 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20">
+                            <i data-lucide="key-round" class="w-4 h-4 mr-3"></i>
+                            Şifreyi Sıfırla
+                        </button>
+                        
+                        <a href="{{ url('admin/dashboard/clearacct') }}/{{ $user->id }}"
+                           onclick="return confirm('{{ $user->name }} kullanıcısının hesabını temizlemek istediğinizden emin misiniz?')"
+                           class="flex items-center px-4 py-2 text-sm text-yellow-700 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20">
+                            <i data-lucide="eraser" class="w-4 h-4 mr-3"></i>
+                            Hesabı Temizle
+                        </a>
+                        
+                        <button onclick="openDeleteModal()"
+                                class="flex items-center w-full px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
+                            <i data-lucide="user-x" class="w-4 h-4 mr-3"></i>
+                            Hesabı Sil
                         </button>
                     </div>
                 </div>
@@ -340,10 +419,71 @@
 </div>
 
 <script>
-function openTopupModal() {
-    // Modal açma fonksiyonu - users_actions dosyasında tanımlanmış modal ile entegre olacak
-    console.log('Topup modal açılacak');
-}
+// Basit event dispatch fonksiyonları
+window.openTopupModal = function() {
+    window.dispatchEvent(new CustomEvent('open-topup-modal'));
+};
+
+window.openEditModal = function() {
+    window.dispatchEvent(new CustomEvent('open-edit-modal'));
+};
+
+window.openTradingModal = function() {
+    window.dispatchEvent(new CustomEvent('open-trading-modal'));
+};
+
+window.openSignalModal = function() {
+    window.dispatchEvent(new CustomEvent('open-signal-modal'));
+};
+
+window.openEmailModal = function() {
+    window.dispatchEvent(new CustomEvent('open-email-modal'));
+};
+
+window.openNotifyModal = function() {
+    window.dispatchEvent(new CustomEvent('open-notify-modal'));
+};
+
+window.openTaxModal = function() {
+    window.dispatchEvent(new CustomEvent('open-tax-modal'));
+};
+
+window.openWithdrawalCodeModal = function() {
+    window.dispatchEvent(new CustomEvent('open-withdrawal-code-modal'));
+};
+
+window.openTradesModal = function() {
+    window.dispatchEvent(new CustomEvent('open-trades-modal'));
+};
+
+window.openSwitchUserModal = function() {
+    window.dispatchEvent(new CustomEvent('open-switch-user-modal'));
+};
+
+window.openResetPasswordModal = function() {
+    window.dispatchEvent(new CustomEvent('open-reset-password-modal'));
+};
+
+window.openDeleteModal = function() {
+    window.dispatchEvent(new CustomEvent('open-delete-modal'));
+};
+
+// Debug için console.log ekleyelim
+window.debugModals = function() {
+    console.log('Modal elements:');
+    console.log('Topup modal:', document.querySelector('#topupModal'));
+    console.log('Edit modal:', document.querySelector('#editModal'));
+    console.log('Trading modal:', document.querySelector('#tradingModal'));
+    console.log('Signal modal:', document.querySelector('#signalModal'));
+    console.log('Email modal:', document.querySelector('#emailModal'));
+    console.log('Notify modal:', document.querySelector('#notifyModal'));
+    console.log('Tax modal:', document.querySelector('#taxModal'));
+    console.log('Withdrawal code modal:', document.querySelector('#withdrawalCodeModal'));
+    console.log('Trades modal:', document.querySelector('#tradesModal'));
+    console.log('Switch user modal:', document.querySelector('#switchUserModal'));
+    console.log('Reset password modal:', document.querySelector('#resetPasswordModal'));
+    console.log('Delete modal:', document.querySelector('#deleteModal'));
+};
 </script>
 
 @include('admin.Users.users_actions')

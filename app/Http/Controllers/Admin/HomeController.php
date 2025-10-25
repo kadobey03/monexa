@@ -158,11 +158,23 @@ class HomeController extends Controller
     //Return manage users route
     public function manageusers()
     {
-        return view('admin.users-modern')
-            ->with(array(
-                'title' => 'All users',
+        // Kullanıcı listesi (sayfalı)
+        $users = User::orderBy('id', 'desc')->paginate(15);
+        
+        // İstatistikler
+        $user_count = User::count();
+        $active_users = User::where('status', 'active')->count();
+        $blocked_users = User::where('status', 'blocked')->count();
+        $pending_verification = User::where('account_verify', '!=', 'yes')->count();
 
-            ));
+        return view('admin.users-modern', [
+            'title' => 'All users',
+            'users' => $users,
+            'user_count' => $user_count,
+            'active_users' => $active_users,
+            'blocked_users' => $blocked_users,
+            'pending_verification' => $pending_verification,
+        ]);
     }
 
     public function activeInvestments()

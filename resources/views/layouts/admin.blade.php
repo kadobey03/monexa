@@ -68,6 +68,47 @@ x-init="
             background: rgba(75, 85, 99, 0.6);
         }
         
+        /* Sidebar navigation scrollbar */
+        .sidebar-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: rgba(229, 231, 235, 0.1);
+            border-radius: 2px;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.3);
+            border-radius: 2px;
+        }
+        
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.5);
+        }
+        
+        .dark .sidebar-nav::-webkit-scrollbar-track {
+            background: rgba(55, 65, 81, 0.1);
+        }
+        
+        .dark .sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(75, 85, 99, 0.3);
+        }
+        
+        .dark .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: rgba(75, 85, 99, 0.5);
+        }
+        
+        /* Firefox scrollbar */
+        .sidebar-nav {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+        }
+        
+        .dark .sidebar-nav {
+            scrollbar-color: rgba(75, 85, 99, 0.3) transparent;
+        }
+        
         /* Sidebar transition */
         .sidebar-transition {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -122,14 +163,15 @@ x-init="
                         <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
                     </div>
                     <div x-show="!sidebarCollapsed" x-transition class="text-white">
-                        <h2 class="text-lg font-bold truncate">{{ Auth('admin')->user()->firstName }}</h2>
-                        <p class="text-xs text-primary-100">{{ Auth('admin')->user()->type }}</p>
+                        @php $adminUser = Auth::guard('admin')->user(); @endphp
+                        <h2 class="text-lg font-bold truncate">{{ $adminUser?->firstName ?? 'Admin' }}</h2>
+                        <p class="text-xs text-primary-100">{{ $adminUser?->type ?? 'User' }}</p>
                     </div>
                 </div>
             </div>
 
             <!-- Navigation Menu -->
-            <nav class="flex-1 overflow-y-auto py-6 px-4" x-data="{ openMenus: {} }">
+            <nav class="sidebar-nav flex-1 overflow-y-auto py-6 px-4" style="height: calc(100vh - 180px);" x-data="{ openMenus: {} }">
                 
                 <!-- Dashboard -->
                 <a href="{{ route('admin.dashboard') }}" 
@@ -139,7 +181,8 @@ x-init="
                     <span x-show="!sidebarCollapsed" x-transition class="font-medium">Kontrol Paneli</span>
                 </a>
 
-                @if (Auth('admin')->user()->type == 'Super Admin' || Auth('admin')->user()->type == 'Admin')
+                @php $adminUser = Auth::guard('admin')->user(); @endphp
+                @if ($adminUser && ($adminUser->type == 'Super Admin' || $adminUser->type == 'Admin'))
                 
                 <!-- Users Management -->
                 <div class="mt-4" x-data="{ open: false }">
@@ -181,38 +224,150 @@ x-init="
                     </a>
                 </div>
 
-                <!-- Other Management -->
+                <!-- Business Management -->
                 <div class="mt-6">
-                    <a href="{{ route('emailservices') }}" 
-                       class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 group"
+                    <div class="px-4 mb-3">
+                        <span x-show="!sidebarCollapsed" class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">İş Yönetimi</span>
+                    </div>
+
+                    <a href="{{ route('emailservices') }}"
+                       class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 group {{ request()->routeIs('emailservices') ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : '' }}"
                        :title="sidebarCollapsed ? 'E-posta Servisleri' : ''">
                         <i data-lucide="mail" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-blue-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
                         <span x-show="!sidebarCollapsed" x-transition class="font-medium">E-posta Servisleri</span>
                     </a>
 
-                    <a href="{{ route('kyc') }}" 
-                       class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-700 dark:hover:text-teal-300 transition-all duration-200 group"
+                    <a href="{{ route('kyc') }}"
+                       class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-700 dark:hover:text-teal-300 transition-all duration-200 group {{ request()->routeIs('kyc') ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300' : '' }}"
                        :title="sidebarCollapsed ? 'KYC Başvuruları' : ''">
                         <i data-lucide="user-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-teal-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
                         <span x-show="!sidebarCollapsed" x-transition class="font-medium">KYC Başvuruları</span>
+                    </a>
+
+                    <a href="{{ route('admin.trades.index') }}"
+                       class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-violet-50 dark:hover:bg-violet-900/20 hover:text-violet-700 dark:hover:text-violet-300 transition-all duration-200 group {{ request()->routeIs('admin.trades.index') ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300' : '' }}"
+                       :title="sidebarCollapsed ? 'İşlem Yönetimi' : ''">
+                        <i data-lucide="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-violet-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">İşlem Yönetimi</span>
+                    </a>
+
+                    <a href="{{ route('admin.leads.index') }}"
+                       class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-700 dark:hover:text-amber-300 transition-all duration-200 group {{ request()->routeIs('admin.leads.index') ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300' : '' }}"
+                       :title="sidebarCollapsed ? 'Müşteri Adayları' : ''">
+                        <i data-lucide="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-amber-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">Müşteri Adayları</span>
+                    </a>
+                </div>
+
+                <!-- Content Management -->
+                <div class="mt-6">
+                    <div class="px-4 mb-3">
+                        <span x-show="!sidebarCollapsed" class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">İçerik Yönetimi</span>
+                    </div>
+                    
+                    <a href="{{ route('admin.phrases') }}"
+                       class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-pink-50 dark:hover:bg-pink-900/20 hover:text-pink-700 dark:hover:text-pink-300 transition-all duration-200 group {{ request()->routeIs('admin.phrases') ? 'bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300' : '' }}"
+                       :title="sidebarCollapsed ? 'Dil/Cümleler' : ''">
+                        <i data-lucide="languages" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-pink-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">Dil/Cümleler</span>
                     </a>
                 </div>
 
                 @endif
 
-                @if (Auth('admin')->user()->type == 'Super Admin')
-                <!-- Super Admin Only -->
+                <!-- Tasks Management -->
+                <div class="mt-6" x-data="{ open: false }">
+                    <button @click="open = !open"
+                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-slate-50 dark:hover:bg-slate-900/20 hover:text-slate-700 dark:hover:text-slate-300 transition-all duration-200 group"
+                            :title="sidebarCollapsed ? 'Görevler' : ''">
+                        <div class="flex items-center">
+                            <i data-lucide="list-checks" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-slate-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                            <span x-show="!sidebarCollapsed" x-transition class="font-medium">Görevler</span>
+                        </div>
+                        <i data-lucide="chevron-down" x-show="!sidebarCollapsed" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                    </button>
+                    
+                    <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
+                        @if ($adminUser && $adminUser->type == 'Super Admin')
+                            <a href="{{ url('/admin/dashboard/task') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
+                                Görev Oluştur
+                            </a>
+                            <a href="{{ url('/admin/dashboard/mtask') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
+                                Görevleri Yönet
+                            </a>
+                        @else
+                            <a href="{{ url('/admin/dashboard/viewtask') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
+                                Görevlerimi Görüntüle
+                            </a>
+                        @endif
+                    </div>
+                </div>
+
+                @if ($adminUser && $adminUser->type == 'Super Admin')
+                
+                <!-- Admins Management -->
+                <div class="mt-4" x-data="{ open: false }">
+                    <button @click="open = !open"
+                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300 transition-all duration-200 group"
+                            :title="sidebarCollapsed ? 'Yöneticiler' : ''">
+                        <div class="flex items-center">
+                            <i data-lucide="user-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                            <span x-show="!sidebarCollapsed" x-transition class="font-medium">Yöneticiler</span>
+                        </div>
+                        <i data-lucide="chevron-down" x-show="!sidebarCollapsed" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                    </button>
+                    
+                    <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
+                        <a href="{{ url('/admin/dashboard/addmanager') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
+                            Yönetici Ekle
+                        </a>
+                        <a href="{{ url('/admin/dashboard/madmin') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
+                            Yöneticileri Yönet
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Super Admin Settings -->
                 <div class="mt-8 pt-6 border-t border-admin-200 dark:border-admin-700">
                     <div class="px-4 mb-3">
                         <span x-show="!sidebarCollapsed" class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">Sistem Yönetimi</span>
                     </div>
                     
-                    <a href="{{ route('appsettingshow') }}" 
-                       class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 transition-all duration-200 group"
+                    <!-- System Settings Menu -->
+                    <a href="{{ route('appsettingshow') }}"
+                       class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:text-orange-700 dark:hover:text-orange-300 transition-all duration-200 group {{ request()->routeIs('appsettingshow') ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300' : '' }}"
                        :title="sidebarCollapsed ? 'Sistem Ayarları' : ''">
-                        <i data-lucide="settings" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-purple-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                        <i data-lucide="server" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-orange-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
                         <span x-show="!sidebarCollapsed" x-transition class="font-medium">Sistem Ayarları</span>
                     </a>
+
+                    <!-- Settings Dropdown -->
+                    <div class="mt-4" x-data="{ open: false }">
+                        <button @click="open = !open"
+                                class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 transition-all duration-200 group"
+                                :title="sidebarCollapsed ? 'Diğer Ayarlar' : ''">
+                            <div class="flex items-center">
+                                <i data-lucide="settings" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-purple-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                                <span x-show="!sidebarCollapsed" x-transition class="font-medium">Diğer Ayarlar</span>
+                            </div>
+                            <i data-lucide="chevron-down" x-show="!sidebarCollapsed" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                        </button>
+                        
+                        <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
+                            <a href="{{ route('refsetshow') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
+                                Tavsiye/Bonus Ayarları
+                            </a>
+                            <a href="{{ route('paymentview') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
+                                Ödeme Ayarları
+                            </a>
+                            <a href="{{ route('managecryptoasset') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
+                                Takas Ayarları
+                            </a>
+                            <a href="{{ url('/admin/dashboard/ipaddress') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
+                                IP Adresi
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 @endif
 
@@ -318,7 +473,7 @@ x-init="
                                 class="relative p-2 rounded-lg text-admin-500 hover:text-admin-700 dark:hover:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                             <i data-lucide="bell" class="w-5 h-5"></i>
                             @php
-                                $notificationCount = \App\Models\Notification::where('admin_id', Auth::guard('admin')->id())->where('is_read', 0)->count();
+                                $notificationCount = $adminUser ? \App\Models\Notification::where('admin_id', $adminUser->id)->where('is_read', 0)->count() : 0;
                             @endphp
                             @if($notificationCount > 0)
                                 <span class="absolute -top-1 -right-1 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
@@ -358,14 +513,14 @@ x-init="
 
                     <!-- Profile Dropdown -->
                     <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" 
+                        <button @click="open = !open"
                                 class="flex items-center space-x-3 p-2 rounded-lg hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                             <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
-                                {{ substr(Auth('admin')->user()->firstName, 0, 1) }}
+                                {{ $adminUser ? substr($adminUser->firstName, 0, 1) : 'A' }}
                             </div>
                             <div class="hidden sm:block text-left">
-                                <div class="text-sm font-medium text-admin-900 dark:text-admin-100">{{ Auth('admin')->user()->firstName }}</div>
-                                <div class="text-xs text-admin-500">{{ Auth('admin')->user()->type }}</div>
+                                <div class="text-sm font-medium text-admin-900 dark:text-admin-100">{{ $adminUser?->firstName ?? 'Admin' }}</div>
+                                <div class="text-xs text-admin-500">{{ $adminUser?->type ?? 'User' }}</div>
                             </div>
                             <i data-lucide="chevron-down" class="w-4 h-4 text-admin-400"></i>
                         </button>
@@ -377,11 +532,11 @@ x-init="
                             <div class="p-4 border-b border-admin-200 dark:border-admin-700">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white font-bold">
-                                        {{ substr(Auth('admin')->user()->firstName, 0, 1) }}
+                                        {{ $adminUser ? substr($adminUser->firstName, 0, 1) : 'A' }}
                                     </div>
                                     <div>
-                                        <div class="font-medium text-admin-900 dark:text-admin-100">{{ Auth('admin')->user()->firstName }} {{ Auth('admin')->user()->lastName }}</div>
-                                        <div class="text-sm text-admin-500">{{ Auth('admin')->user()->type }}</div>
+                                        <div class="font-medium text-admin-900 dark:text-admin-100">{{ $adminUser?->firstName ?? 'Admin' }} {{ $adminUser?->lastName ?? '' }}</div>
+                                        <div class="text-sm text-admin-500">{{ $adminUser?->type ?? 'User' }}</div>
                                     </div>
                                 </div>
                             </div>

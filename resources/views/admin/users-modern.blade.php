@@ -435,11 +435,12 @@ document.addEventListener('change', function(e) {
 
 // User Action Functions
 function viewUser(userId) {
-    window.location.href = `/admin/users/${userId}`;
+    window.location.href = `/admin/dashboard/user-details/${userId}`;
 }
 
 function editUser(userId) {
-    window.location.href = `/admin/users/${userId}/edit`;
+    // Henüz edit route'u yok, geçici olarak view sayfasına yönlendir
+    window.location.href = `/admin/dashboard/user-details/${userId}`;
 }
 
 function toggleUserStatus(userId) {
@@ -452,8 +453,8 @@ function toggleUserStatus(userId) {
         cancelButtonText: 'İptal'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Implement status toggle
-            console.log('Toggling status for user:', userId);
+            // Kullanıcı durumunu toggle et (block/unblock)
+            window.location.href = `/admin/dashboard/uublock/${userId}`;
         }
     });
 }
@@ -468,8 +469,8 @@ function deleteUser(userId) {
         cancelButtonText: 'İptal'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Implement user deletion
-            console.log('Deleting user:', userId);
+            // Kullanıcıyı sil
+            window.location.href = `/admin/dashboard/delsystemuser/${userId}`;
         }
     });
 }
@@ -477,32 +478,82 @@ function deleteUser(userId) {
 // Bulk Action Functions
 function bulkActivate() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
-    console.log('Bulk activating users:', selectedUsers);
+    if (selectedUsers.length === 0) {
+        Swal.fire('Uyarı', 'Lütfen en az bir kullanıcı seçin.', 'warning');
+        return;
+    }
+    
+    Swal.fire({
+        title: 'Toplu Aktifleştir',
+        text: `${selectedUsers.length} kullanıcıyı aktifleştirmek istediğinizden emin misiniz?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Evet, Aktifleştir',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Her kullanıcıyı ayrı ayrı aktifleştir (bulk API yok)
+            selectedUsers.forEach(userId => {
+                window.location.href = `/admin/dashboard/uunblock/${userId}`;
+            });
+        }
+    });
 }
 
 function bulkDeactivate() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
-    console.log('Bulk deactivating users:', selectedUsers);
+    if (selectedUsers.length === 0) {
+        Swal.fire('Uyarı', 'Lütfen en az bir kullanıcı seçin.', 'warning');
+        return;
+    }
+    
+    Swal.fire({
+        title: 'Toplu Deaktifleştir',
+        text: `${selectedUsers.length} kullanıcıyı deaktifleştirmek istediğinizden emin misiniz?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Evet, Deaktifleştir',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Her kullanıcıyı ayrı ayrı deaktifleştir
+            selectedUsers.forEach(userId => {
+                window.location.href = `/admin/dashboard/uublock/${userId}`;
+            });
+        }
+    });
 }
 
 function bulkExport() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
-    console.log('Bulk exporting users:', selectedUsers);
+    if (selectedUsers.length === 0) {
+        Swal.fire('Uyarı', 'Lütfen en az bir kullanıcı seçin.', 'warning');
+        return;
+    }
+    // Export fonksiyonu için özel route gerekli - şimdilik basit uyarı
+    Swal.fire('Bilgi', 'Dışa aktarma özelliği yakında eklenecek.', 'info');
 }
 
 function bulkDelete() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
+    if (selectedUsers.length === 0) {
+        Swal.fire('Uyarı', 'Lütfen en az bir kullanıcı seçin.', 'warning');
+        return;
+    }
     
     Swal.fire({
         title: 'Seçilen Kullanıcıları Sil',
-        text: `${selectedUsers.length} kullanıcıyı silmek istediğinizden emin misiniz?`,
+        text: `${selectedUsers.length} kullanıcıyı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!`,
         icon: 'error',
         showCancelButton: true,
         confirmButtonText: 'Evet, Sil',
         cancelButtonText: 'İptal'
     }).then((result) => {
         if (result.isConfirmed) {
-            console.log('Bulk deleting users:', selectedUsers);
+            // Her kullanıcıyı ayrı ayrı sil
+            selectedUsers.forEach(userId => {
+                window.location.href = `/admin/dashboard/delsystemuser/${userId}`;
+            });
         }
     });
 }
@@ -510,26 +561,35 @@ function bulkDelete() {
 // Form Submission
 function submitAddUser(event) {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const form = event.target;
+    const formData = new FormData(form);
     
-    // Implement user creation
-    console.log('Creating user with data:', Object.fromEntries(formData));
+    // Form action ve method ekle
+    form.action = '/admin/dashboard/saveuser';
+    form.method = 'POST';
     
-    // Close modal on success
-    closeAddUserModal();
+    // CSRF token ekle
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    if (csrfToken) {
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = '_token';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+    }
     
-    // Show success message
-    Swal.fire({
-        title: 'Başarılı!',
-        text: 'Kullanıcı başarıyla eklendi.',
-        icon: 'success'
-    });
+    // Form'u submit et
+    form.submit();
 }
 
 // Export Functions
 function exportUsers() {
-    // Implement user export
-    console.log('Exporting users...');
+    // Henüz export route'u yok, geçici bilgi mesajı
+    Swal.fire({
+        title: 'Bilgi',
+        text: 'Kullanıcı dışa aktarma özelliği yakında eklenecek.',
+        icon: 'info'
+    });
 }
 </script>
 @endpush

@@ -1,269 +1,66 @@
  <!-- Top Up Modal -->
- <div id="topupModal" class="modal fade" role="dialog">
-     <div class="modal-dialog modal-lg modal-dialog-centered">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header bg-primary text-white">
-                 <h4 class="modal-title">
-                     <i class="fas fa-wallet me-2"></i>{{ $user->name }} Hesabına Kredi/Debit Uygula
+ <div id="topupModal" x-data="{ open: false }" x-show="open" @open-topup-modal.window="open = true"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="open = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+             <div class="bg-blue-600 dark:bg-blue-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="wallet" class="h-5 w-5 mr-2"></i>{{ $user->name }} Hesabına Kredi/Debit Uygula
                  </h4>
-                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
+                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
              </div>
-             <div class="modal-body p-4">
+             <div class="p-6">
                  <form method="post" action="{{ route('topup') }}">
                      @csrf
-                     <div class="row g-4">
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-dollar-sign me-2 text-primary"></i>Tutar
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="dollar-sign" class="h-4 w-4 inline mr-2 text-blue-600"></i>Tutar
                              </label>
-                             <input class="form-control form-control-lg" placeholder="Tutar girin" type="number" name="amount" min="0.01" step="0.01" required>
-                             <div class="invalid-feedback">
-                                 Lütfen geçerli bir tutar giriniz (minimum 0.01).
-                             </div>
+                             <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" placeholder="Tutar girin" type="number" name="amount" min="0.01" step="0.01" required>
                          </div>
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-exchange-alt me-2 text-primary"></i>Hesap Türü
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="repeat" class="h-4 w-4 inline mr-2 text-blue-600"></i>Hesap Türü
                              </label>
-                             <select class="form-select form-select-lg" name="type" required>
+                             <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" name="type" required>
                                  <option value="" selected disabled>Hesap Türünü Seçin</option>
-                        <option value="Bonus">💰 Prim</option>
-<option value="Profit">📈 Kâr</option>
-<option value="Ref_Bonus">👥 Referans Primi</option>
-<option value="balance">💳 Hesap Bakiyesi</option>
-<option value="Deposit">🏦 Yatırılan Tutar</option>
+                                 <option value="Bonus">💰 Prim</option>
+                                 <option value="Profit">📈 Kâr</option>
+                                 <option value="Ref_Bonus">👥 Referans Primi</option>
+                                 <option value="balance">💳 Hesap Bakiyesi</option>
+                                 <option value="Deposit">🏦 Yatırılan Tutar</option>
                              </select>
                          </div>
                      </div>
-                     <div class="row g-4 mt-3">
-                         <div class="col-12">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-plus-circle me-2 text-primary"></i>İşlem Türü
-                             </label>
-                             <select class="form-select form-select-lg" name="t_type" required>
-                                 <option value="" selected disabled>İşlem Türünü Seçin</option>
-<option value="Credit">➕ Bakiye Ekle</option>
-<option value="Debit">➖ Bakiye Azalt</option>
-
-                             </select>
-                             <div class="alert alert-warning mt-2 py-2">
-                                 <small><i class="fas fa-exclamation-triangle me-1"></i> <strong>Not:</strong> Depozitoları borçlandıramazsınız</small>
-                             </div>
-                         </div>
-                     </div>
-                     <div class="row g-3 mt-4">
-                         <div class="col-12">
-                             <input type="hidden" name="user_id" value="{{ $user->id }}">
-                             <button type="submit" class="btn btn-primary btn-lg w-100" data-bs-toggle="tooltip" title="Bu işlem kullanıcı hesabına kredi veya debit uygular">
-                                 <i class="fas fa-check me-2"></i>İşlemi Gerçekleştir
-                             </button>
-                         </div>
-                     </div>
-                 </form>
-             </div>
-         </div>
-     </div>
- </div>
- <!-- /Top Up Modal -->
-
-
-
-<!-- send a single user email Modal-->
-<div id="Nostrades" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header bg-info text-white">
-                 <h4 class="modal-title">
-                     <i class="fas fa-chart-line me-2"></i>{{ $user->name }} {{ $user->l_name }} için para çekme öncesi işlem sayısı belirle
-                 </h4>
-                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body p-4">
-                 <form role="form" method="post" action="{{ route('numberoftrades') }}">
-                     @csrf
-                     <div class="mb-4">
-                         <label class="form-label fw-semibold">
-                             <i class="fas fa-exchange-alt me-2 text-info"></i>Para çekme öncesi işlem sayısı
+                     <div class="mt-6">
+                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                             <i data-lucide="plus-circle" class="h-4 w-4 inline mr-2 text-blue-600"></i>İşlem Türü
                          </label>
-                         <input type="number" name="numberoftrades" class="form-control form-control-lg" placeholder="{{ $user->numberoftrades }}" min="0" required>
-                         <div class="invalid-feedback">
-                             Lütfen geçerli bir işlem sayısı giriniz.
+                         <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" name="t_type" required>
+                             <option value="" selected disabled>İşlem Türünü Seçin</option>
+                             <option value="Credit">➕ Bakiye Ekle</option>
+                             <option value="Debit">➖ Bakiye Azalt</option>
+                         </select>
+                         <div class="mt-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-md">
+                             <p class="text-sm text-yellow-800 dark:text-yellow-300"><i data-lucide="alert-triangle" class="h-4 w-4 inline mr-1"></i> <strong>Not:</strong> Depozitoları borçlandıramazsınız</p>
                          </div>
-                         <small class="text-muted mt-1 d-block">
-                             Kullanıcının para çekebilmesi için tamamlaması gereken minimum işlem sayısı
-                         </small>
                      </div>
-
-                     <div class="d-grid">
-                         <input type="submit" class="btn btn-info btn-lg" value="Para Çekme İçin İşlem Sayısı Belirle" data-bs-toggle="tooltip" title="Kullanıcının para çekebilmesi için tamamlaması gereken minimum işlem sayısını belirler">
+                     <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
-                     </div>
-                 </form>
-             </div>
-         </div>
-     </div>
- </div>
-
-
-
-
-<!-- send a single user email Modal-->
- <div id="userTax" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header bg-warning">
-                 <h4 class="modal-title text-dark">
-                     <i class="fas fa-calculator me-2"></i>{{ $user->name }} {{ $user->l_name }} için kullanıcı vergisini aç/kapat
-                 </h4>
-                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body p-4">
-                 <form role="form" method="post" action="{{ route('usertax') }}">
-                     @csrf
-                     <div class="row g-4">
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-toggle-on me-2 text-warning"></i>Açık/Kapalı
-                             </label>
-                             <select class="form-select form-select-lg" name="taxtype" required>
-                                 <option value="" selected disabled>Durumu seçin</option>
-                                 <option value="on">🟢 Açık</option>
-                                 <option value="off">🔴 Kapalı</option>
-                             </select>
-                         </div>
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-percent me-2 text-warning"></i>Vergi Oranı (%)
-                             </label>
-                             <input type="number" name="taxamount" class="form-control form-control-lg" min="0" max="100" step="0.01" placeholder="0.00">
-                             <div class="invalid-feedback">
-                                 Lütfen 0-100 arasında geçerli bir vergi oranı giriniz.
-                             </div>
-                         </div>
-                     </div>
-
-                     <div class="d-grid mt-4">
-                         <input type="submit" class="btn btn-warning btn-lg" value="Kullanıcı Vergisi Ekle" data-bs-toggle="tooltip" title="Kullanıcı için özel vergi oranı belirler">
-                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                     </div>
-                 </form>
-             </div>
-         </div>
-     </div>
- </div>
-
-
-
-<!-- Clear account Modal -->
-<div id="clearacctModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header ">
-                <h4 class="modal-title ">Hesabı Temizle</strong></h4>
-                <button type="button" class="close " data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <p class="">{{ $user->name }} kullanıcısının hesabını {{ $user->currency }}0.00 olarak temizliyorsunuz
-                </p>
-                <a class="btn " href="{{ url('admin/dashboard/clearacct') }}/{{ $user->id }}">Devam Et</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div id="withdrawalcode" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header bg-success text-white">
-                 <h4 class="modal-title">
-                     <i class="fas fa-key me-2"></i>{{ $user->name }} {{ $user->l_name }} için para çekme kodunu girin
-                 </h4>
-                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body p-4">
-                 <form role="form" method="post" action="{{ route('withdrawalcode') }}">
-                     @csrf
-                     <div class="row g-4">
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-toggle-on me-2 text-success"></i>Para Çekme Kodu Durumu
-                             </label>
-                             <select class="form-select form-select-lg" name="withdrawal_code" required>
-                                 <option value="" selected disabled>Durumu seçin</option>
-                                 <option value="on">🟢 Açık</option>
-                                 <option value="off">🔴 Kapalı</option>
-                             </select>
-                         </div>
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-code me-2 text-success"></i>Para Çekme Kodu
-                             </label>
-                             <input type="text" name="user_withdrawalcode" class="form-control form-control-lg" value="{{ $user->user_withdrawalcode }}" maxlength="50" required>
-                             <div class="invalid-feedback">
-                                 Lütfen geçerli bir para çekme kodu giriniz.
-                             </div>
-                         </div>
-                     </div>
-
-                     <div class="d-grid mt-4">
-                         <input type="submit" class="btn btn-success btn-lg" value="Kullanıcı Para Çekme Kodunu Belirle" data-bs-toggle="tooltip" title="Kullanıcı için özel para çekme kodu ve durumunu belirler">
-                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                     </div>
-                 </form>
-             </div>
-         </div>
-     </div>
- </div>
- <!-- /Clear account Modal -->
- <!-- send a single user email Modal-->
- <div id="sendmailtooneuserModal" class="modal fade" role="dialog">
-     <div class="modal-dialog modal-lg modal-dialog-centered">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header bg-primary text-white">
-                 <h4 class="modal-title">
-                     <i class="fas fa-envelope me-2"></i>E-posta Gönder
-                 </h4>
-                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
-             </div>
-             <div class="modal-body p-4">
-                 <div class="alert alert-info py-2 mb-4">
-                     <i class="fas fa-info-circle me-2"></i>Bu mesaj <strong>{{ $user->name }}</strong> kullanıcısına gönderilecek
-                 </div>
-                 <form role="form" method="post" action="{{ route('sendmailtooneuser') }}">
-                     @csrf
-                     <div class="mb-4">
-                         <label class="form-label fw-semibold">
-                             <i class="fas fa-heading me-2 text-primary"></i>E-posta Konusu
-                         </label>
-                         <input type="text" name="subject" class="form-control form-control-lg" placeholder="E-posta konusu" maxlength="100" required>
-                         <div class="invalid-feedback">
-                             Lütfen e-posta konusu giriniz (maksimum 100 karakter).
-                         </div>
-                     </div>
-                     <div class="mb-4">
-                         <label class="form-label fw-semibold">
-                             <i class="fas fa-message me-2 text-primary"></i>Mesaj İçeriği
-                         </label>
-                         <textarea placeholder="Mesajınızı buraya yazın..." class="form-control" name="message" rows="8"
-                             maxlength="1000" required style="resize: vertical;"></textarea>
-                         <div class="invalid-feedback">
-                             Lütfen bir mesaj giriniz (maksimum 1000 karakter).
-                         </div>
-                         <div class="form-text">
-                             <small class="text-muted">Kalan karakter: <span id="charCount">1000</span></small>
-                         </div>
-                     </div>
-                     <div class="d-grid">
-                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                         <button type="submit" class="btn btn-primary btn-lg" data-bs-toggle="tooltip" title="E-posta mesajını kullanıcıya gönderir">
-                             <i class="fas fa-paper-plane me-2"></i>E-postayı Gönder
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                             <i data-lucide="check" class="h-4 w-4 mr-2"></i>İşlemi Gerçekleştir
                          </button>
                      </div>
                  </form>
@@ -271,659 +68,694 @@
          </div>
      </div>
  </div>
- <!-- /Trading History Modal -->
 
- <div id="TradingModal" class="modal fade" role="dialog">
-     <div class="modal-dialog">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header ">
-                 <h4 class="modal-title ">Trade for {{ $user->name }} {{ $user->l_name }} </h4>
-                 <button type="button" class="close " data-dismiss="modal">&times;</button>
-             </div>
-             <div class="modal-body ">
-                 <form role="form" method="post" action="{{ route('addhistory') }}">
-                     @csrf
-                     <div class="form-group">
-                        <h5 class=" ">Amount</h5>
-                        <input type="number" name="amount" class="form-control" placeholder="İşlem tutarını giriniz {{ $user->currency }}" min="0.01" step="0.01" required>
-                        <div class="invalid-feedback">
-                            Lütfen geçerli bir işlem tutarı giriniz (minimum 0.01 {{ $user->currency }}).
-                        </div>
-                    </div>
-                     <div class="form-group">
-                         <h5 class=" ">Select Asset</h5>
-
-                         <select class="form-control  " name="plan" required>
-                             <option value="" selected disabled>Select Asset</option>
-                             <optgroup label="Currency">
-                                <option selected>EURUSD</option>
-                                <option>EURJPY</option>
-                                <option>USDJPY</option>
-                                <option>USDCAD</option>
-                                <option>AUDUSD</option>
-                                <option>AUDJPY</option>
-                                <option>NZDUSD</option>
-                                <option>GBPUSD</option>
-                                <option>GBPJPY</option>
-                                <option>USDCHF</option>
-                            </optgroup>
-                            <optgroup label="Crypto-Currency">
-                                <option>BTCUSD</option>
-                                <option>ETHUSD</option>
-                                <option>BCHUSD</option>
-                                <option>XRPUSD</option>
-                                <option>LTCUSD</option>
-                                <option>ETHBTC</option>
-                            </optgroup>
-                            <optgroup label="Stocks">
-                                <option>CITI</option>
-                                <option>SNAP</option>
-                                <option>EA</option>
-                                <option>MSFT</option>
-                                <option>CSCO</option>
-                                <option>GOOG</option>
-                                <option>FB</option>
-                                <option>SBUX</option>
-                                <option>INTC</option>
-                            </optgroup>
-                            <optgroup label="Indices">
-                                <option>SPX500USD</option>
-                                <option>MXX</option>
-                                <option>XAX</option>
-                                <option>INDEX:STI</option>
-                            </optgroup>
-                            <optgroup label="Commodities">
-                                <option>GOLD</option>
-                                <option>RB1!</option>
-                                <option>USOIL</option>
-                                <option>SILVER</option>
-                            </optgroup>
-                         </select>
-                     </div>
-
-
-                     <div class="form-group">
-                        <select class="form-control" name="leverage" id="leverage" required>
-                            <option selected disable value="">Leverage</option><option value="10">1:10</option><option value="20">1:20</option><option value="30">1:30</option><option value="40">1:40</option><option value="50">1:50</option><option value="60">1:60</option><option value="70">1:70</option><option value="80">1:80</option><option value="90">1:90</option><option value="100">1:100</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" name="expire" id="expire" required>
-                            <option selected disable value="">Expiration</option>
-                            <option value="1 Minutes">1 Minute</option>
-                            <option value="5 Minutes">5 Minutes</option>
-                            <option value="15 Minutes">15 Minutes</option>
-                            <option value="30 Minutes">30 Minutes</option>
-                            <option value="60 Minutes">1 Hour</option>
-                            <option value="4 Hours">4 Hours</option>
-                            <option value="1 Days">1 Day</option>
-                            <option value="2 Days">2 Days</option>
-                            <option value="7 Days">7 Days</option>
-                        </select>
-                    </div>
-                     <div class="form-group">
-                         <h5 class=" ">Profit/Loss</h5>
-                         <select class="form-control  " name="type" required>
-                             <option value="" selected disabled>Select type  profit/loss</option>
-                             <option value="WIN">Profit</option>
-                             <option value="LOSE">Loss</option>
-                         </select>
-                     </div>
-
-                     <div class="form-group">
-                        <h5 class=" ">Trade Type</h5>
-                        <select class="form-control  " name="tradetype" required>
-                            <option value="" selected disabled>Select type  Buy/Sell</option>
-                            <option value="Buy">Buy</option>
-                            <option value="Sell">Sell</option>
-                        </select>
-                    </div>
-                     <div class="form-group">
-                         <input type="submit" class="btn btn-primary" value="İşlem Yap" data-bs-toggle="tooltip" title="Kullanıcı için manuel işlem oluşturur">
-                         <input type="hidden" name="user_id" value="{{ $user->id }}">
-                     </div>
-                 </form>
-             </div>
+ <!-- Edit User Modal -->
+ <div id="editModal" x-data="{ open: false }" x-show="open" @open-edit-modal.window="open = true" 
+      x-transition:enter="transition ease-out duration-300" 
+      x-transition:enter-start="opacity-0" 
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200" 
+      x-transition:leave-start="opacity-100" 
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="open = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
-     </div>
- </div>
- <!-- /send a single user email Modal -->
-
-
-
- {{-- Create signal --}}
-
- <div id="Signal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header ">
-                <h4 class="modal-title ">Create Signal for {{ $user->name }} {{ $user->l_name }} </h4>
-                <button type="button" class="close " data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <form role="form" method="post" action="{{ route('addsignalhistory') }}">
-                    @csrf
-
-                    <div class="form-group">
-                        <h5 class=" ">Select Asset</h5>
-
-                        <select class="form-control  " name="asset" required>
-                            <option value="" selected disabled>Select Asset</option>
-                            <optgroup label="Currency">
-                               <option selected>EURUSD</option>
-                               <option>EURJPY</option>
-                               <option>USDJPY</option>
-                               <option>USDCAD</option>
-                               <option>AUDUSD</option>
-                               <option>AUDJPY</option>
-                               <option>NZDUSD</option>
-                               <option>GBPUSD</option>
-                               <option>GBPJPY</option>
-                               <option>USDCHF</option>
-                           </optgroup>
-                           <optgroup label="Crypto-Currency">
-                               <option>BTCUSD</option>
-                               <option>ETHUSD</option>
-                               <option>BCHUSD</option>
-                               <option>XRPUSD</option>
-                               <option>LTCUSD</option>
-                               <option>ETHBTC</option>
-                           </optgroup>
-                           <optgroup label="Stocks">
-                               <option>CITI</option>
-                               <option>SNAP</option>
-                               <option>EA</option>
-                               <option>MSFT</option>
-                               <option>CSCO</option>
-                               <option>GOOG</option>
-                               <option>FB</option>
-                               <option>SBUX</option>
-                               <option>INTC</option>
-                           </optgroup>
-                           <optgroup label="Indices">
-                               <option>SPX500USD</option>
-                               <option>MXX</option>
-                               <option>XAX</option>
-                               <option>INDEX:STI</option>
-                           </optgroup>
-                           <optgroup label="Commodities">
-                               <option>GOLD</option>
-                               <option>RB1!</option>
-                               <option>USOIL</option>
-                               <option>SILVER</option>
-                           </optgroup>
-                        </select>
-                    </div>
-
-
-                    <div class="form-group">
-                       <select class="form-control" name="leverage" id="leverage" required>
-                           <option selected disable value="">Leverage</option><option value="10">1:10</option><option value="20">1:20</option><option value="30">1:30</option><option value="40">1:40</option><option value="50">1:50</option><option value="60">1:60</option><option value="70">1:70</option><option value="80">1:80</option><option value="90">1:90</option><option value="100">1:100</option>
-                       </select>
-                   </div>
-
-                   <div class="form-group">
-                    <h5 class=" ">Tutar</h5>
-                    <input type="number" name="amount" class="form-control" placeholder="Sinyal tutarını giriniz {{ $user->currency }}" min="0.01" step="0.01" required>
-                    <div class="invalid-feedback">
-                        Lütfen geçerli bir sinyal tutarı giriniz (minimum 0.01 {{ $user->currency }}).
-                    </div>
-                </div>
-                   <div class="form-group">
-                       <select class="form-control" name="expire"  required>
-                           <option selected disable value="">Expiration</option>
-                           <option value="1 Minutes">1 Minute</option>
-                           <option value="5 Minutes">5 Minutes</option>
-                           <option value="15 Minutes">15 Minutes</option>
-                           <option value="30 Minutes">30 Minutes</option>
-                           <option value="60 Minutes">1 Hour</option>
-                           <option value="4 Hours">4 Hours</option>
-                           <option value="1 Days">1 Day</option>
-                           <option value="2 Days">2 Days</option>
-                           <option value="7 Days">7 Days</option>
-                       </select>
-                   </div>
-                    {{-- <div class="form-group">
-                        <h5 class=" ">Profit/Loss</h5>
-                        <select class="form-control  " name="type" required>
-                            <option value="" selected disabled>Select type  profit/loss</option>
-                            <option value="WIN">Profit</option>
-                            <option value="LOSE">Loss</option>
-                        </select>
-                    </div> --}}
-
-                    <div class="form-group">
-                       <h5 class=" ">Order Type</h5>
-                       <select class="form-control  " name="order_type" required>
-                           <option value="" selected disabled>Select type  Buy/Sell</option>
-                           <option value="Buy">Buy</option>
-                           <option value="Sell">Sell</option>
-                       </select>
-                   </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Sinyal Oluştur" data-bs-toggle="tooltip" title="Kullanıcı için manuel sinyal oluşturur">
-                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
- {{-- End creating signal --}}
-
- {{-- Start Add Plan History --}}
-
-
-
-<div id="Planhistory" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header ">
-                <h4 class="modal-title ">Add Trading History for {{ $user->name }} {{ $user->l_name }} </h4>
-                <button type="button" class="close " data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <form role="form" method="post" action="{{ route('addplanhistory') }}">
-                    @csrf
-                    <div class="form-group">
-                        <h5 class=" ">Select Investment Plan</h5>
-                        <select class="form-control  " name="plan">
-                            <option value="" selected disabled>Select Plan</option>
-                            @foreach ($pl as $plns)
-                                <option value="{{ $plns->name }}">{{ $plns->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <h5 class=" ">Amount</h5>
-                        <input type="number" name="amount" class="form-control" placeholder="Plan tutarını giriniz" min="0.01" step="0.01" required>
-                        <div class="invalid-feedback">
-                            Lütfen geçerli bir plan tutarı giriniz (minimum 0.01).
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <h5 class=" ">Type</h5>
-                        <select class="form-control  " name="type">
-                            <option value="" selected disabled>Select type</option>
-                            <option value="Bonus">Bonus</option>
-                            <option value="ROI">ROI</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-secondary" value="Geçmiş Ekle" data-bs-toggle="tooltip" title="Kullanıcı için plan geçmiş kaydı ekler">
-                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{{-- End plan  History --}}
- <!-- Edit user Modal -->
- <div id="edituser" class="modal fade" role="dialog">
-     <div class="modal-dialog modal-lg modal-dialog-centered">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header bg-success text-white">
-                 <h4 class="modal-title">
-                     <i class="fas fa-user-edit me-2"></i>Edit {{ $user->name }} Details
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+             <div class="bg-green-600 dark:bg-green-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="user-pen" class="h-5 w-5 mr-2"></i>{{ $user->name }} Kullanıcısını Düzenle
                  </h4>
-                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
+                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
              </div>
-             <div class="modal-body p-4">
-                 <form role="form" method="post" action="{{ route('edituser') }}">
+             <div class="p-6">
+                 <form method="post" action="{{ route('edituser') }}">
                      @csrf
-                     <div class="row g-4">
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-user me-2 text-success"></i>Username
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="user" class="h-4 w-4 inline mr-2 text-green-600"></i>Kullanıcı Adı
                              </label>
-                             <input class="form-control form-control-lg" id="input1" value="{{ $user->username }}" type="text" name="username" pattern="[a-zA-Z0-9_]{3,50}" maxlength="50" required>
-                             <div class="invalid-feedback">
-                                 Kullanıcı adı 3-50 karakter arası olmalı ve sadece harf, rakam ve alt çizgi içerebilir.
-                             </div>
-                             <small class="text-muted mt-1 d-block">
-                                 <i class="fas fa-info-circle me-1"></i>Note: Same username should be used in the referral link.
-                             </small>
+                             <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->username }}" type="text" name="username" pattern="[a-zA-Z0-9_]{3,50}" maxlength="50" required>
                          </div>
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-signature me-2 text-success"></i>Full Name
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="user-circle" class="h-4 w-4 inline mr-2 text-green-600"></i>Ad Soyad
                              </label>
-                             <input class="form-control form-control-lg" value="{{ $user->name }}" type="text" name="name" required>
+                             <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->name }}" type="text" name="name" required>
                          </div>
-                     </div>
-                     <div class="row g-4 mt-3">
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-envelope me-2 text-success"></i>Email Address
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="mail" class="h-4 w-4 inline mr-2 text-green-600"></i>E-posta Adresi
                              </label>
-                             <input class="form-control form-control-lg" value="{{ $user->email }}" type="email" name="email" maxlength="100" required>
-                             <div class="invalid-feedback">
-                                 Lütfen geçerli bir e-posta adresi giriniz.
-                             </div>
+                             <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->email }}" type="email" name="email" maxlength="100" required>
                          </div>
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-phone me-2 text-success"></i>Phone Number
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="phone" class="h-4 w-4 inline mr-2 text-green-600"></i>Telefon Numarası
                              </label>
-                             <input class="form-control form-control-lg" value="{{ $user->phone }}" type="tel" name="phone" pattern="[+]?[0-9\s\-\(\)]{10,20}" maxlength="20" required>
-                             <div class="invalid-feedback">
-                                 Lütfen geçerli bir telefon numarası giriniz.
-                             </div>
+                             <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->phone }}" type="tel" name="phone" pattern="[+]?[0-9\s\-\(\)]{10,20}" maxlength="20" required>
                          </div>
-                     </div>
-                     <div class="row g-4 mt-3">
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-flag me-2 text-success"></i>Country
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="flag" class="h-4 w-4 inline mr-2 text-green-600"></i>Ülke
                              </label>
-                             <input class="form-control form-control-lg" value="{{ $user->country }}" type="text" name="country">
+                             <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->country }}" type="text" name="country">
                          </div>
-                         <div class="col-md-6">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-money-bill me-2 text-success"></i>Currency
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="coins" class="h-4 w-4 inline mr-2 text-green-600"></i>Para Birimi
                              </label>
-                             <input name="s_currency" value="{{$user->currency}}" id="s_c" type="hidden">
-                             <select name="currency" id="select_c" class="form-select form-select-lg select2" onchange="changecurr()" style="width: 100%">
+                             <input name="s_currency" value="{{$user->currency}}" type="hidden">
+                             <select name="currency" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white">
                                  <option value="{{$user->currency}}">{{ $user->currency }}</option>
                                  @foreach ($currencies as $key => $currency)
-                                     <option id="{{ $key }}" value="<?php echo html_entity_decode($currency); ?>">
+                                     <option value="<?php echo html_entity_decode($currency); ?>">
                                          {{ $key . ' (' . html_entity_decode($currency) . ')' }}</option>
                                  @endforeach
                              </select>
                          </div>
                      </div>
-                     <div class="row g-4 mt-3">
-                         <div class="col-12">
-                             <label class="form-label fw-semibold">
-                                 <i class="fas fa-link me-2 text-success"></i>Referral Link
-                             </label>
-                             <input class="form-control form-control-lg" value="{{ $user->ref_link }}" type="url" name="ref_link" required>
-                         </div>
+                     <div class="mt-6">
+                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                             <i data-lucide="link" class="h-4 w-4 inline mr-2 text-green-600"></i>Referans Linki
+                         </label>
+                         <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->ref_link }}" type="url" name="ref_link" required>
                      </div>
-                     <div class="row g-3 mt-4">
-                         <div class="col-12">
-                             <input type="hidden" name="user_id" value="{{ $user->id }}">
-                             <button type="submit" class="btn btn-success btn-lg w-100" data-bs-toggle="tooltip" title="Kullanıcı bilgilerini günceller">
-                                 <i class="fas fa-save me-2"></i>Kullanıcı Bilgilerini Güncelle
-                             </button>
-                         </div>
+                     <div class="mt-6">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                             <i data-lucide="save" class="h-4 w-4 mr-2"></i>Kullanıcı Bilgilerini Güncelle
+                         </button>
                      </div>
                  </form>
              </div>
          </div>
      </div>
  </div>
- <!-- /Edit user Modal -->
 
- <!-- Reset user password Modal -->
- <div id="resetpswdModal" class="modal fade" role="dialog">
-     <div class="modal-dialog modal-dialog-centered">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header bg-warning text-dark">
-                 <h4 class="modal-title">
-                     <i class="fas fa-key me-2"></i>Reset User Password
+ <!-- Trading Modal -->
+ <div id="tradingModal" x-data="{ open: false }" x-show="open" @open-trading-modal.window="open = true" 
+      x-transition:enter="transition ease-out duration-300" 
+      x-transition:enter-start="opacity-0" 
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200" 
+      x-transition:leave-start="opacity-100" 
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="open = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+             <div class="bg-purple-600 dark:bg-purple-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="trending-up" class="h-5 w-5 mr-2"></i>{{ $user->name }} için Manuel İşlem
                  </h4>
-                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
              </div>
-             <div class="modal-body p-4 text-center">
-                 <div class="mb-4">
-                     <i class="fas fa-lock fa-4x text-warning mb-3"></i>
-                     <h5 class="mb-3">Reset Password for {{ $user->name }}?</h5>
-                     <div class="alert alert-warning py-3">
-                         <p class="mb-2">The password will be reset to: <strong>user01236</strong></p>
-                         <small class="text-muted">Make sure to inform the user about this change.</small>
+             <div class="p-6">
+                 <form method="post" action="{{ route('addhistory') }}">
+                     @csrf
+                     <div class="space-y-6">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">İşlem Tutarı</label>
+                             <input type="number" name="amount" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 dark:bg-admin-700 dark:text-white" placeholder="İşlem tutarını giriniz {{ $user->currency }}" min="0.01" step="0.01" required>
+                         </div>
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Varlık Seçin</label>
+                             <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 dark:bg-admin-700 dark:text-white" name="plan" required>
+                                 <option value="" selected disabled>Varlık Seçin</option>
+                                 <optgroup label="Para Birimleri">
+                                     <option value="EURUSD">EURUSD</option>
+                                     <option value="EURJPY">EURJPY</option>
+                                     <option value="USDJPY">USDJPY</option>
+                                     <option value="USDCAD">USDCAD</option>
+                                     <option value="AUDUSD">AUDUSD</option>
+                                     <option value="AUDJPY">AUDJPY</option>
+                                     <option value="NZDUSD">NZDUSD</option>
+                                     <option value="GBPUSD">GBPUSD</option>
+                                     <option value="GBPJPY">GBPJPY</option>
+                                     <option value="USDCHF">USDCHF</option>
+                                 </optgroup>
+                                 <optgroup label="Kripto Para">
+                                     <option value="BTCUSD">BTCUSD</option>
+                                     <option value="ETHUSD">ETHUSD</option>
+                                     <option value="BCHUSD">BCHUSD</option>
+                                     <option value="XRPUSD">XRPUSD</option>
+                                     <option value="LTCUSD">LTCUSD</option>
+                                     <option value="ETHBTC">ETHBTC</option>
+                                 </optgroup>
+                                 <optgroup label="Hisse Senetleri">
+                                     <option value="AAPL">AAPL</option>
+                                     <option value="GOOGL">GOOGL</option>
+                                     <option value="MSFT">MSFT</option>
+                                     <option value="TSLA">TSLA</option>
+                                 </optgroup>
+                             </select>
+                         </div>
+                         <div class="grid grid-cols-2 gap-4">
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Kaldıraç</label>
+                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 dark:bg-admin-700 dark:text-white" name="leverage" required>
+                                     <option selected disabled value="">Kaldıraç Seçin</option>
+                                     <option value="10">1:10</option>
+                                     <option value="20">1:20</option>
+                                     <option value="50">1:50</option>
+                                     <option value="100">1:100</option>
+                                 </select>
+                             </div>
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Süre</label>
+                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 dark:bg-admin-700 dark:text-white" name="expire" required>
+                                     <option selected disabled value="">Süre Seçin</option>
+                                     <option value="1 Minutes">1 Dakika</option>
+                                     <option value="5 Minutes">5 Dakika</option>
+                                     <option value="15 Minutes">15 Dakika</option>
+                                     <option value="30 Minutes">30 Dakika</option>
+                                     <option value="60 Minutes">1 Saat</option>
+                                 </select>
+                             </div>
+                         </div>
+                         <div class="grid grid-cols-2 gap-4">
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Sonuç</label>
+                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 dark:bg-admin-700 dark:text-white" name="type" required>
+                                     <option value="" selected disabled>Sonuç seçin</option>
+                                     <option value="WIN">Kâr</option>
+                                     <option value="LOSE">Zarar</option>
+                                 </select>
+                             </div>
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">İşlem Türü</label>
+                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 dark:bg-admin-700 dark:text-white" name="tradetype" required>
+                                     <option value="" selected disabled>İşlem türü seçin</option>
+                                     <option value="Buy">Al</option>
+                                     <option value="Sell">Sat</option>
+                                 </select>
+                             </div>
+                         </div>
                      </div>
-                 </div>
-                 <div class="row g-3">
-                     <div class="col-6">
-                         <button type="button" class="btn btn-secondary btn-lg w-100" data-dismiss="modal">
-                             <i class="fas fa-times me-2"></i>Cancel
+                     <div class="mt-6">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                             <i data-lucide="trending-up" class="h-4 w-4 mr-2"></i>İşlem Yap
                          </button>
                      </div>
-                     <div class="col-6">
-                         <a class="btn btn-warning btn-lg w-100" href="{{ url('admin/dashboard/resetpswd') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısının şifresini gerçekten sıfırlamak istiyor musunuz? Yeni şifre: user01236')">
-                             <i class="fas fa-key me-2"></i>Şifreyi Sıfırla
-                         </a>
-                     </div>
-                 </div>
+                 </form>
              </div>
          </div>
      </div>
  </div>
- <!-- /Reset user password Modal -->
 
-
-  <!-- Trading Progress Modal -->
-  <div id="tradingProgressModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header bg-{{$bg}}">
-                <h4 class="modal-title text-{{$text}}">Set Trading Signal</strong></h4>
-
-            </div>
-            <div class="modal-body bg-{{$bg}}">
-                <form role="form" method="post" action="{{route('tradingprogress')}}">
-                    <div class="form-group">
-                        <h5 class=" text-{{$text}}">Trading Signal %</h5>
-                        <input class="form-control bg-{{$bg}} text-{{$text}}" value="{{$user->progress}}" type="number" name="progress" min="0" max="100" step="0.1" required>
-                        <div class="invalid-feedback">
-                            Lütfen 0-100 arasında geçerli bir yüzde değeri giriniz.
-                        </div>
-                         <small>Signal strength in %. For signal strength to show on user dashoard increase its value </small>
-                    </div>
-
-
-                    <div class="form-group">
-                        @csrf
-                        <input type="hidden" name="user_id" value="{{$user->id}}">
-                        <input type="submit" class="btn btn-{{$text}}" value="Sinyal Gücünü Güncelle" data-bs-toggle="tooltip" title="Kullanıcı için sinyal gücünü belirler">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Trading Progress Modal password Modal -->
-
- <!-- Switch useraccount Modal -->
- <div id="switchuserModal" class="modal fade" role="dialog">
-     <div class="modal-dialog modal-dialog-centered">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header bg-info text-white">
-                 <h4 class="modal-title">
-                     <i class="fas fa-exchange-alt me-2"></i>Login as {{ $user->name }}
+ <!-- Email Modal -->
+ <div id="emailModal" x-data="{ open: false }" x-show="open" @open-email-modal.window="open = true" 
+      x-transition:enter="transition ease-out duration-300" 
+      x-transition:enter-start="opacity-0" 
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200" 
+      x-transition:leave-start="opacity-100" 
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="open = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+             <div class="bg-indigo-600 dark:bg-indigo-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="mail" class="h-5 w-5 mr-2"></i>{{ $user->name }} kullanıcısına E-posta Gönder
                  </h4>
-                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
+                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
              </div>
-             <div class="modal-body p-4 text-center">
+             <div class="p-6">
+                 <div class="mb-4 p-3 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-700 rounded-md">
+                     <p class="text-sm text-indigo-800 dark:text-indigo-300"><i data-lucide="info" class="h-4 w-4 inline mr-1"></i>Bu mesaj <strong>{{ $user->name }}</strong> kullanıcısına gönderilecek</p>
+                 </div>
+                 <form method="post" action="{{ route('sendmailtooneuser') }}">
+                     @csrf
+                     <div class="space-y-6">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="type" class="h-4 w-4 inline mr-2 text-indigo-600"></i>E-posta Konusu
+                             </label>
+                             <input type="text" name="subject" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-admin-700 dark:text-white" placeholder="E-posta konusu" maxlength="100" required>
+                         </div>
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <i data-lucide="message-square" class="h-4 w-4 inline mr-2 text-indigo-600"></i>Mesaj İçeriği
+                             </label>
+                             <textarea placeholder="Mesajınızı buraya yazın..." class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-admin-700 dark:text-white" name="message" rows="8" maxlength="1000" required style="resize: vertical;"></textarea>
+                         </div>
+                     </div>
+                     <div class="mt-6">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                             <i data-lucide="send" class="h-4 w-4 mr-2"></i>E-postayı Gönder
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <!-- Delete Modal -->
+ <div id="deleteModal" x-data="{ open: false }" x-show="open" @open-delete-modal.window="open = true" 
+      x-transition:enter="transition ease-out duration-300" 
+      x-transition:enter-start="opacity-0" 
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200" 
+      x-transition:leave-start="opacity-100" 
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="open = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+             <div class="bg-red-600 dark:bg-red-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="alert-triangle" class="h-5 w-5 mr-2"></i>Kullanıcı Hesabını Sil
+                 </h4>
+                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
+             </div>
+             <div class="p-6 text-center">
                  <div class="mb-4">
-                     <i class="fas fa-user-circle fa-4x text-info mb-3"></i>
-                     <h5 class="mb-3">Switch to {{ $user->name }}'s Account?</h5>
-                     <p class="text-muted mb-0">
-                         You will be logged in as this user. You can return to admin panel anytime.
+                     <i data-lucide="user-x" class="mx-auto h-12 w-12 text-red-600 mb-4"></i>
+                     <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{ $user->name }}'in Hesabını Sil?</h5>
+                     <p class="text-gray-600 dark:text-gray-400">
+                         Bu işlem geri alınamaz. Bu hesapla ilişkili tüm veriler kalıcı olarak silinecektir.
                      </p>
                  </div>
-                 <div class="row g-3">
-                     <div class="col-6">
-                         <button type="button" class="btn btn-secondary btn-lg w-100" data-dismiss="modal">
-                             <i class="fas fa-times me-2"></i>Cancel
-                         </button>
+                 <div class="flex space-x-3">
+                     <button @click="resetPasswordOpen = false" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                         <i data-lucide="x" class="h-4 w-4 mr-2 inline"></i>İptal
+                     </button>
+                     <a href="{{ url('admin/dashboard/delsystemuser') }}/{{ $user->id }}" onclick="return confirm('Bu işlem geri alınamaz. {{ $user->name }} kullanıcısını gerçekten silmek istiyor musunuz?')" class="flex-1 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                         <i data-lucide="trash-2" class="h-4 w-4 mr-2"></i>Evet, Hesabı Sil
+                     </a>
+                 </div>
+             </div>
+         </div>
+
+ <!-- Reset Password Modal -->
+ <div id="resetPasswordModal" x-data="{ resetPasswordOpen: false }"
+      x-show="resetPasswordOpen"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="resetPasswordOpen = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+             <div class="bg-yellow-500 dark:bg-yellow-600 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="key" class="h-5 w-5 mr-2"></i>Kullanıcı Şifresini Sıfırla
+                 </h4>
+                 <button @click="resetPasswordOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
+             </div>
+             <div class="p-6 text-center">
+                 <div class="mb-4">
+                     <i data-lucide="lock" class="mx-auto h-12 w-12 text-yellow-500 mb-4"></i>
+                     <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{ $user->name }} için Şifreyi Sıfırla?</h5>
+                     <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-md">
+                         <p class="text-sm text-yellow-800 dark:text-yellow-300 mb-2">Şifre şuna sıfırlanacak: <strong>user01236</strong></p>
+                         <p class="text-xs text-yellow-700 dark:text-yellow-400">Kullanıcıya bu değişikliği bildirmeyi unutmayın.</p>
                      </div>
-                     <div class="col-6">
-                         <a class="btn btn-info btn-lg w-100" href="{{ url('admin/dashboard/switchuser') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısı olarak giriş yapmak istediğinizden emin misiniz? Yönetici paneline istediğiniz zaman dönebilirsiniz.')">
-                             <i class="fas fa-sign-in-alt me-2"></i>Kullanıcı Hesabına Geç
-                         </a>
-                     </div>
+                 </div>
+                 <div class="flex space-x-3">
+                     <button @click="open = false" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                         <i data-lucide="x" class="h-4 w-4 mr-2 inline"></i>İptal
+                     </button>
+                     <a href="{{ url('admin/dashboard/resetpswd') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısının şifresini gerçekten sıfırlamak istiyor musunuz? Yeni şifre: user01236')" class="flex-1 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                         <i data-lucide="key" class="h-4 w-4 mr-2"></i>Şifreyi Sıfırla
+                     </a>
                  </div>
              </div>
          </div>
      </div>
- </div>
- <!-- /Switch user account Modal -->
 
- <div id="notifyuser" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header ">
-                <h4 class="modal-title ">Notify {{$user->username}} Dashboard</h4>
-                <button type="button" class="close " data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <p class="">This show notice on  {{ $user->name }} Dashboard</p>
-                <form style="padding:3px;" role="form" method="post" action="{{ route('notifyuser') }}">
-                    @csrf
-                    <div class=" form-group">
-                        <label>Turn on/off  Dashboard Notification : {{$user->notify}}</label>
-                        <select class="form-control  " name="notifystatus">
-
-                            <option value="on">On</option>
-                                <option value="off">Off</option>
-
-                        </select>
-                    </div>
-                    <div class=" form-group">
-                        <textarea placeholder="Bildirim mesajınızı yazınız" class="form-control" name="notify" rows="8"
-                            maxlength="500" required></textarea>
-                        <div class="invalid-feedback">
-                            Lütfen bir bildirim mesajı giriniz (maksimum 500 karakter).
-                        </div>
-                    </div>
-                    <div class=" form-group">
-                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-                        <input type="submit" class="btn btn-info" value="Gönder" data-bs-toggle="tooltip" title="Bildirim mesajını kullanıcı paneline gönderir">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- upgrade User plan status  --}}
-<div id="ugpradePlanStatus" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header ">
-                <h4 class="modal-title ">Turn on/off {{$user->username}} Plan Upgrade status </h4>
-                <button type="button" class="close " data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <p class="">This will show Upgrade Plan notice on  {{ $user->name }} Dashboard</p>
-                <form style="padding:3px;" role="form" method="post" action="{{ route('upgradeplanstatus') }}">
-                    @csrf
-                    <div class=" form-group">
-                        <label>Turn on/off Plan Upgrade Status : {{$user->plan_status}}</label>
-                        <select class="form-control  " name="planstatus">
-
-                            <option value="on">On</option>
-                                <option value="off">Off</option>
-
-                        </select>
-                    </div>
-                    <div class=" form-group">
-                        <select class="form-control  " name="user_plan">
-                          @foreach($plans as $plan)
-                            <option value="{{ $plan->name }}">{{ $plan->name }}</option>
-                            @endforeach
-
-
-                        </select>
-                    </div>
-                    <div class=" form-group">
-                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-                        <input type="submit" class="btn btn-warning" value="Planı Yükselt" data-bs-toggle="tooltip" title="Kullanıcı için plan yükseltme durumunu ayarlar">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-{{-- upgrade User Signal status  --}}
-<div id="ugpradeSignalStatus" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header ">
-                <h4 class="modal-title ">Turn on/off {{$user->username}} Signal Upgrade status </h4>
-                <button type="button" class="close " data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body ">
-                <p class="">This will show Upgrade Signal notice on  {{ $user->name }} Dashboard</p>
-                <form style="padding:3px;" role="form" method="post" action="{{ route('upgradesignalstatus') }}">
-                    @csrf
-                    <div class=" form-group">
-                        <label>Turn on/off Signal Upgrade Status : {{$user->signal_status}}</label>
-                        <select class="form-control  " name="signal_status">
-
-                            <option value="on">On</option>
-                                <option value="off">Off</option>
-
-                        </select>
-                    </div>
-                    <div class=" form-group">
-                        <select class="form-control  " name="user_signal">
-                          @foreach($signals as $signal)
-                            <option value="{{ $signal->name }}">{{ $signal->name }}</option>
-                            @endforeach
-
-
-                        </select>
-                    </div>
-                    <div class=" form-group">
-                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-                        <input type="submit" class="btn btn-info" value="Sinyali Yükselt" data-bs-toggle="tooltip" title="Kullanıcı için sinyal yükseltme durumunu ayarlar">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
- <!-- Delete user Modal -->
- <div id="deleteModal" class="modal fade" role="dialog">
-     <div class="modal-dialog modal-dialog-centered">
-         <!-- Modal content-->
-         <div class="modal-content">
-             <div class="modal-header bg-danger text-white">
-                 <h4 class="modal-title">
-                     <i class="fas fa-exclamation-triangle me-2"></i>Delete User Account
+ <!-- Tax Modal -->
+ <div id="taxModal" x-data="{ taxOpen: false }" x-show="taxOpen" @open-tax-modal.window="taxOpen = true"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="taxOpen = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+             <div class="bg-yellow-500 dark:bg-yellow-600 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="calculator" class="h-5 w-5 mr-2"></i>{{ $user->name }} için Kullanıcı Vergisi
                  </h4>
-                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Close"></button>
+                 <button @click="taxOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
              </div>
-             <div class="modal-body p-4 text-center">
+             <div class="p-6">
+                 <form method="post" action="{{ route('usertax') }}">
+                     @csrf
+                     <div class="grid grid-cols-2 gap-4">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Durum</label>
+                             <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 dark:bg-admin-700 dark:text-white" name="taxtype" required>
+                                 <option value="" selected disabled>Durumu seçin</option>
+                                 <option value="on">🟢 Açık</option>
+                                 <option value="off">🔴 Kapalı</option>
+                             </select>
+                         </div>
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Vergi Oranı (%)</label>
+                             <input type="number" name="taxamount" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 dark:bg-admin-700 dark:text-white" min="0" max="100" step="0.01" placeholder="0.00">
+                         </div>
+                     </div>
+                     <div class="mt-6">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                             <i data-lucide="calculator" class="h-4 w-4 mr-2"></i>Kullanıcı Vergisi Belirle
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <!-- Withdrawal Code Modal -->
+ <div id="withdrawalCodeModal" x-data="{ withdrawalCodeOpen: false }"
+      x-show="withdrawalCodeOpen"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="withdrawalCodeOpen = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+             <div class="bg-green-600 dark:bg-green-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="key" class="h-5 w-5 mr-2"></i>{{ $user->name }} için Para Çekme Kodu
+                 </h4>
+                 <button @click="withdrawalCodeOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
+             </div>
+             <div class="p-6">
+                 <form method="post" action="{{ route('withdrawalcode') }}">
+                     @csrf
+                     <div class="grid grid-cols-2 gap-4">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Para Çekme Kodu Durumu</label>
+                             <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" name="withdrawal_code" required>
+                                 <option value="" selected disabled>Durumu seçin</option>
+                                 <option value="on">🟢 Açık</option>
+                                 <option value="off">🔴 Kapalı</option>
+                             </select>
+                         </div>
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Para Çekme Kodu</label>
+                             <input type="text" name="user_withdrawalcode" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->user_withdrawalcode }}" maxlength="50" required>
+                         </div>
+                     </div>
+                     <div class="mt-6">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                             <i data-lucide="key" class="h-4 w-4 mr-2"></i>Para Çekme Kodunu Belirle
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <!-- Notify User Modal -->
+ <div id="notifyModal" x-data="{ notifyOpen: false }" x-show="notifyOpen" @open-notify-modal.window="notifyOpen = true"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="notifyOpen = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+             <div class="bg-blue-600 dark:bg-blue-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="bell" class="h-5 w-5 mr-2"></i>{{ $user->username }} Dashboard Bildirimi
+                 </h4>
+                 <button @click="notifyOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
+             </div>
+             <div class="p-6">
+                 <p class="text-gray-600 dark:text-gray-400 mb-4">Bu bildirim {{ $user->name }} kullanıcısının dashboard'unda görünecektir</p>
+                 <form method="post" action="{{ route('notifyuser') }}">
+                     @csrf
+                     <div class="space-y-4">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Dashboard Bildirim Durumu: {{$user->notify}}</label>
+                             <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" name="notifystatus">
+                                 <option value="on">Açık</option>
+                                 <option value="off">Kapalı</option>
+                             </select>
+                         </div>
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Bildirim Mesajı</label>
+                             <textarea placeholder="Bildirim mesajınızı yazınız" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" name="notify" rows="6" maxlength="500" required></textarea>
+                         </div>
+                     </div>
+                     <div class="mt-6">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                             <i data-lucide="send" class="h-4 w-4 mr-2"></i>Bildirimi Gönder
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <!-- Number of Trades Modal -->
+ <div id="tradesModal" x-data="{ tradesOpen: false }" x-show="tradesOpen" @open-trades-modal.window="tradesOpen = true"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="tradesOpen = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+             <div class="bg-cyan-600 dark:bg-cyan-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="hash" class="h-5 w-5 mr-2"></i>{{ $user->name }} için İşlem Sayısı Belirleme
+                 </h4>
+                 <button @click="tradesOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
+             </div>
+             <div class="p-6">
+                 <form method="post" action="{{ route('numberoftrades') }}">
+                     @csrf
+                     <div>
+                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                             <i data-lucide="repeat" class="h-4 w-4 inline mr-2 text-cyan-600"></i>Para çekme öncesi işlem sayısı
+                         </label>
+                         <input type="number" name="numberoftrades" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 dark:bg-admin-700 dark:text-white" placeholder="{{ $user->numberoftrades }}" min="0" required>
+                         <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                             Kullanıcının para çekebilmesi için tamamlaması gereken minimum işlem sayısı
+                         </p>
+                     </div>
+                     <div class="mt-6">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
+                             <i data-lucide="hash" class="h-4 w-4 mr-2"></i>Para Çekme İçin İşlem Sayısı Belirle
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <!-- Signal Modal -->
+ <div id="signalModal" x-data="{ signalOpen: false }" x-show="signalOpen" @open-signal-modal.window="signalOpen = true"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="signalOpen = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+             <div class="bg-pink-600 dark:bg-pink-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="radio" class="h-5 w-5 mr-2"></i>{{ $user->name }} için Sinyal Oluştur
+                 </h4>
+                 <button @click="signalOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
+             </div>
+             <div class="p-6">
+                 <form method="post" action="{{ route('addsignalhistory') }}">
+                     @csrf
+                     <div class="space-y-6">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Varlık Seçin</label>
+                             <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 dark:bg-admin-700 dark:text-white" name="asset" required>
+                                 <option value="" selected disabled>Varlık Seçin</option>
+                                 <optgroup label="Para Birimleri">
+                                     <option value="EURUSD">EURUSD</option>
+                                     <option value="EURJPY">EURJPY</option>
+                                     <option value="USDJPY">USDJPY</option>
+                                     <option value="USDCAD">USDCAD</option>
+                                     <option value="AUDUSD">AUDUSD</option>
+                                     <option value="AUDJPY">AUDJPY</option>
+                                     <option value="NZDUSD">NZDUSD</option>
+                                     <option value="GBPUSD">GBPUSD</option>
+                                     <option value="GBPJPY">GBPJPY</option>
+                                     <option value="USDCHF">USDCHF</option>
+                                 </optgroup>
+                                 <optgroup label="Kripto Para">
+                                     <option value="BTCUSD">BTCUSD</option>
+                                     <option value="ETHUSD">ETHUSD</option>
+                                     <option value="BCHUSD">BCHUSD</option>
+                                     <option value="XRPUSD">XRPUSD</option>
+                                     <option value="LTCUSD">LTCUSD</option>
+                                     <option value="ETHBTC">ETHBTC</option>
+                                 </optgroup>
+                             </select>
+                         </div>
+                         <div class="grid grid-cols-2 gap-4">
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Kaldıraç</label>
+                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 dark:bg-admin-700 dark:text-white" name="leverage" required>
+                                     <option selected disabled value="">Kaldıraç Seçin</option>
+                                     <option value="10">1:10</option>
+                                     <option value="20">1:20</option>
+                                     <option value="50">1:50</option>
+                                     <option value="100">1:100</option>
+                                 </select>
+                             </div>
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Tutar</label>
+                                 <input type="number" name="amount" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 dark:bg-admin-700 dark:text-white" placeholder="Sinyal tutarını giriniz {{ $user->currency }}" min="0.01" step="0.01" required>
+                             </div>
+                         </div>
+                         <div class="grid grid-cols-2 gap-4">
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Süre</label>
+                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 dark:bg-admin-700 dark:text-white" name="expire" required>
+                                     <option selected disabled value="">Süre Seçin</option>
+                                     <option value="1 Minutes">1 Dakika</option>
+                                     <option value="5 Minutes">5 Dakika</option>
+                                     <option value="15 Minutes">15 Dakika</option>
+                                     <option value="30 Minutes">30 Dakika</option>
+                                     <option value="60 Minutes">1 Saat</option>
+                                     <option value="4 Hours">4 Saat</option>
+                                     <option value="1 Days">1 Gün</option>
+                                 </select>
+                             </div>
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Emir Türü</label>
+                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-pink-500 focus:border-pink-500 dark:bg-admin-700 dark:text-white" name="order_type" required>
+                                     <option value="" selected disabled>Emir türü seçin</option>
+                                     <option value="Buy">Al</option>
+                                     <option value="Sell">Sat</option>
+                                 </select>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="mt-6">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
+                             <i data-lucide="radio" class="h-4 w-4 mr-2"></i>Sinyal Oluştur
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+ </div>
+
+ <!-- Switch User Modal -->
+ <div id="switchUserModal" x-data="{ open: false }" x-show="open" @open-switch-user-modal.window="open = true" 
+      x-transition:enter="transition ease-out duration-300" 
+      x-transition:enter-start="opacity-0" 
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-200" 
+      x-transition:leave-start="opacity-100" 
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" @click="open = false">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+             <div class="bg-teal-600 dark:bg-teal-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <i data-lucide="user-switch" class="h-5 w-5 mr-2"></i>{{ $user->name }} olarak giriş yap
+                 </h4>
+                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <i data-lucide="x" class="h-5 w-5"></i>
+                 </button>
+             </div>
+             <div class="p-6 text-center">
                  <div class="mb-4">
-                     <i class="fas fa-user-times fa-4x text-danger mb-3"></i>
-                     <h5 class="mb-3">Delete {{ $user->name }}'s Account?</h5>
-                     <p class="text-muted mb-0">
-                         This action is irreversible. All data associated with this account will be permanently lost.
+                     <i data-lucide="user-circle" class="mx-auto h-12 w-12 text-teal-600 mb-4"></i>
+                     <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{ $user->name }}'in Hesabına Geç?</h5>
+                     <p class="text-gray-600 dark:text-gray-400">
+                         Bu kullanıcı olarak giriş yapacaksınız. İstediğiniz zaman admin paneline dönebilirsiniz.
                      </p>
                  </div>
-                 <div class="row g-3">
-                     <div class="col-6">
-                         <button type="button" class="btn btn-secondary btn-lg w-100" data-dismiss="modal">
-                             <i class="fas fa-times me-2"></i>Cancel
-                         </button>
-                     </div>
-                     <div class="col-6">
-                         <a class="btn btn-danger btn-lg w-100" href="{{ url('admin/dashboard/delsystemuser') }}/{{ $user->id }}" onclick="return confirm('Bu işlem geri alınamaz. {{ $user->name }} kullanıcısını gerçekten silmek istiyor musunuz?')">
-                             <i class="fas fa-trash me-2"></i>Evet, Hesabı Sil
-                         </a>
-                     </div>
+                 <div class="flex space-x-3">
+                     <button @click="open = false" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                         <i data-lucide="x" class="h-4 w-4 mr-2 inline"></i>İptal
+                     </button>
+                     <a href="{{ url('admin/dashboard/switchuser') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısı olarak giriş yapmak istediğinizden emin misiniz? Yönetici paneline istediğiniz zaman dönebilirsiniz.')" class="flex-1 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                         <i data-lucide="log-in" class="h-4 w-4 mr-2"></i>Kullanıcı Hesabına Geç
+                     </a>
                  </div>
              </div>
          </div>
      </div>
  </div>
- <!-- /Delete user Modal -->

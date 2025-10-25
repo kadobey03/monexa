@@ -22,273 +22,249 @@
         <!-- Sidebar Navigation -->
         <div class="sidebar-nav">
             <ul class="nav-list">
-                <!-- Dashboard -->
+                
+                <!-- Admin Category Header -->
+                @if (Auth('admin')->user()->type == 'Admin')
+                <li class="nav-category-header">
+                    <div class="category-title">
+                        <i class="fas fa-shield-alt category-icon"></i>
+                        <span class="category-text">Admin</span>
+                    </div>
+                </li>
+                @endif
+
+                <!-- Super Admin Category Header -->
+                @if (Auth('admin')->user()->type == 'Super Admin')
+                <li class="nav-category-header">
+                    <div class="category-title">
+                        <i class="fas fa-crown category-icon"></i>
+                        <span class="category-text">Super Admin deneme</span>
+                    </div>
+                </li>
+                @endif
+
+                <!-- Dashboard (Kontrol Paneli) -->
                 <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <a href="{{ url('/admin/dashboard') }}" class="nav-link">
                         <div class="nav-icon">
                             <i class="fas fa-chart-pie"></i>
                         </div>
-                        <span class="nav-text">Dashboard</span>
+                        <span class="nav-text">Kontrol Paneli</span>
                     </a>
                 </li>
 
-                <!-- User Management Section -->
-                <li class="nav-section" @click="activeSection = activeSection === 'users' ? null : 'users'">
-                    <div class="nav-section-header">
-                        <div class="nav-icon">
-                            <i class="fas fa-users"></i>
+                @if (Auth('admin')->user()->type == 'Super Admin' || Auth('admin')->user()->type == 'Admin')
+                    <!-- User Management (Kullanıcı Yönetimi) -->
+                    <li class="nav-section" @click="activeSection = activeSection === 'users' ? null : 'users'">
+                        <div class="nav-section-header">
+                            <div class="nav-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span class="nav-text">Kullanıcı Yönetimi</span>
+                            <div class="nav-arrow" :class="{ 'rotated': activeSection === 'users' }">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
                         </div>
-                        <span class="nav-text">User Management</span>
-                        <div class="nav-arrow" :class="{ 'rotated': activeSection === 'users' }">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                    <ul class="nav-section-items" x-show="activeSection === 'users'" x-collapse>
-                        <li class="nav-item {{ request()->routeIs('manageusers') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/manageusers') }}" class="nav-link">
-                                <span class="nav-text">All Users</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('loginactivity') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/loginactivity') }}" class="nav-link">
-                                <span class="nav-text">Login Activity</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('user.plans') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/userplans') }}" class="nav-link">
-                                <span class="nav-text">User Plans</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/admin/dashboard/user-verification') }}" class="nav-link">
-                                <span class="nav-text">Verification</span>
-                                <span class="nav-badge bg-danger">3</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="nav-section-items" x-show="activeSection === 'users'" x-collapse>
+                            <li class="nav-item {{ request()->routeIs('manageusers') ? 'active' : '' }}">
+                                <a href="{{ url('/admin/dashboard/manageusers') }}" class="nav-link">
+                                    <span class="nav-text">Tüm Kullanıcılar</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <!-- Financial Section -->
-                <li class="nav-section" @click="activeSection = activeSection === 'financial' ? null : 'financial'">
-                    <div class="nav-section-header">
-                        <div class="nav-icon">
-                            <i class="fas fa-money-bill-wave"></i>
+                    <!-- Finance Management (Finans Yönetimi) -->
+                    <li class="nav-section" @click="activeSection = activeSection === 'finance' ? null : 'finance'">
+                        <div class="nav-section-header">
+                            <div class="nav-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <span class="nav-text">Finans Yönetimi</span>
+                            <div class="nav-arrow" :class="{ 'rotated': activeSection === 'finance' }">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
                         </div>
-                        <span class="nav-text">Financial</span>
-                        <div class="nav-arrow" :class="{ 'rotated': activeSection === 'financial' }">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                    <ul class="nav-section-items" x-show="activeSection === 'financial'" x-collapse>
-                        <li class="nav-item {{ request()->routeIs('mdeposits') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/mdeposits') }}" class="nav-link">
-                                <span class="nav-text">Deposits</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('mwithdrawals') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/mwithdrawals') }}" class="nav-link">
-                                <span class="nav-text">Withdrawals</span>
-                                <span class="nav-badge bg-warning">8</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/admin/dashboard/transactions') }}" class="nav-link">
-                                <span class="nav-text">Transactions</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/admin/dashboard/payment-methods') }}" class="nav-link">
-                                <span class="nav-text">Payment Methods</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="nav-section-items" x-show="activeSection === 'finance'" x-collapse>
+                            <li class="nav-item {{ request()->routeIs('mdeposits') ? 'active' : '' }}">
+                                <a href="{{ url('/admin/dashboard/mdeposits') }}" class="nav-link">
+                                    <span class="nav-text">Yatırım Yönetimi</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->routeIs('mwithdrawals') ? 'active' : '' }}">
+                                <a href="{{ url('/admin/dashboard/mwithdrawals') }}" class="nav-link">
+                                    <span class="nav-text">Çekim Yönetimi</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->routeIs('admin.trades.index') ? 'active' : '' }}">
+                                <a href="{{ route('admin.trades.index') }}" class="nav-link">
+                                    <span class="nav-text">İşlem Yönetimi</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->url() == url('/admin/trades') ? 'active' : '' }}">
+                                <a href="{{ url('/admin/trades') }}" class="nav-link">
+                                    <span class="nav-text">Trades</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <!-- Trading Section -->
-                <li class="nav-section" @click="activeSection = activeSection === 'trading' ? null : 'trading'">
-                    <div class="nav-section-header">
-                        <div class="nav-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <span class="nav-text">Trading</span>
-                        <div class="nav-arrow" :class="{ 'rotated': activeSection === 'trading' }">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                    <ul class="nav-section-items" x-show="activeSection === 'trading'" x-collapse>
-                        <li class="nav-item {{ request()->routeIs('admin.bots.index') ? 'active' : '' }}">
-                            <a href="{{ route('admin.bots.index') }}" class="nav-link">
-                                <span class="nav-text">Trading Bots</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('admin.bots.create') ? 'active' : '' }}">
-                            <a href="{{ route('admin.bots.create') }}" class="nav-link">
-                                <span class="nav-text">Add New Bot</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('admin.bots.dashboard') ? 'active' : '' }}">
-                            <a href="{{ route('admin.bots.dashboard') }}" class="nav-link">
-                                <span class="nav-text">Bot Analytics</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/admin/dashboard/trading-history') }}" class="nav-link">
-                                <span class="nav-text">Trading History</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
-                <!-- Plans Section -->
-                <li class="nav-section" @click="activeSection = activeSection === 'plans' ? null : 'plans'">
-                    <div class="nav-section-header">
-                        <div class="nav-icon">
-                            <i class="fas fa-layer-group"></i>
+                    <!-- Communication (İletişim) -->
+                    <li class="nav-section" @click="activeSection = activeSection === 'communication' ? null : 'communication'">
+                        <div class="nav-section-header">
+                            <div class="nav-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <span class="nav-text">İletişim</span>
+                            <div class="nav-arrow" :class="{ 'rotated': activeSection === 'communication' }">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
                         </div>
-                        <span class="nav-text">Investment Plans</span>
-                        <div class="nav-arrow" :class="{ 'rotated': activeSection === 'plans' }">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                    <ul class="nav-section-items" x-show="activeSection === 'plans'" x-collapse>
-                        <li class="nav-item {{ request()->routeIs('plans') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/plans') }}" class="nav-link">
-                                <span class="nav-text">Manage Plans</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/admin/dashboard/newplan') }}" class="nav-link">
-                                <span class="nav-text">New Plan</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="nav-section-items" x-show="activeSection === 'communication'" x-collapse>
+                            <li class="nav-item">
+                                <a href="{{ route('emailservices') }}" class="nav-link">
+                                    <span class="nav-text">E-posta Servisleri</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <!-- Content Section -->
-                <li class="nav-section" @click="activeSection = activeSection === 'content' ? null : 'content'">
-                    <div class="nav-section-header">
-                        <div class="nav-icon">
-                            <i class="fas fa-file-alt"></i>
+                    <!-- Compliance (Uyumluluk) -->
+                    <li class="nav-section" @click="activeSection = activeSection === 'compliance' ? null : 'compliance'">
+                        <div class="nav-section-header">
+                            <div class="nav-icon">
+                                <i class="fas fa-shield-check"></i>
+                            </div>
+                            <span class="nav-text">Uyumluluk</span>
+                            <div class="nav-arrow" :class="{ 'rotated': activeSection === 'compliance' }">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
                         </div>
-                        <span class="nav-text">Content</span>
-                        <div class="nav-arrow" :class="{ 'rotated': activeSection === 'content' }">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                    <ul class="nav-section-items" x-show="activeSection === 'content'" x-collapse>
-                        <li class="nav-item {{ request()->routeIs('frontpage') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/frontpage') }}" class="nav-link">
-                                <span class="nav-text">Frontend</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('faqmanager') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/faqmanager') }}" class="nav-link">
-                                <span class="nav-text">FAQ Manager</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('testimonials') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/testimonials') }}" class="nav-link">
-                                <span class="nav-text">Testimonials</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="nav-section-items" x-show="activeSection === 'compliance'" x-collapse>
+                            <li class="nav-item">
+                                <a href="{{ route('kyc') }}" class="nav-link">
+                                    <span class="nav-text">KYC Başvuruları</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <!-- Communications -->
-                <li class="nav-section" @click="activeSection = activeSection === 'communications' ? null : 'communications'">
-                    <div class="nav-section-header">
-                        <div class="nav-icon">
-                            <i class="fas fa-bell"></i>
+                    <!-- Content Management (İçerik Yönetimi) -->
+                    <li class="nav-section" @click="activeSection = activeSection === 'content' ? null : 'content'">
+                        <div class="nav-section-header">
+                            <div class="nav-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <span class="nav-text">İçerik Yönetimi</span>
+                            <div class="nav-arrow" :class="{ 'rotated': activeSection === 'content' }">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
                         </div>
-                        <span class="nav-text">Communications</span>
-                        <div class="nav-arrow" :class="{ 'rotated': activeSection === 'communications' }">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                    <ul class="nav-section-items" x-show="activeSection === 'communications'" x-collapse>
-                        <li class="nav-item {{ request()->routeIs('admin.notifications') ? 'active' : '' }}">
-                            <a href="{{ route('admin.notifications') }}" class="nav-link">
-                                <span class="nav-text">Notifications</span>
-                                <span class="nav-badge bg-primary">12</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('admin.send.message.form') ? 'active' : '' }}">
-                            <a href="{{ route('admin.send.message.form') }}" class="nav-link">
-                                <span class="nav-text">Send Message</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/admin/dashboard/mailbox') }}" class="nav-link">
-                                <span class="nav-text">Mailbox</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="nav-section-items" x-show="activeSection === 'content'" x-collapse>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.phrases') }}" class="nav-link">
+                                    <span class="nav-text">Dil/Cümleler</span>
+                                </a>
+                            </li>
+                            @if (Auth('admin')->user()->type == 'Super Admin')
+                            <li class="nav-item">
+                                <a href="{{ url('/admin/dashboard/task') }}" class="nav-link">
+                                    <span class="nav-text">Görev Oluştur</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/admin/dashboard/mtask') }}" class="nav-link">
+                                    <span class="nav-text">Görevleri Yönet</span>
+                                </a>
+                            </li>
+                            @else
+                            <li class="nav-item">
+                                <a href="{{ url('/admin/dashboard/viewtask') }}" class="nav-link">
+                                    <span class="nav-text">Görevlerim</span>
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </li>
 
-                <!-- Settings -->
-                <li class="nav-section" @click="activeSection = activeSection === 'settings' ? null : 'settings'">
-                    <div class="nav-section-header">
-                        <div class="nav-icon">
-                            <i class="fas fa-cog"></i>
+                    <!-- Leads & Marketing (Potansiyel Müşteriler) -->
+                    <li class="nav-section" @click="activeSection = activeSection === 'leads' ? null : 'leads'">
+                        <div class="nav-section-header">
+                            <div class="nav-icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <span class="nav-text">Potansiyel Müşteriler</span>
+                            <div class="nav-arrow" :class="{ 'rotated': activeSection === 'leads' }">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
                         </div>
-                        <span class="nav-text">Settings</span>
-                        <div class="nav-arrow" :class="{ 'rotated': activeSection === 'settings' }">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                    <ul class="nav-section-items" x-show="activeSection === 'settings'" x-collapse>
-                        <li class="nav-item {{ request()->routeIs('appsettingshow') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/appsettingshow') }}" class="nav-link">
-                                <span class="nav-text">General Settings</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('paymentgtway') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/paymentgateway') }}" class="nav-link">
-                                <span class="nav-text">Payment Gateways</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('managecryptoasset') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/managecryptoasset') }}" class="nav-link">
-                                <span class="nav-text">Crypto Assets</span>
-                            </a>
-                        </li>
-                        <li class="nav-item {{ request()->routeIs('adminprofile') ? 'active' : '' }}">
-                            <a href="{{ url('/admin/dashboard/profile') }}" class="nav-link">
-                                <span class="nav-text">Profile</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="nav-section-items" x-show="activeSection === 'leads'" x-collapse>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.leads.index') }}" class="nav-link">
+                                    <span class="nav-text">Müşteri Adayları</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
-                <!-- Logs & Reporting -->
-                <li class="nav-section" @click="activeSection = activeSection === 'logs' ? null : 'logs'">
-                    <div class="nav-section-header">
-                        <div class="nav-icon">
-                            <i class="fas fa-clipboard-list"></i>
+                @if (Auth('admin')->user()->type == 'Super Admin')
+                    <!-- System Management (Sistem Yönetimi) -->
+                    <li class="nav-section" @click="activeSection = activeSection === 'system' ? null : 'system'">
+                        <div class="nav-section-header">
+                            <div class="nav-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <span class="nav-text">Sistem Yönetimi</span>
+                            <div class="nav-arrow" :class="{ 'rotated': activeSection === 'system' }">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
                         </div>
-                        <span class="nav-text">Logs & Reports</span>
-                        <div class="nav-arrow" :class="{ 'rotated': activeSection === 'logs' }">
-                            <i class="fas fa-chevron-right"></i>
-                        </div>
-                    </div>
-                    <ul class="nav-section-items" x-show="activeSection === 'logs'" x-collapse>
-                        <li class="nav-item">
-                            <a href="{{ url('/admin/dashboard/activity-log') }}" class="nav-link">
-                                <span class="nav-text">Activity Log</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/admin/dashboard/system-log') }}" class="nav-link">
-                                <span class="nav-text">System Log</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/admin/dashboard/reports') }}" class="nav-link">
-                                <span class="nav-text">Reports</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="nav-section-items" x-show="activeSection === 'system'" x-collapse>
+                            <li class="nav-item">
+                                <a href="{{ url('/admin/dashboard/addmanager') }}" class="nav-link">
+                                    <span class="nav-text">Yönetici Ekle</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/admin/dashboard/madmin') }}" class="nav-link">
+                                    <span class="nav-text">Yöneticileri Yönet</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->routeIs('appsettingshow') ? 'active' : '' }}">
+                                <a href="{{ route('appsettingshow') }}" class="nav-link">
+                                    <span class="nav-text">Uygulama Ayarları</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->routeIs('refsetshow') ? 'active' : '' }}">
+                                <a href="{{ route('refsetshow') }}" class="nav-link">
+                                    <span class="nav-text">Tavsiye/Bonus Ayarları</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->routeIs('paymentview') ? 'active' : '' }}">
+                                <a href="{{ route('paymentview') }}" class="nav-link">
+                                    <span class="nav-text">Ödeme Ayarları</span>
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->routeIs('managecryptoasset') ? 'active' : '' }}">
+                                <a href="{{ route('managecryptoasset') }}" class="nav-link">
+                                    <span class="nav-text">Takas Ayarları</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/admin/dashboard/ipaddress') }}" class="nav-link">
+                                    <span class="nav-text">IP Adresi</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/admin/dashboard/about') }}" class="nav-link">
+                                    <span class="nav-text">Daha Fazla Script İçin</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
                 <!-- Logout -->
                 <li class="nav-divider"></li>
@@ -313,16 +289,20 @@
 .sidebar-redesign {
     background-color: #ffffff;
     width: 260px;
-    height: 100%;
+    height: 100vh !important;
+    max-height: 100vh !important;
     position: fixed;
     left: 0;
     top: 0;
-    overflow-y: auto;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
     z-index: 100;
     box-shadow: 0 0 15px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
     scrollbar-width: thin;
     scrollbar-color: rgba(0,0,0,0.2) transparent;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Dark Mode Support */
@@ -387,9 +367,103 @@
     background-color: rgba(79, 70, 229, 0.1);
 }
 
+/* Category Headers */
+.nav-category-header {
+    margin: 1.5rem 0 1rem 0;
+    padding: 0 1.5rem;
+}
+
+.category-title {
+    display: flex;
+    align-items: center;
+    color: #374151;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+
+.dark .category-title {
+    color: #9ca3af;
+}
+
+.category-icon {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+    color: #4f46e5;
+}
+
+.dark .category-icon {
+    color: #818cf8;
+}
+
+.category-text {
+    position: relative;
+}
+
+.category-text::after {
+    content: '';
+    position: absolute;
+    bottom: -0.25rem;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #4f46e5, transparent);
+    border-radius: 1px;
+}
+
+.dark .category-text::after {
+    background: linear-gradient(90deg, #818cf8, transparent);
+}
+
+/* Sidebar Wrapper */
+.sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* overflow: hidden; REMOVED - This was blocking scroll */
+}
+
 /* Sidebar Navigation Styling */
 .sidebar-nav {
     padding: 1.5rem 0;
+    flex: 1;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.2) transparent;
+    max-height: calc(100vh - 120px); /* Ensure scrollable area */
+}
+
+/* Navigation Scrollbar - Made more visible */
+.sidebar-nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.03);
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.25) !important;
+    border-radius: 3px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0,0,0,0.4) !important;
+}
+
+.dark .sidebar-nav::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.03);
+}
+
+.dark .sidebar-nav::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.15) !important;
+}
+
+.dark .sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255,255,255,0.25) !important;
 }
 
 .nav-list {
@@ -515,22 +589,34 @@
     background-color: rgba(255,255,255,0.05);
 }
 
-/* Scrollbar Styling */
+/* Scrollbar Styling - Made more visible */
 .sidebar-redesign::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
 }
 
 .sidebar-redesign::-webkit-scrollbar-track {
-    background: transparent;
+    background: rgba(0,0,0,0.05);
 }
 
 .sidebar-redesign::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 3px;
+    background-color: rgba(0,0,0,0.3) !important;
+    border-radius: 4px;
+}
+
+.sidebar-redesign::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.dark .sidebar-redesign::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
 }
 
 .dark .sidebar-redesign::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255,255,255,0.2) !important;
+}
+
+.dark .sidebar-redesign::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255,255,255,0.3) !important;
 }
 
 /* Responsive Adjustments */

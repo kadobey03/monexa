@@ -210,7 +210,6 @@ if (Auth('admin')->User()->dashboard_style == "light") {
 
 @section('scripts')
 @parent
-<script src="{{ asset('dash/js/plugin/chart.js/chart.min.js') }}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Profit Chart

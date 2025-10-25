@@ -128,16 +128,27 @@ class ManageUsersController extends Controller
     public function viewuser($id)
     {
         $user = User::where('id', $id)->first();
+        
+        if (!$user) {
+            return redirect()->route('manageusers')->with('error', 'User not found!');
+        }
+        
         $plans = Plans::where('type','main')->get();
         $signals = Signal::where('type','main')->get();
-        include 'currencies.php';
+        
+        // Include currencies from the correct path
+        include app_path('Providers/currencies.php');
+        
         return view('admin.Users.userdetails', [
             'user' => $user,
             'currencies' => $currencies,
             'pl' => Plans::orderByDesc('id')->get(),
             'title' => "Manage $user->name",
-            'plans' =>$plans,
-            'signals'=>$signals,
+            'plans' => $plans,
+            'signals' => $signals,
+            'bg' => 'primary', // Background color class (without bg- prefix)
+            'text' => 'white', // Text color class (without text- prefix)
+            'settings' => Settings::first(), // Add settings if needed by view
         ]);
     }
     //ban/disable user

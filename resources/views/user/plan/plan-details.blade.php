@@ -442,9 +442,6 @@
 
 @section('scripts')
 @parent
-<!-- Chart.js Library -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('valueChart').getContext('2d');

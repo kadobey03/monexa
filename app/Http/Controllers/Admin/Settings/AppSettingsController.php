@@ -17,6 +17,7 @@ class AppSettingsController extends Controller
     {
         $live_timezones = timezone_identifiers_list();
         include 'currencies.php';
+        
         return view('admin.Settings.AppSettings.show', [
             'title' => 'Website information settings',
             'timezones' => $live_timezones,

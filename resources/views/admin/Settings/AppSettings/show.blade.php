@@ -1,5 +1,6 @@
 <?php
-if (Auth('admin')->User()->dashboard_style == 'light') {
+$adminUser = Auth::guard('admin')->user();
+if ($adminUser && $adminUser->dashboard_style == 'light') {
     $text = 'dark';
     $bg = 'light';
 } else {
@@ -109,7 +110,10 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     <div class="p-6 sm:p-8 lg:p-10" x-data="{ activeTab: 'info' }">
                         <!-- Module Tab -->
                         <div x-show="activeTab === 'module'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
-                            <livewire:admin.software-module />
+                            {{-- <livewire:admin.software-module /> --}}
+                            <div class="p-4 bg-yellow-100 border border-yellow-300 rounded-lg">
+                                <p class="text-yellow-800">Modül bileşeni geçici olarak devre dışı bırakıldı.</p>
+                            </div>
                         </div>
                         
                         <!-- Website Information Tab -->

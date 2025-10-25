@@ -127,8 +127,6 @@
         <!-- Alpine.js for modern interactivity -->
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
         
-        <!-- Chart.js for charts -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
         
         <!--PayPal Integration-->
         @if(!empty($settings->pp_ci) && $settings->pp_ci !== 'iidjdjdj')
@@ -477,6 +475,9 @@
     @livewireScripts
     
     @section('scripts')
+        <!-- Chart.js for charts -->
+        <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
         <!-- Core functionality scripts -->
         <script src="{{ asset('dash/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('dash/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
