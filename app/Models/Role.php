@@ -339,6 +339,102 @@ class Role extends Model
     }
 
     /**
+     * Check if this role has permission to a specific permission (model instance).
+     */
+    public function hasPermissionTo($permission): bool
+    {
+        if (is_string($permission)) {
+            return $this->hasPermission($permission);
+        }
+        
+        if ($permission instanceof Permission) {
+            return $this->permissions()
+                       ->where('permission_id', $permission->id)
+                       ->wherePivot('is_granted', true)
+                       ->where(function ($query) {
+                           $query->whereNull('role_permissions.expires_at')
+                                 ->orWhere('role_permissions.expires_at', '>', now());
+                       })
+                       ->exists();
+        }
+        
+        return false;
+    }
+
+    /**
+     * Check if this role has inherited permission from parent roles.
+     */
+    public function hasInheritedPermission($permission): bool
+    {
+        if (!$this->parentRole) {
+            return false;
+        }
+        
+        return $this->parentRole->hasPermissionTo($permission);
+    }
+
+    /**
+     * Check if this role has dependent permission (complex permission logic).
+     */
+    public function hasDependentPermission($permission): bool
+    {
+        // This is for permissions that depend on other permissions
+        // For example, 'user_delete' might depend on having 'user_view' and 'user_update'
+        
+        if (!($permission instanceof Permission)) {
+            return false;
+        }
+        
+        // Check if this permission has dependencies defined in constraints
+        $dependencies = $permission->getConstraint('dependencies', []);
+        
+        if (empty($dependencies)) {
+            return false;
+        }
+        
+        // Check if all dependencies are met
+        foreach ($dependencies as $dependency) {
+            if (!$this->hasPermission($dependency)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    /**
+     * Get role color class based on hierarchy level and type.
+     */
+    public function getColorClass(): string
+    {
+        $colorMap = [
+            'super_admin' => 'red',
+            'head_of_office' => 'purple',
+            'sales_head' => 'blue',
+            'retention_head' => 'indigo',
+            'team_leader' => 'green',
+            'retention_team_leader' => 'teal',
+            'sales_agent' => 'orange',
+            'retention_agent' => 'amber',
+        ];
+
+        if (isset($colorMap[$this->name])) {
+            return $colorMap[$this->name];
+        }
+        
+        // Fallback based on hierarchy level
+        $levelColors = [
+            0 => 'red',     // Super admin
+            1 => 'purple',  // Head of office
+            2 => 'blue',    // Department heads
+            3 => 'green',   // Team leaders
+            4 => 'orange',  // Agents
+        ];
+        
+        return $levelColors[$this->hierarchy_level] ?? 'gray';
+    }
+
+    /**
      * Convert the model to its string representation.
      */
     public function __toString(): string

@@ -35,6 +35,10 @@ use App\Http\Controllers\Admin\TradingAccountController;
 use App\Http\Controllers\Admin\TradesController;
 use App\Http\Controllers\Admin\PhrasesController;
 use App\Http\Controllers\Admin\CreditApplicationController;
+use App\Http\Controllers\Admin\AdminManagerController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\HierarchyController;
 use Illuminate\Support\Facades\Route;
 
 // Include admin plan routes
@@ -466,6 +470,100 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
 
     // CKEditor file upload route
     Route::post('ckeditor/upload', [HomeController::class, 'ckeditorUpload'])->name('ckeditor.upload');
+
+    // Advanced Admin Management System Routes
+    Route::prefix('dashboard')->group(function () {
+        
+        // Admin Managers Management (Yöneticiler Yönetimi)
+        Route::controller(AdminManagerController::class)->prefix('managers')->name('admin.managers.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{admin}', 'show')->name('show');
+            Route::get('/{admin}/edit', 'edit')->name('edit');
+            Route::put('/{admin}', 'update')->name('update');
+            Route::delete('/{admin}', 'destroy')->name('destroy');
+            Route::post('/bulk-action', 'bulkAction')->name('bulk-action');
+            Route::get('/{admin}/performance', 'performance')->name('performance');
+            Route::post('/{admin}/toggle-status', 'toggleStatus')->name('toggle-status');
+            Route::post('/{admin}/activate', 'activate')->name('activate');
+            Route::post('/{admin}/deactivate', 'deactivate')->name('deactivate');
+            Route::get('/{admin}/reset-password', 'resetPassword')->name('reset-password');
+            Route::get('/export/csv', 'exportCsv')->name('export.csv');
+            Route::get('/export/excel', 'exportExcel')->name('export.excel');
+            Route::post('/import', 'import')->name('import');
+            Route::post('/{admin}/assign-subordinates', 'assignSubordinates')->name('assign-subordinates');
+            Route::get('/hierarchy/tree', 'hierarchyTree')->name('hierarchy.tree');
+            Route::post('/save-draft', 'saveDraft')->name('save-draft');
+            Route::get('/drafts', 'getDrafts')->name('drafts');
+        });
+
+        // Role Management (Rol Yönetimi)
+        Route::controller(RoleController::class)->prefix('roles')->name('admin.roles.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{role}', 'show')->name('show');
+            Route::get('/{role}/data', 'show')->name('show.data');
+            Route::get('/{role}/edit', 'edit')->name('edit');
+            Route::put('/{role}', 'update')->name('update');
+            Route::delete('/{role}', 'destroy')->name('destroy');
+            Route::get('/permissions', 'permissions')->name('permissions');
+            Route::get('/hierarchy', 'hierarchy')->name('hierarchy');
+            Route::post('/toggle-permission', 'togglePermission')->name('toggle-permission');
+            Route::get('/{role}/permissions', 'rolePermissions')->name('role-permissions');
+            Route::post('/{role}/assign-permissions', 'assignPermissions')->name('assign-permissions');
+            Route::delete('/{role}/remove-permission/{permission}', 'removePermission')->name('remove-permission');
+            Route::get('/hierarchy/tree', 'hierarchyTree')->name('hierarchy.tree');
+            Route::post('/hierarchy/update', 'updateHierarchy')->name('hierarchy.update');
+            Route::get('/{role}/admins', 'roleAdmins')->name('admins');
+            Route::post('/{role}/clone', 'cloneRole')->name('clone');
+            Route::post('/{role}/activate', 'activate')->name('activate');
+            Route::post('/{role}/deactivate', 'deactivate')->name('deactivate');
+        });
+
+        // Permission Management (İzin Yönetimi)
+        Route::controller(PermissionController::class)->prefix('permissions')->name('admin.permissions.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{permission}/edit', 'edit')->name('edit');
+            Route::put('/{permission}', 'update')->name('update');
+            Route::delete('/{permission}', 'destroy')->name('destroy');
+            Route::post('/assign', 'assign')->name('assign');
+            Route::post('/revoke', 'revoke')->name('revoke');
+            Route::get('/role/{role}', 'rolePermissions')->name('role-permissions');
+            Route::post('/bulk-assign', 'bulkAssign')->name('bulk-assign');
+            Route::get('/audit-log', 'auditLog')->name('audit-log');
+            Route::get('/hierarchy', 'hierarchy')->name('hierarchy');
+            Route::post('/bulk-update', 'bulkUpdate')->name('bulk-update');
+            Route::get('/export', 'export')->name('export');
+            Route::post('/sync', 'sync')->name('sync');
+            Route::get('/dependencies/{permission}', 'checkDependencies')->name('check-dependencies');
+            Route::post('/validate-assignment', 'validateAssignment')->name('validate-assignment');
+            Route::get('/matrix', 'matrix')->name('matrix');
+            Route::post('/sync-role-permissions', 'syncRolePermissions')->name('sync-role-permissions');
+            Route::get('/categories', 'categories')->name('categories');
+            Route::post('/toggle-permission', 'togglePermission')->name('toggle-permission');
+            Route::post('/restructure', 'restructure')->name('restructure');
+            Route::get('/hierarchy/export', 'exportHierarchy')->name('hierarchy.export');
+        });
+
+        // Hierarchy Management (Hiyerarşi Yönetimi)
+        Route::controller(HierarchyController::class)->prefix('hierarchy')->name('admin.hierarchy.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/data', 'getData')->name('data');
+            Route::get('/org-chart', 'orgChart')->name('org-chart');
+            Route::get('/performance-dashboard', 'performanceDashboard')->name('performance-dashboard');
+            Route::get('/department/{department}', 'departmentView')->name('department');
+            Route::post('/restructure', 'restructure')->name('restructure');
+            Route::get('/analytics', 'analytics')->name('analytics');
+            Route::get('/efficiency-report', 'efficiencyReport')->name('efficiency-report');
+            Route::post('/validate-move', 'validateMove')->name('validate-move');
+            Route::get('/export/png', 'exportChart')->name('export.png');
+            Route::get('/search', 'search')->name('search');
+        });
+    });
 });
 
 // Missing Routes for Sidebar Menu Items

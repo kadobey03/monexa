@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); // Lead (user) ID
             $table->unsignedBigInteger('assigned_from_admin_id')->nullable(); // Previously assigned admin
             $table->unsignedBigInteger('assigned_to_admin_id'); // Newly assigned admin
-            $table->unsignedBigInteger('assigned_by_admin_id'); // Admin who performed assignment
+            $table->unsignedBigInteger('assigned_by_admin_id')->nullable(); // Admin who performed assignment
             
             // Assignment details
             $table->string('assignment_type'); // initial, reassignment, bulk_assignment, auto_assignment

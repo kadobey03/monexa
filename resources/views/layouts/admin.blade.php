@@ -305,24 +305,89 @@ x-init="
 
                 @if ($adminUser && $adminUser->type == 'Super Admin')
                 
-                <!-- Admins Management -->
+                <!-- Advanced Admin Management -->
                 <div class="mt-4" x-data="{ open: false }">
                     <button @click="open = !open"
-                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300 transition-all duration-200 group"
+                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300 transition-all duration-200 group {{ request()->routeIs('admin.managers.*') ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' : '' }}"
                             :title="sidebarCollapsed ? 'Yöneticiler' : ''">
                         <div class="flex items-center">
-                            <i data-lucide="user-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                            <i data-lucide="users-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
                             <span x-show="!sidebarCollapsed" x-transition class="font-medium">Yöneticiler</span>
                         </div>
-                        <i data-lucide="chevron-down" x-show="!sidebarCollapsed" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                        <div x-show="!sidebarCollapsed" class="flex items-center space-x-2">
+                            @php
+                                $totalManagers = \App\Models\Admin::where('type', '!=', 'Super Admin')->count();
+                                $activeManagers = \App\Models\Admin::where('type', '!=', 'Super Admin')->where('status', 1)->count();
+                            @endphp
+                            <span class="text-xs bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-2 py-0.5 rounded-full font-medium">{{ $activeManagers }}</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                        </div>
                     </button>
                     
                     <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
-                        <a href="{{ url('/admin/dashboard/addmanager') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                            Yönetici Ekle
+                        <a href="{{ route('admin.managers.index') }}"
+                           class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.managers.index') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300' : '' }}">
+                            <span>Yöneticiler Listesi</span>
+                            <i data-lucide="list" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                         </a>
-                        <a href="{{ url('/admin/dashboard/madmin') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                            Yöneticileri Yönet
+                        <a href="{{ route('admin.managers.create') }}"
+                           class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.managers.create') ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300' : '' }}">
+                            <span>Yönetici Ekle</span>
+                            <i data-lucide="user-plus" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="{{ route('admin.hierarchy.index') }}"
+                           class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.hierarchy.*') ? 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300' : '' }}">
+                            <span>Hiyerarşi Görünümü</span>
+                            <i data-lucide="git-branch" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        
+                        <!-- Legacy Routes (Backward Compatibility) -->
+                        <div class="pt-2 border-t border-admin-200 dark:border-admin-700 mt-2">
+                            <p class="text-xs text-admin-400 dark:text-admin-500 px-4 mb-1 font-medium">Eski Sistem</p>
+                            <a href="{{ url('/admin/dashboard/addmanager') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
+                                Eski Yönetici Ekle
+                            </a>
+                            <a href="{{ url('/admin/dashboard/madmin') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
+                                Eski Yöneticiler
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Permissions & Roles Management -->
+                <div class="mt-4" x-data="{ open: false }">
+                    <button @click="open = !open"
+                            class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-700 dark:hover:text-indigo-300 transition-all duration-200 group {{ request()->routeIs('admin.permissions.*') || request()->routeIs('admin.roles.*') ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300' : '' }}"
+                            :title="sidebarCollapsed ? 'Yetkiler & Roller' : ''">
+                        <div class="flex items-center">
+                            <i data-lucide="shield-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-indigo-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                            <span x-show="!sidebarCollapsed" x-transition class="font-medium">Yetkiler & Roller</span>
+                        </div>
+                        <div x-show="!sidebarCollapsed" class="flex items-center space-x-2">
+                            @php
+                                $totalRoles = \App\Models\Role::count();
+                                $totalPermissions = \App\Models\Permission::count();
+                            @endphp
+                            <span class="text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 px-2 py-0.5 rounded-full font-medium">{{ $totalRoles }}/{{ $totalPermissions }}</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                        </div>
+                    </button>
+                    
+                    <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
+                        <a href="{{ route('admin.permissions.index') }}"
+                           class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.permissions.index') ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300' : '' }}">
+                            <span>İzinler Matrisi</span>
+                            <i data-lucide="grid-3x3" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="{{ route('admin.roles.index') }}"
+                           class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.roles.*') ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300' : '' }}">
+                            <span>Rol Yönetimi</span>
+                            <i data-lucide="users" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="{{ route('admin.permissions.audit-log') }}"
+                           class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors flex items-center justify-between group">
+                            <span>İzin Geçmişi</span>
+                            <i data-lucide="history" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                         </a>
                     </div>
                 </div>

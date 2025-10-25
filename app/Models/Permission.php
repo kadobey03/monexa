@@ -358,6 +358,105 @@ class Permission extends Model
     }
 
     /**
+     * Get permission color class based on category.
+     */
+    public function getColorClass(): string
+    {
+        $colorMap = [
+            'user' => 'blue',
+            'admin' => 'purple',
+            'role' => 'indigo',
+            'lead' => 'green',
+            'group' => 'orange',
+            'system' => 'red',
+            'permission' => 'purple',
+            'notification' => 'yellow',
+            'finance' => 'emerald',
+            'report' => 'gray',
+        ];
+
+        return $colorMap[$this->category] ?? 'gray';
+    }
+
+    /**
+     * Get permission icon based on category and action.
+     */
+    public function getIcon(): string
+    {
+        $iconMap = [
+            'user' => [
+                'view' => 'users',
+                'create' => 'user-plus',
+                'update' => 'user-check',
+                'delete' => 'user-x',
+                'default' => 'users'
+            ],
+            'admin' => [
+                'view' => 'shield',
+                'create' => 'shield-plus',
+                'update' => 'shield-check',
+                'delete' => 'shield-x',
+                'default' => 'shield'
+            ],
+            'role' => [
+                'view' => 'key',
+                'create' => 'key-square',
+                'update' => 'edit-2',
+                'delete' => 'trash-2',
+                'assign' => 'user-plus-2',
+                'default' => 'key'
+            ],
+            'lead' => [
+                'view' => 'user-search',
+                'create' => 'user-plus',
+                'update' => 'user-check',
+                'delete' => 'user-minus',
+                'default' => 'user-search'
+            ],
+            'group' => [
+                'view' => 'users-2',
+                'create' => 'plus-circle',
+                'update' => 'edit',
+                'delete' => 'minus-circle',
+                'manage_members' => 'settings',
+                'default' => 'users-2'
+            ],
+            'system' => [
+                'settings' => 'settings',
+                'backup' => 'download',
+                'maintenance' => 'tool',
+                'default' => 'server'
+            ],
+            'permission' => [
+                'view' => 'eye',
+                'assign' => 'link',
+                'bulk_assign' => 'layers',
+                'default' => 'lock'
+            ],
+            'notification' => [
+                'view' => 'bell',
+                'send' => 'send',
+                'default' => 'bell'
+            ],
+            'finance' => [
+                'view' => 'dollar-sign',
+                'create' => 'plus',
+                'update' => 'edit-3',
+                'approve' => 'check-circle',
+                'default' => 'credit-card'
+            ],
+            'report' => [
+                'view' => 'bar-chart',
+                'export' => 'download',
+                'default' => 'file-text'
+            ],
+        ];
+
+        $categoryIcons = $iconMap[$this->category] ?? $iconMap['system'];
+        return $categoryIcons[$this->action] ?? $categoryIcons['default'];
+    }
+
+    /**
      * Convert the model to its string representation.
      */
     public function __toString(): string
