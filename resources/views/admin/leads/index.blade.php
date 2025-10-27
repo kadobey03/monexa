@@ -155,7 +155,8 @@
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white">
                     Lead Listesi
                     <span class="text-sm text-gray-500 dark:text-gray-400 ml-2" x-text="'(' + pagination.total + ' kayıt)'"></span>
-                </div>
+                </h3>
+            </div>
                 
                 <!-- Bulk Actions -->
                 <div x-show="selectedLeads.length > 0" class="flex items-center space-x-2">
@@ -236,7 +237,7 @@
                                 x-data="{
                                     editing: false,
                                     loading: false,
-                                    originalStatus: lead.lead_status_id,
+                                    originalStatus: lead.lead_status_id || '',
                                     selectedStatus: lead.lead_status_id || ''
                                 }"
                                 @click.away="if (editing && !loading) { selectedStatus = originalStatus; editing = false; }"
@@ -280,7 +281,7 @@
                                 x-data="{
                                     editing: false,
                                     loading: false,
-                                    originalAssignment: lead.assign_to,
+                                    originalAssignment: lead.assign_to || '',
                                     selectedAssignment: lead.assign_to || ''
                                 }"
                                 @click.away="if (editing && !loading) { selectedAssignment = originalAssignment; editing = false; }"
@@ -495,28 +496,18 @@
 </div>
 
 <script>
-// 🪲 DIAGNOSTIC: Alpine.js Debug
-console.log('🪲 SCRIPT LOADING - Alpine.js diagnostic started');
-
-// Check if Alpine is available
-console.log('🪲 Alpine available:', typeof Alpine !== 'undefined');
-console.log('🪲 Current timestamp:', new Date().toISOString());
-
 function leadsManagement() {
-    console.log('🪲 FUNCTION INIT - leadsManagement() called');
-    
     const data = {
-        // 🪲 DATA DEBUG
-        leads: (function() {
-            const leadsData = @json($leads->items() ?: []);
-            console.log('🪲 LEADS DATA:', leadsData?.length || 0, 'items');
-            return leadsData;
-        })(),
-        pagination: (function() {
-            const paginationData = @json($leads->toArray());
-            console.log('🪲 PAGINATION DATA:', paginationData);
-            return paginationData;
-        })(),
+        leads: @json($leads->items() ?: []),
+        pagination: {
+            total: {{ $leads->total() }},
+            from: {{ $leads->firstItem() ?: 0 }},
+            to: {{ $leads->lastItem() ?: 0 }},
+            current_page: {{ $leads->currentPage() }},
+            last_page: {{ $leads->lastPage() }},
+            per_page: {{ $leads->perPage() }},
+            has_pages: {{ $leads->hasPages() ? 'true' : 'false' }}
+        },
         filters: {
             search: '{{ request("search", "") }}',
             status: '{{ request("status", "") }}',
@@ -546,17 +537,8 @@ function leadsManagement() {
 
         // Initialization
         init() {
-            console.log('🪲 ALPINE INIT - init() method called');
-            console.log('🪲 DATA CHECK - pagination:', !!this.pagination);
-            console.log('🪲 DATA CHECK - selectedLead:', !!this.selectedLead);
-            console.log('🪲 DATA CHECK - showViewModal:', !!this.showViewModal);
-            console.log('🪲 DATA CHECK - editForm:', !!this.editForm);
-            console.log('🪲 FUNCTION CHECK - formatDate:', typeof this.formatDate);
-            console.log('🪲 FUNCTION CHECK - getPageNumbers:', typeof this.getPageNumbers);
-            
             // Initialize Lucide icons after Alpine is ready
             this.$nextTick(() => {
-                console.log('🪲 LUCIDE INIT - Creating icons');
                 lucide.createIcons();
             });
         },
@@ -601,7 +583,7 @@ function leadsManagement() {
 
         // Pagination
         goToPage(page) {
-            if (page < 1 || page > this.pagination.last_page) return;
+            if (!this.pagination || page < 1 || page > this.pagination.last_page) return;
             
             const params = new URLSearchParams(window.location.search);
             params.set('page', page);
@@ -609,6 +591,8 @@ function leadsManagement() {
         },
 
         getPageNumbers() {
+            if (!this.pagination) return [];
+            
             const current = this.pagination.current_page;
             const last = this.pagination.last_page;
             const pages = [];
@@ -732,26 +716,36 @@ function leadsManagement() {
 
         // Inline Status Update
         async updateStatus(leadId, newStatusId, selectElement) {
-            const statusEditor = selectElement.closest('td').querySelector('[x-data]').__x.$data;
+            if (!leadId || newStatusId === '') return;
             
-            statusEditor.loading = true;
-            statusEditor.editing = false;
-
-            // Find the lead and status objects
-            const lead = this.leads.find(l => l.id === leadId);
-            const newStatus = this.availableStatuses.find(s => s.id == newStatusId);
-            const originalStatus = lead.lead_status;
-
-            // Optimistic update
-            if (newStatus) {
-                lead.lead_status = newStatus;
-                lead.lead_status_id = newStatus.id;
-            } else {
-                lead.lead_status = null;
-                lead.lead_status_id = null;
-            }
-
             try {
+                const statusEditor = selectElement.closest('td').querySelector('[x-data]').__x?.$data;
+                if (!statusEditor) {
+                    console.error('Status editor not found');
+                    return;
+                }
+                
+                statusEditor.loading = true;
+                statusEditor.editing = false;
+
+                // Find the lead and status objects
+                const lead = this.leads.find(l => l.id === leadId);
+                if (!lead) {
+                    throw new Error('Lead bulunamadı');
+                }
+                
+                const newStatus = newStatusId ? this.availableStatuses.find(s => s.id == newStatusId) : null;
+                const originalStatus = lead.lead_status;
+
+                // Optimistic update
+                if (newStatus) {
+                    lead.lead_status = newStatus;
+                    lead.lead_status_id = newStatus.id;
+                } else {
+                    lead.lead_status = null;
+                    lead.lead_status_id = null;
+                }
+
                 const response = await fetch(`/admin/dashboard/leads/${leadId}/status`, {
                     method: 'PUT',
                     headers: {
@@ -760,66 +754,86 @@ function leadsManagement() {
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        lead_status_id: newStatusId
+                        lead_status_id: newStatusId || null
                     })
                 });
 
-                const result = await response.json();
-
                 if (!response.ok) {
-                    throw new Error(result.message || 'Status güncellenirken hata oluştu');
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.message || `HTTP ${response.status}: Status güncellenemedi`);
                 }
+
+                const result = await response.json();
 
                 // Update with actual response data if provided
                 if (result.lead) {
                     const leadIndex = this.leads.findIndex(l => l.id === leadId);
                     if (leadIndex !== -1) {
-                        this.leads[leadIndex] = { ...this.leads[leadIndex], ...result.lead };
+                        Object.assign(this.leads[leadIndex], result.lead);
                     }
                 }
 
                 // Show success notification
                 this.showNotification('success', result.message || 'Lead durumu başarıyla güncellendi');
+                statusEditor.originalStatus = lead.lead_status_id;
 
             } catch (error) {
                 console.error('Status update error:', error);
                 
-                // Revert optimistic update
-                lead.lead_status = originalStatus;
-                lead.lead_status_id = originalStatus?.id || null;
-                statusEditor.selectedStatus = originalStatus?.id || '';
+                // Revert to original state
+                const lead = this.leads.find(l => l.id === leadId);
+                const statusEditor = selectElement.closest('td').querySelector('[x-data]').__x?.$data;
+                
+                if (lead && statusEditor) {
+                    const originalStatus = this.availableStatuses.find(s => s.id == statusEditor.originalStatus);
+                    lead.lead_status = originalStatus || null;
+                    lead.lead_status_id = originalStatus?.id || null;
+                    statusEditor.selectedStatus = originalStatus?.id || '';
+                }
 
                 // Show error notification
                 this.showNotification('error', error.message || 'Status güncellenirken hata oluştu');
             } finally {
-                statusEditor.loading = false;
-                statusEditor.originalStatus = lead.lead_status_id;
+                const statusEditor = selectElement.closest('td').querySelector('[x-data]').__x?.$data;
+                if (statusEditor) {
+                    statusEditor.loading = false;
+                }
                 this.$nextTick(() => lucide.createIcons());
             }
         },
 
         // Inline Assignment Update
         async updateAssignment(leadId, newAdminId, selectElement) {
-            const assignmentEditor = selectElement.closest('td').querySelector('[x-data]').__x.$data;
+            if (!leadId) return;
             
-            assignmentEditor.loading = true;
-            assignmentEditor.editing = false;
-
-            // Find the lead and admin objects
-            const lead = this.leads.find(l => l.id === leadId);
-            const newAdmin = this.availableAdmins.find(a => a.id == newAdminId);
-            const originalAdmin = lead.assigned_admin;
-
-            // Optimistic update
-            if (newAdmin) {
-                lead.assigned_admin = newAdmin;
-                lead.assign_to = newAdmin.id;
-            } else {
-                lead.assigned_admin = null;
-                lead.assign_to = null;
-            }
-
             try {
+                const assignmentEditor = selectElement.closest('td').querySelector('[x-data]').__x?.$data;
+                if (!assignmentEditor) {
+                    console.error('Assignment editor not found');
+                    return;
+                }
+                
+                assignmentEditor.loading = true;
+                assignmentEditor.editing = false;
+
+                // Find the lead and admin objects
+                const lead = this.leads.find(l => l.id === leadId);
+                if (!lead) {
+                    throw new Error('Lead bulunamadı');
+                }
+                
+                const newAdmin = newAdminId ? this.availableAdmins.find(a => a.id == newAdminId) : null;
+                const originalAdmin = lead.assigned_admin;
+
+                // Optimistic update
+                if (newAdmin) {
+                    lead.assigned_admin = newAdmin;
+                    lead.assign_to = newAdmin.id;
+                } else {
+                    lead.assigned_admin = null;
+                    lead.assign_to = null;
+                }
+
                 const response = await fetch(`/admin/dashboard/leads/${leadId}/assignment`, {
                     method: 'PUT',
                     headers: {
@@ -832,36 +846,46 @@ function leadsManagement() {
                     })
                 });
 
-                const result = await response.json();
-
                 if (!response.ok) {
-                    throw new Error(result.message || 'Atama güncellenirken hata oluştu');
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.message || `HTTP ${response.status}: Atama güncellenemedi`);
                 }
+
+                const result = await response.json();
 
                 // Update with actual response data if provided
                 if (result.lead) {
                     const leadIndex = this.leads.findIndex(l => l.id === leadId);
                     if (leadIndex !== -1) {
-                        this.leads[leadIndex] = { ...this.leads[leadIndex], ...result.lead };
+                        Object.assign(this.leads[leadIndex], result.lead);
                     }
                 }
 
                 // Show success notification
                 this.showNotification('success', result.message || 'Lead ataması başarıyla güncellendi');
+                assignmentEditor.originalAssignment = lead.assign_to;
 
             } catch (error) {
                 console.error('Assignment update error:', error);
                 
-                // Revert optimistic update
-                lead.assigned_admin = originalAdmin;
-                lead.assign_to = originalAdmin?.id || null;
-                assignmentEditor.selectedAssignment = originalAdmin?.id || '';
+                // Revert to original state
+                const lead = this.leads.find(l => l.id === leadId);
+                const assignmentEditor = selectElement.closest('td').querySelector('[x-data]').__x?.$data;
+                
+                if (lead && assignmentEditor) {
+                    const originalAdmin = this.availableAdmins.find(a => a.id == assignmentEditor.originalAssignment);
+                    lead.assigned_admin = originalAdmin || null;
+                    lead.assign_to = originalAdmin?.id || null;
+                    assignmentEditor.selectedAssignment = originalAdmin?.id || '';
+                }
 
                 // Show error notification
                 this.showNotification('error', error.message || 'Atama güncellenirken hata oluştu');
             } finally {
-                assignmentEditor.loading = false;
-                assignmentEditor.originalAssignment = lead.assign_to;
+                const assignmentEditor = selectElement.closest('td').querySelector('[x-data]').__x?.$data;
+                if (assignmentEditor) {
+                    assignmentEditor.loading = false;
+                }
                 this.$nextTick(() => lucide.createIcons());
             }
         },
@@ -938,31 +962,20 @@ function leadsManagement() {
 
         formatDate(dateString) {
             if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('tr-TR');
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('tr-TR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
+            } catch (error) {
+                return dateString;
+            }
         }
     };
     
-    console.log('🪲 RETURN DATA - Returning data object with', Object.keys(data).length, 'properties');
     return data;
 }
-
-// 🪲 FINAL DIAGNOSTIC
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🪲 DOM READY - Checking Alpine.js initialization');
-    
-    setTimeout(() => {
-        const alpineEl = document.querySelector('[x-data="leadsManagement()"]');
-        console.log('🪲 ALPINE ELEMENT FOUND:', !!alpineEl);
-        
-        if (alpineEl && alpineEl._x_dataStack) {
-            console.log('🪲 ALPINE DATA BOUND:', Object.keys(alpineEl._x_dataStack[0]));
-        } else {
-            console.error('🪲 ALPINE BINDING ERROR - Element not bound to Alpine.js');
-        }
-    }, 1000);
-});
-
-console.log('🪲 SCRIPT COMPLETE - leadsManagement function defined');
 </script>
 @endsection
