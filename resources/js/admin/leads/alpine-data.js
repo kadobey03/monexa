@@ -38,6 +38,12 @@ window.leadsTableData = function() {
         showEditModal: false,
         selectedLead: null,
         
+        // Modal variables for lead edit modal
+        editingLead: {},
+        newTag: '',
+        errors: {},
+        saving: false,
+        
         // Search & Filters
         searchQuery: '',
         filters: {
@@ -363,13 +369,44 @@ window.leadsTableData = function() {
         },
 
         openEditModal(lead = null) {
+            if (lead) {
+                // Edit existing lead
+                this.editingLead = { ...lead };
+                if (!this.editingLead.tags) {
+                    this.editingLead.tags = [];
+                }
+            } else {
+                // Create new lead
+                this.editingLead = {
+                    name: '',
+                    email: '',
+                    phone: '',
+                    status: 'new',
+                    priority: 'medium',
+                    lead_source_id: '',
+                    assigned_to: '',
+                    lead_score: 0,
+                    conversion_probability: 0,
+                    notes: '',
+                    tags: [],
+                    is_verified: false,
+                    is_premium: false
+                };
+            }
+            
+            this.errors = {};
+            this.newTag = '';
             this.selectedLead = lead;
             this.showEditModal = true;
         },
 
         closeEditModal() {
-            this.selectedLead = null;
             this.showEditModal = false;
+            this.editingLead = {};
+            this.errors = {};
+            this.newTag = '';
+            this.saving = false;
+            this.selectedLead = null;
         },
 
         /**
@@ -469,6 +506,88 @@ window.leadsTableData = function() {
             if (this.columnManager) {
                 this.columnManager.unpinColumn(columnKey);
             }
+        },
+
+        /**
+         * Modal helper methods for lead edit
+         */
+        addEditTag(tag = null) {
+            const tagToAdd = tag || this.newTag.trim();
+            if (tagToAdd && !this.editingLead.tags.includes(tagToAdd)) {
+                this.editingLead.tags.push(tagToAdd);
+                this.newTag = '';
+            }
+        },
+
+        removeEditTag(tag) {
+            const index = this.editingLead.tags.indexOf(tag);
+            if (index > -1) {
+                this.editingLead.tags.splice(index, 1);
+            }
+        },
+
+        getSuggestedTags() {
+            const allTags = ['vip', 'premium', 'sıcak-lead', 'soğuk-lead', 'yeni-kayıt', 'telefon-doğrulandı', 'email-doğrulandı'];
+            return allTags.filter(tag => !this.editingLead.tags.includes(tag));
+        },
+
+        async saveLead() {
+            this.saving = true;
+            this.errors = {};
+            
+            try {
+                const url = this.editingLead.id
+                    ? `/admin/leads/${this.editingLead.id}`
+                    : '/admin/leads';
+                
+                const method = this.editingLead.id ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(this.editingLead)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    this.showNotification(
+                        this.editingLead.id ? 'Lead başarıyla güncellendi' : 'Lead başarıyla oluşturuldu',
+                        'success'
+                    );
+                    
+                    this.closeEditModal();
+                    this.loadLeads(); // Refresh the table
+                } else {
+                    if (result.errors) {
+                        this.errors = result.errors;
+                    } else {
+                        throw new Error(result.message || 'Kayıt başarısız');
+                    }
+                }
+            } catch (error) {
+                this.showNotification(
+                    this.editingLead.id ? 'Lead güncellenemedi' : 'Lead oluşturulamadı',
+                    'error'
+                );
+            } finally {
+                this.saving = false;
+            }
+        },
+
+        formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('tr-TR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
         },
 
         /**
