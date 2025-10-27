@@ -5,7 +5,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     $text = 'light';
 }
 ?>
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Kullanıcı Yatırımları'])
 @section('content')
     @include('admin.topmenu')
     @include('admin.sidebar')

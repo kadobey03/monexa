@@ -120,7 +120,7 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('dashboard/mdeposits', 'mdeposits')->name('mdeposits');
         Route::get('dashboard/agents',  'agents')->name('agents');
         Route::get('dashboard/addmanager', 'addmanager')->name('addmanager');
-        Route::get('dashboard/madmin', 'madmin')->name('madmin');
+        Route::get('dashboard/madmin', [AdminManagerController::class, 'index'])->name('madmin');
         Route::get('dashboard/msubtrade', 'msubtrade')->name('msubtrade');
         Route::get('dashboard/settings', 'settings')->name('settings');
         Route::get('dashboard/frontpage', 'frontpage')->name('frontpage');
@@ -322,15 +322,66 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::post('dashboard/fileImport', 'fileImport')->name('fileImport');
     });
 
-    // New Leads Management Routes
+    // Enhanced Leads Management Routes with Dynamic Table Support
     Route::prefix('dashboard/leads')->name('admin.leads.')->controller(LeadsController::class)->group(function () {
+        // Main View Routes
         Route::get('/', 'index')->name('index');
-        Route::get('/my-leads', 'myLeads')->name('my-leads');
-        Route::get('/{id}', 'show')->name('show');
+        Route::get('/show/{id}', 'show')->name('show');
         Route::put('/{id}', 'update')->name('update');
-        Route::post('/{id}/contact', 'addContact')->name('add-contact');
+        
+        // Dynamic Data API Routes
+        Route::get('/api/data', 'getData')->name('api.data'); // Main table data with filters/search
+        Route::get('/api/search', 'search')->name('api.search'); // Real-time search endpoint
+        Route::post('/api/filter-preset', 'saveFilterPreset')->name('api.filter-preset'); // Save filter preset
+        Route::delete('/api/filter-preset/{id}', 'deleteFilterPreset')->name('api.delete-filter-preset'); // Delete filter preset
+        Route::get('/api/filter-presets', 'getFilterPresets')->name('api.filter-presets'); // Get user's filter presets
+        
+        // Column Management API Routes
+        Route::post('/api/column-preferences', 'saveColumnPreferences')->name('api.column-preferences'); // Save column settings
+        Route::get('/api/column-preferences', 'getColumnPreferences')->name('api.get-column-preferences'); // Get column settings
+        Route::post('/api/column-order', 'saveColumnOrder')->name('api.column-order'); // Save column order
+        Route::post('/api/column-width', 'saveColumnWidth')->name('api.column-width'); // Save column width
+        Route::post('/api/pin-column', 'pinColumn')->name('api.pin-column'); // Pin/unpin column
+        
+        // Bulk Operations API Routes
+        Route::post('/api/bulk-action', 'bulkAction')->name('api.bulk-action'); // Generic bulk actions
+        Route::post('/api/bulk-assign', 'bulkAssign')->name('api.bulk-assign'); // Bulk assignment
+        Route::post('/api/bulk-update-status', 'bulkUpdateStatus')->name('api.bulk-update-status'); // Bulk status update
+        Route::post('/api/bulk-delete', 'bulkDelete')->name('api.bulk-delete'); // Bulk delete
+        Route::post('/api/bulk-export', 'bulkExport')->name('api.bulk-export'); // Bulk export
+        
+        // Quick Update API Routes
+        Route::put('/api/{id}/status', 'updateStatus')->name('api.update-status'); // AJAX status update
+        Route::put('/api/{id}/assignment', 'updateAssignment')->name('api.update-assignment'); // AJAX assignment update
+        Route::put('/api/{id}/priority', 'updatePriority')->name('api.update-priority'); // AJAX priority update
+        Route::put('/api/{id}/tags', 'updateTags')->name('api.update-tags'); // AJAX tags update
+        
+        // Activity & Contact Management
+        Route::post('/api/{id}/activity', 'addActivity')->name('api.add-activity'); // Add activity log
+        Route::get('/api/{id}/activities', 'getActivities')->name('api.get-activities'); // Get activities
+        Route::post('/api/{id}/contact', 'addContact')->name('api.add-contact'); // Add contact log
+        Route::get('/api/{id}/contacts', 'getContacts')->name('api.get-contacts'); // Get contacts
+        
+        // Data & Export Routes
+        Route::get('/api/export', 'export')->name('api.export'); // Export leads
+        Route::get('/api/my-leads', 'myLeads')->name('api.my-leads'); // Current user's leads
+        Route::get('/api/dashboard-stats', 'getDashboardStats')->name('api.dashboard-stats'); // Dashboard statistics
+        
+        // Dropdown Data Routes
+        Route::get('/api/statuses', 'getStatuses')->name('api.statuses'); // Get active statuses
+        Route::get('/api/assignable-admins', 'getAssignableAdmins')->name('api.assignable-admins'); // Get assignable admins
+        Route::get('/api/lead-sources', 'getLeadSources')->name('api.lead-sources'); // Get lead sources
+        Route::get('/api/tags', 'getTags')->name('api.tags'); // Get available tags
+        
+        // Legacy Routes (for backward compatibility)
+        Route::get('/statuses', 'getStatuses')->name('statuses');
+        Route::get('/assignable-admins', 'getAssignableAdmins')->name('assignable-admins');
+        Route::put('/{id}/status', 'updateStatus')->name('update-status');
+        Route::put('/assignment/{id}', 'updateAssignment')->name('update-assignment');
         Route::post('/bulk-assign', 'bulkAssign')->name('bulk-assign');
+        Route::post('/{id}/add-contact', 'addContact')->name('add-contact');
         Route::get('/export', 'export')->name('export');
+        Route::get('/my-leads', 'myLeads')->name('my-leads');
     });
 
     // Lead Status Management Routes
@@ -483,12 +534,15 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
             Route::get('/{admin}/edit', 'edit')->name('edit');
             Route::put('/{admin}', 'update')->name('update');
             Route::delete('/{admin}', 'destroy')->name('destroy');
+            Route::get('/edit-data/{admin}', 'editData')->name('edit-data');
+            Route::post('/{admin}/update-data', 'updateAjax')->name('update-data');
             Route::post('/bulk-action', 'bulkAction')->name('bulk-action');
             Route::get('/{admin}/performance', 'performance')->name('performance');
             Route::post('/{admin}/toggle-status', 'toggleStatus')->name('toggle-status');
             Route::post('/{admin}/activate', 'activate')->name('activate');
             Route::post('/{admin}/deactivate', 'deactivate')->name('deactivate');
             Route::get('/{admin}/reset-password', 'resetPassword')->name('reset-password');
+            Route::post('/{admin}/reset-password', 'resetPasswordPost')->name('reset-password.post');
             Route::get('/export/csv', 'exportCsv')->name('export.csv');
             Route::get('/export/excel', 'exportExcel')->name('export.excel');
             Route::post('/import', 'import')->name('import');

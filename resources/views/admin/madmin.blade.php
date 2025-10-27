@@ -16,7 +16,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800 rounded-2xl p-6 text-white shadow-2xl">
             <div class="flex items-center space-x-4">
                 <div class="bg-white/20 p-4 rounded-xl backdrop-blur-sm">
-                    <i data-lucide="users-cog" class="w-8 h-8"></i>
+                    <i data-lucide="user-cog" class="w-8 h-8"></i>
                 </div>
                 <div>
                     <h1 class="text-3xl font-bold mb-2">Yöneticiler Paneli</h1>

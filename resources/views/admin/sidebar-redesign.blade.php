@@ -228,8 +228,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/admin/dashboard/madmin') }}" class="nav-link">
-                                    <span class="nav-text">Yöneticileri Yönet</span>
+                                <a href="{{ route('admin.managers.index') }}" class="nav-link">
+                                    <span class="nav-text">Yöneticileri Yönet (Modern)</span>
                                 </a>
                             </li>
                             <li class="nav-item {{ request()->routeIs('appsettingshow') ? 'active' : '' }}">

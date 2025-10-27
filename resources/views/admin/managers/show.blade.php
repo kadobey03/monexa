@@ -1,6 +1,25 @@
 @extends('layouts.admin')
 
 @section('content')
+{{-- Defensive coding: Check if manager exists --}}
+@if(!isset($manager) || !$manager || !$manager->exists)
+    <div class="flex items-center justify-center min-h-[60vh]">
+        <div class="text-center">
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <i data-lucide="alert-triangle" class="w-12 h-12 text-red-600 dark:text-red-400"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-admin-900 dark:text-white mb-2">Yönetici Bulunamadı</h2>
+            <p class="text-admin-600 dark:text-admin-400 mb-6">
+                Aradığınız yönetici bulunamadı. Yönetici silinmiş veya mevcut olmayabilir.
+            </p>
+            <a href="{{ route('admin.managers.index') }}"
+               class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                Yöneticiler Listesine Dön
+            </a>
+        </div>
+    </div>
+@else
 <div class="space-y-6" x-data="managerProfileData()">
     
     <!-- Profile Header -->
@@ -737,6 +756,7 @@
         </div>
     </div>
 </div>
+@endif
 @endsection
 
 @push('scripts')

@@ -15,10 +15,10 @@ x-init="
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>{{ $title ?? 'Admin Panel' }} - {{ $settings->site_name ?? 'Monexa' }}</title>
+    <title>{{ $title ?? 'Admin Panel' }} - {{ isset($settings) ? $settings->site_name : 'Monexa' }}</title>
     
     <!-- Favicon -->
-    <link href="{{ asset('storage/app/public/' . ($settings->favicon ?? 'favicon.ico')) }}" rel="icon" type="image/x-icon" />
+    <link href="{{ asset('storage/app/public/' . (isset($settings) ? $settings->favicon : 'favicon.ico')) }}" rel="icon" type="image/x-icon" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,13 +27,13 @@ x-init="
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Lucide Icons - Local fallback to avoid CDN issues -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" onerror="console.warn('Lucide CDN failed, using local fallback')"></script>
     
-    <!-- AlpineJS -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -126,6 +126,7 @@ x-init="
     </style>
     
     @stack('styles')
+    @yield('styles')
 </head>
 <body class="bg-gray-50 dark:bg-admin-900 text-gray-900 dark:text-gray-100 antialiased" x-cloak>
     
@@ -311,7 +312,7 @@ x-init="
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300 transition-all duration-200 group {{ request()->routeIs('admin.managers.*') ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' : '' }}"
                             :title="sidebarCollapsed ? 'Yöneticiler' : ''">
                         <div class="flex items-center">
-                            <i data-lucide="users-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
+                            <i data-lucide="user-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
                             <span x-show="!sidebarCollapsed" x-transition class="font-medium">Yöneticiler</span>
                         </div>
                         <div x-show="!sidebarCollapsed" class="flex items-center space-x-2">
@@ -347,8 +348,8 @@ x-init="
                             <a href="{{ url('/admin/dashboard/addmanager') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
                                 Eski Yönetici Ekle
                             </a>
-                            <a href="{{ url('/admin/dashboard/madmin') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
-                                Eski Yöneticiler
+                            <a href="{{ route('admin.managers.index') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
+                                Eski Yöneticiler (Modern)
                             </a>
                         </div>
                     </div>
@@ -459,7 +460,7 @@ x-init="
                 </div>
                 
                 <div x-show="!sidebarCollapsed" x-transition class="mt-3 text-center">
-                    <p class="text-xs text-admin-500">{{ $settings->site_name ?? 'Admin Panel' }}</p>
+                    <p class="text-xs text-admin-500">{{ isset($settings) ? $settings->site_name : 'Admin Panel' }}</p>
                     <p class="text-xs text-admin-400">© {{ date('Y') }}</p>
                 </div>
             </div>
@@ -639,7 +640,7 @@ x-init="
                     <x-notify-alert />
                 </div>
 
-                <!-- Page Content -->
+                <!-- Page Content - Alpine.js enabled -->
                 <div class="p-6">
                     @yield('content')
                 </div>
@@ -683,10 +684,9 @@ x-init="
 
     <!-- Page Specific Scripts -->
     @stack('scripts')
+    @yield('scripts')
 
-    <!-- Laravel Mix Hot Reload (Development only) -->
-    @if(app()->environment('local'))
-        <script src="{{ mix('js/app.js') }}"></script>
-    @endif
+    <!-- Application Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

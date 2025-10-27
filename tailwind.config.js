@@ -1,224 +1,304 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./resources/**/*.blade.php",
-    "./resources/**/*.js",
-    "./resources/**/*.vue",
-    "./public/**/*.js",
-    "./app/View/**/*.php",
+    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+    './storage/framework/views/*.php',
+    './resources/views/**/*.blade.php',
+    './resources/js/**/*.vue',
+    './resources/js/**/*.js',
   ],
-  darkMode: 'class',
+
+  darkMode: 'class', // Enable dark mode with class strategy
+
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Consolas', 'Monaco', 'monospace'],
+        sans: ['Inter', 'Nunito', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        // Custom color palette for leads management
         primary: {
-          50: '#eef2ff',
-          100: '#e0e7ff', 
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-          950: '#1e1b4b',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
         },
-        semantic: {
-          success: '#10b981',
-          warning: '#f59e0b',
-          error: '#ef4444',
-          info: '#3b82f6',
+        success: {
+          50: '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981',
+          600: '#059669',
+          700: '#047857',
+          800: '#065f46',
+          900: '#064e3b',
         },
-        admin: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
+        warning: {
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
         },
-        'glass': 'rgba(255, 255, 255, 0.05)',
-        'glass-dark': 'rgba(0, 0, 0, 0.05)',
+        danger: {
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#f87171',
+          500: '#ef4444',
+          600: '#dc2626',
+          700: '#b91c1c',
+          800: '#991b1b',
+          900: '#7f1d1d',
+        },
+        // Status colors for leads
+        status: {
+          new: '#3b82f6',        // blue
+          contacted: '#f59e0b',  // yellow
+          qualified: '#10b981',  // green
+          proposal: '#8b5cf6',   // purple
+          negotiation: '#f97316', // orange
+          won: '#059669',        // emerald
+          lost: '#dc2626',       // red
+          nurturing: '#6366f1',  // indigo
+        },
+        // Priority colors
+        priority: {
+          low: '#6b7280',        // gray
+          medium: '#f59e0b',     // yellow
+          high: '#f97316',       // orange
+          urgent: '#dc2626',     // red
+        }
       },
       spacing: {
         '18': '4.5rem',
-        '72': '18rem',
-        '84': '21rem',
-        '96': '24rem',
+        '88': '22rem',
+        '128': '32rem',
       },
-      screens: {
-        'xs': '475px',
-        '3xl': '1680px',
+      height: {
+        '128': '32rem',
       },
-      backdropBlur: {
-        'xs': '2px',
-        'sm': '4px',
+      maxHeight: {
+        '128': '32rem',
       },
       animation: {
-        'gradient-x': 'gradient-x 15s ease infinite',
-        'gradient-y': 'gradient-y 15s ease infinite',
-        'gradient-xy': 'gradient-xy 15s ease infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'slide-in-right': 'slide-in-right 0.3s ease-out',
-        'slide-in-left': 'slide-in-left 0.3s ease-out',
-        'fade-in-up': 'fade-in-up 0.5s ease-out',
-        'scale-in': 'scale-in 0.2s ease-out',
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'fade-out': 'fadeOut 0.5s ease-in-out',
+        'slide-in': 'slideIn 0.3s ease-out',
+        'slide-out': 'slideOut 0.3s ease-out',
+        'bounce-light': 'bounceLight 1s infinite',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
-        'gradient-y': {
-          '0%, 100%': {
-            'background-size': '400% 400%',
-            'background-position': 'center top'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'center center'
-          }
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        'gradient-x': {
-          '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
-          }
+        fadeOut: {
+          '0%': { opacity: '1', transform: 'translateY(0)' },
+          '100%': { opacity: '0', transform: 'translateY(-10px)' },
         },
-        'gradient-xy': {
-          '0%, 100%': {
-            'background-size': '400% 400%',
-            'background-position': 'left center'
-          },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center'
-          }
+        slideIn: {
+          '0%': { opacity: '0', transform: 'translateX(100%)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
         },
-        'float': {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' }
+        slideOut: {
+          '0%': { opacity: '1', transform: 'translateX(0)' },
+          '100%': { opacity: '0', transform: 'translateX(100%)' },
         },
-        'slide-in-right': {
-          '0%': { transform: 'translateX(100%)', opacity: 0 },
-          '100%': { transform: 'translateX(0)', opacity: 1 }
-        },
-        'slide-in-left': {
-          '0%': { transform: 'translateX(-100%)', opacity: 0 },
-          '100%': { transform: 'translateX(0)', opacity: 1 }
-        },
-        'fade-in-up': {
-          '0%': { transform: 'translateY(20px)', opacity: 0 },
-          '100%': { transform: 'translateY(0)', opacity: 1 }
-        },
-        'scale-in': {
-          '0%': { transform: 'scale(0.95)', opacity: 0 },
-          '100%': { transform: 'scale(1)', opacity: 1 }
+        bounceLight: {
+          '0%, 100%': { transform: 'translateY(-5%)', opacity: '0.8' },
+          '50%': { transform: 'translateY(0)', opacity: '1' },
         }
       },
-      boxShadow: {
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-        'glass-dark': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
-        'elegant': '0 4px 20px -2px rgba(0, 0, 0, 0.1)',
-        'elegant-lg': '0 10px 40px -4px rgba(0, 0, 0, 0.15)',
+      backdropBlur: {
+        xs: '2px',
       },
-      blur: {
-        'xs': '2px',
+      boxShadow: {
+        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+        'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        'strong': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
       },
       borderRadius: {
         '4xl': '2rem',
-        '5xl': '2.5rem',
       },
-      transitionDuration: {
-        '400': '400ms',
-        '600': '600ms',
+      zIndex: {
+        '60': '60',
+        '70': '70',
+        '80': '80',
+        '90': '90',
+        '100': '100',
       },
-    }
+      screens: {
+        '3xl': '1600px',
+      },
+    },
   },
+
   plugins: [
     require('@tailwindcss/forms')({
-      strategy: 'class',
+      strategy: 'class', // Use class strategy to avoid conflicts
     }),
     require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
-    // Custom plugin for admin components
+    
+    // Custom plugin for table utilities
+    function({ addUtilities, theme }) {
+      const newUtilities = {
+        '.table-compact': {
+          '& th, & td': {
+            padding: theme('spacing.2') + ' ' + theme('spacing.4'),
+            fontSize: theme('fontSize.sm'),
+            lineHeight: theme('lineHeight.4'),
+          },
+        },
+        '.table-comfortable': {
+          '& th, & td': {
+            padding: theme('spacing.3') + ' ' + theme('spacing.6'),
+            fontSize: theme('fontSize.sm'),
+            lineHeight: theme('lineHeight.5'),
+          },
+        },
+        '.table-spacious': {
+          '& th, & td': {
+            padding: theme('spacing.4') + ' ' + theme('spacing.8'),
+            fontSize: theme('fontSize.base'),
+            lineHeight: theme('lineHeight.6'),
+          },
+        },
+        '.scrollbar-thin': {
+          '&::-webkit-scrollbar': {
+            width: '6px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: theme('colors.gray.100'),
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: theme('colors.gray.400'),
+            borderRadius: theme('borderRadius.full'),
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: theme('colors.gray.500'),
+          },
+        },
+        '.scrollbar-none': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+        '.glass': {
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+        },
+        '.glass-dark': {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+        },
+      }
+      
+      addUtilities(newUtilities)
+    },
+    
+    // Custom plugin for status indicators
     function({ addComponents, theme }) {
-      addComponents({
-        '.admin-card': {
-          backgroundColor: theme('colors.white'),
-          borderRadius: theme('borderRadius.2xl'),
-          boxShadow: theme('boxShadow.elegant'),
-          border: `1px solid ${theme('colors.admin.200')}`,
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          '&:hover': {
-            transform: 'translateY(-2px)',
-            boxShadow: theme('boxShadow.elegant-lg'),
-          }
-        },
-        '.admin-card-dark': {
-          backgroundColor: theme('colors.admin.800'),
-          borderColor: theme('colors.admin.700'),
-          boxShadow: theme('boxShadow.glass-dark'),
-        },
-        '.admin-btn': {
+      const statusComponents = {
+        '.status-badge': {
           display: 'inline-flex',
           alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: theme('borderRadius.xl'),
-          fontWeight: theme('fontWeight.semibold'),
-          transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-          '&:focus': {
-            outline: 'none',
-            boxShadow: `0 0 0 3px ${theme('colors.primary.200')}`,
-          }
+          padding: theme('spacing.1') + ' ' + theme('spacing.2'),
+          borderRadius: theme('borderRadius.full'),
+          fontSize: theme('fontSize.xs'),
+          fontWeight: theme('fontWeight.medium'),
+          textTransform: 'capitalize',
         },
-        '.admin-btn-primary': {
-          backgroundColor: theme('colors.primary.600'),
-          color: theme('colors.white'),
-          '&:hover': {
-            backgroundColor: theme('colors.primary.700'),
-            transform: 'translateY(-1px)',
-          }
+        '.status-new': {
+          backgroundColor: theme('colors.blue.100'),
+          color: theme('colors.blue.800'),
         },
-        '.admin-btn-secondary': {
-          backgroundColor: theme('colors.admin.100'),
-          color: theme('colors.admin.700'),
-          '&:hover': {
-            backgroundColor: theme('colors.admin.200'),
-          }
+        '.status-contacted': {
+          backgroundColor: theme('colors.yellow.100'),
+          color: theme('colors.yellow.800'),
         },
-        '.admin-input': {
-          borderRadius: theme('borderRadius.xl'),
-          borderColor: theme('colors.admin.300'),
-          transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-          '&:focus': {
-            borderColor: theme('colors.primary.500'),
-            boxShadow: `0 0 0 3px ${theme('colors.primary.100')}`,
-            outline: 'none',
-          }
+        '.status-qualified': {
+          backgroundColor: theme('colors.green.100'),
+          color: theme('colors.green.800'),
         },
-        '.glassmorphism': {
-          backdropFilter: 'blur(16px) saturate(180%)',
-          backgroundColor: 'rgba(255, 255, 255, 0.75)',
-          border: '1px solid rgba(255, 255, 255, 0.125)',
+        '.status-proposal': {
+          backgroundColor: theme('colors.purple.100'),
+          color: theme('colors.purple.800'),
         },
-        '.glassmorphism-dark': {
-          backdropFilter: 'blur(16px) saturate(180%)',
-          backgroundColor: 'rgba(17, 25, 40, 0.75)',
-          border: '1px solid rgba(255, 255, 255, 0.125)',
+        '.status-negotiation': {
+          backgroundColor: theme('colors.orange.100'),
+          color: theme('colors.orange.800'),
         },
-      })
+        '.status-won': {
+          backgroundColor: theme('colors.emerald.100'),
+          color: theme('colors.emerald.800'),
+        },
+        '.status-lost': {
+          backgroundColor: theme('colors.red.100'),
+          color: theme('colors.red.800'),
+        },
+        '.status-nurturing': {
+          backgroundColor: theme('colors.indigo.100'),
+          color: theme('colors.indigo.800'),
+        },
+        '.dark .status-new': {
+          backgroundColor: theme('colors.blue.900') + '33',
+          color: theme('colors.blue.400'),
+        },
+        '.dark .status-contacted': {
+          backgroundColor: theme('colors.yellow.900') + '33',
+          color: theme('colors.yellow.400'),
+        },
+        '.dark .status-qualified': {
+          backgroundColor: theme('colors.green.900') + '33',
+          color: theme('colors.green.400'),
+        },
+        '.dark .status-proposal': {
+          backgroundColor: theme('colors.purple.900') + '33',
+          color: theme('colors.purple.400'),
+        },
+        '.dark .status-negotiation': {
+          backgroundColor: theme('colors.orange.900') + '33',
+          color: theme('colors.orange.400'),
+        },
+        '.dark .status-won': {
+          backgroundColor: theme('colors.emerald.900') + '33',
+          color: theme('colors.emerald.400'),
+        },
+        '.dark .status-lost': {
+          backgroundColor: theme('colors.red.900') + '33',
+          color: theme('colors.red.400'),
+        },
+        '.dark .status-nurturing': {
+          backgroundColor: theme('colors.indigo.900') + '33',
+          color: theme('colors.indigo.400'),
+        },
+      }
+      
+      addComponents(statusComponents)
     }
   ],
 }

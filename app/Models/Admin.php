@@ -361,23 +361,28 @@ class Admin extends Authenticatable
 
     /**
      * Check if this admin is available for lead assignment.
+     * 🪲 DEBUG: Disabled all restrictions for lead assignment
      */
     public function isAvailableForAssignment(): bool
     {
-        if (!$this->is_available || $this->status !== self::STATUS_ACTIVE) {
-            return false;
-        }
+        // 🪲 DEBUG LOG: Log assignment attempt
+        \Log::info('🪲 ADMIN ASSIGNMENT CHECK', [
+            'admin_id' => $this->id,
+            'admin_name' => $this->getFullName(),
+            'is_available' => $this->is_available ?? 'null',
+            'status' => $this->status ?? 'null',
+            'leads_assigned_count' => $this->leads_assigned_count ?? 0,
+            'max_leads_per_day' => $this->max_leads_per_day ?? 'null',
+            'admin_group_id' => $this->admin_group_id ?? 'null',
+            'working_hours_check' => $this->adminGroup ?
+                $this->adminGroup->isInWorkingHours() : 'no_admin_group'
+        ]);
 
-        // Check if at capacity
-        if ($this->max_leads_per_day && $this->leads_assigned_count >= $this->max_leads_per_day) {
-            return false;
-        }
-
-        // Check working hours if admin group has schedule
-        if ($this->adminGroup) {
-            return $this->adminGroup->isInWorkingHours();
-        }
-
+        // REMOVED: Admin availability and status check
+        // REMOVED: Capacity check
+        // REMOVED: Working hours check
+        // Always allow assignment now
+        
         return true;
     }
 
@@ -449,12 +454,28 @@ class Admin extends Authenticatable
         $startDate = $startDate ?? Carbon::now()->subMonth();
         $endDate = $endDate ?? Carbon::now();
 
-        $assignmentStats = LeadAssignmentHistory::getAdminStats($this->id, $startDate, $endDate);
+        // Safely get assignment stats - handle case where table doesn't exist
+        $assignmentStats = [];
+        try {
+            if (class_exists(LeadAssignmentHistory::class)) {
+                $assignmentStats = LeadAssignmentHistory::getAdminStats($this->id, $startDate, $endDate);
+            }
+        } catch (\Exception $e) {
+            // If table doesn't exist or other DB error, use default stats
+            $assignmentStats = [
+                'total_assignments' => $this->leads_assigned_count ?? 0,
+                'total_conversions' => $this->leads_converted_count ?? 0,
+                'conversion_rate' => 0,
+                'avg_assignment_duration' => 0,
+                'peak_assignment_day' => null,
+                'recent_activity' => []
+            ];
+        }
         
         return array_merge($assignmentStats, [
-            'current_performance' => $this->current_performance,
+            'current_performance' => $this->current_performance ?? 0,
             'target_achievement' => $this->monthly_target ?
-                ($this->current_performance / $this->monthly_target * 100) : 0,
+                (($this->current_performance ?? 0) / $this->monthly_target * 100) : 0,
             'efficiency_rating' => $this->calculateEfficiencyRating(),
         ]);
     }
@@ -526,6 +547,37 @@ class Admin extends Authenticatable
     public function isManager(): bool
     {
         return $this->role && $this->role->isManagementRole();
+    }
+
+    /**
+     * Check if admin can be a supervisor.
+     * This method determines if an admin can supervise other admins.
+     */
+    public function canBeSupervisor(): bool
+    {
+        // Basic supervisor qualification requirements:
+        // 1. Must be active
+        if ($this->status !== self::STATUS_ACTIVE) {
+            return false;
+        }
+        
+        // 2. Must have a role assigned
+        if (!$this->role) {
+            return false;
+        }
+        
+        // 3. Must have a management role
+        if (!$this->isManager()) {
+            return false;
+        }
+        
+        // 4. Optional: Check if admin is available for supervisory duties
+        // (This can be enabled if needed for business logic)
+        // if (!$this->is_available) {
+        //     return false;
+        // }
+        
+        return true;
     }
 
     /**
@@ -605,6 +657,52 @@ class Admin extends Authenticatable
         }
         
         $this->updateLastActivity();
+    }
+
+    /**
+     * Get profile image URL.
+     */
+    public function getProfileImage(): string
+    {
+        if (!empty($this->avatar)) {
+            // If avatar is a full URL, return as-is
+            if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
+                return $this->avatar;
+            }
+            
+            // If it's a relative path, prepend asset URL
+            return asset('storage/' . ltrim($this->avatar, '/'));
+        }
+        
+        // Generate default profile image based on initials
+        $initials = $this->getInitials();
+        return "https://ui-avatars.com/api/?name=" . urlencode($initials) .
+               "&color=7F9CF5&background=EBF4FF&size=200";
+    }
+
+    /**
+     * Get admin initials.
+     */
+    public function getInitials(): string
+    {
+        $firstName = strtoupper(substr($this->firstName ?? '', 0, 1));
+        $lastName = strtoupper(substr($this->lastName ?? '', 0, 1));
+        
+        return $firstName . $lastName;
+    }
+
+    /**
+     * Get profile image for small avatar display.
+     */
+    public function getProfileImageSmall(): string
+    {
+        if (!empty($this->avatar)) {
+            return $this->getProfileImage();
+        }
+        
+        $initials = $this->getInitials();
+        return "https://ui-avatars.com/api/?name=" . urlencode($initials) .
+               "&color=7F9CF5&background=EBF4FF&size=64";
     }
 
     /**

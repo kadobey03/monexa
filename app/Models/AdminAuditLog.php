@@ -18,6 +18,7 @@ class AdminAuditLog extends Model
      */
     protected $fillable = [
         'admin_id',
+        'target_admin_id',
         'admin_name',
         'admin_email',
         'action',

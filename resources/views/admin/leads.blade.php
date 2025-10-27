@@ -1,290 +1,337 @@
 @extends('layouts.admin', ['title' => 'Lead Yönetimi'])
 
 @section('content')
-<div class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 min-h-screen">
-            <!-- Header Section -->
-    <div class="bg-white dark:bg-admin-800 border-b border-admin-200 dark:border-admin-700 shadow-sm">
-                <div class="px-4 py-6 sm:px-6 lg:px-8">
-                    <div class="flex items-center space-x-4">
-                        <div class="p-3 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl shadow-lg">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Lead Yönetimi</h1>
-                            <p class="text-gray-600 dark:text-gray-400 mt-1">Sistem güncellemesi - Yeni arayüz kullanılabilir</p>
+<div 
+    x-data="leadsTableData()" 
+    x-init="initializeTable()"
+    class="min-h-screen bg-gray-50 dark:bg-gray-900"
+>
+    <!-- Header Section -->
+    <div class="bg-white dark:bg-admin-800 border-b border-gray-200 dark:border-admin-700 shadow-sm">
+        <div class="px-4 py-6 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                <!-- Left: Title and Summary -->
+                <div class="flex items-center space-x-4">
+                    <div class="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg">
+                        <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Lead Yönetimi</h1>
+                        <div class="flex items-center space-x-4 mt-1">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">
+                                Toplam: <span x-text="totalLeads" class="font-medium text-gray-700 dark:text-gray-300"></span>
+                            </span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">
+                                Seçilen: <span x-text="selectedLeads.length" class="font-medium text-gray-700 dark:text-gray-300"></span>
+                            </span>
+                            <span 
+                                x-show="filteredCount !== totalLeads"
+                                class="text-sm text-blue-600 dark:text-blue-400"
+                            >
+                                Filtrelenen: <span x-text="filteredCount" class="font-medium"></span>
+                            </span>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Main Content -->
-            <div class="px-4 py-8 sm:px-6 lg:px-8">
-                <!-- Upgrade Card -->
-                <div class="max-w-6xl mx-auto">
-                    <div class="relative overflow-hidden bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 rounded-2xl shadow-2xl">
-                        <!-- Background Pattern -->
-                        <div class="absolute inset-0 opacity-10">
-                            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;><defs><pattern id=&quot;grain&quot; width=&quot;100&quot; height=&quot;100&quot; patternUnits=&quot;userSpaceOnUse&quot;><circle cx=&quot;50&quot; cy=&quot;50&quot; r=&quot;1&quot; fill=&quot;%23ffffff&quot; opacity=&quot;0.02&quot;/></pattern></defs><rect width=&quot;100&quot; height=&quot;100&quot; fill=&quot;url(%23grain)&quot;/></svg>');"></div>
-                        </div>
+                
+                <!-- Right: Action Buttons -->
+                <div class="flex items-center space-x-3">
+                    <button 
+                        @click="showFilters = !showFilters"
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg hover:bg-gray-50 dark:hover:bg-admin-600 transition-colors"
+                        :class="{ 'bg-blue-50 dark:bg-blue-900 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300': showFilters }"
+                    >
+                        <i data-lucide="filter" class="w-4 h-4 mr-2"></i>
+                        Filtreler
+                        <span 
+                            x-show="getActiveFiltersCount() > 0"
+                            class="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold text-blue-800 bg-blue-200 rounded-full"
+                            x-text="getActiveFiltersCount()"
+                        ></span>
+                    </button>
+                    
+                    <button 
+                        @click="showColumnSettings = true"
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg hover:bg-gray-50 dark:hover:bg-admin-600 transition-colors"
+                    >
+                        <i data-lucide="columns" class="w-4 h-4 mr-2"></i>
+                        Sütunlar
+                    </button>
+                    
+                    <div class="relative" x-data="{ showExportMenu: false }">
+                        <button 
+                            @click="showExportMenu = !showExportMenu"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg hover:bg-gray-50 dark:hover:bg-admin-600 transition-colors"
+                        >
+                            <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                            Export
+                            <i data-lucide="chevron-down" class="w-4 h-4 ml-2"></i>
+                        </button>
                         
-                        <!-- Content -->
-                        <div class="relative z-10 p-8">
-                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-                                <!-- Left Content -->
-                                <div class="lg:col-span-2 text-white">
-                                    <div class="mb-6">
-                                        <div class="inline-flex items-center px-4 py-2 mb-4 rounded-full bg-white/20 backdrop-blur-sm text-white text-sm font-medium">
-                                            🚀 Sistem Güncellemesi
-                                        </div>
-                                        <h2 class="text-3xl lg:text-4xl font-bold mb-4">Yeni Lead Yönetim Sistemi</h2>
-                                        <p class="text-xl text-white/90 mb-6">Daha güçlü özellikler, modern tasarım ve gelişmiş kullanıcı deneyimi ile lead'lerinizi yönetin.</p>
-                                    </div>
-
-                                    <!-- Features Grid -->
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div class="flex items-start space-x-4">
-                                            <div class="flex-shrink-0 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h4 class="text-lg font-semibold mb-2">Dinamik Status Sistemi</h4>
-                                                <p class="text-white/75">Renk kodlu statuslar, özel durumlar, otomatik takip</p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="flex items-start space-x-4">
-                                            <div class="flex-shrink-0 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h4 class="text-lg font-semibold mb-2">Akıllı Atama Sistemi</h4>
-                                                <p class="text-white/75">Hiyerarşik admin yönetimi, toplu işlemler</p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="flex items-start space-x-4">
-                                            <div class="flex-shrink-0 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h4 class="text-lg font-semibold mb-2">Excel Import/Export</h4>
-                                                <p class="text-white/75">Toplu veri transferi, otomatik üye oluşturma</p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="flex items-start space-x-4">
-                                            <div class="flex-shrink-0 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path>
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h4 class="text-lg font-semibold mb-2">Lead Scoring & Analytics</h4>
-                                                <p class="text-white/75">Otomatik puanlama, detaylı raporlama</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Right Content - CTA -->
-                                <div class="text-center">
-                                    <div class="mb-6">
-                                        <div class="w-32 h-32 mx-auto mb-6 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
-                                            <svg class="w-16 h-16 text-white opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    
-                                    <a href="{{ route('admin.leads.index') }}" 
-                                       class="inline-flex items-center px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-bold rounded-2xl hover:bg-white/30 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group">
-                                        <svg class="w-5 h-5 mr-3 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                                        </svg>
-                                        Yeni Sisteme Geç
-                                    </a>
-                                    
-                                    <div class="mt-4 text-white/70 text-sm">
-                                        Modern, hızlı ve güvenli
-                                    </div>
-                                    
-                                    <!-- Auto-redirect timer -->
-                                    <div class="mt-4 p-3 bg-white/10 backdrop-blur-sm rounded-lg">
-                                        <p class="text-white/80 text-sm mb-2">Otomatik yönlendirme:</p>
-                                        <div class="text-2xl font-bold text-white" id="countdown">10</div>
-                                        <div class="text-xs text-white/60">saniye sonra</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Decorative elements -->
-                        <div class="absolute -right-16 -bottom-16 w-32 h-32 bg-gradient-to-br from-white/10 to-blue-300/20 rounded-full blur-2xl"></div>
-                        <div class="absolute -left-16 -top-16 w-24 h-24 bg-gradient-to-br from-purple-400/20 to-indigo-400/20 rounded-full blur-xl"></div>
-                    </div>
-                </div>
-
-                <!-- Info Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-6xl mx-auto">
-                    <div class="bg-white/80 dark:bg-admin-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50 dark:border-admin-700/50">
-                        <div class="text-center">
-                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Güvenli</h3>
-                            <p class="text-gray-600 dark:text-gray-400">Tüm verileriniz güvende, modern güvenlik standartları ile korunmaktadır.</p>
+                        <div 
+                            x-show="showExportMenu"
+                            @click.away="showExportMenu = false"
+                            x-transition:enter="transition ease-out duration-100"
+                            x-transition:enter-start="transform opacity-0 scale-95"
+                            x-transition:enter-end="transform opacity-100 scale-100"
+                            class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-700 rounded-md shadow-lg border border-gray-200 dark:border-admin-600 z-10"
+                        >
+                            <button 
+                                @click="exportToExcel(); showExportMenu = false"
+                                class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
+                            >
+                                <i data-lucide="file-spreadsheet" class="w-4 h-4 mr-3"></i>
+                                Excel Export
+                            </button>
+                            <button 
+                                @click="exportToCSV(); showExportMenu = false"
+                                class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
+                            >
+                                <i data-lucide="file-text" class="w-4 h-4 mr-3"></i>
+                                CSV Export
+                            </button>
                         </div>
                     </div>
                     
-                    <div class="bg-white/80 dark:bg-admin-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50 dark:border-admin-700/50">
-                        <div class="text-center">
-                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Hızlı</h3>
-                            <p class="text-gray-600 dark:text-gray-400">Optimize edilmiş performans ile anlık yükleme ve tepki süreleri.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white/80 dark:bg-admin-800/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white/50 dark:border-admin-700/50">
-                        <div class="text-center">
-                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Responsive</h3>
-                            <p class="text-gray-600 dark:text-gray-400">Her cihazda mükemmel görünüm ve kullanıcı deneyimi sağlar.</p>
-                        </div>
-                    </div>
+                    <button 
+                        @click="openEditModal()"
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+                    >
+                        <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                        Yeni Lead
+                    </button>
                 </div>
-
-                <!-- Additional Benefits -->
-                <div class="mt-12 max-w-4xl mx-auto text-center">
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">Neden Yeni Sisteme Geçmelisiniz?</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="flex items-start space-x-4 p-6 bg-white/60 dark:bg-admin-800/60 backdrop-blur-sm rounded-xl">
-                            <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
-                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <div class="text-left">
-                                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Gelişmiş Özellikler</h4>
-                                <p class="text-gray-600 dark:text-gray-400 text-sm">Yeni sistem ile daha fazla özellik ve kontrol imkanı.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start space-x-4 p-6 bg-white/60 dark:bg-admin-800/60 backdrop-blur-sm rounded-xl">
-                            <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-lg flex items-center justify-center">
-                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <div class="text-left">
-                                <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Kolay Kullanım</h4>
-                                <p class="text-gray-600 dark:text-gray-400 text-sm">Sezgisel arayüz ile daha kolay ve verimli çalışma.</p>
-                            </div>
-                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Filter Panel -->
+    <div x-show="showFilters">
+        <x-admin.leads.filters.filter-panel />
+    </div>
+    
+    <!-- Main Content Area -->
+    <div class="p-4 sm:p-6 lg:p-8">
+        <div class="max-w-full mx-auto">
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <div class="relative max-w-md">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search" class="h-5 w-5 text-gray-400"></i>
+                    </div>
+                    <input 
+                        type="text" 
+                        x-model="searchQuery"
+                        @input.debounce.300ms="searchLeads()"
+                        class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-admin-600 rounded-lg bg-white dark:bg-admin-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                        placeholder="Lead ara (isim, email, telefon...)"
+                    >
+                    <div 
+                        x-show="searchQuery"
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    >
+                        <button 
+                            @click="clearSearch()"
+                            class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                        >
+                            <i data-lucide="x" class="h-4 w-4"></i>
+                        </button>
                     </div>
                 </div>
             </div>
+            
+            <!-- Loading State -->
+            <div 
+                x-show="loading"
+                class="text-center py-12"
+            >
+                <div class="inline-flex items-center px-4 py-2 font-semibold leading-6 text-sm text-blue-600 dark:text-blue-400">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Lead'ler yükleniyor...
+                </div>
+            </div>
+            
+            <!-- Main Table -->
+            <div x-show="!loading" class="bg-white dark:bg-admin-800 shadow-sm rounded-lg overflow-hidden">
+                <x-admin.leads.table.leads-table />
+            </div>
+            
+            <!-- Pagination -->
+            <div 
+                x-show="!loading && totalPages > 1"
+                class="mt-6 flex items-center justify-between"
+            >
+                <div class="flex-1 flex justify-between sm:hidden">
+                    <button 
+                        @click="previousPage()"
+                        :disabled="currentPage === 1"
+                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-admin-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        Önceki
+                    </button>
+                    <button 
+                        @click="nextPage()"
+                        :disabled="currentPage === totalPages"
+                        class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-admin-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        Sonraki
+                    </button>
+                </div>
+                
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700 dark:text-gray-300">
+                            <span class="font-medium" x-text="((currentPage - 1) * perPage) + 1"></span>
+                            -
+                            <span class="font-medium" x-text="Math.min(currentPage * perPage, totalLeads)"></span>
+                            arası gösteriliyor, toplam
+                            <span class="font-medium" x-text="totalLeads"></span>
+                            kayıt
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                            <button 
+                                @click="previousPage()"
+                                :disabled="currentPage === 1"
+                                class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-admin-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                <i data-lucide="chevron-left" class="h-5 w-5"></i>
+                            </button>
+                            
+                            <template x-for="page in getVisiblePages()" :key="page">
+                                <button 
+                                    @click="goToPage(page)"
+                                    :class="{
+                                        'bg-blue-50 dark:bg-blue-900 border-blue-500 dark:border-blue-600 text-blue-600 dark:text-blue-400': page === currentPage,
+                                        'bg-white dark:bg-admin-700 border-gray-300 dark:border-admin-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-admin-600': page !== currentPage
+                                    }"
+                                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                                    x-text="page"
+                                ></button>
+                            </template>
+                            
+                            <button 
+                                @click="nextPage()"
+                                :disabled="currentPage === totalPages"
+                                class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-admin-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                <i data-lucide="chevron-right" class="h-5 w-5"></i>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Empty State -->
+            <div 
+                x-show="!loading && leads.length === 0"
+                class="text-center py-12 bg-white dark:bg-admin-800 rounded-lg shadow-sm"
+            >
+                <div class="max-w-md mx-auto">
+                    <div class="w-20 h-20 mx-auto mb-4 bg-gray-100 dark:bg-admin-700 rounded-full flex items-center justify-center">
+                        <i data-lucide="users" class="w-10 h-10 text-gray-400"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                        <span x-show="searchQuery || getActiveFiltersCount() > 0">Arama kriterlerine uygun lead bulunamadı</span>
+                        <span x-show="!searchQuery && getActiveFiltersCount() === 0">Henüz lead eklenmemiş</span>
+                    </h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-4">
+                        <span x-show="searchQuery || getActiveFiltersCount() > 0">Farklı kriterlerle tekrar deneyin</span>
+                        <span x-show="!searchQuery && getActiveFiltersCount() === 0">İlk lead'inizi ekleyin ve yönetmeye başlayın</span>
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <button 
+                            x-show="searchQuery || getActiveFiltersCount() > 0"
+                            @click="clearAllFilters(); clearSearch()"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg hover:bg-gray-50 dark:hover:bg-admin-600"
+                        >
+                            <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i>
+                            Filtreleri Temizle
+                        </button>
+                        <button 
+                            @click="openEditModal()"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
+                        >
+                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                            Yeni Lead Ekle
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Components -->
+    <div x-show="showColumnSettings">
+        <x-admin.leads.table.column-toggle />
+    </div>
+    
+    <div x-show="selectedLeads.length > 0">
+        <x-admin.leads.actions.bulk-actions />
+    </div>
+    
+    <div x-show="showLeadModal">
+        <x-admin.leads.modals.lead-detail-modal />
+    </div>
+    
+    <div x-show="showEditModal">
+        <x-admin.leads.modals.lead-edit-modal />
+    </div>
+    
+    <!-- Notification System -->
+    <div 
+        x-show="notification.show"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="transform opacity-0 translate-y-2"
+        x-transition:enter-end="transform opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="transform opacity-100 translate-y-0"
+        x-transition:leave-end="transform opacity-0 translate-y-2"
+        class="fixed top-4 right-4 z-50"
+        style="display: none;"
+    >
+        <div 
+            class="rounded-lg shadow-lg p-4 max-w-sm w-full"
+            :class="{
+                'bg-green-100 border-green-500 text-green-700': notification.type === 'success',
+                'bg-red-100 border-red-500 text-red-700': notification.type === 'error',
+                'bg-yellow-100 border-yellow-500 text-yellow-700': notification.type === 'warning',
+                'bg-blue-100 border-blue-500 text-blue-700': notification.type === 'info'
+            }"
+        >
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <i 
+                        :data-lucide="notification.type === 'success' ? 'check-circle' : notification.type === 'error' ? 'alert-circle' : notification.type === 'warning' ? 'alert-triangle' : 'info'"
+                        class="h-5 w-5"
+                    ></i>
+                </div>
+                <div class="ml-3 flex-1">
+                    <p class="text-sm font-medium" x-text="notification.message"></p>
+                </div>
+                <div class="ml-3 flex-shrink-0">
+                    <button 
+                        @click="notification.show = false"
+                        class="inline-flex text-gray-400 hover:text-gray-600"
+                    >
+                        <i data-lucide="x" class="h-4 w-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Scripts -->
-    <script>
-        // Auto-redirect countdown and functionality
-        let countdown = 10;
-        const countdownElement = document.getElementById('countdown');
-        
-        function updateCountdown() {
-            countdownElement.textContent = countdown;
-            countdown--;
-            
-            if (countdown < 0) {
-                if (confirm('Yeni Lead Yönetim sistemine otomatik olarak yönlendirilmek ister misiniz?')) {
-                    window.location.href = "{{ route('admin.leads.index') }}";
-                } else {
-                    // Reset countdown if user cancels
-                    countdown = 10;
-                }
-            }
-        }
-        
-        // Start countdown
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        
-        // Clear countdown if user manually clicks the button
-        document.querySelector('a[href*="admin.leads.index"]').addEventListener('click', function() {
-            clearInterval(countdownInterval);
-        });
-        
-        // Add entrance animations
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.transform');
-            cards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'all 0.6s ease';
-                    
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 50);
-                }, index * 100);
-            });
-        });
-    </script>
+@pushOnce('styles')
+<link href="{{ asset('css/admin/leads-table.css') }}" rel="stylesheet">
+@endPushOnce
 
-    <!-- Enhanced Styles -->
-    <style>
-        /* Custom animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .animate-fade-in-up {
-            animation: fadeInUp 0.8s ease-out;
-        }
-        
-        .animation-delay-200 { animation-delay: 200ms; }
-        .animation-delay-400 { animation-delay: 400ms; }
-        
-        /* Backdrop blur support */
-        .backdrop-blur-sm {
-            backdrop-filter: blur(4px);
-        }
-        
-        /* Hover effects */
-        .group:hover .group-hover\:animate-pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 640px) {
-            .text-4xl { font-size: 2rem; }
-            .text-3xl { font-size: 1.875rem; }
-        }
-    </style>
+@pushOnce('scripts')
+<!-- Load JavaScript modules -->
+<script src="{{ asset('js/admin/leads/index.js') }}" type="module"></script>
+@endPushOnce
 @endsection

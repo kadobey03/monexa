@@ -21,6 +21,54 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Admin API Routes
+Route::middleware(['auth:admin', 'isadmin'])->prefix('admin')->name('api.admin.')->group(function () {
+    
+    // Leads Management API Routes
+    Route::prefix('leads')->name('leads.')->group(function () {
+        Route::get('/', 'App\Http\Controllers\Api\Admin\LeadController@index')->name('index');
+        Route::post('/', 'App\Http\Controllers\Api\Admin\LeadController@store')->name('store');
+        Route::get('/statistics', 'App\Http\Controllers\Api\Admin\LeadController@statistics')->name('statistics');
+        Route::get('/options', 'App\Http\Controllers\Api\Admin\LeadController@dropdownOptions')->name('options');
+        Route::get('/search', 'App\Http\Controllers\Api\Admin\LeadController@search')->name('search');
+        Route::get('/{lead}', 'App\Http\Controllers\Api\Admin\LeadController@show')->name('show');
+        Route::put('/{lead}', 'App\Http\Controllers\Api\Admin\LeadController@update')->name('update');
+        Route::delete('/{lead}', 'App\Http\Controllers\Api\Admin\LeadController@destroy')->name('destroy');
+        Route::post('/bulk', 'App\Http\Controllers\Api\Admin\LeadController@bulkOperations')->name('bulk');
+        
+        // Table Configuration Routes
+        Route::prefix('table')->name('table.')->group(function () {
+            Route::get('/configuration', 'App\Http\Controllers\Api\Admin\LeadTableController@getConfig')->name('configuration');
+            Route::post('/settings', 'App\Http\Controllers\Api\Admin\LeadTableController@updateSettings')->name('settings');
+            Route::post('/reset', 'App\Http\Controllers\Api\Admin\LeadTableController@resetConfig')->name('reset');
+        });
+    });
+    
+    // Phone Actions Routes
+    Route::prefix('phone')->name('phone.')->group(function () {
+        Route::post('/{lead}/actions', 'App\Http\Controllers\Api\Admin\PhoneController@getActions')->name('actions');
+        Route::post('/{lead}/call', 'App\Http\Controllers\Api\Admin\PhoneController@initiateCall')->name('call');
+        Route::post('/{lead}/whatsapp', 'App\Http\Controllers\Api\Admin\PhoneController@whatsapp')->name('whatsapp');
+        Route::get('/{lead}/history', 'App\Http\Controllers\Api\Admin\PhoneController@callHistory')->name('history');
+    });
+    
+    // Import Routes
+    Route::prefix('import')->name('import.')->group(function () {
+        Route::post('/upload', 'App\Http\Controllers\Api\Admin\ImportController@upload')->name('upload');
+        Route::post('/{importId}/process', 'App\Http\Controllers\Api\Admin\ImportController@process')->name('process');
+        Route::get('/{importId}/status', 'App\Http\Controllers\Api\Admin\ImportController@status')->name('status');
+        Route::get('/history', 'App\Http\Controllers\Api\Admin\ImportController@history')->name('history');
+    });
+    
+    // Export Routes
+    Route::prefix('export')->name('export.')->group(function () {
+        Route::post('/start', 'App\Http\Controllers\Api\Admin\ExportController@start')->name('start');
+        Route::get('/{exportId}/status', 'App\Http\Controllers\Api\Admin\ExportController@status')->name('status');
+        Route::get('/download', 'App\Http\Controllers\Api\Admin\ExportController@download')->name('download');
+        Route::get('/history', 'App\Http\Controllers\Api\Admin\ExportController@history')->name('history');
+    });
+});
+
 // Image management routes
 Route::prefix('images')->name('api.images.')->group(function () {
     // Public routes (if needed)

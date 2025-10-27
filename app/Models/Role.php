@@ -435,6 +435,101 @@ class Role extends Model
     }
 
     /**
+     * Get relationship with another role (parent, child, sibling, independent)
+     */
+    public function getRelationshipWith(Role $otherRole): string
+    {
+        if ($this->id === $otherRole->id) {
+            return 'self';
+        }
+
+        // Check if other role is a parent
+        if ($this->parent_role_id === $otherRole->id) {
+            return 'parent';
+        }
+
+        // Check if other role is a child
+        if ($otherRole->parent_role_id === $this->id) {
+            return 'child';
+        }
+
+        // Check if they are siblings (same parent)
+        if ($this->parent_role_id && $this->parent_role_id === $otherRole->parent_role_id) {
+            return 'sibling';
+        }
+
+        // Check if they are in the same hierarchy chain
+        $thisParents = $this->getAllParentRoles();
+        $otherParents = $otherRole->getAllParentRoles();
+
+        if (in_array($otherRole->id, $thisParents)) {
+            return 'ancestor';
+        }
+
+        if (in_array($this->id, $otherParents)) {
+            return 'descendant';
+        }
+
+        return 'independent';
+    }
+
+    /**
+     * Get all parent roles recursively
+     */
+    public function getAllParentRoles(): array
+    {
+        $parents = [];
+        $currentRole = $this;
+
+        while ($currentRole->parentRole) {
+            $parents[] = $currentRole->parentRole->id;
+            $currentRole = $currentRole->parentRole;
+        }
+
+        return $parents;
+    }
+
+    /**
+     * Get parent roles collection (for view compatibility)
+     */
+    public function getParentRolesAttribute()
+    {
+        $parents = collect();
+        $currentRole = $this;
+
+        while ($currentRole->parentRole) {
+            $parents->push($currentRole->parentRole);
+            $currentRole = $currentRole->parentRole;
+        }
+
+        return $parents;
+    }
+
+    /**
+     * Get child roles collection (for view compatibility)
+     */
+    public function getChildRolesAttribute()
+    {
+        return $this->childRoles();
+    }
+
+    /**
+     * Get users count attribute
+     */
+    public function getUsersCountAttribute()
+    {
+        return $this->admins()->count();
+    }
+
+    /**
+     * Get permissions count attribute
+     */
+    public function getPermissionsCountAttribute()
+    {
+        return $this->permissions()->wherePivot('is_granted', true)->count();
+    }
+
+    /**
      * Convert the model to its string representation.
      */
     public function __toString(): string

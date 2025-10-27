@@ -46,13 +46,33 @@ class AppServiceProvider extends ServiceProvider
             $terms = TermsPrivacy::find(1);
             $moreset = SettingsCont::find(1);
 
+            // Create fallback settings if not found
+            if (!$settings) {
+                $settings = (object) [
+                    'site_name' => 'Monexa',
+                    'favicon' => 'favicon.ico',
+                    'currency' => '$',
+                    'modules' => null,
+                    'contact_email' => 'admin@site.com'
+                ];
+            }
+
             View::share('settings', $settings);
             View::share('terms', $terms);
             View::share('moresettings', $moreset);
             View::share('mod', $settings->modules ?? null);
         } catch (\Exception $e) {
             // Database might not be ready during migrations or initial setup
-            View::share('settings', null);
+            // Create fallback settings object instead of null
+            $fallbackSettings = (object) [
+                'site_name' => 'Monexa',
+                'favicon' => 'favicon.ico',
+                'currency' => '$',
+                'modules' => null,
+                'contact_email' => 'admin@site.com'
+            ];
+            
+            View::share('settings', $fallbackSettings);
             View::share('terms', null);
             View::share('moresettings', null);
             View::share('mod', null);

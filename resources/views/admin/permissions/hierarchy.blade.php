@@ -261,7 +261,7 @@
                                                     <h4 class="font-medium text-admin-900 dark:text-white">{{ $role->display_name }}</h4>
                                                     <p class="text-sm text-admin-600 dark:text-admin-400">{{ $role->users_count }} kullanıcı</p>
                                                 </div>
-                                                <a href="{{ route('admin.permissions.role', $role) }}" 
+                                                <a href="{{ route('admin.permissions.role-permissions', $role) }}"
                                                    class="p-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
                                                     <i data-lucide="external-link" class="w-4 h-4"></i>
                                                 </a>

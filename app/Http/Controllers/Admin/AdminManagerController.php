@@ -108,6 +108,9 @@ class AdminManagerController extends Controller
                            ->sort()
                            ->values();
 
+        // Get supervisor options based on organizational role structure
+        $supervisors = $this->getSupervisorOptions($currentAdmin);
+
         // Statistics
         $stats = [
             'total_admins' => Admin::count(),
@@ -120,6 +123,7 @@ class AdminManagerController extends Controller
             'admins',
             'roles',
             'departments',
+            'supervisors',
             'stats',
             'currentAdmin'
         ))->with([
@@ -311,9 +315,21 @@ class AdminManagerController extends Controller
     /**
      * Yönetici detayları görüntüle
      */
-    public function show(Admin $manager)
+    public function show(Admin $manager = null)
     {
+        // Defensive coding: Check if manager exists
+        if (!$manager || !$manager->exists) {
+            return redirect()->route('admin.managers.index')
+                           ->with('error', 'Aradığınız yönetici bulunamadı. Yönetici silinmiş veya mevcut olmayabilir.');
+        }
+
         $currentAdmin = Auth::guard('admin')->user();
+
+        // Additional null check for current admin
+        if (!$currentAdmin) {
+            return redirect()->route('admin.login')
+                           ->with('error', 'Oturum süresi dolmuş. Lütfen tekrar giriş yapın.');
+        }
 
         // Check permissions
         if (!$currentAdmin->canManageAdmin($manager) && $currentAdmin->id !== $manager->id) {
@@ -341,7 +357,6 @@ class AdminManagerController extends Controller
         
         // Get activity timeline
         $recentActivity = AdminAuditLog::where('admin_id', $manager->id)
-                                     ->orWhere('target_admin_id', $manager->id)
                                      ->with('admin')
                                      ->orderBy('created_at', 'desc')
                                      ->take(15)
@@ -360,9 +375,21 @@ class AdminManagerController extends Controller
     /**
      * Yönetici düzenleme formu
      */
-    public function edit(Admin $manager)
+    public function edit(Admin $manager = null)
     {
+        // Defensive coding: Check if manager exists
+        if (!$manager || !$manager->exists) {
+            return redirect()->route('admin.managers.index')
+                           ->with('error', 'Düzenlemek istediğiniz yönetici bulunamadı. Yönetici silinmiş veya mevcut olmayabilir.');
+        }
+
         $currentAdmin = Auth::guard('admin')->user();
+
+        // Additional null check for current admin
+        if (!$currentAdmin) {
+            return redirect()->route('admin.login')
+                           ->with('error', 'Oturum süresi dolmuş. Lütfen tekrar giriş yapın.');
+        }
 
         // Check permissions
         if (!$currentAdmin->canManageAdmin($manager)) {
@@ -410,14 +437,94 @@ class AdminManagerController extends Controller
     }
 
     /**
-     * Yönetici güncelle
+     * AJAX için yönetici verilerini döndür
      */
-    public function update(Request $request, Admin $manager)
+    public function editData(Admin $admin)
     {
+        \Log::info('🚀 DEBUG: editData method called');
+        \Log::info('🚀 DEBUG: Admin parameter received:', [
+            'id' => $admin?->id ?? 'null',
+            'exists' => $admin?->exists ?? 'null',
+            'firstName' => $admin?->firstName ?? 'null',
+        ]);
+        
         $currentAdmin = Auth::guard('admin')->user();
+        \Log::info('🚀 DEBUG: Current admin:', [
+            'id' => $currentAdmin?->id ?? 'null',
+            'type' => $currentAdmin?->type ?? 'null',
+            'role' => $currentAdmin?->role?->name ?? 'none',
+        ]);
 
         // Check permissions
-        if (!$currentAdmin->canManageAdmin($manager)) {
+        if (!$currentAdmin->canManageAdmin($admin)) {
+            \Log::warning('🚨 DEBUG: Permission denied for editing admin');
+            return response()->json([
+                'success' => false,
+                'message' => 'Bu yöneticiyi düzenleme yetkiniz yok.'
+            ], 403);
+        }
+
+        $admin->load(['role', 'supervisor']);
+        \Log::info('🚀 DEBUG: Admin loaded with relations:', [
+            'admin_id' => $admin->id,
+            'role_id' => $admin->role_id,
+            'supervisor_id' => $admin->supervisor_id,
+            'role_name' => $admin->role?->display_name ?? 'none',
+            'supervisor_name' => $admin->supervisor?->getFullName() ?? 'none',
+        ]);
+
+        // Get supervisor options based on current admin's organizational hierarchy permissions
+        $supervisors = $this->getSupervisorOptions($currentAdmin);
+        \Log::info('🚀 DEBUG: Supervisor options loaded:', [
+            'count' => $supervisors->count(),
+            'supervisor_ids' => $supervisors->pluck('id')->toArray(),
+        ]);
+
+        $responseData = [
+            'success' => true,
+            'manager' => [
+                'id' => $admin->id,
+                'firstName' => $admin->firstName,
+                'lastName' => $admin->lastName,
+                'email' => $admin->email,
+                'phone' => $admin->phone,
+                'role_id' => $admin->role_id,
+                'supervisor_id' => $admin->supervisor_id,
+                'department' => $admin->department,
+                'status' => $admin->status,
+            ],
+            'supervisors' => $supervisors->map(function($supervisor) {
+                return [
+                    'id' => $supervisor->id,
+                    'name' => $supervisor->getFullName(),
+                    'role' => $supervisor->role?->display_name ?? 'Belirsiz',
+                    'department' => $supervisor->department,
+                ];
+            })
+        ];
+        
+        \Log::info('🚀 DEBUG: Response data prepared:', [
+            'manager_id' => $responseData['manager']['id'],
+            'supervisors_count' => count($responseData['supervisors']),
+        ]);
+        return response()->json($responseData);
+    }
+
+    /**
+     * Yönetici güncelle
+     */
+    public function update(Request $request, Admin $admin)
+    {
+        $currentAdmin = Auth::guard('admin')->user();
+        
+        \Log::info('🚀 DEBUG: update method called', [
+            'admin_id' => $admin?->id ?? 'null',
+            'request_data' => $request->all(),
+        ]);
+
+        // Check permissions
+        if (!$currentAdmin->canManageAdmin($admin)) {
+            \Log::warning('🚨 DEBUG: Permission denied for updating admin');
             abort(403, 'Bu yöneticiyi düzenleme yetkiniz yok.');
         }
 
@@ -427,7 +534,7 @@ class AdminManagerController extends Controller
             'email' => [
                 'required',
                 'email',
-                Rule::unique('admins')->ignore($manager->id)
+                Rule::unique('admins')->ignore($admin->id)
             ],
             'password' => 'nullable|min:8|confirmed',
             'phone' => 'nullable|string|max:20',
@@ -435,7 +542,7 @@ class AdminManagerController extends Controller
                 'nullable',
                 'string',
                 'max:50',
-                Rule::unique('admins')->ignore($manager->id)
+                Rule::unique('admins')->ignore($admin->id)
             ],
             'role_id' => [
                 'required',
@@ -452,8 +559,8 @@ class AdminManagerController extends Controller
             'supervisor_id' => [
                 'nullable',
                 'exists:admins,id',
-                function ($attribute, $value, $fail) use ($manager) {
-                    if ($value && ($value == $manager->id || in_array($value, $manager->getAllSubordinates()))) {
+                function ($attribute, $value, $fail) use ($admin) {
+                    if ($value && ($value == $admin->id || in_array($value, $admin->getAllSubordinates()))) {
                         $fail('Hiyerarşi döngüsü oluşturulamaz.');
                     }
                 },
@@ -473,7 +580,7 @@ class AdminManagerController extends Controller
 
         DB::beginTransaction();
         try {
-            $oldData = $manager->toArray();
+            $oldData = $admin->toArray();
 
             $updateData = [
                 'firstName' => $request->firstName,
@@ -487,10 +594,10 @@ class AdminManagerController extends Controller
                 'position' => $request->position,
                 'status' => $request->status,
                 'monthly_target' => $request->monthly_target,
-                'current_performance' => $request->current_performance,
+                'current_performance' => $request->current_performance ?? $admin->current_performance ?? 0,
                 'max_leads_per_day' => $request->max_leads_per_day,
                 'is_available' => $request->boolean('is_available'),
-                'time_zone' => $request->time_zone,
+                'time_zone' => $request->time_zone ?? $admin->time_zone ?? 'Europe/Istanbul',
                 'bio' => $request->bio,
             ];
 
@@ -502,19 +609,19 @@ class AdminManagerController extends Controller
             // Handle avatar upload
             if ($request->hasFile('avatar')) {
                 // Delete old avatar
-                if ($manager->avatar) {
-                    Storage::disk('public')->delete($manager->avatar);
+                if ($admin->avatar) {
+                    Storage::disk('public')->delete($admin->avatar);
                 }
                 $updateData['avatar'] = $request->file('avatar')->store('avatars', 'public');
             }
 
             // Handle supervisor change
-            if ($request->supervisor_id != $manager->supervisor_id) {
+            if ($request->supervisor_id != $admin->supervisor_id) {
                 // Remove from old supervisor's subordinate list
-                if ($manager->supervisor_id) {
-                    $oldSupervisor = Admin::find($manager->supervisor_id);
+                if ($admin->supervisor_id) {
+                    $oldSupervisor = Admin::find($admin->supervisor_id);
                     if ($oldSupervisor) {
-                        $subordinateIds = array_diff($oldSupervisor->subordinate_ids ?? [], [$manager->id]);
+                        $subordinateIds = array_diff($oldSupervisor->subordinate_ids ?? [], [$admin->id]);
                         $oldSupervisor->update(['subordinate_ids' => array_values($subordinateIds)]);
                     }
                 }
@@ -523,7 +630,7 @@ class AdminManagerController extends Controller
                 if ($request->supervisor_id) {
                     $newSupervisor = Admin::find($request->supervisor_id);
                     $subordinateIds = $newSupervisor->subordinate_ids ?? [];
-                    $subordinateIds[] = $manager->id;
+                    $subordinateIds[] = $admin->id;
                     $newSupervisor->update(['subordinate_ids' => array_unique($subordinateIds)]);
                     
                     // Update hierarchy level
@@ -537,7 +644,7 @@ class AdminManagerController extends Controller
                 $updateData['supervisor_id'] = $request->supervisor_id;
             }
 
-            $manager->update($updateData);
+            $admin->update($updateData);
 
             // Log changes
             $changes = array_diff_assoc($updateData, $oldData);
@@ -545,9 +652,9 @@ class AdminManagerController extends Controller
                 AdminAuditLog::logAction([
                     'admin_id' => $currentAdmin->id,
                     'action' => 'admin_updated',
-                    'target_admin_id' => $manager->id,
-                    'description' => "Yönetici güncellendi: {$manager->getFullName()}",
+                    'description' => "Yönetici güncellendi: {$admin->getFullName()}",
                     'metadata' => [
+                        'target_admin_id' => $admin->id,
                         'changes' => $changes,
                         'changed_fields' => array_keys($changes),
                     ],
@@ -556,12 +663,30 @@ class AdminManagerController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.managers.show', $manager)
+            // Check if this is an AJAX request
+            if ($request->wantsJson() || $request->ajax()) {
+                \Log::info('🚀 DEBUG: Returning JSON response');
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Yönetici bilgileri başarıyla güncellendi!',
+                    'manager' => $admin->fresh(['role', 'supervisor'])
+                ]);
+            }
+
+            return redirect()->route('admin.managers.show', $admin)
                            ->with('success', 'Yönetici bilgileri başarıyla güncellendi!');
 
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Admin update failed: ' . $e->getMessage());
+            
+            // Check if this is an AJAX request for error handling
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Güncelleme sırasında bir hata oluştu. Lütfen tekrar deneyin.'
+                ], 500);
+            }
             
             return redirect()->back()
                            ->withInput()
@@ -570,29 +695,42 @@ class AdminManagerController extends Controller
     }
 
     /**
+     * AJAX Yönetici güncelle - Workaround
+     */
+    public function updateAjax(Request $request, Admin $admin)
+    {
+        \Log::info('🚀 DEBUG: updateAjax method called', [
+            'admin_id' => $admin?->id ?? 'null',
+            'request_data' => $request->all(),
+        ]);
+
+        return $this->update($request, $admin);
+    }
+
+    /**
      * Yönetici sil
      */
-    public function destroy(Admin $manager)
+    public function destroy(Admin $admin)
     {
         $currentAdmin = Auth::guard('admin')->user();
 
         // Check permissions
-        if (!$currentAdmin->canManageAdmin($manager)) {
+        if (!$currentAdmin->canManageAdmin($admin)) {
             abort(403, 'Bu yöneticiyi silme yetkiniz yok.');
         }
 
         // Prevent self-deletion
-        if ($currentAdmin->id === $manager->id) {
+        if ($currentAdmin->id === $admin->id) {
             return redirect()->back()->with('error', 'Kendi hesabınızı silemezsiniz!');
         }
 
         DB::beginTransaction();
         try {
-            // Handle subordinates - reassign to manager's supervisor
-            if ($manager->subordinates()->count() > 0) {
-                $newSupervisorId = $manager->supervisor_id;
+            // Handle subordinates - reassign to admin's supervisor
+            if ($admin->subordinates()->count() > 0) {
+                $newSupervisorId = $admin->supervisor_id;
                 
-                foreach ($manager->subordinates as $subordinate) {
+                foreach ($admin->subordinates as $subordinate) {
                     $subordinate->update(['supervisor_id' => $newSupervisorId]);
                     
                     // Update new supervisor's subordinate list
@@ -606,42 +744,42 @@ class AdminManagerController extends Controller
             }
 
             // Remove from supervisor's subordinate list
-            if ($manager->supervisor_id) {
-                $supervisor = Admin::find($manager->supervisor_id);
+            if ($admin->supervisor_id) {
+                $supervisor = Admin::find($admin->supervisor_id);
                 if ($supervisor) {
-                    $subordinateIds = array_diff($supervisor->subordinate_ids ?? [], [$manager->id]);
+                    $subordinateIds = array_diff($supervisor->subordinate_ids ?? [], [$admin->id]);
                     $supervisor->update(['subordinate_ids' => array_values($subordinateIds)]);
                 }
             }
 
             // Handle assigned users - reassign to supervisor or unassign
-            if ($manager->assignedUsers()->count() > 0) {
-                $reassignToId = $manager->supervisor_id;
-                $manager->assignedUsers()->update(['assign_to' => $reassignToId]);
+            if ($admin->assignedUsers()->count() > 0) {
+                $reassignToId = $admin->supervisor_id;
+                $admin->assignedUsers()->update(['assign_to' => $reassignToId]);
             }
 
             // Delete avatar
-            if ($manager->avatar) {
-                Storage::disk('public')->delete($manager->avatar);
+            if ($admin->avatar) {
+                Storage::disk('public')->delete($admin->avatar);
             }
 
-            $managerName = $manager->getFullName();
+            $adminName = $admin->getFullName();
             
-            // Soft delete the manager
-            $manager->delete();
+            // Soft delete the admin
+            $admin->delete();
 
             // Log activity
             AdminAuditLog::logAction([
                 'admin_id' => $currentAdmin->id,
                 'action' => 'admin_deleted',
-                'target_admin_id' => $manager->id,
-                'description' => "Yönetici silindi: {$managerName}",
+                'target_admin_id' => $admin->id,
+                'description' => "Yönetici silindi: {$adminName}",
                 'metadata' => [
                     'deleted_admin' => [
-                        'name' => $managerName,
-                        'email' => $manager->email,
-                        'role' => $manager->role?->display_name,
-                        'department' => $manager->department,
+                        'name' => $adminName,
+                        'email' => $admin->email,
+                        'role' => $admin->role?->display_name,
+                        'department' => $admin->department,
                     ],
                 ],
             ]);
@@ -807,5 +945,196 @@ class AdminManagerController extends Controller
             
             return redirect()->back()->with('error', 'Toplu işlem sırasında bir hata oluştu. Lütfen tekrar deneyin.');
         }
+    }
+
+    /**
+     * Get supervisor options based on organizational hierarchy
+     */
+    protected function getSupervisorOptions(Admin $currentAdmin)
+    {
+        $supervisors = collect();
+        
+        if (!$currentAdmin->role) {
+            return $supervisors;
+        }
+
+        $currentRole = $currentAdmin->role->name;
+        $currentHierarchyLevel = $currentAdmin->role->hierarchy_level;
+
+        switch ($currentRole) {
+            case 'head_of_office':
+                // Head of office can see everyone (for reorganizing purposes)
+                $supervisors = Admin::active()
+                    ->whereHas('role', function($q) {
+                        $q->where('is_active', true);
+                    })
+                    ->orderBy('firstName')
+                    ->get();
+                break;
+
+            case 'sales_head':
+            case 'retention_head':
+                // Heads can only see Head Of Office and their own team
+                $supervisors = Admin::active()
+                    ->whereHas('role', function($q) {
+                        $q->where('is_active', true)
+                          ->where(function($q2) {
+                              $q2->where('name', 'head_of_office') // Can report to Head Of Office
+                                 ->orWhere('hierarchy_level', '>=', 2); // Or see their own level and below
+                          });
+                    })
+                    ->where(function($q) use ($currentAdmin) {
+                        $q->where('supervisor_id', $currentAdmin->supervisor_id) // Same branch
+                          ->orWhere('id', $currentAdmin->supervisor_id) // Their supervisor (Head Of Office)
+                          ->orWhere('supervisor_id', $currentAdmin->id); // Their subordinates
+                    })
+                    ->orderBy('firstName')
+                    ->get();
+                break;
+
+            case 'team_leader':
+            case 'retention_team_leader':
+                // Team leaders can only see their Head and Head Of Office
+                $supervisors = Admin::active()
+                    ->whereHas('role', function($q) {
+                        $q->where('is_active', true)
+                          ->whereIn('name', ['head_of_office', 'sales_head', 'retention_head']);
+                    })
+                    ->where(function($q) use ($currentAdmin) {
+                        $q->where('id', $currentAdmin->supervisor_id) // Their Head
+                          ->orWhereHas('role', function($q2) {
+                              $q2->where('name', 'head_of_office'); // Head Of Office
+                          });
+                    })
+                    ->orderBy('firstName')
+                    ->get();
+                break;
+
+            case 'sales_agent':
+            case 'retention_agent':
+                // Sales agents can only see their Team Leader
+                $supervisors = Admin::active()
+                    ->whereHas('role', function($q) {
+                        $q->where('is_active', true)
+                          ->whereIn('name', ['team_leader', 'retention_team_leader']);
+                    })
+                    ->where(function($q) use ($currentAdmin) {
+                        $q->where('id', $currentAdmin->supervisor_id) // Their Team Leader
+                          ->orWhere('supervisor_id', $currentAdmin->supervisor_id); // Same team
+                    })
+                    ->orderBy('firstName')
+                    ->get();
+                break;
+
+            default:
+                // For other roles, use basic hierarchy level filtering
+                $supervisors = Admin::active()
+                    ->whereHas('role', function($q) use ($currentHierarchyLevel) {
+                        $q->where('is_active', true)
+                          ->where('hierarchy_level', '<', $currentHierarchyLevel);
+                    })
+                    ->orderBy('firstName')
+                    ->get();
+                break;
+        }
+
+        return $supervisors;
+    }
+
+    /**
+     * Reset admin password and return it for display (POST method)
+     */
+    public function resetPasswordPost(Request $request, Admin $admin)
+    {
+        $currentAdmin = Auth::guard('admin')->user();
+
+        // Check permissions
+        if (!$currentAdmin->canManageAdmin($admin)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bu yöneticinin şifresini sıfırlama yetkiniz yok.'
+            ], 403);
+        }
+
+        // Prevent self password reset via this method (security)
+        if ($currentAdmin->id === $admin->id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bu yöntemle kendi şifrenizi sıfırlayamazsınız.'
+            ], 422);
+        }
+
+        DB::beginTransaction();
+        try {
+            // Generate secure password
+            $newPassword = $this->generateSecurePassword();
+            
+            // Update admin password
+            $admin->update([
+                'password' => Hash::make($newPassword),
+                'password_changed_at' => now(),
+            ]);
+
+            // Log activity
+            AdminAuditLog::logAction([
+                'admin_id' => $currentAdmin->id,
+                'action' => 'admin_password_reset',
+                'description' => "Yönetici şifresi sıfırlandı: {$admin->getFullName()}",
+                'metadata' => [
+                    'target_admin_id' => $admin->id,
+                    'target_admin_name' => $admin->getFullName(),
+                    'target_admin_email' => $admin->email,
+                    'reset_method' => 'admin_panel_display',
+                    'reset_by' => $currentAdmin->getFullName(),
+                ],
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'newPassword' => $newPassword,
+                'message' => 'Şifre başarıyla sıfırlandı ve aşağıda görüntülendi.',
+                'adminName' => $admin->getFullName(),
+                'adminEmail' => $admin->email
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Admin password reset failed: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Şifre sıfırlama sırasında bir hata oluştu. Lütfen tekrar deneyin.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Generate a secure password for admin
+     */
+    private function generateSecurePassword($length = 12)
+    {
+        // Character sets for secure password generation
+        $uppercase = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+        $lowercase = 'abcdefghjkmnpqrstuvwxyz';
+        $numbers = '23456789';
+        $symbols = '!@#$%^&*';
+
+        // Ensure at least one character from each set
+        $password = '';
+        $password .= $uppercase[random_int(0, strlen($uppercase) - 1)];
+        $password .= $lowercase[random_int(0, strlen($lowercase) - 1)];
+        $password .= $numbers[random_int(0, strlen($numbers) - 1)];
+        $password .= $symbols[random_int(0, strlen($symbols) - 1)];
+
+        // Fill remaining length with random characters from all sets
+        $allChars = $uppercase . $lowercase . $numbers . $symbols;
+        for ($i = 4; $i < $length; $i++) {
+            $password .= $allChars[random_int(0, strlen($allChars) - 1)];
+        }
+
+        // Shuffle the password to randomize character positions
+        return str_shuffle($password);
     }
 }

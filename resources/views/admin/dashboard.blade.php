@@ -9,7 +9,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     $gradient = 'dark';
 }
 ?>
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Admin Paneli'])
 @section('content')
     <!-- Admin Layout Container -->
     <div class="min-h-screen bg-gray-50">

@@ -45,18 +45,53 @@ class HierarchyController extends Controller
                            ->values();
 
         $roles = Role::active()->orderBy('hierarchy_level')->orderBy('display_name')->get();
+        $allRoles = $roles; // For matrix view
         $adminGroups = AdminGroup::where('is_active', true)->orderBy('name')->get();
+
+        // Build hierarchy tree for tree view
+        $hierarchyTree = $this->buildHierarchyTreeByLevels($roles);
+
+        // Build department hierarchy for org view
+        $departmentHierarchy = $this->buildDepartmentHierarchy();
+
+        // Calculate view-specific stats
+        $totalLevels = $roles->max('hierarchy_level') + 1;
+        $activeRoles = $roles->where('is_active', true)->count();
+        $totalDepartments = $departments->count();
+        $totalUsers = Admin::count();
+        $hierarchyConflicts = 0; // TODO: Implement conflict detection
+
+        // D3 hierarchy data for complex visualization
+        $d3HierarchyData = $this->formatHierarchyForD3($hierarchyData);
 
         return view('admin.permissions.hierarchy', compact(
             'hierarchyData',
             'stats',
             'departments',
             'roles',
+            'allRoles',
             'adminGroups',
-            'viewType'
+            'viewType',
+            'hierarchyTree',
+            'departmentHierarchy',
+            'totalLevels',
+            'activeRoles',
+            'totalDepartments',
+            'totalUsers',
+            'hierarchyConflicts',
+            'd3HierarchyData'
         ))->with([
             'title' => 'Organizasyon Hiyerarşisi',
-            'settings' => Settings::first()
+            'settings' => Settings::first() ?: (object)[
+                'id' => 1,
+                'app_name' => 'MonexaFinans',
+                'dashboard_style' => 'light',
+                'favicon' => null,
+                'logo' => null,
+                'timezone' => 'Europe/Istanbul',
+                'locale' => 'tr',
+                'maintenance_mode' => false,
+            ]
         ]);
     }
 
@@ -166,7 +201,16 @@ class HierarchyController extends Controller
             'endDate'
         ))->with([
             'title' => 'Performans Dashboard',
-            'settings' => Settings::first()
+            'settings' => Settings::first() ?: (object)[
+                'id' => 1,
+                'app_name' => 'MonexaFinans',
+                'dashboard_style' => 'light',
+                'favicon' => null,
+                'logo' => null,
+                'timezone' => 'Europe/Istanbul',
+                'locale' => 'tr',
+                'maintenance_mode' => false,
+            ]
         ]);
     }
 
@@ -224,7 +268,16 @@ class HierarchyController extends Controller
             'departmentData'
         ))->with([
             'title' => 'Departman Analizi',
-            'settings' => Settings::first()
+            'settings' => Settings::first() ?: (object)[
+                'id' => 1,
+                'app_name' => 'MonexaFinans',
+                'dashboard_style' => 'light',
+                'favicon' => null,
+                'logo' => null,
+                'timezone' => 'Europe/Istanbul',
+                'locale' => 'tr',
+                'maintenance_mode' => false,
+            ]
         ]);
     }
 
@@ -751,5 +804,69 @@ class HierarchyController extends Controller
                 }), 2),
             ];
         });
+    }
+
+    /**
+     * Build hierarchy tree organized by levels for tree view
+     */
+    private function buildHierarchyTreeByLevels($roles)
+    {
+        $tree = [];
+        
+        // Group roles by hierarchy level
+        $rolesByLevel = $roles->groupBy('hierarchy_level');
+        
+        foreach ($rolesByLevel as $level => $levelRoles) {
+            $tree[$level] = $levelRoles;
+        }
+
+        return $tree;
+    }
+
+    /**
+     * Build department-based hierarchy for org view
+     */
+    private function buildDepartmentHierarchy()
+    {
+        $departments = Admin::with('role')->get()->groupBy('department');
+        $hierarchy = [];
+
+        foreach ($departments as $department => $admins) {
+            $departmentName = $department ?: 'Atanmamış';
+            
+            // Group by hierarchy level
+            $levels = [];
+            $rolesByLevel = $admins->groupBy('role.hierarchy_level');
+            
+            foreach ($rolesByLevel as $level => $levelAdmins) {
+                $roles = $levelAdmins->pluck('role')->unique('id');
+                $levels[$level] = $roles;
+            }
+
+            $hierarchy[$departmentName] = [
+                'total_users' => $admins->count(),
+                'total_roles' => $admins->pluck('role.id')->unique()->count(),
+                'levels' => $levels
+            ];
+        }
+
+        return $hierarchy;
+    }
+
+    /**
+     * Format hierarchy data for D3.js visualization
+     */
+    private function formatHierarchyForD3($hierarchyData)
+    {
+        return array_map(function($item) {
+            return [
+                'id' => $item['id'],
+                'name' => $item['name'],
+                'role' => $item['role']['display_name'] ?? '',
+                'department' => $item['department'],
+                'level' => $item['hierarchy_level'],
+                'children' => $this->formatHierarchyForD3($item['children'] ?? [])
+            ];
+        }, $hierarchyData);
     }
 }

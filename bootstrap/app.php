@@ -44,6 +44,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Route middleware aliases
         $middleware->alias([
             '2fa' => \App\Http\Middleware\TwoFactorVerify::class,
+            'admin' => \App\Http\Middleware\EnsureIsAdmin::class,
             'isadmin' => \App\Http\Middleware\EnsureIsAdmin::class,
             'auth' => \App\Http\Middleware\Authenticate::class,
             'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
@@ -57,6 +58,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
             'complete.kyc' => \App\Http\Middleware\EnsureKycIsCompleted::class,
             'check.banned' => \App\Http\Middleware\CheckBannedUser::class,
+            
+            // Hiyerarşik Rol Sistemi Middleware'leri
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'permission' => \App\Http\Middleware\PermissionMiddleware::class,
+            'hierarchy' => \App\Http\Middleware\HierarchyMiddleware::class,
+            'admin.activity' => \App\Http\Middleware\AdminActivityMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

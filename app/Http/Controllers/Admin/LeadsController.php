@@ -6,12 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\LeadStatus;
+use App\Models\LeadSource;
+use App\Models\LeadActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LeadsExport;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use App\Models\LeadAssignmentHistory;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\JsonResponse;
 
 class LeadsController extends Controller
 {
@@ -20,40 +26,936 @@ class LeadsController extends Controller
      */
     public function index(Request $request)
     {
-        $adminUser = Auth::guard('admin')->user();
-        $isSuperAdmin = $adminUser->type === 'Super Admin';
-        
-        // Base query for leads (users who are not customers yet)
-        $query = User::with(['leadStatus', 'assignedAdmin'])
-                    ->where(function($q) {
-                        $q->whereNull('cstatus')
-                          ->orWhere('cstatus', '!=', 'Customer');
-                    });
+        return view('admin.leads', [
+            'title' => 'Lead Yönetimi'
+        ]);
+    }
 
-        // Admin level filtering
-        if (!$isSuperAdmin) {
-            // Regular admin can only see leads assigned to them or their subordinates
-            $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-            $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
+    /**
+     * API endpoint for dynamic table - Get leads data with advanced filtering
+     * GET /admin/leads/api
+     */
+    public function api(Request $request): JsonResponse
+    {
+        try {
+            $adminUser = Auth::guard('admin')->user();
+            $isSuperAdmin = $adminUser->type === 'Super Admin';
             
-            $query->whereIn('assign_to', $allowedAdminIds);
-        }
+            // Base query for leads (users who are not customers yet)
+            $query = User::with(['leadStatus', 'assignedAdmin', 'leadSource'])
+                        ->where(function($q) {
+                            $q->whereNull('cstatus')
+                              ->orWhere('cstatus', '!=', 'Customer');
+                        });
 
-        // Apply filters
+            // Admin level filtering
+            if (!$isSuperAdmin) {
+                $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
+                $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
+                
+                $query->whereIn('assign_to', $allowedAdminIds);
+            }
+
+            // Apply filters
+            $this->applyFilters($query, $request);
+
+            // Get total count before pagination
+            $totalCount = $query->count();
+
+            // Apply sorting
+            $sortBy = $request->get('sort_by', 'created_at');
+            $sortDirection = $request->get('sort_direction', 'desc');
+            $query->orderBy($sortBy, $sortDirection);
+
+            // Apply pagination
+            $perPage = min($request->get('per_page', 25), 100);
+            $page = $request->get('page', 1);
+            $leads = $query->paginate($perPage);
+
+            // Transform leads data
+            $transformedLeads = $leads->map(function($lead) {
+                return [
+                    'id' => $lead->id,
+                    'name' => $lead->name,
+                    'email' => $lead->email,
+                    'phone' => $lead->phone,
+                    'country' => $lead->country,
+                    'status' => $lead->leadStatus ? [
+                        'id' => $lead->leadStatus->id,
+                        'name' => $lead->leadStatus->name,
+                        'display_name' => $lead->leadStatus->display_name,
+                        'color' => $lead->leadStatus->color
+                    ] : null,
+                    'priority' => $lead->lead_priority,
+                    'lead_score' => $lead->lead_score ?? 0,
+                    'conversion_probability' => $lead->conversion_probability ?? 0,
+                    'assigned_to' => $lead->assignedAdmin ? [
+                        'id' => $lead->assignedAdmin->id,
+                        'name' => $lead->assignedAdmin->firstName . ' ' . $lead->assignedAdmin->lastName,
+                        'email' => $lead->assignedAdmin->email
+                    ] : null,
+                    'source' => $lead->leadSource ? [
+                        'id' => $lead->leadSource->id,
+                        'name' => $lead->leadSource->name
+                    ] : ($lead->lead_source ? ['name' => $lead->lead_source] : null),
+                    'tags' => $lead->lead_tags ? json_decode($lead->lead_tags, true) : [],
+                    'notes' => $lead->lead_notes,
+                    'created_at' => $lead->created_at->toISOString(),
+                    'updated_at' => $lead->updated_at->toISOString(),
+                    'last_contact_date' => $lead->last_contact_date?->toISOString(),
+                    'next_follow_up_date' => $lead->next_follow_up_date?->toISOString(),
+                    'estimated_value' => $lead->estimated_value,
+                    'is_verified' => $lead->phone_verified || $lead->email_verified,
+                    'is_premium' => $lead->account_type === 'premium'
+                ];
+            });
+
+            // Get statistics
+            $stats = $this->getLeadsStatistics($isSuperAdmin, $adminUser);
+
+            // Get filter options
+            $leadStatuses = LeadStatus::active()->get(['id', 'name', 'display_name', 'color']);
+            $leadSources = LeadSource::active()->get(['id', 'name']);
+            $admins = $isSuperAdmin ? 
+                Admin::where('status', 'Active')->orderBy('firstName')->get(['id', 'firstName', 'lastName', 'email']) : 
+                Admin::where(function($q) use ($adminUser) {
+                    $q->where('id', $adminUser->id)
+                      ->orWhere('parent_id', $adminUser->id);
+                })->where('status', 'Active')->orderBy('firstName')->get(['id', 'firstName', 'lastName', 'email']);
+
+            return response()->json([
+                'success' => true,
+                'data' => $transformedLeads,
+                'pagination' => [
+                    'current_page' => $leads->currentPage(),
+                    'per_page' => $leads->perPage(),
+                    'total' => $leads->total(),
+                    'last_page' => $leads->lastPage(),
+                    'from' => $leads->firstItem(),
+                    'to' => $leads->lastItem()
+                ],
+                'filtered_count' => $totalCount,
+                'total_count' => User::where(function($q) {
+                    $q->whereNull('cstatus')->orWhere('cstatus', '!=', 'Customer');
+                })->count(),
+                'lead_sources' => $leadSources,
+                'lead_statuses' => $leadStatuses,
+                'admin_users' => $admins->map(function($admin) {
+                    return [
+                        'id' => $admin->id,
+                        'name' => $admin->firstName . ' ' . $admin->lastName,
+                        'email' => $admin->email
+                    ];
+                }),
+                'statistics' => $stats
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch leads API data', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch leads data.',
+                'error' => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
+    }
+
+    /**
+     * Store a new lead
+     * POST /admin/leads
+     */
+    public function store(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'phone' => 'nullable|string|max:20',
+                'country' => 'nullable|string|max:100',
+                'status' => 'nullable|exists:lead_statuses,id',
+                'priority' => 'nullable|in:low,medium,high,urgent',
+                'lead_source_id' => 'nullable|exists:lead_sources,id',
+                'assigned_to' => 'nullable|exists:admins,id',
+                'lead_score' => 'nullable|integer|min:0|max:100',
+                'conversion_probability' => 'nullable|integer|min:0|max:100',
+                'estimated_value' => 'nullable|numeric|min:0',
+                'notes' => 'nullable|string',
+                'tags' => 'nullable|array',
+                'tags.*' => 'string|max:50',
+                'is_verified' => 'nullable|boolean',
+                'is_premium' => 'nullable|boolean'
+            ]);
+
+            $adminUser = Auth::guard('admin')->user();
+
+            DB::beginTransaction();
+
+            $leadData = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'country' => $request->country,
+                'lead_status_id' => $request->status ?? 1,
+                'lead_priority' => $request->priority ?? 'medium',
+                'lead_source_id' => $request->lead_source_id,
+                'assign_to' => $request->assigned_to,
+                'lead_score' => $request->lead_score ?? 0,
+                'conversion_probability' => $request->conversion_probability ?? 0,
+                'estimated_value' => $request->estimated_value,
+                'lead_notes' => $request->notes,
+                'lead_tags' => $request->tags ? json_encode($request->tags) : null,
+                'account_type' => $request->is_premium ? 'premium' : 'lead',
+                'phone_verified' => $request->is_verified ?? false,
+                'email_verified' => $request->is_verified ?? false,
+                'created_by_admin_id' => $adminUser->id
+            ];
+
+            $lead = User::create($leadData);
+
+            // Add initial activity
+            if ($lead->id) {
+                LeadActivity::create([
+                    'user_id' => $lead->id,
+                    'admin_id' => $adminUser->id,
+                    'type' => 'created',
+                    'description' => 'Lead oluşturuldu',
+                    'metadata' => json_encode([
+                        'created_by' => $adminUser->firstName . ' ' . $adminUser->lastName,
+                        'initial_status' => $leadData['lead_status_id']
+                    ])
+                ]);
+            }
+
+            DB::commit();
+
+            Log::info('Lead created via API', [
+                'admin_id' => $adminUser->id,
+                'lead_id' => $lead->id,
+                'lead_name' => $lead->name
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Lead başarıyla oluşturuldu',
+                'data' => $lead->load(['leadStatus', 'assignedAdmin', 'leadSource'])
+            ], 201);
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to create lead', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage(),
+                'data' => $request->all()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Lead oluşturulamadı'
+            ], 500);
+        }
+    }
+
+    /**
+     * Update an existing lead
+     * PUT /admin/leads/{id}
+     */
+    public function update(Request $request, $id): JsonResponse
+    {
+        try {
+            $request->validate([
+                'name' => 'sometimes|string|max:255',
+                'email' => 'sometimes|email|unique:users,email,' . $id,
+                'phone' => 'nullable|string|max:20',
+                'country' => 'nullable|string|max:100',
+                'status' => 'nullable|exists:lead_statuses,id',
+                'priority' => 'nullable|in:low,medium,high,urgent',
+                'lead_source_id' => 'nullable|exists:lead_sources,id',
+                'assigned_to' => 'nullable|exists:admins,id',
+                'lead_score' => 'nullable|integer|min:0|max:100',
+                'conversion_probability' => 'nullable|integer|min:0|max:100',
+                'estimated_value' => 'nullable|numeric|min:0',
+                'notes' => 'nullable|string',
+                'tags' => 'nullable|array',
+                'tags.*' => 'string|max:50',
+                'is_verified' => 'nullable|boolean',
+                'is_premium' => 'nullable|boolean'
+            ]);
+
+            $adminUser = Auth::guard('admin')->user();
+            $isSuperAdmin = $adminUser->type === 'Super Admin';
+
+            $lead = User::where('id', $id)
+                       ->where(function($q) {
+                           $q->whereNull('cstatus')
+                             ->orWhere('cstatus', '!=', 'Customer');
+                       })->firstOrFail();
+
+            // Check permissions
+            if (!$isSuperAdmin) {
+                $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
+                $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
+                
+                if ($lead->assign_to && !in_array($lead->assign_to, $allowedAdminIds)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Bu lead\'i düzenleme yetkiniz yok'
+                    ], 403);
+                }
+            }
+
+            DB::beginTransaction();
+
+            $oldData = $lead->toArray();
+            $changes = [];
+
+            $updateData = [];
+            if ($request->has('name')) $updateData['name'] = $request->name;
+            if ($request->has('email')) $updateData['email'] = $request->email;
+            if ($request->has('phone')) $updateData['phone'] = $request->phone;
+            if ($request->has('country')) $updateData['country'] = $request->country;
+            if ($request->has('status')) $updateData['lead_status_id'] = $request->status;
+            if ($request->has('priority')) $updateData['lead_priority'] = $request->priority;
+            if ($request->has('lead_source_id')) $updateData['lead_source_id'] = $request->lead_source_id;
+            if ($request->has('assigned_to')) $updateData['assign_to'] = $request->assigned_to;
+            if ($request->has('lead_score')) $updateData['lead_score'] = $request->lead_score;
+            if ($request->has('conversion_probability')) $updateData['conversion_probability'] = $request->conversion_probability;
+            if ($request->has('estimated_value')) $updateData['estimated_value'] = $request->estimated_value;
+            if ($request->has('notes')) $updateData['lead_notes'] = $request->notes;
+            if ($request->has('tags')) $updateData['lead_tags'] = json_encode($request->tags);
+            if ($request->has('is_premium')) $updateData['account_type'] = $request->is_premium ? 'premium' : 'lead';
+            if ($request->has('is_verified')) {
+                $updateData['phone_verified'] = $request->is_verified;
+                $updateData['email_verified'] = $request->is_verified;
+            }
+
+            $lead->update($updateData);
+
+            // Track changes for activity log
+            foreach ($updateData as $key => $newValue) {
+                if ($oldData[$key] != $newValue) {
+                    $changes[$key] = ['from' => $oldData[$key], 'to' => $newValue];
+                }
+            }
+
+            // Add activity if there are changes
+            if (!empty($changes)) {
+                LeadActivity::create([
+                    'user_id' => $lead->id,
+                    'admin_id' => $adminUser->id,
+                    'type' => 'updated',
+                    'description' => 'Lead bilgileri güncellendi',
+                    'metadata' => json_encode([
+                        'changes' => $changes,
+                        'updated_by' => $adminUser->firstName . ' ' . $adminUser->lastName
+                    ])
+                ]);
+            }
+
+            DB::commit();
+
+            Log::info('Lead updated via API', [
+                'admin_id' => $adminUser->id,
+                'lead_id' => $lead->id,
+                'changes' => array_keys($changes)
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Lead başarıyla güncellendi',
+                'data' => $lead->fresh(['leadStatus', 'assignedAdmin', 'leadSource'])
+            ]);
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to update lead', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'lead_id' => $id,
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Lead güncellenemedi'
+            ], 500);
+        }
+    }
+
+    /**
+     * Delete a lead
+     * DELETE /admin/leads/{id}
+     */
+    public function destroy($id): JsonResponse
+    {
+        try {
+            $adminUser = Auth::guard('admin')->user();
+            $isSuperAdmin = $adminUser->type === 'Super Admin';
+
+            $lead = User::where('id', $id)
+                       ->where(function($q) {
+                           $q->whereNull('cstatus')
+                             ->orWhere('cstatus', '!=', 'Customer');
+                       })->firstOrFail();
+
+            // Check permissions
+            if (!$isSuperAdmin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Lead silme yetkiniz yok'
+                ], 403);
+            }
+
+            DB::beginTransaction();
+
+            // Add deletion activity before deleting
+            LeadActivity::create([
+                'user_id' => $lead->id,
+                'admin_id' => $adminUser->id,
+                'type' => 'deleted',
+                'description' => 'Lead silindi',
+                'metadata' => json_encode([
+                    'deleted_by' => $adminUser->firstName . ' ' . $adminUser->lastName,
+                    'deleted_lead_name' => $lead->name
+                ])
+            ]);
+
+            $leadName = $lead->name;
+            $lead->delete();
+
+            DB::commit();
+
+            Log::info('Lead deleted via API', [
+                'admin_id' => $adminUser->id,
+                'lead_id' => $id,
+                'lead_name' => $leadName
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Lead başarıyla silindi'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to delete lead', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'lead_id' => $id,
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Lead silinemedi'
+            ], 500);
+        }
+    }
+
+    /**
+     * Bulk update status
+     * POST /admin/leads/bulk-update-status
+     */
+    public function bulkUpdateStatus(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'lead_ids' => 'required|array|min:1',
+                'lead_ids.*' => 'exists:users,id',
+                'status' => 'required|exists:lead_statuses,id'
+            ]);
+
+            $adminUser = Auth::guard('admin')->user();
+            $updated = 0;
+
+            DB::beginTransaction();
+
+            foreach ($request->lead_ids as $leadId) {
+                $lead = User::where('id', $leadId)
+                           ->where(function($q) {
+                               $q->whereNull('cstatus')
+                                 ->orWhere('cstatus', '!=', 'Customer');
+                           })->first();
+
+                if ($lead) {
+                    $oldStatus = $lead->lead_status_id;
+                    $lead->update(['lead_status_id' => $request->status]);
+
+                    // Add activity
+                    LeadActivity::create([
+                        'user_id' => $lead->id,
+                        'admin_id' => $adminUser->id,
+                        'type' => 'status_updated',
+                        'description' => 'Durum toplu güncelleme ile değiştirildi',
+                        'metadata' => json_encode([
+                            'old_status' => $oldStatus,
+                            'new_status' => $request->status,
+                            'updated_by' => $adminUser->firstName . ' ' . $adminUser->lastName
+                        ])
+                    ]);
+
+                    $updated++;
+                }
+            }
+
+            DB::commit();
+
+            Log::info('Bulk status update completed', [
+                'admin_id' => $adminUser->id,
+                'updated_count' => $updated,
+                'total_requested' => count($request->lead_ids)
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'updated' => $updated,
+                'message' => "{$updated} lead'in durumu güncellendi"
+            ]);
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Bulk status update failed', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Toplu durum güncellemesi başarısız'
+            ], 500);
+        }
+    }
+
+    /**
+     * Bulk assign leads
+     * POST /admin/leads/bulk-assign
+     */
+    public function bulkAssign(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'lead_ids' => 'required|array|min:1',
+                'lead_ids.*' => 'exists:users,id',
+                'admin_id' => 'nullable|exists:admins,id'
+            ]);
+
+            $adminUser = Auth::guard('admin')->user();
+            $isSuperAdmin = $adminUser->type === 'Super Admin';
+            $assigned = 0;
+
+            // Check assignment permission
+            if ($request->admin_id && !$isSuperAdmin) {
+                $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
+                $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
+                
+                if (!in_array($request->admin_id, $allowedAdminIds)) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Bu admin\'e atama yapma yetkiniz yok'
+                    ], 403);
+                }
+            }
+
+            DB::beginTransaction();
+
+            foreach ($request->lead_ids as $leadId) {
+                $lead = User::where('id', $leadId)
+                           ->where(function($q) {
+                               $q->whereNull('cstatus')
+                                 ->orWhere('cstatus', '!=', 'Customer');
+                           })->first();
+
+                if ($lead) {
+                    $oldAdminId = $lead->assign_to;
+                    $lead->update(['assign_to' => $request->admin_id]);
+
+                    // Add activity
+                    $assignedAdminName = $request->admin_id ? 
+                        Admin::find($request->admin_id)->firstName . ' ' . Admin::find($request->admin_id)->lastName : 
+                        'Atanmamış';
+
+                    LeadActivity::create([
+                        'user_id' => $lead->id,
+                        'admin_id' => $adminUser->id,
+                        'type' => 'assigned',
+                        'description' => 'Lead atama toplu işlem ile değiştirildi',
+                        'metadata' => json_encode([
+                            'old_admin_id' => $oldAdminId,
+                            'new_admin_id' => $request->admin_id,
+                            'new_admin_name' => $assignedAdminName,
+                            'assigned_by' => $adminUser->firstName . ' ' . $adminUser->lastName
+                        ])
+                    ]);
+
+                    $assigned++;
+                }
+            }
+
+            DB::commit();
+
+            Log::info('Bulk assignment completed', [
+                'admin_id' => $adminUser->id,
+                'assigned_count' => $assigned,
+                'target_admin_id' => $request->admin_id
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'assigned' => $assigned,
+                'message' => "{$assigned} lead atandı"
+            ]);
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Bulk assignment failed', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Toplu atama başarısız'
+            ], 500);
+        }
+    }
+
+    /**
+     * Bulk add tags
+     * POST /admin/leads/bulk-add-tags
+     */
+    public function bulkAddTags(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'lead_ids' => 'required|array|min:1',
+                'lead_ids.*' => 'exists:users,id',
+                'tags' => 'required|array|min:1',
+                'tags.*' => 'string|max:50'
+            ]);
+
+            $adminUser = Auth::guard('admin')->user();
+            $updated = 0;
+
+            DB::beginTransaction();
+
+            foreach ($request->lead_ids as $leadId) {
+                $lead = User::where('id', $leadId)
+                           ->where(function($q) {
+                               $q->whereNull('cstatus')
+                                 ->orWhere('cstatus', '!=', 'Customer');
+                           })->first();
+
+                if ($lead) {
+                    $existingTags = $lead->lead_tags ? json_decode($lead->lead_tags, true) : [];
+                    $newTags = array_unique(array_merge($existingTags, $request->tags));
+                    
+                    $lead->update(['lead_tags' => json_encode($newTags)]);
+
+                    // Add activity
+                    LeadActivity::create([
+                        'user_id' => $lead->id,
+                        'admin_id' => $adminUser->id,
+                        'type' => 'tags_added',
+                        'description' => 'Etiketler toplu işlem ile eklendi',
+                        'metadata' => json_encode([
+                            'added_tags' => $request->tags,
+                            'added_by' => $adminUser->firstName . ' ' . $adminUser->lastName
+                        ])
+                    ]);
+
+                    $updated++;
+                }
+            }
+
+            DB::commit();
+
+            Log::info('Bulk tag addition completed', [
+                'admin_id' => $adminUser->id,
+                'updated_count' => $updated,
+                'added_tags' => $request->tags
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'updated' => $updated,
+                'message' => "{$updated} lead'e etiket eklendi"
+            ]);
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Bulk tag addition failed', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Toplu etiket ekleme başarısız'
+            ], 500);
+        }
+    }
+
+    /**
+     * Bulk delete leads
+     * DELETE /admin/leads/bulk-delete
+     */
+    public function bulkDelete(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'lead_ids' => 'required|array|min:1',
+                'lead_ids.*' => 'exists:users,id'
+            ]);
+
+            $adminUser = Auth::guard('admin')->user();
+            $isSuperAdmin = $adminUser->type === 'Super Admin';
+
+            if (!$isSuperAdmin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Toplu silme işlemi için süper admin yetkisi gerekli'
+                ], 403);
+            }
+
+            $deleted = 0;
+
+            DB::beginTransaction();
+
+            foreach ($request->lead_ids as $leadId) {
+                $lead = User::where('id', $leadId)
+                           ->where(function($q) {
+                               $q->whereNull('cstatus')
+                                 ->orWhere('cstatus', '!=', 'Customer');
+                           })->first();
+
+                if ($lead) {
+                    // Add deletion activity before deleting
+                    LeadActivity::create([
+                        'user_id' => $lead->id,
+                        'admin_id' => $adminUser->id,
+                        'type' => 'deleted',
+                        'description' => 'Lead toplu silme ile silindi',
+                        'metadata' => json_encode([
+                            'deleted_by' => $adminUser->firstName . ' ' . $adminUser->lastName,
+                            'deleted_lead_name' => $lead->name
+                        ])
+                    ]);
+
+                    $lead->delete();
+                    $deleted++;
+                }
+            }
+
+            DB::commit();
+
+            Log::info('Bulk deletion completed', [
+                'admin_id' => $adminUser->id,
+                'deleted_count' => $deleted
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'deleted' => $deleted,
+                'message' => "{$deleted} lead silindi"
+            ]);
+
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Bulk deletion failed', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Toplu silme başarısız'
+            ], 500);
+        }
+    }
+
+    /**
+     * Add activity to lead
+     * POST /admin/leads/{id}/activities
+     */
+    public function addActivity(Request $request, $id): JsonResponse
+    {
+        try {
+            $request->validate([
+                'type' => 'required|in:call,email,meeting,note,sms,whatsapp',
+                'description' => 'required|string|max:1000'
+            ]);
+
+            $adminUser = Auth::guard('admin')->user();
+            $lead = User::findOrFail($id);
+
+            $activity = LeadActivity::create([
+                'user_id' => $lead->id,
+                'admin_id' => $adminUser->id,
+                'type' => $request->type,
+                'description' => $request->description,
+                'metadata' => json_encode([
+                    'added_by' => $adminUser->firstName . ' ' . $adminUser->lastName,
+                    'admin_name' => $adminUser->firstName . ' ' . $adminUser->lastName
+                ])
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Aktivite eklendi',
+                'data' => [
+                    'id' => $activity->id,
+                    'type' => $activity->type,
+                    'description' => $activity->description,
+                    'created_at' => $activity->created_at->toISOString(),
+                    'admin_name' => $adminUser->firstName . ' ' . $adminUser->lastName
+                ]
+            ]);
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Exception $e) {
+            Log::error('Failed to add activity', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'lead_id' => $id,
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Aktivite eklenemedi'
+            ], 500);
+        }
+    }
+
+    /**
+     * Export leads
+     * GET /admin/leads/export
+     */
+    public function export(Request $request)
+    {
+        try {
+            $adminUser = Auth::guard('admin')->user();
+            $isSuperAdmin = $adminUser->type === 'Super Admin';
+
+            if (!$isSuperAdmin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Export işlemi için süper admin yetkisi gerekli'
+                ], 403);
+            }
+
+            // Build query with same filters as API
+            $query = User::with(['leadStatus', 'assignedAdmin', 'leadSource'])
+                        ->where(function($q) {
+                            $q->whereNull('cstatus')
+                              ->orWhere('cstatus', '!=', 'Customer');
+                        });
+
+            // Apply filters if provided
+            $this->applyFilters($query, $request);
+
+            // If specific lead IDs provided
+            if ($request->has('lead_ids')) {
+                $leadIds = explode(',', $request->lead_ids);
+                $query->whereIn('id', $leadIds);
+            }
+
+            $format = $request->get('format', 'excel');
+            $filename = 'leads-' . date('Y-m-d-H-i-s') . '.' . ($format === 'excel' ? 'xlsx' : 'csv');
+
+            return Excel::download(new LeadsExport($query), $filename);
+
+        } catch (\Exception $e) {
+            Log::error('Lead export failed', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Export işlemi başarısız'
+            ], 500);
+        }
+    }
+
+    /**
+     * Apply filters to query
+     */
+    private function applyFilters($query, $request)
+    {
         if ($request->has('status') && $request->status !== '') {
             $query->where('lead_status_id', $request->status);
         }
 
-        if ($request->has('assigned') && $request->assigned !== '') {
-            if ($request->assigned === 'unassigned') {
+        if ($request->has('source') && $request->source !== '') {
+            $query->where('lead_source_id', $request->source);
+        }
+
+        if ($request->has('assigned_to') && $request->assigned_to !== '') {
+            if ($request->assigned_to === 'unassigned') {
                 $query->whereNull('assign_to');
             } else {
-                $query->where('assign_to', $request->assigned);
+                $query->where('assign_to', $request->assigned_to);
             }
         }
 
-        if ($request->has('source') && $request->source !== '') {
-            $query->where('lead_source', $request->source);
+        if ($request->has('priority') && $request->priority !== '') {
+            $query->where('lead_priority', $request->priority);
         }
 
         if ($request->has('date_from') && $request->date_from !== '') {
@@ -64,258 +966,73 @@ class LeadsController extends Controller
             $query->whereDate('created_at', '<=', $request->date_to);
         }
 
+        if ($request->has('min_score') && $request->min_score !== '') {
+            $query->where('lead_score', '>=', $request->min_score);
+        }
+
+        if ($request->has('max_score') && $request->max_score !== '') {
+            $query->where('lead_score', '<=', $request->max_score);
+        }
+
         if ($request->has('search') && $request->search !== '') {
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
                   ->orWhere('email', 'LIKE', "%{$search}%")
-                  ->orWhere('phone', 'LIKE', "%{$search}%");
+                  ->orWhere('phone', 'LIKE', "%{$search}%")
+                  ->orWhere('lead_notes', 'LIKE', "%{$search}%");
             });
         }
 
-        // Sort by
-        $sortBy = $request->get('sort', 'created_at');
-        $sortDirection = $request->get('direction', 'desc');
-        
-        if ($sortBy === 'lead_score') {
-            $query->orderBy('lead_score', $sortDirection);
-        } elseif ($sortBy === 'last_contact') {
-            $query->orderBy('last_contact_date', $sortDirection);
-        } else {
-            $query->orderBy($sortBy, $sortDirection);
-        }
-
-        $leads = $query->paginate(25)->withQueryString();
-
-        // Get statistics
-        $stats = $this->getLeadsStatistics($isSuperAdmin, $adminUser);
-
-        // Get filter options
-        $leadStatuses = LeadStatus::active()->get();
-        $admins = $isSuperAdmin ? Admin::orderBy('firstName')->get() : 
-                 Admin::where('id', $adminUser->id)
-                      ->orWhere('parent_id', $adminUser->id)
-                      ->orderBy('firstName')->get();
-
-        return view('admin.leads.index', [
-            'title' => 'Lead Yönetimi',
-            'leads' => $leads,
-            'stats' => $stats,
-            'leadStatuses' => $leadStatuses,
-            'admins' => $admins,
-            'currentFilters' => $request->all(),
-            'isSuperAdmin' => $isSuperAdmin
-        ]);
-    }
-
-    /**
-     * Show lead details
-     */
-    public function show($id)
-    {
-        $adminUser = Auth::guard('admin')->user();
-        $isSuperAdmin = $adminUser->type === 'Super Admin';
-        
-        $query = User::with(['leadStatus', 'assignedAdmin'])
-                    ->where('id', $id)
-                    ->where(function($q) {
-                        $q->whereNull('cstatus')
-                          ->orWhere('cstatus', '!=', 'Customer');
-                    });
-
-        // Admin level access control
-        if (!$isSuperAdmin) {
-            $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-            $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
-            
-            $query->where(function($q) use ($allowedAdminIds) {
-                $q->whereIn('assign_to', $allowedAdminIds)
-                  ->orWhereNull('assign_to'); // Allow viewing unassigned leads
+        if ($request->has('tags') && is_array($request->tags) && !empty($request->tags)) {
+            $query->where(function($q) use ($request) {
+                foreach ($request->tags as $tag) {
+                    $q->orWhere('lead_tags', 'LIKE', "%\"$tag\"%");
+                }
             });
         }
 
-        $lead = $query->firstOrFail();
-
-        $leadStatuses = LeadStatus::active()->get();
-        $admins = $isSuperAdmin ? Admin::orderBy('firstName')->get() : 
-                 Admin::where('id', $adminUser->id)
-                      ->orWhere('parent_id', $adminUser->id)
-                      ->orderBy('firstName')->get();
-
-        return view('admin.leads.show', [
-            'title' => 'Lead Detayları - ' . $lead->name,
-            'lead' => $lead,
-            'leadStatuses' => $leadStatuses,
-            'admins' => $admins,
-            'isSuperAdmin' => $isSuperAdmin
-        ]);
-    }
-
-    /**
-     * Update lead information
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'lead_status_id' => 'nullable|exists:lead_statuses,id',
-            'assign_to' => 'nullable|exists:admins,id',
-            'lead_notes' => 'nullable|string',
-            'next_follow_up_date' => 'nullable|date|after:today',
-            'estimated_value' => 'nullable|numeric|min:0',
-            'preferred_contact_method' => 'nullable|in:phone,email,whatsapp,sms',
-            'lead_tags' => 'nullable|array',
-            'lead_tags.*' => 'string|max:50'
-        ]);
-
-        $adminUser = Auth::guard('admin')->user();
-        $isSuperAdmin = $adminUser->type === 'Super Admin';
-
-        $query = User::where('id', $id)
-                    ->where(function($q) {
-                        $q->whereNull('cstatus')
-                          ->orWhere('cstatus', '!=', 'Customer');
-                    });
-
-        // Admin level access control
-        if (!$isSuperAdmin) {
-            $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-            $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
-            
-            $query->where(function($q) use ($allowedAdminIds) {
-                $q->whereIn('assign_to', $allowedAdminIds)
-                  ->orWhereNull('assign_to');
-            });
-        }
-
-        $lead = $query->firstOrFail();
-
-        // Track changes for contact history
-        $changes = [];
-        $updateData = $request->only([
-            'lead_status_id', 'assign_to', 'lead_notes', 'next_follow_up_date',
-            'estimated_value', 'preferred_contact_method', 'lead_tags'
-        ]);
-
-        if ($request->lead_status_id && $lead->lead_status_id != $request->lead_status_id) {
-            $oldStatus = $lead->leadStatus ? $lead->leadStatus->display_name : 'Belirlenmemiş';
-            $newStatus = LeadStatus::find($request->lead_status_id)->display_name;
-            $changes[] = "Status değiştirildi: {$oldStatus} → {$newStatus}";
-        }
-
-        if ($request->assign_to && $lead->assign_to != $request->assign_to) {
-            $oldAdmin = $lead->assignedAdmin ? $lead->assignedAdmin->firstName . ' ' . $lead->assignedAdmin->lastName : 'Atanmamış';
-            $newAdmin = Admin::find($request->assign_to);
-            $newAdminName = $newAdmin->firstName . ' ' . $newAdmin->lastName;
-            $changes[] = "Atama değiştirildi: {$oldAdmin} → {$newAdminName}";
-        }
-
-        $lead->update($updateData);
-
-        // Add contact history if there are changes
-        if (!empty($changes)) {
-            $lead->addContactHistory(
-                'update',
-                'Lead bilgileri güncellendi: ' . implode(', ', $changes),
-                $adminUser->id
-            );
-        }
-
-        // Recalculate lead score
-        $lead->calculateLeadScore();
-
-        return redirect()->back()->with('success', 'Lead bilgileri başarıyla güncellendi.');
-    }
-
-    /**
-     * Add contact note
-     */
-    public function addContact(Request $request, $id)
-    {
-        $request->validate([
-            'contact_type' => 'required|in:call,email,meeting,note,sms,whatsapp',
-            'contact_note' => 'required|string|max:1000',
-            'next_follow_up_date' => 'nullable|date|after:today'
-        ]);
-
-        $adminUser = Auth::guard('admin')->user();
-        $lead = User::findOrFail($id);
-
-        $lead->addContactHistory(
-            $request->contact_type,
-            $request->contact_note,
-            $adminUser->id
-        );
-
-        if ($request->next_follow_up_date) {
-            $lead->next_follow_up_date = $request->next_follow_up_date;
-            $lead->save();
-        }
-
-        return redirect()->back()->with('success', 'İletişim kaydı başarıyla eklendi.');
-    }
-
-    /**
-     * Bulk assign leads
-     */
-    public function bulkAssign(Request $request)
-    {
-        $request->validate([
-            'lead_ids' => 'required|array|min:1',
-            'lead_ids.*' => 'exists:users,id',
-            'admin_id' => 'required|exists:admins,id'
-        ]);
-
-        $adminUser = Auth::guard('admin')->user();
-        $isSuperAdmin = $adminUser->type === 'Super Admin';
-
-        // Check if admin has permission to assign to the selected admin
-        if (!$isSuperAdmin) {
-            $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-            $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
-            
-            if (!in_array($request->admin_id, $allowedAdminIds)) {
-                return redirect()->back()->with('error', 'Bu admin\'e atama yapma yetkiniz yok.');
+        if ($request->has('has_phone') && $request->has_phone !== '') {
+            if ($request->has_phone === 'true') {
+                $query->whereNotNull('phone')->where('phone', '!=', '');
+            } else {
+                $query->where(function($q) {
+                    $q->whereNull('phone')->orWhere('phone', '');
+                });
             }
         }
 
-        $assignedAdmin = Admin::find($request->admin_id);
-        $assignedCount = 0;
-
-        foreach ($request->lead_ids as $leadId) {
-            $lead = User::where('id', $leadId)
-                       ->where(function($q) {
-                           $q->whereNull('cstatus')
-                             ->orWhere('cstatus', '!=', 'Customer');
-                       })
-                       ->first();
-
-            if ($lead) {
-                $lead->update(['assign_to' => $request->admin_id]);
-                $lead->addContactHistory(
-                    'assignment',
-                    "Lead {$assignedAdmin->firstName} {$assignedAdmin->lastName} tarafından atandı",
-                    $adminUser->id
-                );
-                $assignedCount++;
+        if ($request->has('has_email') && $request->has_email !== '') {
+            if ($request->has_email === 'true') {
+                $query->whereNotNull('email')->where('email', '!=', '');
+            } else {
+                $query->where(function($q) {
+                    $q->whereNull('email')->orWhere('email', '');
+                });
             }
         }
 
-        return redirect()->back()->with('success', "{$assignedCount} lead başarıyla {$assignedAdmin->firstName} {$assignedAdmin->lastName} adlı admin'e atandı.");
-    }
-
-    /**
-     * Export leads
-     */
-    public function export(Request $request)
-    {
-        $adminUser = Auth::guard('admin')->user();
-        $isSuperAdmin = $adminUser->type === 'Super Admin';
-
-        if (!$isSuperAdmin) {
-            return redirect()->back()->with('error', 'Export işlemi için süper admin yetkisi gereklidir.');
+        if ($request->has('is_verified') && $request->is_verified !== '') {
+            if ($request->is_verified === 'true') {
+                $query->where(function($q) {
+                    $q->where('phone_verified', true)
+                      ->orWhere('email_verified', true);
+                });
+            } else {
+                $query->where('phone_verified', false)
+                      ->where('email_verified', false);
+            }
         }
 
-        return Excel::download(new LeadsExport($request->all()), 'leads-' . date('Y-m-d') . '.xlsx');
+        if ($request->has('is_premium') && $request->is_premium !== '') {
+            if ($request->is_premium === 'true') {
+                $query->where('account_type', 'premium');
+            } else {
+                $query->where('account_type', '!=', 'premium');
+            }
+        }
+
+        return $query;
     }
 
     /**
@@ -342,67 +1059,77 @@ class LeadsController extends Controller
             'high_score_leads' => (clone $baseQuery)->where('lead_score', '>=', 80)->count(),
             'follow_ups_today' => (clone $baseQuery)->whereDate('next_follow_up_date', today())->count(),
             'overdue_follow_ups' => (clone $baseQuery)->where('next_follow_up_date', '<', now())->count(),
-            'status_breakdown' => LeadStatus::with(['users' => function($query) use ($baseQuery, $isSuperAdmin, $adminUser) {
-                if (!$isSuperAdmin) {
-                    $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-                    $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
-                    $query->whereIn('assign_to', $allowedAdminIds);
-                }
-                $query->where(function($q) {
-                    $q->whereNull('cstatus')
-                      ->orWhere('cstatus', '!=', 'Customer');
-                });
-            }])->get()->map(function($status) {
-                return [
-                    'name' => $status->display_name,
-                    'count' => $status->users->count(),
-                    'color' => $status->color
-                ];
-            })
         ];
     }
 
+    // ... (keep existing methods that are still relevant: show, myLeads, etc.)
+    
     /**
-     * Get leads assigned to current admin
+     * Show lead details
      */
-    public function myLeads(Request $request)
+    public function show($id)
     {
         $adminUser = Auth::guard('admin')->user();
+        $isSuperAdmin = $adminUser->type === 'Super Admin';
         
         $query = User::with(['leadStatus', 'assignedAdmin'])
-                    ->where('assign_to', $adminUser->id)
+                    ->where('id', $id)
                     ->where(function($q) {
                         $q->whereNull('cstatus')
                           ->orWhere('cstatus', '!=', 'Customer');
                     });
 
-        // Apply same filters as index
-        if ($request->has('status') && $request->status !== '') {
-            $query->where('lead_status_id', $request->status);
-        }
-
-        if ($request->has('search') && $request->search !== '') {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'LIKE', "%{$search}%")
-                  ->orWhere('email', 'LIKE', "%{$search}%")
-                  ->orWhere('phone', 'LIKE', "%{$search}%");
+        // Admin level access control
+        if (!$isSuperAdmin) {
+            $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
+            $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
+            
+            $query->where(function($q) use ($allowedAdminIds) {
+                $q->whereIn('assign_to', $allowedAdminIds)
+                  ->orWhereNull('assign_to');
             });
         }
 
-        $sortBy = $request->get('sort', 'created_at');
-        $sortDirection = $request->get('direction', 'desc');
-        $query->orderBy($sortBy, $sortDirection);
+        $lead = $query->firstOrFail();
 
-        $leads = $query->paginate(25)->withQueryString();
+        // Get lead activities
+        $activities = LeadActivity::where('user_id', $lead->id)
+                                ->with('admin:id,firstName,lastName')
+                                ->orderBy('created_at', 'desc')
+                                ->limit(20)
+                                ->get();
 
         $leadStatuses = LeadStatus::active()->get();
+        $admins = $isSuperAdmin ? Admin::orderBy('firstName')->get() : 
+                 Admin::where('id', $adminUser->id)
+                      ->orWhere('parent_id', $adminUser->id)
+                      ->orderBy('firstName')->get();
 
-        return view('admin.leads.my-leads', [
-            'title' => 'Benim Leadlerim',
-            'leads' => $leads,
-            'leadStatuses' => $leadStatuses,
-            'currentFilters' => $request->all()
+        return response()->json([
+            'success' => true,
+            'data' => array_merge($lead->toArray(), [
+                'activities' => $activities->map(function($activity) {
+                    return [
+                        'id' => $activity->id,
+                        'type' => $activity->type,
+                        'description' => $activity->description,
+                        'created_at' => $activity->created_at->toISOString(),
+                        'admin_name' => $activity->admin ? 
+                            $activity->admin->firstName . ' ' . $activity->admin->lastName : 
+                            'System'
+                    ];
+                })
+            ]),
+            'meta' => [
+                'lead_statuses' => $leadStatuses,
+                'admin_users' => $admins->map(function($admin) {
+                    return [
+                        'id' => $admin->id,
+                        'name' => $admin->firstName . ' ' . $admin->lastName,
+                        'email' => $admin->email
+                    ];
+                })
+            ]
         ]);
     }
 }

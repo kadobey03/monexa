@@ -1,0 +1,249 @@
+/* Leads Table Specific Styles */
+
+/* Custom scrollbar for tables */
+.table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.dark .table-container::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+.dark .table-container::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+
+/* Loading animation */
+.loading-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Table row hover effects */
+.table-row-hover:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.dark .table-row-hover:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Notification animations */
+.notification-enter {
+    animation: slideInRight 0.3s ease-out;
+}
+
+.notification-leave {
+    animation: slideOutRight 0.2s ease-in;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Alpine.js specific enhancements */
+[x-cloak] {
+    display: none !important;
+}
+
+/* Transition classes for Alpine.js */
+.alpine-enter {
+    transition: all 0.3s ease-out;
+}
+
+.alpine-enter-start {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.alpine-enter-end {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.alpine-leave {
+    transition: all 0.2s ease-in;
+}
+
+.alpine-leave-start {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.alpine-leave-end {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* Enhanced table selection styles */
+.table-row-selected {
+    @apply bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500;
+}
+
+.table-cell-editable {
+    @apply cursor-text hover:bg-gray-50 dark:hover:bg-admin-700/50 rounded px-1 -mx-1;
+}
+
+.table-cell-editing {
+    @apply bg-blue-50 dark:bg-blue-900/20 ring-2 ring-blue-500 ring-opacity-50 rounded;
+}
+
+/* Status indicator dots */
+.status-dot {
+    @apply w-2 h-2 rounded-full inline-block mr-2;
+}
+
+.status-dot.new {
+    @apply bg-blue-500;
+}
+
+.status-dot.contacted {
+    @apply bg-yellow-500;
+}
+
+.status-dot.qualified {
+    @apply bg-green-500;
+}
+
+.status-dot.converted {
+    @apply bg-emerald-500;
+}
+
+.status-dot.lost {
+    @apply bg-red-500;
+}
+
+/* Priority indicators */
+.priority-bar {
+    @apply h-1 rounded-full;
+}
+
+.priority-bar.low {
+    @apply bg-gray-300 dark:bg-gray-600;
+}
+
+.priority-bar.medium {
+    @apply bg-yellow-400;
+}
+
+.priority-bar.high {
+    @apply bg-orange-500;
+}
+
+.priority-bar.urgent {
+    @apply bg-red-500 animate-pulse;
+}
+
+/* Lead score visual indicator */
+.lead-score-meter {
+    @apply relative w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden;
+}
+
+.lead-score-fill {
+    @apply h-full rounded-full transition-all duration-300;
+}
+
+.lead-score-fill.low {
+    @apply bg-red-400 w-1/4;
+}
+
+.lead-score-fill.medium {
+    @apply bg-yellow-400 w-2/4;
+}
+
+.lead-score-fill.high {
+    @apply bg-green-400 w-3/4;
+}
+
+.lead-score-fill.excellent {
+    @apply bg-emerald-500 w-full;
+}
+
+/* Contact method buttons */
+.contact-method-btn {
+    @apply inline-flex items-center justify-center w-7 h-7 rounded-full text-xs transition-all duration-200 hover:scale-110 hover:shadow-md;
+}
+
+.contact-method-btn.phone {
+    @apply bg-green-100 text-green-600 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400;
+}
+
+.contact-method-btn.email {
+    @apply bg-blue-100 text-blue-600 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-400;
+}
+
+.contact-method-btn.sms {
+    @apply bg-purple-100 text-purple-600 hover:bg-purple-200 dark:bg-purple-900/30 dark:text-purple-400;
+}
+
+.contact-method-btn.whatsapp {
+    @apply bg-green-100 text-green-600 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400;
+}
+
+/* Filter pill styles */
+.filter-pill {
+    @apply inline-flex items-center px-2 py-1 text-xs font-medium rounded-full transition-colors duration-200;
+}
+
+.filter-pill.active {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300;
+}
+
+.filter-pill.inactive {
+    @apply bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400;
+}
+
+/* Action button groups */
+.action-group {
+    @apply flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200;
+}
+
+.action-btn {
+    @apply inline-flex items-center justify-center w-6 h-6 text-xs rounded hover:scale-110 transition-transform duration-200;
+}
+
+.action-btn.edit {
+    @apply bg-blue-100 text-blue-600 hover:bg-blue-200 dark:bg-blue-900/30 dark:text-blue-400;
+}
+
+.action-btn.delete {
+    @apply bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400;
+}
+
+.action-btn.view {
+    @apply bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400;
+}

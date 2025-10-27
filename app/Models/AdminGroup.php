@@ -193,28 +193,55 @@ class AdminGroup extends Model
     }
 
     /**
+     * Get normalized timezone for Carbon compatibility.
+     */
+    private function getNormalizedTimezone(): string
+    {
+        $timezone = $this->time_zone ?? 'UTC';
+        
+        // Convert UTC offset format to timezone name
+        $offsetMap = [
+            'UTC+3' => 'Europe/Istanbul',
+            'UTC+2' => 'Europe/Berlin',
+            'UTC+1' => 'Europe/London',
+            'UTC+0' => 'UTC',
+            'UTC-5' => 'America/New_York',
+            'UTC-8' => 'America/Los_Angeles'
+        ];
+        
+        return $offsetMap[$timezone] ?? 'UTC';
+    }
+
+    /**
      * Check if group is currently in working hours.
      */
     public function isInWorkingHours(?Carbon $time = null): bool
     {
-        $time = $time ?? Carbon::now($this->time_zone);
-        $workingHours = $this->working_hours;
+        try {
+            $normalizedTimezone = $this->getNormalizedTimezone();
+            $time = $time ?? Carbon::now($normalizedTimezone);
+            $workingHours = $this->working_hours;
 
-        if (!$workingHours || !isset($workingHours['start'], $workingHours['end'], $workingHours['days'])) {
-            return true; // Default to always available
+            if (!$workingHours || !isset($workingHours['start'], $workingHours['end'], $workingHours['days'])) {
+                return true; // Default to always available
+            }
+
+            // Check if current day is a working day
+            $currentDay = strtolower($time->format('l'));
+            if (!in_array($currentDay, $workingHours['days'])) {
+                return false;
+            }
+
+            // Check if current time is within working hours
+            $startTime = Carbon::createFromTimeString($workingHours['start'], $normalizedTimezone);
+            $endTime = Carbon::createFromTimeString($workingHours['end'], $normalizedTimezone);
+
+            return $time->between($startTime, $endTime);
+        } catch (\Exception $e) {
+            // If timezone issues occur, default to available
+            \Log::warning('AdminGroup timezone error: ' . $e->getMessage());
+            return true;
         }
-
-        // Check if current day is a working day
-        $currentDay = strtolower($time->format('l'));
-        if (!in_array($currentDay, $workingHours['days'])) {
-            return false;
-        }
-
-        // Check if current time is within working hours
-        $startTime = Carbon::createFromTimeString($workingHours['start'], $this->time_zone);
-        $endTime = Carbon::createFromTimeString($workingHours['end'], $this->time_zone);
-
-        return $time->between($startTime, $endTime);
     }
 
     /**
@@ -228,22 +255,27 @@ class AdminGroup extends Model
             return null;
         }
 
-        $now = Carbon::now($this->time_zone);
-        
-        // Try the next 7 days
-        for ($i = 0; $i < 7; $i++) {
-            $checkDate = $now->copy()->addDays($i);
-            $dayName = strtolower($checkDate->format('l'));
+        try {
+            $normalizedTimezone = $this->getNormalizedTimezone();
+            $now = Carbon::now($normalizedTimezone);
             
-            if (in_array($dayName, $workingHours['days'])) {
-                $workStart = $checkDate->copy()->setTimeFromTimeString($workingHours['start']);
+            // Try the next 7 days
+            for ($i = 0; $i < 7; $i++) {
+                $checkDate = $now->copy()->addDays($i);
+                $dayName = strtolower($checkDate->format('l'));
                 
-                if ($i === 0 && $workStart > $now) {
-                    return $workStart; // Today but later
-                } elseif ($i > 0) {
-                    return $workStart; // Future day
+                if (in_array($dayName, $workingHours['days'])) {
+                    $workStart = $checkDate->copy()->setTimeFromTimeString($workingHours['start']);
+                    
+                    if ($i === 0 && $workStart > $now) {
+                        return $workStart; // Today but later
+                    } elseif ($i > 0) {
+                        return $workStart; // Future day
+                    }
                 }
             }
+        } catch (\Exception $e) {
+            \Log::warning('AdminGroup timezone error in getNextWorkingTime: ' . $e->getMessage());
         }
 
         return null;

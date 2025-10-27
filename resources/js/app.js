@@ -1,7 +1,7 @@
 import "./bootstrap";
-import "./libs/alpine";
+// import "./libs/alpine"; // TEMPORARILY DISABLED FOR VANILLA JS SOLUTION
 import "./admin-management";
-const axios = require("axios");
+import axios from "axios";
 
 // Global axios configuration for admin panel
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

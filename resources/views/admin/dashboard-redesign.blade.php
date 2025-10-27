@@ -9,7 +9,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     $gradient = 'dark';
 }
 ?>
-@extends('layouts.app')
+@extends('layouts.admin', ['title' => 'Dashboard'])
 @section('content')
     <!-- Modern Admin Layout Container -->
     <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">

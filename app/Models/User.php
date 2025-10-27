@@ -159,6 +159,56 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get all notes for this lead.
+     */
+    public function leadNotes(): HasMany
+    {
+        return $this->hasMany(LeadNote::class);
+    }
+
+    /**
+     * Get all communications for this lead.
+     */
+    public function leadCommunications(): HasMany
+    {
+        return $this->hasMany(LeadCommunication::class);
+    }
+
+    /**
+     * Get lead score history.
+     */
+    public function leadScoreHistory(): HasMany
+    {
+        return $this->hasMany(LeadScoreHistory::class);
+    }
+
+    /**
+     * Get quick actions performed on this lead.
+     */
+    public function leadQuickActions(): HasMany
+    {
+        return $this->hasMany(LeadQuickAction::class);
+    }
+
+    /**
+     * Get pinned notes only.
+     */
+    public function pinnedNotes()
+    {
+        return $this->leadNotes()->where('is_pinned', true)->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get recent communications (last 30 days).
+     */
+    public function recentCommunications()
+    {
+        return $this->leadCommunications()
+                    ->where('created_at', '>=', now()->subDays(30))
+                    ->orderBy('created_at', 'desc');
+    }
+
+    /**
      * Check if user is a lead (not a customer yet)
      */
     public function isLead()

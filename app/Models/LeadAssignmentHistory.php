@@ -23,54 +23,11 @@ class LeadAssignmentHistory extends Model
         'assigned_by_admin_id',
         'assignment_type',
         'assignment_method',
-        'reason',
-        'priority',
-        'lead_status_at_assignment',
-        'lead_score_at_assignment',
-        'estimated_value_at_assignment',
-        'lead_tags_at_assignment',
-        'admin_lead_count_before',
-        'admin_lead_count_after',
-        'admin_performance_score',
-        'admin_availability_status',
-        'lead_timezone',
-        'lead_region',
-        'admin_timezone',
-        'assignment_rules_applied',
-        'campaign_id',
-        'lead_source',
-        'department',
-        'admin_group_id',
+        'assignment_outcome',
         'assignment_started_at',
         'assignment_ended_at',
-        'days_assigned',
-        'assignment_outcome',
-        'final_conversion_value',
-        'contacts_made',
-        'first_contact_at',
-        'last_contact_at',
-        'communication_summary',
-        'response_time_hours',
-        'follow_up_count',
-        'engagement_score_start',
-        'engagement_score_end',
-        'sla_met',
-        'was_automated',
-        'assignment_algorithm',
-        'algorithm_factors',
-        'assignment_confidence',
-        'bulk_assignment_id',
-        'bulk_assignment_batch_size',
-        'bulk_assignment_sequence',
-        'requires_manager_approval',
-        'approved_by_admin_id',
-        'approved_at',
-        'is_compliant',
-        'compliance_notes',
-        'metadata',
-        'custom_fields',
-        'notes',
-        'flags',
+        'assignment_reason',
+        'assignment_metadata',
     ];
 
     /**
@@ -317,9 +274,13 @@ class LeadAssignmentHistory extends Model
             'assignment_started_at' => now(),
             'assignment_type' => self::TYPE_INITIAL,
             'assignment_method' => self::METHOD_MANUAL,
-            'priority' => self::PRIORITY_NORMAL,
             'assignment_outcome' => self::OUTCOME_ACTIVE,
         ], $data);
+
+        // Remove priority field if not exists in database
+        if (array_key_exists('priority', $data)) {
+            unset($data['priority']);
+        }
 
         return static::create($data);
     }

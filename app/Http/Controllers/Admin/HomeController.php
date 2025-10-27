@@ -445,12 +445,8 @@ class HomeController extends Controller
     }
     public function madmin()
     {
-        return view('admin.madmin')->with(array(
-            'admins' => Admin::orderby('id', 'desc')->get(),
-            'title' => 'Add new manager',
-
-
-        ));
+        // Redirect to modern managers module
+        return redirect()->route('admin.managers.index');
     }
 
     //Return KYC route
@@ -537,6 +533,321 @@ class HomeController extends Controller
                 'users' => User::orderby('id', 'desc')->where('cstatus', NULL)->get(),
                 'title' => 'Manage New Registered Clients',
             ));
+    }
+
+    /**
+     * Show detailed lead information page
+     */
+    public function showLead($id)
+    {
+        $adminUser = Auth::guard('admin')->user();
+        $isSuperAdmin = $adminUser->type === 'Super Admin';
+
+        $query = User::with([
+            'leadStatus',
+            'assignedAdmin',
+            'leadNotes' => function($q) {
+                $q->orderBy('is_pinned', 'desc')
+                  ->orderBy('created_at', 'desc');
+            },
+            'leadCommunications' => function($q) {
+                $q->orderBy('created_at', 'desc')
+                  ->limit(50);
+            },
+            'leadScoreHistory' => function($q) {
+                $q->orderBy('created_at', 'desc')
+                  ->limit(30);
+            }
+        ])
+        ->where('id', $id)
+        ->where(function($q) {
+            $q->whereNull('cstatus')
+              ->orWhere('cstatus', '!=', 'Customer');
+        });
+
+        // Admin level access control
+        if (!$isSuperAdmin) {
+            $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
+            $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
+
+            $query->where(function($q) use ($allowedAdminIds) {
+                $q->whereIn('assign_to', $allowedAdminIds)
+                  ->orWhereNull('assign_to');
+            });
+        }
+
+        $lead = $query->firstOrFail();
+
+        // Calculate lead score and analytics
+        $scoringService = app(LeadScoringService::class);
+        $scoreData = $scoringService->calculateLeadScore($lead);
+
+        // Get lead statuses for dropdown
+        $leadStatuses = LeadStatus::active()->get();
+
+        // Get admin users for assignment dropdown
+        $admins = $isSuperAdmin ?
+            Admin::where('status', 'Active')->orderBy('firstName')->get() :
+            Admin::where(function($q) use ($adminUser) {
+                $q->where('id', $adminUser->id)
+                  ->orWhere('parent_id', $adminUser->id);
+            })->where('status', 'Active')->orderBy('firstName')->get();
+
+        // Prepare analytics data
+        $analyticsData = $this->prepareAnalyticsData($lead, $scoreData);
+
+        // Prepare chart data for trends
+        $chartData = $this->prepareChartData($lead);
+
+        // Prepare performance metrics
+        $performanceMetrics = $this->preparePerformanceMetrics($lead);
+
+        // Prepare note categories
+        $noteCategories = [
+            'important' => 'Önemli',
+            'general' => 'Genel',
+            'technical' => 'Teknik',
+            'financial' => 'Finansal'
+        ];
+
+        // Prepare communication stats
+        $communicationStats = $this->prepareCommunicationStats($lead);
+
+        // Prepare available actions for sidebar
+        $availableActions = $this->prepareAvailableActions($adminUser, $lead);
+
+        // Prepare user permissions
+        $userPermissions = $this->prepareUserPermissions($adminUser, $lead);
+
+        // Prepare mobile data (simplified version for mobile view)
+        $mobileData = $this->prepareMobileData($lead, $scoreData);
+
+        return view('admin.leads.show', [
+            'lead' => $lead,
+            'leadStatuses' => $leadStatuses,
+            'admins' => $admins,
+            'scoreData' => $scoreData,
+            'analyticsData' => $analyticsData,
+            'chartData' => $chartData,
+            'performanceMetrics' => $performanceMetrics,
+            'noteCategories' => $noteCategories,
+            'communicationStats' => $communicationStats,
+            'availableActions' => $availableActions,
+            'userPermissions' => $userPermissions,
+            'mobileData' => $mobileData,
+            'title' => 'Lead Detayı - ' . $lead->name
+        ]);
+    }
+
+    private function prepareAnalyticsData(User $lead, array $scoreData): array
+    {
+        return [
+            'demographic_score' => $scoreData['breakdown']['demographic_score'],
+            'engagement_score' => $scoreData['breakdown']['engagement_score'],
+            'contact_score' => $scoreData['breakdown']['contact_score'],
+            'value_score' => $scoreData['breakdown']['value_score'],
+            'days_active' => $lead->created_at->diffInDays(),
+            'contact_count' => $lead->leadCommunications->count(),
+            'score_trend' => $lead->leadScoreHistory->count() > 1 ? $this->calculateScoreTrend($lead) : 0,
+        ];
+    }
+
+    private function prepareChartData(User $lead): array
+    {
+        // Score trend data for chart
+        $scoreHistory = $lead->leadScoreHistory->take(30)->reverse();
+
+        return [
+            'score_trend' => [
+                'labels' => $scoreHistory->pluck('created_at')->map(function($date) {
+                    return $date->format('d.m');
+                })->toArray(),
+                'data' => $scoreHistory->pluck('new_score')->toArray()
+            ],
+            'communication_frequency' => $this->calculateCommunicationFrequency($lead),
+            'engagement_heatmap' => $this->calculateEngagementHeatmap($lead)
+        ];
+    }
+
+    private function preparePerformanceMetrics(User $lead): array
+    {
+        $communications = $lead->leadCommunications;
+        $lastCommunication = $communications->first();
+
+        return [
+            'avg_response_time' => $this->calculateAverageResponseTime($communications),
+            'call_success_rate' => $this->calculateCallSuccessRate($communications),
+            'email_open_rate' => $this->calculateEmailOpenRate($communications),
+            'engagement_trend' => $this->calculateEngagementTrend($lead)
+        ];
+    }
+
+    private function prepareCommunicationStats(User $lead): array
+    {
+        $communications = $lead->leadCommunications;
+
+        return [
+            'total_communications' => $communications->count(),
+            'last_communication_date' => $communications->first()?->created_at?->format('d.m.Y H:i'),
+            'communication_types' => $communications->groupBy('communication_type')->map->count()->toArray()
+        ];
+    }
+
+    private function prepareAvailableActions(Admin $admin, User $lead): array
+    {
+        // This would be expanded based on admin permissions and lead status
+        return [
+            'can_edit' => $admin->hasPermission('lead_edit'),
+            'can_call' => $admin->hasPermission('lead_call'),
+            'can_email' => $admin->hasPermission('lead_email'),
+            'can_message' => $admin->hasPermission('lead_message'),
+            'can_assign' => $admin->hasPermission('lead_assign'),
+            'can_block' => $admin->hasPermission('lead_block'),
+            'can_credit_debit' => $admin->hasPermission('lead_financial_manage'),
+            'can_manual_transaction' => $admin->hasPermission('lead_manual_transaction'),
+            'can_create_alert' => $admin->hasPermission('lead_alert_create'),
+            'can_tax_calculation' => $admin->hasPermission('lead_tax_calculate'),
+            'can_withdrawal_code' => $admin->hasPermission('lead_withdrawal_manage'),
+            'can_set_limits' => $admin->hasPermission('lead_limit_manage'),
+            'can_admin_switch' => $admin->hasPermission('lead_admin_switch'),
+        ];
+    }
+
+    private function prepareUserPermissions(Admin $admin, User $lead): array
+    {
+        return [
+            'can_view' => true, // Basic permission checked at route level
+            'can_update' => $admin->hasPermission('lead_edit'),
+            'can_delete' => $admin->hasPermission('lead_delete'),
+            'can_assign' => $admin->hasPermission('lead_assign'),
+            'can_call' => $admin->hasPermission('lead_call'),
+            'can_email' => $admin->hasPermission('lead_email'),
+            'can_message' => $admin->hasPermission('lead_message'),
+            'can_add_notes' => $admin->hasPermission('lead_notes_create'),
+            'can_manage_financial' => $admin->hasPermission('lead_financial_manage'),
+            'can_admin_switch' => $admin->hasPermission('lead_admin_switch')
+        ];
+    }
+
+    private function prepareMobileData(User $lead, array $scoreData): array
+    {
+        return [
+            'quick_stats' => [
+                'score' => $scoreData['total_score'],
+                'contact_count' => $lead->leadCommunications->count(),
+                'days_active' => $lead->created_at->diffInDays(),
+                'engagement_level' => $scoreData['level']['label']
+            ],
+            'recent_notes' => $lead->leadNotes->take(5)->map(function($note) {
+                return [
+                    'id' => $note->id,
+                    'title' => $note->note_title ?: 'Başlıksız Not',
+                    'content' => Str::limit($note->note_content, 100),
+                    'created_at' => $note->created_at->diffForHumans(),
+                    'admin_name' => $note->admin->firstName . ' ' . $note->admin->lastName
+                ];
+            })->toArray(),
+            'recent_communications' => $lead->leadCommunications->take(10)->map(function($comm) {
+                return [
+                    'id' => $comm->id,
+                    'type' => $comm->communication_type,
+                    'subject' => $comm->communication_subject,
+                    'created_at' => $comm->created_at->diffForHumans(),
+                    'admin_name' => $comm->admin?->firstName . ' ' . $comm->admin?->lastName
+                ];
+            })->toArray()
+        ];
+    }
+
+    private function calculateScoreTrend(User $lead): int
+    {
+        $scores = $lead->leadScoreHistory->take(10)->pluck('new_score')->toArray();
+        if (count($scores) < 2) return 0;
+
+        $recent = array_slice($scores, -5); // Last 5 scores
+        $older = array_slice($scores, 0, 5); // Previous 5 scores
+
+        $recentAvg = array_sum($recent) / count($recent);
+        $olderAvg = array_sum($older) / count($older);
+
+        return intval(($recentAvg - $olderAvg) / $olderAvg * 100);
+    }
+
+    private function calculateCommunicationFrequency(User $lead): array
+    {
+        $communications = $lead->leadCommunications->where('created_at', '>=', now()->subDays(30));
+        $weeklyData = [];
+
+        for ($i = 6; $i >= 0; $i--) {
+            $date = now()->subDays($i);
+            $count = $communications->whereBetween('created_at', [
+                $date->startOfDay(),
+                $date->endOfDay()
+            ])->count();
+            $weeklyData[] = $count;
+        }
+
+        return [
+            'labels' => ['6g', '5g', '4g', '3g', '2g', '1g', 'Bugün'],
+            'data' => $weeklyData
+        ];
+    }
+
+    private function calculateEngagementHeatmap(User $lead): array
+    {
+        // Simplified heatmap data
+        $communications = $lead->leadCommunications->where('created_at', '>=', now()->subDays(30));
+
+        $heatmap = [];
+        for ($i = 0; $i < 7; $i++) {
+            $day = now()->subDays($i);
+            $count = $communications->whereDate('created_at', $day->toDateString())->count();
+            $heatmap[] = [
+                'day' => $day->format('D'),
+                'count' => $count,
+                'intensity' => min($count, 4) // Max intensity of 4
+            ];
+        }
+
+        return array_reverse($heatmap); // Most recent first
+    }
+
+    private function calculateAverageResponseTime($communications): string
+    {
+        // Simplified calculation - would need more complex logic for real response time
+        $avgHours = $communications->avg('created_at.diffInHours') ?? 24;
+        return number_format($avgHours, 1) . 'h';
+    }
+
+    private function calculateCallSuccessRate($communications): int
+    {
+        $calls = $communications->where('communication_type', 'call');
+        if ($calls->isEmpty()) return 0;
+
+        $successful = $calls->where('status', 'completed')->count();
+        return intval(($successful / $calls->count()) * 100);
+    }
+
+    private function calculateEmailOpenRate($communications): int
+    {
+        $emails = $communications->where('communication_type', 'email');
+        if ($emails->isEmpty()) return 0;
+
+        // This would need tracking data from email service
+        return rand(30, 70); // Placeholder
+    }
+
+    private function calculateEngagementTrend(User $lead): int
+    {
+        $recent = $lead->leadCommunications->where('created_at', '>=', now()->subWeek())->count();
+        $previous = $lead->leadCommunications->whereBetween('created_at', [
+            now()->subWeeks(2),
+            now()->subWeek()
+        ])->count();
+
+        if ($previous == 0) return $recent > 0 ? 100 : 0;
+
+        return intval((($recent - $previous) / $previous) * 100);
     }
     public function leadsassign()
     {

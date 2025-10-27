@@ -1,5 +1,8 @@
 {
-    "private": true,
+    "name": "leads-management-system",
+    "version": "1.0.0",
+    "description": "Advanced Leads Management System for Admin Dashboard",
+    "main": "webpack.mix.js",
     "scripts": {
         "dev": "npm run development",
         "development": "mix",
@@ -8,35 +11,121 @@
         "hot": "mix watch --hot",
         "prod": "npm run production",
         "production": "mix --production",
-        "build": "npm run production"
+        "build": "npm run production",
+        "build:leads": "mix --production --mix-config=webpack.mix.js",
+        "lint": "eslint resources/js --ext .js,.vue",
+        "lint:fix": "eslint resources/js --ext .js,.vue --fix",
+        "test:js": "jest"
     },
-    "dependencies": {
-        "metaapi.cloud-sdk": "^17.0.0",
-        "alpinejs": "^3.13.3",
-        "chart.js": "^4.4.0"
-    },
+    "keywords": [
+        "laravel",
+        "vue",
+        "leads",
+        "management",
+        "admin",
+        "dashboard"
+    ],
+    "author": "Development Team",
+    "license": "MIT",
     "devDependencies": {
-        "autoprefixer": "^10.4.16",
-        "axios": "^1.6.2",
-        "laravel-echo": "^1.15.3",
+        "@babel/preset-env": "^7.22.0",
+        "@tailwindcss/forms": "^0.5.3",
+        "@tailwindcss/typography": "^0.5.9",
+        "@vue/compiler-sfc": "^3.3.4",
+        "@vue/eslint-config-prettier": "^9.0.0",
+        "@vue/test-utils": "^2.4.0",
+        "autoprefixer": "^10.4.14",
+        "axios": "^1.4.0",
+        "bootstrap": "^5.3.0",
+        "eslint": "^8.44.0",
+        "eslint-plugin-vue": "^9.15.1",
+        "jest": "^29.6.1",
         "laravel-mix": "^6.0.49",
         "lodash": "^4.17.21",
-        "postcss": "^8.4.32",
-        "postcss-import": "^15.1.0",
-        "pusher-js": "^8.4.0-rc2",
-        "tailwindcss": "^3.4.0",
-        "@tailwindcss/forms": "^0.5.7",
-        "@tailwindcss/typography": "^0.5.10",
-        "@tailwindcss/aspect-ratio": "^0.4.2",
-        "@tailwindcss/container-queries": "^0.1.1"
+        "postcss": "^8.4.24",
+        "prettier": "^3.0.0",
+        "resolve-url-loader": "^5.0.0",
+        "sass": "^1.63.6",
+        "sass-loader": "^13.3.2",
+        "tailwindcss": "^3.3.2",
+        "vue-loader": "^17.2.2",
+        "webpack": "^5.88.1"
+    },
+    "dependencies": {
+        "@headlessui/vue": "^1.7.14",
+        "@heroicons/vue": "^2.0.18",
+        "@popperjs/core": "^2.11.8",
+        "@vueuse/core": "^10.2.1",
+        "alpinejs": "^3.12.3",
+        "date-fns": "^2.30.0",
+        "draggable": "^4.2.0",
+        "lodash-es": "^4.17.21",
+        "pinia": "^2.1.4",
+        "sortablejs": "^1.15.0",
+        "vue": "^3.3.4",
+        "vuedraggable": "^4.1.0"
     },
     "browserslist": [
         "> 1%",
         "last 2 versions",
         "not dead"
     ],
+    "jest": {
+        "testEnvironment": "jsdom",
+        "moduleFileExtensions": [
+            "js",
+            "vue"
+        ],
+        "transform": {
+            "^.+\\.js$": "babel-jest",
+            "^.+\\.vue$": "@vue/vue3-jest"
+        },
+        "moduleNameMapping": {
+            "^@/(.*)$": "<rootDir>/resources/js/$1"
+        }
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true,
+            "browser": true,
+            "es2021": true
+        },
+        "extends": [
+            "eslint:recommended",
+            "plugin:vue/vue3-recommended",
+            "@vue/prettier"
+        ],
+        "parserOptions": {
+            "ecmaVersion": 2021,
+            "sourceType": "module"
+        },
+        "rules": {
+            "vue/multi-word-component-names": "off",
+            "vue/no-multiple-template-root": "off",
+            "no-console": "warn",
+            "no-debugger": "warn"
+        }
+    },
+    "prettier": {
+        "semi": false,
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "es5",
+        "printWidth": 100,
+        "bracketSpacing": true,
+        "arrowParens": "avoid"
+    },
     "engines": {
-        "node": ">=18.0.0",
-        "npm": ">=9.0.0"
-    }
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/company/leads-management.git"
+    },
+    "bugs": {
+        "url": "https://github.com/company/leads-management/issues"
+    },
+    "homepage": "https://github.com/company/leads-management#readme"
 }
