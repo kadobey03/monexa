@@ -68,7 +68,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                                 @if($bot->image)
                                 <div class="col-md-12 mb-3">
                                     <div class="text-center">
-                                        <img src="{{ asset('storage/app/public/' . $bot->image) }}"
+                                        <img src="{{ asset('storage/' . $bot->image) }}"
                                              alt="Current Bot Image"
                                              class="img-thumbnail"
                                              style="max-width: 150px; max-height: 150px;">

@@ -23,7 +23,7 @@
             <input type="file" wire:model='photo' class="d-none">
         </label>
         @if ($photoPath)
-            <img src="{{ asset('storage/app/public/' . $photoPath) }}" alt="Profil resmi" class="avatar-img"
+            <img src="{{ asset('storage/' . $photoPath) }}" alt="Profil resmi" class="avatar-img"
                 width="112" height="112">
         @else
             <img src="https://png.pngtree.com/png-vector/20220521/ourlarge/pngtree-avatar-profile-icon-png-image_4644647.png"

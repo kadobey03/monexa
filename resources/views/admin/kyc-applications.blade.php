@@ -227,10 +227,10 @@
                                     </span>
                                 </div>
                                 <div class="relative group">
-                                    <img src="{{ asset('storage/app/public/' . $kyc->frontimg) }}"
+                                    <img src="{{ asset('storage/' . $kyc->frontimg) }}"
                                          alt="Kimlik Ön Yüz"
                                          class="w-full h-auto rounded-lg shadow-md border border-admin-200 dark:border-admin-600 hover:shadow-lg transition-shadow duration-200 cursor-pointer"
-                                         onclick="openImageModal('{{ asset('storage/app/public/' . $kyc->frontimg) }}', 'Belgenin Ön Yüzü')">
+                                         onclick="openImageModal('{{ asset('storage/' . $kyc->frontimg) }}', 'Belgenin Ön Yüzü')">
                                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition-all duration-200 flex items-center justify-center">
                                         <i data-lucide="zoom-in" class="text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"></i>
                                     </div>
@@ -245,10 +245,10 @@
                                     </span>
                                 </div>
                                 <div class="relative group">
-                                    <img src="{{ asset('storage/app/public/' . $kyc->backimg) }}"
+                                    <img src="{{ asset('storage/' . $kyc->backimg) }}"
                                          alt="Kimlik Arka Yüz"
                                          class="w-full h-auto rounded-lg shadow-md border border-admin-200 dark:border-admin-600 hover:shadow-lg transition-shadow duration-200 cursor-pointer"
-                                         onclick="openImageModal('{{ asset('storage/app/public/' . $kyc->backimg) }}', 'Belgenin Arka Yüzü')">
+                                         onclick="openImageModal('{{ asset('storage/' . $kyc->backimg) }}', 'Belgenin Arka Yüzü')">
                                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition-all duration-200 flex items-center justify-center">
                                         <i data-lucide="zoom-in" class="text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"></i>
                                     </div>

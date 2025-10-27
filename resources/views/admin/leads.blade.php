@@ -284,7 +284,7 @@
     
     <!-- Notification System -->
     <div 
-        x-show="notification.show"
+        x-show="notification?.show"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="transform opacity-0 translate-y-2"
         x-transition:enter-end="transform opacity-100 translate-y-0"
@@ -297,21 +297,21 @@
         <div 
             class="rounded-lg shadow-lg p-4 max-w-sm w-full"
             :class="{
-                'bg-green-100 border-green-500 text-green-700': notification.type === 'success',
-                'bg-red-100 border-red-500 text-red-700': notification.type === 'error',
-                'bg-yellow-100 border-yellow-500 text-yellow-700': notification.type === 'warning',
-                'bg-blue-100 border-blue-500 text-blue-700': notification.type === 'info'
+                'bg-green-100 border-green-500 text-green-700': notification?.type === 'success',
+                'bg-red-100 border-red-500 text-red-700': notification?.type === 'error',
+                'bg-yellow-100 border-yellow-500 text-yellow-700': notification?.type === 'warning',
+                'bg-blue-100 border-blue-500 text-blue-700': notification?.type === 'info'
             }"
         >
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <i 
-                        :data-lucide="notification.type === 'success' ? 'check-circle' : notification.type === 'error' ? 'alert-circle' : notification.type === 'warning' ? 'alert-triangle' : 'info'"
+                    <i
+                        :data-lucide="notification?.type === 'success' ? 'check-circle' : notification?.type === 'error' ? 'alert-circle' : notification?.type === 'warning' ? 'alert-triangle' : 'info'"
                         class="h-5 w-5"
                     ></i>
                 </div>
                 <div class="ml-3 flex-1">
-                    <p class="text-sm font-medium" x-text="notification.message"></p>
+                    <p class="text-sm font-medium" x-text="notification?.message"></p>
                 </div>
                 <div class="ml-3 flex-shrink-0">
                     <button 
@@ -331,6 +331,8 @@
 @endPushOnce
 
 @pushOnce('scripts')
+<!-- Load Alpine.js data function first -->
+<script src="{{ asset('js/admin/leads/alpine-data.js') }}"></script>
 <!-- Load JavaScript modules -->
 <script src="{{ asset('js/admin/leads/index.js') }}" type="module"></script>
 @endPushOnce

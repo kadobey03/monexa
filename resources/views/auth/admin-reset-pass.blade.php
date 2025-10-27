@@ -14,7 +14,7 @@
                 <!-- Brand Logo -->
                 <div class="mb-6">
                     <a href="/" class="inline-block">
-                        <img src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="Logo" class="h-12 md:h-16 mx-auto">
+                        <img src="{{ asset('storage/' . $settings->logo) }}" alt="Logo" class="h-12 md:h-16 mx-auto">
                     </a>
                 </div>
 

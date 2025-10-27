@@ -26,7 +26,7 @@
         <div class="text-center space-y-6">
             <div class="flex justify-center">
                 <a href="/" class="inline-block">
-                    <img src="{{ asset('storage/app/public/' . $settings->logo) }}"
+                    <img src="{{ asset('storage/' . $settings->logo) }}"
                          alt="{{ $settings->site_name }}"
                          class="h-12 sm:h-16 w-auto">
                 </a>

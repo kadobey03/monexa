@@ -21,7 +21,7 @@
                 <div class="text-center mb-8">
                     <!-- Logo -->
                     <div class="flex items-center justify-center mb-6">
-                        <img src="{{ asset('storage/app/public/'.$settings->logo)}}"
+                        <img src="{{ asset('storage/'.$settings->logo)}}"
                              class="h-12 sm:h-16 w-auto"
                              alt="{{ $settings->site_name }}" />
                     </div>

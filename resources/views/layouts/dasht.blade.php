@@ -8,7 +8,7 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="{{ asset('storage/app/public/' . $settings->favicon) }}" rel="icon" type="image/x-icon" />
+<link href="{{ asset('storage/' . $settings->favicon) }}" rel="icon" type="image/x-icon" />
     <!-- Inter Font -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -114,7 +114,7 @@
       <div class="flex items-center space-x-4">
         <!-- Logo -->
         <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 group">
-          <img src="{{ asset('storage/app/public/'.$settings->logo)}}" class="h-8 w-auto" alt="Logo" />
+          <img src="{{ asset('storage/'.$settings->logo)}}" class="h-8 w-auto" alt="Logo" />
           <div class="hidden sm:block">
             <span class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
              {{$settings->site_name}}

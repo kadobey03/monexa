@@ -71,7 +71,7 @@
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
                             @if($investment->bot->image)
-                                <img src="{{ asset('storage/app/public/' . $investment->bot->image) }}"
+                                <img src="{{ asset('storage/' . $investment->bot->image) }}"
                                      alt="{{ $investment->bot->name }}"
                                      class="w-12 h-12 rounded-xl object-cover">
                             @else
@@ -165,7 +165,7 @@
                         <div class="flex items-start justify-between mb-4">
                             <div class="flex items-center gap-3">
                                 @if($bot->image)
-                                    <img src="{{ asset('storage/app/public/' . $bot->image) }}"
+                                    <img src="{{ asset('storage/' . $bot->image) }}"
                                          alt="{{ $bot->name }}"
                                          class="w-14 h-14 rounded-xl object-cover border-2 border-white dark:border-gray-700 shadow-lg">
                                 @else

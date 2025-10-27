@@ -18,7 +18,7 @@ x-init="
     <title>{{ $title ?? 'Admin Panel' }} - {{ isset($settings) ? $settings->site_name : 'Monexa' }}</title>
     
     <!-- Favicon -->
-    <link href="{{ asset('storage/app/public/' . (isset($settings) ? $settings->favicon : 'favicon.ico')) }}" rel="icon" type="image/x-icon" />
+    <link href="{{ asset('storage/' . (isset($settings) ? $settings->favicon : 'favicon.ico')) }}" rel="icon" type="image/x-icon" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

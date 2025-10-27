@@ -13,7 +13,7 @@
             <div class="text-center mb-8">
                 <a href="/" class="inline-block group">
                     <div class="relative">
-                        <img src="{{ asset('storage/app/public/' . $settings->logo) }}"
+                        <img src="{{ asset('storage/' . $settings->logo) }}"
                              alt="Logo"
                              class="h-16 w-auto mx-auto transition-transform duration-300 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

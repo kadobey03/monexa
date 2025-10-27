@@ -10,7 +10,7 @@
                 </div>
             @endif
             <a href="/" class="navbar-brand mb-auto">
-                <img src="{{ asset('storage/app/public/' . $settings->logo) }}" alt="Logo" class="logo-large"
+                <img src="{{ asset('storage/' . $settings->logo) }}" alt="Logo" class="logo-large"
                     width="125" height="25">
             </a>
 

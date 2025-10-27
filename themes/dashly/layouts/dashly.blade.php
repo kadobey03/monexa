@@ -106,7 +106,7 @@
         }
     </script>
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('storage/app/public/' . $settings->favicon) }}" sizes="any">
+    <link rel="icon" href="{{ asset('storage/' . $settings->favicon) }}" sizes="any">
 
     <!-- Demo script -->
     <script>
@@ -189,17 +189,17 @@
         <div class="container-fluid">
             <!-- Brand -->
             <a class="navbar-brand" href="{{ route('dashboard') }}">
-                <img src="{{ asset('storage/app/public/' . $settings->logo) }}"
+                <img src="{{ asset('storage/' . $settings->logo) }}"
                     class="navbar-brand-img logo-light logo-small" alt="{{ $settings->site_name }}" width="19"
                     height="25">
-                <img src="{{ asset('storage/app/public/' . $settings->logo) }}"
+                <img src="{{ asset('storage/' . $settings->logo) }}"
                     class="navbar-brand-img logo-light logo-large" alt="{{ $settings->site_name }}" width="125"
                     height="25">
 
-                <img src="{{ asset('storage/app/public/' . $settings->logo) }}"
+                <img src="{{ asset('storage/' . $settings->logo) }}"
                     class="navbar-brand-img logo-dark logo-small" alt="{{ $settings->site_name }}" width="19"
                     height="25">
-                <img src="{{ asset('storage/app/public/' . $settings->logo) }}"
+                <img src="{{ asset('storage/' . $settings->logo) }}"
                     class="navbar-brand-img logo-dark logo-large" alt="{{ $settings->site_name }}" width="125"
                     height="25">
             </a>
@@ -534,7 +534,7 @@
                         aria-expanded="false" data-bs-offset="0,0">
                         <div class="avatar avatar-circle avatar-sm avatar-online">
                             @if (auth()->user()->profile_photo_path)
-                                <img src="{{ asset('storage/app/public/' . auth()->user()->profile_photo_path) }}"
+                                <img src="{{ asset('storage/' . auth()->user()->profile_photo_path) }}"
                                     alt="Profile picture" class="avatar-img" width="40" height="40">
                             @else
                                 <img src="https://png.pngtree.com/png-vector/20220521/ourlarge/pngtree-avatar-profile-icon-png-image_4644647.png"

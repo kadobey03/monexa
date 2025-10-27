@@ -4,7 +4,7 @@
         <!-- Brand + Toggler (for mobile devices) -->
         <div class="pl-4 d-block d-md-none">
             <a class="navbar-brand" href="{{ route('dashboard') }}">
-                <img src="{{ asset('storage/app/public/' . $settings->logo) }}" class="navbar-brand-img" alt="...">
+                <img src="{{ asset('storage/' . $settings->logo) }}" class="navbar-brand-img" alt="...">
             </a>
         </div>
 

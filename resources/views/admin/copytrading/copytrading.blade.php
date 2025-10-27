@@ -32,7 +32,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
 								<span class='badge badge-warning'>{{ $copytrading->tag }}</span>
 								</div>
 								<div class="text-center">
-									<img src="{{ asset('storage/app/public/'.$copytrading->photo) }}"  width="85" height="75" class="rounded-circle rounded" alt="{{ $copytrading->name }}">
+									<img src="{{ asset('storage/'.$copytrading->photo) }}"  width="85" height="75" class="rounded-circle rounded" alt="{{ $copytrading->name }}">
 									<h3 class="text-{{$text}} text-center text-primary"><span class="px-4 mx-auto bg-white shadow-sm  rounded-bottom">{{ $copytrading->name}}</span></h3>
 									{{-- <h2 class="text-{{$text}} text-center text-primary">{{ $copytrading->name}}</h2> --}}
 								</div>

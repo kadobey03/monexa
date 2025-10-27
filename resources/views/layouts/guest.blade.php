@@ -93,7 +93,7 @@
         }
     </script>
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('storage/app/public/' . $settings->favicon) }}" sizes="any">
+    <link rel="icon" href="{{ asset('storage/' . $settings->favicon) }}" sizes="any">
 
     <!-- Demo script -->
     <script>

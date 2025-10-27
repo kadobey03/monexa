@@ -208,7 +208,7 @@
                         <div class="p-6">
                             <div class="max-w-full mx-auto">
                                 <div class="bg-gray-50 rounded-lg p-4 border-2 border-dashed border-gray-300">
-                                    <img src="{{ asset('storage/app/public/' . $deposit->proof) }}" 
+                                    <img src="{{ asset('storage/' . $deposit->proof) }}" 
                                          alt="Ödeme Kanıtı" 
                                          class="w-full h-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-zoom-in"
                                          onclick="openImageModal(this.src)">

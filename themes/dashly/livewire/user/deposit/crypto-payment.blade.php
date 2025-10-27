@@ -38,7 +38,7 @@
                                 @if (!empty($payment_mode->barcode))
                                     <div class="text-center">
                                         <p class="m-0">Aşağıdaki barkodu tarayarak ödeme yapın</p>
-                                        <img src="{{ asset('storage/app/public/' . $payment_mode->barcode) }}"
+                                        <img src="{{ asset('storage/' . $payment_mode->barcode) }}"
                                             alt="" class="img-fluid w-25 m-0">
                                     </div>
                                 @endif

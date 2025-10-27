@@ -14,7 +14,7 @@
                 @forelse ($courses as $course)
                     <div class="col-md-4">
                         <div class="card">
-                            <img src="{{ str_starts_with($course->course->course_image, 'http') ? $course->course->course_image : asset('storage/app/public/' . $course->course->course_image) }}"
+                            <img src="{{ str_starts_with($course->course->course_image, 'http') ? $course->course->course_image : asset('storage/' . $course->course->course_image) }}"
                                 class="card-img-top" alt="course image">
                             <div class="card-body">
                                 <h5 class="font-weight-bolder">{{ $course->course->course_title }}</h5>

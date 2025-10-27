@@ -31,7 +31,7 @@
                         <div class="flex items-center justify-center mb-6">
                             <div class="relative">
                                 <!-- Remove glow effect -->
-                                <img src="{{ asset('storage/app/public/'.$settings->logo)}}"
+                                <img src="{{ asset('storage/'.$settings->logo)}}"
                                      class="relative h-16 w-auto"
                                      alt="{{ $settings->site_name }}" />
                             </div>

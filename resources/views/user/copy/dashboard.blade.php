@@ -140,7 +140,7 @@
                                 <div class="flex items-start sm:items-center justify-between mb-4 sm:mb-6 relative z-10 gap-3">
                                     <div class="flex items-center space-x-3 min-w-0 flex-1">
                                         @if($copyTrade->expert && $copyTrade->expert->photo)
-                                            <img src="{{ asset('storage/app/public/' . $copyTrade->expert->photo) }}"
+                                            <img src="{{ asset('storage/' . $copyTrade->expert->photo) }}"
                                                  class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-blue-200 dark:border-blue-700 shadow-lg flex-shrink-0"
                                                  alt="{{ $copyTrade->name }}">
                                         @else

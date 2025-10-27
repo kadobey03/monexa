@@ -152,7 +152,7 @@
     <meta property="og:image" content="img/share.jpg">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('storage/app/public/'.$settings->favicon)}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('storage/'.$settings->favicon)}}" type="image/x-icon">
 
     <!-- Preload key assets -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -248,7 +248,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0">
                     <a href="/" class="flex items-center">
-                        <img class="h-8 w-auto" src="{{ asset('storage/app/public/'.$settings->logo)}}" alt="{{$settings->site_name}}">
+                        <img class="h-8 w-auto" src="{{ asset('storage/'.$settings->logo)}}" alt="{{$settings->site_name}}">
                     </a>
                 </div>
 
@@ -460,7 +460,7 @@
                     <div>
                         <div class="flex items-center mb-6">
                             <a href="/" class="flex items-center">
-                                <img class="h-8 w-auto" src="{{ asset('storage/app/public/'.$settings->logo)}}" alt="{{$settings->site_name}}">
+                                <img class="h-8 w-auto" src="{{ asset('storage/'.$settings->logo)}}" alt="{{$settings->site_name}}">
                             </a>
                         </div>
                         <p class="text-sm text-gray-400 mb-6">

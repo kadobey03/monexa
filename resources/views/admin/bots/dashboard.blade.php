@@ -142,7 +142,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                         <div class="d-flex">
                             <div class="avatar">
                                 @if($bot->image)
-                                    <img src="{{ asset('storage/app/public/' . $bot->image) }}" alt="Bot" class="avatar-img rounded-circle">
+                                    <img src="{{ asset('storage/' . $bot->image) }}" alt="Bot" class="avatar-img rounded-circle">
                                 @else
                                     <div class="avatar-img rounded-circle bg-primary d-flex align-items-center justify-content-center">
                                         <i class="fas fa-robot text-white"></i>

@@ -117,7 +117,7 @@
         </div>
         <div class="col-md-4">
             <div class="card">
-                <img src="{{ str_starts_with($course->course_image, 'http') ? $course->course_image : asset('storage/app/public/' . $course->course_image) }}"
+                <img src="{{ str_starts_with($course->course_image, 'http') ? $course->course_image : asset('storage/' . $course->course_image) }}"
                     class="card-img-top" alt="course image">
                 <div class="card-body">
                     @if (in_array(auth()->user()->id, $whoPurchased))

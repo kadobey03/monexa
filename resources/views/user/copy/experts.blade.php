@@ -126,7 +126,7 @@
                             <!-- Expert Avatar & Info -->
                             <div class="text-center">
                                 @if($expert->photo)
-                                    <img src="{{ asset('storage/app/public/'.$expert->photo) }}"
+                                    <img src="{{ asset('storage/'.$expert->photo) }}"
                                          class="w-16 h-16 rounded-full object-cover border-2 border-gray-200 dark:border-gray-600 mx-auto mb-3"
                                          alt="{{ $expert->name }}">
                                 @else

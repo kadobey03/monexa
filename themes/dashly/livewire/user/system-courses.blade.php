@@ -27,7 +27,7 @@
                     <div class="card">
                         <a
                             href="{{ route('user.course.details', ['course' => str_replace(' ', '-', $item->course->course_title), 'id' => $item->course->id]) }}">
-                            <img src="{{ str_starts_with($item->course->course_image, 'http') ? $item->course->course_image : asset('storage/app/public/' . $item->course->course_image) }}"
+                            <img src="{{ str_starts_with($item->course->course_image, 'http') ? $item->course->course_image : asset('storage/' . $item->course->course_image) }}"
                                 class="card-img-top" alt="course image">
                         </a>
                         <div class="card-body">
