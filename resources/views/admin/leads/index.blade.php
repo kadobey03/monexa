@@ -1,610 +1,968 @@
 @extends('layouts.admin')
 
-@section('content')
-@section('styles')
-@parent
-<style>
-    .form-card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .form-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    }
-</style>
-@endsection
+@section('title', 'Lead Management')
 
-<!-- Page Header -->
-<div class="mb-8">
-    <div class="flex items-center justify-between bg-gradient-to-r from-amber-600 via-orange-700 to-red-600 rounded-2xl p-6 text-white shadow-lg">
-        <div class="flex items-center space-x-4">
-            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                <i data-lucide="users" class="w-8 h-8 text-white"></i>
-            </div>
-            <div>
-                <h1 class="text-3xl font-bold mb-1">Lead Yönetimi</h1>
-                <p class="text-amber-100 text-lg">Potansiyel müşterilerinizi yönetin ve takip edin</p>
+@push('head')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+@endpush
+
+@section('content')
+<div x-data="leadsManagement()" x-init="init()" class="space-y-6">
+    <!-- Header Section -->
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Müşteri Adayları Yönetimi</h1>
+            <p class="text-gray-600 dark:text-gray-400 mt-1">Lead'leri görüntüleyin, düzenleyin ve yönetin</p>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center gap-3">
+            @if(auth('admin')->user()->can('export_leads'))
+            <button @click="exportLeads()" 
+                    class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors">
+                <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                Export
+            </button>
+            @endif
+            
+            @if(auth('admin')->user()->can('create_leads'))
+            <button @click="showCreateModal = true" 
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                Yeni Lead Ekle
+            </button>
+            @endif
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white dark:bg-admin-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-admin-700">
+            <div class="flex items-center">
+                <div class="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+                    <i data-lucide="users" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['total_leads'] }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Toplam Lead</p>
+                </div>
             </div>
         </div>
-        <div class="flex items-center space-x-3">
-            @if($isSuperAdmin)
-            <a href="{{ route('admin.leads.export', request()->query()) }}"
-               class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors flex items-center text-white shadow-lg">
-                <i data-lucide="download" class="w-4 h-4 mr-2"></i>Export
-            </a>
-            <a href="{{ route('admin.lead-statuses.index') }}"
-               class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors flex items-center text-white shadow-lg">
-                <i data-lucide="tags" class="w-4 h-4 mr-2"></i>Status Yönetimi
-            </a>
-            @endif
-            <button type="button"
-                    class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-xl transition-colors flex items-center text-white shadow-lg"
-                    data-bs-toggle="modal"
-                    data-bs-target="#importModal">
-                <i data-lucide="upload" class="w-4 h-4 mr-2"></i>Import
+        
+        <div class="bg-white dark:bg-admin-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-admin-700">
+            <div class="flex items-center">
+                <div class="p-2 bg-orange-100 dark:bg-orange-900/20 rounded-lg">
+                    <i data-lucide="user-plus" class="w-6 h-6 text-orange-600 dark:text-orange-400"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['unassigned_leads'] }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Atanmamış</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white dark:bg-admin-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-admin-700">
+            <div class="flex items-center">
+                <div class="p-2 bg-green-100 dark:bg-green-900/20 rounded-lg">
+                    <i data-lucide="calendar" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['new_leads_today'] }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Bugün Eklenen</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white dark:bg-admin-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-admin-700">
+            <div class="flex items-center">
+                <div class="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg">
+                    <i data-lucide="clock" class="w-6 h-6 text-red-600 dark:text-red-400"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['follow_ups_today'] }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Bugün Takip</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-white dark:bg-admin-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-admin-700">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+            <!-- Search -->
+            <div class="lg:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Arama</label>
+                <input type="text" x-model="filters.search" @input.debounce.300ms="applyFilters()" 
+                       placeholder="İsim, e-posta, telefon..." 
+                       class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white">
+            </div>
+            
+            <!-- Status Filter -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Durum</label>
+                <select x-model="filters.status" @change="applyFilters()" 
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white">
+                    <option value="">Tümü</option>
+                    @foreach($leadStatuses as $status)
+                        <option value="{{ $status->id }}">{{ $status->display_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <!-- Assigned Filter -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Atanan</label>
+                <select x-model="filters.assigned" @change="applyFilters()" 
+                        class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white">
+                    <option value="">Tümü</option>
+                    <option value="unassigned">Atanmamış</option>
+                    @foreach($admins as $admin)
+                        <option value="{{ $admin->id }}">{{ $admin->firstName }} {{ $admin->lastName }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <!-- Date From -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Başlangıç</label>
+                <input type="date" x-model="filters.date_from" @change="applyFilters()" 
+                       class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white">
+            </div>
+            
+            <!-- Date To -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Bitiş</label>
+                <input type="date" x-model="filters.date_to" @change="applyFilters()" 
+                       class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white">
+            </div>
+        </div>
+        
+        <!-- Clear Filters -->
+        <div class="mt-4 flex justify-end">
+            <button @click="clearFilters()" 
+                    class="inline-flex items-center px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+                <i data-lucide="x-circle" class="w-4 h-4 mr-2"></i>
+                Filtreleri Temizle
             </button>
         </div>
     </div>
-</div>
 
-<!-- Alert Messages -->
-<x-danger-alert />
-<x-success-alert />
-
-<!-- Statistics Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Toplam Lead</p>
-                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['total_leads']) }}</h3>
-                <p class="text-xs text-admin-400 mt-1">Tüm müşteri adayları</p>
-            </div>
-            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
-                <i data-lucide="users" class="w-7 h-7 text-white"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Bugünkü Yeni</p>
-                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['new_leads_today']) }}</h3>
-                <p class="text-xs text-admin-400 mt-1">Yeni kayıtlar</p>
-            </div>
-            <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center">
-                <i data-lucide="user-plus" class="w-7 h-7 text-white"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Atanmamış</p>
-                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['unassigned_leads']) }}</h3>
-                <p class="text-xs text-admin-400 mt-1">Atama bekliyor</p>
-            </div>
-            <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center">
-                <i data-lucide="user-x" class="w-7 h-7 text-white"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-        <div class="flex items-center justify-between">
-            <div>
-                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Yüksek Skor</p>
-                <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['high_score_leads']) }}</h3>
-                <p class="text-xs text-admin-400 mt-1">Potansiyel yüksek</p>
-            </div>
-            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center">
-                <i data-lucide="trophy" class="w-7 h-7 text-white"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-            <!-- Quick Stats Row -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl p-6 text-white">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-cyan-100 text-sm">Bugünkü Takipler</p>
-                            <p class="text-3xl font-bold">{{ number_format($stats['follow_ups_today']) }}</p>
-                        </div>
-                        <i class="fas fa-clock text-4xl text-cyan-200"></i>
-                    </div>
+    <!-- Leads Table -->
+    <div class="bg-white dark:bg-admin-800 rounded-xl shadow-sm border border-gray-200 dark:border-admin-700 overflow-hidden">
+        <!-- Table Header -->
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white">
+                    Lead Listesi
+                    <span class="text-sm text-gray-500 dark:text-gray-400 ml-2" x-text="'(' + pagination.total + ' kayıt)'"></span>
                 </div>
-
-                <div class="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-6 text-white">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-orange-100 text-sm">Gecikmiş Takipler</p>
-                            <p class="text-3xl font-bold">{{ number_format($stats['overdue_follow_ups']) }}</p>
-                        </div>
-                        <i class="fas fa-exclamation-triangle text-4xl text-orange-200"></i>
-                    </div>
-                </div>
-
-                <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-6 text-white">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-purple-100 text-sm">Bu Haftaki Yeni</p>
-                            <p class="text-3xl font-bold">{{ number_format($stats['new_leads_this_week']) }}</p>
-                        </div>
-                        <i class="fas fa-calendar-week text-4xl text-purple-200"></i>
-                    </div>
+                
+                <!-- Bulk Actions -->
+                <div x-show="selectedLeads.length > 0" class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-600 dark:text-gray-400" x-text="selectedLeads.length + ' seçili'"></span>
+                    
+                    @if(auth('admin')->user()->can('edit_leads'))
+                    <select x-model="bulkAssignTo" @change="if(bulkAssignTo) bulkAssign()" 
+                            class="px-3 py-1 text-sm border border-gray-300 dark:border-admin-600 rounded focus:ring-2 focus:ring-blue-500 dark:bg-admin-700 dark:text-white">
+                        <option value="">Toplu Atama</option>
+                        @foreach($admins as $admin)
+                            <option value="{{ $admin->id }}">{{ $admin->firstName }} {{ $admin->lastName }}</option>
+                        @endforeach
+                    </select>
+                    @endif
+                    
+                    <button @click="clearSelection()" 
+                            class="px-3 py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                        Seçimi Temizle
+                    </button>
                 </div>
             </div>
+        </div>
+        
+        <!-- Loading State -->
+        <div x-show="loading" class="flex items-center justify-center py-12">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <span class="ml-3 text-gray-600 dark:text-gray-400">Yükleniyor...</span>
+        </div>
+        
+        <!-- Table -->
+        <div x-show="!loading" class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-admin-700">
+                <thead class="bg-gray-50 dark:bg-admin-900">
+                    <tr>
+                        <th class="px-6 py-3 text-left">
+                            <input type="checkbox" @change="toggleAll($event.target.checked)" 
+                                   class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" @click="sort('name')">
+                            <div class="flex items-center space-x-1">
+                                <span>İsim</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </div>
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">İletişim</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" @click="sort('lead_status_id')">
+                            <div class="flex items-center space-x-1">
+                                <span>Durum</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </div>
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Atanan</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" @click="sort('created_at')">
+                            <div class="flex items-center space-x-1">
+                                <span>Tarih</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </div>
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-admin-800 divide-y divide-gray-200 dark:divide-admin-700">
+                    <template x-for="lead in leads" :key="lead.id">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-admin-700/50 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <input type="checkbox" :value="lead.id" x-model="selectedLeads" 
+                                       class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-gray-900 dark:text-white" x-text="lead.name"></div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400" x-text="lead.country || 'Belirtilmemiş'"></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 dark:text-white" x-text="lead.email"></div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400" x-text="lead.phone"></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap"
+                                x-data="{
+                                    editing: false,
+                                    loading: false,
+                                    originalStatus: lead.lead_status_id,
+                                    selectedStatus: lead.lead_status_id || ''
+                                }"
+                                @click.away="if (editing && !loading) { selectedStatus = originalStatus; editing = false; }"
+                                @keyup.escape="if (editing && !loading) { selectedStatus = originalStatus; editing = false; }">
+                                
+                                <!-- Display Mode -->
+                                <div x-show="!editing"
+                                     @click="if (!loading) { editing = true; $nextTick(() => $refs.statusSelect?.focus()); }"
+                                     class="cursor-pointer hover:bg-gray-50 dark:hover:bg-admin-700 -mx-2 -my-1 px-2 py-1 rounded transition-colors">
+                                    <span class="inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full"
+                                          :class="getStatusClass(lead.lead_status)"
+                                          :style="lead.lead_status?.color ? `background-color: ${lead.lead_status.color}20; color: ${lead.lead_status.color};` : ''">
+                                        <span x-text="lead.lead_status?.display_name || 'Belirlenmemiş'"></span>
+                                        <i data-lucide="chevron-down" class="w-3 h-3 ml-1 opacity-50"></i>
+                                    </span>
+                                </div>
 
-            <!-- Filters -->
-            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 mb-6">
-                <form method="GET" action="{{ route('admin.leads.index') }}" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
-                        <div>
-                            <label class="block text-white/70 text-sm font-medium mb-2">Status</label>
-                            <select name="status" class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
-                                <option value="">Tüm Statuslar</option>
-                                @foreach($leadStatuses as $status)
-                                <option value="{{ $status->id }}" {{ request('status') == $status->id ? 'selected' : '' }}>
-                                    {{ $status->display_name }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-white/70 text-sm font-medium mb-2">Atama</label>
-                            <select name="assigned" class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
-                                <option value="">Tümü</option>
-                                <option value="unassigned" {{ request('assigned') == 'unassigned' ? 'selected' : '' }}>Atanmamış</option>
-                                @foreach($admins as $admin)
-                                <option value="{{ $admin->id }}" {{ request('assigned') == $admin->id ? 'selected' : '' }}>
-                                    {{ $admin->firstName }} {{ $admin->lastName }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-white/70 text-sm font-medium mb-2">Kaynak</label>
-                            <select name="source" class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
-                                <option value="">Tüm Kaynaklar</option>
-                                <option value="import" {{ request('source') == 'import' ? 'selected' : '' }}>Import</option>
-                                <option value="manual" {{ request('source') == 'manual' ? 'selected' : '' }}>Manuel</option>
-                                <option value="web_form" {{ request('source') == 'web_form' ? 'selected' : '' }}>Web Formu</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-white/70 text-sm font-medium mb-2">Başlangıç</label>
-                            <input type="date" name="date_from" value="{{ request('date_from') }}"
-                                   class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
-                        </div>
-                        <div>
-                            <label class="block text-white/70 text-sm font-medium mb-2">Bitiş</label>
-                            <input type="date" name="date_to" value="{{ request('date_to') }}"
-                                   class="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
-                        </div>
-                        <div class="flex items-end">
-                            <button type="submit" class="w-full px-4 py-2 bg-white text-indigo-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
-                                <i class="fas fa-search mr-2"></i>Filtrele
-                            </button>
+                                <!-- Edit Mode -->
+                                <div x-show="editing" class="relative">
+                                    <select x-ref="statusSelect"
+                                            x-model="selectedStatus"
+                                            @change="updateStatus(lead.id, selectedStatus, $el)"
+                                            :disabled="loading"
+                                            class="text-xs font-semibold rounded px-2 py-1 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed min-w-[100px] md:min-w-[120px]">
+                                        <option value="">Seçiniz</option>
+                                        @foreach($leadStatuses as $status)
+                                            <option value="{{ $status->id }}">{{ $status->display_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    
+                                    <!-- Loading spinner -->
+                                    <div x-show="loading" class="absolute right-2 top-1/2 transform -translate-y-1/2">
+                                        <svg class="animate-spin h-3 w-3 text-blue-600" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap"
+                                x-data="{
+                                    editing: false,
+                                    loading: false,
+                                    originalAssignment: lead.assign_to,
+                                    selectedAssignment: lead.assign_to || ''
+                                }"
+                                @click.away="if (editing && !loading) { selectedAssignment = originalAssignment; editing = false; }"
+                                @keyup.escape="if (editing && !loading) { selectedAssignment = originalAssignment; editing = false; }">
+                                
+                                <!-- Display Mode -->
+                                <div x-show="!editing"
+                                     @click="if (!loading) { editing = true; $nextTick(() => $refs.assignmentSelect?.focus()); }"
+                                     class="cursor-pointer hover:bg-gray-50 dark:hover:bg-admin-700 -mx-2 -my-1 px-2 py-1 rounded transition-colors min-w-[120px] md:min-w-[160px]">
+                                    
+                                    <div x-show="lead.assigned_admin" class="flex items-center">
+                                        <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-medium mr-2" x-text="getInitials(lead.assigned_admin?.firstName, lead.assigned_admin?.lastName)"></div>
+                                        <div class="flex-1">
+                                            <div class="text-sm font-medium text-gray-900 dark:text-white" x-text="lead.assigned_admin?.firstName + ' ' + lead.assigned_admin?.lastName"></div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400" x-text="lead.assigned_admin?.type || 'Admin'"></div>
+                                        </div>
+                                        <i data-lucide="chevron-down" class="w-3 h-3 ml-1 opacity-50"></i>
+                                    </div>
+                                    
+                                    <div x-show="!lead.assigned_admin" class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                        <span>Atanmamış</span>
+                                        <i data-lucide="chevron-down" class="w-3 h-3 ml-1 opacity-50"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Edit Mode -->
+                                <div x-show="editing" class="relative">
+                                    <select x-ref="assignmentSelect"
+                                            x-model="selectedAssignment"
+                                            @change="updateAssignment(lead.id, selectedAssignment, $el)"
+                                            :disabled="loading"
+                                            class="text-sm rounded px-2 py-1 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed min-w-[120px] md:min-w-[160px]">
+                                        <option value="">Atanmamış</option>
+                                        @foreach($admins as $admin)
+                                            <option value="{{ $admin->id }}">{{ $admin->firstName }} {{ $admin->lastName }}</option>
+                                        @endforeach
+                                    </select>
+                                    
+                                    <!-- Loading spinner -->
+                                    <div x-show="loading" class="absolute right-2 top-1/2 transform -translate-y-1/2">
+                                        <svg class="animate-spin h-3 w-3 text-blue-600" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400" x-text="formatDate(lead.created_at)"></td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <div class="flex items-center space-x-2">
+                                    <button @click="viewLead(lead)" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                        <i data-lucide="eye" class="w-4 h-4"></i>
+                                    </button>
+                                    @if(auth('admin')->user()->can('edit_leads'))
+                                    <button @click="editLead(lead)" class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300">
+                                        <i data-lucide="edit" class="w-4 h-4"></i>
+                                    </button>
+                                    @endif
+                                    @if(auth('admin')->user()->can('call_leads'))
+                                    <button @click="callLead(lead)" class="text-purple-600 hover:text-purple-900 dark:text-purple-400 dark:hover:text-purple-300">
+                                        <i data-lucide="phone" class="w-4 h-4"></i>
+                                    </button>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Empty State -->
+        <div x-show="!loading && leads.length === 0" class="text-center py-12">
+            <i data-lucide="users" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Lead bulunamadı</h3>
+            <p class="text-gray-500 dark:text-gray-400">Filtreleri değiştirmeyi deneyin veya yeni bir lead ekleyin.</p>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div x-show="pagination.total > 0" class="bg-white dark:bg-admin-800 px-6 py-4 rounded-xl shadow-sm border border-gray-200 dark:border-admin-700">
+        <div class="flex items-center justify-between">
+            <div class="text-sm text-gray-700 dark:text-gray-300">
+                <span x-text="pagination.from"></span> - <span x-text="pagination.to"></span> / <span x-text="pagination.total"></span> kayıt gösteriliyor
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <button @click="goToPage(pagination.current_page - 1)" :disabled="pagination.current_page <= 1"
+                        class="px-3 py-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white">
+                    Önceki
+                </button>
+                
+                <template x-for="page in getPageNumbers()" :key="page">
+                    <button @click="goToPage(page)" 
+                            :class="page === pagination.current_page ? 'bg-blue-600 text-white' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-admin-700'"
+                            class="px-3 py-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg"
+                            x-text="page"></button>
+                </template>
+                
+                <button @click="goToPage(pagination.current_page + 1)" :disabled="pagination.current_page >= pagination.last_page"
+                        class="px-3 py-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white">
+                    Sonraki
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Modal -->
+    <div x-show="showViewModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" x-cloak>
+        <div class="bg-white dark:bg-admin-800 rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto m-4">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-admin-700">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Lead Detayları</h3>
+                <button @click="showViewModal = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 space-y-6" x-show="selectedLead">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-medium text-gray-900 dark:text-white mb-3">Kişisel Bilgiler</h4>
+                        <div class="space-y-2 text-sm">
+                            <div><span class="text-gray-600 dark:text-gray-400">İsim:</span> <span x-text="selectedLead?.name"></span></div>
+                            <div><span class="text-gray-600 dark:text-gray-400">E-posta:</span> <span x-text="selectedLead?.email"></span></div>
+                            <div><span class="text-gray-600 dark:text-gray-400">Telefon:</span> <span x-text="selectedLead?.phone"></span></div>
+                            <div><span class="text-gray-600 dark:text-gray-400">Ülke:</span> <span x-text="selectedLead?.country || 'Belirtilmemiş'"></span></div>
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
-                        <div class="md:col-span-5">
-                            <input type="text" name="search" placeholder="Ad, e-posta veya telefon ile ara..." value="{{ request('search') }}"
-                                   class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/30">
-                        </div>
-                        <div>
-                            <a href="{{ route('admin.leads.index') }}" class="w-full px-4 py-3 bg-white/20 text-white font-semibold rounded-lg hover:bg-white/30 transition-colors flex items-center justify-center">
-                                <i class="fas fa-times mr-2"></i>Temizle
-                            </a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Bulk Actions -->
-            <div id="bulkActions" class="hidden bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl p-4 mb-6">
-                <div class="flex items-center justify-between">
-                    <div class="text-gray-700">
-                        <strong><span id="selectedCount">0</span></strong> lead seçildi
-                    </div>
-                    <div class="flex space-x-3">
-                        <button type="button" 
-                                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#bulkAssignModal">
-                            <i class="fas fa-user-plus mr-2"></i>Toplu Atama
-                        </button>
-                        <button type="button" 
-                                onclick="clearSelection()" 
-                                class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors flex items-center">
-                            <i class="fas fa-times mr-2"></i>Seçimi Temizle
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Leads Table -->
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <i class="fas fa-list text-blue-600 text-xl mr-3"></i>
-                            <h3 class="text-xl font-semibold text-gray-900">Lead Listesi</h3>
-                            <span class="ml-2 text-gray-500">({{ $leads->total() }} toplam)</span>
-                        </div>
-                        <div class="flex space-x-2">
-                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'created_at', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}" 
-                               class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
-                                <i class="fas fa-sort mr-1"></i>Tarih
-                            </a>
-                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'lead_score', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc']) }}" 
-                               class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm">
-                                <i class="fas fa-star mr-1"></i>Skor
-                            </a>
+                    <div>
+                        <h4 class="font-medium text-gray-900 dark:text-white mb-3">Lead Bilgileri</h4>
+                        <div class="space-y-2 text-sm">
+                            <div><span class="text-gray-600 dark:text-gray-400">Durum:</span> <span x-text="selectedLead?.lead_status?.display_name || 'Belirlenmemiş'"></span></div>
+                            <div><span class="text-gray-600 dark:text-gray-400">Atanan:</span> <span x-text="selectedLead?.assigned_admin ? selectedLead.assigned_admin.firstName + ' ' + selectedLead.assigned_admin.lastName : 'Atanmamış'"></span></div>
+                            <div><span class="text-gray-600 dark:text-gray-400">Kayıt Tarihi:</span> <span x-text="formatDate(selectedLead?.created_at)"></span></div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
-                            <tr>
-                                <th class="px-6 py-4 text-left">
-                                    <input type="checkbox" id="selectAll" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
-                                </th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lead Bilgileri</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Skor</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Atanan</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Son İletişim</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kaynak</th>
-                                <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @forelse($leads as $lead)
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" class="lead-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" value="{{ $lead->id }}">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-start">
-                                        <div>
-                                            <div class="flex items-center">
-                                                <div class="text-sm font-medium text-gray-900">{{ $lead->name }}</div>
-                                                @if($lead->preferred_contact_method)
-                                                <span class="ml-2 inline-flex items-center justify-center w-5 h-5 text-xs text-white rounded-full {{ $lead->preferred_contact_method === 'phone' ? 'bg-blue-500' : 'bg-green-500' }}">
-                                                    <i class="fas fa-{{ $lead->preferred_contact_method === 'phone' ? 'phone' : 'envelope' }}"></i>
-                                                </span>
-                                                @endif
-                                            </div>
-                                            <div class="text-sm text-gray-500">
-                                                <i class="fas fa-envelope mr-1"></i>{{ $lead->email }}
-                                            </div>
-                                            @if($lead->phone)
-                                            <div class="text-sm text-gray-500">
-                                                <i class="fas fa-phone mr-1"></i>{{ $lead->phone }}
-                                            </div>
-                                            @endif
-                                            @if($lead->country)
-                                            <div class="text-sm text-gray-500">
-                                                <i class="fas fa-flag mr-1"></i>{{ $lead->country }}
-                                            </div>
-                                            @endif
-                                            @if($lead->lead_tags)
-                                            <div class="flex flex-wrap gap-1 mt-1">
-                                                @foreach($lead->lead_tags as $tag)
-                                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">{{ $tag }}</span>
-                                                @endforeach
-                                            </div>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($lead->leadStatus)
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium text-white"
-                                          style="background-color: {{ $lead->leadStatus->color }};">
-                                        {{ $lead->leadStatus->display_name }}
-                                    </span>
-                                    @else
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-500 text-white">
-                                        Belirlenmemiş
-                                    </span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center justify-center w-10 h-10 rounded-full text-sm font-bold border-2
-                                                {{ $lead->lead_score >= 70 ? 'bg-green-100 text-green-800 border-green-400' : 
-                                                   ($lead->lead_score >= 40 ? 'bg-yellow-100 text-yellow-800 border-yellow-400' : 'bg-red-100 text-red-800 border-red-400') }}">
-                                        {{ $lead->lead_score }}
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($lead->assignedAdmin)
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 w-8 h-8">
-                                            <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-medium">
-                                                {{ substr($lead->assignedAdmin->firstName, 0, 1) }}{{ substr($lead->assignedAdmin->lastName, 0, 1) }}
-                                            </div>
-                                        </div>
-                                        <div class="ml-2">
-                                            <div class="text-sm font-medium text-gray-900">{{ $lead->assignedAdmin->firstName }} {{ $lead->assignedAdmin->lastName }}</div>
-                                        </div>
-                                    </div>
-                                    @else
-                                    <span class="text-sm text-gray-500">Atanmamış</span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    @if($lead->last_contact_date)
-                                    <div>
-                                        <div>{{ $lead->last_contact_date->format('d.m.Y') }}</div>
-                                        <div class="text-gray-500">{{ $lead->last_contact_date->diffForHumans() }}</div>
-                                    </div>
-                                    @else
-                                    <span class="text-gray-500">Hiçbir zaman</span>
-                                    @endif
-                                    
-                                    @if($lead->next_follow_up_date)
-                                    <div class="mt-1">
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
-                                                     {{ $lead->next_follow_up_date->isPast() ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800' }}">
-                                            Sonraki: {{ $lead->next_follow_up_date->format('d.m.Y') }}
-                                        </span>
-                                    </div>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($lead->lead_source)
-                                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                        {{ ucfirst($lead->lead_source) }}
-                                    </span>
-                                    @endif
-                                    <div class="text-sm text-gray-500 mt-1">
-                                        {{ $lead->created_at->format('d.m.Y H:i') }}
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
-                                    <div class="flex items-center justify-center space-x-2">
-                                        <a href="{{ route('admin.leads.show', $lead->id) }}" 
-                                           class="text-blue-600 hover:text-blue-900 transition-colors" 
-                                           title="Detaylar">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        @if(!$lead->isAssigned() || $isSuperAdmin || $lead->assign_to === auth('admin')->id())
-                                        <button type="button" 
-                                                onclick="quickAssign({{ $lead->id }}, '{{ $lead->name }}')" 
-                                                class="text-green-600 hover:text-green-900 transition-colors" 
-                                                title="Hızlı Atama">
-                                            <i class="fas fa-user-plus"></i>
-                                        </button>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="8" class="px-6 py-12 text-center">
-                                    <div class="text-gray-400">
-                                        <i class="fas fa-inbox text-4xl mb-4"></i>
-                                        <h3 class="text-lg font-medium text-gray-900 mb-1">Henüz lead bulunmuyor</h3>
-                                        <p class="text-gray-500">Filtreleri değiştirmeyi deneyin veya yeni lead ekleyin.</p>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                <div x-show="selectedLead?.lead_notes">
+                    <h4 class="font-medium text-gray-900 dark:text-white mb-3">Notlar</h4>
+                    <p class="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-admin-900 p-4 rounded-lg" x-text="selectedLead?.lead_notes"></p>
                 </div>
             </div>
-
-            <!-- Pagination -->
-            @if($leads->hasPages())
-            <div class="flex justify-center mt-6">
-                {{ $leads->appends(request()->query())->links() }}
-            </div>
-            @endif
         </div>
     </div>
-</div>
 
-<!-- Import Modal -->
-<div class="modal fade" id="importModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">
-                    <i class="fas fa-upload me-2"></i>Excel Import
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <form action="{{ route('fileImport') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle me-2"></i>
-                        Excel dosyanızın şu sütunları içermesi gerekir: <strong>name, email, phone_number, country, username (opsiyonel)</strong>
+    <!-- Edit Modal -->
+    <div x-show="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" x-cloak>
+        <div class="bg-white dark:bg-admin-800 rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto m-4">
+            <form @submit.prevent="updateLead()">
+                <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-admin-700">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Lead Düzenle</h3>
+                    <button type="button" @click="showEditModal = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                
+                <div class="p-6 space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Durum</label>
+                            <select x-model="editForm.lead_status_id" class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-admin-700 dark:text-white">
+                                <option value="">Seçiniz</option>
+                                @foreach($leadStatuses as $status)
+                                    <option value="{{ $status->id }}">{{ $status->display_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Atama</label>
+                            <select x-model="editForm.assign_to" class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-admin-700 dark:text-white">
+                                <option value="">Atanmamış</option>
+                                @foreach($admins as $admin)
+                                    <option value="{{ $admin->id }}">{{ $admin->firstName }} {{ $admin->lastName }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     
-                    <div class="mb-3">
-                        <label class="form-label">Excel Dosyası</label>
-                        <input type="file" name="file" class="form-control" accept=".xlsx,.xls,.csv" required>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Notlar</label>
+                        <textarea x-model="editForm.lead_notes" rows="4" class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-admin-700 dark:text-white" placeholder="Lead hakkında notlarınız..."></textarea>
                     </div>
-
-                    <div class="text-center">
-                        <a href="{{ route('downlddoc') }}" class="btn btn-outline-primary">
-                            <i class="fas fa-download me-2"></i>Örnek Dosyayı İndir
-                        </a>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Sonraki Takip Tarihi</label>
+                        <input type="date" x-model="editForm.next_follow_up_date" class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-admin-700 dark:text-white">
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-upload me-2"></i>Import Et
+                
+                <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-admin-700">
+                    <button type="button" @click="showEditModal = false" class="px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                        İptal
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                        <span x-show="!editLoading">Güncelle</span>
+                        <span x-show="editLoading" class="flex items-center">
+                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Güncelleniyor...
+                        </span>
                     </button>
                 </div>
             </form>
         </div>
     </div>
+
 </div>
 
-<!-- Bulk Assign Modal -->
-<div class="modal fade" id="bulkAssignModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">
-                    <i class="fas fa-users-cog me-2"></i>Toplu Atama
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <form action="{{ route('admin.leads.bulk-assign') }}" method="POST" id="bulkAssignForm">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Admin Seçin</label>
-                        <select name="admin_id" class="form-control" required>
-                            <option value="">Admin seçin...</option>
-                            @foreach($admins as $admin)
-                            <option value="{{ $admin->id }}">
-                                {{ $admin->firstName }} {{ $admin->lastName }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle me-2"></i>
-                        Seçilen <strong><span id="bulkSelectedCount">0</span></strong> lead belirtilen admin'e atanacak.
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-check me-2"></i>Ata
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-@push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Checkbox handling
-    const selectAllCheckbox = document.getElementById('selectAll');
-    if (selectAllCheckbox) {
-        selectAllCheckbox.addEventListener('change', function() {
-            const checkboxes = document.querySelectorAll('.lead-checkbox');
-            
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = this.checked;
-            });
-            
-            updateSelectedCount();
-            toggleBulkActions();
-        });
-    }
+// 🪲 DIAGNOSTIC: Alpine.js Debug
+console.log('🪲 SCRIPT LOADING - Alpine.js diagnostic started');
 
-    document.querySelectorAll('.lead-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            updateSelectedCount();
-            toggleBulkActions();
+// Check if Alpine is available
+console.log('🪲 Alpine available:', typeof Alpine !== 'undefined');
+console.log('🪲 Current timestamp:', new Date().toISOString());
+
+function leadsManagement() {
+    console.log('🪲 FUNCTION INIT - leadsManagement() called');
+    
+    const data = {
+        // 🪲 DATA DEBUG
+        leads: (function() {
+            const leadsData = @json($leads->items() ?: []);
+            console.log('🪲 LEADS DATA:', leadsData?.length || 0, 'items');
+            return leadsData;
+        })(),
+        pagination: (function() {
+            const paginationData = @json($leads->toArray());
+            console.log('🪲 PAGINATION DATA:', paginationData);
+            return paginationData;
+        })(),
+        filters: {
+            search: '{{ request("search", "") }}',
+            status: '{{ request("status", "") }}',
+            assigned: '{{ request("assigned", "") }}',
+            date_from: '{{ request("date_from", "") }}',
+            date_to: '{{ request("date_to", "") }}'
+        },
+        sortBy: '{{ request("sort", "created_at") }}',
+        sortDirection: '{{ request("direction", "desc") }}',
+        
+        // State
+        loading: false,
+        selectedLeads: [],
+        bulkAssignTo: '',
+        
+        // Modals
+        showViewModal: false,
+        showEditModal: false,
+        showCreateModal: false,
+        selectedLead: null,
+        editForm: {},
+        editLoading: false,
+
+        // Inline Editing State
+        availableStatuses: @json($leadStatuses),
+        availableAdmins: @json($admins),
+
+        // Initialization
+        init() {
+            console.log('🪲 ALPINE INIT - init() method called');
+            console.log('🪲 DATA CHECK - pagination:', !!this.pagination);
+            console.log('🪲 DATA CHECK - selectedLead:', !!this.selectedLead);
+            console.log('🪲 DATA CHECK - showViewModal:', !!this.showViewModal);
+            console.log('🪲 DATA CHECK - editForm:', !!this.editForm);
+            console.log('🪲 FUNCTION CHECK - formatDate:', typeof this.formatDate);
+            console.log('🪲 FUNCTION CHECK - getPageNumbers:', typeof this.getPageNumbers);
             
-            // Update select all checkbox
-            const allCheckboxes = document.querySelectorAll('.lead-checkbox');
-            const checkedCheckboxes = document.querySelectorAll('.lead-checkbox:checked');
-            const selectAllCheckbox = document.getElementById('selectAll');
+            // Initialize Lucide icons after Alpine is ready
+            this.$nextTick(() => {
+                console.log('🪲 LUCIDE INIT - Creating icons');
+                lucide.createIcons();
+            });
+        },
+
+        // Filtering
+        applyFilters() {
+            const params = new URLSearchParams();
             
-            if (selectAllCheckbox) {
-                if (checkedCheckboxes.length === allCheckboxes.length) {
-                    selectAllCheckbox.checked = true;
-                    selectAllCheckbox.indeterminate = false;
-                } else if (checkedCheckboxes.length > 0) {
-                    selectAllCheckbox.checked = false;
-                    selectAllCheckbox.indeterminate = true;
-                } else {
-                    selectAllCheckbox.checked = false;
-                    selectAllCheckbox.indeterminate = false;
+            Object.keys(this.filters).forEach(key => {
+                if (this.filters[key]) {
+                    params.append(key, this.filters[key]);
                 }
-            }
-        });
-    });
-
-    function updateSelectedCount() {
-        const checkedBoxes = document.querySelectorAll('.lead-checkbox:checked');
-        const count = checkedBoxes.length;
-        
-        const selectedCountEl = document.getElementById('selectedCount');
-        const bulkSelectedCountEl = document.getElementById('bulkSelectedCount');
-        
-        if (selectedCountEl) selectedCountEl.textContent = count;
-        if (bulkSelectedCountEl) bulkSelectedCountEl.textContent = count;
-        
-        // Update form with selected IDs
-        const form = document.getElementById('bulkAssignForm');
-        if (form) {
-            // Remove existing hidden inputs
-            const existingInputs = form.querySelectorAll('input[name="lead_ids[]"]');
-            existingInputs.forEach(input => input.remove());
-            
-            // Add new hidden inputs
-            checkedBoxes.forEach(checkbox => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'lead_ids[]';
-                input.value = checkbox.value;
-                form.appendChild(input);
             });
-        }
-    }
+            
+            if (this.sortBy) params.append('sort', this.sortBy);
+            if (this.sortDirection) params.append('direction', this.sortDirection);
+            
+            window.location.href = `{{ route('admin.leads.index') }}?${params.toString()}`;
+        },
 
-    function toggleBulkActions() {
-        const checkedBoxes = document.querySelectorAll('.lead-checkbox:checked');
-        const bulkActions = document.getElementById('bulkActions');
-        
-        if (bulkActions) {
-            if (checkedBoxes.length > 0) {
-                bulkActions.classList.remove('hidden');
+        clearFilters() {
+            this.filters = {
+                search: '',
+                status: '',
+                assigned: '',
+                date_from: '',
+                date_to: ''
+            };
+            this.applyFilters();
+        },
+
+        // Sorting
+        sort(column) {
+            if (this.sortBy === column) {
+                this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
             } else {
-                bulkActions.classList.add('hidden');
+                this.sortBy = column;
+                this.sortDirection = 'asc';
             }
+            this.applyFilters();
+        },
+
+        // Pagination
+        goToPage(page) {
+            if (page < 1 || page > this.pagination.last_page) return;
+            
+            const params = new URLSearchParams(window.location.search);
+            params.set('page', page);
+            window.location.href = `{{ route('admin.leads.index') }}?${params.toString()}`;
+        },
+
+        getPageNumbers() {
+            const current = this.pagination.current_page;
+            const last = this.pagination.last_page;
+            const pages = [];
+            
+            const start = Math.max(1, current - 2);
+            const end = Math.min(last, current + 2);
+            
+            for (let i = start; i <= end; i++) {
+                pages.push(i);
+            }
+            
+            return pages;
+        },
+
+        // Selection
+        toggleAll(checked) {
+            if (checked) {
+                this.selectedLeads = this.leads.map(lead => lead.id);
+            } else {
+                this.selectedLeads = [];
+            }
+        },
+
+        clearSelection() {
+            this.selectedLeads = [];
+            this.bulkAssignTo = '';
+        },
+
+        // Actions
+        viewLead(lead) {
+            this.selectedLead = lead;
+            this.showViewModal = true;
+            this.$nextTick(() => lucide.createIcons());
+        },
+
+        editLead(lead) {
+            this.selectedLead = lead;
+            this.editForm = {
+                lead_status_id: lead.lead_status_id || '',
+                assign_to: lead.assign_to || '',
+                lead_notes: lead.lead_notes || '',
+                next_follow_up_date: lead.next_follow_up_date || ''
+            };
+            this.showEditModal = true;
+            this.$nextTick(() => lucide.createIcons());
+        },
+
+        async updateLead() {
+            if (!this.selectedLead) return;
+            
+            this.editLoading = true;
+            
+            try {
+                const formData = new FormData();
+                formData.append('_method', 'PUT');
+                formData.append('_token', '{{ csrf_token() }}');
+                
+                Object.keys(this.editForm).forEach(key => {
+                    if (this.editForm[key]) {
+                        formData.append(key, this.editForm[key]);
+                    }
+                });
+
+                const response = await fetch(`/admin/dashboard/leads/${this.selectedLead.id}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    console.error('Update failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                this.editLoading = false;
+            }
+        },
+
+        async bulkAssign() {
+            if (!this.bulkAssignTo || this.selectedLeads.length === 0) return;
+
+            try {
+                const response = await fetch('{{ route('admin.leads.bulk-assign') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        lead_ids: this.selectedLeads,
+                        admin_id: this.bulkAssignTo
+                    })
+                });
+
+                if (response.ok) {
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error('Bulk assign error:', error);
+            }
+        },
+
+        callLead(lead) {
+            if (lead.phone) {
+                window.open(`tel:${lead.phone}`);
+            }
+        },
+
+        exportLeads() {
+            const params = new URLSearchParams();
+            Object.keys(this.filters).forEach(key => {
+                if (this.filters[key]) {
+                    params.append(key, this.filters[key]);
+                }
+            });
+            
+            window.open(`{{ route('admin.leads.export') }}?${params.toString()}`);
+        },
+
+        // Inline Status Update
+        async updateStatus(leadId, newStatusId, selectElement) {
+            const statusEditor = selectElement.closest('td').querySelector('[x-data]').__x.$data;
+            
+            statusEditor.loading = true;
+            statusEditor.editing = false;
+
+            // Find the lead and status objects
+            const lead = this.leads.find(l => l.id === leadId);
+            const newStatus = this.availableStatuses.find(s => s.id == newStatusId);
+            const originalStatus = lead.lead_status;
+
+            // Optimistic update
+            if (newStatus) {
+                lead.lead_status = newStatus;
+                lead.lead_status_id = newStatus.id;
+            } else {
+                lead.lead_status = null;
+                lead.lead_status_id = null;
+            }
+
+            try {
+                const response = await fetch(`/admin/dashboard/leads/${leadId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        lead_status_id: newStatusId
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || 'Status güncellenirken hata oluştu');
+                }
+
+                // Update with actual response data if provided
+                if (result.lead) {
+                    const leadIndex = this.leads.findIndex(l => l.id === leadId);
+                    if (leadIndex !== -1) {
+                        this.leads[leadIndex] = { ...this.leads[leadIndex], ...result.lead };
+                    }
+                }
+
+                // Show success notification
+                this.showNotification('success', result.message || 'Lead durumu başarıyla güncellendi');
+
+            } catch (error) {
+                console.error('Status update error:', error);
+                
+                // Revert optimistic update
+                lead.lead_status = originalStatus;
+                lead.lead_status_id = originalStatus?.id || null;
+                statusEditor.selectedStatus = originalStatus?.id || '';
+
+                // Show error notification
+                this.showNotification('error', error.message || 'Status güncellenirken hata oluştu');
+            } finally {
+                statusEditor.loading = false;
+                statusEditor.originalStatus = lead.lead_status_id;
+                this.$nextTick(() => lucide.createIcons());
+            }
+        },
+
+        // Inline Assignment Update
+        async updateAssignment(leadId, newAdminId, selectElement) {
+            const assignmentEditor = selectElement.closest('td').querySelector('[x-data]').__x.$data;
+            
+            assignmentEditor.loading = true;
+            assignmentEditor.editing = false;
+
+            // Find the lead and admin objects
+            const lead = this.leads.find(l => l.id === leadId);
+            const newAdmin = this.availableAdmins.find(a => a.id == newAdminId);
+            const originalAdmin = lead.assigned_admin;
+
+            // Optimistic update
+            if (newAdmin) {
+                lead.assigned_admin = newAdmin;
+                lead.assign_to = newAdmin.id;
+            } else {
+                lead.assigned_admin = null;
+                lead.assign_to = null;
+            }
+
+            try {
+                const response = await fetch(`/admin/dashboard/leads/${leadId}/assignment`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        assigned_to_admin_id: newAdminId || null
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || 'Atama güncellenirken hata oluştu');
+                }
+
+                // Update with actual response data if provided
+                if (result.lead) {
+                    const leadIndex = this.leads.findIndex(l => l.id === leadId);
+                    if (leadIndex !== -1) {
+                        this.leads[leadIndex] = { ...this.leads[leadIndex], ...result.lead };
+                    }
+                }
+
+                // Show success notification
+                this.showNotification('success', result.message || 'Lead ataması başarıyla güncellendi');
+
+            } catch (error) {
+                console.error('Assignment update error:', error);
+                
+                // Revert optimistic update
+                lead.assigned_admin = originalAdmin;
+                lead.assign_to = originalAdmin?.id || null;
+                assignmentEditor.selectedAssignment = originalAdmin?.id || '';
+
+                // Show error notification
+                this.showNotification('error', error.message || 'Atama güncellenirken hata oluştu');
+            } finally {
+                assignmentEditor.loading = false;
+                assignmentEditor.originalAssignment = lead.assign_to;
+                this.$nextTick(() => lucide.createIcons());
+            }
+        },
+
+        // Notification System
+        showNotification(type, message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm transform transition-all duration-300 translate-x-full ${
+                type === 'success'
+                    ? 'bg-green-500 text-white'
+                    : 'bg-red-500 text-white'
+            }`;
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        ${type === 'success'
+                            ? '<i data-lucide="check-circle" class="w-5 h-5"></i>'
+                            : '<i data-lucide="alert-circle" class="w-5 h-5"></i>'
+                        }
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium">${message}</p>
+                    </div>
+                    <div class="ml-4 flex-shrink-0">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()"
+                                class="inline-flex text-white hover:text-gray-200 focus:outline-none">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+            lucide.createIcons();
+
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        },
+
+        // Utility functions
+        getStatusClass(status) {
+            if (!status) return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
+            
+            const colors = {
+                'new': 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-300',
+                'contacted': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-300',
+                'qualified': 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-300',
+                'lost': 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-300'
+            };
+            
+            return colors[status.name] || 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300';
+        },
+
+        getInitials(firstName, lastName) {
+            if (!firstName) return 'U';
+            const first = firstName.charAt(0).toUpperCase();
+            const last = lastName ? lastName.charAt(0).toUpperCase() : '';
+            return first + last;
+        },
+
+        formatDate(dateString) {
+            if (!dateString) return '';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('tr-TR');
         }
-    }
+    };
+    
+    console.log('🪲 RETURN DATA - Returning data object with', Object.keys(data).length, 'properties');
+    return data;
+}
 
-    window.clearSelection = function() {
-        document.querySelectorAll('.lead-checkbox').forEach(checkbox => {
-            checkbox.checked = false;
-        });
-        const selectAll = document.getElementById('selectAll');
-        if (selectAll) {
-            selectAll.checked = false;
-            selectAll.indeterminate = false;
+// 🪲 FINAL DIAGNOSTIC
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🪲 DOM READY - Checking Alpine.js initialization');
+    
+    setTimeout(() => {
+        const alpineEl = document.querySelector('[x-data="leadsManagement()"]');
+        console.log('🪲 ALPINE ELEMENT FOUND:', !!alpineEl);
+        
+        if (alpineEl && alpineEl._x_dataStack) {
+            console.log('🪲 ALPINE DATA BOUND:', Object.keys(alpineEl._x_dataStack[0]));
+        } else {
+            console.error('🪲 ALPINE BINDING ERROR - Element not bound to Alpine.js');
         }
-        updateSelectedCount();
-        toggleBulkActions();
-    };
-
-    window.quickAssign = function(leadId, leadName) {
-        window.location.href = `/admin/dashboard/leads/${leadId}`;
-    };
-
-    // Initialize Lucide icons
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
-
-    // Initialize counts
-    updateSelectedCount();
-    toggleBulkActions();
+    }, 1000);
 });
-</script>
-@endpush
 
+console.log('🪲 SCRIPT COMPLETE - leadsManagement function defined');
+</script>
 @endsection
