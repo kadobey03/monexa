@@ -49,6 +49,7 @@ require __DIR__ . '/plan-routes.php';
 Route::prefix('adminlogin')->group(function () {
     Route::controller(LoginController::class)->group(function () {
         Route::get('remedy', 'showLoginForm')->name('adminloginform')->middleware('adminguest');
+        Route::get('login', 'showLoginForm')->middleware('adminguest'); // GET route for login page
         Route::post('login', 'adminlogin')->name('adminlogin');
         Route::post('logout', 'adminlogout')->name('adminlogout');
         Route::get('dashboard', 'validate_admin')->name('validate_admin');
@@ -330,6 +331,7 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::put('/{id}', 'update')->name('update');
         
         // Dynamic Data API Routes
+        Route::get('/api', 'api')->name('api'); // Main API endpoint
         Route::get('/api/data', 'getData')->name('api.data'); // Main table data with filters/search
         Route::get('/api/search', 'search')->name('api.search'); // Real-time search endpoint
         Route::post('/api/filter-preset', 'saveFilterPreset')->name('api.filter-preset'); // Save filter preset

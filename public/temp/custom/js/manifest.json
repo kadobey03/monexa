@@ -1,0 +1,16 @@
+{
+    "name": "Monexa Trading Platform",
+    "short_name": "Monexa",
+    "description": "Professional Trading Platform",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1F2937",
+    "theme_color": "#4D7DE6",
+    "icons": [
+        {
+            "src": "/storage/favicon.ico",
+            "sizes": "16x16 32x32 48x48",
+            "type": "image/x-icon"
+        }
+    ]
+}

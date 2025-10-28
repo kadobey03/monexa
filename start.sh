@@ -7,14 +7,14 @@ echo "Starting Laravel 12 application setup..."
 
 # Wait for MySQL to be ready
 echo "Waiting for MySQL to be ready..."
-while ! nc -z mysql-vicsafe 3306; do
+while ! nc -z mysql-monexa 3306; do
     sleep 1
 done
 echo "MySQL is ready!"
 
 # Wait for Redis to be ready
 echo "Waiting for Redis to be ready..."
-while ! nc -z redis-vicsafe 6379; do
+while ! nc -z redis-monexa 6379; do
     sleep 1
 done
 echo "Redis is ready!"

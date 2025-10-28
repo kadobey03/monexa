@@ -454,6 +454,7 @@ class HomeController extends Controller
     {
         return view('admin.kyc', [
             'title' => 'KYC Applications',
+            'settings' => Settings::find(1),
             'kycs' => Kyc::orderByDesc('id')->with(['user'])->get(),
         ]);
     }

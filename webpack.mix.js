@@ -15,7 +15,10 @@ const path = require('path');
 // Main application assets
 mix.js('resources/js/app.js', 'public/js')
    .vue({ version: 3 })
-   .sass('resources/sass/app.scss', 'public/css');
+   .postCss('resources/css/app.css', 'public/css', [
+       require('tailwindcss'),
+       require('autoprefixer'),
+   ]);
 
 // Leads Management System no longer uses Vue.js - replaced with Alpine.js
 
@@ -34,16 +37,12 @@ if (mix.inProduction()) {
 
 // Additional configuration for production
 mix.options({
-    processCssUrls: false,
-    postCss: [
-        require('tailwindcss'),
-        require('autoprefixer'),
-    ]
+    processCssUrls: false
 });
 
-// Copy additional assets
-mix.copy('resources/images', 'public/images')
-   .copy('resources/fonts', 'public/fonts');
+// Copy additional assets (removed until directories are created)
+// mix.copy('resources/images', 'public/images')
+//    .copy('resources/fonts', 'public/fonts');
 
 // Notifications for build completion
 if (!mix.inProduction()) {

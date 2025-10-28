@@ -163,24 +163,31 @@ window.leadsTableData = function() {
                 // Load lead sources
                 const sourcesResponse = await fetch('/admin/dashboard/leads/api/lead-sources');
                 if (sourcesResponse.ok) {
-                    this.leadSources = await sourcesResponse.json();
+                    const sourcesData = await sourcesResponse.json();
+                    this.leadSources = sourcesData.success ? sourcesData.data : [];
                 }
 
                 // Load assignable admins
                 const adminsResponse = await fetch('/admin/dashboard/leads/api/assignable-admins');
                 if (adminsResponse.ok) {
-                    this.adminUsers = await adminsResponse.json();
+                    const adminsData = await adminsResponse.json();
+                    this.adminUsers = adminsData.success ? adminsData.data : [];
                 }
 
                 // Load filter presets
                 const presetsResponse = await fetch('/admin/dashboard/leads/api/filter-presets');
                 if (presetsResponse.ok) {
-                    this.filterPresets = await presetsResponse.json();
+                    const presetsData = await presetsResponse.json();
+                    this.filterPresets = presetsData.success ? presetsData.data : [];
                 }
 
                 console.log('Initial data loaded');
             } catch (error) {
                 console.error('Failed to load initial data:', error);
+                // Set empty arrays as fallback
+                this.leadSources = [];
+                this.adminUsers = [];
+                this.filterPresets = [];
             }
         },
 
@@ -188,9 +195,8 @@ window.leadsTableData = function() {
          * Load leads data
          */
         async loadLeads() {
-            if (this.tableManager) {
-                await this.tableManager.fetchLeads();
-            }
+            // Use the core function instead of tableManager
+            await window.leadsTableCore.loadLeads.call(this);
         },
 
         /**

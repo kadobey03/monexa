@@ -19,6 +19,11 @@
 }
 
 @layer components {
+  /* Base admin input style */
+  .admin-input {
+    @apply bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+
   /* Loading Animation */
   .loading-dots {
     @apply inline-flex space-x-1;
@@ -181,6 +186,19 @@
 }
 
 @layer utilities {
+  /* Custom shadow utilities */
+  .shadow-elegant {
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .shadow-elegant-lg {
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.08);
+  }
+  
+  .shadow-glass-dark {
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+  }
+
   /* Custom utilities */
   .text-shadow {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -516,7 +534,7 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  .bulk-actions-bar.hidden {
+  .bulk-actions-bar.is-hidden {
     @apply translate-y-full opacity-0 pointer-events-none;
   }
   
@@ -874,7 +892,7 @@
     @apply fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700 px-6 py-4 flex items-center space-x-4 z-50 transition-all duration-300 min-w-[400px];
   }
 
-  .bulk-actions-bar.hidden {
+  .bulk-actions-bar.is-hidden {
     @apply translate-y-full opacity-0 pointer-events-none;
   }
 

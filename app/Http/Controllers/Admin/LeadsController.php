@@ -979,8 +979,12 @@ class LeadsController extends Controller
             $query->where(function($q) use ($search) {
                 $q->where('name', 'LIKE', "%{$search}%")
                   ->orWhere('email', 'LIKE', "%{$search}%")
-                  ->orWhere('phone', 'LIKE', "%{$search}%")
-                  ->orWhere('lead_notes', 'LIKE', "%{$search}%");
+                  ->orWhere('phone', 'LIKE', "%{$search}%");
+                // Check if lead_notes column exists before using it
+                $schema = \Illuminate\Support\Facades\Schema::getColumnListing('users');
+                if (in_array('lead_notes', $schema)) {
+                    $q->orWhere('lead_notes', 'LIKE', "%{$search}%");
+                }
             });
         }
 
@@ -1131,5 +1135,124 @@ class LeadsController extends Controller
                 })
             ]
         ]);
+    }
+
+    /**
+     * Get lead data for dynamic table
+     * GET /admin/dashboard/leads/api/data
+     */
+    public function getData(Request $request): JsonResponse
+    {
+        // This method calls the existing api() method which already handles all the data
+        return $this->api($request);
+    }
+
+    /**
+     * Get lead sources for dropdown
+     * GET /admin/dashboard/leads/api/lead-sources
+     */
+    public function getLeadSources(): JsonResponse
+    {
+        try {
+            // Check if LeadSource table exists
+            if (class_exists(\App\Models\LeadSource::class)) {
+                try {
+                    $leadSources = LeadSource::active()->get(['id', 'name']);
+                } catch (\Exception $e) {
+                    // If table doesn't exist, return empty array
+                    $leadSources = collect([]);
+                }
+            } else {
+                // If model doesn't exist, return empty array
+                $leadSources = collect([]);
+            }
+            
+            return response()->json([
+                'success' => true,
+                'data' => $leadSources
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch lead sources', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => true, // Return success with empty data
+                'data' => []
+            ]);
+        }
+    }
+
+    /**
+     * Get assignable admins for dropdown
+     * GET /admin/dashboard/leads/api/assignable-admins
+     */
+    public function getAssignableAdmins(): JsonResponse
+    {
+        try {
+            $adminUser = Auth::guard('admin')->user();
+            $isSuperAdmin = $adminUser->type === 'Super Admin';
+
+            $admins = $isSuperAdmin ?
+                Admin::where('status', 'Active')->orderBy('firstName')->get(['id', 'firstName', 'lastName', 'email']) :
+                Admin::where(function($q) use ($adminUser) {
+                    $q->where('id', $adminUser->id)
+                      ->orWhere('parent_id', $adminUser->id);
+                })->where('status', 'Active')->orderBy('firstName')->get(['id', 'firstName', 'lastName', 'email']);
+
+            $transformedAdmins = $admins->map(function($admin) {
+                return [
+                    'id' => $admin->id,
+                    'name' => $admin->firstName . ' ' . $admin->lastName,
+                    'email' => $admin->email
+                ];
+            });
+
+            return response()->json([
+                'success' => true,
+                'data' => $transformedAdmins
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch assignable admins', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Atanabilir adminler getirilemedi'
+            ], 500);
+        }
+    }
+
+    /**
+     * Get filter presets for user
+     * GET /admin/dashboard/leads/api/filter-presets
+     */
+    public function getFilterPresets(): JsonResponse
+    {
+        try {
+            $adminUser = Auth::guard('admin')->user();
+            
+            // For now, return empty array as filter presets functionality
+            // might be implemented later with a dedicated table
+            $filterPresets = [];
+
+            return response()->json([
+                'success' => true,
+                'data' => $filterPresets
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch filter presets', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Filtre preset\'leri getirilemedi'
+            ], 500);
+        }
     }
 }

@@ -72,7 +72,7 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/bootstrap/cache
 
 # Copy the startup script
-COPY docker/scripts/start.sh /usr/local/bin/start.sh
+COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 # Expose port 9000 and start php-fpm server
