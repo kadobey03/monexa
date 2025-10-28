@@ -327,8 +327,10 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
     Route::prefix('dashboard/leads')->name('admin.leads.')->controller(LeadsController::class)->group(function () {
         // Main View Routes
         Route::get('/', 'index')->name('index');
+        Route::post('/', 'store')->name('store'); // Add store route for creating new leads
         Route::get('/show/{id}', 'show')->name('show');
         Route::put('/{id}', 'update')->name('update');
+        Route::delete('/{id}', 'destroy')->name('destroy'); // Add destroy route for deleting leads
         
         // Dynamic Data API Routes
         Route::get('/api', 'api')->name('api'); // Main API endpoint

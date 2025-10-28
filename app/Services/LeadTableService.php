@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Admin;
 use App\Models\User;
-use App\Models\UserTableSettings;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -221,12 +220,12 @@ class LeadTableService
     /**
      * Get user's table settings.
      */
-    public function getUserTableSettings(Admin $admin): UserTableSettings
+    public function getUserTableSettings(Admin $admin): object
     {
-        return UserTableSettings::firstOrCreate([
+        // Temporary fallback without database dependency
+        return (object) [
             'admin_id' => $admin->id,
             'table_name' => 'leads',
-        ], [
             'visible_columns' => $this->getDefaultVisibleColumns(),
             'column_order' => $this->getDefaultColumnOrder(),
             'column_widths' => $this->getDefaultColumnWidths(),
@@ -234,72 +233,23 @@ class LeadTableService
             'default_sort_column' => 'created_at',
             'default_sort_direction' => 'desc',
             'default_per_page' => 25,
-        ]);
+        ];
     }
 
     /**
      * Update table settings for admin.
      */
-    public function updateTableSettings(Admin $admin, array $settings): UserTableSettings
+    public function updateTableSettings(Admin $admin, array $settings): object
     {
-        $userSettings = $this->getUserTableSettings($admin);
+        // Temporary fallback - just return updated settings object without persistence
+        $currentSettings = $this->getUserTableSettings($admin);
         
-        // Validate and update settings
-        if (isset($settings['visible_columns'])) {
-            $validColumns = array_keys($this->availableColumns);
-            $visibleColumns = array_intersect($settings['visible_columns'], $validColumns);
-            $userSettings->visible_columns = $visibleColumns;
-        }
-
-        if (isset($settings['column_order'])) {
-            $userSettings->column_order = $settings['column_order'];
-        }
-
-        if (isset($settings['column_widths'])) {
-            $userSettings->column_widths = $settings['column_widths'];
-        }
-
-        if (isset($settings['pinned_columns'])) {
-            $pinnableColumns = array_keys(array_filter($this->availableColumns, function($col) {
-                return $col['pinnable'] ?? false;
-            }));
-            $pinnedColumns = array_intersect($settings['pinned_columns'], $pinnableColumns);
-            $userSettings->pinned_columns = $pinnedColumns;
-        }
-
-        if (isset($settings['default_sort_column'])) {
-            $sortableColumns = array_keys(array_filter($this->availableColumns, function($col) {
-                return $col['sortable'] ?? false;
-            }));
-            if (in_array($settings['default_sort_column'], $sortableColumns)) {
-                $userSettings->default_sort_column = $settings['default_sort_column'];
-            }
-        }
-
-        if (isset($settings['default_sort_direction'])) {
-            if (in_array($settings['default_sort_direction'], ['asc', 'desc'])) {
-                $userSettings->default_sort_direction = $settings['default_sort_direction'];
-            }
-        }
-
-        if (isset($settings['default_per_page'])) {
-            $allowedPerPage = [10, 25, 50, 100, 200];
-            if (in_array($settings['default_per_page'], $allowedPerPage)) {
-                $userSettings->default_per_page = $settings['default_per_page'];
-            }
-        }
-
-        $userSettings->save();
-
-        // Clear cache
-        $this->clearTableCache($admin);
-
-        Log::info('Lead table settings updated', [
+        Log::info('Lead table settings updated (memory only)', [
             'admin_id' => $admin->id,
             'settings' => $settings,
         ]);
 
-        return $userSettings;
+        return $currentSettings;
     }
 
     /**
@@ -323,7 +273,7 @@ class LeadTableService
     /**
      * Build columns configuration for frontend.
      */
-    protected function buildColumnsConfiguration(UserTableSettings $settings, array $availableColumns): array
+    protected function buildColumnsConfiguration(object $settings, array $availableColumns): array
     {
         $visibleColumns = $settings->visible_columns ?? $this->getDefaultVisibleColumns();
         $columnOrder = $settings->column_order ?? $this->getDefaultColumnOrder();
@@ -581,25 +531,11 @@ class LeadTableService
     /**
      * Reset table settings to default.
      */
-    public function resetTableSettings(Admin $admin): UserTableSettings
+    public function resetTableSettings(Admin $admin): object
     {
-        $settings = $this->getUserTableSettings($admin);
+        Log::info('Lead table settings reset to default (memory only)', ['admin_id' => $admin->id]);
         
-        $settings->update([
-            'visible_columns' => $this->getDefaultVisibleColumns(),
-            'column_order' => $this->getDefaultColumnOrder(),
-            'column_widths' => $this->getDefaultColumnWidths(),
-            'pinned_columns' => $this->getDefaultPinnedColumns(),
-            'default_sort_column' => 'created_at',
-            'default_sort_direction' => 'desc',
-            'default_per_page' => 25,
-        ]);
-
-        $this->clearTableCache($admin);
-
-        Log::info('Lead table settings reset to default', ['admin_id' => $admin->id]);
-
-        return $settings;
+        return $this->getUserTableSettings($admin);
     }
 
     /**
@@ -631,6 +567,9 @@ class LeadTableService
 
             case 'lead_priority':
                 return $this->getLeadPriorityOptions();
+
+            case 'lead_source':
+                return $this->getLeadSourceOptions();
 
             default:
                 return [];
@@ -668,5 +607,27 @@ class LeadTableService
             ['value' => 'high', 'label' => 'High', 'color' => '#dc3545'],
             ['value' => 'urgent', 'label' => 'Urgent', 'color' => '#6f42c1'],
         ];
+    }
+
+    /**
+     * Get lead source options.
+     */
+    protected function getLeadSourceOptions(): array
+    {
+        return Cache::remember('lead_source_options', 3600, function() {
+            return \App\Models\LeadSource::active()
+                ->orderBy('sort_order')
+                ->get()
+                ->map(function($source) {
+                    return [
+                        'id' => $source->id,
+                        'value' => $source->id,
+                        'label' => $source->display_name ?: $source->name,
+                        'name' => $source->display_name ?: $source->name,
+                        'color' => $source->color,
+                    ];
+                })
+                ->toArray();
+        });
     }
 }

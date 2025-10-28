@@ -32,6 +32,9 @@ x-init="
     <!-- Lucide Icons - Local fallback to avoid CDN issues -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" onerror="console.warn('Lucide CDN failed, using local fallback')"></script>
     
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
     <!-- Alpine.js CDN -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     

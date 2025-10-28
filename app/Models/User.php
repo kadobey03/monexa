@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name', 'l_name', 'email', 'phone', 'country', 'password', 'ref_by', 'status', 'taxtype ','taxamount ', 'currency', 'notify','username', 'email_verified_at', 'account_bal', 'demo_balance', 'demo_mode', 'roi', 'bonus', 'ref_bonus',
-        'lead_status_id', 'lead_notes', 'last_contact_date', 'next_follow_up_date', 'lead_source', 'lead_tags', 'estimated_value', 'lead_score', 'preferred_contact_method', 'contact_history', 'assign_to'
+        'lead_status_id', 'lead_notes', 'last_contact_date', 'next_follow_up_date', 'lead_source', 'lead_source_id', 'lead_tags', 'estimated_value', 'lead_score', 'preferred_contact_method', 'contact_history', 'assign_to'
     ];
 
     /**
@@ -120,6 +120,41 @@ class User extends Authenticatable implements MustVerifyEmail
     public function leadStatus()
     {
         return $this->belongsTo(LeadStatus::class, 'lead_status_id');
+    }
+
+    /**
+     * Get the lead source for the user
+     */
+    public function leadSource()
+    {
+        return $this->belongsTo(LeadSource::class, 'lead_source_id');
+    }
+
+    /**
+     * Get lead_status_id with default fallback to 1
+     */
+    public function getLeadStatusIdAttribute($value)
+    {
+        return $value ?: 1;
+    }
+
+    /**
+     * Get lead_source with default fallback to 1
+     */
+    public function getLeadSourceIdAttribute($value)
+    {
+        return $value ?: 1;
+    }
+
+    /**
+     * Get lead_source (legacy string field) with "Panda" fallback for null/1
+     */
+    public function getLeadSourceAttribute($value)
+    {
+        if (!$value || $value === '1' || $value === 1) {
+            return 'Panda';
+        }
+        return $value;
     }
 
     /**

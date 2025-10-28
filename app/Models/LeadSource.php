@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LeadSource extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     /**
      * The table associated with the model.
@@ -25,13 +24,11 @@ class LeadSource extends Model
      */
     protected $fillable = [
         'name',
+        'display_name',
         'description',
-        'is_active',
         'color',
-        'icon',
-        'conversion_rate',
-        'cost_per_lead',
-        'priority_weight'
+        'is_active',
+        'sort_order'
     ];
 
     /**
@@ -41,9 +38,7 @@ class LeadSource extends Model
      */
     protected $casts = [
         'is_active' => 'boolean',
-        'conversion_rate' => 'decimal:2',
-        'cost_per_lead' => 'decimal:2',
-        'priority_weight' => 'integer'
+        'sort_order' => 'integer'
     ];
 
     /**

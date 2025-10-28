@@ -291,8 +291,8 @@ function statusDropdown(lead) {
         currentStatus: null,
         availableStatuses: [],
         
-        init() {
-            this.loadStatuses();
+        async init() {
+            await this.loadStatuses();
             this.currentStatus = this.availableStatuses.find(s => s.id === lead.lead_status_id);
         },
         
@@ -348,8 +348,8 @@ function assignmentDropdown(lead) {
         currentAdmin: null,
         availableAdmins: [],
         
-        init() {
-            this.loadAdmins();
+        async init() {
+            await this.loadAdmins();
             this.currentAdmin = this.availableAdmins.find(a => a.id === lead.assign_to);
         },
         

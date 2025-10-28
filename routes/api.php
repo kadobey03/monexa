@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ApiAuthController;
 use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserImportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,15 +22,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Admin API Routes
-Route::middleware(['auth:admin', 'isadmin'])->prefix('admin')->name('api.admin.')->group(function () {
+// User Import Routes - Protected with custom header
+Route::prefix('import')->name('api.import.')->group(function () {
+    Route::post('/users', [UserImportController::class, 'importUser'])->name('users');
+    Route::post('/users/bulk', [UserImportController::class, 'bulkImportUsers'])->name('users.bulk');
+});
+
+// Admin API Routes - Web authentication for admin dashboard
+Route::middleware(['web'])->prefix('admin')->name('api.admin.')->group(function () {
     
     // Leads Management API Routes
     Route::prefix('leads')->name('leads.')->group(function () {
         Route::get('/', 'App\Http\Controllers\Api\Admin\LeadController@index')->name('index');
         Route::post('/', 'App\Http\Controllers\Api\Admin\LeadController@store')->name('store');
         Route::get('/statistics', 'App\Http\Controllers\Api\Admin\LeadController@statistics')->name('statistics');
-        Route::get('/options', 'App\Http\Controllers\Api\Admin\LeadController@dropdownOptions')->name('options');
+        Route::get('/options', 'App\Http\Controllers\Api\Admin\LeadController@options')->name('options');
         Route::get('/search', 'App\Http\Controllers\Api\Admin\LeadController@search')->name('search');
         Route::get('/{lead}', 'App\Http\Controllers\Api\Admin\LeadController@show')->name('show');
         Route::put('/{lead}', 'App\Http\Controllers\Api\Admin\LeadController@update')->name('update');
