@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Assignment tracking fields
-            $table->unsignedBigInteger('assigned_to_admin_id')->nullable();
+            $table->unsignedBigInteger('assigned_to_admin_id')->nullable()->after('contact_history');
             $table->unsignedBigInteger('previous_assigned_admin_id')->nullable()->after('assigned_to_admin_id');
             $table->timestamp('first_assigned_at')->nullable()->after('previous_assigned_admin_id');
             $table->timestamp('current_assigned_at')->nullable()->after('first_assigned_at');

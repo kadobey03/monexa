@@ -5,7 +5,7 @@
 class LeadsTableManager {
     constructor() {
         this.apiEndpoints = {
-            list: '/admin/dashboard/leads/api/data',
+            list: '/admin/leads/api',
             show: '/admin/leads/{id}',
             store: '/admin/leads',
             update: '/admin/leads/{id}',

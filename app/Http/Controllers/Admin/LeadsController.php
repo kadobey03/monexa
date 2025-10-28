@@ -26,14 +26,6 @@ class LeadsController extends Controller
      */
     public function index(Request $request)
     {
-        Log::info('🪲 DEBUG: LeadsController@index called', [
-            'admin_id' => Auth::guard('admin')->id(),
-            'request_uri' => $request->getUri(),
-            'request_method' => $request->getMethod(),
-            'user_agent' => $request->userAgent(),
-            'session_id' => session()->getId()
-        ]);
-
         return view('admin.leads', [
             'title' => 'Lead Yönetimi'
         ]);
