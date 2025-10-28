@@ -8,7 +8,7 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="{{ asset('storage/' . $settings->favicon) }}" rel="icon" type="image/x-icon" />
+<link href="{{ $settings->favicon ? asset('storage/' . $settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
     <!-- Inter Font -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

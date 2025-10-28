@@ -5,7 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{$settings->site_name}} | {{$title}}</title>
-    <link rel="icon" href="{{ asset('storage/'.$settings->favicon)}}" type="image/png"/>
+    <link rel="icon" href="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" type="image/png"/>
    <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.1/dist/alpine.min.js" defer></script>

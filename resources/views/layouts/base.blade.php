@@ -152,7 +152,7 @@
     <meta property="og:image" content="img/share.jpg">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('storage/'.$settings->favicon)}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" type="image/x-icon">
 
     <!-- Preload key assets -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

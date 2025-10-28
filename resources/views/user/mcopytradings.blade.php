@@ -170,7 +170,7 @@
                     <div class="flex justify-center -mt-16 mb-4 relative z-20">
                         <div class="relative">
                             <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white dark:border-slate-700 shadow-2xl bg-white group-hover:scale-105 transition-transform duration-300">
-                                <img src="{{ asset('/storage/app/public/photos/'.$copytrading->photo) }}"
+                                <img src="{{ asset('storage/photos/'.$copytrading->photo) }}"
                                      class="w-full h-full object-cover"
                                      alt="{{ $copytrading->name }}">
                             </div>
