@@ -1,5 +1,4 @@
 import "./bootstrap";
-// import "./libs/alpine"; // TEMPORARILY DISABLED FOR VANILLA JS SOLUTION
 import "./admin-management";
 import axios from "axios";
 

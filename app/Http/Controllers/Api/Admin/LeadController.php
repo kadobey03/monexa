@@ -100,12 +100,23 @@ class LeadController extends Controller
             $sortDirection = $params['sort_direction'] ?? 'desc';
             $query->orderBy($sortColumn, $sortDirection);
             
-            // Pagination
+            // Pagination with proper relationship loading
             $perPage = $params['per_page'] ?? 25;
-            $results = $query->with([
-                'assignedAdmin:id,firstName,lastName',
-                'leadStatus:id,name,display_name,color',
-            ])->paginate($perPage);
+            
+            // DÜZELTME: Manual join ile lead_status bilgilerini al
+            $results = $query
+                ->leftJoin('admins as assigned_admin', 'users.assign_to', '=', 'assigned_admin.id')
+                ->leftJoin('lead_statuses', 'users.lead_status', '=', 'lead_statuses.name')
+                ->select([
+                    'users.*',
+                    'assigned_admin.id as admin_id',
+                    'assigned_admin.firstName as admin_firstName',
+                    'assigned_admin.lastName as admin_lastName',
+                    'lead_statuses.name as status_name',
+                    'lead_statuses.display_name as status_display_name',
+                    'lead_statuses.color as status_color'
+                ])
+                ->paginate($perPage);
             
             Log::info('🪲 FIXED LEADS QUERY', [
                 'admin_id' => $admin->id,
@@ -384,6 +395,95 @@ class LeadController extends Controller
                 'success' => false,
                 'message' => 'Failed to update lead.',
                 'debug' => app()->hasDebugModeEnabled() ? $e->getMessage() : null,
+            ], 500);
+        }
+    }
+
+    /**
+     * Update lead status only.
+     */
+    public function updateStatus(Request $request, int $id): JsonResponse
+    {
+        try {
+            $admin = Auth::guard('admin')->user();
+            
+            // Fallback: if no admin guard user, check if current user is admin
+            if (!$admin && Auth::check()) {
+                $user = Auth::user();
+                if ($user && ($user->admin == 1 || $user->role === 'admin')) {
+                    $admin = (object) [
+                        'id' => $user->id,
+                        'firstName' => $user->firstName ?? $user->name,
+                        'lastName' => $user->lastName ?? '',
+                        'email' => $user->email,
+                        'role' => 'admin',
+                        'admin' => 1
+                    ];
+                }
+            }
+            
+            if (!$admin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Admin authentication required.'
+                ], 401);
+            }
+
+            $lead = User::findOrFail($id);
+
+            // Validate request
+            $request->validate([
+                'status_id' => 'required|exists:lead_statuses,id'
+            ]);
+
+            // Get the status name from lead_statuses table
+            $leadStatus = \App\Models\LeadStatus::findOrFail($request->status_id);
+
+            DB::beginTransaction();
+
+            // Update lead status using the status name
+            $lead->update(['lead_status' => $leadStatus->name]);
+
+            // Log the change
+            Log::info('Lead status updated via API', [
+                'admin_id' => $admin->id,
+                'lead_id' => $lead->id,
+                'old_status' => $lead->getOriginal('lead_status'),
+                'new_status' => $leadStatus->name,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status başarıyla güncellendi.',
+                'data' => [
+                    'id' => $lead->id,
+                    'lead_status' => $leadStatus->name,
+                    'status_display' => $leadStatus->display_name ?: $leadStatus->name,
+                    'status_color' => $leadStatus->color,
+                ]
+            ]);
+
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $e->errors(),
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Failed to update lead status', [
+                'admin_id' => $admin->id ?? null,
+                'lead_id' => $id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Status güncellenirken hata oluştu.',
             ], 500);
         }
     }

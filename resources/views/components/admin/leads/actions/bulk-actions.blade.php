@@ -1,11 +1,5 @@
-<div 
-    x-show="selectedLeads.length > 0" 
-    x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="transform opacity-0 translate-y-2"
-    x-transition:enter-end="transform opacity-100 translate-y-0"
-    x-transition:leave="transition ease-in duration-150"
-    x-transition:leave-start="transform opacity-100 translate-y-0"
-    x-transition:leave-end="transform opacity-0 translate-y-2"
+<div
+    id="bulk-actions-bar"
     class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40"
     style="display: none;"
 >
@@ -18,7 +12,7 @@
                 </div>
                 <div>
                     <p class="text-sm font-medium text-gray-900 dark:text-white">
-                        <span x-text="selectedLeads.length"></span> lead seçildi
+                        <span id="selected-count">0</span> lead seçildi
                     </p>
                     <p class="text-xs text-gray-500 dark:text-gray-400">
                         Toplu işlem seçiniz
@@ -29,9 +23,9 @@
             <!-- Action Buttons -->
             <div class="flex items-center space-x-2">
                 <!-- Status Update -->
-                <div class="relative" x-data="{ showStatusMenu: false }">
-                    <button 
-                        @click="showStatusMenu = !showStatusMenu"
+                <div class="relative">
+                    <button
+                        onclick="toggleStatusMenu()"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-admin-700 hover:bg-gray-200 dark:hover:bg-admin-600 rounded-md transition-colors"
                     >
                         <i data-lucide="edit-3" class="w-4 h-4 mr-2"></i>
@@ -39,33 +33,53 @@
                         <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
                     </button>
                     
-                    <div 
-                        x-show="showStatusMenu"
-                        @click.away="showStatusMenu = false"
-                        x-transition:enter="transition ease-out duration-100"
-                        x-transition:enter-start="transform opacity-0 scale-95"
-                        x-transition:enter-end="transform opacity-100 scale-100"
+                    <div
+                        id="status-menu"
                         class="absolute bottom-full mb-2 right-0 w-48 bg-white dark:bg-admin-700 rounded-md shadow-lg border border-gray-200 dark:border-admin-600 py-1 z-50"
+                        style="display: none;"
                     >
-                        <template x-for="status in leadStatuses" :key="status.value">
-                            <button 
-                                @click="bulkUpdateStatus(status.value); showStatusMenu = false"
-                                class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
-                            >
-                                <span 
-                                    class="w-2 h-2 rounded-full mr-3"
-                                    :class="status.color"
-                                ></span>
-                                <span x-text="status.label"></span>
-                            </button>
-                        </template>
+                        <button
+                            onclick="bulkUpdateStatus('new'); hideStatusMenu();"
+                            class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
+                        >
+                            <span class="w-2 h-2 rounded-full mr-3 bg-blue-500"></span>
+                            <span>Yeni</span>
+                        </button>
+                        <button
+                            onclick="bulkUpdateStatus('contacted'); hideStatusMenu();"
+                            class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
+                        >
+                            <span class="w-2 h-2 rounded-full mr-3 bg-yellow-500"></span>
+                            <span>İletişimde</span>
+                        </button>
+                        <button
+                            onclick="bulkUpdateStatus('qualified'); hideStatusMenu();"
+                            class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
+                        >
+                            <span class="w-2 h-2 rounded-full mr-3 bg-green-500"></span>
+                            <span>Nitelikli</span>
+                        </button>
+                        <button
+                            onclick="bulkUpdateStatus('converted'); hideStatusMenu();"
+                            class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
+                        >
+                            <span class="w-2 h-2 rounded-full mr-3 bg-purple-500"></span>
+                            <span>Dönüştürüldü</span>
+                        </button>
+                        <button
+                            onclick="bulkUpdateStatus('lost'); hideStatusMenu();"
+                            class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
+                        >
+                            <span class="w-2 h-2 rounded-full mr-3 bg-red-500"></span>
+                            <span>Kaybedilen</span>
+                        </button>
                     </div>
                 </div>
                 
                 <!-- Assign User -->
-                <div class="relative" x-data="{ showAssignMenu: false }">
-                    <button 
-                        @click="showAssignMenu = !showAssignMenu"
+                <div class="relative">
+                    <button
+                        onclick="toggleAssignMenu()"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-admin-700 hover:bg-gray-200 dark:hover:bg-admin-600 rounded-md transition-colors"
                     >
                         <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i>
@@ -73,16 +87,13 @@
                         <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
                     </button>
                     
-                    <div 
-                        x-show="showAssignMenu"
-                        @click.away="showAssignMenu = false"
-                        x-transition:enter="transition ease-out duration-100"
-                        x-transition:enter-start="transform opacity-0 scale-95"
-                        x-transition:enter-end="transform opacity-100 scale-100"
+                    <div
+                        id="assign-menu"
                         class="absolute bottom-full mb-2 right-0 w-56 bg-white dark:bg-admin-700 rounded-md shadow-lg border border-gray-200 dark:border-admin-600 py-1 z-50"
+                        style="display: none;"
                     >
-                        <button 
-                            @click="bulkAssign(null); showAssignMenu = false"
+                        <button
+                            onclick="bulkAssign(null); hideAssignMenu();"
                             class="w-full px-4 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
                         >
                             <i data-lucide="user-x" class="w-4 h-4 mr-3"></i>
@@ -91,27 +102,31 @@
                         
                         <div class="border-t border-gray-200 dark:border-admin-600 my-1"></div>
                         
-                        <template x-for="admin in adminUsers" :key="admin.id">
-                            <button 
-                                @click="bulkAssign(admin.id); showAssignMenu = false"
-                                class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
-                            >
-                                <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mr-3">
-                                    <span class="text-xs text-white font-medium" x-text="admin.name.charAt(0).toUpperCase()"></span>
-                                </div>
-                                <div>
-                                    <p x-text="admin.name"></p>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400" x-text="admin.email"></p>
-                                </div>
-                            </button>
-                        </template>
+                        <div id="admin-users-list">
+                            @if(isset($adminUsers))
+                                @foreach($adminUsers as $admin)
+                                    <button
+                                        onclick="bulkAssign({{ $admin->id }}); hideAssignMenu();"
+                                        class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
+                                    >
+                                        <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                            <span class="text-xs text-white font-medium">{{ strtoupper(substr($admin->name, 0, 1)) }}</span>
+                                        </div>
+                                        <div>
+                                            <p>{{ $admin->name }}</p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ $admin->email }}</p>
+                                        </div>
+                                    </button>
+                                @endforeach
+                            @endif
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Add Tags -->
-                <div class="relative" x-data="{ showTagsMenu: false, newTag: '' }">
-                    <button 
-                        @click="showTagsMenu = !showTagsMenu"
+                <div class="relative">
+                    <button
+                        onclick="toggleTagsMenu()"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-admin-700 hover:bg-gray-200 dark:hover:bg-admin-600 rounded-md transition-colors"
                     >
                         <i data-lucide="tag" class="w-4 h-4 mr-2"></i>
@@ -119,20 +134,17 @@
                         <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
                     </button>
                     
-                    <div 
-                        x-show="showTagsMenu"
-                        @click.away="showTagsMenu = false"
-                        x-transition:enter="transition ease-out duration-100"
-                        x-transition:enter-start="transform opacity-0 scale-95"
-                        x-transition:enter-end="transform opacity-100 scale-100"
+                    <div
+                        id="tags-menu"
                         class="absolute bottom-full mb-2 right-0 w-64 bg-white dark:bg-admin-700 rounded-md shadow-lg border border-gray-200 dark:border-admin-600 p-3 z-50"
+                        style="display: none;"
                     >
                         <!-- Tag Input -->
                         <div class="mb-3">
-                            <input 
-                                type="text" 
-                                x-model="newTag"
-                                @keydown.enter.prevent="bulkAddTag(newTag); newTag = ''"
+                            <input
+                                type="text"
+                                id="new-tag-input"
+                                onkeypress="if(event.key === 'Enter') { event.preventDefault(); bulkAddTag(); }"
                                 placeholder="Yeni etiket ekle..."
                                 class="w-full text-sm border-gray-300 dark:border-admin-600 rounded-md bg-white dark:bg-admin-800 text-gray-900 dark:text-white focus:border-blue-500 focus:ring-blue-500"
                             >
@@ -144,21 +156,38 @@
                                 Sık Kullanılanlar
                             </p>
                             <div class="flex flex-wrap gap-1">
-                                <template x-for="tag in commonTags" :key="tag">
-                                    <button 
-                                        @click="bulkAddTag(tag)"
-                                        class="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-admin-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
-                                        x-text="tag"
-                                    ></button>
-                                </template>
+                                <button
+                                    onclick="bulkAddTag('vip')"
+                                    class="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-admin-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                >vip</button>
+                                <button
+                                    onclick="bulkAddTag('premium')"
+                                    class="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-admin-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                >premium</button>
+                                <button
+                                    onclick="bulkAddTag('sıcak-lead')"
+                                    class="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-admin-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                >sıcak-lead</button>
+                                <button
+                                    onclick="bulkAddTag('soğuk-lead')"
+                                    class="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-admin-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                >soğuk-lead</button>
+                                <button
+                                    onclick="bulkAddTag('yeni-kayıt')"
+                                    class="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-admin-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                >yeni-kayıt</button>
+                                <button
+                                    onclick="bulkAddTag('telefon-doğrulandı')"
+                                    class="inline-flex items-center px-2 py-1 text-xs font-medium bg-gray-100 dark:bg-admin-800 text-gray-700 dark:text-gray-300 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                >telefon-doğrulandı</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Export -->
-                <button 
-                    @click="exportSelectedLeads()"
+                <button
+                    onclick="exportSelectedLeads()"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-green-100 dark:bg-green-900 hover:bg-green-200 dark:hover:bg-green-800 text-green-700 dark:text-green-300 rounded-md transition-colors"
                 >
                     <i data-lucide="download" class="w-4 h-4 mr-2"></i>
@@ -166,8 +195,8 @@
                 </button>
                 
                 <!-- Delete -->
-                <button 
-                    @click="confirmBulkDelete()"
+                <button
+                    onclick="confirmBulkDelete()"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800 rounded-md transition-colors"
                 >
                     <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
@@ -175,8 +204,8 @@
                 </button>
                 
                 <!-- Close/Cancel -->
-                <button 
-                    @click="clearSelection()"
+                <button
+                    onclick="clearSelection()"
                     class="inline-flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md transition-colors"
                     title="Seçimi Temizle"
                 >
@@ -186,21 +215,20 @@
         </div>
         
         <!-- Progress Bar for Bulk Operations -->
-        <div 
-            x-show="bulkOperationInProgress"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="transform opacity-0"
-            x-transition:enter-end="transform opacity-100"
+        <div
+            id="bulk-progress-container"
             class="mt-3 pt-3 border-t border-gray-200 dark:border-admin-600"
+            style="display: none;"
         >
             <div class="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
-                <span x-text="bulkOperationStatus"></span>
-                <span x-text="bulkOperationProgress + '%'"></span>
+                <span id="bulk-operation-status">İşlem yapılıyor...</span>
+                <span id="bulk-operation-percentage">0%</span>
             </div>
             <div class="w-full bg-gray-200 dark:bg-admin-600 rounded-full h-2">
-                <div 
+                <div
+                    id="bulk-progress-bar"
                     class="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                    :style="{ width: bulkOperationProgress + '%' }"
+                    style="width: 0%;"
                 ></div>
             </div>
         </div>
@@ -208,25 +236,15 @@
 </div>
 
 <!-- Bulk Delete Confirmation Modal -->
-<div 
-    x-show="showBulkDeleteConfirm" 
-    x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="transform opacity-0"
-    x-transition:enter-end="transform opacity-100"
-    x-transition:leave="transition ease-in duration-150"
-    x-transition:leave-start="transform opacity-100"
-    x-transition:leave-end="transform opacity-0"
+<div
+    id="bulk-delete-confirm-modal"
     class="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
     style="display: none;"
+    onclick="hideBulkDeleteConfirm(event)"
 >
-    <div 
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="transform opacity-0 scale-95"
-        x-transition:enter-end="transform opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="transform opacity-100 scale-100"
-        x-transition:leave-end="transform opacity-0 scale-95"
+    <div
         class="bg-white dark:bg-admin-800 rounded-lg shadow-xl max-w-md w-full mx-4"
+        onclick="event.stopPropagation()"
     >
         <div class="p-6">
             <div class="flex items-center space-x-3 mb-4">
@@ -245,33 +263,28 @@
             
             <div class="mb-6">
                 <p class="text-sm text-gray-700 dark:text-gray-300">
-                    <span x-text="selectedLeads.length"></span> lead silinecek. Bu işlem geri alınamaz.
+                    <span id="delete-count">0</span> lead silinecek. Bu işlem geri alınamaz.
                     Silme işlemini onaylıyor musunuz?
                 </p>
                 
                 <!-- Selected leads preview -->
                 <div class="mt-3 p-3 bg-gray-50 dark:bg-admin-900 rounded-md max-h-32 overflow-y-auto">
                     <div class="text-xs text-gray-500 dark:text-gray-400 mb-2">Silinecek Leadler:</div>
-                    <template x-for="leadId in selectedLeads.slice(0, 5)" :key="leadId">
-                        <div class="text-sm text-gray-700 dark:text-gray-300" x-text="getLeadName(leadId)"></div>
-                    </template>
-                    <div 
-                        x-show="selectedLeads.length > 5"
-                        class="text-xs text-gray-500 dark:text-gray-400 mt-1"
-                        x-text="'ve ' + (selectedLeads.length - 5) + ' tane daha...'"
-                    ></div>
+                    <div id="delete-preview-list">
+                        <!-- Lead names will be populated here -->
+                    </div>
                 </div>
             </div>
             
             <div class="flex justify-end space-x-3">
-                <button 
-                    @click="showBulkDeleteConfirm = false"
+                <button
+                    onclick="hideBulkDeleteConfirm()"
                     class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-md hover:bg-gray-50 dark:hover:bg-admin-600"
                 >
                     İptal
                 </button>
-                <button 
-                    @click="executeBulkDelete()"
+                <button
+                    onclick="executeBulkDelete()"
                     class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-md"
                 >
                     <i data-lucide="trash-2" class="w-4 h-4 mr-2 inline"></i>

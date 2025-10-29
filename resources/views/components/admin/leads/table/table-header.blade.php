@@ -2,36 +2,31 @@
     <tr>
         <!-- Select All Checkbox -->
         <th class="px-6 py-4 text-left w-12">
-            <input 
-                type="checkbox" 
-                x-model="selectAll"
-                @change="toggleAllLeads($event.target.checked)"
+            <input
+                type="checkbox"
+                id="select-all-checkbox"
+                name="select_all"
+                onchange="toggleAllLeads(this.checked)"
                 class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             >
         </th>
         
         <!-- ÜLKE Column -->
         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-            @click="toggleSort('country')">
+            onclick="toggleSort('country')">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>ÜLKE</span>
                     <div class="flex flex-col">
-                        <i 
-                            data-lucide="chevron-up" 
-                            class="w-3 h-3"
-                            :class="{
-                                'text-blue-600': sortColumn === 'country' && sortDirection === 'asc',
-                                'text-gray-400': sortColumn !== 'country' || sortDirection !== 'asc'
-                            }"
+                        <i
+                            data-lucide="chevron-up"
+                            class="w-3 h-3 text-gray-400"
+                            id="sort-up-country"
                         ></i>
-                        <i 
-                            data-lucide="chevron-down" 
-                            class="w-3 h-3 -mt-1"
-                            :class="{
-                                'text-blue-600': sortColumn === 'country' && sortDirection === 'desc',
-                                'text-gray-400': sortColumn !== 'country' || sortDirection !== 'desc'
-                            }"
+                        <i
+                            data-lucide="chevron-down"
+                            class="w-3 h-3 -mt-1 text-gray-400"
+                            id="sort-down-country"
                         ></i>
                     </div>
                 </div>
@@ -40,26 +35,20 @@
         
         <!-- AD SOYAD Column -->
         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-            @click="toggleSort('name')">
+            onclick="toggleSort('name')">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>AD SOYAD</span>
                     <div class="flex flex-col">
-                        <i 
-                            data-lucide="chevron-up" 
-                            class="w-3 h-3"
-                            :class="{
-                                'text-blue-600': sortColumn === 'name' && sortDirection === 'asc',
-                                'text-gray-400': sortColumn !== 'name' || sortDirection !== 'asc'
-                            }"
+                        <i
+                            data-lucide="chevron-up"
+                            class="w-3 h-3 text-gray-400"
+                            id="sort-up-name"
                         ></i>
-                        <i 
-                            data-lucide="chevron-down" 
-                            class="w-3 h-3 -mt-1"
-                            :class="{
-                                'text-blue-600': sortColumn === 'name' && sortDirection === 'desc',
-                                'text-gray-400': sortColumn !== 'name' || sortDirection !== 'desc'
-                            }"
+                        <i
+                            data-lucide="chevron-down"
+                            class="w-3 h-3 -mt-1 text-gray-400"
+                            id="sort-down-name"
                         ></i>
                     </div>
                 </div>
@@ -68,26 +57,20 @@
         
         <!-- TELEFON NUMARASI Column -->
         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-            @click="toggleSort('phone')">
+            onclick="toggleSort('phone')">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>TELEFON NUMARASI</span>
                     <div class="flex flex-col">
-                        <i 
-                            data-lucide="chevron-up" 
-                            class="w-3 h-3"
-                            :class="{
-                                'text-blue-600': sortColumn === 'phone' && sortDirection === 'asc',
-                                'text-gray-400': sortColumn !== 'phone' || sortDirection !== 'asc'
-                            }"
+                        <i
+                            data-lucide="chevron-up"
+                            class="w-3 h-3 text-gray-400"
+                            id="sort-up-phone"
                         ></i>
-                        <i 
-                            data-lucide="chevron-down" 
-                            class="w-3 h-3 -mt-1"
-                            :class="{
-                                'text-blue-600': sortColumn === 'phone' && sortDirection === 'desc',
-                                'text-gray-400': sortColumn !== 'phone' || sortDirection !== 'desc'
-                            }"
+                        <i
+                            data-lucide="chevron-down"
+                            class="w-3 h-3 -mt-1 text-gray-400"
+                            id="sort-down-phone"
                         ></i>
                     </div>
                 </div>
@@ -96,26 +79,20 @@
         
         <!-- EMAİL Column -->
         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-            @click="toggleSort('email')">
+            onclick="toggleSort('email')">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>EMAİL</span>
                     <div class="flex flex-col">
-                        <i 
-                            data-lucide="chevron-up" 
-                            class="w-3 h-3"
-                            :class="{
-                                'text-blue-600': sortColumn === 'email' && sortDirection === 'asc',
-                                'text-gray-400': sortColumn !== 'email' || sortDirection !== 'asc'
-                            }"
+                        <i
+                            data-lucide="chevron-up"
+                            class="w-3 h-3 text-gray-400"
+                            id="sort-up-email"
                         ></i>
-                        <i 
-                            data-lucide="chevron-down" 
-                            class="w-3 h-3 -mt-1"
-                            :class="{
-                                'text-blue-600': sortColumn === 'email' && sortDirection === 'desc',
-                                'text-gray-400': sortColumn !== 'email' || sortDirection !== 'desc'
-                            }"
+                        <i
+                            data-lucide="chevron-down"
+                            class="w-3 h-3 -mt-1 text-gray-400"
+                            id="sort-down-email"
                         ></i>
                     </div>
                 </div>
@@ -124,26 +101,20 @@
         
         <!-- ASSIGNED Column -->
         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-            @click="toggleSort('assign_to')">
+            onclick="toggleSort('assign_to')">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>ASSIGNED</span>
                     <div class="flex flex-col">
-                        <i 
-                            data-lucide="chevron-up" 
-                            class="w-3 h-3"
-                            :class="{
-                                'text-blue-600': sortColumn === 'assign_to' && sortDirection === 'asc',
-                                'text-gray-400': sortColumn !== 'assign_to' || sortDirection !== 'asc'
-                            }"
+                        <i
+                            data-lucide="chevron-up"
+                            class="w-3 h-3 text-gray-400"
+                            id="sort-up-assign_to"
                         ></i>
-                        <i 
-                            data-lucide="chevron-down" 
-                            class="w-3 h-3 -mt-1"
-                            :class="{
-                                'text-blue-600': sortColumn === 'assign_to' && sortDirection === 'desc',
-                                'text-gray-400': sortColumn !== 'assign_to' || sortDirection !== 'desc'
-                            }"
+                        <i
+                            data-lucide="chevron-down"
+                            class="w-3 h-3 -mt-1 text-gray-400"
+                            id="sort-down-assign_to"
                         ></i>
                     </div>
                 </div>
@@ -152,26 +123,20 @@
         
         <!-- STATUS Column -->
         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-            @click="toggleSort('lead_status_id')">
+            onclick="toggleSort('lead_status_id')">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>STATUS</span>
                     <div class="flex flex-col">
-                        <i 
-                            data-lucide="chevron-up" 
-                            class="w-3 h-3"
-                            :class="{
-                                'text-blue-600': sortColumn === 'lead_status_id' && sortDirection === 'asc',
-                                'text-gray-400': sortColumn !== 'lead_status_id' || sortDirection !== 'asc'
-                            }"
+                        <i
+                            data-lucide="chevron-up"
+                            class="w-3 h-3 text-gray-400"
+                            id="sort-up-lead_status_id"
                         ></i>
-                        <i 
-                            data-lucide="chevron-down" 
-                            class="w-3 h-3 -mt-1"
-                            :class="{
-                                'text-blue-600': sortColumn === 'lead_status_id' && sortDirection === 'desc',
-                                'text-gray-400': sortColumn !== 'lead_status_id' || sortDirection !== 'desc'
-                            }"
+                        <i
+                            data-lucide="chevron-down"
+                            class="w-3 h-3 -mt-1 text-gray-400"
+                            id="sort-down-lead_status_id"
                         ></i>
                     </div>
                 </div>
@@ -180,26 +145,20 @@
         
         <!-- VARONKA Column -->
         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-            @click="toggleSort('organization')">
+            onclick="toggleSort('organization')">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>VARONKA</span>
                     <div class="flex flex-col">
-                        <i 
-                            data-lucide="chevron-up" 
-                            class="w-3 h-3"
-                            :class="{
-                                'text-blue-600': sortColumn === 'organization' && sortDirection === 'asc',
-                                'text-gray-400': sortColumn !== 'organization' || sortDirection !== 'asc'
-                            }"
+                        <i
+                            data-lucide="chevron-up"
+                            class="w-3 h-3 text-gray-400"
+                            id="sort-up-organization"
                         ></i>
-                        <i 
-                            data-lucide="chevron-down" 
-                            class="w-3 h-3 -mt-1"
-                            :class="{
-                                'text-blue-600': sortColumn === 'organization' && sortDirection === 'desc',
-                                'text-gray-400': sortColumn !== 'organization' || sortDirection !== 'desc'
-                            }"
+                        <i
+                            data-lucide="chevron-down"
+                            class="w-3 h-3 -mt-1 text-gray-400"
+                            id="sort-down-organization"
                         ></i>
                     </div>
                 </div>
@@ -208,26 +167,20 @@
         
         <!-- KAYNAK Column -->
         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-            @click="toggleSort('lead_source_id')">
+            onclick="toggleSort('lead_source_id')">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>KAYNAK</span>
                     <div class="flex flex-col">
-                        <i 
-                            data-lucide="chevron-up" 
-                            class="w-3 h-3"
-                            :class="{
-                                'text-blue-600': sortColumn === 'lead_source_id' && sortDirection === 'asc',
-                                'text-gray-400': sortColumn !== 'lead_source_id' || sortDirection !== 'asc'
-                            }"
+                        <i
+                            data-lucide="chevron-up"
+                            class="w-3 h-3 text-gray-400"
+                            id="sort-up-lead_source_id"
                         ></i>
-                        <i 
-                            data-lucide="chevron-down" 
-                            class="w-3 h-3 -mt-1"
-                            :class="{
-                                'text-blue-600': sortColumn === 'lead_source_id' && sortDirection === 'desc',
-                                'text-gray-400': sortColumn !== 'lead_source_id' || sortDirection !== 'desc'
-                            }"
+                        <i
+                            data-lucide="chevron-down"
+                            class="w-3 h-3 -mt-1 text-gray-400"
+                            id="sort-down-lead_source_id"
                         ></i>
                     </div>
                 </div>
@@ -236,26 +189,20 @@
         
         <!-- ŞİRKET Column -->
         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-            @click="toggleSort('company_name')">
+            onclick="toggleSort('company_name')">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                     <span>ŞİRKET</span>
                     <div class="flex flex-col">
-                        <i 
-                            data-lucide="chevron-up" 
-                            class="w-3 h-3"
-                            :class="{
-                                'text-blue-600': sortColumn === 'company_name' && sortDirection === 'asc',
-                                'text-gray-400': sortColumn !== 'company_name' || sortDirection !== 'asc'
-                            }"
+                        <i
+                            data-lucide="chevron-up"
+                            class="w-3 h-3 text-gray-400"
+                            id="sort-up-company_name"
                         ></i>
-                        <i 
-                            data-lucide="chevron-down" 
-                            class="w-3 h-3 -mt-1"
-                            :class="{
-                                'text-blue-600': sortColumn === 'company_name' && sortDirection === 'desc',
-                                'text-gray-400': sortColumn !== 'company_name' || sortDirection !== 'desc'
-                            }"
+                        <i
+                            data-lucide="chevron-down"
+                            class="w-3 h-3 -mt-1 text-gray-400"
+                            id="sort-down-company_name"
                         ></i>
                     </div>
                 </div>

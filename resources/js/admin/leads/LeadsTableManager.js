@@ -427,15 +427,12 @@ class LeadsTableManager {
     }
     
     showNotification(message, type = 'info') {
-        // Integrate with Alpine.js notification system if available
-        const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
+        // Integrate with vanilla JS data manager if available
+        const dataManager = window.leadsDataManagerInstance;
         
-        if (alpineComponent && alpineComponent._x_dataStack) {
-            const data = alpineComponent._x_dataStack[0];
-            if (data.showNotification) {
-                data.showNotification(message, type);
-                return;
-            }
+        if (dataManager && dataManager.showNotification) {
+            dataManager.showNotification(message, type);
+            return;
         }
         
         // Fallback to console or custom notification

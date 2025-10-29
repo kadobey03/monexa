@@ -1,16 +1,14 @@
 @props(['lead', 'statuses', 'agents'])
 
-<tr class="hover:bg-gray-50 dark:hover:bg-admin-800 transition-colors duration-200 border-b border-gray-200 dark:border-admin-700"
-    :class="{'bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500': selectedLeads.includes({{ $lead->id }})}">
+<tr class="hover:bg-gray-50 dark:hover:bg-admin-800 transition-colors duration-200 border-b border-gray-200 dark:border-admin-700" data-lead-id="{{ $lead->id }}">
     
     <!-- Select Checkbox -->
     <td class="px-6 py-4 whitespace-nowrap">
-        <input 
-            type="checkbox" 
+        <input
+            type="checkbox"
             value="{{ $lead->id }}"
-            x-model="selectedLeads"
-            @change="updateSelectAllState"
             class="lead-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            onchange="handleCheckboxChange(this)"
         >
     </td>
     
@@ -76,20 +74,11 @@
     
     <!-- ASSIGNED Column -->
     <td class="px-6 py-4 whitespace-nowrap">
-        <div class="relative" x-data="{ 
-            showAssignedDropdown: false, 
-            leadId: {{ $lead->id }}, 
-            currentAssigned: {{ $lead->assign_to ?? 'null' }} 
-        }">
+        <div class="relative assigned-dropdown-container" data-lead-id="{{ $lead->id }}" data-current-assigned="{{ $lead->assign_to ?? '' }}">
             <!-- Assigned Display/Button -->
-            <button 
-                @click="showAssignedDropdown = !showAssignedDropdown"
-                @click.outside="showAssignedDropdown = false"
-                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium border transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                :class="{
-                    'bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100': currentAssigned,
-                    'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100': !currentAssigned
-                }"
+            <button
+                onclick="handleAssignedDropdownToggle(event, {{ $lead->id }})"
+                class="assigned-button inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium border transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 {{ $lead->assignedAgent ? 'bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100' : 'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100' }}"
             >
                 @if($lead->assignedAgent)
                     <div class="w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mr-2">
@@ -102,24 +91,15 @@
                     <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i>
                     <span>Atanmadı</span>
                 @endif
-                <i data-lucide="chevron-down" class="ml-2 w-4 h-4 transition-transform duration-200" :class="{'rotate-180': showAssignedDropdown}"></i>
+                <i data-lucide="chevron-down" class="assigned-chevron ml-2 w-4 h-4 transition-transform duration-200"></i>
             </button>
             
             <!-- Dropdown Menu -->
-            <div x-show="showAssignedDropdown" 
-                 x-transition:enter="transition ease-out duration-100"
-                 x-transition:enter-start="transform opacity-0 scale-95"
-                 x-transition:enter-end="transform opacity-100 scale-100"
-                 x-transition:leave="transition ease-in duration-75"
-                 x-transition:leave-start="transform opacity-100 scale-100"
-                 x-transition:leave-end="transform opacity-0 scale-95"
-                 class="absolute z-50 mt-1 w-56 bg-white dark:bg-admin-800 rounded-lg shadow-lg border border-gray-200 dark:border-admin-600 py-1"
-                 style="display: none;">
+            <div class="assigned-dropdown absolute z-50 mt-1 w-56 bg-white dark:bg-admin-800 rounded-lg shadow-lg border border-gray-200 dark:border-admin-600 py-1 hidden">
                 
                 <!-- Unassign Option -->
-                <button @click="updateLeadAssignment(leadId, null, 'Atanmadı'); showAssignedDropdown = false"
-                        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors"
-                        :class="{'bg-blue-50 dark:bg-blue-900/30 text-blue-600': currentAssigned === null}">
+                <button onclick="handleAssignmentUpdate(event, {{ $lead->id }}, null, 'Atanmadı')"
+                        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors {{ $lead->assign_to === null ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600' : '' }}">
                     <i data-lucide="user-x" class="w-4 h-4 mr-3 text-red-500"></i>
                     Atamayı Kaldır
                 </button>
@@ -127,9 +107,8 @@
                 <hr class="my-1 border-gray-200 dark:border-admin-600">
                 
                 @foreach($agents as $agent)
-                <button @click="updateLeadAssignment(leadId, {{ $agent->id }}, '{{ $agent->name }}'); showAssignedDropdown = false"
-                        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors"
-                        :class="{'bg-blue-50 dark:bg-blue-900/30 text-blue-600': currentAssigned === {{ $agent->id }}}">
+                <button onclick="handleAssignmentUpdate(event, {{ $lead->id }}, {{ $agent->id }}, '{{ $agent->name }}')"
+                        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors {{ $lead->assign_to === $agent->id ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600' : '' }}">
                     <div class="w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mr-3">
                         <span class="text-white text-xs font-semibold">
                             {{ substr($agent->name, 0, 1) }}
@@ -147,61 +126,50 @@
     
     <!-- STATUS Column -->
     <td class="px-6 py-4 whitespace-nowrap">
-        <div class="relative" x-data="{ 
-            showStatusDropdown: false, 
-            leadId: {{ $lead->id }}, 
-            currentStatus: {{ $lead->lead_status_id ?? 'null' }},
-            currentStatusName: '{{ $lead->leadStatus->name ?? 'Atanmadı' }}'
-        }">
+        <div class="relative status-dropdown-container" data-lead-id="{{ $lead->id }}" data-current-status="{{ $lead->leadStatus->id ?? '' }}" data-current-status-name="{{ $lead->leadStatusName }}">
             <!-- Status Display/Button -->
-            <button 
-                @click="showStatusDropdown = !showStatusDropdown"
-                @click.outside="showStatusDropdown = false"
-                class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2"
-                :class="{
-                    @if($lead->leadStatus)
-                        @switch($lead->leadStatus->name)
-                            @case('New')
-                                'bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 focus:ring-green-500': true
-                                @break
-                            @case('Contacted') 
-                                'bg-blue-100 text-blue-800 border border-blue-200 hover:bg-blue-200 focus:ring-blue-500': true
-                                @break
-                            @case('Qualified')
-                                'bg-yellow-100 text-yellow-800 border border-yellow-200 hover:bg-yellow-200 focus:ring-yellow-500': true
-                                @break
-                            @case('Converted')
-                                'bg-emerald-100 text-emerald-800 border border-emerald-200 hover:bg-emerald-200 focus:ring-emerald-500': true
-                                @break
-                            @case('Lost')
-                                'bg-red-100 text-red-800 border border-red-200 hover:bg-red-200 focus:ring-red-500': true
-                                @break
-                            @default
-                                'bg-gray-100 text-gray-800 border border-gray-200 hover:bg-gray-200 focus:ring-gray-500': true
-                        @endswitch
-                    @else
-                        'bg-gray-100 text-gray-800 border border-gray-200 hover:bg-gray-200 focus:ring-gray-500': true
-                    @endif
-                }"
+            <button
+                onclick="handleStatusDropdownToggle(event, {{ $lead->id }})"
+                class="status-button inline-flex items-center px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2
+                @if($lead->leadStatus)
+                    @switch(strtolower($lead->leadStatus->name))
+                        @case('new')
+                            bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 focus:ring-green-500
+                            @break
+                        @case('contacted')
+                            bg-blue-100 text-blue-800 border border-blue-200 hover:bg-blue-200 focus:ring-blue-500
+                            @break
+                        @case('qualified')
+                            bg-yellow-100 text-yellow-800 border border-yellow-200 hover:bg-yellow-200 focus:ring-yellow-500
+                            @break
+                        @case('converted')
+                            bg-emerald-100 text-emerald-800 border border-emerald-200 hover:bg-emerald-200 focus:ring-emerald-500
+                            @break
+                        @case('lost')
+                            bg-red-100 text-red-800 border border-red-200 hover:bg-red-200 focus:ring-red-500
+                            @break
+                        @case('interested')
+                            bg-purple-100 text-purple-800 border border-purple-200 hover:bg-purple-200 focus:ring-purple-500
+                            @break
+                        @case('negotiation')
+                            bg-indigo-100 text-indigo-800 border border-indigo-200 hover:bg-indigo-200 focus:ring-indigo-500
+                            @break
+                        @default
+                            bg-gray-100 text-gray-800 border border-gray-200 hover:bg-gray-200 focus:ring-gray-500
+                    @endswitch
+                @else
+                    bg-gray-100 text-gray-800 border border-gray-200 hover:bg-gray-200 focus:ring-gray-500
+                @endif"
             >
-                <span x-text="currentStatusName">{{ $lead->leadStatus->name ?? 'Atanmadı' }}</span>
-                <i data-lucide="chevron-down" class="ml-2 w-4 h-4 transition-transform duration-200" :class="{'rotate-180': showStatusDropdown}"></i>
+                <span class="status-name">{{ $lead->leadStatusName }}</span>
+                <i data-lucide="chevron-down" class="status-chevron ml-2 w-4 h-4 transition-transform duration-200"></i>
             </button>
             
             <!-- Dropdown Menu -->
-            <div x-show="showStatusDropdown" 
-                 x-transition:enter="transition ease-out duration-100"
-                 x-transition:enter-start="transform opacity-0 scale-95"
-                 x-transition:enter-end="transform opacity-100 scale-100"
-                 x-transition:leave="transition ease-in duration-75"
-                 x-transition:leave-start="transform opacity-100 scale-100"
-                 x-transition:leave-end="transform opacity-0 scale-95"
-                 class="absolute z-50 mt-1 w-48 bg-white dark:bg-admin-800 rounded-lg shadow-lg border border-gray-200 dark:border-admin-600 py-1"
-                 style="display: none;">
+            <div class="status-dropdown absolute z-50 mt-1 w-48 bg-white dark:bg-admin-800 rounded-lg shadow-lg border border-gray-200 dark:border-admin-600 py-1 hidden">
                 @foreach($statuses as $status)
-                <button @click="updateLeadStatus(leadId, {{ $status->id }}, '{{ $status->name }}'); showStatusDropdown = false; currentStatus = {{ $status->id }}; currentStatusName = '{{ $status->name }}'"
-                        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors"
-                        :class="{'bg-blue-50 dark:bg-blue-900/30 text-blue-600': currentStatus === {{ $status->id }}}">
+                <button onclick="handleStatusUpdate(event, {{ $lead->id }}, {{ $status->id }}, '{{ $status->name }}')"
+                        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors {{ ($lead->leadStatus && $lead->leadStatus->id === $status->id) ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600' : '' }}">
                     <div class="w-3 h-3 rounded-full mr-3"
                          @class([
                              'bg-green-500' => strtolower($status->name) === 'new' || strtolower($status->name) === 'yeni',
@@ -584,9 +552,175 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Enhanced status update function with status name support
+// Checkbox handling functions
+function handleCheckboxChange(checkbox) {
+    const row = checkbox.closest('tr');
+    const leadId = checkbox.value;
+    
+    if (checkbox.checked) {
+        row.classList.add('selected', 'bg-blue-50', 'border-l-4', 'border-blue-500');
+    } else {
+        row.classList.remove('selected', 'bg-blue-50', 'border-l-4', 'border-blue-500');
+    }
+    
+    if (window.updateBulkActionUI) {
+        window.updateBulkActionUI();
+    }
+    if (window.updateSelectAllState) {
+        window.updateSelectAllState();
+    }
+}
+
+// Enhanced dropdown functions with proper event handling
+function handleAssignedDropdownToggle(event, leadId) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    const container = document.querySelector(`[data-lead-id="${leadId}"] .assigned-dropdown-container`);
+    if (!container) return;
+    
+    const dropdown = container.querySelector('.assigned-dropdown');
+    const chevron = container.querySelector('.assigned-chevron');
+    if (!dropdown || !chevron) return;
+    
+    // Hide other dropdowns first
+    document.querySelectorAll('.assigned-dropdown').forEach(d => {
+        if (d !== dropdown && !d.classList.contains('hidden')) {
+            d.classList.add('hidden');
+            const otherChevron = d.closest('.assigned-dropdown-container')?.querySelector('.assigned-chevron');
+            if (otherChevron) otherChevron.style.transform = '';
+        }
+    });
+    
+    // Also hide status dropdowns
+    document.querySelectorAll('.status-dropdown').forEach(d => {
+        if (!d.classList.contains('hidden')) {
+            d.classList.add('hidden');
+            const otherChevron = d.closest('.status-dropdown-container')?.querySelector('.status-chevron');
+            if (otherChevron) otherChevron.style.transform = '';
+        }
+    });
+    
+    // Toggle current dropdown
+    const isHidden = dropdown.classList.contains('hidden');
+    dropdown.classList.toggle('hidden');
+    chevron.style.transform = isHidden ? 'rotate(180deg)' : '';
+}
+
+function handleStatusDropdownToggle(event, leadId) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    const container = document.querySelector(`[data-lead-id="${leadId}"] .status-dropdown-container`);
+    if (!container) return;
+    
+    const dropdown = container.querySelector('.status-dropdown');
+    const chevron = container.querySelector('.status-chevron');
+    if (!dropdown || !chevron) return;
+    
+    // Hide other dropdowns first
+    document.querySelectorAll('.status-dropdown').forEach(d => {
+        if (d !== dropdown && !d.classList.contains('hidden')) {
+            d.classList.add('hidden');
+            const otherChevron = d.closest('.status-dropdown-container')?.querySelector('.status-chevron');
+            if (otherChevron) otherChevron.style.transform = '';
+        }
+    });
+    
+    // Also hide assignment dropdowns
+    document.querySelectorAll('.assigned-dropdown').forEach(d => {
+        if (!d.classList.contains('hidden')) {
+            d.classList.add('hidden');
+            const otherChevron = d.closest('.assigned-dropdown-container')?.querySelector('.assigned-chevron');
+            if (otherChevron) otherChevron.style.transform = '';
+        }
+    });
+    
+    // Toggle current dropdown
+    const isHidden = dropdown.classList.contains('hidden');
+    dropdown.classList.toggle('hidden');
+    chevron.style.transform = isHidden ? 'rotate(180deg)' : '';
+}
+
+function hideAssignedDropdown(leadId) {
+    const container = document.querySelector(`[data-lead-id="${leadId}"] .assigned-dropdown-container`);
+    if (!container) return;
+    
+    const dropdown = container.querySelector('.assigned-dropdown');
+    const chevron = container.querySelector('.assigned-chevron');
+    
+    if (dropdown) dropdown.classList.add('hidden');
+    if (chevron) chevron.style.transform = '';
+}
+
+function hideStatusDropdown(leadId) {
+    const container = document.querySelector(`[data-lead-id="${leadId}"] .status-dropdown-container`);
+    if (!container) return;
+    
+    const dropdown = container.querySelector('.status-dropdown');
+    const chevron = container.querySelector('.status-chevron');
+    
+    if (dropdown) dropdown.classList.add('hidden');
+    if (chevron) chevron.style.transform = '';
+}
+
+// Backward compatibility
+function toggleAssignedDropdown(leadId) {
+    handleAssignedDropdownToggle({stopPropagation: () => {}, preventDefault: () => {}}, leadId);
+}
+
+function toggleStatusDropdown(leadId) {
+    handleStatusDropdownToggle({stopPropagation: () => {}, preventDefault: () => {}}, leadId);
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.assigned-dropdown-container')) {
+        document.querySelectorAll('.assigned-dropdown').forEach(dropdown => {
+            dropdown.classList.add('hidden');
+            dropdown.closest('.assigned-dropdown-container').querySelector('.assigned-chevron').style.transform = '';
+        });
+    }
+    
+    if (!e.target.closest('.status-dropdown-container')) {
+        document.querySelectorAll('.status-dropdown').forEach(dropdown => {
+            dropdown.classList.add('hidden');
+            dropdown.closest('.status-dropdown-container').querySelector('.status-chevron').style.transform = '';
+        });
+    }
+});
+
+// Enhanced handler functions with anti-duplication
+function handleStatusUpdate(event, leadId, statusId, statusName) {
+    event.stopPropagation();
+    event.preventDefault();
+    hideStatusDropdown(leadId);
+    updateLeadStatus(leadId, statusId, statusName);
+}
+
+function handleAssignmentUpdate(event, leadId, agentId, agentName) {
+    event.stopPropagation();
+    event.preventDefault();
+    hideAssignedDropdown(leadId);
+    updateLeadAssignment(leadId, agentId, agentName);
+}
+
+// Anti-duplicate notification system
+const notificationQueue = new Set();
+
 async function updateLeadStatus(leadId, statusId, statusName) {
+    const updateKey = `status-${leadId}-${statusId}`;
+    
+    // Prevent duplicate requests
+    if (notificationQueue.has(updateKey)) {
+        console.log('Status update already in progress for lead:', leadId);
+        return;
+    }
+    
+    notificationQueue.add(updateKey);
+    
     try {
-        const response = await fetch(`/admin/leads/${leadId}/status`, {
+        const response = await fetch(`/admin/dashboard/leads/${leadId}/status`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -596,9 +730,13 @@ async function updateLeadStatus(leadId, statusId, statusName) {
         });
         
         if (response.ok) {
-            // Update button styling based on status name
-            const button = document.querySelector(`[x-data*="leadId: ${leadId}"] .status-button`);
-            if (button) {
+            const responseData = await response.json();
+            
+            // Update button styling and text
+            const container = document.querySelector(`[data-lead-id="${leadId}"] .status-dropdown-container`);
+            const button = container.querySelector('.status-button');
+            const statusNameSpan = button.querySelector('.status-name');
+            if (button && statusNameSpan) {
                 // Remove all status classes
                 button.classList.remove(
                     'bg-green-100', 'text-green-800', 'border-green-200', 'hover:bg-green-200', 'focus:ring-green-500',
@@ -608,6 +746,9 @@ async function updateLeadStatus(leadId, statusId, statusName) {
                     'bg-red-100', 'text-red-800', 'border-red-200', 'hover:bg-red-200', 'focus:ring-red-500',
                     'bg-gray-100', 'text-gray-800', 'border-gray-200', 'hover:bg-gray-200', 'focus:ring-gray-500'
                 );
+                
+                // Update status name text
+                statusNameSpan.textContent = statusName;
                 
                 // Add appropriate classes based on status name
                 const statusLower = statusName.toLowerCase();
@@ -629,7 +770,7 @@ async function updateLeadStatus(leadId, statusId, statusName) {
                 showStatusUpdateSuccess(button);
             }
             
-            // Show notification
+            // Show notification ONLY ONCE
             showNotification('Status başarıyla güncellendi', 'success');
         } else {
             throw new Error('Status güncellenemedi');
@@ -637,13 +778,28 @@ async function updateLeadStatus(leadId, statusId, statusName) {
     } catch (error) {
         console.error('Status güncelleme hatası:', error);
         showNotification('Status güncellenirken hata oluştu', 'error');
+    } finally {
+        // Remove from queue after 1 second to prevent future duplicates
+        setTimeout(() => {
+            notificationQueue.delete(updateKey);
+        }, 1000);
     }
 }
 
-// Enhanced assignment update function  
+// Enhanced assignment update function with anti-duplication
 async function updateLeadAssignment(leadId, agentId, agentName) {
+    const updateKey = `assignment-${leadId}-${agentId}`;
+    
+    // Prevent duplicate requests
+    if (notificationQueue.has(updateKey)) {
+        console.log('Assignment update already in progress for lead:', leadId);
+        return;
+    }
+    
+    notificationQueue.add(updateKey);
+    
     try {
-        const response = await fetch(`/admin/leads/${leadId}/assign`, {
+        const response = await fetch(`/admin/dashboard/leads/${leadId}/assign`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -654,12 +810,12 @@ async function updateLeadAssignment(leadId, agentId, agentName) {
         
         if (response.ok) {
             // Update the UI
-            const button = document.querySelector(`[x-data*="leadId: ${leadId}"] .assigned-button`);
+            const button = document.querySelector(`[data-lead-id="${leadId}"] .assigned-button`);
             if (button) {
                 showAssignmentUpdateSuccess(button);
             }
             
-            // Show notification
+            // Show notification ONLY ONCE
             showNotification('Atama başarıyla güncellendi', 'success');
         } else {
             throw new Error('Atama güncellenemedi');
@@ -667,6 +823,11 @@ async function updateLeadAssignment(leadId, agentId, agentName) {
     } catch (error) {
         console.error('Atama güncelleme hatası:', error);
         showNotification('Atama güncellenirken hata oluştu', 'error');
+    } finally {
+        // Remove from queue after 1 second to prevent future duplicates
+        setTimeout(() => {
+            notificationQueue.delete(updateKey);
+        }, 1000);
     }
 }
 
@@ -686,11 +847,22 @@ function showAssignmentUpdateSuccess(button) {
     }, 1500);
 }
 
-// Notification system
-function showNotification(message, type = 'info') {
+// Enhanced notification system with deduplication
+const activeNotifications = new Map();
+
+function showNotification(message, type = 'info', duration = 3000) {
+    // Create unique key for this notification
+    const notificationKey = `${type}-${message}`;
+    
+    // If this exact notification is already showing, don't show another
+    if (activeNotifications.has(notificationKey)) {
+        console.log('Duplicate notification prevented:', message);
+        return;
+    }
+    
     // Create notification element
     const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full ${
         type === 'success' ? 'bg-green-500 text-white' :
         type === 'error' ? 'bg-red-500 text-white' :
         type === 'warning' ? 'bg-yellow-500 text-white' :
@@ -699,13 +871,19 @@ function showNotification(message, type = 'info') {
     
     notification.innerHTML = `
         <div class="flex items-center">
-            <i data-lucide="${type === 'success' ? 'check-circle' : 
+            <i data-lucide="${type === 'success' ? 'check-circle' :
                              type === 'error' ? 'x-circle' :
-                             type === 'warning' ? 'alert-triangle' : 'info'}" 
+                             type === 'warning' ? 'alert-triangle' : 'info'}"
                class="w-5 h-5 mr-2"></i>
             <span>${message}</span>
+            <button onclick="removeNotification('${notificationKey}')" class="ml-4 text-white hover:text-gray-200">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
         </div>
     `;
+    
+    // Track this notification
+    activeNotifications.set(notificationKey, notification);
     
     document.body.appendChild(notification);
     
@@ -714,16 +892,32 @@ function showNotification(message, type = 'info') {
         window.lucide.createIcons();
     }
     
-    // Remove after 3 seconds
+    // Animate in
     setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 100);
+    
+    // Remove after duration
+    setTimeout(() => {
+        removeNotification(notificationKey);
+    }, duration);
+}
+
+function removeNotification(notificationKey) {
+    const notification = activeNotifications.get(notificationKey);
+    if (notification && document.body.contains(notification)) {
         notification.style.opacity = '0';
         notification.style.transform = 'translateX(100%)';
         setTimeout(() => {
             if (document.body.contains(notification)) {
                 document.body.removeChild(notification);
             }
+            activeNotifications.delete(notificationKey);
         }, 300);
-    }, 3000);
+    }
 }
+
+// Global function for removing notifications
+window.removeNotification = removeNotification;
 </script>
 @endPushOnce

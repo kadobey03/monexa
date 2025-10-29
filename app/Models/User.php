@@ -144,7 +144,44 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getLeadStatusNameAttribute()
     {
-        return $this->leadStatus?->display_name ?? $this->leadStatus?->name ?? 'Bilinmeyen';
+        // Türkçe karşılıkları
+        $statusMap = [
+            'new' => 'Yeni',
+            'contacted' => 'İletişimde',
+            'qualified' => 'Nitelikli',
+            'converted' => 'Dönüştürülmüş',
+            'lost' => 'Kayıp',
+            'interested' => 'İlgileniyor',
+            'negotiation' => 'Görüşme Aşamasında',
+            'New' => 'Yeni',
+            'Contacted' => 'İletişimde',
+            'Qualified' => 'Nitelikli',
+            'Converted' => 'Dönüştürülmüş',
+            'Lost' => 'Kayıp',
+            'Interested' => 'İlgileniyor',
+            'Negotiation' => 'Görüşme Aşamasında'
+        ];
+
+        // Önce leadStatus relationship'ini dene
+        if ($this->leadStatus) {
+            $displayName = $this->leadStatus->display_name;
+            $name = $this->leadStatus->name;
+            
+            // Eğer display_name boş değilse ve mapped değerden farklıysa onu kullan
+            if ($displayName && $displayName !== $name && !isset($statusMap[$displayName])) {
+                return $displayName;
+            }
+            
+            // Değilse mapping kullan
+            return $statusMap[$name] ?? ucfirst($name);
+        }
+        
+        // Eğer leadStatus relationship null ise, raw lead_status değerini mapping'le döndür
+        if ($this->lead_status) {
+            return $statusMap[$this->lead_status] ?? ucfirst($this->lead_status);
+        }
+        
+        return 'Atanmadı';
     }
 
     /**
@@ -510,6 +547,14 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getLeadStatusName(): string
     {
+        \Log::info('DEBUG - getLeadStatusName called', [
+            'user_id' => $this->id,
+            'lead_status_raw' => $this->lead_status,
+            'leadStatus_relationship' => $this->leadStatus,
+            'leadStatus_display_name' => $this->leadStatus?->display_name,
+            'leadStatus_name' => $this->leadStatus?->name,
+        ]);
+        
         return $this->leadStatus?->display_name ?? $this->leadStatus?->name ?? 'Bilinmeyen';
     }
 

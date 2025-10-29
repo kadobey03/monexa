@@ -10,31 +10,23 @@
                         <i data-lucide="users" class="w-6 h-6 mr-3 text-blue-600"></i>
                         Lead Yönetimi
                     </h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" 
-                       x-text="`Toplam ${pagination.total || 0} lead kayıt`"></p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" id="total-leads-count">
+                       Toplam 0 lead kayıt</p>
                 </div>
                 
                 <div class="flex items-center space-x-3">
                     <!-- Column Settings -->
-                    <div class="relative" x-data="{ showColumnSettings: false }">
-                        <button 
-                            @click="showColumnSettings = !showColumnSettings"
-                            @click.outside="showColumnSettings = false"
+                    <div class="relative">
+                        <button
+                            onclick="toggleColumnSettings()"
                             class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
                             <i data-lucide="columns" class="w-4 h-4 mr-2"></i>
                             Sütunlar
-                            <i data-lucide="chevron-down" class="w-4 h-4 ml-2 transition-transform duration-200" 
-                               :class="{'rotate-180': showColumnSettings}"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 ml-2 transition-transform duration-200" id="column-chevron"></i>
                         </button>
                         
                         <!-- Column Settings Dropdown -->
-                        <div x-show="showColumnSettings"
-                             x-transition:enter="transition ease-out duration-100"
-                             x-transition:enter-start="transform opacity-0 scale-95"
-                             x-transition:enter-end="transform opacity-100 scale-100"
-                             x-transition:leave="transition ease-in duration-75"
-                             x-transition:leave-start="transform opacity-100 scale-100"
-                             x-transition:leave-end="transform opacity-0 scale-95"
+                        <div id="column-settings-dropdown"
                              class="absolute right-0 z-50 mt-2 w-64 bg-white dark:bg-admin-800 rounded-lg shadow-lg border border-gray-200 dark:border-admin-600 py-2"
                              style="display: none;">
                             <div class="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-200 dark:border-admin-600">
@@ -84,8 +76,8 @@
                     
                     <!-- Export Button -->
                     @can('export_leads')
-                    <button 
-                        @click="exportLeads()"
+                    <button
+                        onclick="exportLeads()"
                         class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-sm font-medium rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 shadow-lg">
                         <i data-lucide="download" class="w-4 h-4 mr-2"></i>
                         Export
@@ -93,17 +85,17 @@
                     @endcan
                     
                     <!-- Refresh Button -->
-                    <button 
-                        @click="refreshLeads()"
+                    <button
+                        onclick="refreshLeads()"
                         class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
-                        <i data-lucide="refresh-cw" class="w-4 h-4" :class="{'animate-spin': loading}"></i>
+                        <i data-lucide="refresh-cw" class="w-4 h-4" id="refresh-icon"></i>
                     </button>
                 </div>
             </div>
         </div>
         
         <!-- Loading Indicator -->
-        <div x-show="loading" class="flex flex-col items-center justify-center py-16 bg-gray-50 dark:bg-admin-900/50">
+        <div id="loading-indicator" class="flex flex-col items-center justify-center py-16 bg-gray-50 dark:bg-admin-900/50" style="display: none;">
             <div class="relative">
                 <div class="w-16 h-16 border-4 border-blue-200 dark:border-blue-900 rounded-full animate-pulse"></div>
                 <div class="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-blue-600 rounded-full animate-spin"></div>
@@ -115,22 +107,20 @@
         </div>
         
         <!-- Table Content -->
-        <div x-show="!loading" class="overflow-x-auto bg-white dark:bg-admin-800">
+        <div id="table-content" class="overflow-x-auto bg-white dark:bg-admin-800">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-admin-700 table-fixed">
                 <!-- Table Header -->
                 <x-admin.leads.table.table-header />
                 
                 <!-- Table Body -->
                 <tbody id="leads-table-body" class="bg-white dark:bg-admin-800 divide-y divide-gray-200 dark:divide-admin-700">
-                    <template x-for="lead in leads" :key="lead.id">
-                        <x-admin.leads.table.table-row :lead="lead" :statuses="$statuses" :agents="$agents" />
-                    </template>
+                    <!-- Leads will be populated here via JavaScript -->
                 </tbody>
             </table>
         </div>
         
         <!-- Empty State -->
-        <div x-show="!loading && leads.length === 0" class="text-center py-16 bg-gray-50 dark:bg-admin-900/50">
+        <div id="empty-state" class="text-center py-16 bg-gray-50 dark:bg-admin-900/50" style="display: none;">
             <div class="mx-auto w-24 h-24 bg-gray-200 dark:bg-admin-700 rounded-full flex items-center justify-center mb-6">
                 <i data-lucide="users" class="w-12 h-12 text-gray-400 dark:text-gray-600"></i>
             </div>
@@ -138,8 +128,8 @@
             <p class="text-gray-500 dark:text-gray-400 mb-6 max-w-md mx-auto">
                 Aradığınız kriterlere uygun lead bulunamadı. Filtreleri değiştirmeyi deneyin veya yeni bir lead ekleyin.
             </p>
-            <button 
-                @click="clearFilters()"
+            <button
+                onclick="clearFilters()"
                 class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
                 <i data-lucide="filter-x" class="w-4 h-4 mr-2"></i>
                 Filtreleri Temizle
@@ -147,47 +137,41 @@
         </div>
         
         <!-- Selected Actions Bar -->
-        <div id="bulk-actions" x-show="selectedLeads.length > 0" 
-             x-transition:enter="transition ease-out duration-100"
-             x-transition:enter-start="transform opacity-0 translate-y-2"
-             x-transition:enter-end="transform opacity-100 translate-y-0"
-             x-transition:leave="transition ease-in duration-75"
-             x-transition:leave-start="transform opacity-100 translate-y-0"
-             x-transition:leave-end="transform opacity-0 translate-y-2"
+        <div id="bulk-actions"
              class="border-t border-gray-200 dark:border-admin-700 bg-blue-50 dark:bg-blue-900/20 px-6 py-4"
              style="display: none;">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
                     <i data-lucide="check-circle" class="w-5 h-5 text-blue-600 mr-2"></i>
                     <span class="text-sm font-medium text-blue-900 dark:text-blue-100">
-                        <span id="selected-count" x-text="selectedLeads.length"></span> lead seçildi
+                        <span id="selected-count">0</span> lead seçildi
                     </span>
                 </div>
                 
                 <div class="flex items-center space-x-3">
-                    <button 
-                        @click="bulkAssign()"
+                    <button
+                        onclick="bulkAssign()"
                         class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 rounded-lg transition-colors">
                         <i data-lucide="user-plus" class="w-4 h-4 mr-1"></i>
                         Toplu Atama
                     </button>
                     
-                    <button 
-                        @click="bulkStatusUpdate()"
+                    <button
+                        onclick="bulkStatusUpdate()"
                         class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-lg transition-colors">
                         <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
                         Durumu Değiştir
                     </button>
                     
-                    <button 
-                        @click="bulkDelete()"
+                    <button
+                        onclick="bulkDelete()"
                         class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-lg transition-colors">
                         <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
                         Sil
                     </button>
                     
-                    <button 
-                        @click="selectedLeads = []"
+                    <button
+                        onclick="clearSelection()"
                         class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
                         <i data-lucide="x" class="w-4 h-4 mr-1"></i>
                         Seçimi Temizle
@@ -198,24 +182,24 @@
     </div>
     
     <!-- Modern Pagination -->
-    <div x-show="pagination.total > 0" class="mt-6">
+    <div id="pagination-container" class="mt-6" style="display: none;">
         <div class="bg-white dark:bg-admin-800 rounded-xl shadow-lg border border-gray-200 dark:border-admin-700 overflow-hidden">
             <div class="px-6 py-4 bg-gradient-to-r from-gray-50 to-white dark:from-admin-900 dark:to-admin-800 border-b border-gray-200 dark:border-admin-700">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-4">
                         <div class="text-sm text-gray-700 dark:text-gray-300">
-                            <span class="font-medium" x-text="pagination.from || 0"></span>
+                            <span class="font-medium" id="pagination-from">0</span>
                             -
-                            <span class="font-medium" x-text="pagination.to || 0"></span>
+                            <span class="font-medium" id="pagination-to">0</span>
                             /
-                            <span class="font-semibold text-blue-600" x-text="pagination.total || 0"></span>
+                            <span class="font-semibold text-blue-600" id="pagination-total">0</span>
                             kayıt gösteriliyor
                         </div>
                         
                         <!-- Per Page Selector -->
                         <div class="flex items-center space-x-2">
                             <label class="text-sm text-gray-600 dark:text-gray-400">Sayfa başına:</label>
-                            <select @change="changePerPage($event.target.value)" 
+                            <select onchange="changePerPage(this.value)"
                                     class="text-sm border border-gray-300 dark:border-admin-600 rounded-lg px-2 py-1 bg-white dark:bg-admin-700 text-gray-700 dark:text-gray-300">
                                 <option value="10">10</option>
                                 <option value="25" selected>25</option>
@@ -227,48 +211,40 @@
                     
                     <div class="flex items-center space-x-1">
                         <!-- First Page -->
-                        <button 
-                            @click="goToPage(1)"
-                            :disabled="pagination.current_page <= 1"
+                        <button
+                            onclick="goToPage(1)"
+                            id="first-page-btn"
                             class="p-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white transition-colors">
                             <i data-lucide="chevrons-left" class="w-4 h-4"></i>
                         </button>
                         
                         <!-- Previous Page -->
-                        <button 
-                            @click="goToPage(pagination.current_page - 1)"
-                            :disabled="pagination.current_page <= 1"
+                        <button
+                            onclick="goToPreviousPage()"
+                            id="prev-page-btn"
                             class="px-3 py-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white transition-colors">
                             <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i>
                             Önceki
                         </button>
                         
                         <!-- Page Numbers -->
-                        <template x-for="page in getVisiblePages()" :key="page">
-                            <button 
-                                @click="goToPage(page)"
-                                :class="{
-                                    'bg-blue-600 text-white border-blue-600 shadow-lg': page === pagination.current_page,
-                                    'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-admin-700 border-gray-300 dark:border-admin-600': page !== pagination.current_page
-                                }"
-                                class="px-4 py-2 text-sm border rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
-                                x-text="page">
-                            </button>
-                        </template>
+                        <div id="page-numbers">
+                            <!-- Page buttons will be generated here -->
+                        </div>
                         
                         <!-- Next Page -->
-                        <button 
-                            @click="goToPage(pagination.current_page + 1)"
-                            :disabled="pagination.current_page >= pagination.last_page"
+                        <button
+                            onclick="goToNextPage()"
+                            id="next-page-btn"
                             class="px-3 py-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white transition-colors">
                             Sonraki
                             <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
                         </button>
                         
                         <!-- Last Page -->
-                        <button 
-                            @click="goToPage(pagination.last_page)"
-                            :disabled="pagination.current_page >= pagination.last_page"
+                        <button
+                            onclick="goToLastPage()"
+                            id="last-page-btn"
                             class="p-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white transition-colors">
                             <i data-lucide="chevrons-right" class="w-4 h-4"></i>
                         </button>

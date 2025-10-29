@@ -578,7 +578,7 @@ class FilterManager {
 // Global instance
 window.filterManager = new FilterManager();
 
-// Alpine.js integration helpers
+// Vanilla JS integration helpers
 window.filterManagerHelpers = {
     // Get current filters
     getCurrentFilters() {
@@ -586,23 +586,32 @@ window.filterManagerHelpers = {
     },
     
     // Apply filters
-    applyFilters() {
-        this.filters = window.filterManager.getCurrentFilters();
-        this.loadLeads();
+    applyFilters(dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager) {
+            manager.state.filters = window.filterManager.getCurrentFilters();
+            manager.loadLeads();
+        }
     },
     
     // Clear all filters
-    clearAllFilters() {
-        window.filterManager.clearAllFilters();
-        this.filters = window.filterManager.getCurrentFilters();
-        this.loadLeads();
+    clearAllFilters(dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager) {
+            window.filterManager.clearAllFilters();
+            manager.state.filters = window.filterManager.getCurrentFilters();
+            manager.loadLeads();
+        }
     },
     
     // Update single filter
-    updateFilter(key, value) {
-        window.filterManager.updateFilter(key, value);
-        this.filters[key] = value;
-        this.loadLeads();
+    updateFilter(key, value, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager) {
+            window.filterManager.updateFilter(key, value);
+            manager.state.filters[key] = value;
+            manager.loadLeads();
+        }
     },
     
     // Get active filters count
@@ -611,11 +620,14 @@ window.filterManagerHelpers = {
     },
     
     // Quick filters
-    applyQuickFilter(quickFilterId) {
-        const filters = window.filterManager.applyQuickFilter(quickFilterId);
-        if (filters) {
-            this.filters = filters;
-            this.loadLeads();
+    applyQuickFilter(quickFilterId, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager) {
+            const filters = window.filterManager.applyQuickFilter(quickFilterId);
+            if (filters) {
+                manager.state.filters = filters;
+                manager.loadLeads();
+            }
         }
     },
     
@@ -624,17 +636,19 @@ window.filterManagerHelpers = {
     },
     
     // Tag management
-    addTag(tag) {
-        if (window.filterManager.addTag(tag)) {
-            this.filters.tags = [...window.filterManager.getCurrentFilters().tags];
-            this.loadLeads();
+    addTag(tag, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager && window.filterManager.addTag(tag)) {
+            manager.state.filters.tags = [...window.filterManager.getCurrentFilters().tags];
+            manager.loadLeads();
         }
     },
     
-    removeTag(tag) {
-        if (window.filterManager.removeTag(tag)) {
-            this.filters.tags = [...window.filterManager.getCurrentFilters().tags];
-            this.loadLeads();
+    removeTag(tag, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager && window.filterManager.removeTag(tag)) {
+            manager.state.filters.tags = [...window.filterManager.getCurrentFilters().tags];
+            manager.loadLeads();
         }
     },
     
@@ -643,35 +657,40 @@ window.filterManagerHelpers = {
     },
     
     // Preset management
-    saveFilterPreset() {
+    saveFilterPreset(dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
         const name = prompt('Preset adını girin:');
-        if (name) {
+        if (name && manager) {
             try {
                 const preset = window.filterManager.saveFilterPreset(name);
-                this.filterPresets = window.filterManager.getFilterPresets();
-                this.showNotification(`"${name}" preset'i kaydedildi`, 'success');
+                manager.state.filterPresets = window.filterManager.getFilterPresets();
+                manager.showNotification(`"${name}" preset'i kaydedildi`, 'success');
                 return preset;
             } catch (error) {
-                this.showNotification(error.message, 'error');
+                manager.showNotification(error.message, 'error');
             }
         }
     },
     
-    loadFilterPreset(presetId) {
-        const preset = window.filterManager.loadFilterPreset(presetId);
-        if (preset) {
-            this.filters = window.filterManager.getCurrentFilters();
-            this.loadLeads();
-            this.showNotification(`"${preset.name}" preset'i yüklendi`, 'success');
+    loadFilterPreset(presetId, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager) {
+            const preset = window.filterManager.loadFilterPreset(presetId);
+            if (preset) {
+                manager.state.filters = window.filterManager.getCurrentFilters();
+                manager.loadLeads();
+                manager.showNotification(`"${preset.name}" preset'i yüklendi`, 'success');
+            }
         }
     },
     
-    deleteFilterPreset(presetId) {
-        if (confirm('Bu preset\'i silmek istediğinizden emin misiniz?')) {
+    deleteFilterPreset(presetId, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager && confirm('Bu preset\'i silmek istediğinizden emin misiniz?')) {
             const deleted = window.filterManager.deleteFilterPreset(presetId);
             if (deleted) {
-                this.filterPresets = window.filterManager.getFilterPresets();
-                this.showNotification(`"${deleted.name}" preset'i silindi`, 'success');
+                manager.state.filterPresets = window.filterManager.getFilterPresets();
+                manager.showNotification(`"${deleted.name}" preset'i silindi`, 'success');
             }
         }
     },
@@ -690,23 +709,29 @@ window.filterManagerHelpers = {
     },
     
     // Export filtered data
-    async exportFilteredData() {
-        try {
-            const filters = window.filterManager.getCurrentFilters();
-            await window.leadsTableManager.exportLeads('excel', filters);
-            this.showNotification('Filtrelenmiş veriler export ediliyor...', 'success');
-        } catch (error) {
-            this.showNotification('Export işlemi başarısız', 'error');
+    async exportFilteredData(dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager) {
+            try {
+                const filters = window.filterManager.getCurrentFilters();
+                await window.leadsTableManager.exportLeads('excel', filters);
+                manager.showNotification('Filtrelenmiş veriler export ediliyor...', 'success');
+            } catch (error) {
+                manager.showNotification('Export işlemi başarısız', 'error');
+            }
         }
     },
     
-    // Initialize filters in Alpine component
-    initializeFilters() {
-        this.filters = window.filterManager.getCurrentFilters();
-        this.filterPresets = window.filterManager.getFilterPresets();
-        
-        // Load initial data
-        this.loadLeads();
+    // Initialize filters in data manager
+    initializeFilters(dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        if (manager) {
+            manager.state.filters = window.filterManager.getCurrentFilters();
+            manager.state.filterPresets = window.filterManager.getFilterPresets();
+            
+            // Load initial data
+            manager.loadLeads();
+        }
     }
 };
 

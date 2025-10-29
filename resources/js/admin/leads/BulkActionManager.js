@@ -586,163 +586,183 @@ class BulkActionManager {
 // Global instance
 window.bulkActionManager = new BulkActionManager();
 
-// Alpine.js integration helpers
+// Vanilla JS integration helpers
 window.bulkActionHelpers = {
     // Execute bulk actions
-    async bulkUpdateStatus(status) {
-        if (this.selectedLeads.length === 0) {
-            this.showNotification('Lütfen lead seçin', 'warning');
+    async bulkUpdateStatus(status, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        
+        if (!manager || manager.state.selectedLeads.length === 0) {
+            console.warn('No data manager or selected leads found');
             return;
         }
         
         try {
-            this.bulkOperationInProgress = true;
+            manager.setState({ bulkOperationInProgress: true });
             
             const operationId = await window.bulkActionManager.executeBulkAction(
                 window.bulkActionManager.actionTypes.UPDATE_STATUS,
-                this.selectedLeads,
+                manager.state.selectedLeads,
                 { status }
             );
             
             // Track progress
             window.bulkActionManager.onProgress(operationId, (progress, statusMessage) => {
-                this.bulkOperationProgress = progress;
-                this.bulkOperationStatus = statusMessage;
+                manager.setState({
+                    bulkOperationProgress: progress,
+                    bulkOperationStatus: statusMessage
+                });
             });
             
             // Wait for completion
             const operation = await this.waitForOperationCompletion(operationId);
             
-            this.showNotification(`${operation.successCount} lead durumu güncellendi`, 'success');
-            await this.loadLeads();
-            this.clearSelection();
+            manager.showNotification(`${operation.successCount} lead durumu güncellendi`, 'success');
+            await manager.loadLeads();
+            manager.clearSelection();
             
         } catch (error) {
-            this.showNotification('Durum güncellenemedi: ' + error.message, 'error');
+            manager.showNotification('Durum güncellenemedi: ' + error.message, 'error');
         } finally {
-            this.bulkOperationInProgress = false;
+            manager.setState({ bulkOperationInProgress: false });
         }
     },
     
-    async bulkAssign(adminId) {
-        if (this.selectedLeads.length === 0) {
-            this.showNotification('Lütfen lead seçin', 'warning');
+    async bulkAssign(adminId, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        
+        if (!manager || manager.state.selectedLeads.length === 0) {
+            console.warn('No data manager or selected leads found');
             return;
         }
         
         try {
-            this.bulkOperationInProgress = true;
+            manager.setState({ bulkOperationInProgress: true });
             
             const operationId = await window.bulkActionManager.executeBulkAction(
                 window.bulkActionManager.actionTypes.ASSIGN_USER,
-                this.selectedLeads,
+                manager.state.selectedLeads,
                 { admin_id: adminId }
             );
             
             window.bulkActionManager.onProgress(operationId, (progress, statusMessage) => {
-                this.bulkOperationProgress = progress;
-                this.bulkOperationStatus = statusMessage;
+                manager.setState({
+                    bulkOperationProgress: progress,
+                    bulkOperationStatus: statusMessage
+                });
             });
             
             const operation = await this.waitForOperationCompletion(operationId);
             
-            this.showNotification(`${operation.successCount} lead atandı`, 'success');
-            await this.loadLeads();
-            this.clearSelection();
+            manager.showNotification(`${operation.successCount} lead atandı`, 'success');
+            await manager.loadLeads();
+            manager.clearSelection();
             
         } catch (error) {
-            this.showNotification('Atama işlemi başarısız: ' + error.message, 'error');
+            manager.showNotification('Atama işlemi başarısız: ' + error.message, 'error');
         } finally {
-            this.bulkOperationInProgress = false;
+            manager.setState({ bulkOperationInProgress: false });
         }
     },
     
-    async bulkAddTag(tag) {
-        if (this.selectedLeads.length === 0) {
-            this.showNotification('Lütfen lead seçin', 'warning');
+    async bulkAddTag(tag, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        
+        if (!manager || manager.state.selectedLeads.length === 0) {
+            console.warn('No data manager or selected leads found');
             return;
         }
         
         if (!tag || !tag.trim()) {
-            this.showNotification('Lütfen etiket girin', 'warning');
+            manager.showNotification('Lütfen etiket girin', 'warning');
             return;
         }
         
         try {
-            this.bulkOperationInProgress = true;
+            manager.setState({ bulkOperationInProgress: true });
             
             const operationId = await window.bulkActionManager.executeBulkAction(
                 window.bulkActionManager.actionTypes.ADD_TAGS,
-                this.selectedLeads,
+                manager.state.selectedLeads,
                 { tags: [tag.trim()] }
             );
             
             window.bulkActionManager.onProgress(operationId, (progress, statusMessage) => {
-                this.bulkOperationProgress = progress;
-                this.bulkOperationStatus = statusMessage;
+                manager.setState({
+                    bulkOperationProgress: progress,
+                    bulkOperationStatus: statusMessage
+                });
             });
             
             const operation = await this.waitForOperationCompletion(operationId);
             
-            this.showNotification(`"${tag}" etiketi ${operation.successCount} lead'e eklendi`, 'success');
-            await this.loadLeads();
+            manager.showNotification(`"${tag}" etiketi ${operation.successCount} lead'e eklendi`, 'success');
+            await manager.loadLeads();
             
         } catch (error) {
-            this.showNotification('Etiket eklenemedi: ' + error.message, 'error');
+            manager.showNotification('Etiket eklenemedi: ' + error.message, 'error');
         } finally {
-            this.bulkOperationInProgress = false;
+            manager.setState({ bulkOperationInProgress: false });
         }
     },
     
-    confirmBulkDelete() {
-        if (this.selectedLeads.length === 0) {
-            this.showNotification('Lütfen lead seçin', 'warning');
+    confirmBulkDelete(dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        
+        if (!manager || manager.state.selectedLeads.length === 0) {
+            manager.showNotification('Lütfen lead seçin', 'warning');
             return;
         }
         
-        this.showBulkDeleteConfirm = true;
+        manager.setState({ showBulkDeleteConfirm: true });
     },
     
-    async executeBulkDelete() {
-        this.showBulkDeleteConfirm = false;
+    async executeBulkDelete(dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        
+        manager.setState({ showBulkDeleteConfirm: false });
         
         try {
-            this.bulkOperationInProgress = true;
+            manager.setState({ bulkOperationInProgress: true });
             
             const operationId = await window.bulkActionManager.executeBulkAction(
                 window.bulkActionManager.actionTypes.DELETE,
-                this.selectedLeads
+                manager.state.selectedLeads
             );
             
             window.bulkActionManager.onProgress(operationId, (progress, statusMessage) => {
-                this.bulkOperationProgress = progress;
-                this.bulkOperationStatus = statusMessage;
+                manager.setState({
+                    bulkOperationProgress: progress,
+                    bulkOperationStatus: statusMessage
+                });
             });
             
             const operation = await this.waitForOperationCompletion(operationId);
             
-            this.showNotification(`${operation.successCount} lead silindi`, 'success');
-            await this.loadLeads();
-            this.clearSelection();
+            manager.showNotification(`${operation.successCount} lead silindi`, 'success');
+            await manager.loadLeads();
+            manager.clearSelection();
             
         } catch (error) {
-            this.showNotification('Silme işlemi başarısız: ' + error.message, 'error');
+            manager.showNotification('Silme işlemi başarısız: ' + error.message, 'error');
         } finally {
-            this.bulkOperationInProgress = false;
+            manager.setState({ bulkOperationInProgress: false });
         }
     },
     
-    async exportSelectedLeads() {
-        if (this.selectedLeads.length === 0) {
-            this.showNotification('Lütfen export edilecek lead\'leri seçin', 'warning');
+    async exportSelectedLeads(dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        
+        if (!manager || manager.state.selectedLeads.length === 0) {
+            manager.showNotification('Lütfen export edilecek lead\'leri seçin', 'warning');
             return;
         }
         
         try {
             const operationId = await window.bulkActionManager.executeBulkAction(
                 window.bulkActionManager.actionTypes.EXPORT,
-                this.selectedLeads,
-                { format: 'excel', filters: this.filters }
+                manager.state.selectedLeads,
+                { format: 'excel', filters: manager.state.filters }
             );
             
             window.bulkActionManager.onProgress(operationId, (progress, statusMessage) => {
@@ -752,10 +772,10 @@ window.bulkActionHelpers = {
             
             const operation = await this.waitForOperationCompletion(operationId);
             
-            this.showNotification(`${operation.successCount} lead export edildi`, 'success');
+            manager.showNotification(`${operation.successCount} lead export edildi`, 'success');
             
         } catch (error) {
-            this.showNotification('Export işlemi başarısız: ' + error.message, 'error');
+            manager.showNotification('Export işlemi başarısız: ' + error.message, 'error');
         }
     },
     
@@ -800,10 +820,12 @@ window.bulkActionHelpers = {
     },
     
     // Cancel active operation
-    cancelBulkOperation(operationId) {
+    cancelBulkOperation(operationId, dataManager = null) {
+        const manager = dataManager || window.leadsDataManagerInstance;
+        
         if (window.bulkActionManager.cancelOperation(operationId)) {
-            this.showNotification('İşlem iptal edildi', 'info');
-            this.bulkOperationInProgress = false;
+            manager.showNotification('İşlem iptal edildi', 'info');
+            manager.setState({ bulkOperationInProgress: false });
         }
     }
 };

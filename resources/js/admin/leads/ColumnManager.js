@@ -548,6 +548,13 @@ class ColumnManager {
         const column = this.getColumn(columnKey);
         return column ? (column.visible && !column.hidden) : false;
     }
+
+    /**
+     * Get pinned columns
+     */
+    getPinnedColumns() {
+        return [...this.pinnedColumns];
+    }
     
     /**
      * Reset to default settings
@@ -751,40 +758,38 @@ window.columnManagerHelpers = {
     resetToDefaults() {
         window.columnManager.resetToDefaults();
         
-        // Update Alpine.js data if available
-        const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
-        if (alpineComponent && alpineComponent._x_dataStack) {
-            const data = alpineComponent._x_dataStack[0];
-            data.availableColumns = window.columnManager.getAllColumns();
-            data.visibleColumns = window.columnManager.getResponsiveColumns();
-            data.pinnedColumns = window.columnManager.getPinnedColumns();
+        // Update data manager if available
+        const dataManager = window.leadsDataManagerInstance;
+        if (dataManager) {
+            dataManager.state.availableColumns = window.columnManager.getAllColumns();
+            dataManager.state.visibleColumns = window.columnManager.getResponsiveColumns();
+            dataManager.state.pinnedColumns = window.columnManager.getPinnedColumns();
+            dataManager.renderTable();
         }
     },
     
-    // Save column settings with Alpine.js integration
+    // Save column settings with vanilla JS integration
     saveColumnSettings() {
         window.columnManager.saveSettings();
         
-        const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
-        if (alpineComponent && alpineComponent._x_dataStack) {
-            const data = alpineComponent._x_dataStack[0];
-            if (data.showColumnSettings) {
-                data.showColumnSettings = false;
-            }
-            if (data.showNotification) {
-                data.showNotification('Sütun ayarları kaydedildi', 'success');
+        const dataManager = window.leadsDataManagerInstance;
+        if (dataManager) {
+            dataManager.setState({ showColumnSettings: false });
+            dataManager.renderColumnSettings();
+            if (dataManager.showNotification) {
+                dataManager.showNotification('Sütun ayarları kaydedildi', 'success');
             }
         }
     },
     
-    // Load settings into Alpine.js component
+    // Load settings into data manager
     loadColumnSettings() {
-        const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
-        if (alpineComponent && alpineComponent._x_dataStack) {
-            const data = alpineComponent._x_dataStack[0];
-            data.availableColumns = window.columnManager.getAllColumns();
-            data.visibleColumns = window.columnManager.getResponsiveColumns();
-            data.pinnedColumns = window.columnManager.getPinnedColumns();
+        const dataManager = window.leadsDataManagerInstance;
+        if (dataManager) {
+            dataManager.state.availableColumns = window.columnManager.getAllColumns();
+            dataManager.state.visibleColumns = window.columnManager.getResponsiveColumns();
+            dataManager.state.pinnedColumns = window.columnManager.getPinnedColumns();
+            dataManager.renderTable();
         }
     },
     
@@ -804,14 +809,11 @@ window.columnManagerHelpers = {
     }
 };
 
-// Listen for column events and update Alpine.js
+// Listen for column events and update data manager
 document.addEventListener('columns:columnSettingsUpdated', (event) => {
-    const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
-    if (alpineComponent && alpineComponent._x_dataStack) {
-        const data = alpineComponent._x_dataStack[0];
-        if (data.loadLeads) {
-            data.loadLeads(); // Reload table data with new column settings
-        }
+    const dataManager = window.leadsDataManagerInstance;
+    if (dataManager && dataManager.loadLeads) {
+        dataManager.loadLeads(); // Reload table data with new column settings
     }
 });
 

@@ -356,6 +356,7 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         
         // Quick Update API Routes
         Route::put('/api/{id}/status', 'updateStatus')->name('api.update-status'); // AJAX status update
+        Route::patch('/{id}/status', 'updateStatus')->name('update-status-patch'); // Frontend compatibility route
         Route::put('/api/{id}/assignment', 'updateAssignment')->name('api.update-assignment'); // AJAX assignment update
         Route::put('/api/{id}/priority', 'updatePriority')->name('api.update-priority'); // AJAX priority update
         Route::put('/api/{id}/tags', 'updateTags')->name('api.update-tags'); // AJAX tags update

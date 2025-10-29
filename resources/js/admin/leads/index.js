@@ -1,7 +1,7 @@
 /**
- * Leads Module Index - Updated for Alpine.js Integration
+ * Leads Module Index - Vanilla JavaScript Implementation
  * Tüm lead yönetimi modüllerini yükler ve entegre eder
- * Alpine.js ile tam uyumlu modüler yapı
+ * Alpine.js bağımlılığı kaldırılmış modüler yapı
  */
 
 // Import all modules
@@ -9,7 +9,7 @@ import LeadsTableManager from './LeadsTableManager.js';
 import ColumnManager from './ColumnManager.js';
 import FilterManager from './FilterManager.js';
 import BulkActionManager from './BulkActionManager.js';
-import './alpine-data.js'; // Alpine.js data function
+import { LeadsDataManager } from './leads-data-manager.js';
 
 /**
  * Initialize Leads Module
@@ -17,30 +17,38 @@ import './alpine-data.js'; // Alpine.js data function
  */
 function initializeLeadsModule() {
     // Check if we're on the leads page
-    if (!document.querySelector('[x-data*="leadsTableData"]')) {
+    if (!document.querySelector('[data-leads-table]')) {
         return;
     }
     
-    console.log('🚀 Lead Yönetim Sistemi başlatılıyor (Alpine.js entegre)...');
+    console.log('🚀 Lead Yönetim Sistemi başlatılıyor (Vanilla JS)...');
     
     // Initialize Lucide icons if available
     if (window.lucide) {
         window.lucide.createIcons();
     }
     
+    // Initialize the main data manager
+    const dataManager = window.initializeLeadsDataManager();
+    
+    if (!dataManager) {
+        console.error('Failed to initialize Leads Data Manager');
+        return;
+    }
+    
     // Setup global error handling for the module
     setupErrorHandling();
     
     // Setup auto-refresh if user is idle
-    setupAutoRefresh();
+    setupAutoRefresh(dataManager);
     
     // Setup keyboard shortcuts
-    setupKeyboardShortcuts();
+    setupKeyboardShortcuts(dataManager);
     
     // Setup performance monitoring
     setupPerformanceMonitoring();
     
-    console.log('✅ Lead Yönetim Sistemi hazır (Alpine.js ile entegre)');
+    console.log('✅ Lead Yönetim Sistemi hazır (Vanilla JS)');
 }
 
 /**
@@ -76,7 +84,7 @@ function setupErrorHandling() {
 /**
  * Auto-refresh setup for idle users
  */
-function setupAutoRefresh() {
+function setupAutoRefresh(dataManager) {
     let idleTime = 0;
     let idleTimer;
     const maxIdleTime = 30; // 30 minutes
@@ -90,14 +98,9 @@ function setupAutoRefresh() {
             idleTime++;
             
             // Auto-refresh data if user has been idle for too long
-            if (idleTime >= maxIdleTime) {
-                const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
-                
-                if (alpineComponent?.__x?.$data?.loadLeads) {
-                    console.log('Auto-refreshing leads data due to inactivity');
-                    alpineComponent.__x.$data.loadLeads();
-                }
-                
+            if (idleTime >= maxIdleTime && dataManager) {
+                console.log('Auto-refreshing leads data due to inactivity');
+                dataManager.loadLeads();
                 idleTime = 0; // Reset after refresh
             }
         }, 60000); // Check every minute
@@ -114,18 +117,15 @@ function setupAutoRefresh() {
 /**
  * Keyboard shortcuts setup
  */
-function setupKeyboardShortcuts() {
+function setupKeyboardShortcuts(dataManager) {
     document.addEventListener('keydown', (e) => {
         // Only work if we're on the leads page and not in an input field
-        if (!document.querySelector('[x-data*="leadsTableData"]') || 
+        if (!document.querySelector('[data-leads-table]') || 
             ['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
             return;
         }
         
-        const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
-        const data = alpineComponent?.__x?.$data;
-        
-        if (!data) return;
+        if (!dataManager) return;
         
         // Keyboard shortcuts
         switch (e.key) {
@@ -133,7 +133,7 @@ function setupKeyboardShortcuts() {
             case 'N':
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
-                    data.openEditModal();
+                    dataManager.openEditModal();
                 }
                 break;
                 
@@ -141,7 +141,7 @@ function setupKeyboardShortcuts() {
             case 'F':
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
-                    data.showFilters = !data.showFilters;
+                    dataManager.toggleFilters();
                 }
                 break;
                 
@@ -149,7 +149,7 @@ function setupKeyboardShortcuts() {
             case 'R':
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
-                    data.loadLeads();
+                    dataManager.loadLeads();
                 }
                 break;
                 
@@ -157,7 +157,7 @@ function setupKeyboardShortcuts() {
             case 'A':
                 if (e.ctrlKey || e.metaKey) {
                     e.preventDefault();
-                    data.selectAllLeads();
+                    dataManager.selectAllLeads();
                 }
                 break;
                 
@@ -165,17 +165,19 @@ function setupKeyboardShortcuts() {
             case 'C':
                 if (e.ctrlKey || e.metaKey && e.shiftKey) {
                     e.preventDefault();
-                    data.showColumnSettings = !data.showColumnSettings;
+                    dataManager.toggleColumnSettings();
                 }
                 break;
                 
             case 'Escape':
                 // Close modals and filters
-                data.showFilters = false;
-                data.showColumnSettings = false;
-                data.showLeadModal = false;
-                data.showEditModal = false;
-                data.clearSelection();
+                dataManager.setState({
+                    showFilters: false,
+                    showColumnSettings: false,
+                    showLeadModal: false,
+                    showEditModal: false
+                });
+                dataManager.clearSelection();
                 break;
         }
     });
@@ -233,11 +235,10 @@ function setupPerformanceMonitoring() {
  * Show global notification
  */
 function showGlobalNotification(message, type = 'info') {
-    const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
-    const data = alpineComponent?.__x?.$data;
+    const dataManager = window.leadsDataManagerInstance;
     
-    if (data && data.showNotification) {
-        data.showNotification(message, type);
+    if (dataManager && dataManager.showNotification) {
+        dataManager.showNotification(message, type);
     } else {
         // Fallback notification
         console.log(`${type.toUpperCase()}: ${message}`);
@@ -265,52 +266,56 @@ function showGlobalNotification(message, type = 'info') {
  */
 window.leadsModuleSettings = {
     export() {
-        const alpineData = document.querySelector('[x-data*="leadsTableData"]')?.__x?.$data;
+        const dataManager = window.leadsDataManagerInstance;
         
+        if (!dataManager) {
+            return null;
+        }
+
         return {
-            columns: alpineData?.availableColumns || [],
-            filters: alpineData?.filters || {},
-            perPage: alpineData?.perPage || 25,
-            sortColumn: alpineData?.sortColumn || 'created_at',
-            sortDirection: alpineData?.sortDirection || 'desc',
+            columns: dataManager.state.availableColumns || [],
+            filters: dataManager.state.filters || {},
+            perPage: dataManager.state.perPage || 25,
+            sortColumn: dataManager.state.sortColumn || 'created_at',
+            sortDirection: dataManager.state.sortDirection || 'desc',
             timestamp: new Date().toISOString(),
-            version: '2.0'
+            version: '3.0'
         };
     },
     
     import(settings) {
         try {
-            const alpineData = document.querySelector('[x-data*="leadsTableData"]')?.__x?.$data;
+            const dataManager = window.leadsDataManagerInstance;
             
-            if (!alpineData) {
-                throw new Error('Alpine.js component not found');
+            if (!dataManager) {
+                throw new Error('Leads Data Manager not found');
             }
             
             if (settings.columns) {
-                alpineData.availableColumns = settings.columns;
+                dataManager.state.availableColumns = settings.columns;
             }
             
             if (settings.filters) {
-                alpineData.filters = { ...alpineData.filters, ...settings.filters };
+                dataManager.state.filters = { ...dataManager.state.filters, ...settings.filters };
             }
             
             if (settings.perPage) {
-                alpineData.perPage = settings.perPage;
+                dataManager.state.perPage = settings.perPage;
             }
             
             if (settings.sortColumn) {
-                alpineData.sortColumn = settings.sortColumn;
+                dataManager.state.sortColumn = settings.sortColumn;
             }
             
             if (settings.sortDirection) {
-                alpineData.sortDirection = settings.sortDirection;
+                dataManager.state.sortDirection = settings.sortDirection;
             }
             
             // Save to localStorage
-            alpineData.saveSettings();
+            dataManager.saveSettings();
             
             // Reload data
-            alpineData.loadLeads();
+            dataManager.loadLeads();
             
             return {
                 success: true,
@@ -348,18 +353,23 @@ window.leadsModuleSettings = {
  */
 if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
     window.leadsDebug = {
-        getAlpineData() {
-            return document.querySelector('[x-data*="leadsTableData"]')?.__x?.$data;
+        getDataManager() {
+            return window.leadsDataManagerInstance;
+        },
+        
+        getState() {
+            const dataManager = this.getDataManager();
+            return dataManager ? dataManager.state : null;
         },
         
         getManagers() {
-            const data = this.getAlpineData();
-            return {
-                table: data?.tableManager,
-                column: data?.columnManager,
-                filter: data?.filterManager,
-                bulkAction: data?.bulkActionManager
-            };
+            const dataManager = this.getDataManager();
+            return dataManager ? {
+                table: dataManager.tableManager,
+                column: dataManager.columnManager,
+                filter: dataManager.filterManager,
+                bulkAction: dataManager.bulkActionManager
+            } : null;
         },
         
         simulate: {
@@ -412,16 +422,16 @@ if (process.env.NODE_ENV === 'development' || window.location.hostname === 'loca
  * Module health check
  */
 function healthCheck() {
-    const alpineData = document.querySelector('[x-data*="leadsTableData"]')?.__x?.$data;
+    const dataManager = window.leadsDataManagerInstance;
     
     const checks = [
-        { name: 'Alpine.js Component', test: () => !!alpineData },
+        { name: 'Data Manager Instance', test: () => !!dataManager },
         { name: 'CSRF Token', test: () => !!document.querySelector('meta[name="csrf-token"]') },
-        { name: 'leadsTableData Function', test: () => typeof window.leadsTableData === 'function' },
-        { name: 'Table Manager', test: () => !!alpineData?.tableManager },
-        { name: 'Column Manager', test: () => !!alpineData?.columnManager },
-        { name: 'Filter Manager', test: () => !!alpineData?.filterManager },
-        { name: 'Bulk Action Manager', test: () => !!alpineData?.bulkActionManager },
+        { name: 'Leads Container', test: () => !!document.querySelector('[data-leads-table]') },
+        { name: 'Table Manager', test: () => !!dataManager?.tableManager },
+        { name: 'Column Manager', test: () => !!dataManager?.columnManager },
+        { name: 'Filter Manager', test: () => !!dataManager?.filterManager },
+        { name: 'Bulk Action Manager', test: () => !!dataManager?.bulkActionManager },
         { name: 'CSS File', test: () => !!document.querySelector('link[href*="leads-table.css"]') }
     ];
     
@@ -457,7 +467,8 @@ export {
     LeadsTableManager,
     ColumnManager,
     FilterManager,
-    BulkActionManager
+    BulkActionManager,
+    LeadsDataManager
 };
 
 // Add to window for global access
@@ -466,4 +477,4 @@ window.leadsModule = {
     healthCheck: healthCheck
 };
 
-console.log('📦 Leads Module loaded with Alpine.js integration');
+console.log('📦 Leads Module loaded with Vanilla JavaScript');
