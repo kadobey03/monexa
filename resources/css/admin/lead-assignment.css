@@ -1,0 +1,674 @@
+/* Lead Assignment Vue.js Application Styles */
+
+/* Base Variables */
+:root {
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --secondary-color: #6b7280;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --info-color: #06b6d4;
+  
+  --border-color: #e5e7eb;
+  --border-hover: #d1d5db;
+  --background-light: #f9fafb;
+  --background-dark: #f3f4f6;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 200ms ease-in-out;
+  --transition-slow: 300ms ease-in-out;
+}
+
+/* Lead Management Container */
+.leads-management-container {
+  @apply min-h-screen bg-gray-50;
+}
+
+.page-header {
+  @apply sticky top-0 z-10 backdrop-blur-sm;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Loading States */
+.loading-state {
+  @apply animate-pulse;
+}
+
+.loading-skeleton {
+  @apply bg-gray-200 rounded animate-pulse;
+}
+
+/* Vue App Content */
+.vue-content {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Admin Dropdown Styles */
+.admin-dropdown {
+  @apply relative;
+}
+
+.admin-dropdown-trigger {
+  @apply w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg border;
+  @apply border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500;
+  @apply transition-all duration-200;
+}
+
+.admin-dropdown-trigger:focus {
+  @apply border-blue-500 ring-2 ring-blue-500;
+}
+
+.admin-dropdown-trigger.is-open {
+  @apply border-blue-500 ring-2 ring-blue-500;
+}
+
+.admin-dropdown-panel {
+  @apply absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg;
+  min-width: 320px;
+}
+
+.admin-dropdown-panel.position-up {
+  @apply bottom-full mb-1;
+}
+
+.admin-option {
+  @apply flex items-center px-3 py-3 cursor-pointer transition-colors duration-150;
+  @apply hover:bg-gray-50;
+}
+
+.admin-option.selected {
+  @apply bg-blue-50 text-blue-700;
+}
+
+.admin-avatar {
+  @apply w-10 h-10 rounded-full mr-3 flex-shrink-0;
+}
+
+.admin-avatar-fallback {
+  @apply w-10 h-10 rounded-full mr-3 flex-shrink-0 bg-gray-300;
+  @apply flex items-center justify-center text-sm font-semibold text-gray-600;
+}
+
+.admin-info {
+  @apply flex-1 min-w-0;
+}
+
+.admin-name {
+  @apply text-sm font-medium text-gray-900 truncate;
+}
+
+.admin-department {
+  @apply text-xs text-gray-500 truncate;
+}
+
+.admin-status {
+  @apply flex-shrink-0 ml-2 text-xs;
+}
+
+.capacity-bar {
+  @apply w-16 bg-gray-200 rounded-full h-2 ml-2;
+}
+
+.capacity-fill {
+  @apply h-2 rounded-full transition-all duration-300;
+}
+
+.capacity-low {
+  @apply bg-green-400;
+}
+
+.capacity-medium {
+  @apply bg-yellow-400;
+}
+
+.capacity-high {
+  @apply bg-red-400;
+}
+
+/* Status Dropdown Styles */
+.status-dropdown {
+  @apply relative inline-block w-full;
+}
+
+.status-dropdown-trigger {
+  @apply w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg border;
+  @apply border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500;
+  @apply transition-all duration-200;
+}
+
+.status-dropdown-panel {
+  @apply absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-hidden;
+}
+
+.status-option {
+  @apply flex items-center px-3 py-2 cursor-pointer transition-colors duration-150;
+  @apply hover:bg-gray-50;
+}
+
+.status-badge {
+  @apply inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full;
+  transition: all 0.2s ease;
+}
+
+.status-option:hover .status-badge {
+  transform: scale(1.05);
+}
+
+/* Filter Panel Styles */
+.filter-panel {
+  @apply bg-white border border-gray-200 rounded-lg shadow-sm;
+}
+
+.filter-header {
+  @apply flex items-center justify-between p-4 border-b border-gray-200;
+}
+
+.filter-content {
+  @apply overflow-hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.filter-group {
+  @apply space-y-2;
+}
+
+.filter-group label {
+  @apply block text-sm font-medium text-gray-700;
+}
+
+.filter-group input[type="text"],
+.filter-group input[type="date"],
+.filter-group select {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg;
+  @apply focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  @apply transition-colors duration-200;
+}
+
+.filter-group input[type="checkbox"] {
+  @apply h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded;
+}
+
+.filter-actions {
+  @apply flex justify-between items-center px-4 py-3 bg-gray-50 border-t border-gray-200 rounded-b-lg;
+}
+
+/* Lead Assignment Table Styles */
+.lead-assignment-table {
+  @apply bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden;
+}
+
+.table-header {
+  @apply bg-gray-50 border-b border-gray-200;
+}
+
+.table-header th {
+  @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+}
+
+.table-header th.sortable {
+  @apply cursor-pointer hover:bg-gray-100 transition-colors duration-150;
+}
+
+.sort-indicator {
+  @apply ml-1 text-gray-400;
+}
+
+.sort-indicator.active {
+  @apply text-blue-600;
+}
+
+.table-body {
+  @apply divide-y divide-gray-200;
+}
+
+.table-row {
+  @apply hover:bg-gray-50 transition-colors duration-150;
+}
+
+.table-row.selected {
+  @apply bg-blue-50 border-blue-200;
+}
+
+.table-cell {
+  @apply px-6 py-4 whitespace-nowrap text-sm;
+}
+
+.table-cell.truncate {
+  @apply max-w-xs truncate;
+}
+
+/* Lead Assignment Row Styles */
+.lead-row {
+  @apply transition-all duration-200;
+}
+
+.lead-row:hover {
+  @apply bg-gray-50;
+}
+
+.lead-row.selected {
+  @apply bg-blue-50 border-l-4 border-blue-500;
+}
+
+.lead-checkbox {
+  @apply h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded;
+}
+
+.lead-name {
+  @apply font-medium text-gray-900;
+}
+
+.lead-email {
+  @apply text-gray-500;
+}
+
+.lead-phone {
+  @apply text-gray-600;
+}
+
+.lead-actions {
+  @apply flex items-center space-x-2;
+}
+
+.action-button {
+  @apply p-2 text-gray-400 hover:text-gray-600 rounded-md hover:bg-gray-100;
+  @apply transition-colors duration-150;
+}
+
+.action-button:hover {
+  @apply text-blue-600;
+}
+
+/* Bulk Action Panel Styles */
+.bulk-action-panel {
+  @apply relative;
+}
+
+.bulk-actions-bar {
+  @apply fixed bottom-4 left-1/2 transform -translate-x-1/2;
+  @apply bg-white border border-gray-300 rounded-lg shadow-xl px-6 py-4 z-50;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+.bulk-actions-bar .progress-bar {
+  @apply w-full bg-gray-200 rounded-full h-2 mt-3;
+}
+
+.bulk-actions-bar .progress-fill {
+  @apply bg-blue-600 h-2 rounded-full transition-all duration-300;
+}
+
+/* Pagination Styles */
+.pagination {
+  @apply flex items-center justify-between px-6 py-3 bg-white border-t border-gray-200;
+}
+
+.pagination-info {
+  @apply text-sm text-gray-700;
+}
+
+.pagination-controls {
+  @apply flex items-center space-x-2;
+}
+
+.pagination-button {
+  @apply px-3 py-1 text-sm border border-gray-300 rounded-md;
+  @apply hover:bg-gray-50 transition-colors duration-150;
+}
+
+.pagination-button.active {
+  @apply bg-blue-600 text-white border-blue-600;
+}
+
+.pagination-button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+}
+
+.modal-content {
+  @apply bg-white rounded-lg shadow-xl max-w-lg w-full mx-4;
+}
+
+.modal-header {
+  @apply px-6 py-4 border-b border-gray-200;
+}
+
+.modal-title {
+  @apply text-lg font-semibold text-gray-900;
+}
+
+.modal-body {
+  @apply px-6 py-4;
+}
+
+.modal-footer {
+  @apply px-6 py-4 border-t border-gray-200 flex justify-end space-x-3;
+}
+
+/* Button Styles */
+.btn {
+  @apply inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg;
+  @apply focus:outline-none focus:ring-2 transition-colors duration-200;
+}
+
+.btn-primary {
+  @apply text-white bg-blue-600 border border-transparent;
+  @apply hover:bg-blue-700 focus:ring-blue-500;
+}
+
+.btn-secondary {
+  @apply text-gray-700 bg-white border border-gray-300;
+  @apply hover:bg-gray-50 focus:ring-blue-500;
+}
+
+.btn-danger {
+  @apply text-white bg-red-600 border border-transparent;
+  @apply hover:bg-red-700 focus:ring-red-500;
+}
+
+.btn-success {
+  @apply text-white bg-green-600 border border-transparent;
+  @apply hover:bg-green-700 focus:ring-green-500;
+}
+
+.btn:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Input Styles */
+.form-input {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg;
+  @apply focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+  @apply transition-colors duration-200;
+}
+
+.form-input:focus {
+  @apply outline-none;
+}
+
+.form-input.error {
+  @apply border-red-300 focus:ring-red-500 focus:border-red-500;
+}
+
+/* Status Indicators */
+.status-indicator {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.status-new {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.status-contacted {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.status-qualified {
+  @apply bg-green-100 text-green-800;
+}
+
+.status-lost {
+  @apply bg-red-100 text-red-800;
+}
+
+.status-won {
+  @apply bg-green-100 text-green-800;
+}
+
+/* Priority Indicators */
+.priority-indicator {
+  @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold;
+}
+
+.priority-high {
+  @apply bg-red-100 text-red-800;
+}
+
+.priority-medium {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.priority-low {
+  @apply bg-gray-100 text-gray-800;
+}
+
+/* Availability Indicators */
+.availability-indicator {
+  @apply inline-flex items-center;
+}
+
+.availability-dot {
+  @apply w-2 h-2 rounded-full mr-2;
+}
+
+.available .availability-dot {
+  @apply bg-green-400;
+}
+
+.busy .availability-dot {
+  @apply bg-yellow-400;
+}
+
+.unavailable .availability-dot {
+  @apply bg-red-400;
+}
+
+.offline .availability-dot {
+  @apply bg-gray-400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-dropdown-panel {
+    min-width: 280px;
+  }
+  
+  .bulk-actions-bar {
+    @apply w-full max-w-none mx-4;
+  }
+  
+  .table-cell {
+    @apply px-4 py-3;
+  }
+  
+  .pagination {
+    @apply px-4 py-3;
+  }
+  
+  .modal-content {
+    @apply mx-4;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-dropdown-panel {
+    min-width: 260px;
+  }
+  
+  .filter-panel .filter-content {
+    @apply p-3;
+  }
+  
+  .table-header th,
+  .table-cell {
+    @apply px-3 py-2 text-xs;
+  }
+  
+  .btn {
+    @apply px-3 py-2 text-xs;
+  }
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 #f7fafc;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f7fafc;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Animation Classes */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity var(--transition-normal);
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+.slide-up-enter-active, .slide-up-leave-active {
+  transition: all var(--transition-normal);
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.scale-enter-active, .scale-leave-active {
+  transition: all var(--transition-fast);
+}
+
+.scale-enter-from, .scale-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* Utility Classes */
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(8px);
+}
+
+/* Print Styles */
+@media print {
+  .bulk-actions-bar,
+  .filter-panel,
+  .action-button {
+    @apply hidden;
+  }
+  
+  .table-row {
+    @apply bg-white;
+  }
+  
+  .page-header {
+    @apply bg-white;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --border-color: #000;
+    --border-hover: #333;
+  }
+  
+  .admin-dropdown-trigger,
+  .status-dropdown-trigger,
+  .form-input {
+    @apply border-2 border-black;
+  }
+  
+  .status-badge {
+    @apply border-2 border-black;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark Mode Support (optional) */
+@media (prefers-color-scheme: dark) {
+  .leads-management-container {
+    @apply bg-gray-900;
+  }
+  
+  .filter-panel,
+  .lead-assignment-table,
+  .bulk-actions-bar {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .admin-dropdown-panel,
+  .status-dropdown-panel {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .table-header {
+    @apply bg-gray-700;
+  }
+  
+  .table-header th {
+    @apply text-gray-300;
+  }
+  
+  .table-cell {
+    @apply text-gray-300;
+  }
+  
+  .lead-name {
+    @apply text-gray-100;
+  }
+  
+  .form-input {
+    @apply bg-gray-700 border-gray-600 text-gray-100;
+  }
+}

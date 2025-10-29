@@ -39,6 +39,7 @@ use App\Http\Controllers\Admin\AdminManagerController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\HierarchyController;
+use App\Http\Controllers\Admin\LeadAssignmentController;
 use Illuminate\Support\Facades\Route;
 
 // Include admin plan routes
@@ -378,6 +379,10 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('/api/lead-sources', 'getLeadSources')->name('api.lead-sources'); // Get lead sources
         Route::get('/api/tags', 'getTags')->name('api.tags'); // Get available tags
         
+        // Admin Management & Cache Routes
+        Route::delete('/api/cache/admins', 'clearAdminCache')->name('api.clear-admin-cache'); // Clear admin dropdown cache
+        Route::get('/api/admin-stats', 'getAdminAssignmentStats')->name('api.admin-stats'); // Get admin assignment statistics
+        
         // Legacy Routes (for backward compatibility)
         Route::get('/statuses', 'getStatuses')->name('statuses');
         Route::get('/assignable-admins', 'getAssignableAdmins')->name('assignable-admins');
@@ -387,6 +392,27 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::post('/{id}/add-contact', 'addContact')->name('add-contact');
         Route::get('/export', 'export')->name('export');
         Route::get('/my-leads', 'myLeads')->name('my-leads');
+    });
+
+    // Optimized Lead Assignment Management Routes
+    Route::prefix('dashboard/leads')->name('admin.leads.assignment.')->controller(LeadAssignmentController::class)->group(function () {
+        // Individual Lead Assignment
+        Route::put('/api/{leadId}/assignment', 'assignLead')->name('assign-single')->middleware(['validate.lead.assignment']);
+        
+        // Bulk Lead Assignment
+        Route::post('/api/bulk-assign', 'bulkAssignLeads')->name('bulk-assign')->middleware(['validate.lead.assignment']);
+        
+        // Assignment History
+        Route::get('/api/{leadId}/assignment-history', 'getAssignmentHistory')->name('history')->middleware(['isadmin', '2fa']);
+        
+        // Assignment Validation Endpoint
+        Route::post('/api/validate-assignment', 'validateAssignment')->name('validate')->middleware(['validate.lead.assignment']);
+        
+        // Available Admins for Assignment
+        Route::get('/api/available-admins', 'getAvailableAdmins')->name('available-admins')->middleware(['isadmin', '2fa']);
+        
+        // Assignment Statistics
+        Route::get('/api/assignment-stats', 'getAssignmentStats')->name('stats')->middleware(['isadmin', '2fa']);
     });
 
     // Lead Status Management Routes

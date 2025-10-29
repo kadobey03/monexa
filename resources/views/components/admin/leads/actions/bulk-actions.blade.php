@@ -106,7 +106,7 @@
                             @if(isset($adminUsers))
                                 @foreach($adminUsers as $admin)
                                     <button
-                                        onclick="bulkAssign({{ $admin->id }}); hideAssignMenu();"
+                                        onclick="testBulkAssign({{ $admin->id }}); hideAssignMenu();"
                                         class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-600 flex items-center"
                                     >
                                         <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mr-3">
@@ -322,15 +322,19 @@ window.bulkActionsData = {
         this.bulkOperationProgress = 0;
         
         try {
-            const response = await fetch('/admin/leads/bulk-update-status', {
+            const response = await fetch('/api/admin/leads/bulk', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify({
+                    action: 'update_status',
                     lead_ids: this.selectedLeads,
-                    status: status
+                    options: {
+                        status_name: status
+                    }
                 })
             });
             
@@ -363,15 +367,19 @@ window.bulkActionsData = {
         this.bulkOperationProgress = 0;
         
         try {
-            const response = await fetch('/admin/leads/bulk-assign', {
+            const response = await fetch('/api/admin/leads/bulk', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify({
+                    action: 'assign',
                     lead_ids: this.selectedLeads,
-                    admin_id: adminId
+                    options: {
+                        assign_to: adminId
+                    }
                 })
             });
             
@@ -408,13 +416,15 @@ window.bulkActionsData = {
         this.bulkOperationProgress = 0;
         
         try {
-            const response = await fetch('/admin/leads/bulk-delete', {
-                method: 'DELETE',
+            const response = await fetch('/api/admin/leads/bulk', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'X-Requested-With': 'XMLHttpRequest'
                 },
                 body: JSON.stringify({
+                    action: 'delete',
                     lead_ids: this.selectedLeads
                 })
             });
@@ -439,6 +449,69 @@ window.bulkActionsData = {
             this.showNotification('Silme işlemi sırasında hata oluştu', 'error');
         }
     }
+};
+
+// Global functions for onclick handlers
+window.bulkUpdateStatus = async function(status) {
+    console.log('🪲 bulkUpdateStatus called', { status, hasData: !!window.bulkActionsData });
+    if (window.bulkActionsData && window.bulkActionsData.bulkUpdateStatus) {
+        await window.bulkActionsData.bulkUpdateStatus.call(window.bulkActionsData, status);
+    }
+};
+
+window.bulkAssign = async function(adminId) {
+    console.log('🪲 bulkAssign called', { adminId, hasData: !!window.bulkActionsData });
+    if (window.bulkActionsData && window.bulkActionsData.bulkAssign) {
+        await window.bulkActionsData.bulkAssign.call(window.bulkActionsData, adminId);
+    } else {
+        console.error('🪲 bulkActionsData not available');
+    }
+};
+
+window.confirmBulkDelete = function() {
+    if (window.bulkActionsData && window.bulkActionsData.confirmBulkDelete) {
+        window.bulkActionsData.confirmBulkDelete.call(window.bulkActionsData);
+    }
+};
+
+window.executeBulkDelete = async function() {
+    if (window.bulkActionsData && window.bulkActionsData.executeBulkDelete) {
+        await window.bulkActionsData.executeBulkDelete.call(window.bulkActionsData);
+    }
+};
+
+// Initialize window.bulkActionsData
+window.bulkActionsData = window.bulkActionsData;
+
+// Simple test function
+window.testBulkAssign = function(adminId) {
+    console.log('🪲 testBulkAssign called', adminId);
+    alert('Test function çalışıyor! Admin ID: ' + adminId);
+    
+    // Test request
+    fetch('/api/admin/leads/bulk', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+            action: 'assign',
+            lead_ids: [298], // Test lead ID
+            options: {
+                assign_to: adminId
+            }
+        })
+    }).then(response => response.json())
+      .then(data => {
+          console.log('🪲 Response:', data);
+          alert('Response: ' + JSON.stringify(data));
+      })
+      .catch(error => {
+          console.error('🪲 Error:', error);
+          alert('Error: ' + error);
+      });
 };
 </script>
 @endPushOnce

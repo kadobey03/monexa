@@ -3,9 +3,23 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
+    /**
+     * Check if index exists on table
+     */
+    private function indexExists($table, $indexName): bool
+    {
+        try {
+            $indexes = DB::select("SHOW INDEX FROM {$table} WHERE Key_name = ?", [$indexName]);
+            return count($indexes) > 0;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
@@ -29,22 +43,51 @@ return new class extends Migration
             // Improve existing phone field length if needed
             $table->string('phone', 50)->nullable()->change();
             
-            // Add performance indexes for lead queries
-            $table->index(['account_type', 'created_at'], 'idx_account_type_created');
-            $table->index(['assign_to', 'account_type'], 'idx_assign_account_type');
-            $table->index(['lead_status_id', 'created_at'], 'idx_lead_status_created');
-            $table->index(['country', 'account_type'], 'idx_country_account_type');
-            $table->index(['lead_source', 'created_at'], 'idx_lead_source_created');
-            $table->index(['lead_score', 'account_type'], 'idx_lead_score_account');
-            $table->index(['last_contact_date'], 'idx_last_contact_date');
-            $table->index(['next_follow_up_date'], 'idx_next_follow_up_date');
-            $table->index(['created_at', 'account_type'], 'idx_created_account_type');
-            $table->index(['estimated_value', 'account_type'], 'idx_estimated_value_account');
+            // Add performance indexes for lead queries - only if columns exist
+            if (!$this->indexExists('users', 'idx_account_type_created')) {
+                $table->index(['account_type', 'created_at'], 'idx_account_type_created');
+            }
+            if (Schema::hasColumn('users', 'assign_to') && !$this->indexExists('users', 'idx_assign_account_type')) {
+                $table->index(['assign_to', 'account_type'], 'idx_assign_account_type');
+            }
+            
+            // Use lead_status instead of lead_status_id since that's what exists
+            if (Schema::hasColumn('users', 'lead_status') && !$this->indexExists('users', 'idx_lead_status_created')) {
+                $table->index(['lead_status', 'created_at'], 'idx_lead_status_created');
+            }
+            
+            if (Schema::hasColumn('users', 'country') && !$this->indexExists('users', 'idx_country_account_type')) {
+                $table->index(['country', 'account_type'], 'idx_country_account_type');
+            }
+            if (Schema::hasColumn('users', 'lead_source') && !$this->indexExists('users', 'idx_lead_source_created')) {
+                $table->index(['lead_source', 'created_at'], 'idx_lead_source_created');
+            }
+            if (Schema::hasColumn('users', 'lead_score') && !$this->indexExists('users', 'idx_lead_score_account')) {
+                $table->index(['lead_score', 'account_type'], 'idx_lead_score_account');
+            }
+            if (Schema::hasColumn('users', 'last_contact_date') && !$this->indexExists('users', 'idx_last_contact_date')) {
+                $table->index(['last_contact_date'], 'idx_last_contact_date');
+            }
+            if (Schema::hasColumn('users', 'next_follow_up_date') && !$this->indexExists('users', 'idx_next_follow_up_date')) {
+                $table->index(['next_follow_up_date'], 'idx_next_follow_up_date');
+            }
+            if (!$this->indexExists('users', 'idx_created_account_type')) {
+                $table->index(['created_at', 'account_type'], 'idx_created_account_type');
+            }
+            if (Schema::hasColumn('users', 'estimated_value') && !$this->indexExists('users', 'idx_estimated_value_account')) {
+                $table->index(['estimated_value', 'account_type'], 'idx_estimated_value_account');
+            }
             
             // Composite indexes for complex lead queries
-            $table->index(['assign_to', 'lead_status_id', 'created_at'], 'idx_assign_status_created');
-            $table->index(['country', 'lead_source', 'account_type'], 'idx_country_source_account');
-            $table->index(['lead_priority', 'lead_score', 'account_type'], 'idx_priority_score_account');
+            if (Schema::hasColumn('users', 'assign_to') && Schema::hasColumn('users', 'lead_status') && !$this->indexExists('users', 'idx_assign_status_created')) {
+                $table->index(['assign_to', 'lead_status', 'created_at'], 'idx_assign_status_created');
+            }
+            if (Schema::hasColumn('users', 'country') && Schema::hasColumn('users', 'lead_source') && !$this->indexExists('users', 'idx_country_source_account')) {
+                $table->index(['country', 'lead_source', 'account_type'], 'idx_country_source_account');
+            }
+            if (!$this->indexExists('users', 'idx_priority_score_account')) {
+                $table->index(['lead_priority', 'lead_score', 'account_type'], 'idx_priority_score_account');
+            }
         });
 
         // Add full-text search index for better search performance (MySQL only)

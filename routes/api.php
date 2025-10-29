@@ -5,6 +5,7 @@ use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserImportController;
+use App\Http\Controllers\Api\UserStatusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('import')->name('api.import.')->group(function () {
     Route::post('/users', [UserImportController::class, 'importUser'])->name('users');
     Route::post('/users/bulk', [UserImportController::class, 'bulkImportUsers'])->name('users.bulk');
+});
+
+// User Status Routes - Protected with custom header
+Route::prefix('users')->name('api.users.')->group(function () {
+    Route::get('/status/statistics', [UserStatusController::class, 'getStatusStatistics'])->name('status.statistics');
+    Route::get('/status', [UserStatusController::class, 'getUsersStatus'])->name('status');
+    Route::get('/status/{identifier}', [UserStatusController::class, 'getUserStatus'])->name('status.single');
 });
 
 // Admin API Routes - Web authentication for admin dashboard

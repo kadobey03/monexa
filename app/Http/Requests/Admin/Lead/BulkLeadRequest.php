@@ -24,8 +24,8 @@ class BulkLeadRequest extends FormRequest
             'lead_ids' => 'required|array|min:1|max:100',
             'lead_ids.*' => 'integer|exists:users,id',
             'options' => 'sometimes|array',
-            'options.assign_to' => 'required_if:action,assign|integer|exists:admins,id',
-            'options.status_id' => 'required_if:action,update_status|integer|exists:lead_statuses,id',
+            'options.assign_to' => 'required_if:action,assign|nullable|integer|exists:admins,id',
+            'options.status_name' => 'required_if:action,update_status|string',
             'options.priority' => 'required_if:action,update_priority|string|in:low,medium,high,urgent',
         ];
     }
@@ -43,8 +43,7 @@ class BulkLeadRequest extends FormRequest
             'lead_ids.*.exists' => 'One or more selected leads do not exist.',
             'options.assign_to.required_if' => 'Admin assignment is required for assign action.',
             'options.assign_to.exists' => 'Selected admin does not exist.',
-            'options.status_id.required_if' => 'Status is required for update status action.',
-            'options.status_id.exists' => 'Selected status does not exist.',
+            'options.status_name.required_if' => 'Status name is required for update status action.',
             'options.priority.required_if' => 'Priority is required for update priority action.',
             'options.priority.in' => 'Priority must be low, medium, high, or urgent.',
         ];
@@ -59,7 +58,7 @@ class BulkLeadRequest extends FormRequest
             'action' => 'bulk action',
             'lead_ids' => 'selected leads',
             'options.assign_to' => 'assigned admin',
-            'options.status_id' => 'lead status',
+            'options.status_name' => 'lead status',
             'options.priority' => 'priority level',
         ];
     }
@@ -82,8 +81,8 @@ class BulkLeadRequest extends FormRequest
                     break;
 
                 case 'update_status':
-                    if (!isset($options['status_id'])) {
-                        $validator->errors()->add('options.status_id', 'Status selection is required.');
+                    if (!isset($options['status_name']) || empty($options['status_name'])) {
+                        $validator->errors()->add('options.status_name', 'Status name is required.');
                     }
                     break;
 

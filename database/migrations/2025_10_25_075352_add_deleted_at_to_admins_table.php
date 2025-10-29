@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->timestamp('deleted_at')->nullable();
+            // Only add deleted_at column if it doesn't already exist
+            if (!Schema::hasColumn('admins', 'deleted_at')) {
+                $table->timestamp('deleted_at')->nullable();
+            }
         });
     }
 
@@ -22,7 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->dropColumn('deleted_at');
+            // Only drop deleted_at column if it exists
+            if (Schema::hasColumn('admins', 'deleted_at')) {
+                $table->dropColumn('deleted_at');
+            }
         });
     }
 };

@@ -11,7 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lead_assignment_histories', function (Blueprint $table) {
+        // Only create table if it doesn't already exist
+        if (!Schema::hasTable('lead_assignment_histories')) {
+            Schema::create('lead_assignment_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('assigned_to_admin_id')->nullable();
@@ -69,12 +71,39 @@ return new class extends Migration
             $table->json('flags')->nullable();
             $table->timestamps();
             
-            // Indexes for better performance
-            $table->index(['user_id', 'assignment_outcome', 'assignment_ended_at']);
-            $table->index('assigned_to_admin_id');
-            $table->index('assignment_type');
-            $table->index('department');
-        });
+            // Indexes for better performance - using custom shorter names
+            $table->index(['user_id', 'assignment_outcome', 'assignment_ended_at'], 'lah_user_outcome_ended_idx');
+            $table->index('assigned_to_admin_id', 'lah_assigned_to_admin_idx');
+            $table->index('assignment_type', 'lah_assignment_type_idx');
+            $table->index('department', 'lah_department_idx');
+            });
+        }
+        
+        // Add indexes if table exists but indexes might not exist
+        if (Schema::hasTable('lead_assignment_histories')) {
+            Schema::table('lead_assignment_histories', function (Blueprint $table) {
+                // Check if indexes don't exist before adding them
+                try {
+                    $indexes = \DB::select("SHOW INDEX FROM lead_assignment_histories");
+                    $existingIndexes = collect($indexes)->pluck('Key_name')->toArray();
+                    
+                    if (!in_array('lah_user_outcome_ended_idx', $existingIndexes)) {
+                        $table->index(['user_id', 'assignment_outcome', 'assignment_ended_at'], 'lah_user_outcome_ended_idx');
+                    }
+                    if (!in_array('lah_assigned_to_admin_idx', $existingIndexes)) {
+                        $table->index('assigned_to_admin_id', 'lah_assigned_to_admin_idx');
+                    }
+                    if (!in_array('lah_assignment_type_idx', $existingIndexes)) {
+                        $table->index('assignment_type', 'lah_assignment_type_idx');
+                    }
+                    if (!in_array('lah_department_idx', $existingIndexes)) {
+                        $table->index('department', 'lah_department_idx');
+                    }
+                } catch (\Exception $e) {
+                    // Ignore if there are any issues checking indexes
+                }
+            });
+        }
     }
 
     /**

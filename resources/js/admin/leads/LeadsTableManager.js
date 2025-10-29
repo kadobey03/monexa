@@ -5,13 +5,13 @@
 class LeadsTableManager {
     constructor() {
         this.apiEndpoints = {
-            list: '/admin/dashboard/leads/api',
-            show: '/admin/dashboard/leads/{id}',
-            store: '/admin/dashboard/leads',
-            update: '/admin/dashboard/leads/{id}',
-            delete: '/admin/dashboard/leads/{id}',
-            bulkUpdate: '/admin/dashboard/leads/bulk-update',
-            bulkDelete: '/admin/dashboard/leads/bulk-delete',
+            list: '/api/admin/leads',
+            show: '/api/admin/leads/{id}',
+            store: '/api/admin/leads',
+            update: '/api/admin/leads/{id}',
+            delete: '/api/admin/leads/{id}',
+            bulkUpdate: '/api/admin/leads/bulk',
+            bulkDelete: '/api/admin/leads/bulk',
             export: '/admin/dashboard/leads/export'
         };
         

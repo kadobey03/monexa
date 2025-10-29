@@ -799,13 +799,15 @@ async function updateLeadAssignment(leadId, agentId, agentName) {
     notificationQueue.add(updateKey);
     
     try {
-        const response = await fetch(`/admin/dashboard/leads/${leadId}/assign`, {
-            method: 'PATCH',
+        console.log('🪲 NEW ENDPOINT:', `/admin/dashboard/leads/api/${leadId}/assignment`);
+        console.log('🪲 CACHE BUSTED:', new Date().getTime());
+        const response = await fetch(`/admin/dashboard/leads/api/${leadId}/assignment?cb=${Date.now()}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
             },
-            body: JSON.stringify({ agent_id: agentId })
+            body: JSON.stringify({ assign_to: agentId })
         });
         
         if (response.ok) {

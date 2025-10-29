@@ -361,28 +361,63 @@ class Admin extends Authenticatable
 
     /**
      * Check if this admin is available for lead assignment.
-     * 🪲 DEBUG: Disabled all restrictions for lead assignment
+     * Enhanced with proper validation and logging.
      */
     public function isAvailableForAssignment(): bool
     {
-        // 🪲 DEBUG LOG: Log assignment attempt
-        \Log::info('🪲 ADMIN ASSIGNMENT CHECK', [
+        // Basic status check
+        if ($this->status !== self::STATUS_ACTIVE) {
+            \Log::debug('Admin assignment check failed: inactive status', [
+                'admin_id' => $this->id,
+                'admin_name' => $this->getFullName(),
+                'status' => $this->status
+            ]);
+            return false;
+        }
+
+        // Availability check
+        if (!$this->is_available) {
+            \Log::debug('Admin assignment check failed: not available', [
+                'admin_id' => $this->id,
+                'admin_name' => $this->getFullName(),
+                'is_available' => $this->is_available
+            ]);
+            return false;
+        }
+
+        // Capacity check - allow override for super admins and managers
+        if ($this->max_leads_per_day && !$this->isManager()) {
+            $currentCount = $this->leads_assigned_count ?? 0;
+            if ($currentCount >= $this->max_leads_per_day) {
+                \Log::debug('Admin assignment check failed: at capacity', [
+                    'admin_id' => $this->id,
+                    'admin_name' => $this->getFullName(),
+                    'current_leads' => $currentCount,
+                    'max_leads' => $this->max_leads_per_day
+                ]);
+                return false;
+            }
+        }
+
+        // Working hours check (optional - can be disabled via config)
+        if (config('lead_assignment.check_working_hours', false) && $this->adminGroup) {
+            if (!$this->adminGroup->isInWorkingHours()) {
+                \Log::debug('Admin assignment check failed: outside working hours', [
+                    'admin_id' => $this->id,
+                    'admin_name' => $this->getFullName(),
+                    'admin_group_id' => $this->admin_group_id
+                ]);
+                return false;
+            }
+        }
+
+        \Log::debug('Admin assignment check passed', [
             'admin_id' => $this->id,
             'admin_name' => $this->getFullName(),
-            'is_available' => $this->is_available ?? 'null',
-            'status' => $this->status ?? 'null',
-            'leads_assigned_count' => $this->leads_assigned_count ?? 0,
-            'max_leads_per_day' => $this->max_leads_per_day ?? 'null',
-            'admin_group_id' => $this->admin_group_id ?? 'null',
-            'working_hours_check' => $this->adminGroup ?
-                $this->adminGroup->isInWorkingHours() : 'no_admin_group'
+            'current_leads' => $this->leads_assigned_count ?? 0,
+            'max_leads' => $this->max_leads_per_day ?? 'unlimited'
         ]);
 
-        // REMOVED: Admin availability and status check
-        // REMOVED: Capacity check
-        // REMOVED: Working hours check
-        // Always allow assignment now
-        
         return true;
     }
 
@@ -403,33 +438,105 @@ class Admin extends Authenticatable
     }
 
     /**
-     * Assign a user to this admin.
+     * Assign a user to this admin with enhanced safety.
      */
-    public function assignUser(User $user, Admin $assignedBy = null): bool
+    public function assignUser(User $user, Admin $assignedBy = null, string $reason = null): bool
     {
         if (!$this->isAvailableForAssignment()) {
+            \Log::warning('User assignment failed: Admin not available', [
+                'admin_id' => $this->id,
+                'user_id' => $user->id,
+                'assigned_by' => $assignedBy?->id
+            ]);
             return false;
         }
 
-        $user->assign_to = $this->id;
-        $user->save();
+        try {
+            \DB::beginTransaction();
 
-        // Update counters
-        $this->increment('leads_assigned_count');
+            $previousAdminId = $user->assign_to;
 
-        // Create assignment history record
-        LeadAssignmentHistory::createAssignment([
-            'user_id' => $user->id,
-            'assigned_to_admin_id' => $this->id,
-            'assigned_by_admin_id' => $assignedBy?->id,
-            'assignment_type' => LeadAssignmentHistory::TYPE_INITIAL,
-            'admin_lead_count_before' => $this->leads_assigned_count - 1,
-            'admin_lead_count_after' => $this->leads_assigned_count,
-            'department' => $this->department,
-            'admin_group_id' => $this->admin_group_id,
-        ]);
+            // Skip if already assigned to this admin
+            if ($previousAdminId == $this->id) {
+                \DB::rollBack();
+                return true;
+            }
 
-        return true;
+            // End current assignment if exists
+            if ($previousAdminId) {
+                $currentAssignment = LeadAssignmentHistory::where('user_id', $user->id)
+                                                         ->where('assignment_outcome', LeadAssignmentHistory::OUTCOME_ACTIVE)
+                                                         ->whereNull('assignment_ended_at')
+                                                         ->first();
+                
+                if ($currentAssignment) {
+                    $currentAssignment->endAssignment(LeadAssignmentHistory::OUTCOME_REASSIGNED);
+                }
+
+                // Safely decrement previous admin's count
+                Admin::where('id', $previousAdminId)
+                     ->where('leads_assigned_count', '>', 0)
+                     ->decrement('leads_assigned_count');
+            }
+
+            $user->assign_to = $this->id;
+            $user->save();
+
+            // Create comprehensive assignment history record
+            LeadAssignmentHistory::createAssignment([
+                'user_id' => $user->id,
+                'assigned_from_admin_id' => $previousAdminId,
+                'assigned_to_admin_id' => $this->id,
+                'assigned_by_admin_id' => $assignedBy?->id,
+                'assignment_type' => $previousAdminId ? LeadAssignmentHistory::TYPE_REASSIGNMENT : LeadAssignmentHistory::TYPE_INITIAL,
+                'assignment_method' => LeadAssignmentHistory::METHOD_MANUAL,
+                'assignment_outcome' => LeadAssignmentHistory::OUTCOME_ACTIVE,
+                'reason' => $reason,
+                'priority' => $user->lead_priority ?? 'normal',
+                'lead_status_at_assignment' => $user->lead_status ?? 'new',
+                'lead_score_at_assignment' => $user->lead_score,
+                'estimated_value_at_assignment' => $user->estimated_value,
+                'lead_tags_at_assignment' => $user->lead_tags,
+                'admin_lead_count_before' => $this->leads_assigned_count,
+                'admin_lead_count_after' => $this->leads_assigned_count + 1,
+                'admin_performance_score' => $this->current_performance,
+                'admin_availability_status' => $this->is_available ? 'available' : 'busy',
+                'lead_timezone' => $user->getTimezone(),
+                'lead_region' => $user->getRegion(),
+                'admin_timezone' => $this->time_zone ?? 'UTC',
+                'lead_source' => $user->lead_source,
+                'department' => $this->department,
+                'admin_group_id' => $this->admin_group_id,
+                'assignment_started_at' => now(),
+            ]);
+
+            // Safely increment counter
+            $this->increment('leads_assigned_count');
+
+            \DB::commit();
+
+            \Log::info('User assigned to admin successfully', [
+                'admin_id' => $this->id,
+                'user_id' => $user->id,
+                'previous_admin_id' => $previousAdminId,
+                'assigned_by' => $assignedBy?->id,
+                'reason' => $reason
+            ]);
+
+            return true;
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            
+            \Log::error('User assignment to admin failed', [
+                'admin_id' => $this->id,
+                'user_id' => $user->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return false;
+        }
     }
 
     /**

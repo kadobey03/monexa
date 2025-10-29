@@ -24,8 +24,12 @@ return new class extends Migration
             $table->string('preferred_contact_method')->nullable()->after('lead_score'); // phone, email, whatsapp
             $table->json('contact_history')->nullable()->after('preferred_contact_method'); // log of all contacts
             
-            // Add foreign key constraint
+            // Lead assignment field - DÜZELTME: Eksik olan sütun eklendi
+            $table->unsignedBigInteger('assign_to')->nullable()->after('contact_history')->comment('Admin ID for lead assignment');
+            
+            // Add foreign key constraints
             $table->foreign('lead_status_id')->references('id')->on('lead_statuses')->onDelete('set null');
+            $table->foreign('assign_to')->references('id')->on('admins')->onDelete('set null');
             
             // Add indexes for better performance
             $table->index('lead_status_id');
@@ -51,6 +55,8 @@ return new class extends Migration
             $table->dropIndex(['next_follow_up_date']);
             $table->dropIndex(['lead_score']);
             
+            $table->dropForeign(['assign_to']);
+            
             $table->dropColumn([
                 'lead_status_id',
                 'lead_notes',
@@ -61,7 +67,8 @@ return new class extends Migration
                 'estimated_value',
                 'lead_score',
                 'preferred_contact_method',
-                'contact_history'
+                'contact_history',
+                'assign_to'
             ]);
         });
     }

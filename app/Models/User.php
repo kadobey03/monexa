@@ -371,50 +371,103 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Assign user to an admin.
+     * Assign user to an admin with enhanced safety and validation.
      */
     public function assignToAdmin(Admin $admin, Admin $assignedBy = null, string $reason = null): bool
     {
-        $previousAdminId = $this->assign_to;
-        
-        // End current assignment if exists
-        $currentAssignment = $this->currentAssignment;
-        if ($currentAssignment && $currentAssignment->assigned_to_admin_id !== $admin->id) {
-            $currentAssignment->endAssignment(LeadAssignmentHistory::OUTCOME_REASSIGNED);
+        if (!$admin->isAvailableForAssignment()) {
+            \Log::warning('Assignment failed: Admin not available', [
+                'user_id' => $this->id,
+                'admin_id' => $admin->id,
+                'admin_status' => $admin->status,
+                'admin_available' => $admin->is_available
+            ]);
+            return false;
         }
 
-        // Update user assignment
-        $this->assign_to = $admin->id;
-        $this->save();
+        $previousAdminId = $this->assign_to;
+        
+        // Skip if already assigned to same admin
+        if ($previousAdminId == $admin->id) {
+            return true;
+        }
 
-        // Create new assignment history
-        LeadAssignmentHistory::createAssignment([
-            'user_id' => $this->id,
-            'assigned_from_admin_id' => $previousAdminId,
-            'assigned_to_admin_id' => $admin->id,
-            'assigned_by_admin_id' => $assignedBy?->id,
-            'assignment_type' => $previousAdminId ? LeadAssignmentHistory::TYPE_REASSIGNMENT : LeadAssignmentHistory::TYPE_INITIAL,
-            'reason' => $reason,
-            'lead_status_at_assignment' => $this->lead_status,
-            'lead_score_at_assignment' => $this->lead_score,
-            'estimated_value_at_assignment' => $this->estimated_value,
-            'lead_tags_at_assignment' => $this->lead_tags,
-            'admin_lead_count_before' => $admin->leads_assigned_count,
-            'admin_lead_count_after' => $admin->leads_assigned_count + 1,
-            'admin_performance_score' => $admin->current_performance,
-            'admin_availability_status' => $admin->is_available ? 'available' : 'busy',
-            'lead_timezone' => $this->getTimezone(),
-            'lead_region' => $this->getRegion(),
-            'admin_timezone' => $admin->time_zone,
-            'lead_source' => $this->lead_source,
-            'department' => $admin->department,
-            'admin_group_id' => $admin->admin_group_id,
-        ]);
+        try {
+            \DB::beginTransaction();
 
-        // Update admin counters
-        $admin->increment('leads_assigned_count');
+            // End current assignment if exists
+            $currentAssignment = $this->currentAssignment;
+            if ($currentAssignment && $currentAssignment->assigned_to_admin_id !== $admin->id) {
+                $currentAssignment->endAssignment(LeadAssignmentHistory::OUTCOME_REASSIGNED);
+            }
 
-        return true;
+            // Update admin counters with safe increment/decrement
+            if ($previousAdminId && $previousAdminId != $admin->id) {
+                Admin::where('id', $previousAdminId)
+                     ->where('leads_assigned_count', '>', 0)
+                     ->decrement('leads_assigned_count');
+            }
+
+            // Update user assignment
+            $this->assign_to = $admin->id;
+            $this->save();
+
+            // Create new assignment history with comprehensive data
+            LeadAssignmentHistory::createAssignment([
+                'user_id' => $this->id,
+                'assigned_from_admin_id' => $previousAdminId,
+                'assigned_to_admin_id' => $admin->id,
+                'assigned_by_admin_id' => $assignedBy?->id,
+                'assignment_type' => $previousAdminId ? LeadAssignmentHistory::TYPE_REASSIGNMENT : LeadAssignmentHistory::TYPE_INITIAL,
+                'assignment_method' => LeadAssignmentHistory::METHOD_MANUAL,
+                'assignment_outcome' => LeadAssignmentHistory::OUTCOME_ACTIVE,
+                'reason' => $reason,
+                'priority' => $this->lead_priority ?? 'normal',
+                'lead_status_at_assignment' => $this->lead_status ?? 'new',
+                'lead_score_at_assignment' => $this->lead_score,
+                'estimated_value_at_assignment' => $this->estimated_value,
+                'lead_tags_at_assignment' => $this->lead_tags,
+                'admin_lead_count_before' => $admin->leads_assigned_count,
+                'admin_lead_count_after' => $admin->leads_assigned_count + 1,
+                'admin_performance_score' => $admin->current_performance,
+                'admin_availability_status' => $admin->is_available ? 'available' : 'busy',
+                'lead_timezone' => $this->getTimezone(),
+                'lead_region' => $this->getRegion(),
+                'admin_timezone' => $admin->time_zone ?? 'UTC',
+                'lead_source' => $this->lead_source,
+                'department' => $admin->department,
+                'admin_group_id' => $admin->admin_group_id,
+                'assignment_started_at' => now(),
+            ]);
+
+            // Safely increment admin counter
+            $admin->increment('leads_assigned_count');
+
+            \DB::commit();
+
+            \Log::info('User assigned to admin successfully', [
+                'user_id' => $this->id,
+                'user_name' => $this->name,
+                'previous_admin_id' => $previousAdminId,
+                'new_admin_id' => $admin->id,
+                'assigned_by' => $assignedBy?->id,
+                'reason' => $reason
+            ]);
+
+            return true;
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            
+            \Log::error('Assignment to admin failed', [
+                'user_id' => $this->id,
+                'admin_id' => $admin->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return false;
+        }
     }
 
     /**

@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Log;
 use App\Models\LeadAssignmentHistory;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\Admin\AssignableAdminRequest;
+use App\Services\AdminCacheService;
+use Illuminate\Support\Facades\Cache;
 
 class LeadsController extends Controller
 {
@@ -1185,45 +1188,310 @@ class LeadsController extends Controller
     }
 
     /**
-     * Get assignable admins for dropdown
+     * Get assignable admins for dropdown - Optimized with caching
      * GET /admin/dashboard/leads/api/assignable-admins
      */
-    public function getAssignableAdmins(): JsonResponse
+    public function getAssignableAdmins(AssignableAdminRequest $request): JsonResponse
     {
         try {
             $adminUser = Auth::guard('admin')->user();
-            $isSuperAdmin = $adminUser->type === 'Super Admin';
+            
+            if (!$adminUser) {
+                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+            }
 
-            $admins = $isSuperAdmin ?
-                Admin::where('status', 'Active')->orderBy('firstName')->get(['id', 'firstName', 'lastName', 'email']) :
-                Admin::where(function($q) use ($adminUser) {
-                    $q->where('id', $adminUser->id)
-                      ->orWhere('parent_id', $adminUser->id);
-                })->where('status', 'Active')->orderBy('firstName')->get(['id', 'firstName', 'lastName', 'email']);
+            // Get validated request data
+            $filters = $request->getValidatedData();
+            
+            // Initialize cache service
+            $adminCacheService = new AdminCacheService();
+            
+            // Get cached assignable admins
+            $admins = $adminCacheService->getAssignableAdmins($adminUser);
+            
+            // Apply filters
+            $admins = $this->applyAdminFilters($admins, $filters);
+            
+            // Format response based on requested format
+            $formattedAdmins = $this->formatAdminsResponse($admins, $filters['format']);
 
-            $transformedAdmins = $admins->map(function($admin) {
-                return [
-                    'id' => $admin->id,
-                    'name' => $admin->firstName . ' ' . $admin->lastName,
-                    'email' => $admin->email
-                ];
-            });
+            // Response metadata
+            $metadata = [
+                'total_count' => count($formattedAdmins),
+                'cache_info' => $adminCacheService->getCacheStats(),
+                'filters_applied' => array_filter($filters, function($value) {
+                    return $value !== null && $value !== false && $value !== '';
+                }),
+                'current_admin' => [
+                    'id' => $adminUser->id,
+                    'name' => $adminUser->firstName . ' ' . $adminUser->lastName,
+                    'is_super_admin' => $adminUser->isSuperAdmin() || $adminUser->type === 'Super Admin'
+                ],
+                'timestamp' => now()->toISOString()
+            ];
 
-            return response()->json([
-                'success' => true,
-                'data' => $transformedAdmins
-            ]);
+            return $this->successResponse($formattedAdmins, 'Atanabilir adminler başarıyla getirildi', $metadata);
+            
         } catch (\Exception $e) {
             Log::error('Failed to fetch assignable admins', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_params' => $request->all()
+            ]);
+
+            return $this->errorResponse(
+                'Atanabilir adminler getirilemedi',
+                'FETCH_ADMINS_FAILED',
+                500,
+                config('app.debug') ? [
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine()
+                ] : null
+            );
+        }
+    }
+
+    /**
+     * Clear admin dropdown cache
+     * DELETE /admin/dashboard/leads/api/cache/admins
+     */
+    public function clearAdminCache(Request $request): JsonResponse
+    {
+        try {
+            $adminUser = Auth::guard('admin')->user();
+            
+            if (!$adminUser || !($adminUser->isSuperAdmin() || $adminUser->type === 'Super Admin')) {
+                return $this->errorResponse('Bu işlem için yetkiniz bulunmamaktadır', 'INSUFFICIENT_PERMISSIONS', 403);
+            }
+
+            $adminCacheService = new AdminCacheService();
+            
+            // Clear specific admin cache or all cache
+            $adminId = $request->get('admin_id');
+            if ($adminId) {
+                $adminCacheService->clearAdminCache((int)$adminId);
+                $message = "Admin ID {$adminId} için cache temizlendi";
+            } else {
+                $adminCacheService->clearAllCache();
+                $message = 'Tüm admin dropdown cache temizlendi';
+            }
+            
+            Log::info('Admin dropdown cache cleared', [
+                'admin_id' => $adminUser->id,
+                'cleared_admin_id' => $adminId,
+                'action' => $adminId ? 'specific' : 'all'
+            ]);
+
+            return $this->successResponse(
+                ['cache_cleared' => true, 'admin_id' => $adminId],
+                $message
+            );
+            
+        } catch (\Exception $e) {
+            Log::error('Failed to clear admin cache', [
                 'admin_id' => Auth::guard('admin')->id(),
                 'error' => $e->getMessage()
             ]);
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Atanabilir adminler getirilemedi'
-            ], 500);
+            return $this->errorResponse('Cache temizleme işlemi başarısız', 'CACHE_CLEAR_FAILED', 500);
         }
+    }
+
+    /**
+     * Get admin assignment statistics
+     * GET /admin/dashboard/leads/api/admin-stats
+     */
+    public function getAdminAssignmentStats(Request $request): JsonResponse
+    {
+        try {
+            $adminUser = Auth::guard('admin')->user();
+            
+            if (!$adminUser) {
+                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+            }
+
+            $cacheKey = "admin_assignment_stats_{$adminUser->id}";
+            
+            $stats = Cache::remember($cacheKey, 300, function() use ($adminUser) {
+                $adminCacheService = new AdminCacheService();
+                $admins = $adminCacheService->getAssignableAdmins($adminUser);
+                
+                $totalAdmins = count($admins);
+                $availableAdmins = array_filter($admins, fn($admin) => $admin['is_available']);
+                $adminsWithCapacity = array_filter($admins, fn($admin) => $admin['has_capacity']);
+                $fullCapacityAdmins = array_filter($admins, fn($admin) => $admin['capacity']['status'] === 'full');
+                
+                // Department breakdown
+                $departments = [];
+                foreach ($admins as $admin) {
+                    $dept = $admin['department'] ?? 'Unassigned';
+                    if (!isset($departments[$dept])) {
+                        $departments[$dept] = ['total' => 0, 'available' => 0, 'with_capacity' => 0];
+                    }
+                    $departments[$dept]['total']++;
+                    if ($admin['is_available']) $departments[$dept]['available']++;
+                    if ($admin['has_capacity']) $departments[$dept]['with_capacity']++;
+                }
+                
+                return [
+                    'totals' => [
+                        'total_admins' => $totalAdmins,
+                        'available_admins' => count($availableAdmins),
+                        'admins_with_capacity' => count($adminsWithCapacity),
+                        'full_capacity_admins' => count($fullCapacityAdmins),
+                        'availability_percentage' => $totalAdmins > 0 ? round((count($availableAdmins) / $totalAdmins) * 100, 1) : 0,
+                        'capacity_percentage' => $totalAdmins > 0 ? round((count($adminsWithCapacity) / $totalAdmins) * 100, 1) : 0
+                    ],
+                    'departments' => $departments,
+                    'capacity_distribution' => [
+                        'low' => count(array_filter($admins, fn($admin) => $admin['capacity']['status'] === 'low')),
+                        'medium' => count(array_filter($admins, fn($admin) => $admin['capacity']['status'] === 'medium')),
+                        'high' => count(array_filter($admins, fn($admin) => $admin['capacity']['status'] === 'high')),
+                        'full' => count($fullCapacityAdmins)
+                    ]
+                ];
+            });
+
+            return $this->successResponse($stats, 'Admin istatistikleri başarıyla getirildi');
+            
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch admin assignment stats', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return $this->errorResponse('Admin istatistikleri getirilemedi', 'FETCH_STATS_FAILED', 500);
+        }
+    }
+
+    /**
+     * Apply filters to admin list.
+     */
+    protected function applyAdminFilters(array $admins, array $filters): array
+    {
+        // Search filter
+        if (!empty($filters['search'])) {
+            $searchQuery = strtolower(trim($filters['search']));
+            $admins = array_filter($admins, function($admin) use ($searchQuery) {
+                return str_contains(strtolower($admin['name']), $searchQuery) ||
+                       str_contains(strtolower($admin['email']), $searchQuery) ||
+                       str_contains(strtolower($admin['department'] ?? ''), $searchQuery) ||
+                       str_contains(strtolower($admin['position'] ?? ''), $searchQuery);
+            });
+        }
+        
+        // Availability filter
+        if ($filters['only_available']) {
+            $admins = array_filter($admins, function($admin) {
+                return $admin['is_available'] && $admin['has_capacity'];
+            });
+        }
+        
+        // Department filter
+        if (!empty($filters['department'])) {
+            $admins = array_filter($admins, function($admin) use ($filters) {
+                return ($admin['department'] ?? '') === $filters['department'];
+            });
+        }
+        
+        // Role filter
+        if (!empty($filters['role_id'])) {
+            $admins = array_filter($admins, function($admin) use ($filters) {
+                return $admin['role']['id'] == $filters['role_id'];
+            });
+        }
+        
+        // Hierarchy level filter
+        if ($filters['hierarchy_level'] !== null) {
+            $admins = array_filter($admins, function($admin) use ($filters) {
+                return $admin['hierarchy_level'] == $filters['hierarchy_level'];
+            });
+        }
+        
+        // Capacity filter
+        if ($filters['with_capacity']) {
+            $admins = array_filter($admins, function($admin) {
+                return $admin['has_capacity'];
+            });
+        }
+        
+        // Re-index array and apply limit
+        $admins = array_values($admins);
+        
+        if (!empty($filters['limit'])) {
+            $admins = array_slice($admins, 0, (int)$filters['limit']);
+        }
+        
+        return $admins;
+    }
+
+    /**
+     * Format admins response based on requested format.
+     */
+    protected function formatAdminsResponse(array $admins, string $format): array
+    {
+        switch ($format) {
+            case 'simple':
+                return array_map(function($admin) {
+                    return [
+                        'id' => $admin['id'],
+                        'name' => $admin['name'],
+                        'is_available' => $admin['is_available']
+                    ];
+                }, $admins);
+                
+            case 'minimal':
+                return array_map(function($admin) {
+                    return [
+                        'id' => $admin['id'],
+                        'name' => $admin['name']
+                    ];
+                }, $admins);
+                
+            case 'detailed':
+            default:
+                return $admins; // Return full data
+        }
+    }
+
+    /**
+     * Standard success response format.
+     */
+    protected function successResponse($data, string $message = 'İşlem başarılı', array $meta = []): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $data,
+            'meta' => array_merge([
+                'timestamp' => now()->toISOString(),
+                'version' => '1.0'
+            ], $meta)
+        ]);
+    }
+
+    /**
+     * Standard error response format.
+     */
+    protected function errorResponse(string $message, string $errorCode = 'UNKNOWN_ERROR', int $statusCode = 500, $errorDetails = null): JsonResponse
+    {
+        $response = [
+            'success' => false,
+            'message' => $message,
+            'error_code' => $errorCode,
+            'meta' => [
+                'timestamp' => now()->toISOString(),
+                'version' => '1.0'
+            ]
+        ];
+        
+        if ($errorDetails) {
+            $response['error_details'] = $errorDetails;
+        }
+        
+        return response()->json($response, $statusCode);
     }
 
     /**

@@ -489,6 +489,100 @@ class LeadController extends Controller
     }
 
     /**
+     * Update lead assignment only.
+     */
+    public function updateAssignment(Request $request, int $id): JsonResponse
+    {
+        try {
+            $admin = Auth::guard('admin')->user();
+            
+            // Fallback: if no admin guard user, check if current user is admin
+            if (!$admin && Auth::check()) {
+                $user = Auth::user();
+                if ($user && ($user->admin == 1 || $user->role === 'admin')) {
+                    $admin = (object) [
+                        'id' => $user->id,
+                        'firstName' => $user->firstName ?? $user->name,
+                        'lastName' => $user->lastName ?? '',
+                        'email' => $user->email,
+                        'role' => 'admin',
+                        'admin' => 1
+                    ];
+                }
+            }
+            
+            if (!$admin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Admin authentication required.'
+                ], 401);
+            }
+
+            $lead = User::with(['assignedAdmin:id,firstName,lastName'])->findOrFail($id);
+
+            // Validate request
+            $request->validate([
+                'assign_to' => 'nullable|integer|exists:admins,id'
+            ]);
+
+            DB::beginTransaction();
+
+            $oldAssignTo = $lead->assign_to;
+            
+            // Update lead assignment
+            $lead->update(['assign_to' => $request->assign_to]);
+            $lead = $lead->fresh(['assignedAdmin:id,firstName,lastName']);
+
+            // Log the change
+            Log::info('🪲 ASSIGNMENT UPDATED VIA API', [
+                'admin_id' => $admin->id,
+                'lead_id' => $lead->id,
+                'old_assign_to' => $oldAssignTo,
+                'new_assign_to' => $request->assign_to,
+                'endpoint' => 'updateAssignment'
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Atama başarıyla güncellendi',
+                'data' => [
+                    'id' => $lead->id,
+                    'assign_to' => $lead->assign_to,
+                    'assignedAdmin' => $lead->assignedAdmin ? [
+                        'id' => $lead->assignedAdmin->id,
+                        'firstName' => $lead->assignedAdmin->firstName,
+                        'lastName' => $lead->assignedAdmin->lastName,
+                        'name' => $lead->assignedAdmin->firstName . ' ' . $lead->assignedAdmin->lastName,
+                    ] : null,
+                ]
+            ]);
+
+        } catch (ValidationException $e) {
+            DB::rollback();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $e->errors(),
+            ], 422);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Failed to update lead assignment', [
+                'admin_id' => $admin->id ?? null,
+                'lead_id' => $id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Atama güncellenirken hata oluştu.',
+            ], 500);
+        }
+    }
+
+    /**
      * Delete lead.
      */
     public function destroy(int $id): JsonResponse
@@ -549,6 +643,17 @@ class LeadController extends Controller
     {
         try {
             $admin = Auth::guard('admin')->user();
+            
+            // 🪲 DEBUG: Log request details
+            Log::info('🪲 BULK REQUEST RECEIVED', [
+                'action' => $request->get('action'),
+                'lead_ids' => $request->get('lead_ids'),
+                'options' => $request->get('options'),
+                'admin_id' => $admin ? $admin->id : 'NULL',
+                'auth_check' => Auth::check(),
+                'admin_guard_check' => Auth::guard('admin')->check()
+            ]);
+            
             $validatedData = $request->validated();
             
             $action = $validatedData['action'];

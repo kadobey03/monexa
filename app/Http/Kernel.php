@@ -78,5 +78,6 @@ class Kernel extends HttpKernel
         'permission' => \App\Http\Middleware\PermissionMiddleware::class,
         'hierarchy' => \App\Http\Middleware\HierarchyMiddleware::class,
         'admin.activity' => \App\Http\Middleware\AdminActivityMiddleware::class,
+        'validate.lead.assignment' => \App\Http\Middleware\ValidateLeadAssignment::class,
     ];
 }

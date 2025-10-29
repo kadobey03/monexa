@@ -12,11 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->timestamp('deleted_at')->nullable()->after('updated_at');
+            // Only add deleted_at column if it doesn't already exist
+            if (!Schema::hasColumn('roles', 'deleted_at')) {
+                $table->timestamp('deleted_at')->nullable()->after('updated_at');
+            }
         });
 
         Schema::table('permissions', function (Blueprint $table) {
-            $table->timestamp('deleted_at')->nullable()->after('updated_at');
+            // Only add deleted_at column if it doesn't already exist
+            if (!Schema::hasColumn('permissions', 'deleted_at')) {
+                $table->timestamp('deleted_at')->nullable()->after('updated_at');
+            }
         });
     }
 
@@ -26,11 +32,17 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->dropColumn('deleted_at');
+            // Only drop deleted_at column if it exists
+            if (Schema::hasColumn('roles', 'deleted_at')) {
+                $table->dropColumn('deleted_at');
+            }
         });
 
         Schema::table('permissions', function (Blueprint $table) {
-            $table->dropColumn('deleted_at');
+            // Only drop deleted_at column if it exists
+            if (Schema::hasColumn('permissions', 'deleted_at')) {
+                $table->dropColumn('deleted_at');
+            }
         });
     }
 };
