@@ -56,7 +56,7 @@ class UsersImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFai
             'phone' => $this->cleanPhone($row['phone_number'] ?? $row['phone'] ?? null),
             'status' => 'active', // Set as active by default
             'lead_source' => 'import',
-            'lead_status_id' => $newLeadStatus ? $newLeadStatus->id : null,
+            'lead_status' => $newLeadStatus ? $newLeadStatus->name : 'new',
             'lead_score' => 10, // Base score for imported leads
             'lead_notes' => 'Excel dosyasından içe aktarıldı: ' . now()->format('d.m.Y H:i'),
             'lead_tags' => ['imported', 'excel'],

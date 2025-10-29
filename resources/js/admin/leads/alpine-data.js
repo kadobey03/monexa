@@ -55,17 +55,17 @@ window.leadsTableData = function() {
         // Column Management
         visibleColumns: [],
         availableColumns: [
-            { key: 'select', label: 'Seç', width: 50, resizable: false, pinnable: false, visible: true },
-            { key: 'name', label: 'İsim', width: 200, resizable: true, pinnable: true, visible: true },
-            { key: 'email', label: 'E-posta', width: 250, resizable: true, pinnable: true, visible: true },
-            { key: 'phone', label: 'Telefon', width: 150, resizable: true, pinnable: false, visible: true },
-            { key: 'status', label: 'Durum', width: 120, resizable: true, pinnable: false, visible: true },
-            { key: 'priority', label: 'Öncelik', width: 100, resizable: true, pinnable: false, visible: true },
-            { key: 'lead_score', label: 'Puan', width: 80, resizable: true, pinnable: false, visible: true },
-            { key: 'assigned_to', label: 'Atanan', width: 150, resizable: true, pinnable: false, visible: true },
-            { key: 'source', label: 'Kaynak', width: 120, resizable: true, pinnable: false, visible: true },
-            { key: 'created_at', label: 'Eklenme Tarihi', width: 130, resizable: true, pinnable: false, visible: true },
-            { key: 'actions', label: 'İşlemler', width: 150, resizable: false, pinnable: false, visible: true }
+            { key: 'select', label: 'Seç', width: 50, resizable: false, pinnable: false, visible: true, priority: 1 },
+            { key: 'country', label: 'ÜLKE', width: 100, resizable: true, pinnable: false, visible: true, priority: 2 },
+            { key: 'name', label: 'AD SOYAD', width: 180, resizable: true, pinnable: true, visible: true, priority: 3 },
+            { key: 'phone', label: 'TELEFON NUMARASI', width: 150, resizable: true, pinnable: false, visible: true, priority: 4 },
+            { key: 'email', label: 'EMAİL', width: 200, resizable: true, pinnable: true, visible: true, priority: 5 },
+            { key: 'assigned_to', label: 'ASSIGNED', width: 140, resizable: true, pinnable: false, visible: true, priority: 6 },
+            { key: 'status', label: 'STATUS', width: 120, resizable: true, pinnable: false, visible: true, priority: 7 },
+            { key: 'organization', label: 'VARONKA', width: 150, resizable: true, pinnable: false, visible: true, priority: 8 },
+            { key: 'source', label: 'KAYNAK', width: 120, resizable: true, pinnable: false, visible: true, priority: 9 },
+            { key: 'company_name', label: 'ŞİRKET', width: 150, resizable: true, pinnable: false, visible: true, priority: 10 },
+            { key: 'actions', label: 'İŞLEMLER', width: 100, resizable: false, pinnable: false, visible: true, priority: 11 }
         ],
         pinnedColumns: [],
         

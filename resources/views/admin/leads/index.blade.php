@@ -202,7 +202,7 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">İletişim</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" onclick="LeadsManager.sort('lead_status_id')">
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" onclick="LeadsManager.sort('lead_status')">
                             <div class="flex items-center space-x-1">
                                 <span>Durum</span>
                                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
@@ -242,10 +242,10 @@
                                         </span>
                                     </div>
                                     <select class="dropdown-select hidden text-xs font-semibold rounded px-2 py-1 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[100px] md:min-w-[120px]"
-                                            onchange="LeadsManager.updateStatus({{ $lead->id }}, this.value, this)" data-original="{{ $lead->lead_status_id }}">
+                                            onchange="LeadsManager.updateStatus({{ $lead->id }}, this.value, this)" data-original="{{ $lead->lead_status }}">
                                         <option value="">Seçiniz</option>
                                         @foreach($leadStatuses as $status)
-                                            <option value="{{ $status->id }}" {{ $lead->lead_status_id == $status->id ? 'selected' : '' }}>{{ $status->display_name }}</option>
+                                            <option value="{{ $status->name }}" {{ $lead->lead_status == $status->name ? 'selected' : '' }}>{{ $status->display_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -373,10 +373,10 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Durum</label>
-                            <select id="editLeadStatus" name="lead_status_id" class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-admin-700 dark:text-white">
+                            <select id="editLeadStatus" name="lead_status" class="w-full px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-admin-700 dark:text-white">
                                 <option value="">Seçiniz</option>
                                 @foreach($leadStatuses as $status)
-                                    <option value="{{ $status->id }}">{{ $status->display_name }}</option>
+                                    <option value="{{ $status->name }}">{{ $status->display_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -665,7 +665,7 @@ const LeadsManager = {
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    lead_status_id: parseInt(newStatusId)
+                    lead_status: newStatusId
                 })
             });
 
@@ -829,7 +829,7 @@ const LeadsManager = {
         this.data.selectedLead = lead;
         
         // Populate form
-        document.getElementById('editLeadStatus').value = lead.lead_status_id || '';
+        document.getElementById('editLeadStatus').value = lead.lead_status || '';
         document.getElementById('editAssignTo').value = lead.assign_to || '';
         document.getElementById('editLeadNotes').value = lead.lead_notes || '';
         document.getElementById('editNextFollowUp').value = lead.next_follow_up_date || '';
@@ -854,7 +854,7 @@ const LeadsManager = {
             const formData = new FormData();
             formData.append('_method', 'PUT');
             formData.append('_token', '{{ csrf_token() }}');
-            formData.append('lead_status_id', document.getElementById('editLeadStatus').value);
+            formData.append('lead_status', document.getElementById('editLeadStatus').value);
             formData.append('assign_to', document.getElementById('editAssignTo').value);
             formData.append('lead_notes', document.getElementById('editLeadNotes').value);
             formData.append('next_follow_up_date', document.getElementById('editNextFollowUp').value);

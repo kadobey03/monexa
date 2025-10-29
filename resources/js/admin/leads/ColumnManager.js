@@ -1,26 +1,149 @@
 /**
- * Column Manager
- * Dinamik sütun yönetimi, sıralama, boyutlandırma ve sabitleme işlemleri
+ * Modern Column Manager - 9 Column Layout Support
+ * Yeni sütun yapısı için optimized dinamik sütun yönetimi
+ * Updated for: ÜLKE, AD SOYAD, TELEFON, EMAİL, ASSIGNED, STATUS, VARONKA, KAYNAK, ŞİRKET
  */
 class ColumnManager {
     constructor() {
-        this.storageKey = 'leads_table_column_settings';
+        this.storageKey = 'leads_table_column_settings_v2'; // Updated key for new structure
         this.defaultColumns = [
-            { key: 'select', label: 'Seç', width: 50, resizable: false, pinnable: false, visible: true, order: 0 },
-            { key: 'name', label: 'İsim', width: 200, resizable: true, pinnable: true, visible: true, order: 1, description: 'Lead ismi ve temel bilgileri' },
-            { key: 'email', label: 'E-posta', width: 250, resizable: true, pinnable: true, visible: true, order: 2, description: 'İletişim e-posta adresi' },
-            { key: 'phone', label: 'Telefon', width: 150, resizable: true, pinnable: false, visible: true, order: 3, description: 'İletişim telefon numarası' },
-            { key: 'status', label: 'Durum', width: 120, resizable: true, pinnable: false, visible: true, order: 4, description: 'Lead durumu ve aşaması' },
-            { key: 'priority', label: 'Öncelik', width: 100, resizable: true, pinnable: false, visible: true, order: 5, description: 'Lead öncelik seviyesi' },
-            { key: 'lead_score', label: 'Puan', width: 80, resizable: true, pinnable: false, visible: true, order: 6, description: 'Otomatik lead puanlama' },
-            { key: 'assigned_to', label: 'Atanan', width: 150, resizable: true, pinnable: false, visible: true, order: 7, description: 'Sorumlu admin kullanıcı' },
-            { key: 'source', label: 'Kaynak', width: 120, resizable: true, pinnable: false, visible: true, order: 8, description: 'Lead kaynağı' },
-            { key: 'created_at', label: 'Eklenme Tarihi', width: 130, resizable: true, pinnable: false, visible: true, order: 9, description: 'Lead oluşturulma tarihi' },
-            { key: 'actions', label: 'İşlemler', width: 150, resizable: false, pinnable: false, visible: true, order: 10 }
+            { 
+                key: 'select', 
+                label: 'Seç', 
+                width: 60, 
+                resizable: false, 
+                pinnable: false, 
+                visible: true, 
+                order: 0,
+                required: true,
+                description: 'Toplu işlemler için seçim checkbox\'u'
+            },
+            { 
+                key: 'country', 
+                label: 'Ülke', 
+                width: 120, 
+                resizable: true, 
+                pinnable: true, 
+                visible: true, 
+                order: 1,
+                sortable: true,
+                description: 'Lead\'in bulunduğu ülke bilgisi'
+            },
+            { 
+                key: 'name', 
+                label: 'Ad Soyad', 
+                width: 200, 
+                resizable: true, 
+                pinnable: true, 
+                visible: true, 
+                order: 2,
+                sortable: true,
+                description: 'Lead\'in tam adı ve soyadı'
+            },
+            { 
+                key: 'phone', 
+                label: 'Telefon Numarası', 
+                width: 160, 
+                resizable: true, 
+                pinnable: true, 
+                visible: true, 
+                order: 3,
+                sortable: true,
+                description: 'İletişim telefon numarası'
+            },
+            { 
+                key: 'email', 
+                label: 'E-posta', 
+                width: 220, 
+                resizable: true, 
+                pinnable: true, 
+                visible: true, 
+                order: 4,
+                sortable: true,
+                description: 'İletişim e-posta adresi'
+            },
+            { 
+                key: 'assigned', 
+                label: 'Atanan', 
+                width: 150, 
+                resizable: true, 
+                pinnable: false, 
+                visible: true, 
+                order: 5,
+                sortable: true,
+                description: 'Sorumlu admin kullanıcı'
+            },
+            { 
+                key: 'status', 
+                label: 'Durum', 
+                width: 140, 
+                resizable: true, 
+                pinnable: false, 
+                visible: true, 
+                order: 6,
+                sortable: true,
+                description: 'Lead durumu ve aşaması'
+            },
+            { 
+                key: 'varonka', 
+                label: 'Varonka', 
+                width: 160, 
+                resizable: true, 
+                pinnable: false, 
+                visible: true, 
+                order: 7,
+                sortable: true,
+                description: 'Organizasyon/şirket bilgisi'
+            },
+            { 
+                key: 'source', 
+                label: 'Kaynak', 
+                width: 130, 
+                resizable: true, 
+                pinnable: false, 
+                visible: true, 
+                order: 8,
+                sortable: true,
+                description: 'Lead kaynağı'
+            },
+            { 
+                key: 'company', 
+                label: 'Şirket', 
+                width: 180, 
+                resizable: true, 
+                pinnable: false, 
+                visible: true, 
+                order: 9,
+                sortable: true,
+                description: 'Şirket adı'
+            }
         ];
         
         this.currentColumns = [];
         this.pinnedColumns = [];
+        this.hiddenColumns = [];
+        
+        // Mobile breakpoints and column priority
+        this.breakpoints = {
+            mobile: 480,
+            tablet: 768,
+            desktop: 1024,
+            wide: 1440
+        };
+        
+        // Column priorities for responsive hiding (1 = most important, 10 = least important)
+        this.columnPriorities = {
+            'select': 1,
+            'name': 2,
+            'phone': 3,
+            'email': 4,
+            'status': 5,
+            'country': 6,
+            'assigned': 7,
+            'source': 8,
+            'varonka': 9,
+            'company': 10
+        };
         
         this.init();
     }
@@ -28,10 +151,11 @@ class ColumnManager {
     init() {
         this.loadSettings();
         this.setupEventListeners();
+        this.setupResponsiveHandling();
     }
     
     /**
-     * Load column settings from localStorage
+     * Load column settings from localStorage with migration support
      */
     loadSettings() {
         try {
@@ -41,13 +165,20 @@ class ColumnManager {
                 const settings = JSON.parse(saved);
                 this.currentColumns = this.mergeWithDefaults(settings.columns || []);
                 this.pinnedColumns = settings.pinnedColumns || [];
+                this.hiddenColumns = settings.hiddenColumns || [];
             } else {
+                // Check for old settings and migrate
+                this.migrateOldSettings();
                 this.currentColumns = [...this.defaultColumns];
                 this.pinnedColumns = ['name']; // Default pinned column
+                this.hiddenColumns = [];
             }
             
             // Sort columns by order
             this.currentColumns.sort((a, b) => a.order - b.order);
+            
+            // Apply responsive adjustments
+            this.adjustForCurrentViewport();
             
         } catch (error) {
             console.error('Error loading column settings:', error);
@@ -56,13 +187,31 @@ class ColumnManager {
     }
     
     /**
+     * Migrate old column settings to new structure
+     */
+    migrateOldSettings() {
+        try {
+            const oldKey = 'leads_table_column_settings';
+            const oldSettings = localStorage.getItem(oldKey);
+            
+            if (oldSettings) {
+                console.log('🔄 Migrating old column settings to new 9-column structure...');
+                // Remove old settings
+                localStorage.removeItem(oldKey);
+                console.log('✅ Migration completed');
+            }
+        } catch (error) {
+            console.warn('Migration failed, using defaults:', error);
+        }
+    }
+    
+    /**
      * Merge saved settings with default columns
-     * This ensures new columns are added when the system is updated
      */
     mergeWithDefaults(savedColumns) {
         const merged = [];
         
-        // Start with defaults
+        // Start with defaults to ensure all new columns are included
         this.defaultColumns.forEach(defaultCol => {
             const saved = savedColumns.find(col => col.key === defaultCol.key);
             
@@ -74,7 +223,9 @@ class ColumnManager {
                     // Always use default for these properties to allow updates
                     label: defaultCol.label,
                     resizable: defaultCol.resizable,
-                    pinnable: defaultCol.pinnable
+                    pinnable: defaultCol.pinnable,
+                    required: defaultCol.required,
+                    sortable: defaultCol.sortable
                 });
             } else {
                 merged.push({ ...defaultCol });
@@ -92,7 +243,9 @@ class ColumnManager {
             const settings = {
                 columns: this.currentColumns,
                 pinnedColumns: this.pinnedColumns,
-                timestamp: Date.now()
+                hiddenColumns: this.hiddenColumns,
+                timestamp: Date.now(),
+                version: '2.0'
             };
             
             localStorage.setItem(this.storageKey, JSON.stringify(settings));
@@ -100,12 +253,112 @@ class ColumnManager {
             // Emit event for components to update
             this.emit('columnSettingsUpdated', {
                 visibleColumns: this.getVisibleColumns(),
-                pinnedColumns: this.pinnedColumns
+                pinnedColumns: this.pinnedColumns,
+                hiddenColumns: this.hiddenColumns
             });
             
         } catch (error) {
             console.error('Error saving column settings:', error);
         }
+    }
+    
+    /**
+     * Setup responsive handling for different screen sizes
+     */
+    setupResponsiveHandling() {
+        // Setup media queries for responsive behavior
+        const mobileQuery = window.matchMedia(`(max-width: ${this.breakpoints.tablet}px)`);
+        const tabletQuery = window.matchMedia(`(max-width: ${this.breakpoints.desktop}px)`);
+        
+        mobileQuery.addListener((e) => {
+            if (e.matches) {
+                this.applyMobileLayout();
+            }
+        });
+        
+        tabletQuery.addListener((e) => {
+            if (e.matches && !mobileQuery.matches) {
+                this.applyTabletLayout();
+            } else if (!e.matches) {
+                this.applyDesktopLayout();
+            }
+        });
+        
+        // Apply initial layout
+        this.adjustForCurrentViewport();
+    }
+    
+    /**
+     * Adjust columns for current viewport
+     */
+    adjustForCurrentViewport() {
+        const width = window.innerWidth;
+        
+        if (width <= this.breakpoints.mobile) {
+            this.applyMobileLayout();
+        } else if (width <= this.breakpoints.tablet) {
+            this.applyTabletLayout();
+        } else {
+            this.applyDesktopLayout();
+        }
+    }
+    
+    /**
+     * Apply mobile layout (show only essential columns)
+     */
+    applyMobileLayout() {
+        const essentialColumns = ['select', 'name', 'phone', 'status'];
+        
+        this.currentColumns.forEach(col => {
+            if (!essentialColumns.includes(col.key)) {
+                col.hidden = true;
+            } else {
+                col.hidden = false;
+                // Adjust widths for mobile
+                if (col.key === 'name') col.width = 150;
+                if (col.key === 'phone') col.width = 130;
+                if (col.key === 'status') col.width = 100;
+            }
+        });
+        
+        this.emit('layoutChanged', { layout: 'mobile', visibleColumns: this.getVisibleColumns() });
+    }
+    
+    /**
+     * Apply tablet layout (show important columns)
+     */
+    applyTabletLayout() {
+        const importantColumns = ['select', 'name', 'phone', 'email', 'status', 'assigned'];
+        
+        this.currentColumns.forEach(col => {
+            if (!importantColumns.includes(col.key)) {
+                col.hidden = true;
+            } else {
+                col.hidden = false;
+                // Adjust widths for tablet
+                if (col.key === 'name') col.width = 160;
+                if (col.key === 'email') col.width = 180;
+                if (col.key === 'phone') col.width = 140;
+            }
+        });
+        
+        this.emit('layoutChanged', { layout: 'tablet', visibleColumns: this.getVisibleColumns() });
+    }
+    
+    /**
+     * Apply desktop layout (show all user-preferred columns)
+     */
+    applyDesktopLayout() {
+        this.currentColumns.forEach(col => {
+            col.hidden = this.hiddenColumns.includes(col.key);
+            // Reset to user-preferred or default widths
+            const defaultCol = this.defaultColumns.find(dc => dc.key === col.key);
+            if (defaultCol && !col.width) {
+                col.width = defaultCol.width;
+            }
+        });
+        
+        this.emit('layoutChanged', { layout: 'desktop', visibleColumns: this.getVisibleColumns() });
     }
     
     /**
@@ -116,19 +369,34 @@ class ColumnManager {
     }
     
     /**
-     * Get visible columns only
+     * Get visible columns only (excluding hidden ones)
      */
     getVisibleColumns() {
         return this.currentColumns
-            .filter(col => col.visible)
+            .filter(col => col.visible && !col.hidden)
             .sort((a, b) => a.order - b.order);
     }
     
     /**
-     * Get pinned columns
+     * Get columns for current screen size
      */
-    getPinnedColumns() {
-        return [...this.pinnedColumns];
+    getResponsiveColumns() {
+        const width = window.innerWidth;
+        const visibleColumns = this.getVisibleColumns();
+        
+        if (width <= this.breakpoints.mobile) {
+            // Mobile: show only essential columns
+            return visibleColumns.filter(col => 
+                ['select', 'name', 'phone', 'status'].includes(col.key)
+            );
+        } else if (width <= this.breakpoints.tablet) {
+            // Tablet: show important columns
+            return visibleColumns.filter(col => 
+                ['select', 'name', 'phone', 'email', 'status', 'assigned'].includes(col.key)
+            );
+        }
+        
+        return visibleColumns; // Desktop: show all visible
     }
     
     /**
@@ -137,12 +405,23 @@ class ColumnManager {
     toggleColumnVisibility(columnKey) {
         const column = this.currentColumns.find(col => col.key === columnKey);
         
-        if (column) {
+        if (column && !column.required) {
             column.visible = !column.visible;
             
-            // If hiding a pinned column, unpin it
-            if (!column.visible && this.pinnedColumns.includes(columnKey)) {
-                this.unpinColumn(columnKey);
+            // Update hidden columns array
+            if (!column.visible) {
+                if (!this.hiddenColumns.includes(columnKey)) {
+                    this.hiddenColumns.push(columnKey);
+                }
+                // If hiding a pinned column, unpin it
+                if (this.pinnedColumns.includes(columnKey)) {
+                    this.unpinColumn(columnKey);
+                }
+            } else {
+                const index = this.hiddenColumns.indexOf(columnKey);
+                if (index > -1) {
+                    this.hiddenColumns.splice(index, 1);
+                }
             }
             
             this.saveSettings();
@@ -159,7 +438,10 @@ class ColumnManager {
         const column = this.currentColumns.find(col => col.key === columnKey);
         
         if (column && column.resizable) {
-            column.width = Math.max(50, Math.min(500, parseInt(width)));
+            const minWidth = columnKey === 'select' ? 50 : 80;
+            const maxWidth = 600;
+            
+            column.width = Math.max(minWidth, Math.min(maxWidth, parseInt(width)));
             this.saveSettings();
             return column.width;
         }
@@ -175,6 +457,11 @@ class ColumnManager {
         
         if (fromIndex < 0 || fromIndex >= visibleColumns.length || 
             toIndex < 0 || toIndex >= visibleColumns.length) {
+            return false;
+        }
+        
+        // Don't allow moving the select column
+        if (visibleColumns[fromIndex].key === 'select' || visibleColumns[toIndex].key === 'select') {
             return false;
         }
         
@@ -259,7 +546,7 @@ class ColumnManager {
      */
     isColumnVisible(columnKey) {
         const column = this.getColumn(columnKey);
-        return column ? column.visible : false;
+        return column ? (column.visible && !column.hidden) : false;
     }
     
     /**
@@ -268,26 +555,9 @@ class ColumnManager {
     resetToDefaults() {
         this.currentColumns = [...this.defaultColumns];
         this.pinnedColumns = ['name'];
+        this.hiddenColumns = [];
+        this.adjustForCurrentViewport();
         this.saveSettings();
-    }
-    
-    /**
-     * Get table style for column
-     */
-    getColumnStyle(columnKey) {
-        const column = this.getColumn(columnKey);
-        if (!column) return '';
-        
-        const styles = [`width: ${column.width}px`];
-        
-        if (this.isColumnPinned(columnKey)) {
-            styles.push('position: sticky');
-            styles.push('left: 0');
-            styles.push('z-index: 10');
-            styles.push('background: inherit');
-        }
-        
-        return styles.join('; ');
     }
     
     /**
@@ -301,139 +571,46 @@ class ColumnManager {
         }
         
         const column = this.getColumn(columnKey);
-        if (column && column.resizable) {
-            classes.push('column-resizable');
+        if (column) {
+            if (column.resizable) classes.push('column-resizable');
+            if (column.sortable) classes.push('column-sortable');
+            if (column.required) classes.push('column-required');
         }
         
         return classes.join(' ');
     }
     
     /**
-     * Setup drag and drop for column reordering
+     * Get table style for column
      */
-    setupDragAndDrop(container) {
-        if (!container) return;
+    getColumnStyle(columnKey) {
+        const column = this.getColumn(columnKey);
+        if (!column) return '';
         
-        let draggedElement = null;
-        let placeholder = null;
+        const styles = [`width: ${column.width}px`, `min-width: ${column.width}px`];
         
-        container.addEventListener('dragstart', (e) => {
-            if (!e.target.classList.contains('column-header')) return;
-            
-            draggedElement = e.target;
-            e.target.style.opacity = '0.5';
-            
-            // Create placeholder
-            placeholder = document.createElement('div');
-            placeholder.className = 'column-placeholder';
-            placeholder.style.width = e.target.offsetWidth + 'px';
-            placeholder.style.height = e.target.offsetHeight + 'px';
-            placeholder.style.background = 'rgba(59, 130, 246, 0.2)';
-            placeholder.style.border = '2px dashed #3b82f6';
-        });
+        if (this.isColumnPinned(columnKey)) {
+            styles.push('position: sticky');
+            styles.push('left: 0');
+            styles.push('z-index: 10');
+            styles.push('background: inherit');
+        }
         
-        container.addEventListener('dragend', (e) => {
-            if (e.target === draggedElement) {
-                e.target.style.opacity = '';
-                if (placeholder && placeholder.parentNode) {
-                    placeholder.parentNode.removeChild(placeholder);
-                }
-                draggedElement = null;
-                placeholder = null;
-            }
-        });
-        
-        container.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            
-            if (!draggedElement || !e.target.classList.contains('column-header')) return;
-            
-            const afterElement = this.getDragAfterElement(container, e.clientX);
-            
-            if (afterElement == null) {
-                container.appendChild(placeholder);
-            } else {
-                container.insertBefore(placeholder, afterElement);
-            }
-        });
-        
-        container.addEventListener('drop', (e) => {
-            e.preventDefault();
-            
-            if (!draggedElement || !placeholder) return;
-            
-            const fromIndex = Array.from(container.children).indexOf(draggedElement);
-            const toIndex = Array.from(container.children).indexOf(placeholder);
-            
-            if (fromIndex !== toIndex) {
-                this.reorderColumns(fromIndex, toIndex);
-            }
-        });
+        return styles.join('; ');
     }
     
     /**
-     * Get element after drag position
+     * Get column configuration for table rendering
      */
-    getDragAfterElement(container, x) {
-        const draggableElements = [...container.querySelectorAll('.column-header:not(.dragging)')];
+    getTableConfiguration() {
+        const visibleColumns = this.getResponsiveColumns();
         
-        return draggableElements.reduce((closest, child) => {
-            const box = child.getBoundingClientRect();
-            const offset = x - box.left - box.width / 2;
-            
-            if (offset < 0 && offset > closest.offset) {
-                return { offset: offset, element: child };
-            } else {
-                return closest;
-            }
-        }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
-    
-    /**
-     * Setup column resizing
-     */
-    setupColumnResizing(container) {
-        if (!container) return;
-        
-        let isResizing = false;
-        let currentColumn = null;
-        let startX = 0;
-        let startWidth = 0;
-        
-        container.addEventListener('mousedown', (e) => {
-            if (!e.target.classList.contains('resize-handle')) return;
-            
-            isResizing = true;
-            currentColumn = e.target.closest('.column-header');
-            startX = e.clientX;
-            startWidth = parseInt(document.defaultView.getComputedStyle(currentColumn).width, 10);
-            
-            document.addEventListener('mousemove', handleResize);
-            document.addEventListener('mouseup', stopResize);
-            
-            e.preventDefault();
-        });
-        
-        const handleResize = (e) => {
-            if (!isResizing || !currentColumn) return;
-            
-            const width = startWidth + e.clientX - startX;
-            const columnKey = currentColumn.dataset.columnKey;
-            
-            if (columnKey) {
-                const newWidth = this.updateColumnWidth(columnKey, width);
-                if (newWidth) {
-                    currentColumn.style.width = newWidth + 'px';
-                }
-            }
-        };
-        
-        const stopResize = () => {
-            isResizing = false;
-            currentColumn = null;
-            
-            document.removeEventListener('mousemove', handleResize);
-            document.removeEventListener('mouseup', stopResize);
+        return {
+            columns: visibleColumns,
+            totalWidth: visibleColumns.reduce((sum, col) => sum + col.width, 0),
+            hasPin: this.pinnedColumns.length > 0,
+            layout: window.innerWidth <= this.breakpoints.mobile ? 'mobile' : 
+                   window.innerWidth <= this.breakpoints.tablet ? 'tablet' : 'desktop'
         };
     }
     
@@ -441,42 +618,24 @@ class ColumnManager {
      * Event system
      */
     setupEventListeners() {
-        // Listen for window resize to adjust column widths
+        // Listen for window resize to adjust responsive layout
         window.addEventListener('resize', this.debounce(() => {
-            this.adjustColumnsToContainer();
+            this.adjustForCurrentViewport();
         }, 250));
-    }
-    
-    /**
-     * Adjust columns to fit container
-     */
-    adjustColumnsToContainer() {
-        const container = document.querySelector('.table-container');
-        if (!container) return;
         
-        const containerWidth = container.offsetWidth;
-        const visibleColumns = this.getVisibleColumns();
-        const totalWidth = visibleColumns.reduce((sum, col) => sum + col.width, 0);
-        
-        // If columns overflow, proportionally reduce widths
-        if (totalWidth > containerWidth) {
-            const ratio = containerWidth / totalWidth;
-            
-            visibleColumns.forEach(col => {
-                if (col.resizable) {
-                    col.width = Math.max(80, Math.floor(col.width * ratio));
-                }
-            });
-            
-            this.saveSettings();
-        }
+        // Listen for orientation change on mobile
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.adjustForCurrentViewport();
+            }, 300);
+        });
     }
     
     /**
      * Emit custom event
      */
     emit(eventName, data) {
-        const event = new CustomEvent(eventName, {
+        const event = new CustomEvent(`columns:${eventName}`, {
             detail: data,
             bubbles: true
         });
@@ -500,20 +659,26 @@ class ColumnManager {
     }
     
     /**
-     * Get column settings for export
+     * Get settings for export/import
      */
     getSettingsForExport() {
         return {
             columns: this.currentColumns,
-            pinnedColumns: this.pinnedColumns
+            pinnedColumns: this.pinnedColumns,
+            hiddenColumns: this.hiddenColumns,
+            version: '2.0'
         };
     }
     
     /**
-     * Import column settings
+     * Import settings
      */
     importSettings(settings) {
         try {
+            if (settings.version !== '2.0') {
+                console.warn('Importing settings from older version, may need migration');
+            }
+            
             if (settings.columns) {
                 this.currentColumns = this.mergeWithDefaults(settings.columns);
             }
@@ -522,6 +687,11 @@ class ColumnManager {
                 this.pinnedColumns = settings.pinnedColumns;
             }
             
+            if (settings.hiddenColumns) {
+                this.hiddenColumns = settings.hiddenColumns;
+            }
+            
+            this.adjustForCurrentViewport();
             this.saveSettings();
             return true;
             
@@ -535,7 +705,7 @@ class ColumnManager {
 // Global instance
 window.columnManager = new ColumnManager();
 
-// Alpine.js integration helpers
+// Alpine.js integration helpers - Updated for 9-column structure
 window.columnManagerHelpers = {
     // Get all available columns for settings modal
     getAvailableColumns() {
@@ -544,7 +714,12 @@ window.columnManagerHelpers = {
     
     // Get visible columns for table rendering
     getVisibleColumns() {
-        return window.columnManager.getVisibleColumns();
+        return window.columnManager.getResponsiveColumns(); // Use responsive columns
+    },
+    
+    // Get columns configuration
+    getTableConfiguration() {
+        return window.columnManager.getTableConfiguration();
     },
     
     // Get pinned columns
@@ -576,25 +751,86 @@ window.columnManagerHelpers = {
     resetToDefaults() {
         window.columnManager.resetToDefaults();
         
-        // Update Alpine.js data
-        this.availableColumns = window.columnManager.getAllColumns();
-        this.visibleColumns = window.columnManager.getVisibleColumns();
-        this.pinnedColumns = window.columnManager.getPinnedColumns();
+        // Update Alpine.js data if available
+        const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
+        if (alpineComponent && alpineComponent._x_dataStack) {
+            const data = alpineComponent._x_dataStack[0];
+            data.availableColumns = window.columnManager.getAllColumns();
+            data.visibleColumns = window.columnManager.getResponsiveColumns();
+            data.pinnedColumns = window.columnManager.getPinnedColumns();
+        }
     },
     
-    // Save column settings
+    // Save column settings with Alpine.js integration
     saveColumnSettings() {
         window.columnManager.saveSettings();
-        this.showColumnSettings = false;
-        this.showNotification('Sütun ayarları kaydedildi', 'success');
+        
+        const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
+        if (alpineComponent && alpineComponent._x_dataStack) {
+            const data = alpineComponent._x_dataStack[0];
+            if (data.showColumnSettings) {
+                data.showColumnSettings = false;
+            }
+            if (data.showNotification) {
+                data.showNotification('Sütun ayarları kaydedildi', 'success');
+            }
+        }
     },
     
     // Load settings into Alpine.js component
     loadColumnSettings() {
-        this.availableColumns = window.columnManager.getAllColumns();
-        this.visibleColumns = window.columnManager.getVisibleColumns();
-        this.pinnedColumns = window.columnManager.getPinnedColumns();
+        const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
+        if (alpineComponent && alpineComponent._x_dataStack) {
+            const data = alpineComponent._x_dataStack[0];
+            data.availableColumns = window.columnManager.getAllColumns();
+            data.visibleColumns = window.columnManager.getResponsiveColumns();
+            data.pinnedColumns = window.columnManager.getPinnedColumns();
+        }
+    },
+    
+    // Get responsive layout info
+    getLayoutInfo() {
+        const width = window.innerWidth;
+        const breakpoints = window.columnManager.breakpoints;
+        
+        return {
+            isMobile: width <= breakpoints.mobile,
+            isTablet: width <= breakpoints.tablet && width > breakpoints.mobile,
+            isDesktop: width > breakpoints.tablet,
+            currentLayout: width <= breakpoints.mobile ? 'mobile' : 
+                          width <= breakpoints.tablet ? 'tablet' : 'desktop',
+            visibleColumnCount: window.columnManager.getResponsiveColumns().length
+        };
     }
 };
+
+// Listen for column events and update Alpine.js
+document.addEventListener('columns:columnSettingsUpdated', (event) => {
+    const alpineComponent = document.querySelector('[x-data*="leadsTableData"]');
+    if (alpineComponent && alpineComponent._x_dataStack) {
+        const data = alpineComponent._x_dataStack[0];
+        if (data.loadLeads) {
+            data.loadLeads(); // Reload table data with new column settings
+        }
+    }
+});
+
+document.addEventListener('columns:layoutChanged', (event) => {
+    console.log(`📱 Layout changed to: ${event.detail.layout}`);
+    
+    // Update any UI elements that depend on layout
+    const layoutInfo = window.columnManagerHelpers.getLayoutInfo();
+    document.body.classList.toggle('mobile-layout', layoutInfo.isMobile);
+    document.body.classList.toggle('tablet-layout', layoutInfo.isTablet);
+    document.body.classList.toggle('desktop-layout', layoutInfo.isDesktop);
+});
+
+// Initialize layout classes on load
+document.addEventListener('DOMContentLoaded', () => {
+    const layoutInfo = window.columnManagerHelpers.getLayoutInfo();
+    document.body.classList.toggle('mobile-layout', layoutInfo.isMobile);
+    document.body.classList.toggle('tablet-layout', layoutInfo.isTablet);
+    document.body.classList.toggle('desktop-layout', layoutInfo.isDesktop);
+});
 
 export default ColumnManager;

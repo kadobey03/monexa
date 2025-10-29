@@ -35,7 +35,7 @@ class LeadsExport implements FromQuery, WithHeadings, WithMapping, WithStyles, S
 
         // Apply filters
         if (!empty($this->filters['status'])) {
-            $query->where('lead_status_id', $this->filters['status']);
+            $query->where('lead_status', $this->filters['status']);
         }
 
         if (!empty($this->filters['assigned'])) {

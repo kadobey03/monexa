@@ -1,405 +1,729 @@
-<tr 
-    class="hover:bg-gray-50 dark:hover:bg-admin-700/50 transition-colors group"
-    :class="{ 'bg-blue-50 dark:bg-blue-900/20': selectedLeads.includes(lead.id) }"
-    x-data="{ showActions: false }"
-    @mouseenter="showActions = true"
-    @mouseleave="showActions = false"
->
+@props(['lead', 'statuses', 'agents'])
+
+<tr class="hover:bg-gray-50 dark:hover:bg-admin-800 transition-colors duration-200 border-b border-gray-200 dark:border-admin-700"
+    :class="{'bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500': selectedLeads.includes({{ $lead->id }})}">
+    
     <!-- Select Checkbox -->
-    <td class="px-6 py-4 whitespace-nowrap w-12">
+    <td class="px-6 py-4 whitespace-nowrap">
         <input 
             type="checkbox" 
-            :value="lead.id"
+            value="{{ $lead->id }}"
             x-model="selectedLeads"
-            class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            @change="updateSelectAllState"
+            class="lead-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500"
         >
     </td>
     
-    <!-- Dynamic Columns -->
-    <template x-for="column in visibleColumns" :key="column.key">
-        <td 
-            class="px-6 py-4 whitespace-nowrap text-sm"
-            :class="{
-                'sticky left-12 z-10 bg-inherit': column.pinned,
-                'font-medium text-gray-900 dark:text-white': column.key === 'name',
-                'text-gray-500 dark:text-gray-400': column.key !== 'name' && column.key !== 'actions'
-            }"
-            :style="column.width ? `width: ${column.width}px; min-width: ${column.width}px;` : ''"
-        >
-            <!-- Name Column -->
-            <template x-if="column.key === 'name'">
-                <div>
-                    <div class="font-medium text-gray-900 dark:text-white" x-text="lead.name"></div>
-                    <div class="text-sm text-gray-500 dark:text-gray-400" x-text="lead.country || 'Belirtilmemiş'"></div>
-                </div>
-            </template>
-            
-            <!-- Email Column -->
-            <template x-if="column.key === 'email'">
-                <div>
-                    <a 
-                        :href="'mailto:' + lead.email" 
-                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-                        x-text="lead.email"
-                    ></a>
-                </div>
-            </template>
-            
-            <!-- Phone Column -->
-            <template x-if="column.key === 'phone'">
-                <div>
-                    <a 
-                        :href="'tel:' + lead.phone" 
-                        class="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 flex items-center"
-                    >
-                        <i data-lucide="phone" class="w-4 h-4 mr-1"></i>
-                        <span x-text="lead.phone"></span>
-                    </a>
-                </div>
-            </template>
-            
-            <!-- Status Column with Dropdown -->
-            <template x-if="column.key === 'lead_status_id'">
-                <div x-data="statusDropdown(lead)" class="relative">
-                    <button 
-                        @click="toggleDropdown()"
-                        class="inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full cursor-pointer hover:opacity-80 transition-opacity"
-                        :style="`background-color: ${currentStatus?.color || '#6B7280'}; color: white;`"
-                    >
-                        <span x-text="currentStatus?.display_name || 'Belirlenmemiş'"></span>
-                        <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
-                    </button>
-                    
-                    <div 
-                        x-show="isOpen" 
-                        @click.away="isOpen = false"
-                        x-transition:enter="transition ease-out duration-100"
-                        x-transition:enter-start="transform opacity-0 scale-95"
-                        x-transition:enter-end="transform opacity-100 scale-100"
-                        class="absolute z-20 mt-1 w-48 bg-white dark:bg-admin-800 rounded-md shadow-lg border border-gray-200 dark:border-admin-700 py-1"
-                        style="display: none;"
-                    >
-                        <template x-for="status in availableStatuses" :key="status.id">
-                            <button 
-                                @click="updateStatus(status)"
-                                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors"
-                                :class="{ 'bg-blue-50 dark:bg-blue-900/20': status.id === lead.lead_status_id }"
-                            >
-                                <span 
-                                    class="inline-block w-3 h-3 rounded-full mr-2"
-                                    :style="`background-color: ${status.color}`"
-                                ></span>
-                                <span x-text="status.display_name"></span>
-                            </button>
-                        </template>
-                    </div>
-                </div>
-            </template>
-            
-            <!-- Assignment Column with Dropdown -->
-            <template x-if="column.key === 'assign_to'">
-                <div x-data="assignmentDropdown(lead)" class="relative">
-                    <button 
-                        @click="toggleDropdown()"
-                        class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors cursor-pointer min-w-[120px]"
-                    >
-                        <template x-if="currentAdmin">
-                            <div class="flex items-center space-x-2">
-                                <div 
-                                    class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-medium"
-                                    x-text="getInitials(currentAdmin.name)"
-                                ></div>
-                                <div class="flex-1 text-left">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-white" x-text="currentAdmin.name"></div>
-                                    <div class="text-xs text-gray-500 dark:text-gray-400">Admin</div>
-                                </div>
-                            </div>
-                        </template>
-                        <template x-if="!currentAdmin">
-                            <div class="text-sm text-gray-500 dark:text-gray-400">Atanmamış</div>
-                        </template>
-                        <i data-lucide="chevron-down" class="w-3 h-3 opacity-50"></i>
-                    </button>
-                    
-                    <div 
-                        x-show="isOpen" 
-                        @click.away="isOpen = false"
-                        x-transition:enter="transition ease-out duration-100"
-                        x-transition:enter-start="transform opacity-0 scale-95"
-                        x-transition:enter-end="transform opacity-100 scale-100"
-                        class="absolute z-20 mt-1 w-64 bg-white dark:bg-admin-800 rounded-md shadow-lg border border-gray-200 dark:border-admin-700 py-1"
-                        style="display: none;"
-                    >
-                        <button 
-                            @click="updateAssignment(null)"
-                            class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors"
-                            :class="{ 'bg-blue-50 dark:bg-blue-900/20': !lead.assign_to }"
-                        >
-                            <span class="text-gray-500 dark:text-gray-400">Atanmamış</span>
-                        </button>
-                        
-                        <template x-for="admin in availableAdmins" :key="admin.id">
-                            <button 
-                                @click="updateAssignment(admin)"
-                                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors"
-                                :class="{ 'bg-blue-50 dark:bg-blue-900/20': admin.id === lead.assign_to }"
-                            >
-                                <div class="flex items-center space-x-2">
-                                    <div 
-                                        class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-medium"
-                                        x-text="getInitials(admin.name)"
-                                    ></div>
-                                    <div>
-                                        <div class="font-medium" x-text="admin.name"></div>
-                                        <div class="text-xs text-gray-500 dark:text-gray-400" x-text="admin.role || 'Admin'"></div>
-                                    </div>
-                                </div>
-                            </button>
-                        </template>
-                    </div>
-                </div>
-            </template>
-            
-            <!-- Lead Score Column -->
-            <template x-if="column.key === 'lead_score'">
-                <div class="flex items-center space-x-2">
-                    <div class="w-12 bg-gray-200 dark:bg-admin-600 rounded-full h-2">
-                        <div 
-                            class="h-2 rounded-full transition-all duration-300"
-                            :class="{
-                                'bg-red-500': lead.lead_score < 30,
-                                'bg-yellow-500': lead.lead_score >= 30 && lead.lead_score < 70,
-                                'bg-green-500': lead.lead_score >= 70
-                            }"
-                            :style="`width: ${lead.lead_score || 0}%`"
-                        ></div>
-                    </div>
-                    <span 
-                        class="text-xs font-medium"
-                        :class="{
-                            'text-red-600 dark:text-red-400': lead.lead_score < 30,
-                            'text-yellow-600 dark:text-yellow-400': lead.lead_score >= 30 && lead.lead_score < 70,
-                            'text-green-600 dark:text-green-400': lead.lead_score >= 70
-                        }"
-                        x-text="lead.lead_score || 0"
-                    ></span>
-                </div>
-            </template>
-            
-            <!-- Lead Priority Column -->
-            <template x-if="column.key === 'lead_priority'">
-                <span 
-                    class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full"
-                    :class="{
-                        'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300': lead.lead_priority === 'low',
-                        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300': lead.lead_priority === 'medium',
-                        'bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-300': lead.lead_priority === 'high',
-                        'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300': lead.lead_priority === 'urgent'
-                    }"
-                >
-                    <span x-text="getPriorityLabel(lead.lead_priority)"></span>
+    <!-- ÜLKE Column -->
+    <td class="px-6 py-4">
+        @if($lead->country)
+            <div class="flex items-center">
+                <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-gray-500"></i>
+                <span class="text-sm font-medium text-gray-900 dark:text-white">
+                    {{ $lead->country }}
                 </span>
-            </template>
-            
-            <!-- Created At Column -->
-            <template x-if="column.key === 'created_at'">
-                <div>
-                    <div x-text="formatDate(lead.created_at)"></div>
-                    <div class="text-xs text-gray-400" x-text="getTimeAgo(lead.created_at)"></div>
+            </div>
+        @else
+            <span class="text-sm text-gray-500">Belirtilmedi</span>
+        @endif
+    </td>
+    
+    <!-- AD SOYAD Column -->
+    <td class="px-6 py-4">
+        <div class="flex items-center">
+            <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mr-3">
+                <span class="text-white text-sm font-semibold">
+                    {{ substr($lead->name ?? 'N', 0, 1) }}
+                </span>
+            </div>
+            <div>
+                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                    {{ $lead->name ?? 'Belirtilmedi' }}
                 </div>
-            </template>
+            </div>
+        </div>
+    </td>
+    
+    <!-- TELEFON NUMARASI Column -->
+    <td class="px-6 py-4">
+        @if($lead->phone)
+            <div class="flex items-center">
+                <i data-lucide="phone" class="w-4 h-4 mr-2 text-gray-500"></i>
+                <a href="tel:{{ $lead->phone }}" 
+                   class="text-sm text-green-600 hover:text-green-800 hover:underline transition-colors">
+                    {{ $lead->phone }}
+                </a>
+            </div>
+        @else
+            <span class="text-sm text-gray-500">Belirtilmedi</span>
+        @endif
+    </td>
+    
+    <!-- EMAİL Column -->
+    <td class="px-6 py-4">
+        @if($lead->email)
+            <div class="flex items-center">
+                <i data-lucide="mail" class="w-4 h-4 mr-2 text-gray-500"></i>
+                <a href="mailto:{{ $lead->email }}" 
+                   class="text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors">
+                    {{ $lead->email }}
+                </a>
+            </div>
+        @else
+            <span class="text-sm text-gray-500">Belirtilmedi</span>
+        @endif
+    </td>
+    
+    <!-- ASSIGNED Column -->
+    <td class="px-6 py-4 whitespace-nowrap">
+        <div class="relative" x-data="{ 
+            showAssignedDropdown: false, 
+            leadId: {{ $lead->id }}, 
+            currentAssigned: {{ $lead->assign_to ?? 'null' }} 
+        }">
+            <!-- Assigned Display/Button -->
+            <button 
+                @click="showAssignedDropdown = !showAssignedDropdown"
+                @click.outside="showAssignedDropdown = false"
+                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium border transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                :class="{
+                    'bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100': currentAssigned,
+                    'bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100': !currentAssigned
+                }"
+            >
+                @if($lead->assignedAgent)
+                    <div class="w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mr-2">
+                        <span class="text-white text-xs font-semibold">
+                            {{ substr($lead->assignedAgent->name, 0, 1) }}
+                        </span>
+                    </div>
+                    <span>{{ $lead->assignedAgent->name }}</span>
+                @else
+                    <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i>
+                    <span>Atanmadı</span>
+                @endif
+                <i data-lucide="chevron-down" class="ml-2 w-4 h-4 transition-transform duration-200" :class="{'rotate-180': showAssignedDropdown}"></i>
+            </button>
             
-            <!-- Actions Column -->
-            <template x-if="column.key === 'actions'">
-                <div class="flex items-center space-x-2" :class="{ 'opacity-100': showActions, 'opacity-0 group-hover:opacity-100': !showActions }">
-                    <button 
-                        @click="viewLead(lead.id)"
-                        class="p-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 rounded"
-                        title="Görüntüle"
-                    >
-                        <i data-lucide="eye" class="w-4 h-4"></i>
-                    </button>
-                    
-                    @can('edit_leads')
-                    <button 
-                        @click="editLead(lead.id)"
-                        class="p-1 text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 rounded"
-                        title="Düzenle"
-                    >
-                        <i data-lucide="edit" class="w-4 h-4"></i>
-                    </button>
-                    @endcan
-                    
-                    @can('call_leads')
-                    <a 
-                        :href="'tel:' + lead.phone" 
-                        class="p-1 text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 rounded"
-                        title="Ara"
-                    >
-                        <i data-lucide="phone" class="w-4 h-4"></i>
-                    </a>
-                    @endcan
-                    
-                    <button 
-                        @click="showLeadMenu = !showLeadMenu"
-                        class="p-1 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300 rounded relative"
-                        title="Daha fazla"
-                        x-data="{ showLeadMenu: false }"
-                    >
-                        <i data-lucide="more-horizontal" class="w-4 h-4"></i>
-                        
-                        <div 
-                            x-show="showLeadMenu" 
-                            @click.away="showLeadMenu = false"
-                            class="absolute right-0 top-8 w-48 bg-white dark:bg-admin-800 rounded-md shadow-lg border border-gray-200 dark:border-admin-700 py-1 z-30"
-                            style="display: none;"
-                        >
-                            <button 
-                                @click="addNote(lead.id); showLeadMenu = false"
-                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700"
-                            >
-                                <i data-lucide="file-text" class="w-4 h-4 mr-2 inline"></i>
-                                Not Ekle
-                            </button>
-                            
-                            <button 
-                                @click="scheduleFollowUp(lead.id); showLeadMenu = false"
-                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700"
-                            >
-                                <i data-lucide="calendar" class="w-4 h-4 mr-2 inline"></i>
-                                Takip Planla
-                            </button>
-                        </div>
-                    </button>
-                </div>
-            </template>
+            <!-- Dropdown Menu -->
+            <div x-show="showAssignedDropdown" 
+                 x-transition:enter="transition ease-out duration-100"
+                 x-transition:enter-start="transform opacity-0 scale-95"
+                 x-transition:enter-end="transform opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-75"
+                 x-transition:leave-start="transform opacity-100 scale-100"
+                 x-transition:leave-end="transform opacity-0 scale-95"
+                 class="absolute z-50 mt-1 w-56 bg-white dark:bg-admin-800 rounded-lg shadow-lg border border-gray-200 dark:border-admin-600 py-1"
+                 style="display: none;">
+                
+                <!-- Unassign Option -->
+                <button @click="updateLeadAssignment(leadId, null, 'Atanmadı'); showAssignedDropdown = false"
+                        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors"
+                        :class="{'bg-blue-50 dark:bg-blue-900/30 text-blue-600': currentAssigned === null}">
+                    <i data-lucide="user-x" class="w-4 h-4 mr-3 text-red-500"></i>
+                    Atamayı Kaldır
+                </button>
+                
+                <hr class="my-1 border-gray-200 dark:border-admin-600">
+                
+                @foreach($agents as $agent)
+                <button @click="updateLeadAssignment(leadId, {{ $agent->id }}, '{{ $agent->name }}'); showAssignedDropdown = false"
+                        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors"
+                        :class="{'bg-blue-50 dark:bg-blue-900/30 text-blue-600': currentAssigned === {{ $agent->id }}}">
+                    <div class="w-6 h-6 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mr-3">
+                        <span class="text-white text-xs font-semibold">
+                            {{ substr($agent->name, 0, 1) }}
+                        </span>
+                    </div>
+                    <div>
+                        <div class="font-medium">{{ $agent->name }}</div>
+                        <div class="text-xs text-gray-500">{{ $agent->email }}</div>
+                    </div>
+                </button>
+                @endforeach
+            </div>
+        </div>
+    </td>
+    
+    <!-- STATUS Column -->
+    <td class="px-6 py-4 whitespace-nowrap">
+        <div class="relative" x-data="{ 
+            showStatusDropdown: false, 
+            leadId: {{ $lead->id }}, 
+            currentStatus: {{ $lead->lead_status_id ?? 'null' }},
+            currentStatusName: '{{ $lead->leadStatus->name ?? 'Atanmadı' }}'
+        }">
+            <!-- Status Display/Button -->
+            <button 
+                @click="showStatusDropdown = !showStatusDropdown"
+                @click.outside="showStatusDropdown = false"
+                class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                :class="{
+                    @if($lead->leadStatus)
+                        @switch($lead->leadStatus->name)
+                            @case('New')
+                                'bg-green-100 text-green-800 border border-green-200 hover:bg-green-200 focus:ring-green-500': true
+                                @break
+                            @case('Contacted') 
+                                'bg-blue-100 text-blue-800 border border-blue-200 hover:bg-blue-200 focus:ring-blue-500': true
+                                @break
+                            @case('Qualified')
+                                'bg-yellow-100 text-yellow-800 border border-yellow-200 hover:bg-yellow-200 focus:ring-yellow-500': true
+                                @break
+                            @case('Converted')
+                                'bg-emerald-100 text-emerald-800 border border-emerald-200 hover:bg-emerald-200 focus:ring-emerald-500': true
+                                @break
+                            @case('Lost')
+                                'bg-red-100 text-red-800 border border-red-200 hover:bg-red-200 focus:ring-red-500': true
+                                @break
+                            @default
+                                'bg-gray-100 text-gray-800 border border-gray-200 hover:bg-gray-200 focus:ring-gray-500': true
+                        @endswitch
+                    @else
+                        'bg-gray-100 text-gray-800 border border-gray-200 hover:bg-gray-200 focus:ring-gray-500': true
+                    @endif
+                }"
+            >
+                <span x-text="currentStatusName">{{ $lead->leadStatus->name ?? 'Atanmadı' }}</span>
+                <i data-lucide="chevron-down" class="ml-2 w-4 h-4 transition-transform duration-200" :class="{'rotate-180': showStatusDropdown}"></i>
+            </button>
             
-            <!-- Default Column Content -->
-            <template x-if="!['name', 'email', 'phone', 'lead_status_id', 'assign_to', 'lead_score', 'lead_priority', 'created_at', 'actions'].includes(column.key)">
-                <span x-text="getColumnValue(lead, column.key)"></span>
-            </template>
-        </td>
-    </template>
+            <!-- Dropdown Menu -->
+            <div x-show="showStatusDropdown" 
+                 x-transition:enter="transition ease-out duration-100"
+                 x-transition:enter-start="transform opacity-0 scale-95"
+                 x-transition:enter-end="transform opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-75"
+                 x-transition:leave-start="transform opacity-100 scale-100"
+                 x-transition:leave-end="transform opacity-0 scale-95"
+                 class="absolute z-50 mt-1 w-48 bg-white dark:bg-admin-800 rounded-lg shadow-lg border border-gray-200 dark:border-admin-600 py-1"
+                 style="display: none;">
+                @foreach($statuses as $status)
+                <button @click="updateLeadStatus(leadId, {{ $status->id }}, '{{ $status->name }}'); showStatusDropdown = false; currentStatus = {{ $status->id }}; currentStatusName = '{{ $status->name }}'"
+                        class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors"
+                        :class="{'bg-blue-50 dark:bg-blue-900/30 text-blue-600': currentStatus === {{ $status->id }}}">
+                    <div class="w-3 h-3 rounded-full mr-3"
+                         @class([
+                             'bg-green-500' => strtolower($status->name) === 'new' || strtolower($status->name) === 'yeni',
+                             'bg-blue-500' => strtolower($status->name) === 'contacted' || strtolower($status->name) === 'iletişimde',
+                             'bg-yellow-500' => strtolower($status->name) === 'qualified' || strtolower($status->name) === 'nitelikli',
+                             'bg-emerald-500' => strtolower($status->name) === 'converted' || strtolower($status->name) === 'dönüştürülmüş',
+                             'bg-red-500' => strtolower($status->name) === 'lost' || strtolower($status->name) === 'kayıp',
+                             'bg-gray-400' => !in_array(strtolower($status->name), ['new', 'yeni', 'contacted', 'iletişimde', 'qualified', 'nitelikli', 'converted', 'dönüştürülmüş', 'lost', 'kayıp'])
+                         ])></div>
+                    {{ $status->name }}
+                </button>
+                @endforeach
+            </div>
+        </div>
+    </td>
+    
+    <!-- VARONKA Column -->
+    <td class="px-6 py-4">
+        <div class="text-sm font-medium text-gray-900 dark:text-white">
+            {{ $lead->organization ?? 'Belirtilmedi' }}
+        </div>
+    </td>
+    
+    <!-- KAYNAK Column -->
+    <td class="px-6 py-4 whitespace-nowrap">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
+              @class([
+                  'bg-purple-100 text-purple-800 border border-purple-200' => $lead->leadSource?->name === 'Website',
+                  'bg-indigo-100 text-indigo-800 border border-indigo-200' => $lead->leadSource?->name === 'Social Media',
+                  'bg-pink-100 text-pink-800 border border-pink-200' => $lead->leadSource?->name === 'Email Campaign',
+                  'bg-orange-100 text-orange-800 border border-orange-200' => $lead->leadSource?->name === 'Cold Call',
+                  'bg-teal-100 text-teal-800 border border-teal-200' => $lead->leadSource?->name === 'Referral',
+                  'bg-gray-100 text-gray-800 border border-gray-200' => !$lead->leadSource || !in_array($lead->leadSource->name, ['Website', 'Social Media', 'Email Campaign', 'Cold Call', 'Referral'])
+              ])>
+            @if($lead->leadSource)
+                <i data-lucide="{{ $lead->leadSource->name === 'Website' ? 'globe' : 
+                                 ($lead->leadSource->name === 'Social Media' ? 'users' :
+                                 ($lead->leadSource->name === 'Email Campaign' ? 'mail' :
+                                 ($lead->leadSource->name === 'Cold Call' ? 'phone' : 'user-plus'))) }}" 
+                   class="w-4 h-4 mr-2"></i>
+                {{ $lead->leadSource->name }}
+            @else
+                <i data-lucide="help-circle" class="w-4 h-4 mr-2"></i>
+                Belirtilmedi
+            @endif
+        </span>
+    </td>
+    
+    <!-- ŞİRKET Column -->
+    <td class="px-6 py-4">
+        <div class="text-sm font-medium text-gray-900 dark:text-white">
+            {{ $lead->company_name ?? 'Belirtilmedi' }}
+        </div>
+    </td>
 </tr>
 
-@pushOnce('scripts')
-<script>
-// Status dropdown functionality
-function statusDropdown(lead) {
-    return {
-        isOpen: false,
-        currentStatus: null,
-        availableStatuses: [],
-        
-        async init() {
-            await this.loadStatuses();
-            this.currentStatus = this.availableStatuses.find(s => s.id === lead.lead_status_id);
-        },
-        
-        toggleDropdown() {
-            this.isOpen = !this.isOpen;
-        },
-        
-        async loadStatuses() {
-            try {
-                const response = await fetch('/admin/dashboard/leads/statuses');
-                const data = await response.json();
-                if (data.success) {
-                    this.availableStatuses = data.data;
-                }
-            } catch (error) {
-                console.error('Failed to load statuses:', error);
-            }
-        },
-        
-        async updateStatus(status) {
-            try {
-                const response = await fetch(`/admin/dashboard/leads/${lead.id}/status`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        lead_status_id: status.id
-                    })
-                });
-                
-                const result = await response.json();
-                if (result.success) {
-                    this.currentStatus = status;
-                    lead.lead_status_id = status.id;
-                    this.isOpen = false;
-                } else {
-                    throw new Error(result.message || 'Status güncellenemedi');
-                }
-            } catch (error) {
-                console.error('Status update failed:', error);
-                alert('Status güncellenirken hata oluştu');
-            }
-        }
+@pushOnce('styles')
+<style>
+/* Modern Table Row Styling */
+.table-row-modern {
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.table-row-modern:hover {
+    background-color: rgba(59, 130, 246, 0.02);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table-row-modern.selected {
+    background-color: rgba(59, 130, 246, 0.05);
+    border-left: 4px solid #3b82f6;
+}
+
+/* Cell styling */
+.table-row-modern td {
+    padding: 1rem 1.5rem;
+    vertical-align: top;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Status dropdown styling */
+.status-dropdown {
+    position: relative;
+}
+
+.status-button {
+    transition: all 0.2s ease;
+    border-radius: 9999px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.status-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.status-button:focus {
+    outline: none;
+    ring: 2px;
+    ring-offset: 2px;
+}
+
+/* Source badges */
+.source-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    border: 1px solid;
+}
+
+/* Avatar styling */
+.avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: white;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+/* Contact info styling */
+.contact-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.contact-info:last-child {
+    margin-bottom: 0;
+}
+
+.contact-info i {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    color: #6b7280;
+}
+
+/* Assigned dropdown */
+.assigned-dropdown {
+    min-width: 14rem;
+}
+
+.assigned-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.assigned-button:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    position: absolute;
+    z-index: 50;
+    margin-top: 0.25rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    padding: 0.25rem 0;
+    max-height: 16rem;
+    overflow-y: auto;
+}
+
+.dropdown-menu button {
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: #374151;
+    transition: background-color 0.15s ease;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-menu button:hover {
+    background-color: #f3f4f6;
+}
+
+.dropdown-menu button.active {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+/* Checkbox styling */
+.lead-checkbox {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d1d5db;
+    accent-color: #3b82f6;
+}
+
+.lead-checkbox:checked {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .table-row-modern td {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+    }
+    
+    .status-button, .assigned-button {
+        padding: 0.375rem 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    .avatar {
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 0.75rem;
+    }
+    
+    .dropdown-menu {
+        min-width: 12rem;
     }
 }
 
-// Assignment dropdown functionality
-function assignmentDropdown(lead) {
-    return {
-        isOpen: false,
-        currentAdmin: null,
-        availableAdmins: [],
+/* Dark mode enhancements */
+.dark .table-row-modern {
+    border-bottom-color: #374151;
+}
+
+.dark .table-row-modern:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.dark .dropdown-menu {
+    background: #1f2937;
+    border-color: #374151;
+}
+
+.dark .dropdown-menu button {
+    color: #d1d5db;
+}
+
+.dark .dropdown-menu button:hover {
+    background-color: #374151;
+}
+
+.dark .dropdown-menu button.active {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-menu {
+    animation: fadeIn 0.15s ease-out;
+}
+
+/* Focus states */
+.status-button:focus,
+.assigned-button:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: #3b82f6;
+    ring-offset: 2px;
+}
+
+/* Success/Error states */
+.status-updated {
+    background-color: #ecfdf5 !important;
+    border-color: #10b981 !important;
+}
+
+.status-error {
+    background-color: #fef2f2 !important;
+    border-color: #ef4444 !important;
+}
+</style>
+@endPushOnce
+
+@pushOnce('scripts')
+<script>
+// Enhanced table row functionality
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Individual checkbox handling
+    function setupRowCheckboxes() {
+        const checkboxes = document.querySelectorAll('.lead-checkbox');
         
-        async init() {
-            await this.loadAdmins();
-            this.currentAdmin = this.availableAdmins.find(a => a.id === lead.assign_to);
-        },
-        
-        toggleDropdown() {
-            this.isOpen = !this.isOpen;
-        },
-        
-        async loadAdmins() {
-            try {
-                const response = await fetch('/admin/dashboard/leads/assignable-admins');
-                const data = await response.json();
-                if (data.success) {
-                    this.availableAdmins = data.data.admins;
-                }
-            } catch (error) {
-                console.error('Failed to load admins:', error);
-            }
-        },
-        
-        async updateAssignment(admin) {
-            try {
-                const response = await fetch(`/admin/dashboard/leads/${lead.id}/assignment`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        assigned_to_admin_id: admin?.id || null
-                    })
-                });
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const row = this.closest('tr');
+                const leadId = this.value;
                 
-                const result = await response.json();
-                if (result.success) {
-                    this.currentAdmin = admin;
-                    lead.assign_to = admin?.id || null;
-                    this.isOpen = false;
+                if (this.checked) {
+                    row.classList.add('selected', 'bg-blue-50', 'border-l-4', 'border-blue-500');
                 } else {
-                    throw new Error(result.message || 'Atama güncellenemedi');
+                    row.classList.remove('selected', 'bg-blue-50', 'border-l-4', 'border-blue-500');
                 }
-            } catch (error) {
-                console.error('Assignment update failed:', error);
-                alert('Atama güncellenirken hata oluştu');
-            }
-        },
+                
+                updateBulkActionUI();
+                updateSelectAllState();
+            });
+        });
+    }
+    
+    // Update select all state
+    function updateSelectAllState() {
+        const allCheckboxes = document.querySelectorAll('.lead-checkbox');
+        const checkedCheckboxes = document.querySelectorAll('.lead-checkbox:checked');
+        const selectAllCheckbox = document.querySelector('thead input[type="checkbox"]');
         
-        getInitials(name) {
-            return name.split(' ').map(n => n[0]).join('').toUpperCase();
+        if (selectAllCheckbox) {
+            if (checkedCheckboxes.length === 0) {
+                selectAllCheckbox.indeterminate = false;
+                selectAllCheckbox.checked = false;
+            } else if (checkedCheckboxes.length === allCheckboxes.length) {
+                selectAllCheckbox.indeterminate = false;
+                selectAllCheckbox.checked = true;
+            } else {
+                selectAllCheckbox.indeterminate = true;
+                selectAllCheckbox.checked = false;
+            }
         }
     }
+    
+    // Bulk action UI update
+    function updateBulkActionUI() {
+        const checkedCount = document.querySelectorAll('.lead-checkbox:checked').length;
+        const bulkActions = document.querySelector('#bulk-actions');
+        const selectedCounter = document.querySelector('#selected-count');
+        
+        if (bulkActions) {
+            if (checkedCount > 0) {
+                bulkActions.classList.remove('hidden');
+                if (selectedCounter) {
+                    selectedCounter.textContent = checkedCount;
+                }
+            } else {
+                bulkActions.classList.add('hidden');
+            }
+        }
+    }
+    
+    // Initialize
+    setupRowCheckboxes();
+    
+    // Make functions globally available for Alpine.js
+    window.updateBulkActionUI = updateBulkActionUI;
+    window.updateSelectAllState = updateSelectAllState;
+});
+
+// Enhanced status update function with status name support
+async function updateLeadStatus(leadId, statusId, statusName) {
+    try {
+        const response = await fetch(`/admin/leads/${leadId}/status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({ status_id: statusId })
+        });
+        
+        if (response.ok) {
+            // Update button styling based on status name
+            const button = document.querySelector(`[x-data*="leadId: ${leadId}"] .status-button`);
+            if (button) {
+                // Remove all status classes
+                button.classList.remove(
+                    'bg-green-100', 'text-green-800', 'border-green-200', 'hover:bg-green-200', 'focus:ring-green-500',
+                    'bg-blue-100', 'text-blue-800', 'border-blue-200', 'hover:bg-blue-200', 'focus:ring-blue-500',
+                    'bg-yellow-100', 'text-yellow-800', 'border-yellow-200', 'hover:bg-yellow-200', 'focus:ring-yellow-500',
+                    'bg-emerald-100', 'text-emerald-800', 'border-emerald-200', 'hover:bg-emerald-200', 'focus:ring-emerald-500',
+                    'bg-red-100', 'text-red-800', 'border-red-200', 'hover:bg-red-200', 'focus:ring-red-500',
+                    'bg-gray-100', 'text-gray-800', 'border-gray-200', 'hover:bg-gray-200', 'focus:ring-gray-500'
+                );
+                
+                // Add appropriate classes based on status name
+                const statusLower = statusName.toLowerCase();
+                if (statusLower === 'new' || statusLower === 'yeni') {
+                    button.classList.add('bg-green-100', 'text-green-800', 'border', 'border-green-200', 'hover:bg-green-200', 'focus:ring-green-500');
+                } else if (statusLower === 'contacted' || statusLower === 'iletişimde') {
+                    button.classList.add('bg-blue-100', 'text-blue-800', 'border', 'border-blue-200', 'hover:bg-blue-200', 'focus:ring-blue-500');
+                } else if (statusLower === 'qualified' || statusLower === 'nitelikli') {
+                    button.classList.add('bg-yellow-100', 'text-yellow-800', 'border', 'border-yellow-200', 'hover:bg-yellow-200', 'focus:ring-yellow-500');
+                } else if (statusLower === 'converted' || statusLower === 'dönüştürülmüş') {
+                    button.classList.add('bg-emerald-100', 'text-emerald-800', 'border', 'border-emerald-200', 'hover:bg-emerald-200', 'focus:ring-emerald-500');
+                } else if (statusLower === 'lost' || statusLower === 'kayıp') {
+                    button.classList.add('bg-red-100', 'text-red-800', 'border', 'border-red-200', 'hover:bg-red-200', 'focus:ring-red-500');
+                } else {
+                    button.classList.add('bg-gray-100', 'text-gray-800', 'border', 'border-gray-200', 'hover:bg-gray-200', 'focus:ring-gray-500');
+                }
+                
+                // Show success animation
+                showStatusUpdateSuccess(button);
+            }
+            
+            // Show notification
+            showNotification('Status başarıyla güncellendi', 'success');
+        } else {
+            throw new Error('Status güncellenemedi');
+        }
+    } catch (error) {
+        console.error('Status güncelleme hatası:', error);
+        showNotification('Status güncellenirken hata oluştu', 'error');
+    }
+}
+
+// Enhanced assignment update function  
+async function updateLeadAssignment(leadId, agentId, agentName) {
+    try {
+        const response = await fetch(`/admin/leads/${leadId}/assign`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({ agent_id: agentId })
+        });
+        
+        if (response.ok) {
+            // Update the UI
+            const button = document.querySelector(`[x-data*="leadId: ${leadId}"] .assigned-button`);
+            if (button) {
+                showAssignmentUpdateSuccess(button);
+            }
+            
+            // Show notification
+            showNotification('Atama başarıyla güncellendi', 'success');
+        } else {
+            throw new Error('Atama güncellenemedi');
+        }
+    } catch (error) {
+        console.error('Atama güncelleme hatası:', error);
+        showNotification('Atama güncellenirken hata oluştu', 'error');
+    }
+}
+
+// Status update success animation
+function showStatusUpdateSuccess(button) {
+    button.classList.add('status-updated');
+    setTimeout(() => {
+        button.classList.remove('status-updated');
+    }, 1500);
+}
+
+// Assignment update success animation
+function showAssignmentUpdateSuccess(button) {
+    button.classList.add('status-updated');
+    setTimeout(() => {
+        button.classList.remove('status-updated');
+    }, 1500);
+}
+
+// Notification system
+function showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
+        type === 'success' ? 'bg-green-500 text-white' :
+        type === 'error' ? 'bg-red-500 text-white' :
+        type === 'warning' ? 'bg-yellow-500 text-white' :
+        'bg-blue-500 text-white'
+    }`;
+    
+    notification.innerHTML = `
+        <div class="flex items-center">
+            <i data-lucide="${type === 'success' ? 'check-circle' : 
+                             type === 'error' ? 'x-circle' :
+                             type === 'warning' ? 'alert-triangle' : 'info'}" 
+               class="w-5 h-5 mr-2"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Initialize Lucide icons for the notification
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
 }
 </script>
 @endPushOnce

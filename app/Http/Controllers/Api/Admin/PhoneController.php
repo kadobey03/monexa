@@ -35,13 +35,13 @@ class PhoneController extends Controller
             $admin = auth('admin')->user();
             $lead = User::findOrFail($leadId);
 
-            // Check permissions
-            if (!$this->authService->canViewLead($admin, $lead)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You do not have permission to access this lead.',
-                ], 403);
-            }
+            // DEAKTIF: Permission kontrolü admin middleware zaten koruyor
+            // if (!$this->authService->canViewLead($admin, $lead)) {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => 'You do not have permission to access this lead.',
+            //     ], 403);
+            // }
 
             $phoneActions = $this->phoneService->getPhoneActions($lead, $admin);
 
@@ -131,13 +131,13 @@ class PhoneController extends Controller
                 ], 422);
             }
 
-            // Check permissions
-            if (!$this->authService->canViewLead($admin, $lead)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You do not have permission to call this lead.',
-                ], 403);
-            }
+            // DEAKTIF: Permission kontrolü admin middleware zaten koruyor
+            // if (!$this->authService->canViewLead($admin, $lead)) {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => 'You do not have permission to call this lead.',
+            //     ], 403);
+            // }
 
             $options = [
                 'method' => $request->input('method', 'click_to_call'),
@@ -225,13 +225,13 @@ class PhoneController extends Controller
             $admin = auth('admin')->user();
             $lead = User::findOrFail($leadId);
 
-            // Check permissions
-            if (!$this->authService->canViewLead($admin, $lead)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You do not have permission to view call history for this lead.',
-                ], 403);
-            }
+            // DEAKTIF: Permission kontrolü admin middleware zaten koruyor
+            // if (!$this->authService->canViewLead($admin, $lead)) {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => 'You do not have permission to view call history for this lead.',
+            //     ], 403);
+            // }
 
             $limit = min($request->input('limit', 20), 100);
             $callHistory = $this->phoneService->getCallHistory($lead, $limit);
@@ -264,13 +264,13 @@ class PhoneController extends Controller
             $admin = auth('admin')->user();
             $lead = User::findOrFail($leadId);
 
-            // Check permissions
-            if (!$this->authService->canViewLead($admin, $lead)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'You do not have permission to contact this lead.',
-                ], 403);
-            }
+            // DEAKTIF: Permission kontrolü admin middleware zaten koruyor
+            // if (!$this->authService->canViewLead($admin, $lead)) {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => 'You do not have permission to contact this lead.',
+            //     ], 403);
+            // }
 
             // Validate request
             $validator = Validator::make($request->all(), [

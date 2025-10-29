@@ -531,7 +531,10 @@ class HomeController extends Controller
         return view('admin.leads')
             ->with(array(
                 'admin' => Admin::orderBy('id', 'desc')->get(),
-                'users' => User::orderby('id', 'desc')->where('cstatus', NULL)->get(),
+                'users' => User::select('*', 'company_name', 'organization')
+                    ->orderby('id', 'desc')
+                    ->where('cstatus', NULL)
+                    ->get(),
                 'title' => 'Manage New Registered Clients',
             ));
     }

@@ -179,6 +179,14 @@ class LeadAuthorizationService
      */
     public function canViewLead(Admin $admin, User $lead): bool
     {
+        // DÜZELTME: Admin kullanıcılar (admin=1) için bypass
+        if (isset($admin->admin) && $admin->admin == 1) {
+            return true;
+        }
+        if (isset($admin->role) && $admin->role === 'admin') {
+            return true;
+        }
+        
         if ($admin->isSuperAdmin()) {
             return true;
         }
@@ -194,6 +202,14 @@ class LeadAuthorizationService
      */
     public function canEditLead(Admin $admin, User $lead): bool
     {
+        // DÜZELTME: Admin kullanıcılar (admin=1) için bypass
+        if (isset($admin->admin) && $admin->admin == 1) {
+            return true;
+        }
+        if (isset($admin->role) && $admin->role === 'admin') {
+            return true;
+        }
+        
         // Same permissions as viewing for now, but could be more restrictive
         return $this->canViewLead($admin, $lead);
     }
@@ -203,6 +219,14 @@ class LeadAuthorizationService
      */
     public function canAssignLead(Admin $admin, User $lead): bool
     {
+        // DÜZELTME: Admin kullanıcılar (admin=1) için bypass
+        if (isset($admin->admin) && $admin->admin == 1) {
+            return true;
+        }
+        if (isset($admin->role) && $admin->role === 'admin') {
+            return true;
+        }
+        
         $roleName = $admin->role?->name;
 
         switch ($roleName) {
@@ -232,6 +256,14 @@ class LeadAuthorizationService
      */
     public function canDeleteLead(Admin $admin, User $lead): bool
     {
+        // DÜZELTME: Admin kullanıcılar (admin=1) için bypass
+        if (isset($admin->admin) && $admin->admin == 1) {
+            return true;
+        }
+        if (isset($admin->role) && $admin->role === 'admin') {
+            return true;
+        }
+        
         $roleName = $admin->role?->name;
 
         switch ($roleName) {

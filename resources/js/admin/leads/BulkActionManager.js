@@ -145,7 +145,7 @@ class BulkActionManager {
                 },
                 body: JSON.stringify({
                     lead_ids: leadIds,
-                    status: status
+                    status_name: status
                 })
             });
             

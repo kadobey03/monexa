@@ -1255,4 +1255,29 @@ class LeadsController extends Controller
             ], 500);
         }
     }
+    /**
+     * Get lead statuses for dropdown
+     * GET /admin/dashboard/leads/api/statuses
+     */
+    public function getStatuses(): JsonResponse
+    {
+        try {
+            $statuses = LeadStatus::active()->get(['id', 'name', 'display_name', 'color']);
+            
+            return response()->json([
+                'success' => true,
+                'data' => $statuses
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch lead statuses', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Lead statusleri getirilemedi'
+            ], 500);
+        }
+    }
 }

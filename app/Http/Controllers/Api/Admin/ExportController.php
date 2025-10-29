@@ -390,13 +390,15 @@ class ExportController extends Controller
                 $query = $this->authService->applyFilters($query, $filters);
             }
 
-            // Apply search if provided
+            // Apply search if provided - company_name ve organization dahil
             $search = $request->input('search');
             if (!empty($search)) {
                 $query = $query->where(function($q) use ($search) {
                     $q->where('name', 'LIKE', "%{$search}%")
                       ->orWhere('email', 'LIKE', "%{$search}%")
-                      ->orWhere('phone', 'LIKE', "%{$search}%");
+                      ->orWhere('phone', 'LIKE', "%{$search}%")
+                      ->orWhere('company_name', 'LIKE', "%{$search}%")
+                      ->orWhere('organization', 'LIKE', "%{$search}%");
                 });
             }
 
@@ -578,6 +580,8 @@ class ExportController extends Controller
                 'last_contact_date' => 'Last Contact',
                 'next_follow_up_date' => 'Next Follow Up',
                 'lead_notes' => 'Notes',
+                'company_name' => 'Company Name',
+                'organization' => 'Organization',
                 'company' => 'Company',
                 'position' => 'Position',
                 'website' => 'Website',

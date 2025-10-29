@@ -39,9 +39,9 @@ Route::middleware(['web'])->prefix('admin')->name('api.admin.')->group(function 
         Route::get('/options', 'App\Http\Controllers\Api\Admin\LeadController@options')->name('options');
         Route::get('/search', 'App\Http\Controllers\Api\Admin\LeadController@search')->name('search');
         Route::get('/{lead}', 'App\Http\Controllers\Api\Admin\LeadController@show')->name('show');
-        Route::put('/{lead}', 'App\Http\Controllers\Api\Admin\LeadController@update')->name('update');
-        Route::delete('/{lead}', 'App\Http\Controllers\Api\Admin\LeadController@destroy')->name('destroy');
-        Route::post('/bulk', 'App\Http\Controllers\Api\Admin\LeadController@bulkOperations')->name('bulk');
+        Route::patch('/{id}', 'App\Http\Controllers\Api\Admin\LeadController@update')->name('update');
+        Route::delete('/{id}', 'App\Http\Controllers\Api\Admin\LeadController@destroy')->name('destroy');
+        Route::post('/bulk', 'App\Http\Controllers\Api\Admin\LeadController@bulk')->name('bulk');
         
         // Table Configuration Routes
         Route::prefix('table')->name('table.')->group(function () {

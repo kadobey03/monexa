@@ -47,7 +47,7 @@ class LeadImportService
         'lead_score' => ['score', 'lead_score', 'rating'],
         'lead_priority' => ['priority', 'lead_priority', 'importance'],
         'assign_to' => ['assigned_to', 'assign_to', 'agent', 'sales_rep'],
-        'lead_status_id' => ['status', 'lead_status', 'stage'],
+        'lead_status' => ['status', 'lead_status', 'stage'],
         'next_follow_up_date' => ['follow_up', 'next_follow_up', 'callback_date'],
         'created_at' => ['created', 'created_at', 'date_created', 'registration_date'],
         'company' => ['company', 'company_name', 'organization'],
@@ -508,8 +508,8 @@ class LeadImportService
                     $leadData['assign_to'] = $options['default_assignee'];
                 }
                 
-                if (empty($leadData['lead_status_id']) && !empty($options['default_status'])) {
-                    $leadData['lead_status_id'] = $options['default_status'];
+                if (empty($leadData['lead_status']) && !empty($options['default_status'])) {
+                    $leadData['lead_status'] = $options['default_status'];
                 }
 
                 if (empty($leadData['lead_source']) && !empty($options['default_source'])) {

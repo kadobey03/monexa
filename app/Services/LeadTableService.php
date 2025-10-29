@@ -76,7 +76,7 @@ class LeadTableService
             'pinnable' => false,
         ],
         'lead_status' => [
-            'key' => 'lead_status_id',
+            'key' => 'lead_status',
             'label' => 'Status',
             'sortable' => true,
             'searchable' => false,
@@ -364,7 +364,7 @@ class LeadTableService
         // Execute query with relationships
         $results = $query->with([
             'assignedAdmin:id,firstName,lastName',
-            'leadStatus:id,name,color',
+            'leadStatus:id,name,display_name,color',
         ])->paginate($perPage, ['*'], 'page', $page);
         
         Log::info('🪲 TABLE QUERY DEBUG - Final results', [
@@ -438,7 +438,7 @@ class LeadTableService
                            ->select('users.*');
 
             case 'lead_status':
-                return $query->leftJoin('lead_statuses', 'users.lead_status_id', '=', 'lead_statuses.id')
+                return $query->leftJoin('lead_statuses', 'users.lead_status', '=', 'lead_statuses.name')
                            ->orderBy('lead_statuses.name', $direction)
                            ->select('users.*');
 
@@ -587,8 +587,8 @@ class LeadTableService
                 ->get()
                 ->map(function($status) {
                     return [
-                        'value' => $status->id,
-                        'label' => $status->name,
+                        'value' => $status->name,
+                        'label' => $status->display_name ?: $status->name,
                         'color' => $status->color,
                     ];
                 })

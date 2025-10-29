@@ -1,7 +1,7 @@
 <thead class="bg-gray-50 dark:bg-admin-900">
     <tr>
         <!-- Select All Checkbox -->
-        <th class="px-6 py-3 text-left w-12">
+        <th class="px-6 py-4 text-left w-12">
             <input 
                 type="checkbox" 
                 x-model="selectAll"
@@ -10,184 +10,493 @@
             >
         </th>
         
-        <!-- Dynamic Columns -->
-        <template x-for="column in visibleColumns" :key="column.key">
-            <th 
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider relative group"
-                :class="{
-                    'cursor-pointer select-none': column.sortable,
-                    'bg-blue-50 dark:bg-blue-900/20': sortColumn === column.key,
-                    'sticky left-0 z-10': column.pinned
-                }"
-                :style="column.width ? `width: ${column.width}px; min-width: ${column.width}px;` : ''"
-                @click="column.sortable && toggleSort(column.key)"
-            >
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <!-- Column Label -->
-                        <span x-text="column.label"></span>
-                        
-                        <!-- Sort Icons -->
-                        <div x-show="column.sortable" class="flex flex-col">
-                            <i 
-                                data-lucide="chevron-up" 
-                                class="w-3 h-3"
-                                :class="{
-                                    'text-blue-600': sortColumn === column.key && sortDirection === 'asc',
-                                    'text-gray-400': sortColumn !== column.key || sortDirection !== 'asc'
-                                }"
-                            ></i>
-                            <i 
-                                data-lucide="chevron-down" 
-                                class="w-3 h-3 -mt-1"
-                                :class="{
-                                    'text-blue-600': sortColumn === column.key && sortDirection === 'desc',
-                                    'text-gray-400': sortColumn !== column.key || sortDirection !== 'desc'
-                                }"
-                            ></i>
-                        </div>
-                    </div>
-                    
-                    <!-- Column Actions -->
-                    <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <!-- Pin/Unpin Button -->
-                        <button 
-                            x-show="column.pinnable"
-                            @click.stop="toggleColumnPin(column.key)"
-                            :title="column.pinned ? 'Sabitlemeyi Kaldır' : 'Sabitle'"
-                            class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded"
-                        >
-                            <i 
-                                data-lucide="pin" 
-                                class="w-3 h-3"
-                                :class="{
-                                    'text-blue-600': column.pinned,
-                                    'text-gray-400': !column.pinned
-                                }"
-                            ></i>
-                        </button>
-                        
-                        <!-- Column Settings -->
-                        <div class="relative" x-data="{ open: false }">
-                            <button 
-                                @click.stop="open = !open"
-                                class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded"
-                            >
-                                <i data-lucide="more-vertical" class="w-3 h-3"></i>
-                            </button>
-                            
-                            <!-- Dropdown Menu -->
-                            <div 
-                                x-show="open" 
-                                @click.away="open = false"
-                                x-transition:enter="transition ease-out duration-100"
-                                x-transition:enter-start="transform opacity-0 scale-95"
-                                x-transition:enter-end="transform opacity-100 scale-100"
-                                x-transition:leave="transition ease-in duration-75"
-                                x-transition:leave-start="transform opacity-100 scale-100"
-                                x-transition:leave-end="transform opacity-0 scale-95"
-                                class="absolute right-0 top-8 w-48 bg-white dark:bg-admin-800 rounded-md shadow-lg border border-gray-200 dark:border-admin-700 py-1 z-20"
-                                style="display: none;"
-                            >
-                                <button 
-                                    @click="hideColumn(column.key); open = false"
-                                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700"
-                                >
-                                    <i data-lucide="eye-off" class="w-4 h-4 mr-2 inline"></i>
-                                    Sütunu Gizle
-                                </button>
-                                
-                                <template x-if="column.key !== 'actions'">
-                                    <button 
-                                        @click="resetColumnWidth(column.key); open = false"
-                                        class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700"
-                                    >
-                                        <i data-lucide="maximize" class="w-4 h-4 mr-2 inline"></i>
-                                        Genişliği Sıfırla
-                                    </button>
-                                </template>
-                            </div>
-                        </div>
+        <!-- ÜLKE Column -->
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            @click="toggleSort('country')">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span>ÜLKE</span>
+                    <div class="flex flex-col">
+                        <i 
+                            data-lucide="chevron-up" 
+                            class="w-3 h-3"
+                            :class="{
+                                'text-blue-600': sortColumn === 'country' && sortDirection === 'asc',
+                                'text-gray-400': sortColumn !== 'country' || sortDirection !== 'asc'
+                            }"
+                        ></i>
+                        <i 
+                            data-lucide="chevron-down" 
+                            class="w-3 h-3 -mt-1"
+                            :class="{
+                                'text-blue-600': sortColumn === 'country' && sortDirection === 'desc',
+                                'text-gray-400': sortColumn !== 'country' || sortDirection !== 'desc'
+                            }"
+                        ></i>
                     </div>
                 </div>
-                
-                <!-- Resize Handle -->
-                <div 
-                    x-show="column.resizable && column.key !== 'actions'"
-                    class="absolute right-0 top-0 w-1 h-full cursor-col-resize bg-transparent hover:bg-blue-500 resize-handle"
-                    @mousedown="startResize($event, column.key)"
-                ></div>
-            </th>
-        </template>
+            </div>
+        </th>
+        
+        <!-- AD SOYAD Column -->
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            @click="toggleSort('name')">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span>AD SOYAD</span>
+                    <div class="flex flex-col">
+                        <i 
+                            data-lucide="chevron-up" 
+                            class="w-3 h-3"
+                            :class="{
+                                'text-blue-600': sortColumn === 'name' && sortDirection === 'asc',
+                                'text-gray-400': sortColumn !== 'name' || sortDirection !== 'asc'
+                            }"
+                        ></i>
+                        <i 
+                            data-lucide="chevron-down" 
+                            class="w-3 h-3 -mt-1"
+                            :class="{
+                                'text-blue-600': sortColumn === 'name' && sortDirection === 'desc',
+                                'text-gray-400': sortColumn !== 'name' || sortDirection !== 'desc'
+                            }"
+                        ></i>
+                    </div>
+                </div>
+            </div>
+        </th>
+        
+        <!-- TELEFON NUMARASI Column -->
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            @click="toggleSort('phone')">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span>TELEFON NUMARASI</span>
+                    <div class="flex flex-col">
+                        <i 
+                            data-lucide="chevron-up" 
+                            class="w-3 h-3"
+                            :class="{
+                                'text-blue-600': sortColumn === 'phone' && sortDirection === 'asc',
+                                'text-gray-400': sortColumn !== 'phone' || sortDirection !== 'asc'
+                            }"
+                        ></i>
+                        <i 
+                            data-lucide="chevron-down" 
+                            class="w-3 h-3 -mt-1"
+                            :class="{
+                                'text-blue-600': sortColumn === 'phone' && sortDirection === 'desc',
+                                'text-gray-400': sortColumn !== 'phone' || sortDirection !== 'desc'
+                            }"
+                        ></i>
+                    </div>
+                </div>
+            </div>
+        </th>
+        
+        <!-- EMAİL Column -->
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            @click="toggleSort('email')">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span>EMAİL</span>
+                    <div class="flex flex-col">
+                        <i 
+                            data-lucide="chevron-up" 
+                            class="w-3 h-3"
+                            :class="{
+                                'text-blue-600': sortColumn === 'email' && sortDirection === 'asc',
+                                'text-gray-400': sortColumn !== 'email' || sortDirection !== 'asc'
+                            }"
+                        ></i>
+                        <i 
+                            data-lucide="chevron-down" 
+                            class="w-3 h-3 -mt-1"
+                            :class="{
+                                'text-blue-600': sortColumn === 'email' && sortDirection === 'desc',
+                                'text-gray-400': sortColumn !== 'email' || sortDirection !== 'desc'
+                            }"
+                        ></i>
+                    </div>
+                </div>
+            </div>
+        </th>
+        
+        <!-- ASSIGNED Column -->
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            @click="toggleSort('assign_to')">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span>ASSIGNED</span>
+                    <div class="flex flex-col">
+                        <i 
+                            data-lucide="chevron-up" 
+                            class="w-3 h-3"
+                            :class="{
+                                'text-blue-600': sortColumn === 'assign_to' && sortDirection === 'asc',
+                                'text-gray-400': sortColumn !== 'assign_to' || sortDirection !== 'asc'
+                            }"
+                        ></i>
+                        <i 
+                            data-lucide="chevron-down" 
+                            class="w-3 h-3 -mt-1"
+                            :class="{
+                                'text-blue-600': sortColumn === 'assign_to' && sortDirection === 'desc',
+                                'text-gray-400': sortColumn !== 'assign_to' || sortDirection !== 'desc'
+                            }"
+                        ></i>
+                    </div>
+                </div>
+            </div>
+        </th>
+        
+        <!-- STATUS Column -->
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            @click="toggleSort('lead_status_id')">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span>STATUS</span>
+                    <div class="flex flex-col">
+                        <i 
+                            data-lucide="chevron-up" 
+                            class="w-3 h-3"
+                            :class="{
+                                'text-blue-600': sortColumn === 'lead_status_id' && sortDirection === 'asc',
+                                'text-gray-400': sortColumn !== 'lead_status_id' || sortDirection !== 'asc'
+                            }"
+                        ></i>
+                        <i 
+                            data-lucide="chevron-down" 
+                            class="w-3 h-3 -mt-1"
+                            :class="{
+                                'text-blue-600': sortColumn === 'lead_status_id' && sortDirection === 'desc',
+                                'text-gray-400': sortColumn !== 'lead_status_id' || sortDirection !== 'desc'
+                            }"
+                        ></i>
+                    </div>
+                </div>
+            </div>
+        </th>
+        
+        <!-- VARONKA Column -->
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            @click="toggleSort('organization')">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span>VARONKA</span>
+                    <div class="flex flex-col">
+                        <i 
+                            data-lucide="chevron-up" 
+                            class="w-3 h-3"
+                            :class="{
+                                'text-blue-600': sortColumn === 'organization' && sortDirection === 'asc',
+                                'text-gray-400': sortColumn !== 'organization' || sortDirection !== 'asc'
+                            }"
+                        ></i>
+                        <i 
+                            data-lucide="chevron-down" 
+                            class="w-3 h-3 -mt-1"
+                            :class="{
+                                'text-blue-600': sortColumn === 'organization' && sortDirection === 'desc',
+                                'text-gray-400': sortColumn !== 'organization' || sortDirection !== 'desc'
+                            }"
+                        ></i>
+                    </div>
+                </div>
+            </div>
+        </th>
+        
+        <!-- KAYNAK Column -->
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            @click="toggleSort('lead_source_id')">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span>KAYNAK</span>
+                    <div class="flex flex-col">
+                        <i 
+                            data-lucide="chevron-up" 
+                            class="w-3 h-3"
+                            :class="{
+                                'text-blue-600': sortColumn === 'lead_source_id' && sortDirection === 'asc',
+                                'text-gray-400': sortColumn !== 'lead_source_id' || sortDirection !== 'asc'
+                            }"
+                        ></i>
+                        <i 
+                            data-lucide="chevron-down" 
+                            class="w-3 h-3 -mt-1"
+                            :class="{
+                                'text-blue-600': sortColumn === 'lead_source_id' && sortDirection === 'desc',
+                                'text-gray-400': sortColumn !== 'lead_source_id' || sortDirection !== 'desc'
+                            }"
+                        ></i>
+                    </div>
+                </div>
+            </div>
+        </th>
+        
+        <!-- ŞİRKET Column -->
+        <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+            @click="toggleSort('company_name')">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span>ŞİRKET</span>
+                    <div class="flex flex-col">
+                        <i 
+                            data-lucide="chevron-up" 
+                            class="w-3 h-3"
+                            :class="{
+                                'text-blue-600': sortColumn === 'company_name' && sortDirection === 'asc',
+                                'text-gray-400': sortColumn !== 'company_name' || sortDirection !== 'asc'
+                            }"
+                        ></i>
+                        <i 
+                            data-lucide="chevron-down" 
+                            class="w-3 h-3 -mt-1"
+                            :class="{
+                                'text-blue-600': sortColumn === 'company_name' && sortDirection === 'desc',
+                                'text-gray-400': sortColumn !== 'company_name' || sortDirection !== 'desc'
+                            }"
+                        ></i>
+                    </div>
+                </div>
+            </div>
+        </th>
     </tr>
 </thead>
 
-@pushOnce('scripts')
-<script>
-// Column resize functionality
-function startResize(event, columnKey) {
-    event.preventDefault();
-    
-    const startX = event.clientX;
-    const column = document.querySelector(`[data-column="${columnKey}"]`);
-    const startWidth = column.offsetWidth;
-    
-    function doResize(e) {
-        const newWidth = Math.max(80, startWidth + (e.clientX - startX));
-        
-        // Update column width
-        column.style.width = newWidth + 'px';
-        column.style.minWidth = newWidth + 'px';
-        
-        // Dispatch resize event
-        window.dispatchEvent(new CustomEvent('column-resized', {
-            detail: { columnKey, newWidth }
-        }));
-    }
-    
-    function stopResize() {
-        document.removeEventListener('mousemove', doResize);
-        document.removeEventListener('mouseup', stopResize);
-    }
-    
-    document.addEventListener('mousemove', doResize);
-    document.addEventListener('mouseup', stopResize);
-}
-</script>
-@endPushOnce
-
 @pushOnce('styles')
 <style>
-.resize-handle {
-    transition: background-color 0.2s;
+/* Modern Table Header Styling */
+.table-header-modern {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 2px solid #e2e8f0;
 }
 
-.resize-handle:hover {
-    background-color: #3b82f6;
-    width: 2px;
+.table-header-modern th {
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 1rem 1.5rem;
+    position: relative;
+    transition: all 0.2s ease;
 }
 
-/* Pinned columns styling */
-th.sticky {
-    position: sticky;
-    background-color: inherit;
-    z-index: 10;
-}
-
-/* Sort transition */
-th[data-sortable="true"]:hover {
+.table-header-modern th:hover {
     background-color: rgba(59, 130, 246, 0.05);
+    transform: translateY(-1px);
 }
 
-/* Column drag and drop */
-.column-dragging {
-    opacity: 0.5;
-    transform: rotate(5deg);
+.table-header-modern th.sortable {
+    cursor: pointer;
+    user-select: none;
 }
 
-.column-drop-target {
+.table-header-modern th.sorted-asc,
+.table-header-modern th.sorted-desc {
     background-color: rgba(59, 130, 246, 0.1);
-    border-left: 2px solid #3b82f6;
+    color: #1d4ed8;
+}
+
+/* Sort indicators */
+.sort-indicator {
+    display: inline-flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+}
+
+.sort-indicator i {
+    transition: color 0.2s ease;
+}
+
+/* Hover effects */
+.table-header-modern th:hover .sort-indicator i {
+    color: #64748b;
+}
+
+/* Active sort styling */
+.table-header-modern th[data-sorted="asc"] .sort-up,
+.table-header-modern th[data-sorted="desc"] .sort-down {
+    color: #2563eb;
+}
+
+/* Column specific styling with adjusted widths */
+.table-header-modern .checkbox-column {
+    width: 60px;
+    min-width: 60px;
+}
+
+.table-header-modern .country-column {
+    width: 120px;
+    min-width: 120px;
+}
+
+.table-header-modern .name-column {
+    width: 200px;
+    min-width: 200px;
+}
+
+.table-header-modern .phone-column {
+    width: 180px;
+    min-width: 180px;
+}
+
+.table-header-modern .email-column {
+    width: 220px;
+    min-width: 220px;
+}
+
+.table-header-modern .assigned-column {
+    width: 160px;
+    min-width: 160px;
+}
+
+.table-header-modern .status-column {
+    width: 140px;
+    min-width: 140px;
+}
+
+.table-header-modern .varonka-column {
+    width: 180px;
+    min-width: 180px;
+}
+
+.table-header-modern .source-column {
+    width: 120px;
+    min-width: 120px;
+}
+
+.table-header-modern .company-column {
+    width: 180px;
+    min-width: 180px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .table-header-modern th {
+        padding: 0.75rem 1rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Dark mode enhancements */
+.dark .table-header-modern {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-bottom-color: #475569;
+}
+
+.dark .table-header-modern th:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Focus states */
+.table-header-modern input[type="checkbox"]:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: #3b82f6;
+    ring-offset: 2px;
 }
 </style>
+@endPushOnce
+
+@pushOnce('scripts')
+<script>
+// Modern table header functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Add mobile labels for responsive design
+    const headers = document.querySelectorAll('.table-header-modern th');
+    const mobileLabels = ['', 'Ülke', 'Ad Soyad', 'Telefon', 'Email', 'Assigned', 'Status', 'Varonka', 'Kaynak', 'Şirket'];
+    
+    headers.forEach((header, index) => {
+        if (mobileLabels[index]) {
+            header.setAttribute('data-mobile-label', mobileLabels[index]);
+        }
+    });
+    
+    // Enhanced sort functionality
+    function updateSortIndicators(sortColumn, sortDirection) {
+        // Reset all headers
+        headers.forEach(header => {
+            header.removeAttribute('data-sorted');
+            const icons = header.querySelectorAll('i');
+            icons.forEach(icon => {
+                icon.classList.remove('text-blue-600');
+                icon.classList.add('text-gray-400');
+            });
+        });
+        
+        // Update active header
+        const activeHeader = document.querySelector(`th[data-column="${sortColumn}"]`);
+        if (activeHeader) {
+            activeHeader.setAttribute('data-sorted', sortDirection);
+            
+            const icon = activeHeader.querySelector(sortDirection === 'asc' ? 
+                'i[data-lucide="chevron-up"]' : 
+                'i[data-lucide="chevron-down"]'
+            );
+            
+            if (icon) {
+                icon.classList.remove('text-gray-400');
+                icon.classList.add('text-blue-600');
+            }
+        }
+    }
+    
+    // Listen for sort changes
+    window.addEventListener('sort-changed', function(event) {
+        const { column, direction } = event.detail;
+        updateSortIndicators(column, direction);
+    });
+});
+
+// Select all functionality enhancement
+function toggleAllLeads(checked) {
+    const checkboxes = document.querySelectorAll('.lead-checkbox');
+    const tbody = document.querySelector('#leads-table-body');
+    
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = checked;
+        
+        // Add visual feedback
+        const row = checkbox.closest('tr');
+        if (row) {
+            if (checked) {
+                row.classList.add('bg-blue-50', 'border-l-4', 'border-blue-500');
+            } else {
+                row.classList.remove('bg-blue-50', 'border-l-4', 'border-blue-500');
+            }
+        }
+    });
+    
+    // Update bulk action UI
+    const selectedCount = checked ? checkboxes.length : 0;
+    updateBulkActionUI(selectedCount);
+}
+
+function updateBulkActionUI(count) {
+    const bulkActions = document.querySelector('#bulk-actions');
+    const selectedCounter = document.querySelector('#selected-count');
+    
+    if (bulkActions) {
+        if (count > 0) {
+            bulkActions.classList.remove('hidden');
+            if (selectedCounter) {
+                selectedCounter.textContent = count;
+            }
+        } else {
+            bulkActions.classList.add('hidden');
+        }
+    }
+}
+
+// Enhanced sorting with animation
+function toggleSort(column) {
+    const event = new CustomEvent('sort-requested', {
+        detail: { column: column },
+        bubbles: true
+    });
+    
+    document.dispatchEvent(event);
+}
+</script>
 @endPushOnce

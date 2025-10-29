@@ -27,7 +27,7 @@ class LeadStatus extends Model
      */
     public function users()
     {
-        return $this->hasMany(User::class, 'lead_status_id');
+        return $this->hasMany(User::class, 'lead_status', 'name');
     }
 
     /**

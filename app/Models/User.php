@@ -46,7 +46,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name', 'l_name', 'email', 'phone', 'country', 'password', 'ref_by', 'status', 'taxtype ','taxamount ', 'currency', 'notify','username', 'email_verified_at', 'account_bal', 'demo_balance', 'demo_mode', 'roi', 'bonus', 'ref_bonus',
-        'lead_status_id', 'lead_notes', 'last_contact_date', 'next_follow_up_date', 'lead_source', 'lead_source_id', 'lead_tags', 'estimated_value', 'lead_score', 'preferred_contact_method', 'contact_history', 'assign_to'
+        'lead_status', 'lead_notes', 'last_contact_date', 'next_follow_up_date', 'lead_source', 'lead_source_id', 'lead_tags', 'estimated_value', 'lead_score', 'preferred_contact_method', 'contact_history', 'assign_to',
+        'company_name', 'organization'
     ];
 
     /**
@@ -119,7 +120,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function leadStatus()
     {
-        return $this->belongsTo(LeadStatus::class, 'lead_status_id');
+        return $this->belongsTo(LeadStatus::class, 'lead_status', 'name');
     }
 
     /**
@@ -131,11 +132,19 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get lead_status_id with default fallback to 1
+     * Get lead_status with default fallback to 'new'
      */
-    public function getLeadStatusIdAttribute($value)
+    public function getLeadStatusDisplayAttribute()
     {
-        return $value ?: 1;
+        return $this->lead_status ?: 'new';
+    }
+    
+    /**
+     * Get lead status name for display
+     */
+    public function getLeadStatusNameAttribute()
+    {
+        return $this->leadStatus?->display_name ?? $this->leadStatus?->name ?? 'Bilinmeyen';
     }
 
     /**
@@ -286,9 +295,9 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get leads by status
      */
-    public static function leadsByStatus($statusId)
+    public static function leadsByStatus($statusName)
     {
-        return self::where('lead_status_id', $statusId)
+        return self::where('lead_status', $statusName)
                    ->where(function($query) {
                        $query->whereNull('cstatus')
                              ->orWhere('cstatus', '!=', 'Customer');
@@ -349,7 +358,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'assigned_by_admin_id' => $assignedBy?->id,
             'assignment_type' => $previousAdminId ? LeadAssignmentHistory::TYPE_REASSIGNMENT : LeadAssignmentHistory::TYPE_INITIAL,
             'reason' => $reason,
-            'lead_status_at_assignment' => $this->lead_status_id,
+            'lead_status_at_assignment' => $this->lead_status,
             'lead_score_at_assignment' => $this->lead_score,
             'estimated_value_at_assignment' => $this->estimated_value,
             'lead_tags_at_assignment' => $this->lead_tags,
@@ -501,7 +510,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getLeadStatusName(): string
     {
-        return $this->leadStatus?->name ?? 'Unknown';
+        return $this->leadStatus?->display_name ?? $this->leadStatus?->name ?? 'Bilinmeyen';
     }
 
     /**
