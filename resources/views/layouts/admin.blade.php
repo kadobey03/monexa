@@ -1,14 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr" x-data="{ 
-    darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches),
-    sidebarOpen: false,
-    sidebarCollapsed: localStorage.getItem('sidebar-collapsed') === 'true' 
-}" 
-:class="{ 'dark': darkMode }"
-x-init="
-    $watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'));
-    $watch('sidebarCollapsed', val => localStorage.setItem('sidebar-collapsed', val.toString()));
-">
+<html lang="tr" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +18,7 @@ x-init="
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <!-- Lucide Icons - Local fallback to avoid CDN issues -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" onerror="console.warn('Lucide CDN failed, using local fallback')"></script>
@@ -35,14 +26,11 @@ x-init="
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     
-    <!-- Alpine.js CDN -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
-        [x-cloak] { display: none !important; }
+        .hidden-initial { display: none !important; }
         
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -131,7 +119,7 @@ x-init="
     @stack('styles')
     @yield('styles')
 </head>
-<body class="bg-gray-50 dark:bg-admin-900 text-gray-900 dark:text-gray-100 antialiased" x-cloak>
+<body class="bg-gray-50 dark:bg-admin-900 text-gray-900 dark:text-gray-100 antialiased hidden-initial" id="bodyElement">
     
     <!-- Loading Screen -->
     <div id="loading-screen" class="fixed inset-0 bg-white dark:bg-admin-900 z-50 flex items-center justify-center">
@@ -145,28 +133,16 @@ x-init="
     <div class="min-h-screen flex">
         
         <!-- Sidebar -->
-        <aside class="sidebar-transition fixed inset-y-0 left-0 z-50 bg-white dark:bg-admin-800 shadow-elegant dark:shadow-glass-dark border-r border-admin-200 dark:border-admin-700"
-               :class="{
-                   'w-64': !sidebarCollapsed,
-                   'w-20': sidebarCollapsed,
-                   'translate-x-0': sidebarOpen || window.innerWidth >= 1024,
-                   '-translate-x-full': !sidebarOpen && window.innerWidth < 1024
-               }"
-               x-show="sidebarOpen || window.innerWidth >= 1024"
-               x-transition:enter="transition ease-out duration-300"
-               x-transition:enter-start="-translate-x-full"
-               x-transition:enter-end="translate-x-0"
-               x-transition:leave="transition ease-in duration-200"
-               x-transition:leave-start="translate-x-0"
-               x-transition:leave-end="-translate-x-full">
+        <aside class="sidebar-transition fixed inset-y-0 left-0 z-50 bg-white dark:bg-admin-800 shadow-elegant dark:shadow-glass-dark border-r border-admin-200 dark:border-admin-700 w-64 translate-x-0"
+               id="sidebar">
             
             <!-- Sidebar Header -->
             <div class="h-20 flex items-center justify-between px-6 border-b border-admin-200 dark:border-admin-700 bg-gradient-to-r from-primary-600 to-primary-700">
-                <div class="flex items-center space-x-3" :class="{ 'justify-center w-full': sidebarCollapsed }">
+                <div class="flex items-center space-x-3" id="sidebarHeader">
                     <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
                         <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
                     </div>
-                    <div x-show="!sidebarCollapsed" x-transition class="text-white">
+                    <div class="text-white" id="sidebarHeaderText">
                         @php $adminUser = Auth::guard('admin')->user(); @endphp
                         <h2 class="text-lg font-bold truncate">{{ $adminUser?->firstName ?? 'Admin' }}</h2>
                         <p class="text-xs text-primary-100">{{ $adminUser?->type ?? 'User' }}</p>
@@ -175,32 +151,32 @@ x-init="
             </div>
 
             <!-- Navigation Menu -->
-            <nav class="sidebar-nav flex-1 overflow-y-auto py-6 px-4" style="height: calc(100vh - 180px);" x-data="{ openMenus: {} }">
+            <nav class="sidebar-nav flex-1 overflow-y-auto py-6 px-4" style="height: calc(100vh - 180px);" id="sidebarNav">
                 
                 <!-- Dashboard -->
                 <a href="{{ route('admin.dashboard') }}" 
                    class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-700 dark:hover:text-primary-300 transition-all duration-200 group {{ request()->routeIs('admin.dashboard') ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300' : '' }}"
-                   :title="sidebarCollapsed ? 'Kontrol Paneli' : ''">
-                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                    <span x-show="!sidebarCollapsed" x-transition class="font-medium">Kontrol Paneli</span>
+                   title="Kontrol Paneli">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Kontrol Paneli</span>
                 </a>
 
                 @php $adminUser = Auth::guard('admin')->user(); @endphp
                 @if ($adminUser && ($adminUser->type == 'Super Admin' || $adminUser->type == 'Admin'))
                 
                 <!-- Users Management -->
-                <div class="mt-4" x-data="{ open: false }">
-                    <button @click="open = !open" 
+                <div class="mt-4" id="usersMenu">
+                    <button onclick="toggleSubMenu('usersMenu')"
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700/50 transition-all duration-200 group"
-                            :title="sidebarCollapsed ? 'Kullanıcıları Yönet' : ''">
+                            title="Kullanıcıları Yönet">
                         <div class="flex items-center">
-                            <i data-lucide="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                            <span x-show="!sidebarCollapsed" x-transition class="font-medium">Kullanıcılar</span>
+                            <i data-lucide="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500"></i>
+                            <span class="font-medium">Kullanıcılar</span>
                         </div>
-                        <i data-lucide="chevron-down" x-show="!sidebarCollapsed" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="usersMenuChevron"></i>
                     </button>
                     
-                    <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
+                    <div class="mt-2 ml-12 space-y-1" id="usersMenuContent" style="display: none;">
                         <a href="{{ route('manageusers') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
                             Tüm Kullanıcılar
                         </a>
@@ -210,88 +186,88 @@ x-init="
                 <!-- Financial Management -->
                 <div class="mt-6">
                     <div class="px-4 mb-3">
-                        <span x-show="!sidebarCollapsed" class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">Finans Yönetimi</span>
+                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">Finans Yönetimi</span>
                     </div>
                     
                     <a href="{{ route('mdeposits') }}" 
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-200 group {{ request()->routeIs('mdeposits') ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300' : '' }}"
-                       :title="sidebarCollapsed ? 'Yatırımları Yönet' : ''">
-                        <i data-lucide="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">Yatırımlar</span>
+                       title="Yatırımları Yönet">
+                        <i data-lucide="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500"></i>
+                        <span class="font-medium">Yatırımlar</span>
                     </a>
 
                     <a href="{{ route('mwithdrawals') }}" 
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:text-rose-700 dark:hover:text-rose-300 transition-all duration-200 group {{ request()->routeIs('mwithdrawals') ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300' : '' }}"
-                       :title="sidebarCollapsed ? 'Çekimleri Yönet' : ''">
-                        <i data-lucide="trending-down" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-rose-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">Çekimler</span>
+                       title="Çekimleri Yönet">
+                        <i data-lucide="trending-down" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-rose-500"></i>
+                        <span class="font-medium">Çekimler</span>
                     </a>
                 </div>
 
                 <!-- Business Management -->
                 <div class="mt-6">
                     <div class="px-4 mb-3">
-                        <span x-show="!sidebarCollapsed" class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">İş Yönetimi</span>
+                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">İş Yönetimi</span>
                     </div>
 
                     <a href="{{ route('emailservices') }}"
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 group {{ request()->routeIs('emailservices') ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : '' }}"
-                       :title="sidebarCollapsed ? 'E-posta Servisleri' : ''">
-                        <i data-lucide="mail" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-blue-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">E-posta Servisleri</span>
+                       title="E-posta Servisleri">
+                        <i data-lucide="mail" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-blue-500"></i>
+                        <span class="font-medium">E-posta Servisleri</span>
                     </a>
 
                     <a href="{{ route('kyc') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-700 dark:hover:text-teal-300 transition-all duration-200 group {{ request()->routeIs('kyc') ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300' : '' }}"
-                       :title="sidebarCollapsed ? 'KYC Başvuruları' : ''">
-                        <i data-lucide="user-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-teal-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">KYC Başvuruları</span>
+                       title="KYC Başvuruları">
+                        <i data-lucide="user-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-teal-500"></i>
+                        <span class="font-medium">KYC Başvuruları</span>
                     </a>
 
                     <a href="{{ route('admin.trades.index') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-violet-50 dark:hover:bg-violet-900/20 hover:text-violet-700 dark:hover:text-violet-300 transition-all duration-200 group {{ request()->routeIs('admin.trades.index') ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300' : '' }}"
-                       :title="sidebarCollapsed ? 'İşlem Yönetimi' : ''">
-                        <i data-lucide="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-violet-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">İşlem Yönetimi</span>
+                       title="İşlem Yönetimi">
+                        <i data-lucide="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-violet-500"></i>
+                        <span class="font-medium">İşlem Yönetimi</span>
                     </a>
 
                     <a href="{{ route('admin.leads.index') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-700 dark:hover:text-amber-300 transition-all duration-200 group {{ request()->routeIs('admin.leads.index') ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300' : '' }}"
-                       :title="sidebarCollapsed ? 'Müşteri Adayları' : ''">
-                        <i data-lucide="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-amber-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">Müşteri Adayları</span>
+                       title="Müşteri Adayları">
+                        <i data-lucide="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-amber-500"></i>
+                        <span class="font-medium">Müşteri Adayları</span>
                     </a>
                 </div>
 
                 <!-- Content Management -->
                 <div class="mt-6">
                     <div class="px-4 mb-3">
-                        <span x-show="!sidebarCollapsed" class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">İçerik Yönetimi</span>
+                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">İçerik Yönetimi</span>
                     </div>
                     
                     <a href="{{ route('admin.phrases') }}"
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-pink-50 dark:hover:bg-pink-900/20 hover:text-pink-700 dark:hover:text-pink-300 transition-all duration-200 group {{ request()->routeIs('admin.phrases') ? 'bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300' : '' }}"
-                       :title="sidebarCollapsed ? 'Dil/Cümleler' : ''">
-                        <i data-lucide="languages" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-pink-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">Dil/Cümleler</span>
+                       title="Dil/Cümleler">
+                        <i data-lucide="languages" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-pink-500"></i>
+                        <span class="font-medium">Dil/Cümleler</span>
                     </a>
                 </div>
 
                 @endif
 
                 <!-- Tasks Management -->
-                <div class="mt-6" x-data="{ open: false }">
-                    <button @click="open = !open"
+                <div class="mt-6" id="tasksMenu">
+                    <button onclick="toggleSubMenu('tasksMenu')"
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-slate-50 dark:hover:bg-slate-900/20 hover:text-slate-700 dark:hover:text-slate-300 transition-all duration-200 group"
-                            :title="sidebarCollapsed ? 'Görevler' : ''">
+                            title="Görevler">
                         <div class="flex items-center">
-                            <i data-lucide="list-checks" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-slate-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                            <span x-show="!sidebarCollapsed" x-transition class="font-medium">Görevler</span>
+                            <i data-lucide="list-checks" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-slate-500"></i>
+                            <span class="font-medium">Görevler</span>
                         </div>
-                        <i data-lucide="chevron-down" x-show="!sidebarCollapsed" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="tasksMenuChevron"></i>
                     </button>
                     
-                    <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
+                    <div class="mt-2 ml-12 space-y-1" id="tasksMenuContent" style="display: none;">
                         @if ($adminUser && $adminUser->type == 'Super Admin')
                             <a href="{{ url('/admin/dashboard/task') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
                                 Görev Oluştur
@@ -310,25 +286,25 @@ x-init="
                 @if ($adminUser && $adminUser->type == 'Super Admin')
                 
                 <!-- Advanced Admin Management -->
-                <div class="mt-4" x-data="{ open: false }">
-                    <button @click="open = !open"
+                <div class="mt-4" id="managersMenu">
+                    <button onclick="toggleSubMenu('managersMenu')"
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300 transition-all duration-200 group {{ request()->routeIs('admin.managers.*') ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' : '' }}"
-                            :title="sidebarCollapsed ? 'Yöneticiler' : ''">
+                            title="Yöneticiler">
                         <div class="flex items-center">
-                            <i data-lucide="user-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                            <span x-show="!sidebarCollapsed" x-transition class="font-medium">Yöneticiler</span>
+                            <i data-lucide="user-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500"></i>
+                            <span class="font-medium">Yöneticiler</span>
                         </div>
-                        <div x-show="!sidebarCollapsed" class="flex items-center space-x-2">
+                        <div class="flex items-center space-x-2">
                             @php
                                 $totalManagers = \App\Models\Admin::where('type', '!=', 'Super Admin')->count();
                                 $activeManagers = \App\Models\Admin::where('type', '!=', 'Super Admin')->where('status', 1)->count();
                             @endphp
                             <span class="text-xs bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-2 py-0.5 rounded-full font-medium">{{ $activeManagers }}</span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="managersMenuChevron"></i>
                         </div>
                     </button>
                     
-                    <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
+                    <div class="mt-2 ml-12 space-y-1" id="managersMenuContent" style="display: none;">
                         <a href="{{ route('admin.managers.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.managers.index') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300' : '' }}">
                             <span>Yöneticiler Listesi</span>
@@ -359,25 +335,25 @@ x-init="
                 </div>
 
                 <!-- Permissions & Roles Management -->
-                <div class="mt-4" x-data="{ open: false }">
-                    <button @click="open = !open"
+                <div class="mt-4" id="permissionsMenu">
+                    <button onclick="toggleSubMenu('permissionsMenu')"
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-700 dark:hover:text-indigo-300 transition-all duration-200 group {{ request()->routeIs('admin.permissions.*') || request()->routeIs('admin.roles.*') ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300' : '' }}"
-                            :title="sidebarCollapsed ? 'Yetkiler & Roller' : ''">
+                            title="Yetkiler & Roller">
                         <div class="flex items-center">
-                            <i data-lucide="shield-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-indigo-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                            <span x-show="!sidebarCollapsed" x-transition class="font-medium">Yetkiler & Roller</span>
+                            <i data-lucide="shield-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-indigo-500"></i>
+                            <span class="font-medium">Yetkiler & Roller</span>
                         </div>
-                        <div x-show="!sidebarCollapsed" class="flex items-center space-x-2">
+                        <div class="flex items-center space-x-2">
                             @php
                                 $totalRoles = \App\Models\Role::count();
                                 $totalPermissions = \App\Models\Permission::count();
                             @endphp
                             <span class="text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 px-2 py-0.5 rounded-full font-medium">{{ $totalRoles }}/{{ $totalPermissions }}</span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="permissionsMenuChevron"></i>
                         </div>
                     </button>
                     
-                    <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
+                    <div class="mt-2 ml-12 space-y-1" id="permissionsMenuContent" style="display: none;">
                         <a href="{{ route('admin.permissions.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.permissions.index') ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300' : '' }}">
                             <span>İzinler Matrisi</span>
@@ -399,30 +375,30 @@ x-init="
                 <!-- Super Admin Settings -->
                 <div class="mt-8 pt-6 border-t border-admin-200 dark:border-admin-700">
                     <div class="px-4 mb-3">
-                        <span x-show="!sidebarCollapsed" class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">Sistem Yönetimi</span>
+                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">Sistem Yönetimi</span>
                     </div>
                     
                     <!-- System Settings Menu -->
                     <a href="{{ route('appsettingshow') }}"
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:text-orange-700 dark:hover:text-orange-300 transition-all duration-200 group {{ request()->routeIs('appsettingshow') ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300' : '' }}"
-                       :title="sidebarCollapsed ? 'Sistem Ayarları' : ''">
-                        <i data-lucide="server" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-orange-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                        <span x-show="!sidebarCollapsed" x-transition class="font-medium">Sistem Ayarları</span>
+                       title="Sistem Ayarları">
+                        <i data-lucide="server" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-orange-500"></i>
+                        <span class="font-medium">Sistem Ayarları</span>
                     </a>
 
                     <!-- Settings Dropdown -->
-                    <div class="mt-4" x-data="{ open: false }">
-                        <button @click="open = !open"
+                    <div class="mt-4" id="settingsMenu">
+                        <button onclick="toggleSubMenu('settingsMenu')"
                                 class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 transition-all duration-200 group"
-                                :title="sidebarCollapsed ? 'Diğer Ayarlar' : ''">
+                                title="Diğer Ayarlar">
                             <div class="flex items-center">
-                                <i data-lucide="settings" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-purple-500" :class="{ 'mr-0': sidebarCollapsed }"></i>
-                                <span x-show="!sidebarCollapsed" x-transition class="font-medium">Diğer Ayarlar</span>
+                                <i data-lucide="settings" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-purple-500"></i>
+                                <span class="font-medium">Diğer Ayarlar</span>
                             </div>
-                            <i data-lucide="chevron-down" x-show="!sidebarCollapsed" class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="settingsMenuChevron"></i>
                         </button>
                         
-                        <div x-show="open && !sidebarCollapsed" x-transition class="mt-2 ml-12 space-y-1">
+                        <div class="mt-2 ml-12 space-y-1" id="settingsMenuContent" style="display: none;">
                             <a href="{{ route('refsetshow') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
                                 Tavsiye/Bonus Ayarları
                             </a>
@@ -444,25 +420,25 @@ x-init="
 
             <!-- Sidebar Footer -->
             <div class="p-4 border-t border-admin-200 dark:border-admin-700">
-                <div class="flex items-center justify-center space-x-2" :class="{ 'flex-col space-x-0 space-y-2': sidebarCollapsed }">
+                <div class="flex items-center justify-center space-x-2" id="sidebarFooterControls">
                     <!-- Dark Mode Toggle -->
-                    <button @click="darkMode = !darkMode" 
+                    <button onclick="toggleDarkMode()"
                             class="p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors"
-                            :title="darkMode ? 'Açık Tema' : 'Koyu Tema'">
-                        <i data-lucide="sun" x-show="darkMode" class="w-4 h-4"></i>
-                        <i data-lucide="moon" x-show="!darkMode" class="w-4 h-4"></i>
+                            id="darkModeToggle" title="Tema Değiştir">
+                        <i data-lucide="sun" class="w-4 h-4" id="sunIcon"></i>
+                        <i data-lucide="moon" class="w-4 h-4" id="moonIcon" style="display: none;"></i>
                     </button>
                     
                     <!-- Collapse Toggle (Desktop Only) -->
-                    <button @click="sidebarCollapsed = !sidebarCollapsed"
+                    <button onclick="toggleSidebarCollapse()"
                             class="hidden lg:block p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors"
-                            :title="sidebarCollapsed ? 'Genişlet' : 'Daralt'">
-                        <i data-lucide="panel-left" x-show="!sidebarCollapsed" class="w-4 h-4"></i>
-                        <i data-lucide="panel-right" x-show="sidebarCollapsed" class="w-4 h-4"></i>
+                            id="collapseToggle" title="Daralt">
+                        <i data-lucide="panel-left" class="w-4 h-4" id="panelLeftIcon"></i>
+                        <i data-lucide="panel-right" class="w-4 h-4" id="panelRightIcon" style="display: none;"></i>
                     </button>
                 </div>
                 
-                <div x-show="!sidebarCollapsed" x-transition class="mt-3 text-center">
+                <div class="mt-3 text-center" id="sidebarFooterText">
                     <p class="text-xs text-admin-500">{{ isset($settings) ? $settings->site_name : 'Admin Panel' }}</p>
                     <p class="text-xs text-admin-400">© {{ date('Y') }}</p>
                 </div>
@@ -471,22 +447,12 @@ x-init="
         </aside>
 
         <!-- Mobile Sidebar Overlay -->
-        <div x-show="sidebarOpen && window.innerWidth < 1024" 
-             @click="sidebarOpen = false"
-             x-transition:enter="transition-opacity ease-linear duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition-opacity ease-linear duration-300"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"></div>
+        <div id="mobileOverlay" onclick="closeMobileSidebar()"
+             class="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden transition-opacity ease-linear duration-300 opacity-0"
+             style="display: none;"></div>
 
         <!-- Main Content Area -->
-        <div class="flex-1 flex flex-col overflow-hidden sidebar-transition"
-             :class="{
-                 'lg:ml-64': !sidebarCollapsed,
-                 'lg:ml-20': sidebarCollapsed
-             }">
+        <div class="flex-1 flex flex-col overflow-hidden sidebar-transition lg:ml-64" id="mainContent">
 
             <!-- Top Navigation -->
             <header class="h-20 bg-white dark:bg-admin-800 shadow-sm dark:shadow-glass-dark border-b border-admin-200 dark:border-admin-700 flex items-center justify-between px-6">
@@ -494,7 +460,7 @@ x-init="
                 <!-- Left Side -->
                 <div class="flex items-center space-x-4">
                     <!-- Mobile Menu Button -->
-                    <button @click="sidebarOpen = !sidebarOpen" 
+                    <button onclick="toggleMobileSidebar()"
                             class="lg:hidden p-2 rounded-lg text-admin-500 hover:text-admin-700 dark:hover:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
@@ -530,15 +496,15 @@ x-init="
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i data-lucide="search" class="w-4 h-4 text-admin-400"></i>
                         </div>
-                        <input type="text" 
+                        <input type="text"
                                placeholder="Kullanıcıları ara..."
                                class="admin-input w-64 pl-10 pr-4 py-2 text-sm"
-                               onclick="window.location.href='{{ route('manageusers') }}'">
+                               onclick="window.location.href='{{ route('manageusers') }}';">
                     </div>
 
                     <!-- Notifications -->
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" 
+                    <div class="relative" id="notificationsDropdown">
+                        <button onclick="toggleNotificationsDropdown()"
                                 class="relative p-2 rounded-lg text-admin-500 hover:text-admin-700 dark:hover:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                             <i data-lucide="bell" class="w-5 h-5"></i>
                             @php
@@ -552,8 +518,9 @@ x-init="
                         </button>
 
                         <!-- Notifications Dropdown -->
-                        <div x-show="open" @click.away="open = false"
-                             x-transition class="absolute right-0 mt-2 w-80 bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700 max-h-96 overflow-hidden z-50">
+                        <div id="notificationsDropdownContent"
+                             class="absolute right-0 mt-2 w-80 bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700 max-h-96 overflow-hidden z-50 transition opacity-0"
+                             style="display: none;">
                             
                             <div class="px-6 py-4 border-b border-admin-200 dark:border-admin-700 bg-admin-50 dark:bg-admin-900/50">
                                 <div class="flex items-center justify-between">
@@ -581,8 +548,8 @@ x-init="
                     </div>
 
                     <!-- Profile Dropdown -->
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open"
+                    <div class="relative" id="profileDropdown">
+                        <button onclick="toggleProfileDropdown()"
                                 class="flex items-center space-x-3 p-2 rounded-lg hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                             <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
                                 {{ $adminUser ? substr($adminUser->firstName, 0, 1) : 'A' }}
@@ -595,8 +562,9 @@ x-init="
                         </button>
 
                         <!-- Profile Dropdown Menu -->
-                        <div x-show="open" @click.away="open = false"
-                             x-transition class="absolute right-0 mt-2 w-56 bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700 z-50">
+                        <div id="profileDropdownContent"
+                             class="absolute right-0 mt-2 w-56 bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700 z-50 transition opacity-0"
+                             style="display: none;">
                             
                             <div class="p-4 border-b border-admin-200 dark:border-admin-700">
                                 <div class="flex items-center space-x-3">
@@ -643,7 +611,7 @@ x-init="
                     <x-notify-alert />
                 </div>
 
-                <!-- Page Content - Alpine.js enabled -->
+                <!-- Page Content -->
                 <div class="p-6">
                     @yield('content')
                 </div>
@@ -653,9 +621,26 @@ x-init="
 
     <!-- Scripts -->
     <script>
-        // Initialize Lucide Icons
+        // Admin Layout State Management
+        let adminState = {
+            darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches),
+            sidebarOpen: false,
+            sidebarCollapsed: localStorage.getItem('sidebar-collapsed') === 'true',
+            notificationsOpen: false,
+            profileOpen: false,
+            openMenus: {}
+        };
+
+        // Initialize admin layout
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Lucide Icons
             lucide.createIcons();
+            
+            // Apply initial theme
+            applyTheme();
+            
+            // Apply initial sidebar state
+            applySidebarState();
             
             // Hide loading screen
             const loadingScreen = document.getElementById('loading-screen');
@@ -664,23 +649,313 @@ x-init="
                     loadingScreen.style.opacity = '0';
                     setTimeout(() => {
                         loadingScreen.style.display = 'none';
+                        document.getElementById('bodyElement').classList.remove('hidden-initial');
                     }, 300);
                 }, 500);
             }
+            
+            // Add click outside listeners
+            addClickOutsideListeners();
+            
+            console.log('Admin layout initialized');
         });
 
-        // Re-initialize icons after Alpine updates
-        document.addEventListener('alpine:init', () => {
-            Alpine.nextTick(() => {
+        // Apply theme
+        function applyTheme() {
+            const htmlRoot = document.getElementById('htmlRoot');
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            
+            if (adminState.darkMode) {
+                htmlRoot.classList.add('dark');
+                if (sunIcon) sunIcon.style.display = 'block';
+                if (moonIcon) moonIcon.style.display = 'none';
+            } else {
+                htmlRoot.classList.remove('dark');
+                if (sunIcon) sunIcon.style.display = 'none';
+                if (moonIcon) moonIcon.style.display = 'block';
+            }
+        }
+
+        // Apply sidebar state
+        function applySidebarState() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const sidebarHeader = document.getElementById('sidebarHeader');
+            const sidebarHeaderText = document.getElementById('sidebarHeaderText');
+            const sidebarFooterControls = document.getElementById('sidebarFooterControls');
+            const sidebarFooterText = document.getElementById('sidebarFooterText');
+            const panelLeftIcon = document.getElementById('panelLeftIcon');
+            const panelRightIcon = document.getElementById('panelRightIcon');
+            const collapseToggle = document.getElementById('collapseToggle');
+            
+            if (adminState.sidebarCollapsed) {
+                // Collapsed state
+                sidebar.classList.remove('w-64');
+                sidebar.classList.add('w-20');
+                mainContent.classList.remove('lg:ml-64');
+                mainContent.classList.add('lg:ml-20');
+                
+                if (sidebarHeader) {
+                    sidebarHeader.classList.add('justify-center', 'w-full');
+                }
+                if (sidebarHeaderText) {
+                    sidebarHeaderText.style.display = 'none';
+                }
+                if (sidebarFooterControls) {
+                    sidebarFooterControls.classList.add('flex-col', 'space-y-2');
+                    sidebarFooterControls.classList.remove('space-x-2');
+                }
+                if (sidebarFooterText) {
+                    sidebarFooterText.style.display = 'none';
+                }
+                if (panelLeftIcon) panelLeftIcon.style.display = 'none';
+                if (panelRightIcon) panelRightIcon.style.display = 'block';
+                if (collapseToggle) collapseToggle.title = 'Genişlet';
+                
+                // Hide all menu text and chevrons
+                updateMenuTextVisibility(false);
+            } else {
+                // Expanded state
+                sidebar.classList.remove('w-20');
+                sidebar.classList.add('w-64');
+                mainContent.classList.remove('lg:ml-20');
+                mainContent.classList.add('lg:ml-64');
+                
+                if (sidebarHeader) {
+                    sidebarHeader.classList.remove('justify-center', 'w-full');
+                }
+                if (sidebarHeaderText) {
+                    sidebarHeaderText.style.display = 'block';
+                }
+                if (sidebarFooterControls) {
+                    sidebarFooterControls.classList.remove('flex-col', 'space-y-2');
+                    sidebarFooterControls.classList.add('space-x-2');
+                }
+                if (sidebarFooterText) {
+                    sidebarFooterText.style.display = 'block';
+                }
+                if (panelLeftIcon) panelLeftIcon.style.display = 'block';
+                if (panelRightIcon) panelRightIcon.style.display = 'none';
+                if (collapseToggle) collapseToggle.title = 'Daralt';
+                
+                // Show all menu text and chevrons
+                updateMenuTextVisibility(true);
+            }
+            
+            // Re-initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
-            });
-        });
+            }
+        }
 
-        // Handle window resize for sidebar
+        // Update menu text visibility
+        function updateMenuTextVisibility(show) {
+            const menuSpans = document.querySelectorAll('#sidebarNav span.font-medium');
+            const sectionTitles = document.querySelectorAll('#sidebarNav span.text-xs.font-semibold');
+            const chevrons = document.querySelectorAll('#sidebarNav i[id$="MenuChevron"]');
+            
+            menuSpans.forEach(span => {
+                span.style.display = show ? 'block' : 'none';
+            });
+            
+            sectionTitles.forEach(title => {
+                title.style.display = show ? 'block' : 'none';
+            });
+            
+            chevrons.forEach(chevron => {
+                chevron.style.display = show ? 'block' : 'none';
+            });
+            
+            // Also hide menu contents if collapsed
+            if (!show) {
+                Object.keys(adminState.openMenus).forEach(menuId => {
+                    const content = document.getElementById(menuId + 'Content');
+                    if (content) {
+                        content.style.display = 'none';
+                        adminState.openMenus[menuId] = false;
+                    }
+                });
+            }
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            adminState.darkMode = !adminState.darkMode;
+            localStorage.setItem('theme', adminState.darkMode ? 'dark' : 'light');
+            applyTheme();
+        }
+
+        // Toggle sidebar collapse
+        function toggleSidebarCollapse() {
+            adminState.sidebarCollapsed = !adminState.sidebarCollapsed;
+            localStorage.setItem('sidebar-collapsed', adminState.sidebarCollapsed.toString());
+            applySidebarState();
+        }
+
+        // Toggle mobile sidebar
+        function toggleMobileSidebar() {
+            adminState.sidebarOpen = !adminState.sidebarOpen;
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            if (window.innerWidth < 1024) {
+                if (adminState.sidebarOpen) {
+                    // Show sidebar and overlay
+                    sidebar.classList.remove('-translate-x-full');
+                    sidebar.classList.add('translate-x-0');
+                    overlay.style.display = 'block';
+                    setTimeout(() => {
+                        overlay.classList.remove('opacity-0');
+                        overlay.classList.add('opacity-100');
+                    }, 10);
+                } else {
+                    // Hide sidebar and overlay
+                    sidebar.classList.remove('translate-x-0');
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.remove('opacity-100');
+                    overlay.classList.add('opacity-0');
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 300);
+                }
+            }
+        }
+
+        // Close mobile sidebar
+        function closeMobileSidebar() {
+            if (adminState.sidebarOpen && window.innerWidth < 1024) {
+                adminState.sidebarOpen = false;
+                toggleMobileSidebar();
+            }
+        }
+
+        // Toggle submenu
+        function toggleSubMenu(menuId) {
+            if (adminState.sidebarCollapsed) return; // Don't open menus when collapsed
+            
+            const isOpen = adminState.openMenus[menuId] || false;
+            adminState.openMenus[menuId] = !isOpen;
+            
+            const content = document.getElementById(menuId + 'Content');
+            const chevron = document.getElementById(menuId + 'Chevron');
+            
+            if (content && chevron) {
+                if (adminState.openMenus[menuId]) {
+                    // Show menu
+                    content.style.display = 'block';
+                    chevron.classList.add('rotate-180');
+                } else {
+                    // Hide menu
+                    content.style.display = 'none';
+                    chevron.classList.remove('rotate-180');
+                }
+            }
+        }
+
+        // Toggle notifications dropdown
+        function toggleNotificationsDropdown() {
+            adminState.notificationsOpen = !adminState.notificationsOpen;
+            const dropdown = document.getElementById('notificationsDropdownContent');
+            
+            if (dropdown) {
+                if (adminState.notificationsOpen) {
+                    dropdown.style.display = 'block';
+                    setTimeout(() => {
+                        dropdown.classList.remove('opacity-0');
+                        dropdown.classList.add('opacity-100');
+                    }, 10);
+                } else {
+                    dropdown.classList.remove('opacity-100');
+                    dropdown.classList.add('opacity-0');
+                    setTimeout(() => {
+                        dropdown.style.display = 'none';
+                    }, 150);
+                }
+            }
+        }
+
+        // Toggle profile dropdown
+        function toggleProfileDropdown() {
+            adminState.profileOpen = !adminState.profileOpen;
+            const dropdown = document.getElementById('profileDropdownContent');
+            
+            if (dropdown) {
+                if (adminState.profileOpen) {
+                    dropdown.style.display = 'block';
+                    setTimeout(() => {
+                        dropdown.classList.remove('opacity-0');
+                        dropdown.classList.add('opacity-100');
+                    }, 10);
+                } else {
+                    dropdown.classList.remove('opacity-100');
+                    dropdown.classList.add('opacity-0');
+                    setTimeout(() => {
+                        dropdown.style.display = 'none';
+                    }, 150);
+                }
+            }
+        }
+
+        // Add click outside listeners
+        function addClickOutsideListeners() {
+            document.addEventListener('click', function(event) {
+                // Close notifications dropdown
+                const notificationsDropdown = document.getElementById('notificationsDropdown');
+                const notificationsContent = document.getElementById('notificationsDropdownContent');
+                if (adminState.notificationsOpen && notificationsDropdown && !notificationsDropdown.contains(event.target)) {
+                    adminState.notificationsOpen = false;
+                    if (notificationsContent) {
+                        notificationsContent.classList.remove('opacity-100');
+                        notificationsContent.classList.add('opacity-0');
+                        setTimeout(() => {
+                            notificationsContent.style.display = 'none';
+                        }, 150);
+                    }
+                }
+                
+                // Close profile dropdown
+                const profileDropdown = document.getElementById('profileDropdown');
+                const profileContent = document.getElementById('profileDropdownContent');
+                if (adminState.profileOpen && profileDropdown && !profileDropdown.contains(event.target)) {
+                    adminState.profileOpen = false;
+                    if (profileContent) {
+                        profileContent.classList.remove('opacity-100');
+                        profileContent.classList.add('opacity-0');
+                        setTimeout(() => {
+                            profileContent.style.display = 'none';
+                        }, 150);
+                    }
+                }
+            });
+        }
+
+        // Handle window resize
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 1024) {
                 // Close mobile sidebar on desktop
-                Alpine.store('sidebar', { ...Alpine.store('sidebar'), sidebarOpen: false });
+                if (adminState.sidebarOpen) {
+                    adminState.sidebarOpen = false;
+                    const sidebar = document.getElementById('sidebar');
+                    const overlay = document.getElementById('mobileOverlay');
+                    
+                    if (sidebar) {
+                        sidebar.classList.remove('-translate-x-full');
+                        sidebar.classList.add('translate-x-0');
+                    }
+                    if (overlay) {
+                        overlay.style.display = 'none';
+                    }
+                }
+            } else {
+                // Handle mobile view
+                if (!adminState.sidebarOpen) {
+                    const sidebar = document.getElementById('sidebar');
+                    if (sidebar) {
+                        sidebar.classList.remove('translate-x-0');
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                }
             }
         });
     </script>
@@ -690,6 +965,6 @@ x-init="
     @yield('scripts')
 
     <!-- Application Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <!-- Already loaded by @vite directive above -->
 </body>
 </html>

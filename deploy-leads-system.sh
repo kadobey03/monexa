@@ -125,7 +125,7 @@ required_files=(
     ".env.${ENVIRONMENT}"
     "package.json"
     "composer.json"
-    "webpack.mix.js"
+    "vite.config.js"
     "tailwind.config.js"
 )
 
@@ -229,58 +229,49 @@ fi
 log "Step 6: Building frontend assets..."
 
 # Ensure directories exist
-mkdir -p public/css
-mkdir -p public/js
-mkdir -p public/mix-manifest.json
+mkdir -p public/build
 
 # Clean existing build files
-rm -f public/css/leads-management.css
-rm -f public/js/leads-management.js
-rm -f public/mix-manifest.json
+rm -rf public/build/*
 
 # Build assets
 if [[ "$ENVIRONMENT" == "production" ]]; then
     log "Building for production..."
-    if npm run production; then
+    if npm run build; then
         success "Production assets compiled"
     else
         error "Production build failed"
     fi
 else
     log "Building for development..."
-    if npm run development; then
+    if npm run build; then
         success "Development assets compiled"
     else
         error "Development build failed"
     fi
 fi
 
-# Verify critical files were created
-critical_files=(
-    "public/css/leads-management.css"
-    "public/js/leads-management.js"
-    "public/mix-manifest.json"
-)
+# Verify build directory and manifest were created
+if [[ ! -d "public/build" ]]; then
+    error "Vite build directory not found: public/build"
+fi
 
-for file in "${critical_files[@]}"; do
-    if [[ ! -f "$file" ]]; then
-        warning "Critical file not found: $file"
-        
-        # Try to create minimal fallback
-        if [[ "$file" == "public/css/leads-management.css" ]]; then
-            echo "/* Fallback CSS */" > "$file"
-            log "Created fallback CSS file"
-        elif [[ "$file" == "public/js/leads-management.js" ]]; then
-            echo "console.log('Leads Management System Loaded');" > "$file"
-            log "Created fallback JS file"
-        elif [[ "$file" == "public/mix-manifest.json" ]]; then
-            echo '{}' > "$file"
-            log "Created fallback manifest file"
-        fi
-    else
-        success "Verified: $file"
-    fi
-done
+if [[ ! -f "public/build/manifest.json" ]]; then
+    warning "Vite manifest not found: public/build/manifest.json"
+    # Create minimal fallback manifest
+    echo '{}' > "public/build/manifest.json"
+    log "Created fallback Vite manifest file"
+else
+    success "Verified: public/build/manifest.json"
+fi
+
+# Check if any assets were built
+asset_count=$(find public/build -name "*.css" -o -name "*.js" | wc -l)
+if [[ "$asset_count" -gt 0 ]]; then
+    success "Verified: $asset_count asset files built"
+else
+    warning "No asset files found in public/build directory"
+fi
 
 # Step 7: Configure environment
 log "Step 7: Configuring environment..."
@@ -439,11 +430,11 @@ else
     warning "Database connection check failed"
 fi
 
-# Check if Mix manifest is valid
-if php artisan tinker --execute="echo json_encode(mix('css/leads-management.css', false));" 2>/dev/null | grep -q "css"; then
-    success "Mix manifest check passed"
+# Check if Vite manifest is valid
+if [[ -f "public/build/manifest.json" ]] && [[ -s "public/build/manifest.json" ]]; then
+    success "Vite manifest check passed"
 else
-    warning "Mix manifest check failed - may cause asset loading issues"
+    warning "Vite manifest check failed - may cause asset loading issues"
 fi
 
 # Step 18: Disable maintenance mode
@@ -477,7 +468,7 @@ echo "Deployment completed at $(date)" >> storage/logs/deployments.log
 echo "Environment: $ENVIRONMENT" >> storage/logs/deployments.log
 echo "Version: $(git rev-parse HEAD 2>/dev/null || echo 'unknown')" >> storage/logs/deployments.log
 echo "Build files:" >> storage/logs/deployments.log
-ls -la public/css/leads-management.css public/js/leads-management.js 2>/dev/null >> storage/logs/deployments.log || true
+ls -la public/build/ 2>/dev/null >> storage/logs/deployments.log || true
 echo "---" >> storage/logs/deployments.log
 
 # Send Slack notification if webhook is configured
@@ -499,9 +490,9 @@ echo "Deployment time: $(date)"
 echo "Application URL: ${APP_URL:-'http://localhost'}"
 echo ""
 echo "Build verification:"
-echo "✓ CSS: $(ls -lh public/css/leads-management.css 2>/dev/null | awk '{print $5}' || echo 'Missing')"
-echo "✓ JS:  $(ls -lh public/js/leads-management.js 2>/dev/null | awk '{print $5}' || echo 'Missing')"
-echo "✓ Mix: $(test -f public/mix-manifest.json && echo 'OK' || echo 'Missing')"
+echo "✓ Vite build dir: $(test -d public/build && echo 'OK' || echo 'Missing')"
+echo "✓ Vite manifest: $(test -f public/build/manifest.json && echo 'OK' || echo 'Missing')"
+echo "✓ Asset count: $(find public/build -name "*.css" -o -name "*.js" 2>/dev/null | wc -l) files"
 echo ""
 echo "Next steps:"
 echo "1. Verify application functionality at: ${APP_URL:-'http://localhost'}/admin/leads"
@@ -510,7 +501,7 @@ echo "3. Check queue workers: php artisan queue:work --daemon"
 echo "4. Monitor performance and user feedback"
 echo ""
 echo "Troubleshooting:"
-echo "- If assets don't load: npm run production && php artisan view:clear"
+echo "- If assets don't load: npm run build && php artisan view:clear"
 echo "- If database issues: php artisan migrate:status"
 echo "- If queue issues: php artisan queue:restart"
 echo ""

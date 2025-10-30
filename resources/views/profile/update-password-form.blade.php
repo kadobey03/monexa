@@ -1,4 +1,4 @@
-<div x-data="{ showOldPassword: false, showNewPassword: false, showConfirmPassword: false, passwordStrength: 0, passwordFeedback: '' }" class="space-y-8">
+<div class="space-y-8 password-form-wrapper">
     <!-- Password Introduction -->
     <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 mb-6 rounded-lg">
         <div class="flex">
@@ -32,7 +32,6 @@
                         type="password"
                         name="current_password"
                         id="current_password"
-                        :type="showOldPassword ? 'text' : 'password'"
                         class="pl-10 pr-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         required
                         placeholder="Mevcut şifreyi girin"
@@ -40,11 +39,11 @@
                     <div class="absolute inset-y-0 right-0 flex items-center px-3">
                         <button
                             type="button"
-                            @click="showOldPassword = !showOldPassword"
+                            onclick="togglePasswordVisibility('current_password')"
                             class="text-gray-400 hover:text-gray-500 focus:outline-none"
                         >
-                            <i data-lucide="eye" class="h-5 w-5" x-show="!showOldPassword"></i>
-                            <i data-lucide="eye-off" class="h-5 w-5" x-show="showOldPassword" style="display: none;"></i>
+                            <i data-lucide="eye" class="h-5 w-5 eye-icon"></i>
+                            <i data-lucide="eye-off" class="h-5 w-5 eye-off-icon" style="display: none;"></i>
                         </button>
                     </div>
                 </div>
@@ -63,20 +62,19 @@
                         type="password"
                         name="password"
                         id="password"
-                        :type="showNewPassword ? 'text' : 'password'"
                         class="pl-10 pr-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         required
                         placeholder="Yeni şifre girin"
-                        @input="checkPasswordStrength($event.target.value)"
+                        oninput="checkPasswordStrength(this.value)"
                     >
                     <div class="absolute inset-y-0 right-0 flex items-center px-3">
                         <button
                             type="button"
-                            @click="showNewPassword = !showNewPassword"
+                            onclick="togglePasswordVisibility('password')"
                             class="text-gray-400 hover:text-gray-500 focus:outline-none"
                         >
-                            <i data-lucide="eye" class="h-5 w-5" x-show="!showNewPassword"></i>
-                            <i data-lucide="eye-off" class="h-5 w-5" x-show="showNewPassword" style="display: none;"></i>
+                            <i data-lucide="eye" class="h-5 w-5 eye-icon"></i>
+                            <i data-lucide="eye-off" class="h-5 w-5 eye-off-icon" style="display: none;"></i>
                         </button>
                     </div>
                 </div>
@@ -84,18 +82,14 @@
                 <!-- Password Strength Meter -->
                 <div class="mt-2">
                     <div class="flex items-center justify-between mb-1">
-                        <div class="text-xs font-medium text-gray-500 dark:text-gray-400" x-text="passwordFeedback"></div>
+                        <div class="text-xs font-medium text-gray-500 dark:text-gray-400" id="password-feedback"></div>
                         <div class="text-xs font-medium text-gray-500 dark:text-gray-400">Şifre Gücü</div>
                     </div>
                     <div class="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                         <div
-                            class="h-full transition-all duration-300 ease-out rounded-full"
-                            :class="{
-                                'bg-red-500': passwordStrength > 0 && passwordStrength < 33,
-                                'bg-yellow-500': passwordStrength >= 33 && passwordStrength < 66,
-                                'bg-green-500': passwordStrength >= 66
-                            }"
-                            :style="'width: ' + passwordStrength + '%'"
+                            id="password-strength-bar"
+                            class="h-full transition-all duration-300 ease-out rounded-full bg-red-500"
+                            style="width: 0%"
                         ></div>
                     </div>
                 </div>
@@ -114,7 +108,6 @@
                         type="password"
                         name="password_confirmation"
                         id="password_confirmation"
-                        :type="showConfirmPassword ? 'text' : 'password'"
                         class="pl-10 pr-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         required
                         placeholder="Yeni şifreyi onaylayın"
@@ -122,11 +115,11 @@
                     <div class="absolute inset-y-0 right-0 flex items-center px-3">
                         <button
                             type="button"
-                            @click="showConfirmPassword = !showConfirmPassword"
+                            onclick="togglePasswordVisibility('password_confirmation')"
                             class="text-gray-400 hover:text-gray-500 focus:outline-none"
                         >
-                            <i data-lucide="eye" class="h-5 w-5" x-show="!showConfirmPassword"></i>
-                            <i data-lucide="eye-off" class="h-5 w-5" x-show="showConfirmPassword" style="display: none;"></i>
+                            <i data-lucide="eye" class="h-5 w-5 eye-icon"></i>
+                            <i data-lucide="eye-off" class="h-5 w-5 eye-off-icon" style="display: none;"></i>
                         </button>
                     </div>
                 </div>
@@ -197,46 +190,65 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Lucide icons if available
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
+function togglePasswordVisibility(inputId) {
+    const input = document.getElementById(inputId);
+    const button = input.nextElementSibling.querySelector('button');
+    const eyeIcon = button.querySelector('.eye-icon');
+    const eyeOffIcon = button.querySelector('.eye-off-icon');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        eyeIcon.style.display = 'none';
+        eyeOffIcon.style.display = 'block';
+    } else {
+        input.type = 'password';
+        eyeIcon.style.display = 'block';
+        eyeOffIcon.style.display = 'none';
+    }
+}
 
-        // Add Alpine function for password strength
-        if (typeof Alpine !== 'undefined') {
-            Alpine.data('passwordStrength', () => ({
-                checkPasswordStrength(password) {
-                    if (!password) {
-                        this.passwordStrength = 0;
-                        this.passwordFeedback = '';
-                        return;
-                    }
+function checkPasswordStrength(password) {
+    const feedbackElement = document.getElementById('password-feedback');
+    const strengthBar = document.getElementById('password-strength-bar');
+    
+    if (!password) {
+        strengthBar.style.width = '0%';
+        feedbackElement.textContent = '';
+        return;
+    }
 
-                    let strength = 0;
+    let strength = 0;
 
-                    // Length check
-                    if (password.length >= 8) strength += 25;
+    // Length check
+    if (password.length >= 8) strength += 25;
 
-                    // Character variety checks
-                    if (password.match(/[a-z]+/)) strength += 25; // lowercase
-                    if (password.match(/[A-Z]+/)) strength += 25; // uppercase
-                    if (password.match(/[0-9]+/) || password.match(/[^a-zA-Z0-9]+/)) strength += 25; // numbers or symbols
+    // Character variety checks
+    if (password.match(/[a-z]+/)) strength += 25; // lowercase
+    if (password.match(/[A-Z]+/)) strength += 25; // uppercase
+    if (password.match(/[0-9]+/) || password.match(/[^a-zA-Z0-9]+/)) strength += 25; // numbers or symbols
 
-                    this.passwordStrength = strength;
+    strengthBar.style.width = strength + '%';
 
-                    // Set feedback based on strength
-                    if (strength < 25) {
-                        this.passwordFeedback = 'Çok Zayıf';
-                    } else if (strength < 50) {
-                        this.passwordFeedback = 'Zayıf';
-                    } else if (strength < 75) {
-                        this.passwordFeedback = 'Orta';
-                    } else {
-                        this.passwordFeedback = 'Güçlü';
-                    }
-                }
-            }));
-        }
-    });
+    // Update colors and feedback
+    if (strength < 25) {
+        strengthBar.className = 'h-full transition-all duration-300 ease-out rounded-full bg-red-500';
+        feedbackElement.textContent = 'Çok Zayıf';
+    } else if (strength < 50) {
+        strengthBar.className = 'h-full transition-all duration-300 ease-out rounded-full bg-red-500';
+        feedbackElement.textContent = 'Zayıf';
+    } else if (strength < 75) {
+        strengthBar.className = 'h-full transition-all duration-300 ease-out rounded-full bg-yellow-500';
+        feedbackElement.textContent = 'Orta';
+    } else {
+        strengthBar.className = 'h-full transition-all duration-300 ease-out rounded-full bg-green-500';
+        feedbackElement.textContent = 'Güçlü';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Lucide icons if available
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+});
 </script>

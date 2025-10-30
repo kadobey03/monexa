@@ -87,6 +87,7 @@
                         </div>
                         <input type="password"
                                name="password"
+                               autocomplete="new-password"
                                id="password"
                                required
                                autocomplete="new-password"
@@ -116,6 +117,7 @@
                         </div>
                         <input type="password"
                                name="password_confirmation"
+                               autocomplete="new-password"
                                id="password_confirmation"
                                required
                                autocomplete="new-password"

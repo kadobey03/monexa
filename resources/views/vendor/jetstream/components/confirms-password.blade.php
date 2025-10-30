@@ -4,13 +4,7 @@
     $confirmableId = md5($attributes->wire('then'));
 @endphp
 
-<span
-    {{ $attributes->wire('then') }}
-    x-data
-    x-ref="span"
-    x-on:click="$wire.startConfirmingPassword('{{ $confirmableId }}')"
-    x-on:password-confirmed.window="setTimeout(() => $event.detail.id === '{{ $confirmableId }}' && $refs.span.dispatchEvent(new CustomEvent('then', { bubbles: false })), 250);"
->
+<span class="confirmable-action" data-confirmable-id="{{ $confirmableId }}" onclick="startConfirmingPassword('{{ $confirmableId }}')">
     {{ $slot }}
 </span>
 
@@ -23,9 +17,9 @@
     <x-slot name="content">
         <p class=""> {{ $content }}</p>
        
-        <div class="mt-4 border-none" x-data="{}" x-on:confirming-password.window="setTimeout(() => $refs.confirmable_password.focus(), 250)">
-            <x-jet-input type="password" class="form-control " placeholder="{{ __('Password') }}"
-                        x-ref="confirmable_password"
+        <div class="mt-4 border-none">
+            <x-jet-input type="password" class="form-control confirmable-password-input"
+                        placeholder="{{ __('Password') }}"
                         wire:model.defer="confirmablePassword"
                         wire:keydown.enter="confirmPassword" />
 
@@ -43,4 +37,39 @@
         </x-jet-button>
     </x-slot>
 </x-jet-dialog-modal>
+
+<script>
+function startConfirmingPassword(confirmableId) {
+    if (typeof Livewire !== 'undefined') {
+        Livewire.emit('startConfirmingPassword', confirmableId);
+    }
+}
+
+// Focus password input when confirming password
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof Livewire !== 'undefined') {
+        Livewire.on('confirming-password', function() {
+            setTimeout(function() {
+                const passwordInput = document.querySelector('.confirmable-password-input');
+                if (passwordInput) {
+                    passwordInput.focus();
+                }
+            }, 250);
+        });
+        
+        // Handle password confirmed event
+        Livewire.on('password-confirmed', function(data) {
+            setTimeout(function() {
+                if (data.id) {
+                    const confirmableElement = document.querySelector(`[data-confirmable-id="${data.id}"]`);
+                    if (confirmableElement) {
+                        const thenEvent = new CustomEvent('then', { bubbles: false });
+                        confirmableElement.dispatchEvent(thenEvent);
+                    }
+                }
+            }, 250);
+        });
+    }
+});
+</script>
 @endonce

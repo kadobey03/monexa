@@ -1,0 +1,252 @@
+/**
+ * Main CSS Entry Point
+ * Modern Vite-optimized CSS architecture
+ */
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+/* CSS Variables and Design Tokens */
+@import './base/variables.css';
+
+/* Base reset and typography */
+@import './base/reset.css';
+@import './base/typography.css';
+
+/* ========================================
+   COMPONENTS
+   ======================================== */
+
+/* Interactive components */
+@import './components/buttons.css';
+@import './components/forms.css';
+@import './components/cards.css';
+@import './components/modals.css';
+@import './components/navigation.css';
+@import './components/tables.css';
+@import './components/alerts.css';
+@import './components/badges.css';
+@import './components/progress.css';
+@import './components/tooltips.css';
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+
+/* Layout and spacing utilities */
+@import './utilities/spacing.css';
+@import './utilities/layout.css';
+@import './utilities/display.css';
+@import './utilities/positioning.css';
+@import './utilities/flexbox.css';
+@import './utilities/grid.css';
+
+/* Visual utilities */
+@import './utilities/colors.css';
+@import './utilities/borders.css';
+@import './utilities/shadows.css';
+@import './utilities/effects.css';
+
+/* ========================================
+   THIRD-PARTY INTEGRATIONS
+   ======================================== */
+
+/* Tailwind CSS (if used alongside custom CSS) */
+/* @import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities'; */
+
+/* Chart.js customizations */
+@import './vendors/chart-overrides.css';
+
+/* SweetAlert2 customizations */
+@import './vendors/swal-overrides.css';
+
+/* ========================================
+   THEME CUSTOMIZATIONS
+   ======================================== */
+
+/* Dark mode styles */
+@import './themes/dark-mode.css';
+
+/* High contrast mode */
+@import './themes/high-contrast.css';
+
+/* ========================================
+   ANIMATIONS & TRANSITIONS
+   ======================================== */
+
+/* Global animations */
+@import './base/animations.css';
+
+/* Micro-interactions */
+@import './base/transitions.css';
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Mobile-first responsive styles are embedded within each component */
+/* Additional responsive utilities can be added here if needed */
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  /* Hide interactive elements when printing */
+  .no-print,
+  .btn,
+  .form-input,
+  .navbar,
+  .sidebar {
+    display: none !important;
+  }
+  
+  /* Optimize text for print */
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+    color: black;
+    background: white;
+  }
+  
+  /* Ensure good contrast for print */
+  * {
+    color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+  
+  /* Page breaks */
+  .page-break-before {
+    page-break-before: always;
+  }
+  
+  .page-break-after {
+    page-break-after: always;
+  }
+  
+  .page-break-avoid {
+    page-break-inside: avoid;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ======================================== */
+
+/* Enhance focus visibility for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Respect user preferences for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border-primary: #000000;
+    --color-border-secondary: #000000;
+    --color-text-primary: #000000;
+    --color-bg-primary: #ffffff;
+  }
+  
+  .btn,
+  .form-input,
+  .form-select,
+  .form-textarea {
+    border-width: 2px;
+  }
+}
+
+/* Respect user's color scheme preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* ========================================
+   LEGACY SUPPORT & POLYFILLS
+   ======================================== */
+
+/* CSS Grid fallback for older browsers */
+@supports not (display: grid) {
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .grid > * {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+/* Custom property fallbacks */
+@supports not (color: var(--color-primary-500)) {
+  .btn-primary {
+    background-color: #3b82f6;
+  }
+  
+  .text-primary {
+    color: #3b82f6;
+  }
+}
+
+/* ========================================
+   DEVELOPMENT HELPERS
+   ======================================== */
+
+/* Debug helpers - only in development */
+@media screen and (min-width: 1px) {
+  .debug-grid {
+    background-image: 
+      linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  .debug-outline * {
+    outline: 1px solid rgba(255, 0, 0, 0.3);
+  }
+  
+  .debug-spacing * {
+    background-color: rgba(255, 0, 0, 0.05);
+    outline: 1px solid rgba(255, 0, 0, 0.1);
+  }
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+/* Optimize rendering performance */
+.performance-boost {
+  contain: layout style paint;
+  content-visibility: auto;
+}
+
+/* GPU acceleration for animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Optimize font loading */
+@font-display: swap;
+
+/* Critical above-the-fold styles should be inlined in HTML */
+/* This file should be loaded asynchronously for better performance */

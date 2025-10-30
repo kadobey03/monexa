@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('content')
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8" x-data="{ activeTab: 'per' }">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8" id="profileContainer">
     <div class="container mx-auto px-6">
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
@@ -62,11 +62,11 @@
             <!-- Tabs Navigation -->
             <div class="border-b border-gray-700 dark:border-gray-600">
                 <div class="flex px-6">
-                    <button @click="activeTab = 'per'" :class="{ 'border-b-2 border-blue-500': activeTab === 'per', 'text-blue-600 dark:text-blue-400': activeTab === 'per', 'text-gray-300 dark:text-gray-400': activeTab !== 'per' }" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors">
+                    <button onclick="setActiveTab('per')" id="perTab" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors border-b-2 border-blue-500 text-blue-600 dark:text-blue-400">
                         <i data-lucide="user" class="w-5 h-5"></i>
                         <span>Kişisel Bilgiler</span>
                     </button>
-                    <button @click="activeTab = 'pas'" :class="{ 'border-b-2 border-blue-500': activeTab === 'pas', 'text-blue-600 dark:text-blue-400': activeTab === 'pas', 'text-gray-300 dark:text-gray-400': activeTab !== 'pas' }" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors">
+                    <button onclick="setActiveTab('pas')" id="pasTab" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors text-gray-300 dark:text-gray-400">
                         <i data-lucide="lock" class="w-5 h-5"></i>
                         <span>Güvenlik</span>
                     </button>
@@ -75,7 +75,7 @@
 
             <!-- Tab Content -->
             <div class="p-6">
-                <div x-show="activeTab === 'per'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+                <div id="perContent" class="transition-opacity duration-200 opacity-100">
                     <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 mb-6 rounded-lg">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -91,7 +91,7 @@
                     @include('profile.update-profile-information-form')
                 </div>
 
-                <div x-show="activeTab === 'pas'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" style="display: none;">
+                <div id="pasContent" class="transition-opacity duration-200 opacity-0" style="display: none;">
                     <div class="bg-indigo-50 dark:bg-indigo-900/20 border-l-4 border-indigo-500 p-4 mb-6 rounded-lg">
                         <div class="flex">
                             <div class="flex-shrink-0">
@@ -159,20 +159,104 @@
 @section('scripts')
     @parent
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+        // Profile Tab Management
+        const ProfileManager = {
+            activeTab: 'per',
 
-            // Add this style for the background pattern
-            const style = document.createElement('style');
-            style.textContent = `
-                .bg-pattern {
-                    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            init() {
+                this.initializeLucideIcons();
+                this.addBackgroundPattern();
+                this.updateTabDisplay();
+            },
+
+            setActiveTab(tab) {
+                this.activeTab = tab;
+                this.updateTabDisplay();
+            },
+
+            updateTabDisplay() {
+                // Update tab buttons
+                const perTab = document.getElementById('perTab');
+                const pasTab = document.getElementById('pasTab');
+                const perContent = document.getElementById('perContent');
+                const pasContent = document.getElementById('pasContent');
+
+                if (this.activeTab === 'per') {
+                    // Activate personal tab
+                    if (perTab) {
+                        perTab.className = perTab.className.replace(/text-gray-300.*dark:text-gray-400/, 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400');
+                        if (!perTab.className.includes('border-b-2')) {
+                            perTab.className += ' border-b-2 border-blue-500 text-blue-600 dark:text-blue-400';
+                        }
+                    }
+                    // Deactivate password tab
+                    if (pasTab) {
+                        pasTab.className = pasTab.className.replace(/border-b-2.*dark:text-blue-400/, 'text-gray-300 dark:text-gray-400');
+                        if (!pasTab.className.includes('text-gray-300')) {
+                            pasTab.className += ' text-gray-300 dark:text-gray-400';
+                        }
+                    }
+                    // Show/hide content
+                    if (perContent) {
+                        perContent.style.display = 'block';
+                        perContent.className = perContent.className.replace(/opacity-0/, 'opacity-100');
+                    }
+                    if (pasContent) {
+                        pasContent.style.display = 'none';
+                        pasContent.className = pasContent.className.replace(/opacity-100/, 'opacity-0');
+                    }
+                } else {
+                    // Activate password tab
+                    if (pasTab) {
+                        pasTab.className = pasTab.className.replace(/text-gray-300.*dark:text-gray-400/, 'border-b-2 border-blue-500 text-blue-600 dark:text-blue-400');
+                        if (!pasTab.className.includes('border-b-2')) {
+                            pasTab.className += ' border-b-2 border-blue-500 text-blue-600 dark:text-blue-400';
+                        }
+                    }
+                    // Deactivate personal tab
+                    if (perTab) {
+                        perTab.className = perTab.className.replace(/border-b-2.*dark:text-blue-400/, 'text-gray-300 dark:text-gray-400');
+                        if (!perTab.className.includes('text-gray-300')) {
+                            perTab.className += ' text-gray-300 dark:text-gray-400';
+                        }
+                    }
+                    // Show/hide content
+                    if (pasContent) {
+                        pasContent.style.display = 'block';
+                        pasContent.className = pasContent.className.replace(/opacity-0/, 'opacity-100');
+                    }
+                    if (perContent) {
+                        perContent.style.display = 'none';
+                        perContent.className = perContent.className.replace(/opacity-100/, 'opacity-0');
+                    }
                 }
-            `;
-            document.head.appendChild(style);
+            },
+
+            initializeLucideIcons() {
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            },
+
+            addBackgroundPattern() {
+                const style = document.createElement('style');
+                style.textContent = `
+                    .bg-pattern {
+                        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        };
+
+        // Global function for onclick handlers
+        function setActiveTab(tab) {
+            ProfileManager.setActiveTab(tab);
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            ProfileManager.init();
         });
     </script>
 @endsection

@@ -23,24 +23,21 @@
         <!-- Modern Glass Card -->
         <div class="bg-gray-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-gray-700 shadow-xl floating-animation">
             <!-- Navigation Tabs -->
-            <div x-data="{ activeTab: 'deposits' }" class="w-full">
+            <div class="w-full">
                 <!-- Mobile-First Tab Navigation -->
                 <div class="flex flex-col sm:flex-row gap-2 p-2 mb-6 sm:mb-8 bg-gray-800 rounded-xl sm:rounded-2xl backdrop-blur-sm">
-                    <button @click="activeTab = 'deposits'"
-                            :class="activeTab === 'deposits' ? 'bg-gray-700 text-white shadow-lg' : 'text-slate-300 hover:text-white hover:bg-gray-700/50'"
-                            class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105">
+                    <button id="deposits-tab"
+                            class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105 bg-gray-700 text-white shadow-lg">
                         <i data-lucide="arrow-down-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         <span class="text-sm sm:text-base">Yatırımlar</span>
                     </button>
-                    <button @click="activeTab = 'withdrawals'"
-                            :class="activeTab === 'withdrawals' ? 'bg-gray-700 text-white shadow-lg' : 'text-slate-300 hover:text-white hover:bg-gray-700/50'"
-                            class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105">
+                    <button id="withdrawals-tab"
+                            class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105 text-slate-300 hover:text-white hover:bg-gray-700/50">
                         <i data-lucide="arrow-up-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         <span class="text-sm sm:text-base">Çekimler</span>
                     </button>
-                    <button @click="activeTab = 'others'"
-                            :class="activeTab === 'others' ? 'bg-gray-700 text-white shadow-lg' : 'text-slate-300 hover:text-white hover:bg-gray-700/50'"
-                            class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105">
+                    <button id="others-tab"
+                            class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105 text-slate-300 hover:text-white hover:bg-gray-700/50">
                         <i data-lucide="activity" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                         <span class="text-sm sm:text-base">Diğerleri</span>
                     </button>
@@ -49,7 +46,7 @@
                 <!-- Tab Content -->
                 <div class="p-2 sm:p-4 lg:p-6">
                     <!-- Deposits Tab -->
-                    <div x-show="activeTab === 'deposits'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0">
+                    <div id="deposits-content" class="tab-content opacity-100 transform translate-y-0 transition-all duration-300">
                         <div class="mb-4 sm:mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
                             <div class="text-center lg:text-left">
                                 <h3 class="text-xl sm:text-2xl font-light text-white mb-1 sm:mb-2">Yatırım Geçmişi</h3>
@@ -252,7 +249,7 @@
                     </div>
 
                     <!-- Withdrawals Tab -->
-                    <div x-show="activeTab === 'withdrawals'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0">
+                    <div id="withdrawals-content" class="tab-content opacity-0 transform translate-y-4 transition-all duration-300 hidden">
                         <div class="mb-4 sm:mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
                             <div class="text-center lg:text-left">
                                 <h3 class="text-xl sm:text-2xl font-light text-white mb-1 sm:mb-2">Çekim Geçmişi</h3>
@@ -466,7 +463,7 @@
                     </div>
 
                     <!-- Other Transactions Tab -->
-                    <div x-show="activeTab === 'others'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0">
+                    <div id="others-content" class="tab-content opacity-0 transform translate-y-4 transition-all duration-300 hidden">
                         <div class="mb-4 sm:mb-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-6">
                             <div class="text-center lg:text-left">
                                 <h3 class="text-xl sm:text-2xl font-light text-white mb-1 sm:mb-2">Diğer İşlemler</h3>
@@ -832,6 +829,158 @@
 <script>
     // Initialize Lucide icons
     lucide.createIcons();
+
+    // Transaction Tabs Manager
+    class TransactionTabsManager {
+        constructor() {
+            this.activeTab = 'deposits';
+            this.tabs = ['deposits', 'withdrawals', 'others'];
+            this.init();
+        }
+
+        init() {
+            // Add event listeners to tab buttons
+            this.tabs.forEach(tab => {
+                const tabButton = document.getElementById(`${tab}-tab`);
+                if (tabButton) {
+                    tabButton.addEventListener('click', () => this.switchTab(tab));
+                }
+            });
+        }
+
+        switchTab(tabName) {
+            if (this.activeTab === tabName) return;
+
+            const previousTab = this.activeTab;
+            this.activeTab = tabName;
+
+            // Update tab button states
+            this.updateTabButtons(previousTab, tabName);
+
+            // Switch content with animation
+            this.animateTabTransition(previousTab, tabName);
+        }
+
+        updateTabButtons(previousTab, activeTab) {
+            // Remove active state from previous tab
+            if (previousTab) {
+                const prevButton = document.getElementById(`${previousTab}-tab`);
+                if (prevButton) {
+                    prevButton.classList.remove('bg-gray-700', 'text-white', 'shadow-lg');
+                    prevButton.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-gray-700/50');
+                }
+            }
+
+            // Add active state to new tab
+            const activeButton = document.getElementById(`${activeTab}-tab`);
+            if (activeButton) {
+                activeButton.classList.add('bg-gray-700', 'text-white', 'shadow-lg');
+                activeButton.classList.remove('text-slate-300', 'hover:text-white', 'hover:bg-gray-700/50');
+            }
+        }
+
+        animateTabTransition(previousTab, activeTab) {
+            const previousContent = document.getElementById(`${previousTab}-content`);
+            const activeContent = document.getElementById(`${activeTab}-content`);
+
+            if (!previousContent || !activeContent) return;
+
+            // Hide previous content with animation
+            previousContent.classList.add('opacity-0', 'transform', 'translate-y-4');
+            
+            setTimeout(() => {
+                previousContent.classList.add('hidden');
+                
+                // Show new content
+                activeContent.classList.remove('hidden');
+                
+                // Trigger reflow
+                activeContent.offsetHeight;
+                
+                // Animate in new content
+                setTimeout(() => {
+                    activeContent.classList.remove('opacity-0', 'translate-y-4');
+                    activeContent.classList.add('opacity-100', 'transform', 'translate-y-0');
+                }, 10);
+            }, 300);
+        }
+
+        // Get current active tab
+        getActiveTab() {
+            return this.activeTab;
+        }
+
+        // Programmatically switch to a tab
+        goToTab(tabName) {
+            if (this.tabs.includes(tabName)) {
+                this.switchTab(tabName);
+            }
+        }
+    }
+
+    // Initialize tabs when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        window.transactionTabs = new TransactionTabsManager();
+    });
+
+    // Search functionality for each tab
+    function initializeSearch() {
+        const searchInputs = document.querySelectorAll('input[type="text"]');
+        
+        searchInputs.forEach(input => {
+            if (input.placeholder.includes('ara')) {
+                input.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const activeTabContent = document.querySelector(`#${window.transactionTabs.getActiveTab()}-content`);
+                    
+                    if (activeTabContent) {
+                        const cards = activeTabContent.querySelectorAll('.bg-gray-800');
+                        const rows = activeTabContent.querySelectorAll('tbody tr');
+                        
+                        // Search in mobile cards
+                        cards.forEach(card => {
+                            const text = card.textContent.toLowerCase();
+                            card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+                        });
+                        
+                        // Search in desktop table rows
+                        rows.forEach(row => {
+                            const text = row.textContent.toLowerCase();
+                            row.style.display = text.includes(searchTerm) ? 'table-row' : 'none';
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    // Initialize search when DOM is ready
+    document.addEventListener('DOMContentLoaded', initializeSearch);
+
+    // Utility function for formatting numbers
+    function formatCurrency(amount, currency = '$') {
+        return `${currency}${parseFloat(amount).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    // Enhanced mobile responsiveness
+    function handleMobileLayout() {
+        const isMobile = window.innerWidth <= 768;
+        const tabContainer = document.querySelector('.flex.flex-col.sm\\:flex-row');
+        
+        if (tabContainer) {
+            if (isMobile) {
+                tabContainer.classList.add('space-y-2');
+                tabContainer.classList.remove('space-x-2');
+            } else {
+                tabContainer.classList.remove('space-y-2');
+                tabContainer.classList.add('space-x-2');
+            }
+        }
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', handleMobileLayout);
+    document.addEventListener('DOMContentLoaded', handleMobileLayout);
 </script>
 
 @endsection

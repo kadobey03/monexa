@@ -8,7 +8,10 @@
     <link rel="icon" href="{{ asset('storage/'.$settings->favicon)}}" type="image/png"/>
    <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.1/dist/alpine.min.js" defer></script>
+  
+  <!-- Vite Assets - Includes Alpine.js -->
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  
     <!-- Bootstrap CSS File -->
     <link href="{{ asset ('temp/lib/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 

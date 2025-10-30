@@ -1,6 +1,6 @@
 /**
  * Leads Data Manager - Vanilla JavaScript Implementation
- * Alpine.js'den vanilla JS'e çevrilmiş leads table yönetim sistemi
+ * Modern vanilla JavaScript leads table yönetim sistemi
  */
 
 // Import core modules
@@ -841,7 +841,7 @@ class LeadsDataManager {
     }
 }
 
-// Global initialization function (replaces Alpine.js function)
+// Global initialization function for vanilla JavaScript
 window.initializeLeadsDataManager = function(containerSelector = '[data-leads-table]') {
     const container = document.querySelector(containerSelector);
     if (!container) {

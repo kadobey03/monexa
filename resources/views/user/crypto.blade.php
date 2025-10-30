@@ -107,7 +107,7 @@
     </div>
 
     <!-- Crypto Plans Grid -->
-    <div x-data="{ selectedPlan: null }" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
         @php
             $cryptoPlans = $plans->where('investment_type', 'crypto');
         @endphp
@@ -115,7 +115,7 @@
         @forelse ($cryptoPlans as $index => $plan)
             <!-- Crypto Plan Card -->
             <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700 group"
-                 :class="{'ring-4 ring-orange-500 dark:ring-orange-600': selectedPlan === {{ $index }}}">
+                 id="plan-card-{{ $index }}">
 
                 <!-- Crypto Badge -->
                 <div class="absolute top-4 right-4 z-10">
@@ -222,7 +222,7 @@
                     <!-- Investment Form -->
                     <form method="post" action="{{route('joininvestmentplan')}}" class="space-y-4">
                         @csrf
-                        <div x-data="{ amount: '{{$plan->min_price}}' }">
+                        <div data-plan-index="{{ $index }}" data-min-price="{{ $plan->min_price }}" data-max-price="{{ $plan->max_price }}" data-increment="{{ $plan->increment_amount }}" data-expected-return="{{ $plan->expected_return }}">
                             <!-- Amount Input -->
                             <div>
                                 <label for="amount-{{$index}}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -239,10 +239,11 @@
                                         name="iamount"
                                         min="{{$plan->min_price}}"
                                         max="{{$plan->max_price}}"
-                                        x-model="amount"
+                                        value="{{ $plan->min_price }}"
+                                        data-plan-input="{{ $index }}"
                                         placeholder="Enter amount"
                                         class="pl-8 block w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 py-3 px-4 text-gray-900 dark:text-white shadow-sm focus:border-orange-500 focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-600 transition-colors duration-200"
-                                        @click="selectedPlan = {{$index}}"
+                                        data-plan-select="{{ $index }}"
                                     >
                                 </div>
 
@@ -252,7 +253,8 @@
                                         type="range"
                                         min="{{$plan->min_price}}"
                                         max="{{$plan->max_price}}"
-                                        x-model="amount"
+                                        value="{{ $plan->min_price }}"
+                                        data-plan-range="{{ $index }}"
                                         class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-orange-600 dark:accent-orange-500"
                                     >
                                     <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -266,13 +268,13 @@
                                     <div class="flex justify-between items-center text-sm">
                                         <span class="text-gray-600 dark:text-gray-400">{{$plan->increment_interval}} Return:</span>
                                         <span class="font-medium text-orange-600 dark:text-orange-400">
-                                            {{Auth::user()->currency}}<span x-text="(amount * {{$plan->increment_amount}} / 100).toFixed(2)"></span>
+                                            {{Auth::user()->currency}}<span id="daily-return-{{ $index }}">{{ number_format(($plan->min_price * $plan->increment_amount / 100), 2) }}</span>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-center text-sm mt-1">
                                         <span class="text-gray-600 dark:text-gray-400">Total Return ({{$plan->expiration}} days):</span>
                                         <span class="font-bold text-orange-600 dark:text-orange-400">
-                                            {{Auth::user()->currency}}<span x-text="(amount * {{$plan->expected_return}} / 100).toFixed(2)"></span>
+                                            {{Auth::user()->currency}}<span id="total-return-{{ $index }}">{{ number_format(($plan->min_price * $plan->expected_return / 100), 2) }}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -285,7 +287,7 @@
                             <button
                                 type="submit"
                                 class="w-full relative py-3 px-6 rounded-lg bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700 text-white font-medium shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 dark:focus:ring-offset-gray-900 group"
-                                @mouseenter="selectedPlan = {{$index}}"
+                                data-plan-hover="{{ $index }}"
                             >
                                 <span class="flex items-center justify-center">
                                     <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" fill="currentColor" viewBox="0 0 20 20">
@@ -442,15 +444,207 @@
     </div>
 </div>
 
-<!-- Alpine.js Initialization -->
+<!-- Crypto Investment Manager -->
 <script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('cryptoPlans', () => ({
-            selectedPlan: null,
-            init() {
-                // Crypto specific initialization
+    class CryptoInvestmentManager {
+        constructor() {
+            this.selectedPlan = null;
+            this.planData = new Map();
+            this.init();
+        }
+
+        init() {
+            // Initialize plan data from DOM
+            const planContainers = document.querySelectorAll('[data-plan-index]');
+            planContainers.forEach(container => {
+                const index = container.getAttribute('data-plan-index');
+                const planInfo = {
+                    minPrice: parseFloat(container.getAttribute('data-min-price')),
+                    maxPrice: parseFloat(container.getAttribute('data-max-price')),
+                    increment: parseFloat(container.getAttribute('data-increment')),
+                    expectedReturn: parseFloat(container.getAttribute('data-expected-return')),
+                    currentAmount: parseFloat(container.getAttribute('data-min-price'))
+                };
+                this.planData.set(index, planInfo);
+            });
+            
+            // Bind event listeners
+            this.bindEventListeners();
+        }
+
+        bindEventListeners() {
+            // Bind number input events
+            document.querySelectorAll('[data-plan-input]').forEach(input => {
+                const planIndex = input.getAttribute('data-plan-input');
+                input.addEventListener('input', (e) => {
+                    this.updateAmount(parseInt(planIndex), e.target.value);
+                });
+                input.addEventListener('click', (e) => {
+                    this.selectPlan(parseInt(planIndex));
+                });
+            });
+
+            // Bind range input events
+            document.querySelectorAll('[data-plan-range]').forEach(input => {
+                const planIndex = input.getAttribute('data-plan-range');
+                input.addEventListener('input', (e) => {
+                    this.updateAmountFromRange(parseInt(planIndex), e.target.value);
+                });
+            });
+
+            // Bind hover events on buttons
+            document.querySelectorAll('[data-plan-hover]').forEach(button => {
+                const planIndex = button.getAttribute('data-plan-hover');
+                button.addEventListener('mouseenter', (e) => {
+                    this.selectPlan(parseInt(planIndex));
+                });
+            });
+        }
+
+        selectPlan(planIndex) {
+            // Remove previous selection
+            if (this.selectedPlan !== null) {
+                const prevCard = document.getElementById(`plan-card-${this.selectedPlan}`);
+                if (prevCard) {
+                    prevCard.classList.remove('ring-4', 'ring-orange-500', 'dark:ring-orange-600');
+                }
             }
-        }))
-    })
+
+            // Set new selection
+            this.selectedPlan = planIndex;
+            const currentCard = document.getElementById(`plan-card-${planIndex}`);
+            if (currentCard) {
+                currentCard.classList.add('ring-4', 'ring-orange-500', 'dark:ring-orange-600');
+            }
+        }
+
+        updateAmount(planIndex, amount) {
+            const planInfo = this.planData.get(planIndex.toString());
+            if (!planInfo) return;
+
+            // Validate amount
+            const numAmount = parseFloat(amount) || 0;
+            
+            // Update plan data
+            planInfo.currentAmount = numAmount;
+            
+            // Update range slider
+            const rangeSlider = document.querySelector(`[data-plan-index="${planIndex}"] input[type="range"]`);
+            if (rangeSlider) {
+                rangeSlider.value = numAmount;
+            }
+
+            // Update profit calculations
+            this.updateProfitCalculations(planIndex, numAmount, planInfo);
+        }
+
+        updateAmountFromRange(planIndex, amount) {
+            const planInfo = this.planData.get(planIndex.toString());
+            if (!planInfo) return;
+
+            const numAmount = parseFloat(amount) || 0;
+            
+            // Update plan data
+            planInfo.currentAmount = numAmount;
+            
+            // Update number input
+            const numberInput = document.querySelector(`[data-plan-index="${planIndex}"] input[type="number"]`);
+            if (numberInput) {
+                numberInput.value = numAmount;
+            }
+
+            // Update profit calculations
+            this.updateProfitCalculations(planIndex, numAmount, planInfo);
+        }
+
+        updateProfitCalculations(planIndex, amount, planInfo) {
+            // Calculate daily return
+            const dailyReturn = (amount * planInfo.increment / 100).toFixed(2);
+            const dailyReturnEl = document.getElementById(`daily-return-${planIndex}`);
+            if (dailyReturnEl) {
+                dailyReturnEl.textContent = dailyReturn;
+            }
+
+            // Calculate total return
+            const totalReturn = (amount * planInfo.expectedReturn / 100).toFixed(2);
+            const totalReturnEl = document.getElementById(`total-return-${planIndex}`);
+            if (totalReturnEl) {
+                totalReturnEl.textContent = totalReturn;
+            }
+        }
+
+        formatNumber(num) {
+            return parseFloat(num).toLocaleString('tr-TR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Validation method
+        validateAmount(planIndex, amount) {
+            const planInfo = this.planData.get(planIndex.toString());
+            if (!planInfo) return false;
+
+            const numAmount = parseFloat(amount);
+            return numAmount >= planInfo.minPrice && numAmount <= planInfo.maxPrice;
+        }
+
+        // Show notification method
+        showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 transition-all duration-300 ${
+                type === 'success' ? 'bg-green-600' :
+                type === 'error' ? 'bg-red-600' :
+                type === 'warning' ? 'bg-orange-600' : 'bg-blue-600'
+            }`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+    }
+
+    // Initialize Crypto Investment Manager
+    document.addEventListener('DOMContentLoaded', function() {
+        window.cryptoManager = new CryptoInvestmentManager();
+        
+        // Add form validation
+        const forms = document.querySelectorAll('form[action*="joininvestmentplan"]');
+        forms.forEach((form, index) => {
+            form.addEventListener('submit', function(e) {
+                const amountInput = form.querySelector('input[name="iamount"]');
+                if (amountInput) {
+                    const amount = parseFloat(amountInput.value);
+                    if (!cryptoManager.validateAmount(index, amount)) {
+                        e.preventDefault();
+                        const planInfo = cryptoManager.planData.get(index.toString());
+                        if (planInfo) {
+                            cryptoManager.showNotification(
+                                `Yatırım miktarı {{Auth::user()->currency}}${planInfo.minPrice} ile {{Auth::user()->currency}}${planInfo.maxPrice} arasında olmalıdır.`,
+                                'error'
+                            );
+                        }
+                        return false;
+                    }
+                }
+            });
+        });
+    });
 </script>
 @endsection

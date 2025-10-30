@@ -2,8 +2,7 @@
 @section('title', $title)
 @section('content')
 
-
-<div class="min-h-screen bg-white dark:bg-gray-900" x-cloak>
+<div class="min-h-screen bg-white dark:bg-gray-900">
     <!-- Simple Header -->
     <div class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div class="max-w-7xl mx-auto px-6 py-8">
@@ -24,14 +23,7 @@
         <!-- Trading History Card -->
         <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800">
             <!-- Header -->
-            <div class="p-6 border-b border-gray-100 dark:border-gray-800" x-data="{
-                stats: {
-                    total: {{ isset($t_history) ? $t_history->total() : 0 }},
-                    wins: {{ isset($t_history) ? $t_history->where('type', 'WIN')->count() : 0 }},
-                    losses: {{ isset($t_history) ? $t_history->where('type', 'LOSE')->count() : 0 }},
-                    trades: {{ isset($t_history) ? $t_history->whereIn('type', ['Buy', 'Sell'])->count() : 0 }}
-                }
-            }" x-init="$store.tradeFilter = { value: 'all' }" x-cloak>
+            <div class="p-6 border-b border-gray-100 dark:border-gray-800" id="trading-header">
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div>
                         <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-1">İşlem Genel Bakışı</h2>
@@ -41,19 +33,19 @@
                     <!-- Quick Stats -->
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                         <div class="text-center">
-                             <div class="text-xl font-medium text-gray-900 dark:text-white" x-text="stats.total"></div>
+                             <div class="text-xl font-medium text-gray-900 dark:text-white" id="stat-total">{{ isset($t_history) ? $t_history->total() : 0 }}</div>
                              <div class="text-xs text-gray-500 dark:text-gray-400">Toplam</div>
                          </div>
                          <div class="text-center">
-                             <div class="text-xl font-medium text-green-600 dark:text-green-400" x-text="stats.wins"></div>
+                             <div class="text-xl font-medium text-green-600 dark:text-green-400" id="stat-wins">{{ isset($t_history) ? $t_history->where('type', 'WIN')->count() : 0 }}</div>
                              <div class="text-xs text-gray-500 dark:text-gray-400">Kazanç</div>
                          </div>
                          <div class="text-center">
-                             <div class="text-xl font-medium text-red-600 dark:text-red-400" x-text="stats.losses"></div>
+                             <div class="text-xl font-medium text-red-600 dark:text-red-400" id="stat-losses">{{ isset($t_history) ? $t_history->where('type', 'LOSE')->count() : 0 }}</div>
                              <div class="text-xs text-gray-500 dark:text-gray-400">Kayıp</div>
                          </div>
                          <div class="text-center">
-                             <div class="text-xl font-medium text-blue-600 dark:text-blue-400" x-text="stats.trades"></div>
+                             <div class="text-xl font-medium text-blue-600 dark:text-blue-400" id="stat-trades">{{ isset($t_history) ? $t_history->whereIn('type', ['Buy', 'Sell'])->count() : 0 }}</div>
                              <div class="text-xs text-gray-500 dark:text-gray-400">Aktif</div>
                          </div>
                     </div>
@@ -61,42 +53,36 @@
 
                 <!-- Filter Buttons -->
                 <div class="flex flex-wrap gap-2 mt-4">
-                    <button @click="$store.tradeFilter.value = 'all'"
-                             :class="$store.tradeFilter.value === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400'"
-                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <button onclick="setTradeFilter('all')" id="filter-all"
+                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
                          Tümü
                      </button>
-                     <button @click="$store.tradeFilter.value = 'WIN'"
-                             :class="$store.tradeFilter.value === 'WIN' ? 'bg-green-600 text-white' : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400'"
-                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                     <button onclick="setTradeFilter('WIN')" id="filter-WIN"
+                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
                          Kazançlar
                      </button>
-                     <button @click="$store.tradeFilter.value = 'LOSE'"
-                             :class="$store.tradeFilter.value === 'LOSE' ? 'bg-red-600 text-white' : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400'"
-                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                     <button onclick="setTradeFilter('LOSE')" id="filter-LOSE"
+                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
                          Kayıplar
                      </button>
-                     <button @click="$store.tradeFilter.value = 'Buy'"
-                             :class="$store.tradeFilter.value === 'Buy' ? 'bg-blue-600 text-white' : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400'"
-                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                     <button onclick="setTradeFilter('Buy')" id="filter-Buy"
+                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
                          Alış
                      </button>
-                     <button @click="$store.tradeFilter.value = 'Sell'"
-                             :class="$store.tradeFilter.value === 'Sell' ? 'bg-orange-600 text-white' : 'bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400'"
-                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                     <button onclick="setTradeFilter('Sell')" id="filter-Sell"
+                             class="px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
                          Satış
                      </button>
                 </div>
             </div>
 
             <!-- Trading History List -->
-            <div class="p-6" x-cloak>
-                <div class="space-y-3">
+            <div class="p-6">
+                <div class="space-y-3" id="trading-history">
                     @if(isset($t_history) && $t_history->count() > 0)
                         @foreach($t_history as $history)
                             <div class="trading-item bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-100 dark:border-gray-700"
-                                 x-show="$store.tradeFilter.value === 'all' || $store.tradeFilter.value === '{{ $history->type }}'"
-                                 x-transition>
+                                 data-type="{{ $history->type }}">
 
                                 <div class="flex items-center justify-between">
                                     <!-- Trade Details -->
@@ -119,14 +105,14 @@
                                                 <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
                                                     <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                                                        <path fill-rule="evenodd" d="9 3a1 1 0 012 0v8.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 11.586V3z" clip-rule="evenodd"></path>
+                                                        <path fill-rule="evenodd" d="M9 3a1 1 0 012 0v8.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 11.586V3z" clip-rule="evenodd"></path>
                                                     </svg>
                                                 </div>
                                             @else
                                                 <div class="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
                                                     <svg class="w-4 h-4 text-orange-600 dark:text-orange-400" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="17 10a1 1 0 01-1 1H4a1 1 0 110-2h12a1 1 0 011 1z" clip-rule="evenodd"></path>
-                                                        <path fill-rule="evenodd" d="11 17a1 1 0 01-2 0V8.414L6.707 10.707a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 8.414V17z" clip-rule="evenodd"></path>
+                                                        <path fill-rule="evenodd" d="M11 17a1 1 0 01-2 0V8.414L6.707 10.707a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 8.414V17z" clip-rule="evenodd"></path>
                                                     </svg>
                                                 </div>
                                             @endif
@@ -358,18 +344,58 @@
 
 @push('scripts')
 <script>
-    // Initialize Alpine.js store for filters
-    document.addEventListener('alpine:init', () => {
-        Alpine.store('tradeFilter', {
-            value: 'all'
-        });
+let currentFilter = 'all';
+
+function setTradeFilter(filterValue) {
+    currentFilter = filterValue;
+    
+    // Update button styles
+    const buttons = ['all', 'WIN', 'LOSE', 'Buy', 'Sell'];
+    buttons.forEach(button => {
+        const btnElement = document.getElementById('filter-' + button);
+        if (button === filterValue) {
+            // Active button styles
+            btnElement.className = 'px-3 py-2 rounded-lg text-sm font-medium transition-colors';
+            if (button === 'all') {
+                btnElement.className += ' bg-blue-600 text-white';
+            } else if (button === 'WIN') {
+                btnElement.className += ' bg-green-600 text-white';
+            } else if (button === 'LOSE') {
+                btnElement.className += ' bg-red-600 text-white';
+            } else if (button === 'Buy') {
+                btnElement.className += ' bg-blue-600 text-white';
+            } else if (button === 'Sell') {
+                btnElement.className += ' bg-orange-600 text-white';
+            }
+        } else {
+            // Inactive button styles
+            btnElement.className = 'px-3 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400';
+        }
     });
+    
+    // Filter trading items
+    const tradingItems = document.querySelectorAll('.trading-item');
+    tradingItems.forEach(item => {
+        const itemType = item.getAttribute('data-type');
+        if (filterValue === 'all' || itemType === filterValue) {
+            item.style.display = 'block';
+            // Add fade in animation
+            item.style.opacity = '0';
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transition = 'opacity 0.3s ease-in-out';
+            }, 50);
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    setTradeFilter('all');
+});
 </script>
-<style>
-    [x-cloak] {
-        display: none !important;
-    }
-</style>
 @endpush
 
 @endsection

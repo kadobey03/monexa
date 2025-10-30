@@ -101,6 +101,7 @@
                                     <i data-lucide="mail" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors duration-200"></i>
                                 </div>
                                 <input type="text" name="email" id="email" required
+                                       autocomplete="email"
                                        class="block w-full rounded-2xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-medium"
                                        placeholder="eposta@ornek.com"
                                        value="{{ old('email') }}">
@@ -112,18 +113,17 @@
                             <label for="password" class="block text-sm font-semibold text-gray-200">
                                 Şifre
                             </label>
-                            <div class="relative group" x-data="{ showPassword: false }">
+                            <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
                                     <i data-lucide="lock" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors duration-200"></i>
                                 </div>
                                 <input type="password" name="password" id="password" required
-                                       :type="showPassword ? 'text' : 'password'"
+                                       autocomplete="current-password"
                                        class="block w-full rounded-2xl border border-gray-600 bg-gray-900 pl-12 pr-12 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-medium"
                                        placeholder="Şifrenizi giriniz">
-                                <button type="button" @click="showPassword = !showPassword"
+                                <button type="button" onclick="togglePasswordVisibility('password')"
                                         class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-400 transition-colors">
-                                    <i data-lucide="eye" class="h-5 w-5" x-show="!showPassword"></i>
-                                    <i data-lucide="eye-off" class="h-5 w-5" x-show="showPassword" x-cloak></i>
+                                    <i data-lucide="eye" class="h-5 w-5" id="password-eye"></i>
                                 </button>
                             </div>
                         </div>
@@ -166,21 +166,21 @@
                         </div>
 
                         <div class="mt-6 flex justify-center space-x-4">
-                            <button type="button" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false"
+                            <button type="button"
                                     class="group relative inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-gray-600 bg-gray-800 hover:bg-gray-700 hover:border-blue-400/50 transition-all duration-200 shadow-lg hover:shadow-xl">
                                 <i data-lucide="fingerprint" class="h-6 w-6 text-blue-400 group-hover:text-blue-300 group-hover:scale-110 transition-all duration-200"></i>
                                 <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-gray-900/90 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
                                     Parmak İzi
                                 </div>
                             </button>
-                            <button type="button" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false"
+                            <button type="button"
                                     class="group relative inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-gray-600 bg-gray-800 hover:bg-gray-700 hover:border-cyan-400/50 transition-all duration-200 shadow-lg hover:shadow-xl">
                                 <i data-lucide="scan-face" class="h-6 w-6 text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all duration-200"></i>
                                 <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-gray-900/90 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
                                     Yüz Tanıma
                                 </div>
                             </button>
-                            <button type="button" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false"
+                            <button type="button"
                                     class="group relative inline-flex items-center justify-center w-14 h-14 rounded-2xl border border-gray-600 bg-gray-800 hover:bg-gray-700 hover:border-green-400/50 transition-all duration-200 shadow-lg hover:shadow-xl">
                                 <i data-lucide="qr-code" class="h-6 w-6 text-green-400 group-hover:text-green-300 group-hover:scale-110 transition-all duration-200"></i>
                                 <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-gray-900/90 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
@@ -229,6 +229,24 @@
 </div>
 
 <script>
+    function togglePasswordVisibility(fieldId) {
+        const field = document.getElementById(fieldId);
+        const eye = document.getElementById(fieldId + '-eye');
+        
+        if (field.type === 'password') {
+            field.type = 'text';
+            eye.setAttribute('data-lucide', 'eye-off');
+        } else {
+            field.type = 'password';
+            eye.setAttribute('data-lucide', 'eye');
+        }
+        
+        // Re-initialize lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         // E-posta alanına otomatik odaklanma
         const emailField = document.getElementById('email');
@@ -237,13 +255,6 @@
         }
 
         // Lucide ikonlarını başlat
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
-    });
-
-    // Alpine güncellemelerinden sonra ikonları yeniden başlat
-    document.addEventListener('alpine:updated', () => {
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
         }

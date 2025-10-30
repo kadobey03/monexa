@@ -136,11 +136,18 @@
 @endsection
 
 @section('styles')
-    <!-- Vue.js Lead Assignment Styles -->
-    <link href="{{ mix('css/admin/lead-assignment.css') }}" rel="stylesheet">
-    
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* Lead Assignment CSS will be included in main app.css via Vite */
+        .leads-management-container {
+            max-width: 100%;
+        }
+        .loading-state {
+            min-height: 24rem;
+        }
+    </style>
 @endsection
 
 @section('scripts')

@@ -6,56 +6,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        accent: '#6366F1',
-                        warning: '#F59E0B',
-                        danger: '#EF4444',
-                        dark: {
-                            100: '#374151',
-                            200: '#1F2937',
-                            300: '#111827',
-                            400: '#0F172A',
-                            500: '#0B1120',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Tailwind CSS configurations are now handled by Vite build -->
 
-    <!-- Alpine.js -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Vite Assets -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome - Local -->
+    <link rel="stylesheet" href="{{ asset('vendor/fontawesome/all.min.css') }}">
 
-    <!-- jQuery (required for some components) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery - Local -->
+    <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
 
-    <!-- DataTables JS -->
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.js"></script>
+    <!-- DataTables JS - Local -->
+    <script type="text/javascript" src="{{ asset('vendor/datatables/datatables.min.js') }}"></script>
 
-    <!-- AOS JS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- AOS JS - Local -->
+    <script src="{{ asset('vendor/aos/aos.js') }}"></script>
 
     <!-- Custom Styles -->
     <style>
-        /* Alpine.js x-cloak directive */
-        [x-cloak] {
-            display: none !important;
-        }
 
         /* Custom scrollbar for dark mode */
         ::-webkit-scrollbar {
@@ -154,51 +123,17 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" type="image/x-icon">
 
-    <!-- Preload key assets -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Inter Font - Local -->
+    <link href="{{ asset('vendor/fonts/inter.css') }}" rel="stylesheet">
 
+    <!-- DataTables CSS - Local -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/datatables/datatables.min.css') }}"/>
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css"/>
-
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- AOS CSS - Local -->
+    <link href="{{ asset('vendor/aos/aos.css') }}" rel="stylesheet">
 
     <!-- JavaScript utilities -->
     <script>
-        // Utility function for mobile menu
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('navigation', {
-                open: false,
-                toggle() {
-                    this.open = !this.open;
-                },
-                close() {
-                    this.open = false;
-                }
-            });
-
-            // Theme toggler
-            Alpine.store('darkMode', {
-                on: true,
-                toggle() {
-                    this.on = !this.on;
-                    if (this.on) {
-                        document.documentElement.classList.add('dark');
-                        document.body.classList.add('bg-gray-900');
-                        document.body.classList.remove('bg-gray-100');
-                    } else {
-                        document.documentElement.classList.remove('dark');
-                        document.body.classList.remove('bg-gray-900');
-                        document.body.classList.add('bg-gray-100');
-                    }
-                    localStorage.setItem('darkMode', this.on ? 'dark' : 'light');
-                }
-            });
-        });
-
         // Initialize theme from local storage
         document.addEventListener('DOMContentLoaded', () => {
             const theme = localStorage.getItem('darkMode');
@@ -206,9 +141,97 @@
                 document.documentElement.classList.remove('dark');
                 document.body.classList.remove('bg-gray-900');
                 document.body.classList.add('bg-gray-100');
-                if (window.Alpine) {
-                    Alpine.store('darkMode').on = false;
-                }
+            }
+        });
+
+        // Theme toggle function
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('bg-gray-900');
+                document.body.classList.add('bg-gray-100');
+                localStorage.setItem('darkMode', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('bg-gray-900');
+                document.body.classList.remove('bg-gray-100');
+                localStorage.setItem('darkMode', 'dark');
+            }
+        }
+
+        // Dropdown states
+        let tradeMenuOpen = false;
+        let companyMenuOpen = false;
+        let mobileMenuOpen = false;
+        let mobileTradeOpen = false;
+        let mobileCompanyOpen = false;
+
+        // Navigation toggle functions
+        function toggleTradeMenu() {
+            tradeMenuOpen = !tradeMenuOpen;
+            const menu = document.getElementById('trade-menu');
+            menu.style.display = tradeMenuOpen ? 'block' : 'none';
+            if (tradeMenuOpen && companyMenuOpen) {
+                toggleCompanyMenu();
+            }
+        }
+
+        function toggleCompanyMenu() {
+            companyMenuOpen = !companyMenuOpen;
+            const menu = document.getElementById('company-menu');
+            menu.style.display = companyMenuOpen ? 'block' : 'none';
+            if (companyMenuOpen && tradeMenuOpen) {
+                toggleTradeMenu();
+            }
+        }
+
+        function toggleMobileMenu() {
+            mobileMenuOpen = !mobileMenuOpen;
+            const menu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('mobile-menu-icon');
+            const closeIcon = document.getElementById('mobile-close-icon');
+            
+            if (mobileMenuOpen) {
+                menu.style.display = 'block';
+                menuIcon.style.display = 'none';
+                closeIcon.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+                menuIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+            }
+        }
+
+        function toggleMobileTrade() {
+            mobileTradeOpen = !mobileTradeOpen;
+            const menu = document.getElementById('mobile-trade-menu');
+            const chevron = document.getElementById('mobile-trade-chevron');
+            
+            menu.style.display = mobileTradeOpen ? 'block' : 'none';
+            chevron.classList.toggle('rotate-180', mobileTradeOpen);
+        }
+
+        function toggleMobileCompany() {
+            mobileCompanyOpen = !mobileCompanyOpen;
+            const menu = document.getElementById('mobile-company-menu');
+            const chevron = document.getElementById('mobile-company-chevron');
+            
+            menu.style.display = mobileCompanyOpen ? 'block' : 'none';
+            chevron.classList.toggle('rotate-180', mobileCompanyOpen);
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const tradeMenu = document.getElementById('trade-menu');
+            const companyMenu = document.getElementById('company-menu');
+            
+            if (tradeMenuOpen && !event.target.closest('[onclick="toggleTradeMenu()"]') && !tradeMenu.contains(event.target)) {
+                toggleTradeMenu();
+            }
+            
+            if (companyMenuOpen && !event.target.closest('[onclick="toggleCompanyMenu()"]') && !companyMenu.contains(event.target)) {
+                toggleCompanyMenu();
             }
         });
     </script>
@@ -242,7 +265,7 @@
     <!-- Header -->
 <header class="bg-gray-900 border-b border-gray-800 relative z-50">
     <!-- Top Navigation Bar -->
-    <div x-data="{ mobileMenuOpen: false }" class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8" id="navbar-container">
         <div class="relative">
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
@@ -254,14 +277,14 @@
 
                 <!-- Main Navigation - Desktop -->
                 <nav class="hidden md:flex space-x-8">
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" @click.away="open = false" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
+                    <div class="relative">
+                        <button onclick="toggleTradeMenu()" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
                             <span>Ticaret</span>
                             <svg class="ml-2 h-4 w-4 text-gray-400 group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-300 ring-1 ring-black ring-opacity-5 z-50" style="display: none;">
+                        <div id="trade-menu" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-300 ring-1 ring-black ring-opacity-5 z-50" style="display: none;">
                             <a href="cryptocurrencies" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Kripto Para</a>
                             <a href="forex" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Döviz</a>
                             <a href="shares" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Hisseler</a>
@@ -271,14 +294,14 @@
                     </div>
 
 
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" @click.away="open = false" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
+                    <div class="relative">
+                        <button onclick="toggleCompanyMenu()" class="group inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-200 hover:text-white focus:outline-none">
                             <span>Şirket</span>
                             <svg class="ml-2 h-4 w-4 text-gray-400 group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
-                        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-300 ring-1 ring-black ring-opacity-5 z-50" style="display: none;">
+                        <div id="company-menu" class="absolute left-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-300 ring-1 ring-black ring-opacity-5 z-50" style="display: none;">
                             <a href="about" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Hakkımızda</a>
                             <a href="why-us" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">Neden Biz</a>
                             <a href="faq" class="block px-4 py-2 text-sm text-gray-200 hover:bg-dark-200">SSS</a>
@@ -344,12 +367,12 @@
                     <!--</button>-->
 
                     <!-- Mobile Menu Toggle -->
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                    <button onclick="toggleMobileMenu()" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                         <span class="sr-only">Menüyü Aç</span>
-                        <svg x-show="!mobileMenuOpen" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <svg id="mobile-menu-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
-                        <svg x-show="mobileMenuOpen" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" style="display: none;">
+                        <svg id="mobile-close-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" style="display: none;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
@@ -358,17 +381,17 @@
         </div>
 
         <!-- Mobile menu -->
-        <div x-show="mobileMenuOpen" class="md:hidden" id="mobile-menu" style="display: none;">
+        <div id="mobile-menu" class="md:hidden" style="display: none;">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <!-- Mobile Navigation -->
-                <div x-data="{ open: false }" class="py-1">
-                    <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
+                <div class="py-1">
+                    <button onclick="toggleMobileTrade()" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
                         <span>Ticaret</span>
-                        <svg class="h-4 w-4 text-gray-400" :class="{'transform rotate-180': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <svg id="mobile-trade-chevron" class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <div x-show="open" class="pl-4">
+                    <div id="mobile-trade-menu" class="pl-4" style="display: none;">
                         <a href="cryptocurrencies" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Kripto Para</a>
                         <a href="forex" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Döviz</a>
                         <a href="shares" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Hisseler</a>
@@ -377,15 +400,14 @@
                     </div>
                 </div>
 
-
-                <div x-data="{ open: false }" class="py-1">
-                    <button @click="open = !open" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
+                <div class="py-1">
+                    <button onclick="toggleMobileCompany()" class="w-full flex justify-between items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
                         <span>Şirket</span>
-                        <svg class="h-4 w-4 text-gray-400" :class="{'transform rotate-180': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <svg id="mobile-company-chevron" class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <div x-show="open" class="pl-4">
+                    <div id="mobile-company-menu" class="pl-4" style="display: none;">
                         <a href="about" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Hakkımızda</a>
                         <a href="why-us" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Neden Biz</a>
                         <a href="faq" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">SSS</a>

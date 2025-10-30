@@ -23,25 +23,61 @@ switch ($width) {
         $width = 'w-48';
         break;
 }
+
+$dropdownId = 'dropdown_' . uniqid();
 @endphp
 
-<div class="relative" x-data="{ open: false }" @click.away="open = false" @close.stop="open = false">
-    <div @click="open = ! open">
+<div class="relative dropdown-wrapper">
+    <div onclick="toggleDropdown('{{ $dropdownId }}')">
         {{ $trigger }}
     </div>
 
-    <div x-show="open"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="transform opacity-0 scale-95"
-            x-transition:enter-end="transform opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-75"
-            x-transition:leave-start="transform opacity-100 scale-100"
-            x-transition:leave-end="transform opacity-0 scale-95"
-            class="absolute z-50 mt-2 {{ $width }} rounded-md shadow-lg {{ $alignmentClasses }} {{ $dropdownClasses }}"
-            style="display: none;"
-            @click="open = false">
+    <div id="{{ $dropdownId }}" 
+         class="absolute z-50 mt-2 {{ $width }} rounded-md shadow-lg {{ $alignmentClasses }} {{ $dropdownClasses }} dropdown-menu"
+         style="display: none;">
         <div class="rounded-md ring-1 ring-black ring-opacity-5 {{ $contentClasses }}">
             {{ $content }}
         </div>
     </div>
 </div>
+
+<script>
+function toggleDropdown(id) {
+    const dropdown = document.getElementById(id);
+    const isOpen = dropdown.style.display !== 'none';
+    
+    // Close all other dropdowns
+    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        if (menu.id !== id) {
+            menu.style.display = 'none';
+        }
+    });
+    
+    // Toggle this dropdown
+    dropdown.style.display = isOpen ? 'none' : 'block';
+}
+
+function closeDropdown(id) {
+    const dropdown = document.getElementById(id);
+    if (dropdown) {
+        dropdown.style.display = 'none';
+    }
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.dropdown-wrapper')) {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.style.display = 'none';
+        });
+    }
+});
+
+// Close dropdown when clicking on dropdown content
+document.addEventListener('click', function(event) {
+    if (event.target.closest('.dropdown-menu')) {
+        const dropdown = event.target.closest('.dropdown-menu');
+        dropdown.style.display = 'none';
+    }
+});
+</script>

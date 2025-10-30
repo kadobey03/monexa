@@ -72,7 +72,7 @@
                             id="email"
                             name="email"
                             type="email"
-                            autocomplete="email"
+                            autocomplete="username"
                             value="{{ old('email') }}"
                             required
                             class="block w-full pl-12 pr-4 py-4 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-base font-medium"
@@ -97,24 +97,23 @@
                             Şifrenizi mi unuttunuz?
                         </a>
                     </div>
-                    <div class="relative" x-data="{ showPassword: false }">
+                    <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <i data-lucide="lock" class="h-5 w-5 text-gray-400"></i>
                         </div>
                         <input
                             id="password"
                             name="password"
-                            :type="showPassword ? 'text' : 'password'"
+                            type="password"
                             autocomplete="current-password"
                             required
                             class="block w-full pl-12 pr-12 py-4 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-base font-medium"
                             placeholder="Enter your password">
                         <button
                             type="button"
-                            @click="showPassword = !showPassword"
+                            onclick="togglePasswordVisibility('password')"
                             class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300 transition-colors duration-200">
-                            <i data-lucide="eye" x-show="!showPassword" class="h-5 w-5"></i>
-                            <i data-lucide="eye-off" x-show="showPassword" class="h-5 w-5"></i>
+                            <i data-lucide="eye" class="h-5 w-5" id="password-eye"></i>
                         </button>
                     </div>
                     @error('password')
@@ -161,6 +160,24 @@
 
 <!-- Initialize Lucide Icons -->
 <script>
+function togglePasswordVisibility(fieldId) {
+    const field = document.getElementById(fieldId);
+    const eye = document.getElementById(fieldId + '-eye');
+    
+    if (field.type === 'password') {
+        field.type = 'text';
+        eye.setAttribute('data-lucide', 'eye-off');
+    } else {
+        field.type = 'password';
+        eye.setAttribute('data-lucide', 'eye');
+    }
+    
+    // Re-initialize lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();

@@ -22,10 +22,9 @@
             <x-slot name="content">
                 <p class="">{{ __('Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}</p>
             
-                <div class="mt-4" x-data="{}" x-on:confirming-delete-user.window="setTimeout(() => $refs.password.focus(), 250)">
-                    <x-jet-input type="password" class="form-control"
+                <div class="mt-4 password-confirm-container">
+                    <x-jet-input type="password" class="form-control confirmable-password-field"
                                 placeholder="{{ __('Password') }}"
-                                x-ref="password"
                                  wire:model.defer="password"
                                 wire:keydown.enter="deleteUser" />
 
@@ -45,3 +44,17 @@
         </x-jet-dialog-modal>
     </x-slot>
 </x-jet-action-section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Focus password input when modal opens
+    document.addEventListener('confirming-delete-user', function() {
+        setTimeout(function() {
+            const passwordField = document.querySelector('.confirmable-password-field');
+            if (passwordField) {
+                passwordField.focus();
+            }
+        }, 250);
+    });
+});
+</script>

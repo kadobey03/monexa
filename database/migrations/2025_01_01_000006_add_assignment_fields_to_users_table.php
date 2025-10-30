@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             // Assignment tracking fields
             if (!Schema::hasColumn('users', 'assigned_to_admin_id')) {
-                $table->unsignedBigInteger('assigned_to_admin_id')->nullable()->after('contact_history');
+                $table->unsignedBigInteger('assigned_to_admin_id')->nullable();
             }
             if (!Schema::hasColumn('users', 'previous_assigned_admin_id')) {
                 $table->unsignedBigInteger('previous_assigned_admin_id')->nullable()->after('assigned_to_admin_id');

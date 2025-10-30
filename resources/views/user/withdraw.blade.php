@@ -3,7 +3,7 @@
 @section('title', $title)
 @section('content')
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8" x-data="{ showConfirmModal: false, amount: '' }">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
     <div class="container mx-auto px-6">
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
@@ -44,8 +44,17 @@
         <div class="bg-gray-900 dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-700 dark:border-gray-700 max-w-3xl mx-auto">
             <div class="p-6 border-b border-gray-700 dark:border-gray-700">
                 <div class="flex items-center gap-4">
-                    <div class="p-3 rounded-full" :class="{'bg-blue-100 dark:bg-blue-900/30': '{{ $payment_mode }}' == 'Bitcoin' || '{{ $payment_mode }}' == 'Ethereum', 'bg-green-100 dark:bg-green-900/30': '{{ $payment_mode }}' == 'Bank Transfer', 'bg-purple-100 dark:bg-purple-900/30': '{{ $payment_mode }}' == 'USDT'}">
-                        <i data-lucide="{{ $payment_mode == 'Bitcoin' ? 'bitcoin' : ($payment_mode == 'Ethereum' ? 'zap' : ($payment_mode == 'USDT' ? 'circle-dollar-sign' : 'building-bank')) }}" class="w-6 h-6" :class="{'text-blue-600 dark:text-blue-400': '{{ $payment_mode }}' == 'Bitcoin' || '{{ $payment_mode }}' == 'Ethereum', 'text-green-600 dark:text-green-400': '{{ $payment_mode }}' == 'Bank Transfer', 'text-purple-600 dark:text-purple-400': '{{ $payment_mode }}' == 'USDT'}"></i>
+                    <div class="p-3 rounded-full
+                        @if($payment_mode == 'Bitcoin' || $payment_mode == 'Ethereum') bg-blue-100 dark:bg-blue-900/30
+                        @elseif($payment_mode == 'Bank Transfer') bg-green-100 dark:bg-green-900/30
+                        @elseif($payment_mode == 'USDT') bg-purple-100 dark:bg-purple-900/30
+                        @endif">
+                        <i data-lucide="{{ $payment_mode == 'Bitcoin' ? 'bitcoin' : ($payment_mode == 'Ethereum' ? 'zap' : ($payment_mode == 'USDT' ? 'circle-dollar-sign' : 'building-bank')) }}"
+                           class="w-6 h-6
+                           @if($payment_mode == 'Bitcoin' || $payment_mode == 'Ethereum') text-blue-600 dark:text-blue-400
+                           @elseif($payment_mode == 'Bank Transfer') text-green-600 dark:text-green-400
+                           @elseif($payment_mode == 'USDT') text-purple-600 dark:text-purple-400
+                           @endif"></i>
                     </div>
                     <div>
                         <h2 class="text-2xl font-bold text-white dark:text-white">{{ $payment_mode }} Çekimi</h2>
@@ -54,7 +63,7 @@
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('completewithdrawal') }}" class="p-6" x-on:submit="showConfirmModal = true; return false;" id="withdrawalForm">
+            <form method="POST" action="{{ route('completewithdrawal') }}" class="p-6" id="withdrawalForm">
                 @csrf
                 <input type="hidden" name="method" value="{{ $payment_mode }}">
 
@@ -73,7 +82,6 @@
                                required
                                min="1"
                                placeholder="Çekilecek tutarı girin"
-                               x-model="amount"
                                class="pl-10 block w-full rounded-xl border-gray-600 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-800 dark:bg-gray-700 text-white dark:text-white sm:text-sm py-3"
                         />
                     </div>
@@ -215,39 +223,25 @@
     </div>
 
     <!-- Confirmation Modal -->
-    <div x-show="showConfirmModal"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-50 overflow-y-auto"
-         style="display: none;">
+    <div id="confirmModal" class="fixed inset-0 z-50 overflow-y-auto hidden opacity-0 transition-all duration-300">
         <div class="flex items-center justify-center min-h-screen px-4">
-            <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" @click="showConfirmModal = false"></div>
+            <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" id="modalBackdrop"></div>
 
-            <div x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="transform opacity-0 scale-95"
-                 x-transition:enter-end="transform opacity-100 scale-100"
-                 x-transition:leave="transition ease-in duration-200"
-                 x-transition:leave-start="transform opacity-100 scale-100"
-                 x-transition:leave-end="transform opacity-0 scale-95"
-                 class="bg-gray-900 dark:bg-gray-900 rounded-2xl shadow-xl transform transition-all max-w-md w-full p-6 z-10">
+            <div id="modalContent" class="bg-gray-900 dark:bg-gray-900 rounded-2xl shadow-xl transform transition-all max-w-md w-full p-6 z-10 scale-95 opacity-0">
                 <div class="text-center">
                     <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-500/20 dark:bg-blue-900/30 mb-4">
                         <i data-lucide="alert-circle" class="h-8 w-8 text-blue-400 dark:text-blue-400"></i>
                     </div>
                     <h3 class="text-xl font-semibold text-white dark:text-white mb-2">Çekimi Onayla</h3>
                     <p class="mb-6 text-gray-300 dark:text-gray-400">
-                        {{ Auth::user()->currency }}<span x-text="amount"></span> tutarı {{ $payment_mode }} hesabınıza çekmek istediğinizden emin misiniz?
+                        {{ Auth::user()->currency }}<span id="confirmAmount"></span> tutarı {{ $payment_mode }} hesabınıza çekmek istediğinizden emin misiniz?
                     </p>
                     <div class="flex justify-center gap-4">
-                        <button @click="showConfirmModal = false"
+                        <button id="cancelButton"
                                 class="px-4 py-2 bg-gray-700 dark:bg-gray-700 text-gray-300 dark:text-gray-300 rounded-lg hover:bg-gray-600 dark:hover:bg-gray-600 focus:outline-none transition-colors">
                             İptal
                         </button>
-                        <button @click="document.getElementById('withdrawalForm').submit()"
+                        <button id="confirmButton"
                                 class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none transition-colors">
                             Çekimi Onayla
                         </button>
@@ -268,6 +262,286 @@
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
+
+            // Withdrawal Manager
+            class WithdrawalManager {
+                constructor() {
+                    this.amount = '';
+                    this.showConfirmModal = false;
+                    this.init();
+                }
+
+                init() {
+                    this.bindEvents();
+                    this.setupFormValidation();
+                }
+
+                bindEvents() {
+                    const form = document.getElementById('withdrawalForm');
+                    const amountInput = document.getElementById('amount');
+                    const confirmModal = document.getElementById('confirmModal');
+                    const modalBackdrop = document.getElementById('modalBackdrop');
+                    const cancelButton = document.getElementById('cancelButton');
+                    const confirmButton = document.getElementById('confirmButton');
+                    const confirmAmount = document.getElementById('confirmAmount');
+
+                    // Form submission
+                    if (form) {
+                        form.addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            this.showConfirmation();
+                        });
+                    }
+
+                    // Amount input
+                    if (amountInput) {
+                        amountInput.addEventListener('input', (e) => {
+                            this.amount = e.target.value;
+                        });
+                    }
+
+                    // Modal close events
+                    if (modalBackdrop) {
+                        modalBackdrop.addEventListener('click', () => this.hideConfirmation());
+                    }
+
+                    if (cancelButton) {
+                        cancelButton.addEventListener('click', () => this.hideConfirmation());
+                    }
+
+                    // Confirm withdrawal
+                    if (confirmButton) {
+                        confirmButton.addEventListener('click', () => {
+                            this.confirmWithdrawal();
+                        });
+                    }
+
+                    // Escape key to close modal
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape' && this.showConfirmModal) {
+                            this.hideConfirmation();
+                        }
+                    });
+                }
+
+                showConfirmation() {
+                    if (!this.amount || parseFloat(this.amount) <= 0) {
+                        this.showError('Lütfen geçerli bir tutar girin.');
+                        return;
+                    }
+
+                    const userBalance = {{ Auth::user()->account_bal ?? 0 }};
+                    if (parseFloat(this.amount) > userBalance) {
+                        this.showError('Yetersiz bakiye.');
+                        return;
+                    }
+
+                    const minWithdrawal = 50;
+                    if (parseFloat(this.amount) < minWithdrawal) {
+                        this.showError('Minimum çekim tutarı {{ Auth::user()->currency }}' + minWithdrawal + ' olmalıdır.');
+                        return;
+                    }
+
+                    this.showConfirmModal = true;
+                    const modal = document.getElementById('confirmModal');
+                    const modalContent = document.getElementById('modalContent');
+                    const confirmAmount = document.getElementById('confirmAmount');
+
+                    if (confirmAmount) {
+                        confirmAmount.textContent = this.formatNumber(this.amount);
+                    }
+
+                    if (modal && modalContent) {
+                        modal.classList.remove('hidden');
+                        
+                        // Animate in
+                        setTimeout(() => {
+                            modal.classList.remove('opacity-0');
+                            modal.classList.add('opacity-100');
+                            modalContent.classList.remove('scale-95', 'opacity-0');
+                            modalContent.classList.add('scale-100', 'opacity-100');
+                        }, 10);
+                    }
+
+                    // Prevent body scroll
+                    document.body.style.overflow = 'hidden';
+                }
+
+                hideConfirmation() {
+                    this.showConfirmModal = false;
+                    const modal = document.getElementById('confirmModal');
+                    const modalContent = document.getElementById('modalContent');
+
+                    if (modal && modalContent) {
+                        // Animate out
+                        modal.classList.remove('opacity-100');
+                        modal.classList.add('opacity-0');
+                        modalContent.classList.remove('scale-100', 'opacity-100');
+                        modalContent.classList.add('scale-95', 'opacity-0');
+
+                        setTimeout(() => {
+                            modal.classList.add('hidden');
+                        }, 300);
+                    }
+
+                    // Restore body scroll
+                    document.body.style.overflow = '';
+                }
+
+                confirmWithdrawal() {
+                    const form = document.getElementById('withdrawalForm');
+                    if (form) {
+                        // Add loading state
+                        const confirmButton = document.getElementById('confirmButton');
+                        if (confirmButton) {
+                            confirmButton.disabled = true;
+                            confirmButton.innerHTML = '<i class="animate-spin w-4 h-4 mr-2" data-lucide="loader"></i>İşleniyor...';
+                            lucide.createIcons();
+                        }
+
+                        // Submit the form
+                        form.submit();
+                    }
+                }
+
+                setupFormValidation() {
+                    const amountInput = document.getElementById('amount');
+                    if (amountInput) {
+                        amountInput.addEventListener('blur', () => {
+                            this.validateAmount();
+                        });
+
+                        amountInput.addEventListener('input', () => {
+                            this.clearErrors();
+                        });
+                    }
+
+                    // Bank transfer fields validation
+                    const bankFields = ['bank_name', 'account_name', 'account_no', 'swiftcode'];
+                    bankFields.forEach(fieldId => {
+                        const field = document.getElementById(fieldId);
+                        if (field) {
+                            field.addEventListener('blur', () => {
+                                this.validateField(field);
+                            });
+                        }
+                    });
+
+                    // Wallet address validation
+                    const detailsField = document.getElementById('details');
+                    if (detailsField) {
+                        detailsField.addEventListener('blur', () => {
+                            this.validateWalletAddress(detailsField);
+                        });
+                    }
+                }
+
+                validateAmount() {
+                    const amountInput = document.getElementById('amount');
+                    if (!amountInput) return true;
+
+                    const amount = parseFloat(amountInput.value);
+                    const userBalance = {{ Auth::user()->account_bal ?? 0 }};
+                    const minWithdrawal = 50;
+
+                    this.clearFieldError(amountInput);
+
+                    if (isNaN(amount) || amount <= 0) {
+                        this.showFieldError(amountInput, 'Geçerli bir tutar girin.');
+                        return false;
+                    }
+
+                    if (amount < minWithdrawal) {
+                        this.showFieldError(amountInput, 'Minimum çekim tutarı {{ Auth::user()->currency }}' + minWithdrawal + ' olmalıdır.');
+                        return false;
+                    }
+
+                    if (amount > userBalance) {
+                        this.showFieldError(amountInput, 'Yetersiz bakiye.');
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                validateField(field) {
+                    this.clearFieldError(field);
+
+                    if (!field.value.trim()) {
+                        this.showFieldError(field, 'Bu alan gereklidir.');
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                validateWalletAddress(field) {
+                    this.clearFieldError(field);
+
+                    const address = field.value.trim();
+                    if (!address) {
+                        this.showFieldError(field, 'Cüzdan adresi gereklidir.');
+                        return false;
+                    }
+
+                    // Basic wallet address validation (length check)
+                    if (address.length < 20) {
+                        this.showFieldError(field, 'Geçersiz cüzdan adresi formatı.');
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                showFieldError(field, message) {
+                    const errorId = `${field.id}-error`;
+                    let errorElement = document.getElementById(errorId);
+                    
+                    if (!errorElement) {
+                        errorElement = document.createElement('p');
+                        errorElement.id = errorId;
+                        errorElement.className = 'mt-2 text-sm text-red-400';
+                        field.parentNode.parentNode.appendChild(errorElement);
+                    }
+                    
+                    errorElement.textContent = message;
+                    field.classList.add('border-red-500');
+                }
+
+                clearFieldError(field) {
+                    const errorId = `${field.id}-error`;
+                    const errorElement = document.getElementById(errorId);
+                    
+                    if (errorElement) {
+                        errorElement.remove();
+                    }
+                    
+                    field.classList.remove('border-red-500');
+                }
+
+                clearErrors() {
+                    const errorElements = document.querySelectorAll('[id$="-error"]');
+                    errorElements.forEach(element => element.remove());
+                    
+                    const errorFields = document.querySelectorAll('.border-red-500');
+                    errorFields.forEach(field => field.classList.remove('border-red-500'));
+                }
+
+                showError(message) {
+                    // You can implement a toast notification here or use a simple alert
+                    alert(message);
+                }
+
+                formatNumber(num) {
+                    return parseFloat(num).toLocaleString('tr-TR', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                }
+            }
+
+            // Initialize withdrawal manager
+            window.withdrawalManager = new WithdrawalManager();
         });
     </script>
 @endsection

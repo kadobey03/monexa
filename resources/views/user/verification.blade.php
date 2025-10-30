@@ -1,21 +1,7 @@
 @extends('layouts.dasht')
 @section('title', $title)
 @section('content')
-<div class="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8"
-     x-data="{
-        currentStep: 1,
-        documentType: 'passport',
-        isSubmitting: false,
-        progress: 33,
-        showPreview: false,
-        frontPreview: null,
-        backPreview: null,
-        documentTypes: {
-            passport: 'International Passport',
-            national_id: 'National ID Card',
-            drivers_license: 'Driver\'s License'
-        }
-     }">
+<div class="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8" id="verificationContainer">
 
     <!-- Alert Messages -->
     <x-danger-alert />
@@ -42,42 +28,39 @@
     <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 mb-6 sm:mb-8">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-lg font-semibold text-white">Doğrulama İlerlemesi</h2>
-            <span class="text-sm text-gray-400" x-text="`Adım ${currentStep} / 3`"></span>
+            <span class="text-sm text-gray-400" id="stepCounter">Adım 1 / 3</span>
         </div>
 
         <!-- Progress Bar -->
         <div class="w-full bg-gray-800 rounded-full h-2 mb-4">
             <div class="bg-gradient-to-r from-blue-600 to-blue-500 h-2 rounded-full transition-all duration-500"
-                 :style="`width: ${progress}%`"></div>
+                 id="progressBar" style="width: 33%"></div>
         </div>
 
         <!-- Steps -->
         <div class="flex items-center justify-between">
-            <div class="flex items-center" :class="currentStep >= 1 ? 'text-blue-400' : 'text-gray-500'">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2"
-                     :class="currentStep >= 1 ? 'bg-blue-600 border-blue-600 text-white' : 'border-gray-600 text-gray-400'">
-                    <svg x-show="currentStep > 1" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="flex items-center text-blue-400" id="step1Container">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 bg-blue-600 border-blue-600 text-white" id="step1Circle">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="step1Check" style="display: none;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span x-show="currentStep <= 1">1</span>
+                    <span id="step1Number">1</span>
                 </div>
                 <span class="ml-2 text-xs sm:text-sm font-medium hidden sm:block">Kişisel Bilgiler</span>
             </div>
 
-            <div class="flex items-center" :class="currentStep >= 2 ? 'text-blue-400' : 'text-gray-500'">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2"
-                     :class="currentStep >= 2 ? 'bg-blue-600 border-blue-600 text-white' : 'border-gray-600 text-gray-400'">
-                    <svg x-show="currentStep > 2" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="flex items-center text-gray-500" id="step2Container">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 border-gray-600 text-gray-400" id="step2Circle">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="step2Check" style="display: none;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    <span x-show="currentStep <= 2">2</span>
+                    <span id="step2Number">2</span>
                 </div>
                 <span class="ml-2 text-xs sm:text-sm font-medium hidden sm:block">Adres</span>
             </div>
 
-            <div class="flex items-center" :class="currentStep >= 3 ? 'text-blue-400' : 'text-gray-500'">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2"
-                     :class="currentStep >= 3 ? 'bg-blue-600 border-blue-600 text-white' : 'border-gray-600 text-gray-400'">
+            <div class="flex items-center text-gray-500" id="step3Container">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 border-gray-600 text-gray-400" id="step3Circle">
                     <span>3</span>
                 </div>
                 <span class="ml-2 text-xs sm:text-sm font-medium hidden sm:block">Belgeler</span>
@@ -104,11 +87,11 @@
 
         <!-- Form Content -->
         <form action="{{ route('kycsubmit') }}" method="POST" enctype="multipart/form-data"
-              x-on:submit="isSubmitting = true" class="p-4 sm:p-6">
+              onsubmit="handleFormSubmit()" class="p-4 sm:p-6" id="verificationForm">
             @csrf
 
             <!-- Step 1: Personal Details -->
-            <div x-show="currentStep === 1" x-transition>
+            <div id="step1Content">
                 <div class="mb-6">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 bg-blue-600/10 rounded-lg flex items-center justify-center">
@@ -189,7 +172,7 @@
                 </div>
 
                 <div class="flex justify-end mt-8">
-                    <button type="button" @click="currentStep = 2; progress = 66"
+                    <button type="button" onclick="goToStep(2, 66)"
                             class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
                         Adrese Devam Et
                         <svg class="w-4 h-4 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -200,7 +183,7 @@
             </div>
 
             <!-- Step 2: Address Details -->
-            <div x-show="currentStep === 2" x-transition>
+            <div id="step2Content" style="display: none;">
                 <div class="mb-6">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 bg-green-600/10 rounded-lg flex items-center justify-center">
@@ -271,14 +254,14 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-between gap-4 mt-8">
-                    <button type="button" @click="currentStep = 1; progress = 33"
+                    <button type="button" onclick="goToStep(1, 33)"
                             class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-medium transition-all duration-200 order-2 sm:order-1">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                         Önceki
                     </button>
-                    <button type="button" @click="currentStep = 3; progress = 100"
+                    <button type="button" onclick="goToStep(3, 100)"
                             class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl order-1 sm:order-2">
                         Belgelere Devam Et
                         <svg class="w-4 h-4 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -289,7 +272,7 @@
             </div>
 
             <!-- Step 3: Document Upload -->
-            <div x-show="currentStep === 3" x-transition>
+            <div id="step3Content" style="display: none;">
                 <div class="mb-6">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 bg-purple-600/10 rounded-lg flex items-center justify-center">
@@ -311,9 +294,8 @@
                     </label>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                         <label class="relative cursor-pointer group">
-                            <input type="radio" name="document_type" value="Int'l Passport" x-model="documentType" class="sr-only">
-                            <div class="p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700"
-                                 :class="documentType === 'passport' ? 'border-blue-500 bg-blue-600/10' : 'border-gray-700 hover:border-gray-600'">
+                            <input type="radio" name="document_type" value="Int'l Passport" class="sr-only" onchange="selectDocumentType('passport')">
+                            <div class="p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700 border-blue-500 bg-blue-600/10" id="passportOption">
                                 <div class="w-12 h-12 bg-blue-600/10 rounded-lg flex items-center justify-center mx-auto mb-3">
                                     <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
@@ -325,9 +307,8 @@
                         </label>
 
                         <label class="relative cursor-pointer group">
-                            <input type="radio" name="document_type" value="National ID" x-model="documentType" class="sr-only">
-                            <div class="p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700"
-                                 :class="documentType === 'national_id' ? 'border-blue-500 bg-blue-600/10' : 'border-gray-700 hover:border-gray-600'">
+                            <input type="radio" name="document_type" value="National ID" class="sr-only" onchange="selectDocumentType('national_id')">
+                            <div class="p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700 border-gray-700 hover:border-gray-600" id="nationalIdOption">
                                 <div class="w-12 h-12 bg-green-600/10 rounded-lg flex items-center justify-center mx-auto mb-3">
                                     <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
@@ -339,9 +320,8 @@
                         </label>
 
                         <label class="relative cursor-pointer group">
-                            <input type="radio" name="document_type" value="Drivers License" x-model="documentType" class="sr-only">
-                            <div class="p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700"
-                                 :class="documentType === 'drivers_license' ? 'border-blue-500 bg-blue-600/10' : 'border-gray-700 hover:border-gray-600'">
+                            <input type="radio" name="document_type" value="Drivers License" class="sr-only" onchange="selectDocumentType('drivers_license')">
+                            <div class="p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700 border-gray-700 hover:border-gray-600" id="driversLicenseOption">
                                 <div class="w-12 h-12 bg-amber-600/10 rounded-lg flex items-center justify-center mx-auto mb-3">
                                     <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
@@ -403,18 +383,18 @@
                         </label>
                         <div class="relative">
                             <input type="file" name="frontimg" required accept="image/*"
-                                   @change="frontPreview = $event.target.files[0] ? URL.createObjectURL($event.target.files[0]) : null"
+                                   onchange="handleFrontImageUpload(event)"
                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                             <div class="border-2 border-dashed border-gray-600 rounded-xl p-6 text-center bg-gray-800 hover:bg-gray-750 hover:border-blue-500 transition-all">
-                                <div x-show="!frontPreview">
+                                <div id="frontUploadPlaceholder">
                                     <svg class="w-12 h-12 mx-auto mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                     </svg>
                                     <p class="text-gray-400 font-medium mb-2">Ön Yüzü Yükle</p>
                                     <p class="text-gray-500 text-xs">PNG, JPG 10MB'ye kadar</p>
                                 </div>
-                                <div x-show="frontPreview" class="space-y-3">
-                                    <img :src="frontPreview" class="w-full h-32 object-cover rounded-lg mx-auto">
+                                <div id="frontPreviewContent" class="space-y-3" style="display: none;">
+                                    <img id="frontPreviewImage" class="w-full h-32 object-cover rounded-lg mx-auto">
                                     <p class="text-green-400 text-sm font-medium">Ön yüz yüklendi</p>
                                 </div>
                             </div>
@@ -428,18 +408,18 @@
                         </label>
                         <div class="relative">
                             <input type="file" name="backimg" required accept="image/*"
-                                   @change="backPreview = $event.target.files[0] ? URL.createObjectURL($event.target.files[0]) : null"
+                                   onchange="handleBackImageUpload(event)"
                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
                             <div class="border-2 border-dashed border-gray-600 rounded-xl p-6 text-center bg-gray-800 hover:bg-gray-750 hover:border-blue-500 transition-all">
-                                <div x-show="!backPreview">
+                                <div id="backUploadPlaceholder">
                                     <svg class="w-12 h-12 mx-auto mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                     </svg>
                                     <p class="text-gray-400 font-medium mb-2">Arka Yüzü Yükle</p>
                                     <p class="text-gray-500 text-xs">PNG, JPG 10MB'ye kadar</p>
                                 </div>
-                                <div x-show="backPreview" class="space-y-3">
-                                    <img :src="backPreview" class="w-full h-32 object-cover rounded-lg mx-auto">
+                                <div id="backPreviewContent" class="space-y-3" style="display: none;">
+                                    <img id="backPreviewImage" class="w-full h-32 object-cover rounded-lg mx-auto">
                                     <p class="text-green-400 text-sm font-medium">Arka yüz yüklendi</p>
                                 </div>
                             </div>
@@ -465,7 +445,7 @@
 
                 <!-- Action Buttons -->
                 <div class="flex flex-col sm:flex-row justify-between gap-4">
-                    <button type="button" @click="currentStep = 2; progress = 66"
+                    <button type="button" onclick="goToStep(2, 66)"
                             class="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-medium transition-all duration-200 order-2 sm:order-1">
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -483,18 +463,16 @@
                             İnceleniyor
                         </button>
                     @else
-                        <button type="submit"
-                                :disabled="isSubmitting"
+                        <button type="submit" id="submitButton"
                                 class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl disabled:cursor-not-allowed order-1 sm:order-2 flex items-center justify-center gap-2">
-                            <svg x-show="isSubmitting" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <svg id="loadingSpinner" class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24" style="display: none;">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            <svg x-show="!isSubmitting" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg id="submitIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            <span x-show="!isSubmitting">Başvuru Gönder</span>
-                            <span x-show="isSubmitting">Gönderiliyor...</span>
+                            <span id="submitText">Başvuru Gönder</span>
                         </button>
                     @endif
                 </div>
@@ -522,20 +500,195 @@
 
 @push('scripts')
 <script>
-document.addEventListener('alpine:init', () => {
-    Alpine.data('verificationForm', () => ({
-        init() {
-            // Initialize any additional functionality
-            console.log('Verification form initialized');
-        }
-    }));
+// Verification Form State
+let verificationState = {
+    currentStep: 1,
+    documentType: 'passport',
+    isSubmitting: false,
+    progress: 33,
+    frontPreview: null,
+    backPreview: null
+};
+
+// Initialize verification form
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Verification form initialized');
+    updateStepDisplay();
+    
+    // Set default document type selection
+    selectDocumentType('passport');
 });
+
+// Step navigation function
+function goToStep(step, progressValue) {
+    verificationState.currentStep = step;
+    verificationState.progress = progressValue;
+    
+    // Hide all step contents
+    document.getElementById('step1Content').style.display = 'none';
+    document.getElementById('step2Content').style.display = 'none';
+    document.getElementById('step3Content').style.display = 'none';
+    
+    // Show current step content
+    document.getElementById('step' + step + 'Content').style.display = 'block';
+    
+    updateStepDisplay();
+    updateProgressBar();
+}
+
+// Update step indicator display
+function updateStepDisplay() {
+    const currentStep = verificationState.currentStep;
+    
+    // Update step counter
+    document.getElementById('stepCounter').textContent = `Adım ${currentStep} / 3`;
+    
+    // Update step 1
+    const step1Container = document.getElementById('step1Container');
+    const step1Circle = document.getElementById('step1Circle');
+    const step1Check = document.getElementById('step1Check');
+    const step1Number = document.getElementById('step1Number');
+    
+    if (currentStep >= 1) {
+        step1Container.className = 'flex items-center text-blue-400';
+        step1Circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 bg-blue-600 border-blue-600 text-white';
+        if (currentStep > 1) {
+            step1Check.style.display = 'block';
+            step1Number.style.display = 'none';
+        } else {
+            step1Check.style.display = 'none';
+            step1Number.style.display = 'block';
+        }
+    } else {
+        step1Container.className = 'flex items-center text-gray-500';
+        step1Circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 border-gray-600 text-gray-400';
+    }
+    
+    // Update step 2
+    const step2Container = document.getElementById('step2Container');
+    const step2Circle = document.getElementById('step2Circle');
+    const step2Check = document.getElementById('step2Check');
+    const step2Number = document.getElementById('step2Number');
+    
+    if (currentStep >= 2) {
+        step2Container.className = 'flex items-center text-blue-400';
+        step2Circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 bg-blue-600 border-blue-600 text-white';
+        if (currentStep > 2) {
+            step2Check.style.display = 'block';
+            step2Number.style.display = 'none';
+        } else {
+            step2Check.style.display = 'none';
+            step2Number.style.display = 'block';
+        }
+    } else {
+        step2Container.className = 'flex items-center text-gray-500';
+        step2Circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 border-gray-600 text-gray-400';
+    }
+    
+    // Update step 3
+    const step3Container = document.getElementById('step3Container');
+    const step3Circle = document.getElementById('step3Circle');
+    
+    if (currentStep >= 3) {
+        step3Container.className = 'flex items-center text-blue-400';
+        step3Circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 bg-blue-600 border-blue-600 text-white';
+    } else {
+        step3Container.className = 'flex items-center text-gray-500';
+        step3Circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 border-gray-600 text-gray-400';
+    }
+}
+
+// Update progress bar
+function updateProgressBar() {
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.width = verificationState.progress + '%';
+}
+
+// Document type selection
+function selectDocumentType(type) {
+    verificationState.documentType = type;
+    
+    // Reset all options
+    document.getElementById('passportOption').className = 'p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700 border-gray-700 hover:border-gray-600';
+    document.getElementById('nationalIdOption').className = 'p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700 border-gray-700 hover:border-gray-600';
+    document.getElementById('driversLicenseOption').className = 'p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700 border-gray-700 hover:border-gray-600';
+    
+    // Highlight selected option
+    const selectedOption = document.getElementById(type + 'Option');
+    if (selectedOption) {
+        selectedOption.className = 'p-4 rounded-xl border-2 transition-all text-center bg-gray-800 hover:bg-gray-700 border-blue-500 bg-blue-600/10';
+    }
+    
+    // Update radio button
+    const radioInputs = document.querySelectorAll('input[name="document_type"]');
+    radioInputs.forEach(input => {
+        if ((type === 'passport' && input.value === "Int'l Passport") ||
+            (type === 'national_id' && input.value === "National ID") ||
+            (type === 'drivers_license' && input.value === "Drivers License")) {
+            input.checked = true;
+        } else {
+            input.checked = false;
+        }
+    });
+}
+
+// Handle front image upload
+function handleFrontImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const url = URL.createObjectURL(file);
+        verificationState.frontPreview = url;
+        
+        // Show preview
+        document.getElementById('frontUploadPlaceholder').style.display = 'none';
+        document.getElementById('frontPreviewContent').style.display = 'block';
+        document.getElementById('frontPreviewImage').src = url;
+    } else {
+        verificationState.frontPreview = null;
+        document.getElementById('frontUploadPlaceholder').style.display = 'block';
+        document.getElementById('frontPreviewContent').style.display = 'none';
+    }
+}
+
+// Handle back image upload
+function handleBackImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const url = URL.createObjectURL(file);
+        verificationState.backPreview = url;
+        
+        // Show preview
+        document.getElementById('backUploadPlaceholder').style.display = 'none';
+        document.getElementById('backPreviewContent').style.display = 'block';
+        document.getElementById('backPreviewImage').src = url;
+    } else {
+        verificationState.backPreview = null;
+        document.getElementById('backUploadPlaceholder').style.display = 'block';
+        document.getElementById('backPreviewContent').style.display = 'none';
+    }
+}
+
+// Handle form submission
+function handleFormSubmit() {
+    verificationState.isSubmitting = true;
+    
+    // Update submit button state
+    const submitButton = document.getElementById('submitButton');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const submitIcon = document.getElementById('submitIcon');
+    const submitText = document.getElementById('submitText');
+    
+    if (submitButton) {
+        submitButton.disabled = true;
+        loadingSpinner.style.display = 'block';
+        submitIcon.style.display = 'none';
+        submitText.textContent = 'Gönderiliyor...';
+    }
+    
+    return true; // Allow form submission to continue
+}
 </script>
 <style>
-    [x-cloak] {
-        display: none !important;
-    }
-
     .bg-gray-750 {
         background-color: rgb(55, 65, 81);
     }

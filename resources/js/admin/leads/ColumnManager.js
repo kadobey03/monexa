@@ -712,7 +712,7 @@ class ColumnManager {
 // Global instance
 window.columnManager = new ColumnManager();
 
-// Alpine.js integration helpers - Updated for 9-column structure
+// Vanilla JavaScript integration helpers - Updated for 9-column structure
 window.columnManagerHelpers = {
     // Get all available columns for settings modal
     getAvailableColumns() {

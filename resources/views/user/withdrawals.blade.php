@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('content')
 
-<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-4 sm:py-8" x-data="{ showCodeInfo: false, selectedMethod: '' }">
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-4 sm:py-8" id="withdrawalsContainer">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
@@ -71,11 +71,11 @@
                                     <a href="mailto:{{$settings->contact_email}}" class="font-semibold underline hover:text-amber-100 transition-colors">{{$settings->contact_email}}</a>
                                     çekim doğrulama kodunuzu almak için.
                                 </p>
-                                <button @click="showCodeInfo = !showCodeInfo" class="mt-3 flex items-center text-xs sm:text-sm font-medium text-amber-300 hover:text-amber-200 transition-colors">
-                                    <span x-text="showCodeInfo ? 'Güvenlik ayrıntılarını gizle' : 'Çekim güvenliği hakkında bilgi edinin'"></span>
-                                    <i x-bind:data-lucide="showCodeInfo ? 'chevron-up' : 'chevron-down'" class="ml-1 w-3 h-3 sm:w-4 sm:h-4"></i>
+                                <button onclick="toggleCodeInfo()" class="mt-3 flex items-center text-xs sm:text-sm font-medium text-amber-300 hover:text-amber-200 transition-colors">
+                                    <span id="codeInfoToggleText">Çekim güvenliği hakkında bilgi edinin</span>
+                                    <i data-lucide="chevron-down" class="ml-1 w-3 h-3 sm:w-4 sm:h-4" id="codeInfoToggleIcon"></i>
                                 </button>
-                                <div x-show="showCodeInfo" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="mt-3 p-3 sm:p-4 bg-amber-500/10 rounded-lg text-xs sm:text-sm text-amber-200" style="display: none;">
+                                <div id="codeInfoContent" class="mt-3 p-3 sm:p-4 bg-amber-500/10 rounded-lg text-xs sm:text-sm text-amber-200 transition ease-out duration-200 opacity-0 transform -translate-y-2" style="display: none;">
                                     <p class="font-medium mb-2">Çekim kodlarının neden gerekli olduğu:</p>
                                     <ul class="space-y-1 text-xs">
                                         <li>• Hesabınızı yetkisiz erişimden korumak için gelişmiş güvenlik</li>
@@ -149,7 +149,7 @@
                                 name="method"
                                 id="method"
                                 required
-                                x-model="selectedMethod"
+                                onchange="handleMethodSelection(this.value)"
                                 class="appearance-none block w-full pl-4 pr-12 py-3 sm:py-4 border border-gray-600/50 bg-gray-800/50 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-white text-sm sm:text-base transition-all duration-200 backdrop-blur-sm"
                             >
                                 <option value="" disabled selected>Bir çekim yöntemi seçin</option>
@@ -166,27 +166,15 @@
                     </div>
 
                     <!-- Enhanced Method Details Card -->
-                    <div x-show="selectedMethod" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-4 sm:p-6 border border-blue-500/30 backdrop-blur-sm" style="display: none;">
+                    <div id="methodDetailsCard" class="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl p-4 sm:p-6 border border-blue-500/30 backdrop-blur-sm transition ease-out duration-300 opacity-0 transform scale-95" style="display: none;">
                         <div class="flex flex-col sm:flex-row items-start gap-4">
                             <!-- Enhanced Dynamic icon based on method -->
-                            <div class="p-3 rounded-xl shadow-sm mx-auto sm:mx-0" :class="{
-                                'bg-orange-500/20': selectedMethod === 'Bitcoin',
-                                'bg-blue-500/20': selectedMethod === 'Ethereum',
-                                'bg-green-500/20': selectedMethod === 'Bank Transfer',
-                                'bg-blue-500/20': selectedMethod === 'USDT',
-                                'bg-gray-500/20': !['Bitcoin', 'Ethereum', 'Bank Transfer', 'USDT'].includes(selectedMethod)
-                            }">
-                                <i :data-lucide="selectedMethod === 'Bitcoin' ? 'bitcoin' : (selectedMethod === 'Ethereum' ? 'zap' : (selectedMethod === 'Bank Transfer' ? 'building-bank' : (selectedMethod === 'USDT' ? 'circle-dollar-sign' : 'credit-card')))" class="w-5 h-5 sm:w-6 sm:h-6" :class="{
-                                    'text-orange-400': selectedMethod === 'Bitcoin',
-                                    'text-blue-400': selectedMethod === 'Ethereum',
-                                    'text-green-400': selectedMethod === 'Bank Transfer',
-                                    'text-blue-400': selectedMethod === 'USDT',
-                                    'text-gray-400': !['Bitcoin', 'Ethereum', 'Bank Transfer', 'USDT'].includes(selectedMethod)
-                                }"></i>
+                            <div class="p-3 rounded-xl shadow-sm mx-auto sm:mx-0 bg-gray-500/20" id="methodIconContainer">
+                                <i data-lucide="credit-card" class="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" id="methodIcon"></i>
                             </div>
                             <div class="flex-1 text-center sm:text-left">
-                                <h3 class="font-semibold text-white text-base sm:text-lg" x-text="selectedMethod + ' Çekimi'"></h3>
-                                <p class="text-xs sm:text-sm text-gray-300 mt-1" x-text="selectedMethod + ' tercih ettiğiniz çekim yöntemi olarak seçtiniz.'"></p>
+                                <h3 class="font-semibold text-white text-base sm:text-lg" id="methodTitle">Çekim</h3>
+                                <p class="text-xs sm:text-sm text-gray-300 mt-1" id="methodDescription">tercih ettiğiniz çekim yöntemi olarak seçtiniz.</p>
                                 <div class="mt-3 flex items-center justify-center sm:justify-start gap-2 text-xs text-blue-400">
                                     <i data-lucide="shield-check" class="w-3 h-3 sm:w-4 sm:h-4"></i>
                                     <span>Güvenli ve şifreli işlem</span>
@@ -303,11 +291,128 @@
 @section('scripts')
     @parent
     <script>
+        // Withdrawals page state
+        let withdrawalsState = {
+            showCodeInfo: false,
+            selectedMethod: ''
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize Lucide icons
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
+            
+            console.log('Withdrawals page initialized');
         });
+
+        // Toggle code info section
+        function toggleCodeInfo() {
+            withdrawalsState.showCodeInfo = !withdrawalsState.showCodeInfo;
+            
+            const content = document.getElementById('codeInfoContent');
+            const toggleText = document.getElementById('codeInfoToggleText');
+            const toggleIcon = document.getElementById('codeInfoToggleIcon');
+            
+            if (withdrawalsState.showCodeInfo) {
+                // Show content
+                content.style.display = 'block';
+                setTimeout(() => {
+                    content.classList.remove('opacity-0', '-translate-y-2');
+                    content.classList.add('opacity-100', 'translate-y-0');
+                }, 10);
+                
+                // Update text and icon
+                toggleText.textContent = 'Güvenlik ayrıntılarını gizle';
+                toggleIcon.setAttribute('data-lucide', 'chevron-up');
+            } else {
+                // Hide content
+                content.classList.remove('opacity-100', 'translate-y-0');
+                content.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => {
+                    content.style.display = 'none';
+                }, 200);
+                
+                // Update text and icon
+                toggleText.textContent = 'Çekim güvenliği hakkında bilgi edinin';
+                toggleIcon.setAttribute('data-lucide', 'chevron-down');
+            }
+            
+            // Reinitialize Lucide icons for the updated icon
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        }
+
+        // Handle payment method selection
+        function handleMethodSelection(method) {
+            withdrawalsState.selectedMethod = method;
+            
+            const detailsCard = document.getElementById('methodDetailsCard');
+            const iconContainer = document.getElementById('methodIconContainer');
+            const methodIcon = document.getElementById('methodIcon');
+            const methodTitle = document.getElementById('methodTitle');
+            const methodDescription = document.getElementById('methodDescription');
+            
+            if (method && method !== '') {
+                // Update method details
+                methodTitle.textContent = method + ' Çekimi';
+                methodDescription.textContent = method + ' tercih ettiğiniz çekim yöntemi olarak seçtiniz.';
+                
+                // Update icon and colors based on method
+                let iconName = 'credit-card';
+                let iconColor = 'text-gray-400';
+                let bgColor = 'bg-gray-500/20';
+                
+                switch(method) {
+                    case 'Bitcoin':
+                        iconName = 'bitcoin';
+                        iconColor = 'text-orange-400';
+                        bgColor = 'bg-orange-500/20';
+                        break;
+                    case 'Ethereum':
+                        iconName = 'zap';
+                        iconColor = 'text-blue-400';
+                        bgColor = 'bg-blue-500/20';
+                        break;
+                    case 'Bank Transfer':
+                        iconName = 'building-bank';
+                        iconColor = 'text-green-400';
+                        bgColor = 'bg-green-500/20';
+                        break;
+                    case 'USDT':
+                        iconName = 'circle-dollar-sign';
+                        iconColor = 'text-blue-400';
+                        bgColor = 'bg-blue-500/20';
+                        break;
+                }
+                
+                // Update icon
+                methodIcon.setAttribute('data-lucide', iconName);
+                methodIcon.className = `w-5 h-5 sm:w-6 sm:h-6 ${iconColor}`;
+                
+                // Update container background
+                iconContainer.className = `p-3 rounded-xl shadow-sm mx-auto sm:mx-0 ${bgColor}`;
+                
+                // Show details card with animation
+                detailsCard.style.display = 'block';
+                setTimeout(() => {
+                    detailsCard.classList.remove('opacity-0', 'scale-95');
+                    detailsCard.classList.add('opacity-100', 'scale-100');
+                }, 10);
+                
+                // Reinitialize Lucide icons
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            } else {
+                // Hide details card
+                detailsCard.classList.remove('opacity-100', 'scale-100');
+                detailsCard.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    detailsCard.style.display = 'none';
+                }, 300);
+            }
+        }
     </script>
 @endsection

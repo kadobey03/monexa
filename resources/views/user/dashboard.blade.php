@@ -1,7 +1,7 @@
 @extends('layouts.dasht')
 @section('title', $title)
 @section('content')
-<div class="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8" x-data="{ showCopied: false }">
+<div class="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8" data-dashboard="true">
 
     <x-danger-alert />
     <x-success-alert />
@@ -236,7 +236,7 @@
 
     @if(isset($settings->enable_kyc) && $settings->enable_kyc === 'yes')
         <!-- KYC Verification Component -->
-        <div class="mb-6 sm:mb-8" x-data="{ kycDropdownOpen: false }" x-cloak>
+        <div class="mb-6 sm:mb-8" data-kyc-dropdown="closed">
             @if(Auth::user()->account_verify === 'Verified')
                 <!-- Verified Status -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-4 sm:p-6 shadow-sm">
@@ -278,12 +278,11 @@
                             </div>
 
                             <!-- Toggle Button -->
-                            <button @click="kycDropdownOpen = !kycDropdownOpen"
+                            <button onclick="toggleKycDropdown()"
                                     class="w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                                 <span class="flex items-center justify-center gap-2">
                                     <span>Detayları Görüntüle</span>
-                                    <i data-lucide="chevron-down"
-                                       :class="kycDropdownOpen ? 'rotate-180' : 'rotate-0'"
+                                    <i data-lucide="chevron-down" id="kycChevron"
                                        class="w-4 h-4 transition-transform"></i>
                                 </span>
                             </button>
@@ -291,14 +290,8 @@
                     </div>
 
                     <!-- Dropdown Content -->
-                    <div x-show="kycDropdownOpen"
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 -translate-y-1"
-                         x-transition:enter-end="opacity-100 translate-y-0"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 translate-y-0"
-                         x-transition:leave-end="opacity-0 -translate-y-1"
-                         class="p-4 sm:p-6 border-t border-gray-100 dark:border-gray-800">
+                    <div id="kycDropdownContent" style="display: none;"
+                         class="p-4 sm:p-6 border-t border-gray-100 dark:border-gray-800 transition-all duration-200">
 
                         @if(Auth::user()->account_verify === 'Under review')
                             <!-- Under Review State -->
@@ -713,9 +706,9 @@
                 <h4 class="font-semibold mb-2 text-gray-900 dark:text-white text-sm sm:text-base">Kişisel Referans Bağlantısı</h4>
                 <div class="flex flex-col sm:flex-row items-stretch gap-2">
                     <input type="text" class="form-input flex-1 rounded border-gray-300 dark:bg-gray-900 dark:border-gray-700 text-white text-xs sm:text-sm min-w-0" value="{{ Auth::user()->ref_link }}" readonly>
-                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-xs sm:text-sm whitespace-nowrap" x-on:click="navigator.clipboard.writeText('{{ Auth::user()->ref_link }}'); showCopied = true">Kopyala</button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-xs sm:text-sm whitespace-nowrap" onclick="copyReferralLink()">Kopyala</button>
                 </div>
-                <p x-show="showCopied" class="text-xs sm:text-sm text-green-500 mt-1">Panoya kopyalandı!</p>
+                <p id="copiedMessage" class="text-xs sm:text-sm text-green-500 mt-1" style="display: none;">Panoya kopyalandı!</p>
             </div>
 
             </div>
@@ -901,6 +894,58 @@
 </div>
 
 <script>
+    // KYC Dropdown Toggle
+    function toggleKycDropdown() {
+        const dropdown = document.querySelector('[data-kyc-dropdown]');
+        const content = document.getElementById('kycDropdownContent');
+        const chevron = document.getElementById('kycChevron');
+        
+        if (content && chevron) {
+            const isOpen = content.style.display !== 'none';
+            
+            if (isOpen) {
+                content.style.display = 'none';
+                chevron.classList.remove('rotate-180');
+                dropdown.setAttribute('data-kyc-dropdown', 'closed');
+            } else {
+                content.style.display = 'block';
+                chevron.classList.add('rotate-180');
+                dropdown.setAttribute('data-kyc-dropdown', 'open');
+            }
+        }
+    }
+
+    // Copy Referral Link
+    function copyReferralLink() {
+        const refLink = '{{ Auth::user()->ref_link }}';
+        const copiedMessage = document.getElementById('copiedMessage');
+        
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(refLink).then(function() {
+                showCopiedMessage();
+            });
+        } else {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = refLink;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showCopiedMessage();
+        }
+    }
+
+    function showCopiedMessage() {
+        const copiedMessage = document.getElementById('copiedMessage');
+        if (copiedMessage) {
+            copiedMessage.style.display = 'block';
+            setTimeout(function() {
+                copiedMessage.style.display = 'none';
+            }, 3000);
+        }
+    }
+
     function changeTimeframe(interval) {
         if (widget) {
             widget.chart().setResolution(interval);

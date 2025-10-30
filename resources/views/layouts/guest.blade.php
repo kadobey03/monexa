@@ -125,7 +125,8 @@
     </script>
     <!-- Page Title -->
     <title>@yield('title') | {{ $settings->site_name }}</title>
-    <script src="{{ asset('themes/dashly/assets/ext/dist/alpine.min.js') }}" defer></script>
+    <!-- Vite Assets -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>

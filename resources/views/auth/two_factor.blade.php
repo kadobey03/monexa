@@ -3,7 +3,7 @@
 @section('content')
 
 <!-- Advanced 2FA Challenge -->
-<div class="min-h-screen bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" x-data="{ recovery: false }">
+<div class="min-h-screen bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" id="twoFactorContainer">
     <div class="max-w-md w-full space-y-8">
 
         <!-- 2FA Challenge Card -->
@@ -13,8 +13,8 @@
             <div class="text-center mb-8">
                 <!-- Dynamic Security Icon -->
                 <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-500/10 mb-4">
-                    <i data-lucide="smartphone" x-show="!recovery" class="h-8 w-8 text-blue-400"></i>
-                    <i data-lucide="key-round" x-show="recovery" class="h-8 w-8 text-amber-400"></i>
+                    <i data-lucide="smartphone" id="normalIcon" class="h-8 w-8 text-blue-400"></i>
+                    <i data-lucide="key-round" id="recoveryIcon" class="h-8 w-8 text-amber-400" style="display: none;"></i>
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
@@ -22,29 +22,28 @@
                 </h1>
 
                 <!-- Dynamic Descriptions -->
-                <p class="text-gray-400 text-sm md:text-base" x-show="!recovery">
+                <p class="text-gray-400 text-sm md:text-base" id="normalDescription">
                     Ticaret hesabınızı güvenceye almak için kimlik doğrulayıcı uygulamanızdan 6 haneli kodu girin
                 </p>
-                <p class="text-gray-400 text-sm md:text-base" x-show="recovery">
+                <p class="text-gray-400 text-sm md:text-base" id="recoveryDescription" style="display: none;">
                     Hesabınıza erişimi geri kazanmak için acil kurtarma kodlarınızdan birini kullanın
                 </p>
             </div>
 
             <!-- Dynamic Security Notice -->
-            <div class="mb-6 p-4 rounded-xl border transition-all duration-300"
-                 :class="recovery ? 'bg-amber-500/10 border-amber-500/20' : 'bg-blue-500/10 border-blue-500/20'">
+            <div class="mb-6 p-4 rounded-xl border transition-all duration-300 bg-blue-500/10 border-blue-500/20" id="securityNotice">
                 <div class="flex items-start gap-3">
-                    <i data-lucide="shield-alert" x-show="!recovery" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
-                    <i data-lucide="alert-triangle" x-show="recovery" class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0"></i>
+                    <i data-lucide="shield-alert" id="normalNoticeIcon" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
+                    <i data-lucide="alert-triangle" id="recoveryNoticeIcon" class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" style="display: none;"></i>
                     <div class="text-sm">
-                        <p class="font-bold mb-1" :class="recovery ? 'text-amber-300' : 'text-blue-300'">
-                            <span x-show="!recovery">Kimlik Doğrulayıcı Gerekli</span>
-                            <span x-show="recovery">Kurtarma Modu</span>
+                        <p class="font-bold mb-1 text-blue-300" id="noticeTitle">
+                            <span id="normalNoticeTitle">Kimlik Doğrulayıcı Gerekli</span>
+                            <span id="recoveryNoticeTitle" style="display: none;">Kurtarma Modu</span>
                         </p>
-                        <p class="text-gray-300" x-show="!recovery">
+                        <p class="text-gray-300" id="normalNoticeText">
                             Kimlik doğrulayıcı uygulamanızı açın (Google Authenticator, Authy vb.) ve mevcut 6 haneli kodu girin.
                         </p>
-                        <p class="text-gray-300" x-show="recovery">
+                        <p class="text-gray-300" id="recoveryNoticeText" style="display: none;">
                             Kurtarma kodları tek kullanımlıktır. Kullandıktan sonra kalan kodları güvenli bir yerde saklayın.
                         </p>
                     </div>
@@ -67,46 +66,38 @@
             <form method="POST" action="{{ route('two-factor.login') }}">
                 @csrf
                 <div class="row">
-                    <div class="col-lg-12" x-show="! recovery">
+                    <div class="col-lg-12" id="normalCodeSection">
                         <div class="mb-5">
                             <label class="form-label">
                                 Kod
                             </label>
                             <!-- Input -->
                             <input type="text" inputmode="numeric" class="form-control"
-                                placeholder="Enter auth code from your app" name="code" autofocus x-ref="code"
+                                placeholder="Enter auth code from your app" name="code" autofocus id="codeInput"
                                 autocomplete="one-time-code">
                         </div>
                     </div>
                     <!--end col-->
 
-                    <div class="col-lg-12" x-show="recovery">
+                    <div class="col-lg-12" id="recoveryCodeSection" style="display: none;">
                         <div class="mb-5">
                             <label class="form-label">
                                 Kurtarma Kodu
                             </label>
                             <input id="recovery_code" class="form-control" type="text" name="recovery_code"
-                                x-ref="recovery_code" autocomplete="one-time-code">
+                                autocomplete="one-time-code">
                         </div>
                     </div>
                     <!--end col-->
 
                     <div class="my-2 col-lg-12 text-center">
-                        <button class="btn btn-link" type="button" x-show="! recovery"
-                            x-on:click="
-                                    recovery = true;
-                                    $nextTick(() => { $refs.recovery_code.focus() })
-                                ">
+                        <button class="btn btn-link" type="button" id="useRecoveryBtn">
                             Bir kurtarma kodu kullan
                         </button>
                     </div>
 
                     <div class="my-2 col-lg-12 text-center">
-                        <button class="btn btn-link" type="button" x-show="recovery"
-                            x-on:click="
-                                    recovery = false;
-                                    $nextTick(() => { $refs.code.focus() })
-                                ">
+                        <button class="btn btn-link" type="button" id="useNormalBtn" style="display: none;">
                             Bir kimlik doğrulama kodu kullan
                         </button>
                     </div>
@@ -122,6 +113,123 @@
 
         </div>
     </div> <!-- / .row -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let recovery = false;
+    
+    // DOM elements
+    const normalIcon = document.getElementById('normalIcon');
+    const recoveryIcon = document.getElementById('recoveryIcon');
+    const normalDescription = document.getElementById('normalDescription');
+    const recoveryDescription = document.getElementById('recoveryDescription');
+    const securityNotice = document.getElementById('securityNotice');
+    const normalNoticeIcon = document.getElementById('normalNoticeIcon');
+    const recoveryNoticeIcon = document.getElementById('recoveryNoticeIcon');
+    const noticeTitle = document.getElementById('noticeTitle');
+    const normalNoticeTitle = document.getElementById('normalNoticeTitle');
+    const recoveryNoticeTitle = document.getElementById('recoveryNoticeTitle');
+    const normalNoticeText = document.getElementById('normalNoticeText');
+    const recoveryNoticeText = document.getElementById('recoveryNoticeText');
+    const normalCodeSection = document.getElementById('normalCodeSection');
+    const recoveryCodeSection = document.getElementById('recoveryCodeSection');
+    const useRecoveryBtn = document.getElementById('useRecoveryBtn');
+    const useNormalBtn = document.getElementById('useNormalBtn');
+    const codeInput = document.getElementById('codeInput');
+    const recoveryCodeInput = document.getElementById('recovery_code');
+
+    function updateUI() {
+        if (recovery) {
+            // Show recovery mode
+            normalIcon.style.display = 'none';
+            recoveryIcon.style.display = 'block';
+            normalDescription.style.display = 'none';
+            recoveryDescription.style.display = 'block';
+            
+            // Update notice styling and content
+            securityNotice.className = 'mb-6 p-4 rounded-xl border transition-all duration-300 bg-amber-500/10 border-amber-500/20';
+            normalNoticeIcon.style.display = 'none';
+            recoveryNoticeIcon.style.display = 'block';
+            noticeTitle.className = 'font-bold mb-1 text-amber-300';
+            normalNoticeTitle.style.display = 'none';
+            recoveryNoticeTitle.style.display = 'block';
+            normalNoticeText.style.display = 'none';
+            recoveryNoticeText.style.display = 'block';
+            
+            // Show/hide form sections
+            normalCodeSection.style.display = 'none';
+            recoveryCodeSection.style.display = 'block';
+            useRecoveryBtn.style.display = 'none';
+            useNormalBtn.style.display = 'block';
+            
+            // Focus recovery code input
+            setTimeout(() => {
+                if (recoveryCodeInput) {
+                    recoveryCodeInput.focus();
+                }
+            }, 100);
+        } else {
+            // Show normal mode
+            normalIcon.style.display = 'block';
+            recoveryIcon.style.display = 'none';
+            normalDescription.style.display = 'block';
+            recoveryDescription.style.display = 'none';
+            
+            // Update notice styling and content
+            securityNotice.className = 'mb-6 p-4 rounded-xl border transition-all duration-300 bg-blue-500/10 border-blue-500/20';
+            normalNoticeIcon.style.display = 'block';
+            recoveryNoticeIcon.style.display = 'none';
+            noticeTitle.className = 'font-bold mb-1 text-blue-300';
+            normalNoticeTitle.style.display = 'block';
+            recoveryNoticeTitle.style.display = 'none';
+            normalNoticeText.style.display = 'block';
+            recoveryNoticeText.style.display = 'none';
+            
+            // Show/hide form sections
+            normalCodeSection.style.display = 'block';
+            recoveryCodeSection.style.display = 'none';
+            useRecoveryBtn.style.display = 'block';
+            useNormalBtn.style.display = 'none';
+            
+            // Focus normal code input
+            setTimeout(() => {
+                if (codeInput) {
+                    codeInput.focus();
+                }
+            }, 100);
+        }
+        
+        // Re-initialize Lucide icons if available
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+
+    // Event listeners
+    if (useRecoveryBtn) {
+        useRecoveryBtn.addEventListener('click', function() {
+            recovery = true;
+            updateUI();
+        });
+    }
+
+    if (useNormalBtn) {
+        useNormalBtn.addEventListener('click', function() {
+            recovery = false;
+            updateUI();
+        });
+    }
+
+    // Initialize UI
+    updateUI();
+    
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+});
+</script>
+
 @endsection
 {{-- <div x-data="{ recovery: false }">
     <section class=" auth">

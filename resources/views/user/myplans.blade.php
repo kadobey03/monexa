@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('content')
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8" x-data="myPlansManager()">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
     <div class="container mx-auto px-6">
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
@@ -80,8 +80,8 @@
                             <div class="flex items-center gap-3">
                                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Filter by status:</span>
                                 <div class="relative">
-                                    <select x-model="selectedFilter"
-                                            @change="console.log('Filter changed to:', selectedFilter); updateFilter()"
+                                    <select name="filter_status"
+                                            onchange="updateFilter(this.value)"
                                             class="appearance-none bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                         <option value="All">All Plans</option>
                                         <option value="yes">Active Plans</option>
@@ -370,56 +370,30 @@
 @section('scripts')
     @parent
     <script>
-        // Make function available globally for Alpine.js
-        window.myPlansManager = function() {
-            return {
-                selectedFilter: 'All',
+        // Filter function
+        function updateFilter(filterValue) {
+            console.log('=== Filter Update Started ===');
+            console.log('Selected filter:', filterValue);
+            console.log('Current URL:', window.location.href);
 
-                init() {
-                    // Set initial filter value based on current URL if needed
-                    const urlParts = window.location.pathname.split('/');
-                    const currentFilter = urlParts[urlParts.length - 1];
-                    console.log('Current URL parts:', urlParts);
-                    console.log('Current filter from URL:', currentFilter);
+            const baseUrl = '{{ url("/dashboard/sort-plans") }}';
+            const targetUrl = `${baseUrl}/${filterValue}`;
 
-                    if (['All', 'yes', 'expired'].includes(currentFilter)) {
-                        this.selectedFilter = currentFilter;
-                    } else if (urlParts[urlParts.length - 2] === 'myplans') {
-                        // If we're on /dashboard/myplans without a sort parameter, default to 'All'
-                        this.selectedFilter = 'All';
-                    }
-                    console.log('Alpine.js initialized with filter:', this.selectedFilter);
-                },
+            console.log('Base URL:', baseUrl);
+            console.log('Target URL:', targetUrl);
+            console.log('=== Navigating to new URL ===');
 
-                updateFilter() {
-                    console.log('=== Filter Update Started ===');
-                    console.log('Selected filter:', this.selectedFilter);
-                    console.log('Current URL:', window.location.href);
-
-                    const baseUrl = '{{ url("/dashboard/sort-plans") }}';
-                    const targetUrl = `${baseUrl}/${this.selectedFilter}`;
-
-                    console.log('Base URL:', baseUrl);
-                    console.log('Target URL:', targetUrl);
-                    console.log('=== Navigating to new URL ===');
-
-                    // Add a small delay to see the console logs before navigation
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 100);
-                }
-            };
+            // Add a small delay to see the console logs before navigation
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 100);
         }
 
-        // Debug Alpine.js initialization
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, Alpine.js should initialize soon');
+            console.log('DOM loaded');
             console.log('Current page URL:', window.location.href);
         });
 
-        // Debug Alpine.js events
-        document.addEventListener('alpine:init', () => {
-            console.log('Alpine.js initialized successfully');
-        });
     </script>
 @endsection

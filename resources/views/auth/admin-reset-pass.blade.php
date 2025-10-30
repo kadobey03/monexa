@@ -140,6 +140,7 @@
                         <input
                             type="password"
                             id="password"
+                            autocomplete="new-password"
                             name="password"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200 pr-12"
                             placeholder="Güçlü bir şifre oluşturun"
@@ -171,6 +172,7 @@
                         <input
                             type="password"
                             id="password_confirmation"
+                            autocomplete="new-password"
                             name="password_confirmation"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200 pr-12"
                             placeholder="Şifrenizi onaylayın"

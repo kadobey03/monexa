@@ -467,7 +467,7 @@ class LeadsTableManager {
 // Global instance
 window.leadsTableManager = new LeadsTableManager();
 
-// Core functions for Alpine.js integration
+// Core functions for vanilla JavaScript integration
 window.leadsTableCore = {
     async loadLeads() {
         this.loading = true;

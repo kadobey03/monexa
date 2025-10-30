@@ -85,10 +85,9 @@ if (Auth::user()->dashboard_style == "light") {
                 <p class="">{{ __('Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.') }}</p>
                 
 
-                <div class="mt-4" x-data="{}" x-on:confirming-logout-other-browser-sessions.window="setTimeout(() => $refs.password.focus(), 250)">
-                    <x-jet-input type="password" class="d-block form-control "
+                <div class="mt-4 password-focus-container">
+                    <x-jet-input type="password" class="d-block form-control confirmable-password-field"
                                 placeholder="{{ __('Password') }}"
-                                x-ref="password"
                                 wire:model.defer="password"
                                 wire:keydown.enter="logoutOtherBrowserSessions" />
 
@@ -110,3 +109,17 @@ if (Auth::user()->dashboard_style == "light") {
         </x-jet-dialog-modal>
     </x-slot>
 </x-jet-action-section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Focus password input when modal opens
+    document.addEventListener('confirming-logout-other-browser-sessions', function() {
+        setTimeout(function() {
+            const passwordField = document.querySelector('.confirmable-password-field');
+            if (passwordField) {
+                passwordField.focus();
+            }
+        }, 250);
+    });
+});
+</script>

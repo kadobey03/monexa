@@ -8,9 +8,21 @@ module.exports = {
     './resources/views/**/*.blade.php',
     './resources/js/**/*.vue',
     './resources/js/**/*.js',
+    './themes/**/*.blade.php',
+    './themes/**/*.js',
+    './themes/**/*.vue',
   ],
 
   darkMode: 'class', // Enable dark mode with class strategy
+  
+  // Enable JIT mode for Tailwind CSS v3+
+  mode: 'jit',
+  
+  // Future flags for upcoming features
+  future: {
+    hoverOnlyWhenSupported: true,
+    respectDefaultRingColorOpacity: true,
+  },
 
   theme: {
     extend: {
@@ -160,6 +172,21 @@ module.exports = {
       },
       screens: {
         '3xl': '1600px',
+        '4xl': '1920px',
+      },
+      // Container queries support
+      containers: {
+        xs: '20rem',
+        sm: '24rem',
+        md: '28rem',
+        lg: '32rem',
+        xl: '36rem',
+        '2xl': '42rem',
+        '3xl': '48rem',
+        '4xl': '56rem',
+        '5xl': '64rem',
+        '6xl': '72rem',
+        '7xl': '80rem',
       },
     },
   },
@@ -169,6 +196,8 @@ module.exports = {
       strategy: 'class', // Use class strategy to avoid conflicts
     }),
     require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/container-queries'),
     
     // Custom plugin for table utilities
     function({ addUtilities, theme }) {

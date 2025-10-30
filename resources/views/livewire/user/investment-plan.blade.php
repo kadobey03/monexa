@@ -7,8 +7,8 @@
                     <x-success-alert />
                     <div class="card-body">
                         <!-- Remove 'active' class, this is just to show in Codepen thumbnail -->
-                        <div class="select-menu" x-data="{ open: false }" :class="open ? 'active' : ''">
-                            <div class="select-btn" @click="open = ! open">
+                        <div class="select-menu" id="planSelectMenu">
+                            <div class="select-btn" onclick="togglePlanSelector()">
                                 <div class="d-flex">
                                     @if ($planSelected)
                                         <span class="mr-2 fas fa-hand-holding-seedling"></span>
@@ -23,7 +23,7 @@
                             <ul class="options">
                                 @foreach ($plans as $plan)
                                     <li class="option" wire:click="selectPlan({{ $plan->id }})"
-                                        @click=" open=false">
+                                        onclick="closePlanSelector()">
                                         <i class="fas fa-hand-holding-seedling"></i>
                                         <span class="option-text">{{ $plan->name }}</span>
                                     </li>
@@ -189,3 +189,47 @@
     @endif
 
 </div>
+
+<script>
+// Investment Plan Component State
+let investmentPlanState = {
+    planSelectorOpen: false
+};
+
+// Toggle plan selector dropdown
+function togglePlanSelector() {
+    investmentPlanState.planSelectorOpen = !investmentPlanState.planSelectorOpen;
+    const selectMenu = document.getElementById('planSelectMenu');
+    
+    if (selectMenu) {
+        if (investmentPlanState.planSelectorOpen) {
+            selectMenu.classList.add('active');
+        } else {
+            selectMenu.classList.remove('active');
+        }
+    }
+}
+
+// Close plan selector dropdown
+function closePlanSelector() {
+    investmentPlanState.planSelectorOpen = false;
+    const selectMenu = document.getElementById('planSelectMenu');
+    
+    if (selectMenu) {
+        selectMenu.classList.remove('active');
+    }
+}
+
+// Initialize investment plan component
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click outside listener for plan selector
+    document.addEventListener('click', function(event) {
+        const selectMenu = document.getElementById('planSelectMenu');
+        if (selectMenu && investmentPlanState.planSelectorOpen && !selectMenu.contains(event.target)) {
+            closePlanSelector();
+        }
+    });
+    
+    console.log('Investment Plan component initialized');
+});
+</script>

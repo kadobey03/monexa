@@ -6,7 +6,7 @@
 <!-- Notification Alerts -->
 
 <!-- Main Payment Container -->
-<div class="min-h-screen bg-gray-900" x-data="paymentHandler()">
+<div class="min-h-screen bg-gray-900">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 <div class="space-y-4 mb-6">
@@ -170,7 +170,7 @@
                                          alt="Payment QR Code"
                                          class="w-full h-auto max-w-[200px] sm:max-w-[250px] mx-auto rounded-lg">
                                     <button type="button"
-                                            @click="downloadQR()"
+                                            id="downloadQR"
                                             class="absolute top-2 right-2 p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
                                         <i data-lucide="download" class="w-3 h-3 sm:w-4 sm:h-4 text-gray-600"></i>
                                     </button>
@@ -199,7 +199,7 @@
                                         <div class="flex items-center gap-2">
                                             <input type="text" value="{{ $payment_mode->bankname }}" readonly
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
-                                            <button type="button" @click="copyToClipboard('{{ $payment_mode->bankname }}')"
+                                            <button type="button" onclick="paymentManager.copyToClipboard('{{ $payment_mode->bankname }}')"
                                                     class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors">
                                                 <i data-lucide="copy" class="w-4 h-4"></i>
                                             </button>
@@ -212,7 +212,7 @@
                                         <div class="flex items-center gap-2">
                                             <input type="text" value="{{ $payment_mode->account_name }}" readonly
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
-                                            <button type="button" @click="copyToClipboard('{{ $payment_mode->account_name }}')"
+                                            <button type="button" onclick="paymentManager.copyToClipboard('{{ $payment_mode->account_name }}')"
                                                     class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors">
                                                 <i data-lucide="copy" class="w-4 h-4"></i>
                                             </button>
@@ -225,7 +225,7 @@
                                         <div class="flex items-center gap-2">
                                             <input type="text" value="{{ $payment_mode->account_number }}" readonly
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
-                                            <button type="button" @click="copyToClipboard('{{ $payment_mode->account_number }}')"
+                                            <button type="button" onclick="paymentManager.copyToClipboard('{{ $payment_mode->account_number }}')"
                                                     class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors">
                                                 <i data-lucide="copy" class="w-4 h-4"></i>
                                             </button>
@@ -239,7 +239,7 @@
                                         <div class="flex items-center gap-2">
                                             <input type="text" value="{{ $payment_mode->swift_code }}" readonly
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
-                                            <button type="button" @click="copyToClipboard('{{ $payment_mode->swift_code }}')"
+                                            <button type="button" onclick="paymentManager.copyToClipboard('{{ $payment_mode->swift_code }}')"
                                                     class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors">
                                                 <i data-lucide="copy" class="w-4 h-4"></i>
                                             </button>
@@ -272,10 +272,11 @@
                                                class="w-full sm:flex-1 bg-gray-800 border border-gray-700 rounded-xl sm:rounded-l-xl sm:rounded-r-none px-3 sm:px-4 py-3 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-500 transition-colors duration-200 break-all"
                                                readonly>
                                         <button type="button"
-                                                @click="copyToClipboard('{{ $payment_mode->wallet_address }}')"
+                                                onclick="paymentManager.copyToClipboard('{{ $payment_mode->wallet_address }}')"
+                                                id="copyWalletBtn"
                                                 class="mt-2 sm:mt-0 px-4 py-3 bg-blue-600 hover:bg-blue-700 border border-blue-600 rounded-xl sm:rounded-l-none sm:rounded-r-xl text-white transition-all duration-200 flex items-center justify-center gap-2">
                                             <i data-lucide="copy" class="w-3 h-3 sm:w-4 sm:h-4"></i>
-                                            <span x-text="copied ? 'Copied!' : 'Copy'" class="text-xs sm:text-sm font-medium"></span>
+                                            <span class="text-xs sm:text-sm font-medium">Copy</span>
                                         </button>
                                     </div>
                                 </div>
@@ -305,30 +306,27 @@
                                            accept="image/*"
                                            required
                                            class="hidden"
-                                           @change="handleFileUpload($event)">
+                                           onchange="paymentManager.handleFileUpload(event)">
 
                                     <label for="proof"
-                                           class="relative block w-full border-2 border-dashed border-gray-600 hover:border-blue-500 rounded-2xl p-4 sm:p-8 text-center cursor-pointer transition-all duration-200 group"
-                                           :class="{ 'border-blue-500 bg-blue-500/5': isDragOver }"
-                                           @dragover.prevent="isDragOver = true"
-                                           @dragleave.prevent="isDragOver = false"
-                                           @drop.prevent="handleFileDrop($event)">
+                                           id="dropZone"
+                                           class="relative block w-full border-2 border-dashed border-gray-600 hover:border-blue-500 rounded-2xl p-4 sm:p-8 text-center cursor-pointer transition-all duration-200 group">
 
                                         <div class="space-y-3 sm:space-y-4">
                                             <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto group-hover:bg-blue-500/30 transition-colors duration-200">
                                                 <i data-lucide="upload-cloud" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-400"></i>
                                             </div>
 
-                                            <div x-show="!fileName">
+                                            <div id="uploadPrompt">
                                                 <p class="text-sm sm:text-lg font-medium text-white">Dosya seçin veya sürükleyip bırakın</p>
                                                 <p class="text-xs sm:text-sm text-gray-400">PNG, JPG, GIF 10MB'ye kadar</p>
                                             </div>
 
-                                            <div x-show="fileName" class="text-center">
-                                                <p class="text-sm sm:text-lg font-medium text-white break-all" x-text="fileName"></p>
-                                                <p class="text-xs sm:text-sm text-gray-400" x-text="fileSize"></p>
+                                            <div id="fileInfo" class="text-center hidden">
+                                                <p id="fileName" class="text-sm sm:text-lg font-medium text-white break-all"></p>
+                                                <p id="fileSize" class="text-xs sm:text-sm text-gray-400"></p>
                                                 <button type="button"
-                                                        @click.stop="removeFile()"
+                                                        onclick="paymentManager.removeFile(event)"
                                                         class="mt-2 text-red-400 hover:text-red-300 text-xs sm:text-sm">
                                                     Dosyayı kaldır
                                                 </button>
@@ -351,9 +349,9 @@
                     <!-- Submit Button -->
                     <div class="pt-4 sm:pt-6">
                         <button type="submit"
-                                :disabled="!fileName"
-                                class="w-full relative group overflow-hidden"
-                                :class="!fileName ? 'opacity-50 cursor-not-allowed' : 'hover:scale-[1.02] active:scale-[0.98]'">
+                                id="submitBtn"
+                                disabled
+                                class="w-full relative group overflow-hidden opacity-50 cursor-not-allowed">
                             <div class="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-200"></div>
                             <div class="relative bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl flex items-center justify-center gap-2 sm:gap-3 transition-all duration-200">
                                 <i data-lucide="send" class="w-4 h-4 sm:w-5 sm:h-5"></i>
@@ -401,61 +399,253 @@
 </div>
 
 <script>
-    function paymentHandler() {
-        return {
-            copied: false,
-            fileName: '',
-            fileSize: '',
-            isDragOver: false,
+    // Payment Manager Class
+    class PaymentManager {
+        constructor() {
+            this.copied = false;
+            this.fileName = '';
+            this.fileSize = '';
+            this.isDragOver = false;
+            this.init();
+        }
 
-            copyToClipboard(text) {
-                navigator.clipboard.writeText(text).then(() => {
-                    this.copied = true;
-                    setTimeout(() => {
-                        this.copied = false;
-                    }, 2000);
+        init() {
+            this.bindEvents();
+            this.initializeLucide();
+        }
+
+        bindEvents() {
+            // QR Download button
+            const downloadQRBtn = document.getElementById('downloadQR');
+            if (downloadQRBtn) {
+                downloadQRBtn.addEventListener('click', () => this.downloadQR());
+            }
+
+            // Drop zone events
+            const dropZone = document.getElementById('dropZone');
+            if (dropZone) {
+                dropZone.addEventListener('dragover', (e) => this.handleDragOver(e));
+                dropZone.addEventListener('dragleave', (e) => this.handleDragLeave(e));
+                dropZone.addEventListener('drop', (e) => this.handleFileDrop(e));
+            }
+        }
+
+        copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Find all copy buttons and update their text temporarily
+                const copyBtns = document.querySelectorAll('button[onclick*="copyToClipboard"]');
+                copyBtns.forEach(btn => {
+                    const span = btn.querySelector('span');
+                    if (span && btn.onclick.toString().includes(text)) {
+                        const originalText = span.textContent;
+                        span.textContent = 'Copied!';
+                        setTimeout(() => {
+                            span.textContent = originalText;
+                        }, 2000);
+                    }
                 });
-            },
 
-            handleFileUpload(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    this.fileName = file.name;
-                    this.fileSize = `${(file.size / 1024 / 1024).toFixed(2)}MB`;
+                // Special case for wallet copy button
+                const copyWalletBtn = document.getElementById('copyWalletBtn');
+                if (copyWalletBtn && text.length > 20) { // Assume wallet addresses are long
+                    const span = copyWalletBtn.querySelector('span');
+                    if (span) {
+                        span.textContent = 'Copied!';
+                        setTimeout(() => {
+                            span.textContent = 'Copy';
+                        }, 2000);
+                    }
                 }
-            },
 
-            handleFileDrop(event) {
-                this.isDragOver = false;
-                const file = event.dataTransfer.files[0];
-                if (file && file.type.startsWith('image/')) {
-                    document.getElementById('proof').files = event.dataTransfer.files;
-                    this.fileName = file.name;
-                    this.fileSize = `${(file.size / 1024 / 1024).toFixed(2)}MB`;
+                // Show success message
+                this.showNotification('Panoya kopyalandı!', 'success');
+            }).catch(() => {
+                this.showNotification('Kopyalama başarısız!', 'error');
+            });
+        }
+
+        handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                if (this.validateFile(file)) {
+                    this.updateFileDisplay(file);
+                    this.enableSubmitButton();
                 }
-            },
+            }
+        }
 
-            removeFile() {
-                document.getElementById('proof').value = '';
-                this.fileName = '';
-                this.fileSize = '';
-            },
+        handleFileDrop(event) {
+            event.preventDefault();
+            this.isDragOver = false;
+            this.updateDropZoneStyle(false);
 
-            downloadQR() {
-                const img = document.querySelector('img[alt="Payment QR Code"]');
+            const file = event.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                if (this.validateFile(file)) {
+                    // Set the file to the input
+                    const fileInput = document.getElementById('proof');
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    fileInput.files = dataTransfer.files;
+
+                    this.updateFileDisplay(file);
+                    this.enableSubmitButton();
+                }
+            } else {
+                this.showNotification('Lütfen geçerli bir resim dosyası seçin!', 'error');
+            }
+        }
+
+        handleDragOver(event) {
+            event.preventDefault();
+            this.isDragOver = true;
+            this.updateDropZoneStyle(true);
+        }
+
+        handleDragLeave(event) {
+            event.preventDefault();
+            this.isDragOver = false;
+            this.updateDropZoneStyle(false);
+        }
+
+        updateDropZoneStyle(isDragOver) {
+            const dropZone = document.getElementById('dropZone');
+            if (dropZone) {
+                if (isDragOver) {
+                    dropZone.classList.add('border-blue-500', 'bg-blue-500/5');
+                } else {
+                    dropZone.classList.remove('border-blue-500', 'bg-blue-500/5');
+                }
+            }
+        }
+
+        validateFile(file) {
+            // Check file type
+            if (!file.type.startsWith('image/')) {
+                this.showNotification('Lütfen bir resim dosyası seçin!', 'error');
+                return false;
+            }
+
+            // Check file size (10MB limit)
+            const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+            if (file.size > maxSize) {
+                this.showNotification('Dosya boyutu 10MB\'dan küçük olmalıdır!', 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+        updateFileDisplay(file) {
+            this.fileName = file.name;
+            this.fileSize = `${(file.size / 1024 / 1024).toFixed(2)}MB`;
+
+            // Update UI
+            const uploadPrompt = document.getElementById('uploadPrompt');
+            const fileInfo = document.getElementById('fileInfo');
+            const fileNameEl = document.getElementById('fileName');
+            const fileSizeEl = document.getElementById('fileSize');
+
+            if (uploadPrompt) uploadPrompt.style.display = 'none';
+            if (fileInfo) fileInfo.classList.remove('hidden');
+            if (fileNameEl) fileNameEl.textContent = this.fileName;
+            if (fileSizeEl) fileSizeEl.textContent = this.fileSize;
+        }
+
+        removeFile(event) {
+            event.stopPropagation();
+            
+            // Clear file input
+            const fileInput = document.getElementById('proof');
+            if (fileInput) {
+                fileInput.value = '';
+            }
+
+            // Reset display
+            const uploadPrompt = document.getElementById('uploadPrompt');
+            const fileInfo = document.getElementById('fileInfo');
+            
+            if (uploadPrompt) uploadPrompt.style.display = 'block';
+            if (fileInfo) fileInfo.classList.add('hidden');
+
+            // Reset internal state
+            this.fileName = '';
+            this.fileSize = '';
+
+            // Disable submit button
+            this.disableSubmitButton();
+        }
+
+        enableSubmitButton() {
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitBtn.classList.add('hover:scale-[1.02]', 'active:scale-[0.98]');
+            }
+        }
+
+        disableSubmitButton() {
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.classList.remove('hover:scale-[1.02]', 'active:scale-[0.98]');
+            }
+        }
+
+        downloadQR() {
+            const img = document.querySelector('img[alt="Payment QR Code"]');
+            if (img) {
                 const link = document.createElement('a');
                 link.href = img.src;
                 link.download = 'payment-qr-code.png';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+                this.showNotification('QR kod indirildi!', 'success');
+            }
+        }
+
+        showNotification(message, type = 'info') {
+            // Create a simple notification
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white z-50 transition-all duration-300 ${
+                type === 'success' ? 'bg-green-600' :
+                type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+            }`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        initializeLucide() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
             }
         }
     }
 
-    // Initialize Lucide icons
+    // Initialize Payment Manager
     document.addEventListener('DOMContentLoaded', function() {
-        lucide.createIcons();
+        window.paymentManager = new PaymentManager();
     });
 </script>
 

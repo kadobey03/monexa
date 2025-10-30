@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Lead status fields
-            $table->unsignedBigInteger('lead_status_id')->nullable()->after('cstatus');
+            $table->unsignedBigInteger('lead_status_id')->nullable();
             $table->text('lead_notes')->nullable()->after('lead_status_id');
             $table->timestamp('last_contact_date')->nullable()->after('lead_notes');
             $table->timestamp('next_follow_up_date')->nullable()->after('last_contact_date');

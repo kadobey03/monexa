@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ darkMode: localStorage.getItem('theme') === 'light' ? false : true }"
-      :class="{ 'dark': darkMode }"
-      class="dark bg-gray-300 h-full">
+<html lang="en" class="dark bg-gray-300 h-full" data-theme="">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,114 +9,23 @@
     <!-- Favicon -->
     <link href="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
 
-    <!-- Inter Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Inter Font - Local -->
+    <link href="{{ asset('vendor/fonts/inter.css') }}" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Set dark mode as default if no preference is stored
-        if (!localStorage.getItem('theme')) {
-            localStorage.setItem('theme', 'dark');
-            document.documentElement.classList.add('dark');
-        }
+    <!-- Tailwind CSS configurations are now handled by Vite build -->
 
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        primary: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            200: '#c7d2fe',
-                            300: '#a5b4fc',
-                            400: '#818cf8',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
-                            900: '#312e81',
-                        },
-                        'glass': 'rgba(255, 255, 255, 0.05)',
-                    },
-                    backdropBlur: {
-                        'xs': '2px',
-                    },
-                    animation: {
-                        'gradient-x': 'gradient-x 15s ease infinite',
-                        'gradient-y': 'gradient-y 15s ease infinite',
-                        'gradient-xy': 'gradient-xy 15s ease infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        'gradient-y': {
-                            '0%, 100%': {
-                                'background-size': '400% 400%',
-                                'background-position': 'center top'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'center center'
-                            }
-                        },
-                        'gradient-x': {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
-                        },
-                        'gradient-xy': {
-                            '0%, 100%': {
-                                'background-size': '400% 400%',
-                                'background-position': 'left center'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
-                        },
-                        'float': {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Vite Assets -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Alpine.js -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <!-- Lucide Icons - Local -->
+    <script src="{{ asset('vendor/lucide/lucide.js') }}"></script>
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="temp/custom/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="temp/custom/js/jquery.min.js"></script>
-<!-- Popper JS -->
-<script src="temp/custom/js/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="temp/custom/js/bootstrap.min.js"></script>
-
-<link href="temp/custom/css/main.css" rel="stylesheet"/>
-<!-- <link href="404.html" rel="stylesheet" /> -->
+    <!-- Bootstrap CSS & JS - Local -->
+    <link href="{{ asset('vendor/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
 
 <title>{{$settings->site_name }}</title>
-<link rel="manifest" href="temp/custom/js/manifest.json">
 <meta name="theme-color" content="#4D7DE6">
 <meta name="msapplication-navbutton-color" content="#4D7DE6">
 <!-- iOS Safari -->
@@ -185,7 +92,7 @@ EXPERTISE.???">
             overflow-x: hidden;
         }
 
-        [x-cloak] {
+        .js-hidden {
             display: none !important;
         }
 
@@ -243,23 +150,19 @@ EXPERTISE.???">
     </style>
 </head>
 
-<body class="h-full bg-gray-300 font-sans antialiased transition-colors duration-300 text-gray-900" x-data="{ darkMode: localStorage.theme === 'dark' || !localStorage.theme }" :class="{ 'dark': darkMode }" x-cloak>
+<body class="h-full bg-gray-300 font-sans antialiased transition-colors duration-300 text-gray-900 dark js-hidden" id="main-body">
     
     
     <!-- Theme Toggle (Hidden but accessible) -->
     <div class="fixed top-4 right-4 z-50">
         
         
-        <button
-            x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme') }"
-            @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light'); document.documentElement.classList.toggle('dark', darkMode)"
-            class="relative inline-flex items-center justify-center w-10 h-10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-150 backdrop-blur-sm"
-            :aria-pressed="darkMode"
-            x-cloak>
-            <svg x-cloak x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button id="theme-toggle"
+            class="relative inline-flex items-center justify-center w-10 h-10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-150 backdrop-blur-sm">
+            <svg id="sun-icon" class="w-5 h-5 js-hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 12.728l-.707-.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
-            <svg x-cloak x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg id="moon-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
             </svg>
             <span class="absolute inset-0 rounded-lg ring-2 ring-inset ring-transparent transition-colors duration-150 hover:ring-blue-400/20"></span>
@@ -302,41 +205,57 @@ EXPERTISE.???">
 
     <!-- Initialize Scripts -->
     <script>
+        // Theme Management - Vanilla JavaScript
+        let isDarkMode = localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme');
+        
         // Set dark mode as default if no preference is stored
         if (!localStorage.getItem('theme')) {
             localStorage.setItem('theme', 'dark');
-            document.documentElement.classList.add('dark');
+            isDarkMode = true;
         }
 
-        // Initialize theme
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('theme', {
-                init() {
-                    // Default to dark if no preference is set
-                    this.darkMode = localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme');
-                    this.updateTheme();
-                },
-                darkMode: true, // Set default to true
-                toggle() {
-                    this.darkMode = !this.darkMode;
-                    this.updateTheme();
-                },
-                updateTheme() {
-                    localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
-                    document.documentElement.classList.toggle('dark', this.darkMode);
-                }
-            });
-        });
-
-        // Initialize Lucide icons
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+        function updateTheme() {
+            const html = document.documentElement;
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            
+            if (isDarkMode) {
+                html.classList.add('dark');
+                html.setAttribute('data-theme', 'dark');
+                if (sunIcon) sunIcon.classList.add('js-hidden');
+                if (moonIcon) moonIcon.classList.remove('js-hidden');
+            } else {
+                html.classList.remove('dark');
+                html.setAttribute('data-theme', 'light');
+                if (sunIcon) sunIcon.classList.remove('js-hidden');
+                if (moonIcon) moonIcon.classList.add('js-hidden');
             }
-        });
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
 
-        // Re-initialize icons after Alpine updates
-        document.addEventListener('alpine:updated', () => {
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            updateTheme();
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Show body content
+            const body = document.getElementById('main-body');
+            if (body) {
+                body.classList.remove('js-hidden');
+            }
+            
+            // Initialize theme
+            updateTheme();
+            
+            // Theme toggle button
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
+            
+            // Initialize Lucide icons
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }

@@ -141,11 +141,9 @@
         </div>
 
         <!-- Traders Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" x-data="{ hoveredCard: null }">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach ($copytradings as $copytrading)
-            <div class="group relative"
-                 x-on:mouseenter="hoveredCard = {{ $copytrading->id }}"
-                 x-on:mouseleave="hoveredCard = null">
+            <div class="group relative">
 
                 <!-- Card Glow Effect -->
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-2xl blur opacity-0 group-hover:opacity-75 transition duration-500"></div>
@@ -318,12 +316,6 @@
     // Initialize Lucide Icons
     lucide.createIcons();
 
-    // Initialize Alpine.js Data
-    document.addEventListener('alpine:init', () => {
-        Alpine.store('ui', {
-            hoveredCard: null
-        });
-    });
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

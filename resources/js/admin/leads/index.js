@@ -1,7 +1,7 @@
 /**
  * Leads Module Index - Vanilla JavaScript Implementation
  * Tüm lead yönetimi modüllerini yükler ve entegre eder
- * Alpine.js bağımlılığı kaldırılmış modüler yapı
+ * Modern ES6+ modüler yapı
  */
 
 // Import all modules

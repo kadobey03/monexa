@@ -12,8 +12,6 @@
     <link rel="icon" href="{{ $settings->favicon ? asset('storage/' . $settings->favicon) : asset('favicon.ico') }}" type="image/png" />
 
     @section('styles')
-        <!-- Tailwind CSS CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
                 important: true,
@@ -115,18 +113,17 @@
             }
         </script>
         
-        <!-- Font Awesome Icons -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Font Awesome Icons - Local -->
+        <link rel="stylesheet" href="{{ asset('vendor/fontawesome/all.min.css') }}">
         
-        <!-- jQuery (minimal for legacy compatibility) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <!-- jQuery - Local -->
+        <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
         
         <!-- Sweet Alert for notifications -->
         <script src="{{ asset('dash/js/plugin/sweetalert/sweetalert.min.js') }} "></script>
         
-        <!-- Alpine.js for modern interactivity -->
-        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-        
+        <!-- Vite Assets -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
         
         <!--PayPal Integration-->
         @if(!empty($settings->pp_ci) && $settings->pp_ci !== 'iidjdjdj')
@@ -475,8 +472,8 @@
     @livewireScripts
     
     @section('scripts')
-        <!-- Chart.js for charts -->
-        <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <!-- Chart.js for charts - Local -->
+        <script defer src="{{ asset('vendor/chartjs/chart.umd.min.js') }}"></script>
 
         <!-- Core functionality scripts -->
         <script src="{{ asset('dash/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>

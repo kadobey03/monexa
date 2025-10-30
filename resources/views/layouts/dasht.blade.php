@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ darkMode: localStorage.getItem('theme') === 'light' ? false : true }"
-      :class="{ 'dark': darkMode }"
-      class="dark bg-gray-900">
+<html lang="en" class="dark bg-gray-900" data-theme="">
 <head>
     <meta charset="UTF-8">
     <title>{{$title}}</title>
@@ -9,19 +7,19 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{ $settings->favicon ? asset('storage/' . $settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
-    <!-- Inter Font -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Inter Font - Local -->
+    <link href="{{ asset('vendor/fonts/inter.css') }}" rel="stylesheet">
+    <!-- SweetAlert2 - Local -->
+    <link href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- jQuery - Local -->
+    <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
 
     <!-- Tailwind CSS Local -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Tailwind configured via Laravel Mix - no CDN config needed -->
+    <!-- Tailwind configured via Vite - no CDN config needed -->
 
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
         // Set dark mode as default if no preference is stored
         if (!localStorage.getItem('theme')) {
@@ -29,36 +27,38 @@
             document.documentElement.classList.add('dark');
         }
 
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('theme', {
-                init() {
-                    // Default to dark if no preference is set
-                    this.darkMode = localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme');
-                    this.updateTheme();
-                },
-                darkMode: true, // Set default to true
-                toggle() {
-                    this.darkMode = !this.darkMode;
-                    this.updateTheme();
-                },
-                updateTheme() {
-                    localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
-                    document.documentElement.classList.toggle('dark', this.darkMode);
-                }
-            });
-        });
+        // Theme Management - Vanilla JavaScript
+        let isDarkMode = localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme');
+        
+        function updateTheme() {
+            const html = document.documentElement;
+            if (isDarkMode) {
+                html.classList.add('dark');
+                html.setAttribute('data-theme', 'dark');
+            } else {
+                html.classList.remove('dark');
+                html.setAttribute('data-theme', 'light');
+            }
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+        
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            updateTheme();
+        }
+        
+        // Initialize theme immediately
+        updateTheme();
     </script>
 
 </head>
-<body x-data="{ darkMode: localStorage.theme === 'dark' || !localStorage.theme, sidebarOpen: false }"
-      :class="{ 'dark': darkMode }"
-      class="dark text-gray-100 bg-gray-900" x-cloak>
+<body class="dark text-gray-100 bg-gray-900 js-hidden" id="main-body" data-sidebar-open="false">
       <style>
           body {
       overflow-x: hidden;
     }
   
-    [x-cloak] {
+    .js-hidden {
       display: none !important;
     }
   
@@ -98,13 +98,7 @@
     }
           </style>
 <!-- Professional Trading Navbar -->
-<nav x-data="{
-  open: false,
-  darkMode: localStorage.theme === 'dark' || !localStorage.theme,
-  notificationOpen: false,
-  quickActionsOpen: false
-}"
-     class="bg-white/98 dark:bg-gray-900/98 backdrop-blur-xl border-b border-gray-200/80 dark:border-gray-700/80 sticky top-0 z-50 shadow-sm dark:shadow-gray-900/20" x-cloak>
+<nav id="main-nav" class="bg-white/98 dark:bg-gray-900/98 backdrop-blur-xl border-b border-gray-200/80 dark:border-gray-700/80 sticky top-0 z-50 shadow-sm dark:shadow-gray-900/20">
 
   <!-- Main Navigation Container -->
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
@@ -126,23 +120,18 @@
         </a>
 
         <!-- Live Market Ticker (Hidden on small screens) -->
-        <div class="hidden lg:flex items-center space-x-4 ml-8 pl-8 border-l border-gray-200 dark:border-gray-700"
-             x-data="cryptoPrices()" x-init="fetchPrices()">
+        <div class="hidden lg:flex items-center space-x-4 ml-8 pl-8 border-l border-gray-200 dark:border-gray-700" id="crypto-prices">
           <div class="flex items-center space-x-2">
             <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             <span class="text-xs font-medium text-gray-600 dark:text-gray-300">LIVE</span>
           </div>
           <div class="text-sm">
             <span class="text-gray-500 dark:text-gray-400">BTC:</span>
-            <span class="font-mono ml-1"
-                  :class="btcChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
-                  x-text="'$' + (btcPrice ? btcPrice.toLocaleString() : '...')"></span>
+            <span class="font-mono ml-1 text-green-600 dark:text-green-400" id="btc-price">$...</span>
           </div>
           <div class="text-sm">
             <span class="text-gray-500 dark:text-gray-400">ETH:</span>
-            <span class="font-mono ml-1"
-                  :class="ethChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
-                  x-text="'$' + (ethPrice ? ethPrice.toLocaleString() : '...')"></span>
+            <span class="font-mono ml-1 text-green-600 dark:text-green-400" id="eth-price">$...</span>
           </div>
         </div>
       </div>
@@ -161,19 +150,15 @@
       <div class="flex items-center space-x-2">
 
         <!-- Quick Actions Dropdown (Desktop) -->
-        <div class="hidden md:block relative" x-data="{ quickActionsOpen: false }">
-          <button @click="quickActionsOpen = !quickActionsOpen"
+        <div class="hidden md:block relative" id="quick-actions-dropdown">
+          <button id="quick-actions-btn"
                   class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
             <i data-lucide="zap" class="w-4 h-4"></i>
             <span>Hızlı İşlem</span>
-            <i data-lucide="chevron-down" class="w-4 h-4" :class="quickActionsOpen ? 'rotate-180' : ''"></i>
+            <i data-lucide="chevron-down" class="w-4 h-4" id="quick-actions-chevron"></i>
           </button>
 
-          <div x-show="quickActionsOpen" @click.away="quickActionsOpen = false"
-               x-transition:enter="transition ease-out duration-200"
-               x-transition:enter-start="opacity-0 scale-95"
-               x-transition:enter-end="opacity-100 scale-100"
-               class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20" x-cloak>
+          <div id="quick-actions-menu" class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 js-hidden">
             <div class="p-2">
               <a href="{{ route('deposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <i data-lucide="plus-circle" class="w-4 h-4 mr-3 text-green-500"></i>
@@ -192,8 +177,8 @@
         </div>
 
         <!-- Notifications -->
-        <div class="relative" x-data="{ notificationOpen: false }">
-          <button @click="notificationOpen = !notificationOpen"
+        <div class="relative" id="notifications-dropdown">
+          <button id="notifications-btn"
                   class="relative p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
             <i data-lucide="bell" class="w-5 h-5"></i>
             @php
@@ -208,11 +193,7 @@
             @endif
           </button>
 
-          <div x-show="notificationOpen" @click.away="notificationOpen = false"
-               x-transition:enter="transition ease-out duration-200"
-               x-transition:enter-start="opacity-0 scale-95"
-               x-transition:enter-end="opacity-100 scale-100"
-               class="absolute right-0 sm:right-0 sm:left-auto left-1/2 sm:transform-none transform -translate-x-1/2 mt-2 w-80 max-w-[90vw] bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20" x-cloak>
+          <div id="notifications-menu" class="absolute right-0 sm:right-0 sm:left-auto left-1/2 sm:transform-none transform -translate-x-1/2 mt-2 w-80 max-w-[90vw] bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 js-hidden">
             <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
               <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
                 Bildirimler
@@ -280,21 +261,18 @@
         </div>
 
         <!-- Dark Mode Toggle -->
-        <button
-          x-data="{ darkMode: localStorage.getItem('theme') === 'dark' }"
-          @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light'); document.documentElement.classList.toggle('dark', darkMode)"
-          class="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200"
-          :aria-pressed="darkMode">
-          <i data-lucide="sun" x-show="!darkMode" class="w-5 h-5"></i>
-          <i data-lucide="moon" x-show="darkMode" class="w-5 h-5"></i>
+        <button id="theme-toggle"
+          class="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
+          <i data-lucide="sun" id="sun-icon" class="w-5 h-5 js-hidden"></i>
+          <i data-lucide="moon" id="moon-icon" class="w-5 h-5"></i>
         </button>
 
         <!-- Language Translator (Desktop) -->
 
 
         <!-- User Profile Dropdown -->
-        <div class="relative" x-data="{ dropdownOpen: false }">
-          <button @click="dropdownOpen = !dropdownOpen"
+        <div class="relative" id="user-dropdown">
+          <button id="user-dropdown-btn"
                   class="flex items-center space-x-3 px-2 py-2 text-sm rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 focus:outline-none">
             <div class="flex items-center space-x-2">
               <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-medium">
@@ -309,14 +287,10 @@
                 </div>
               </div>
             </div>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400" :class="dropdownOpen ? 'rotate-180' : ''"></i>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400" id="user-dropdown-chevron"></i>
           </button>
 
-          <div x-show="dropdownOpen" @click.away="dropdownOpen = false"
-               x-transition:enter="transition ease-out duration-200"
-               x-transition:enter-start="opacity-0 scale-95"
-               x-transition:enter-end="opacity-100 scale-100"
-               class="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20" x-cloak>
+          <div id="user-dropdown-menu" class="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 js-hidden">
 
             <!-- User Info Header -->
             <div class="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -362,18 +336,17 @@
         </div>
 
         <!-- Mobile Menu Button -->
-        <button @click="sidebarOpen = !sidebarOpen"
+        <button id="mobile-menu-btn"
                 class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-          <i data-lucide="menu" x-show="!sidebarOpen" class="w-5 h-5"></i>
-          <i data-lucide="x" x-show="sidebarOpen" class="w-5 h-5"></i>
+          <i data-lucide="menu" id="menu-icon" class="w-5 h-5"></i>
+          <i data-lucide="x" id="close-icon" class="w-5 h-5 js-hidden"></i>
         </button>
       </div>
     </div>
   </div>
 
   <!-- Mobile Market Ticker -->
-  <div class="lg:hidden bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 px-4 py-2"
-       x-data="cryptoPrices()" x-init="fetchPrices()">
+  <div class="lg:hidden bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 px-4 py-2" id="mobile-crypto-prices">
     <div class="flex items-center justify-between text-xs">
       <div class="flex items-center space-x-4">
         <div class="flex items-center space-x-1">
@@ -382,15 +355,11 @@
         </div>
         <div>
           <span class="text-gray-500 dark:text-gray-400">BTC:</span>
-          <span class="font-mono ml-1"
-                :class="btcChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
-                x-text="'$' + (btcPrice ? btcPrice.toLocaleString() : '...')"></span>
+          <span class="font-mono ml-1 text-green-600 dark:text-green-400" id="mobile-btc-price">$...</span>
         </div>
         <div>
           <span class="text-gray-500 dark:text-gray-400">ETH:</span>
-          <span class="font-mono ml-1"
-                :class="ethChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
-                x-text="'$' + (ethPrice ? ethPrice.toLocaleString() : '...')"></span>
+          <span class="font-mono ml-1 text-green-600 dark:text-green-400" id="mobile-eth-price">$...</span>
         </div>
       </div>
       <div class="md:hidden">
@@ -406,12 +375,11 @@
 
 
 <!-- Sidebar Toggle Wrapper -->
-<div class="flex min-h-screen bg-gray-900" x-cloak>
+<div class="flex min-h-screen bg-gray-900">
 
   <!-- Sidebar -->
-<aside x-cloak
-  :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-  class="fixed z-50 md:z-40 top-0 left-0 w-72 h-full bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out md:translate-x-0 overflow-y-auto">
+<aside id="sidebar"
+  class="fixed z-50 md:z-40 top-0 left-0 w-72 h-full bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out md:translate-x-0 overflow-y-auto -translate-x-full">
 
     <!-- User Profile Section -->
     <div class="relative p-4 border-b border-gray-200 dark:border-gray-700">
@@ -435,7 +403,7 @@
     </div>
 
     <!-- Live Market Prices -->
-    <div class="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20" x-cloak>
+    <div class="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
         <div class="flex items-center justify-between mb-3">
             <h3 class="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Live Market</h3>
             <span class="flex items-center text-xs text-green-600 dark:text-green-400">
@@ -455,7 +423,7 @@
     </div>
 
     <!-- Navigation Menu -->
-    <nav class="p-4 space-y-6 text-sm pb-20" x-cloak>
+    <nav class="p-4 space-y-6 text-sm pb-20">
         <!-- Overview Section -->
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
@@ -548,7 +516,7 @@
                     </a>
                 </li>
                 @if(isset($settings->enable_kyc) && $settings->enable_kyc === 'yes')
-                <li x-data="{ kycOpen: false }" x-cloak>
+                <li id="kyc-section">
                     @if(Auth::user()->account_verify === 'Verified')
                         <!-- Verified Status -->
                         <div class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
@@ -558,24 +526,16 @@
                     @else
                         <!-- KYC Dropdown -->
                         <div class="relative">
-                            <button @click="kycOpen = !kycOpen"
+                            <button id="kyc-toggle-btn"
                                     class="flex items-center w-full px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200 {{ request()->routeIs('account.verify') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                                 <i data-lucide="shield-alert" class="w-5 h-5 mr-3"></i>
                                 <span class="flex-1 text-left">Kimlik Doğrulama</span>
-                                <i data-lucide="chevron-down"
-                                   :class="kycOpen ? 'rotate-180' : 'rotate-0'"
+                                <i data-lucide="chevron-down" id="kyc-chevron"
                                    class="w-4 h-4 transition-transform duration-200"></i>
                             </button>
 
                             <!-- Dropdown Content -->
-                            <div x-show="kycOpen"
-                                 x-transition:enter="transition ease-out duration-200"
-                                 x-transition:enter-start="opacity-0 -translate-y-2"
-                                 x-transition:enter-end="opacity-100 translate-y-0"
-                                 x-transition:leave="transition ease-in duration-150"
-                                 x-transition:leave-start="opacity-100 translate-y-0"
-                                 x-transition:leave-end="opacity-0 -translate-y-2"
-                                 class="mt-2 ml-8 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm" x-cloak>
+                            <div id="kyc-dropdown" class="mt-2 ml-8 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm js-hidden">
 
                                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-3">
                                     Kimlik Doğrulama
@@ -665,10 +625,7 @@
     </aside>
 
   <!-- Sidebar overlay for mobile -->
-  <div
-    x-show="sidebarOpen"
-    @click="sidebarOpen = false"
-    class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" x-cloak>
+  <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden js-hidden">
   </div>
 
   <!-- Main content placeholder -->
@@ -684,7 +641,7 @@
 
 <!-- Modern Mobile Navigation with Glassmorphism -->
 
-<div class="fixed bottom-0 w-full z-30 md:hidden" x-data="{ fabOpen: false }" x-cloak>
+<div class="fixed bottom-0 w-full z-30 md:hidden" id="mobile-nav">
   <!-- Bottom Navigation Bar with Enhanced Glassmorphism -->
   <div class="flex justify-between items-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl px-6 py-4 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] relative border-t border-gray-200/30 dark:border-gray-700/30"
     <!-- Language Selector (Mobile) -->
@@ -764,15 +721,7 @@
   </div>
 
   <!-- Modern FAB Overlay Menu -->
-  <div x-show="fabOpen"
-       @click.away="fabOpen = false"
-       class="fixed inset-0 bg-gray-900/70 backdrop-blur-sm z-40 flex items-center justify-center p-4"
-       x-transition:enter="transition ease-out duration-300"
-       x-transition:enter-start="opacity-0"
-       x-transition:enter-end="opacity-100"
-       x-transition:leave="transition ease-in duration-200"
-       x-transition:leave-start="opacity-100"
-       x-transition:leave-end="opacity-0" x-cloak>
+  <div id="fab-overlay" class="fixed inset-0 bg-gray-900/70 backdrop-blur-sm z-40 flex items-center justify-center p-4 js-hidden">
 
     <!-- Menu Card -->
     <div class="bg-gray-900 p-6 rounded-2xl
@@ -816,7 +765,7 @@
       </div>
 
       <!-- Close Button -->
-      <button @click="fabOpen = false"
+      <button id="fab-close"
               class="absolute top-2 right-2 p-2 rounded-full
                      text-gray-400 hover:text-gray-200
                      hover:bg-gray-800
@@ -837,8 +786,8 @@
   </style>
 </div>
 
-<!-- Script for Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
+<!-- Script for Lucide Icons - Local -->
+<script src="{{ asset('vendor/lucide/lucide.js') }}"></script>
 <script>
   // Initialize Lucide icons
   document.addEventListener('DOMContentLoaded', function() {
@@ -846,11 +795,8 @@
   });
 
   // Re-initialize icons when Alpine renders new content
-  document.addEventListener('alpine:init', () => {
-    Alpine.nextTick(() => {
-      lucide.createIcons();
-    });
-  });
+  // Initialize icons after DOM is loaded
+  lucide.createIcons();
 </script>
 
 <style>
@@ -863,55 +809,277 @@
   }
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- SweetAlert2 already loaded above -->
 
 <!-- Live Crypto Prices Script -->
 <script>
-// Alpine.js component for live crypto prices
-function cryptoPrices() {
-  return {
+// Vanilla JavaScript functionality
+
+let sidebarOpen = false;
+let quickActionsOpen = false;
+let notificationsOpen = false;
+let userDropdownOpen = false;
+let kycOpen = false;
+let fabOpen = false;
+
+// Crypto prices data
+let cryptoData = {
     btcPrice: null,
     ethPrice: null,
     btcChange: 0,
-    ethChange: 0,
-    lastUpdate: null,
+    ethChange: 0
+};
 
-    async fetchPrices() {
-      try {
-        // Using Laravel proxy to avoid CORS issues
+// Theme functions already defined above
+
+// Sidebar functions
+function toggleSidebar() {
+    sidebarOpen = !sidebarOpen;
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+    
+    if (sidebarOpen) {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        overlay.classList.remove('js-hidden');
+        menuIcon.classList.add('js-hidden');
+        closeIcon.classList.remove('js-hidden');
+    } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        overlay.classList.add('js-hidden');
+        menuIcon.classList.remove('js-hidden');
+        closeIcon.classList.add('js-hidden');
+    }
+}
+
+// Dropdown functions
+function toggleDropdown(dropdownId, isOpen, setOpen) {
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+        if (isOpen) {
+            dropdown.classList.add('js-hidden');
+            setOpen(false);
+        } else {
+            dropdown.classList.remove('js-hidden');
+            setOpen(true);
+        }
+    }
+}
+
+function toggleQuickActions() {
+    quickActionsOpen = !quickActionsOpen;
+    toggleDropdown('quick-actions-menu', !quickActionsOpen, (val) => quickActionsOpen = val);
+    
+    const chevron = document.getElementById('quick-actions-chevron');
+    if (chevron) {
+        chevron.classList.toggle('rotate-180', quickActionsOpen);
+    }
+}
+
+function toggleNotifications() {
+    notificationsOpen = !notificationsOpen;
+    toggleDropdown('notifications-menu', !notificationsOpen, (val) => notificationsOpen = val);
+}
+
+function toggleUserDropdown() {
+    userDropdownOpen = !userDropdownOpen;
+    toggleDropdown('user-dropdown-menu', !userDropdownOpen, (val) => userDropdownOpen = val);
+    
+    const chevron = document.getElementById('user-dropdown-chevron');
+    if (chevron) {
+        chevron.classList.toggle('rotate-180', userDropdownOpen);
+    }
+}
+
+function toggleKyc() {
+    kycOpen = !kycOpen;
+    toggleDropdown('kyc-dropdown', !kycOpen, (val) => kycOpen = val);
+    
+    const chevron = document.getElementById('kyc-chevron');
+    if (chevron) {
+        chevron.classList.toggle('rotate-180', kycOpen);
+    }
+}
+
+function toggleFab() {
+    fabOpen = !fabOpen;
+    const overlay = document.getElementById('fab-overlay');
+    if (overlay) {
+        if (fabOpen) {
+            overlay.classList.remove('js-hidden');
+        } else {
+            overlay.classList.add('js-hidden');
+        }
+    }
+}
+
+// Crypto prices function
+async function fetchCryptoPrices() {
+    try {
         const response = await fetch('/api/crypto/prices');
         const data = await response.json();
 
         if (data.bitcoin && data.ethereum) {
-          this.btcPrice = Math.round(data.bitcoin.usd);
-          this.ethPrice = Math.round(data.ethereum.usd);
-          this.btcChange = data.bitcoin.usd_24h_change || 0;
-          this.ethChange = data.ethereum.usd_24h_change || 0;
-          this.lastUpdate = new Date();
-
-          console.log('Crypto prices updated:', {
-            BTC: this.btcPrice,
-            ETH: this.ethPrice,
-            time: this.lastUpdate
-          });
+            cryptoData.btcPrice = Math.round(data.bitcoin.usd);
+            cryptoData.ethPrice = Math.round(data.ethereum.usd);
+            cryptoData.btcChange = data.bitcoin.usd_24h_change || 0;
+            cryptoData.ethChange = data.ethereum.usd_24h_change || 0;
+            
+            updateCryptoPrices();
         }
-      } catch (error) {
+    } catch (error) {
         console.error('Error fetching crypto prices:', error);
-        // Fallback to static values on error
-        this.btcPrice = this.btcPrice || 45320;
-        this.ethPrice = this.ethPrice || 2850;
-      }
-
-      // Update prices every 30 seconds
-      setTimeout(() => this.fetchPrices(), 30000);
+        // Fallback values
+        cryptoData.btcPrice = cryptoData.btcPrice || 45320;
+        cryptoData.ethPrice = cryptoData.ethPrice || 2850;
+        updateCryptoPrices();
     }
-  }
+
+    // Update every 30 seconds
+    setTimeout(fetchCryptoPrices, 30000);
 }
 
-// Initialize when Alpine is ready
-document.addEventListener('alpine:init', () => {
-  // Register the component globally
-  Alpine.data('cryptoPrices', cryptoPrices);
+function updateCryptoPrices() {
+    // Desktop prices
+    const btcPriceEl = document.getElementById('btc-price');
+    const ethPriceEl = document.getElementById('eth-price');
+    
+    if (btcPriceEl && cryptoData.btcPrice) {
+        btcPriceEl.textContent = '$' + cryptoData.btcPrice.toLocaleString();
+        btcPriceEl.className = `font-mono ml-1 ${cryptoData.btcChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`;
+    }
+    
+    if (ethPriceEl && cryptoData.ethPrice) {
+        ethPriceEl.textContent = '$' + cryptoData.ethPrice.toLocaleString();
+        ethPriceEl.className = `font-mono ml-1 ${cryptoData.ethChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`;
+    }
+    
+    // Mobile prices
+    const mobileBtcPriceEl = document.getElementById('mobile-btc-price');
+    const mobileEthPriceEl = document.getElementById('mobile-eth-price');
+    
+    if (mobileBtcPriceEl && cryptoData.btcPrice) {
+        mobileBtcPriceEl.textContent = '$' + cryptoData.btcPrice.toLocaleString();
+        mobileBtcPriceEl.className = `font-mono ml-1 ${cryptoData.btcChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`;
+    }
+    
+    if (mobileEthPriceEl && cryptoData.ethPrice) {
+        mobileEthPriceEl.textContent = '$' + cryptoData.ethPrice.toLocaleString();
+        mobileEthPriceEl.className = `font-mono ml-1 ${cryptoData.ethChange >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`;
+    }
+}
+
+// Close dropdowns when clicking outside
+function handleOutsideClick(event) {
+    // Quick actions
+    const quickActionsDropdown = document.getElementById('quick-actions-dropdown');
+    if (quickActionsDropdown && !quickActionsDropdown.contains(event.target) && quickActionsOpen) {
+        toggleQuickActions();
+    }
+    
+    // Notifications
+    const notificationsDropdown = document.getElementById('notifications-dropdown');
+    if (notificationsDropdown && !notificationsDropdown.contains(event.target) && notificationsOpen) {
+        toggleNotifications();
+    }
+    
+    // User dropdown
+    const userDropdown = document.getElementById('user-dropdown');
+    if (userDropdown && !userDropdown.contains(event.target) && userDropdownOpen) {
+        toggleUserDropdown();
+    }
+    
+    // FAB overlay
+    const fabOverlay = document.getElementById('fab-overlay');
+    if (fabOverlay && event.target === fabOverlay && fabOpen) {
+        toggleFab();
+    }
+}
+
+// Initialize everything
+document.addEventListener('DOMContentLoaded', () => {
+    // Show body
+    const body = document.getElementById('main-body');
+    if (body) {
+        body.classList.remove('js-hidden');
+    }
+    
+    // Initialize theme
+    updateTheme();
+    
+    // Event listeners
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            toggleTheme();
+            // Update icons
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            if (isDarkMode) {
+                sunIcon.classList.add('js-hidden');
+                moonIcon.classList.remove('js-hidden');
+            } else {
+                sunIcon.classList.remove('js-hidden');
+                moonIcon.classList.add('js-hidden');
+            }
+        });
+    }
+    
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', toggleSidebar);
+    }
+    
+    // Sidebar overlay
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', toggleSidebar);
+    }
+    
+    // Quick actions
+    const quickActionsBtn = document.getElementById('quick-actions-btn');
+    if (quickActionsBtn) {
+        quickActionsBtn.addEventListener('click', toggleQuickActions);
+    }
+    
+    // Notifications
+    const notificationsBtn = document.getElementById('notifications-btn');
+    if (notificationsBtn) {
+        notificationsBtn.addEventListener('click', toggleNotifications);
+    }
+    
+    // User dropdown
+    const userDropdownBtn = document.getElementById('user-dropdown-btn');
+    if (userDropdownBtn) {
+        userDropdownBtn.addEventListener('click', toggleUserDropdown);
+    }
+    
+    // KYC toggle
+    const kycToggleBtn = document.getElementById('kyc-toggle-btn');
+    if (kycToggleBtn) {
+        kycToggleBtn.addEventListener('click', toggleKyc);
+    }
+    
+    // FAB close
+    const fabClose = document.getElementById('fab-close');
+    if (fabClose) {
+        fabClose.addEventListener('click', toggleFab);
+    }
+    
+    // Outside click handler
+    document.addEventListener('click', handleOutsideClick);
+    
+    // Initialize crypto prices
+    fetchCryptoPrices();
+    
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 });
 </script>
 

@@ -1059,38 +1059,76 @@
 }
 
 /* ========================================
-   ALPINE.JS TRANSITIONS
+   MODERN CSS TRANSITIONS
    ======================================== */
-[x-cloak] {
+.js-hidden {
     display: none !important;
 }
 
-.alpine-transition-enter {
+.transition-enter {
     transition: all 0.2s ease-out;
 }
 
-.alpine-transition-enter-start {
+.transition-enter-start {
     opacity: 0;
     transform: translateY(-10px);
 }
 
-.alpine-transition-enter-end {
+.transition-enter-end {
     opacity: 1;
     transform: translateY(0);
 }
 
-.alpine-transition-leave {
+.transition-leave {
     transition: all 0.15s ease-in;
 }
 
-.alpine-transition-leave-start {
+.transition-leave-start {
     opacity: 1;
     transform: translateY(0);
 }
 
-.alpine-transition-leave-end {
+.transition-leave-end {
     opacity: 0;
     transform: translateY(-10px);
+}
+
+/* Fade transitions */
+.fade-enter {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade-enter-active {
+    opacity: 1;
+}
+
+.fade-leave {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade-leave-active {
+    opacity: 0;
+}
+
+/* Slide transitions */
+.slide-up-enter {
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.slide-up-enter-active {
+    transform: translateY(0);
+}
+
+.slide-up-leave {
+    transform: translateY(0);
+    transition: transform 0.3s ease-out;
+}
+
+.slide-up-leave-active {
+    transform: translateY(100%);
 }
 
 /* ========================================

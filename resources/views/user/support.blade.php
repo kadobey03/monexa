@@ -2,13 +2,7 @@
 @extends('layouts.dasht')
 @section('title', $title)
 @section('content')
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-6" x-data="{ 
-    showSuccess: false, 
-    showError: false,
-    isSubmitting: false,
-    message: '',
-    showContactModal: false 
-}">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-6" id="supportContainer">
     <div class="max-w-4xl mx-auto">
         <!-- Page Header -->
         <div class="mb-8">
@@ -28,10 +22,10 @@
         </div>
 
         <!-- Alert Components -->
-        <div x-show="showSuccess" x-transition class="mb-6">
+        <div id="successAlert" class="mb-6" style="display: none;">
             <x-success-alert/>
         </div>
-        <div x-show="showError" x-transition class="mb-6">
+        <div id="errorAlert" class="mb-6" style="display: none;">
             <x-danger-alert/>
         </div>
 
@@ -70,9 +64,9 @@
             </div>
 
             <div class="max-w-2xl mx-auto">
-                <form method="post" action="{{route('enquiry')}}" 
-                      @submit="isSubmitting = true" 
-                      x-data="{ messageLength: 0 }">
+                <form method="post" action="{{route('enquiry')}}"
+                      onsubmit="handleSupportFormSubmit()"
+                      id="supportForm">
                     @csrf
                     <input type="hidden" name="name" value="{{Auth::user()->name}}" />
                     <input type="hidden" name="email" value="{{Auth::user()->email}}">
@@ -102,13 +96,12 @@
                         <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                             Mesaj <span class="text-red-500">*</span>
                         </label>
-                        <textarea 
-                            name="message" 
+                        <textarea
+                            name="message"
                             id="message"
-                            x-model="message"
-                            @input="messageLength = $el.value.length"
-                            class="w-full px-4 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none" 
-                            rows="6" 
+                            oninput="updateMessageLength(this.value.length)"
+                            class="w-full px-4 py-4 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
+                            rows="6"
                             placeholder="Lütfen sorunuzu veya sorununuzu detaylı olarak açıklayın..."
                             required
                             maxlength="1000"></textarea>
@@ -116,26 +109,25 @@
                             <p class="text-sm text-gray-500 dark:text-gray-400">
                                 Size daha iyi yardımcı olmak için lütfen mümkün olduğunca fazla detay sağlayın.
                             </p>
-                            <span class="text-sm text-gray-400" x-text="messageLength + '/1000'"></span>
+                            <span class="text-sm text-gray-400" id="messageCounter">0/1000</span>
                         </div>
                     </div>
 
                     <!-- Submit Button -->
                     <div class="text-center">
-                        <button 
-                            type="submit" 
-                            :disabled="isSubmitting || message.trim().length < 10"
-                            :class="isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'"
-                            class="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform disabled:opacity-50 disabled:cursor-not-allowed">
-                            <span x-show="!isSubmitting">Mesaj Gönder</span>
-                            <span x-show="isSubmitting" class="flex items-center space-x-2">
+                        <button
+                            type="submit"
+                            id="submitButton"
+                            class="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span id="submitText">Mesaj Gönder</span>
+                            <span id="submittingText" class="flex items-center space-x-2" style="display: none;">
                                 <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
                                 <span>Gönderiliyor...</span>
                             </span>
-                            <i data-lucide="send" class="w-5 h-5" x-show="!isSubmitting"></i>
+                            <i data-lucide="send" class="w-5 h-5" id="sendIcon"></i>
                         </button>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
                             Genellikle iş günlerinde 24 saat içinde yanıt veririz.
@@ -146,19 +138,10 @@
         </div>
 
         <!-- Contact Modal -->
-        <div x-show="showContactModal" 
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-             @click.self="showContactModal = false">
-            <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 max-w-md w-full border border-gray-200 dark:border-gray-700"
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0 transform scale-95"
-                 x-transition:enter-end="opacity-100 transform scale-100">
+        <div id="contactModal"
+             class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 transition ease-out duration-300 opacity-0"
+             onclick="closeContactModal(event)" style="display: none;">
+            <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 max-w-md w-full border border-gray-200 dark:border-gray-700 transition ease-out duration-300 transform scale-95" id="contactModalContent">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i data-lucide="message-circle" class="w-8 h-8 text-green-600 dark:text-green-400"></i>
@@ -167,7 +150,7 @@
                     <p class="text-gray-500 dark:text-gray-400 mb-6">
                         Canlı sohbet özelliğimiz yakında gelecek! Şimdilik lütfen iletişim formunu kullanın veya doğrudan bize e-posta gönderin.
                     </p>
-                    <button @click="showContactModal = false" 
+                    <button onclick="closeContactModal()"
                             class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                         Kapat
                     </button>
@@ -178,8 +161,171 @@
 </div>
 
 <script>
+// Support form state
+let supportState = {
+    showSuccess: false,
+    showError: false,
+    isSubmitting: false,
+    message: '',
+    messageLength: 0,
+    showContactModal: false
+};
+
+// Initialize support form
+document.addEventListener('DOMContentLoaded', function() {
     // Initialize Lucide icons
     lucide.createIcons();
+    
+    // Initialize message input listener
+    const messageInput = document.getElementById('message');
+    if (messageInput) {
+        messageInput.addEventListener('input', function() {
+            updateMessageLength(this.value.length);
+            supportState.message = this.value;
+            updateSubmitButtonState();
+        });
+        
+        // Initialize counter
+        updateMessageLength(0);
+    }
+    
+    console.log('Support form initialized');
+});
+
+// Update message length counter
+function updateMessageLength(length) {
+    supportState.messageLength = length;
+    const counter = document.getElementById('messageCounter');
+    if (counter) {
+        counter.textContent = length + '/1000';
+    }
+}
+
+// Update submit button state based on message length
+function updateSubmitButtonState() {
+    const submitButton = document.getElementById('submitButton');
+    const messageLength = supportState.message.trim().length;
+    
+    if (submitButton) {
+        if (supportState.isSubmitting || messageLength < 10) {
+            submitButton.disabled = true;
+            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+            submitButton.classList.remove('hover:scale-105');
+        } else {
+            submitButton.disabled = false;
+            submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            submitButton.classList.add('hover:scale-105');
+        }
+    }
+}
+
+// Handle support form submission
+function handleSupportFormSubmit() {
+    supportState.isSubmitting = true;
+    
+    // Update UI elements
+    const submitButton = document.getElementById('submitButton');
+    const submitText = document.getElementById('submitText');
+    const submittingText = document.getElementById('submittingText');
+    const sendIcon = document.getElementById('sendIcon');
+    
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+        submitButton.classList.remove('hover:scale-105');
+    }
+    
+    if (submitText) {
+        submitText.style.display = 'none';
+    }
+    
+    if (submittingText) {
+        submittingText.style.display = 'flex';
+    }
+    
+    if (sendIcon) {
+        sendIcon.style.display = 'none';
+    }
+    
+    return true; // Allow form submission to continue
+}
+
+// Show success alert
+function showSuccessAlert() {
+    supportState.showSuccess = true;
+    const successAlert = document.getElementById('successAlert');
+    if (successAlert) {
+        successAlert.style.display = 'block';
+    }
+}
+
+// Show error alert
+function showErrorAlert() {
+    supportState.showError = true;
+    const errorAlert = document.getElementById('errorAlert');
+    if (errorAlert) {
+        errorAlert.style.display = 'block';
+    }
+}
+
+// Hide alerts
+function hideAlerts() {
+    supportState.showSuccess = false;
+    supportState.showError = false;
+    
+    const successAlert = document.getElementById('successAlert');
+    const errorAlert = document.getElementById('errorAlert');
+    
+    if (successAlert) {
+        successAlert.style.display = 'none';
+    }
+    
+    if (errorAlert) {
+        errorAlert.style.display = 'none';
+    }
+}
+
+// Show contact modal
+function showContactModal() {
+    supportState.showContactModal = true;
+    const modal = document.getElementById('contactModal');
+    const modalContent = document.getElementById('contactModalContent');
+    
+    if (modal && modalContent) {
+        modal.style.display = 'flex';
+        // Trigger animation
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }, 10);
+    }
+}
+
+// Close contact modal
+function closeContactModal(event) {
+    // Check if clicked on backdrop (not modal content)
+    if (event && event.target !== document.getElementById('contactModal')) {
+        return;
+    }
+    
+    supportState.showContactModal = false;
+    const modal = document.getElementById('contactModal');
+    const modalContent = document.getElementById('contactModalContent');
+    
+    if (modal && modalContent) {
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0');
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+        
+        // Hide modal after animation
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+    }
+}
 </script>
 
 @endsection

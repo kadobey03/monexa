@@ -2,7 +2,7 @@
 @section('title', 'Trade ' . $instrument->name)
 @section('content')
 
-<div class="container mx-auto px-4 py-8" x-data="tradingSingle()" x-cloak>
+<div class="container mx-auto px-4 py-8" id="tradingSingleContainer">
     <!-- TradingView Ticker Tape Widget -->
     <!--<div class="mb-6">-->
     <!--    <div class="tradingview-widget-container">-->
@@ -173,20 +173,20 @@
 
                 <!-- Trade History Tabs -->
                 <div class="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1 mb-6">
-                    <button @click="activeTab = 'open'"
-                            :class="activeTab === 'open' ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-400'"
-                            class="flex-1 py-2 px-4 rounded-md font-medium transition-colors text-sm">
+                    <button onclick="setActiveTab('open')"
+                            id="openTab"
+                            class="flex-1 py-2 px-4 rounded-md font-medium transition-colors text-sm bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm">
                         Açık İşlemler ({{ $openTrades->count() }})
                     </button>
-                    <button @click="activeTab = 'closed'"
-                            :class="activeTab === 'closed' ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-400'"
-                            class="flex-1 py-2 px-4 rounded-md font-medium transition-colors text-sm">
+                    <button onclick="setActiveTab('closed')"
+                            id="closedTab"
+                            class="flex-1 py-2 px-4 rounded-md font-medium transition-colors text-sm text-gray-600 dark:text-gray-400">
                         Kapalı İşlemler ({{ $closedTrades->count() }})
                     </button>
                 </div>
 
                 <!-- Open Trades -->
-                <div x-show="activeTab === 'open'" x-transition>
+                <div id="openTradesContent">
                     @if($openTrades->count() > 0)
                         <div class="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
                             @foreach($openTrades as $trade)
@@ -307,7 +307,7 @@
                 </div>
 
                 <!-- Closed Trades -->
-                <div x-show="activeTab === 'closed'" x-transition>
+                <div id="closedTradesContent" style="display: none;">
                     @if($closedTrades->count() > 0)
                         <div class="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
                             @foreach($closedTrades as $trade)
@@ -499,27 +499,27 @@
 
                 <!-- Order Type Tabs -->
                 <div class="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1 mb-6">
-                    <button @click="orderType = 'Buy'"
-                            :class="orderType === 'Buy' ? 'bg-green-500 text-white' : 'text-gray-600 dark:text-gray-400'"
-                            class="flex-1 py-2 px-4 rounded-md font-medium transition-colors">
+                    <button onclick="setOrderType('Buy')"
+                            id="buyButton"
+                            class="flex-1 py-2 px-4 rounded-md font-medium transition-colors bg-green-500 text-white">
                         Al
                     </button>
-                    <button @click="orderType = 'Sell'"
-                            :class="orderType === 'Sell' ? 'bg-red-500 text-white' : 'text-gray-600 dark:text-gray-400'"
-                            class="flex-1 py-2 px-4 rounded-md font-medium transition-colors">
+                    <button onclick="setOrderType('Sell')"
+                            id="sellButton"
+                            class="flex-1 py-2 px-4 rounded-md font-medium transition-colors text-gray-600 dark:text-gray-400">
                         Sat
                     </button>
                 </div>
 
                 <!-- Order Form -->
-                <form action="{{ route('joinplan') }}" method="POST" class="space-y-4" @submit.prevent="submitOrder">
+                <form action="{{ route('joinplan') }}" method="POST" class="space-y-4" id="orderForm" onsubmit="return submitOrder(event)">
                     @csrf
                     <!-- Hidden fields for instrument data -->
                     <input type="hidden" name="plan_id" value="{{ $instrument->id }}">
                     <input type="hidden" name="symbol" value="{{ $instrument->symbol }}">
                     <input type="hidden" name="asset" value="{{ $instrument->name }}">
                     <input type="hidden" name="instrument_price" value="{{ $instrument->price }}">
-                    <input type="hidden" name="order_type" x-model="orderType">
+                    <input type="hidden" name="order_type" id="orderTypeInput" value="Buy">
                     <input type="hidden" name="trade_type" value="market">
                     <input type="hidden" name="leverage" value="100">
                     <input type="hidden" name="expire" value="7 Days">
@@ -529,11 +529,12 @@
                     <div >
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fiyat ($)</label>
                         <input type="number"
-                               x-model="price"
+                               id="priceInput"
                                name="price"
                                step="any"
                                min="0"
                                placeholder="{{ $instrument->price }}"
+                               value="{{ $instrument->price }}"
                                class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white">
                     </div>
 
@@ -541,22 +542,24 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Yatırım Miktarı ($)</label>
                         <input type="number"
-                               x-model="amount"
+                               id="amountInput"
                                name="amount"
                                step="0.01"
                                min="0"
                                placeholder="0.00"
                                required
+                               onchange="updateSummary()"
+                               oninput="updateSummary()"
                                class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white">
                     </div>                    <!-- Investment Summary -->
                     <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm text-gray-600 dark:text-gray-400">Yatırım Miktarı:</span>
-                            <span class="font-semibold text-gray-900 dark:text-white" x-text="formatAmount()"></span>
+                            <span class="font-semibold text-gray-900 dark:text-white" id="summaryAmount">$0.00</span>
                         </div>
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-sm text-gray-600 dark:text-gray-400">Birimler:</span>
-                            <span class="text-sm text-gray-900 dark:text-white" x-text="formatUnits()"></span>
+                            <span class="text-sm text-gray-900 dark:text-white" id="summaryUnits">0</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-sm text-gray-600 dark:text-gray-400">Mevcut Bakiye:</span>
@@ -566,13 +569,9 @@
 
                     <!-- Submit Button -->
                     <button type="submit"
-                            :disabled="!amount || amount <= 0 || loading"
-                            :class="orderType === 'Buy' ? 'bg-green-600 hover:bg-green-700 disabled:bg-green-300' : 'bg-red-600 hover:bg-red-700 disabled:bg-red-300'"
-                            class="w-full py-3 px-4 text-white font-semibold rounded-lg transition-colors disabled:cursor-not-allowed flex items-center justify-center gap-2">
-                        <template x-if="loading">
-                            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                        </template>
-                        <span x-text="loading ? 'İşleniyor...' : (orderType === 'Buy' ? 'Al ' + '{{ $instrument->symbol }}' : 'Sat ' + '{{ $instrument->symbol }}')"></span>
+                            id="submitButton"
+                            class="w-full py-3 px-4 text-white font-semibold rounded-lg transition-colors disabled:cursor-not-allowed flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 disabled:bg-green-300">
+                        <span id="submitButtonText">Al {{ $instrument->symbol }}</span>
                     </button>
                 </form>
 
@@ -580,10 +579,10 @@
                 <div class="mt-4">
                     <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Hızlı miktarlar:</div>
                     <div class="grid grid-cols-4 gap-2">
-                        <button @click="setQuickAmount(25)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">25%</button>
-                        <button @click="setQuickAmount(50)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">50%</button>
-                        <button @click="setQuickAmount(75)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">75%</button>
-                        <button @click="setQuickAmount(100)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">Max</button>
+                        <button onclick="setQuickAmount(25)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">25%</button>
+                        <button onclick="setQuickAmount(50)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">50%</button>
+                        <button onclick="setQuickAmount(75)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">75%</button>
+                        <button onclick="setQuickAmount(100)" class="py-1 px-2 text-xs bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-700 dark:text-gray-300 transition-colors">Max</button>
                     </div>
                 </div>
             </div>
@@ -592,107 +591,234 @@
 </div>
 
 <script>
-function tradingSingle() {
-    return {
-        instrument: @json($instrument),
-        orderType: 'Buy',
-        tradeType: 'market',
-        amount: '',
-        price: '',
-        loading: false,
-        activeTab: 'open', // Add tab state to the main Alpine component
+// Trading Single Vanilla JavaScript
+const TradingSingle = {
+    instrument: {!! json_encode($instrument) !!},
+    orderType: 'Buy',
+    tradeType: 'market',
+    amount: '',
+    price: '{{ $instrument->price }}',
+    loading: false,
+    activeTab: 'open',
 
-        formatAmount() {
-            if (!this.amount) return '$0.00';
-            const amount = parseFloat(this.amount);
-            return '$' + amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        },
+    init() {
+        this.setupEventListeners();
+        this.updateSummary();
+        this.initializeLucideIcons();
+    },
 
-        formatUnits() {
-            if (!this.amount) return '0';
-            const amount = parseFloat(this.amount);
-            const price = this.tradeType === 'market' ? this.instrument.price : (this.price || this.instrument.price);
-            const units = amount / parseFloat(price);
-            return units.toLocaleString('en-US', { minimumFractionDigits: 6, maximumFractionDigits: 6 });
-        },
-
-        setQuickAmount(percentage) {
-            const balance = {{ auth()->user()->account_bal ?? 0 }};
-            this.amount = (balance * percentage / 100).toFixed(2);
-        },
-
-        submitOrder() {
-            if (!this.amount || this.amount <= 0) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Geçersiz Miktar',
-                    text: 'Lütfen işlem yapmak için geçerli bir miktar girin.',
-                    confirmButtonColor: '#3B82F6'
-                });
-                return;
-            }
-
-            const total = this.formatAmount();
-            const units = this.formatUnits();
-            const action = this.orderType.toUpperCase();
-
-            Swal.fire({
-                title: `Al/Sat Siparişini Onayla`,
-                html: `
-                    <div class="text-left space-y-2">
-                        <p><strong>Enstrüman:</strong> ${this.instrument.symbol}</p>
-                        <p><strong>İşlem:</strong> ${action}</p>
-                        <p><strong>Yatırım Miktarı:</strong> ${total}</p>
-                        <p><strong>Birimler:</strong> ${units}</p>
-                        <p><strong>Kaldıraç:</strong> 1:100</p>
-                        <p><strong>Süre:</strong> 7 Gün</p>
-                    </div>
-                `,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: this.orderType === 'Buy' ? '#10B981' : '#EF4444',
-                cancelButtonColor: '#6B7280',
-                confirmButtonText: `Evet, ${action}!`,
-                cancelButtonText: 'İptal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.loading = true;
-
-                    // Show processing message
-                    Swal.fire({
-                        title: 'Sipariş İşleniyor...',
-                        text: 'Lütfen işleminiz işlenirken bekleyin.',
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        showConfirmButton: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
-                    });
-
-                    // Submit the form
-                    this.$el.closest('form').submit();
-                }
-            });
-        },        init() {
-            // Initialize price for limit/stop orders
-            this.price = this.instrument.price;
-
-            // Initialize Lucide icons
-            this.$nextTick(() => {
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
+    setupEventListeners() {
+        const amountInput = document.getElementById('amountInput');
+        const priceInput = document.getElementById('priceInput');
+        
+        if (amountInput) {
+            amountInput.addEventListener('input', () => {
+                this.amount = amountInput.value;
+                this.updateSummary();
             });
         }
+
+        if (priceInput) {
+            priceInput.addEventListener('input', () => {
+                this.price = priceInput.value;
+                this.updateSummary();
+            });
+        }
+    },
+
+    formatAmount() {
+        if (!this.amount) return '$0.00';
+        const amount = parseFloat(this.amount);
+        return '$' + amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    },
+
+    formatUnits() {
+        if (!this.amount) return '0';
+        const amount = parseFloat(this.amount);
+        const price = this.tradeType === 'market' ? this.instrument.price : (this.price || this.instrument.price);
+        const units = amount / parseFloat(price);
+        return units.toLocaleString('en-US', { minimumFractionDigits: 6, maximumFractionDigits: 6 });
+    },
+
+    updateSummary() {
+        const summaryAmount = document.getElementById('summaryAmount');
+        const summaryUnits = document.getElementById('summaryUnits');
+        
+        if (summaryAmount) {
+            summaryAmount.textContent = this.formatAmount();
+        }
+        
+        if (summaryUnits) {
+            summaryUnits.textContent = this.formatUnits();
+        }
+    },
+
+    setQuickAmount(percentage) {
+        const balance = {{ auth()->user()->account_bal ?? 0 }};
+        this.amount = (balance * percentage / 100).toFixed(2);
+        const amountInput = document.getElementById('amountInput');
+        if (amountInput) {
+            amountInput.value = this.amount;
+        }
+        this.updateSummary();
+    },
+
+    setOrderType(type) {
+        this.orderType = type;
+        const orderTypeInput = document.getElementById('orderTypeInput');
+        const buyButton = document.getElementById('buyButton');
+        const sellButton = document.getElementById('sellButton');
+        const submitButton = document.getElementById('submitButton');
+        const submitButtonText = document.getElementById('submitButtonText');
+
+        if (orderTypeInput) {
+            orderTypeInput.value = type;
+        }
+
+        if (type === 'Buy') {
+            if (buyButton) {
+                buyButton.className = buyButton.className.replace(/text-gray-600.*dark:text-gray-400/, 'bg-green-500 text-white');
+            }
+            if (sellButton) {
+                sellButton.className = sellButton.className.replace(/bg-red-500.*text-white/, 'text-gray-600 dark:text-gray-400');
+            }
+            if (submitButton) {
+                submitButton.className = submitButton.className.replace(/bg-red-600.*disabled:bg-red-300/, 'bg-green-600 hover:bg-green-700 disabled:bg-green-300');
+            }
+            if (submitButtonText) {
+                submitButtonText.textContent = `Al ${this.instrument.symbol}`;
+            }
+        } else {
+            if (sellButton) {
+                sellButton.className = sellButton.className.replace(/text-gray-600.*dark:text-gray-400/, 'bg-red-500 text-white');
+            }
+            if (buyButton) {
+                buyButton.className = buyButton.className.replace(/bg-green-500.*text-white/, 'text-gray-600 dark:text-gray-400');
+            }
+            if (submitButton) {
+                submitButton.className = submitButton.className.replace(/bg-green-600.*disabled:bg-green-300/, 'bg-red-600 hover:bg-red-700 disabled:bg-red-300');
+            }
+            if (submitButtonText) {
+                submitButtonText.textContent = `Sat ${this.instrument.symbol}`;
+            }
+        }
+    },
+
+    setActiveTab(tab) {
+        this.activeTab = tab;
+        const openTab = document.getElementById('openTab');
+        const closedTab = document.getElementById('closedTab');
+        const openContent = document.getElementById('openTradesContent');
+        const closedContent = document.getElementById('closedTradesContent');
+
+        if (tab === 'open') {
+            if (openTab) {
+                openTab.className = openTab.className.replace(/text-gray-600.*dark:text-gray-400/, 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm');
+            }
+            if (closedTab) {
+                closedTab.className = closedTab.className.replace(/bg-white.*shadow-sm/, 'text-gray-600 dark:text-gray-400');
+            }
+            if (openContent) openContent.style.display = 'block';
+            if (closedContent) closedContent.style.display = 'none';
+        } else {
+            if (closedTab) {
+                closedTab.className = closedTab.className.replace(/text-gray-600.*dark:text-gray-400/, 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm');
+            }
+            if (openTab) {
+                openTab.className = openTab.className.replace(/bg-white.*shadow-sm/, 'text-gray-600 dark:text-gray-400');
+            }
+            if (openContent) openContent.style.display = 'none';
+            if (closedContent) closedContent.style.display = 'block';
+        }
+    },
+
+    submitOrder(event) {
+        event.preventDefault();
+        
+        if (!this.amount || this.amount <= 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Geçersiz Miktar',
+                text: 'Lütfen işlem yapmak için geçerli bir miktar girin.',
+                confirmButtonColor: '#3B82F6'
+            });
+            return false;
+        }
+
+        const total = this.formatAmount();
+        const units = this.formatUnits();
+        const action = this.orderType.toUpperCase();
+
+        Swal.fire({
+            title: `Al/Sat Siparişini Onayla`,
+            html: `
+                <div class="text-left space-y-2">
+                    <p><strong>Enstrüman:</strong> ${this.instrument.symbol}</p>
+                    <p><strong>İşlem:</strong> ${action}</p>
+                    <p><strong>Yatırım Miktarı:</strong> ${total}</p>
+                    <p><strong>Birimler:</strong> ${units}</p>
+                    <p><strong>Kaldıraç:</strong> 1:100</p>
+                    <p><strong>Süre:</strong> 7 Gün</p>
+                </div>
+            `,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: this.orderType === 'Buy' ? '#10B981' : '#EF4444',
+            cancelButtonColor: '#6B7280',
+            confirmButtonText: `Evet, ${action}!`,
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.loading = true;
+
+                Swal.fire({
+                    title: 'Sipariş İşleniyor...',
+                    text: 'Lütfen işleminiz işlenirken bekleyin.',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                document.getElementById('orderForm').submit();
+            }
+        });
+        return false;
+    },
+
+    initializeLucideIcons() {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     }
+};
+
+// Global functions
+function setOrderType(type) {
+    TradingSingle.setOrderType(type);
 }
 
-// Re-initialize icons after Alpine updates
-document.addEventListener('alpine:updated', () => {
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+function setActiveTab(tab) {
+    TradingSingle.setActiveTab(tab);
+}
+
+function setQuickAmount(percentage) {
+    TradingSingle.setQuickAmount(percentage);
+}
+
+function updateSummary() {
+    TradingSingle.updateSummary();
+}
+
+function submitOrder(event) {
+    return TradingSingle.submitOrder(event);
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    TradingSingle.init();
 });
 </script>
 
