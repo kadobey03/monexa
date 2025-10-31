@@ -87,7 +87,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Forex Card -->
-            <div class="relative group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="relative group">
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
                 <div class="relative bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 group-hover:border-blue-500 transition duration-300 h-full">
                     <div class="flex items-center mb-4">
@@ -115,7 +115,7 @@
             </div>
 
             <!-- CFD Card -->
-            <div class="relative group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="relative group">
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
                 <div class="relative bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 group-hover:border-emerald-500 transition duration-300 h-full">
                     <div class="flex items-center mb-4">
@@ -143,7 +143,7 @@
             </div>
 
             <!-- Cryptocurrency Card -->
-            <div class="relative group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="relative group">
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
                 <div class="relative bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 group-hover:border-purple-500 transition duration-300 h-full">
                     <div class="flex items-center mb-4">
@@ -171,7 +171,7 @@
             </div>
 
             <!-- Digital Options Card -->
-            <div class="relative group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="relative group">
                 <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
                 <div class="relative bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 group-hover:border-indigo-500 transition duration-300 h-full">
                     <div class="flex items-center mb-4">
@@ -225,15 +225,11 @@
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" x-data="{ activeCard: null }">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Ultimate Platform Card -->
-            <div class="relative h-full group"
-                x-on:mouseenter="activeCard = 1"
-                x-on:mouseleave="activeCard = null">
-                <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-xl blur opacity-30"
-                    x-bind:class="{ 'opacity-70': activeCard === 1 }"></div>
-                <div class="relative bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 h-full flex flex-col transition duration-300"
-                    x-bind:class="{ 'border-blue-500 transform scale-[1.02]': activeCard === 1 }">
+            <div class="relative h-full group">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+                <div class="relative bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 h-full flex flex-col transition duration-300 group-hover:border-blue-500 group-hover:scale-[1.02]">
                     <div class="w-16 h-16 rounded-full bg-blue-900 bg-opacity-50 flex items-center justify-center mb-6 mx-auto">
                         <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -246,7 +242,7 @@
                         Çoklu grafik düzeni, teknik analiz, tarihsel fiyatlar ve fazlası. Bir platformda aradığınız her şey — tercih ettiğiniz cihazda.
                     </p>
 
-                    <div class="mt-6 pt-4 border-t border-gray-700" x-show="activeCard === 1" x-transition>
+                    <div class="mt-6 pt-4 border-t border-gray-700 group-hover:block">
                         <a href="#" class="flex items-center justify-center text-emerald-400 hover:text-emerald-300 transition">
                             <span>Platformu keşfedin</span>
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -258,13 +254,9 @@
             </div>
 
             <!-- Analysis & Alerts Card -->
-            <div class="relative h-full group"
-                x-on:mouseenter="activeCard = 2"
-                x-on:mouseleave="activeCard = null">
-                <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-xl blur opacity-30"
-                    x-bind:class="{ 'opacity-70': activeCard === 2 }"></div>
-                <div class="relative bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 h-full flex flex-col transition duration-300"
-                    x-bind:class="{ 'border-emerald-500 transform scale-[1.02]': activeCard === 2 }">
+            <div class="relative h-full group">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+                <div class="relative bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 h-full flex flex-col transition duration-300 group-hover:border-emerald-500 group-hover:scale-[1.02]">
                     <div class="w-16 h-16 rounded-full bg-emerald-900 bg-opacity-50 flex items-center justify-center mb-6 mx-auto">
                         <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
@@ -277,7 +269,7 @@
                         Haber Akışımız ve Ekonomik Takvimlerimiz ile temel ve teknik analizden en iyi şekilde yararlanın. 100'den fazla en yaygın kullanılan teknik gösterge.
                     </p>
 
-                    <div class="mt-6 pt-4 border-t border-gray-700" x-show="activeCard === 2" x-transition>
+                    <div class="mt-6 pt-4 border-t border-gray-700 group-hover:block">
                         <a href="#" class="flex items-center justify-center text-emerald-400 hover:text-emerald-300 transition">
                             <span>Araçları görüntüle</span>
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -289,13 +281,9 @@
             </div>
 
             <!-- Demo Account Card -->
-            <div class="relative h-full group"
-                x-on:mouseenter="activeCard = 3"
-                x-on:mouseleave="activeCard = null">
-                <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl blur opacity-30"
-                    x-bind:class="{ 'opacity-70': activeCard === 3 }"></div>
-                <div class="relative bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 h-full flex flex-col transition duration-300"
-                    x-bind:class="{ 'border-purple-500 transform scale-[1.02]': activeCard === 3 }">
+            <div class="relative h-full group">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+                <div class="relative bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 h-full flex flex-col transition duration-300 group-hover:border-purple-500 group-hover:scale-[1.02]">
                     <div class="w-16 h-16 rounded-full bg-purple-900 bg-opacity-50 flex items-center justify-center mb-6 mx-auto">
                         <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
@@ -308,7 +296,7 @@
                         Demo/alıştırma hesabı ve eğitim içeriğiyle becerilerinizi ustalaşın. Herhangi bir risk olmadan gerçek piyasa koşullarında sanal fonlarla pratik yapın.
                     </p>
 
-                    <div class="mt-6 pt-4 border-t border-gray-700" x-show="activeCard === 3" x-transition>
+                    <div class="mt-6 pt-4 border-t border-gray-700 group-hover:block">
                         <a href="#" class="flex items-center justify-center text-emerald-400 hover:text-emerald-300 transition">
                             <span>Demo'yu başlat</span>
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -320,13 +308,9 @@
             </div>
 
             <!-- Risk Management Card -->
-            <div class="relative h-full group"
-                x-on:mouseenter="activeCard = 4"
-                x-on:mouseleave="activeCard = null">
-                <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-xl blur opacity-30"
-                    x-bind:class="{ 'opacity-70': activeCard === 4 }"></div>
-                <div class="relative bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 h-full flex flex-col transition duration-300"
-                    x-bind:class="{ 'border-indigo-500 transform scale-[1.02]': activeCard === 4 }">
+            <div class="relative h-full group">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+                <div class="relative bg-gray-900 bg-opacity-90 backdrop-filter backdrop-blur-sm p-6 rounded-xl border border-gray-700 h-full flex flex-col transition duration-300 group-hover:border-indigo-500 group-hover:scale-[1.02]">
                     <div class="w-16 h-16 rounded-full bg-indigo-900 bg-opacity-50 flex items-center justify-center mb-6 mx-auto">
                         <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
@@ -339,7 +323,7 @@
                         Stop Loss/Take Profit, Negatif bakiye koruması ve Trailing Stop gibi özelliklerle kayıplarınızı ve karlarınızı önceden belirlediğiniz seviyelerde yönetebilirsiniz.
                     </p>
 
-                    <div class="mt-6 pt-4 border-t border-gray-700" x-show="activeCard === 4" x-transition>
+                    <div class="mt-6 pt-4 border-t border-gray-700 group-hover:block">
                         <a href="#" class="flex items-center justify-center text-emerald-400 hover:text-emerald-300 transition">
                             <span>Daha fazla öğren</span>
                             <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

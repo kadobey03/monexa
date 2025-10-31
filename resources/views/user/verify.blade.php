@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('content')
 
-<div class="min-h-screen bg-white dark:bg-gray-900" x-cloak>
+<div class="min-h-screen bg-white dark:bg-gray-900" id="verifyApp">
     <!-- Simple Header -->
     <div class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
         <div class="max-w-4xl mx-auto px-6 py-8">
@@ -25,8 +25,7 @@
 
     <div class="max-w-4xl mx-auto px-6 py-8">
         <!-- Main Verification Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 mb-6"
-             x-data="{ showDetails: false }" x-cloak>
+        <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 mb-6" id="verifyCard">
 
             <!-- Card Content -->
             <div class="p-6 text-center">
@@ -82,10 +81,10 @@
                         </a>
 
                         <!-- Quick Info Toggle -->
-                        <button @click="showDetails = !showDetails"
+                        <button onclick="verifyManager.toggleDetails()"
                                 class="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                            <span x-text="showDetails ? 'Ayrıntıları Gizle' : 'Daha Fazla Bilgi'"></span>
-                            <svg class="w-4 h-4 inline ml-1 transition-transform" :class="showDetails ? 'rotate-180' : ''" fill="currentColor" viewBox="0 0 20 20">
+                            <span id="toggleText">Daha Fazla Bilgi</span>
+                            <svg id="toggleIcon" class="w-4 h-4 inline ml-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                             </svg>
                         </button>
@@ -93,7 +92,7 @@
                 </div>
 
                 <!-- Expandable Details -->
-                <div x-show="showDetails" x-transition class="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-left">
+                <div id="expandableDetails" class="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-left" style="display: none;">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">KYC Doğrulama Nedir?</h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -154,7 +153,7 @@
         </div>
 
         <!-- Support Card -->
-        <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800" x-cloak>
+        <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800">
             <div class="p-6">
                 <div class="flex flex-col lg:flex-row items-center gap-6">
                     <!-- Icon -->
@@ -215,12 +214,53 @@
     </div>
 </div>
 
-@push('scripts')
-<style>
-    [x-cloak] {
-        display: none !important;
+<script>
+// Verify Manager - Vanilla JavaScript
+class VerifyManager {
+    constructor() {
+        this.showDetails = false;
+        this.init();
     }
-</style>
-@endpush
+
+    init() {
+        // Initialize if needed
+    }
+
+    toggleDetails() {
+        this.showDetails = !this.showDetails;
+        this.updateUI();
+    }
+
+    updateUI() {
+        const detailsEl = document.getElementById('expandableDetails');
+        const toggleText = document.getElementById('toggleText');
+        const toggleIcon = document.getElementById('toggleIcon');
+        
+        if (detailsEl) {
+            detailsEl.style.display = this.showDetails ? 'block' : 'none';
+        }
+        
+        if (toggleText) {
+            toggleText.textContent = this.showDetails ? 'Ayrıntıları Gizle' : 'Daha Fazla Bilgi';
+        }
+        
+        if (toggleIcon) {
+            if (this.showDetails) {
+                toggleIcon.classList.add('rotate-180');
+            } else {
+                toggleIcon.classList.remove('rotate-180');
+            }
+        }
+    }
+}
+
+// Global instance
+let verifyManager = null;
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    verifyManager = new VerifyManager();
+});
+</script>
 
 @endsection

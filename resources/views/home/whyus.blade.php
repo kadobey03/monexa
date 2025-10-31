@@ -110,7 +110,7 @@
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Reliable -->
-            <div class="group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="group">
                 <div class="relative h-full">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-emerald-400/5 rounded-xl transition-all duration-300 group-hover:scale-105"></div>
                     <div class="relative h-full p-6 bg-gray-800 rounded-xl border border-gray-700 transition-all duration-300 hover:border-blue-500/50">
@@ -126,7 +126,7 @@
             </div>
 
             <!-- Intelligent -->
-            <div class="group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="group">
                 <div class="relative h-full">
                     <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-400/5 rounded-xl transition-all duration-300 group-hover:scale-105"></div>
                     <div class="relative h-full p-6 bg-gray-800 rounded-xl border border-gray-700 transition-all duration-300 hover:border-emerald-500/50">
@@ -142,7 +142,7 @@
             </div>
 
             <!-- Transparent -->
-            <div class="group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="group">
                 <div class="relative h-full">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-emerald-400/5 rounded-xl transition-all duration-300 group-hover:scale-105"></div>
                     <div class="relative h-full p-6 bg-gray-800 rounded-xl border border-gray-700 transition-all duration-300 hover:border-blue-500/50">
@@ -158,7 +158,7 @@
             </div>
 
             <!-- Intuitive -->
-            <div class="group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="group">
                 <div class="relative h-full">
                     <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-400/5 rounded-xl transition-all duration-300 group-hover:scale-105"></div>
                     <div class="relative h-full p-6 bg-gray-800 rounded-xl border border-gray-700 transition-all duration-300 hover:border-emerald-500/50">
@@ -207,7 +207,7 @@
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Globally Regulated -->
-            <div class="group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="group">
                 <div class="relative h-full">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-emerald-400/5 rounded-xl transition-all duration-300 group-hover:scale-105"></div>
                     <div class="relative h-full p-6 bg-gray-800 rounded-xl border border-gray-700 transition-all duration-300 hover:border-blue-500/50">
@@ -223,8 +223,7 @@
             </div>
 
             <!-- International Awards -->
-            <div class="group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
-
+            <div class="group">
                 <div class="relative h-full">
                     <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-400/5 rounded-xl transition-all duration-300 group-hover:scale-105"></div>
                     <div class="relative h-full p-6 bg-gray-800 rounded-xl border border-gray-700 transition-all duration-300 hover:border-emerald-500/50">
@@ -238,8 +237,9 @@
                     </div>
                 </div>
             </div>
+            
             <!-- 24/7 Support -->
-            <div class="group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="group">
                 <div class="relative h-full">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-emerald-400/5 rounded-xl transition-all duration-300 group-hover:scale-105"></div>
                     <div class="relative h-full p-6 bg-gray-800 rounded-xl border border-gray-700 transition-all duration-300 hover:border-blue-500/50">
@@ -255,7 +255,7 @@
             </div>
 
             <!-- Secure Transactions -->
-            <div class="group" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false">
+            <div class="group">
                 <div class="relative h-full">
                     <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-blue-400/5 rounded-xl transition-all duration-300 group-hover:scale-105"></div>
                     <div class="relative h-full p-6 bg-gray-800 rounded-xl border border-gray-700 transition-all duration-300 hover:border-emerald-500/50">

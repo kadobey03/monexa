@@ -1,45 +1,79 @@
 
-@extends('layouts.dashly1')
+@extends('layouts.dasht')
 @section('title', $title)
 @section('content')
-    <!-- Page title -->
-    <div class="page-title">
-        <div class="row justify-content-between align-items-center">
-            <div class="mb-3 col-md-6 mb-md-0">
-                <h5 class="h2 m-0">{{ __('Security/Account Deletion') }}</h5>
+<div class="container mx-auto px-4 py-6">
+    <x-danger-alert/>
+	<x-success-alert/>
+    
+    <!-- Page Header -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                    {{ __('Güvenlik/Hesap Silme') }}
+                </h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-1">
+                    Hesap güvenlik ayarlarınızı yönetin
+                </p>
             </div>
         </div>
     </div>
-    <x-danger-alert/>
-	<x-success-alert/>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-					<div class="row">
-						<div class="p-2 text-center col-md-12 p-md-3">
-                            @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
-                                <div>
-                                    @livewire('profile.two-factor-authentication-form')
-                                </div>
-                            @endif
-                        </div>
-					</div>
-					<div class="row">
-						<div class="p-2 text-center col-md-12">
-							@livewire('profile.logout-other-browser-sessions-form')
-                        </div>
-					</div>
-					<div class="row">
-						<div class="p-2 text-center col-md-12">
-							@if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
-								<x-jet-section-border />
-								@livewire('profile.delete-user-form')
-							@endif
-                        </div>
-					</div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Two Factor Authentication -->
+        <div class="lg:col-span-2">
+            <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        İki Faktörlü Kimlik Doğrulama
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Hesabınızın güvenliğini artırmak için 2FA'yı etkinleştirin
+                    </p>
+                </div>
+                <div class="p-6">
+                    @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
+                        @livewire('profile.two-factor-authentication-form')
+                    @endif
                 </div>
             </div>
         </div>
-	</div>
+
+        <!-- Security Information -->
+        <div class="space-y-6">
+            <!-- Active Sessions -->
+            <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Aktif Oturumlar
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                        Diğer tarayıcılardaki oturumları yönetin
+                    </p>
+                </div>
+                <div class="p-6">
+                    @livewire('profile.logout-other-browser-sessions-form')
+                </div>
+            </div>
+
+            <!-- Account Deletion -->
+            @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
+                <div class="bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-200 dark:border-red-800 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-red-200 dark:border-red-800">
+                        <h3 class="text-lg font-semibold text-red-900 dark:text-red-100">
+                            Hesap Silme
+                        </h3>
+                        <p class="text-sm text-red-600 dark:text-red-400 mt-1">
+                            Bu işlem geri alınamaz
+                        </p>
+                    </div>
+                    <div class="p-6">
+                        @livewire('profile.delete-user-form')
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
 @endsection

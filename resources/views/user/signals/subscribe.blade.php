@@ -3,7 +3,7 @@
 @section('content')
 
 <!-- Trade Signal Subscription Page -->
-<div class="space-y-6" x-data="signalSubscription()">
+<div class="space-y-6" id="signalsSubscriptionApp">
 
     <!-- Page Header -->
     <div class="bg-gray-900 rounded-2xl p-6 border border-gray-700">
@@ -80,7 +80,7 @@
 
                 <!-- Subscribe Button -->
                 <button
-                    @click="showSubscribeModal = true"
+                    onclick="signalApp.showSubscribeModal()"
                     class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 >
                     <span class="flex items-center gap-2">
@@ -160,7 +160,7 @@
                                     Your subscription is expiring soon. Renew now to continue receiving premium signals.
                                 </p>
                                 <button
-                                    @click="showRenewalModal = true"
+                                    onclick="signalApp.showRenewalModal()"
                                     class="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 text-sm"
                                 >
                                     <span class="flex items-center gap-2">
@@ -233,29 +233,14 @@
     @endif
 
     <!-- Subscribe Modal -->
-    <div x-show="showSubscribeModal"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-         style="display: none;">
+    <div id="subscribeModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 opacity-0" style="display: none;">
 
-        <div @click.away="showSubscribeModal = false"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 scale-95"
-             x-transition:enter-end="opacity-100 scale-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100 scale-100"
-             x-transition:leave-end="opacity-0 scale-95"
-             class="bg-gray-900 rounded-2xl border border-gray-700 w-full max-w-md max-h-[80vh] overflow-y-auto">
+        <div id="subscribeModalContent" class="bg-gray-900 rounded-2xl border border-gray-700 w-full max-w-md max-h-[80vh] overflow-y-auto transition-all duration-300 opacity-0 scale-95">
 
             <!-- Modal Header -->
             <div class="flex items-center justify-between p-6 border-b border-gray-700">
                 <h3 class="text-xl font-bold text-white">Subscribe to Premium Signals</h3>
-                <button @click="showSubscribeModal = false"
+                <button onclick="signalApp.closeSubscribeModal()"
                         class="text-gray-400 hover:text-white transition-colors duration-200">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
@@ -270,29 +255,14 @@
 
     @if ($subscription && (now()->greaterThanOrEqualTo(\Carbon\Carbon::parse($subscription->reminded_at)) or now()->greaterThanOrEqualTo(\Carbon\Carbon::parse($subscription->expired_at))))
         <!-- Renewal Modal -->
-        <div x-show="showRenewalModal"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-             style="display: none;">
+        <div id="renewalModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 opacity-0" style="display: none;">
 
-            <div @click.away="showRenewalModal = false"
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0 scale-95"
-                 x-transition:enter-end="opacity-100 scale-100"
-                 x-transition:leave="transition ease-in duration-200"
-                 x-transition:leave-start="opacity-100 scale-100"
-                 x-transition:leave-end="opacity-0 scale-95"
-                 class="bg-gray-900 rounded-2xl border border-gray-700 w-full max-w-md">
+            <div id="renewalModalContent" class="bg-gray-900 rounded-2xl border border-gray-700 w-full max-w-md transition-all duration-300 opacity-0 scale-95">
 
                 <!-- Modal Header -->
                 <div class="flex items-center justify-between p-6 border-b border-gray-700">
                     <h3 class="text-xl font-bold text-white">Renew Subscription</h3>
-                    <button @click="showRenewalModal = false"
+                    <button onclick="signalApp.closeRenewalModal()"
                             class="text-gray-400 hover:text-white transition-colors duration-200">
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
@@ -318,7 +288,7 @@
                     </div>
 
                     <div class="flex gap-3">
-                        <button @click="showRenewalModal = false"
+                        <button onclick="signalApp.closeRenewalModal()"
                                 class="flex-1 bg-gray-800 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200">
                             Cancel
                         </button>
@@ -336,20 +306,119 @@
 <!-- Add Lucide Icons Script -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <script>
-    function signalSubscription() {
-        return {
-            showSubscribeModal: false,
-            showRenewalModal: false,
+// Signals Subscription Manager - Vanilla JavaScript
+class SignalSubscriptionManager {
+    constructor() {
+        this.subscribeModal = null;
+        this.renewalModal = null;
+        this.init();
+    }
 
-            init() {
-                lucide.createIcons();
+    init() {
+        this.subscribeModal = document.getElementById('subscribeModal');
+        this.renewalModal = document.getElementById('renewalModal');
+        this.bindEvents();
+        this.initializeLucideIcons();
+    }
+
+    bindEvents() {
+        // Click outside to close modals
+        document.addEventListener('click', (e) => {
+            if (e.target === this.subscribeModal) {
+                this.closeSubscribeModal();
             }
+            if (e.target === this.renewalModal) {
+                this.closeRenewalModal();
+            }
+        });
+
+        // Escape key to close modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.closeSubscribeModal();
+                this.closeRenewalModal();
+            }
+        });
+    }
+
+    showSubscribeModal() {
+        if (this.subscribeModal) {
+            this.subscribeModal.style.display = 'flex';
+            // Use requestAnimationFrame for smooth animation
+            requestAnimationFrame(() => {
+                this.subscribeModal.style.opacity = '1';
+                const content = document.getElementById('subscribeModalContent');
+                if (content) {
+                    content.style.opacity = '1';
+                    content.style.transform = 'scale(1)';
+                }
+            });
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    closeSubscribeModal() {
+        if (this.subscribeModal) {
+            const content = document.getElementById('subscribeModalContent');
+            if (content) {
+                content.style.opacity = '0';
+                content.style.transform = 'scale(0.95)';
+            }
+            this.subscribeModal.style.opacity = '0';
+            
+            setTimeout(() => {
+                this.subscribeModal.style.display = 'none';
+            }, 300);
+        }
+    }
+
+    showRenewalModal() {
+        if (this.renewalModal) {
+            this.renewalModal.style.display = 'flex';
+            requestAnimationFrame(() => {
+                this.renewalModal.style.opacity = '1';
+                const content = document.getElementById('renewalModalContent');
+                if (content) {
+                    content.style.opacity = '1';
+                    content.style.transform = 'scale(1)';
+                }
+            });
+        }
+    }
+
+    closeRenewalModal() {
+        if (this.renewalModal) {
+            const content = document.getElementById('renewalModalContent');
+            if (content) {
+                content.style.opacity = '0';
+                content.style.transform = 'scale(0.95)';
+            }
+            this.renewalModal.style.opacity = '0';
+            
+            setTimeout(() => {
+                this.renewalModal.style.display = 'none';
+            }, 300);
+        }
+    }
+
+    initializeLucideIcons() {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+}
+
+// Global functions for onclick handlers
+window.signalApp = null;
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    window.signalApp = new SignalSubscriptionManager();
+    
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
         lucide.createIcons();
-    });
+    }
+});
 </script>
 
 @endsection

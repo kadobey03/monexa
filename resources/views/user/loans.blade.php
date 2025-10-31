@@ -1,5 +1,5 @@
-@extends('layouts.dasht')
-@section('title', $title)
+@extends('layouts.master', ['layoutType' => 'dashboard'])
+@section('title', $title ?? 'Loan Management')
 @section('content')
 <!-- Alpine.js Component for Loan History -->
 <div x-data="loanHistory()" class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
@@ -42,8 +42,7 @@
 
         <!-- Alert Messages -->
         <div class="mb-6">
-            <x-danger-alert />
-            <x-success-alert />
+            <x-alerts />
         </div>
 
         <!-- Summary Statistics -->

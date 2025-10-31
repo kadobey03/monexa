@@ -16,25 +16,27 @@
         'lg' => 'p-8'
     ];
 
-    $shadowClass = $shadow ? 'shadow-md' : '';
-    $borderClass = $bordered ? 'border border-border' : '';
+    $shadowClass = $shadow ? 'shadow-sm hover:shadow-md transition-shadow duration-200' : '';
+    $borderClass = $bordered ? 'border border-base-gray-200 dark:border-brand-secondary-700' : '';
+    
+    $cardClasses = 'card ' . ($shadow ? 'card-elevated ' : '') . ($bordered ? 'bordered ' : '');
 @endphp
 
 <div {{ $attributes->merge([
-    'class' => 'bg-surface rounded-lg ' . $shadowClass . ' ' . $borderClass
+    'class' => $cardClasses . $shadowClass . ' ' . $borderClass
 ]) }}>
     @if($title || $subtitle || $headerActions)
-        <div class="px-6 py-4 border-b border-border">
+        <div class="card-header">
             <div class="flex items-center justify-between">
                 <div>
                     @if($title)
-                        <h3 class="text-lg font-semibold text-text-primary">
+                        <h3 class="text-lg font-semibold text-base-gray-900 dark:text-base-gray-100">
                             {{ $title }}
                         </h3>
                     @endif
 
                     @if($subtitle)
-                        <p class="mt-1 text-sm text-text-secondary">
+                        <p class="mt-1 text-sm text-base-gray-600 dark:text-base-gray-400">
                             {{ $subtitle }}
                         </p>
                     @endif
@@ -54,7 +56,7 @@
     </div>
 
     @if($footer)
-        <div class="px-6 py-4 border-t border-border bg-surface-hover">
+        <div class="card-footer">
             {{ $footer }}
         </div>
     @endif

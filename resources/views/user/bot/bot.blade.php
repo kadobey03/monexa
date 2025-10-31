@@ -1,4 +1,4 @@
-@extends('layouts.dasht', ['title' => 'Bot Trading Overview'])
+@extends('layouts.master', ['layoutType' => 'dashboard', 'title' => 'Bot Trading Overview'])
 
 @section('content')
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900">

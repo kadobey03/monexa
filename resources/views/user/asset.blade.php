@@ -1,9 +1,8 @@
-@extends('layouts.dasht')
-@section('title', $title)
+@extends('layouts.master', ['layoutType' => 'dashboard'])
+@section('title', $title ?? 'Asset Management')
 @section('content')
 <div class="min-h-screen bg-gray-900 p-4 md:p-6">
-    <x-danger-alert />
-    <x-success-alert />
+    <x-alerts />
 
     <!-- Header Section -->
     <div class="mb-8">
@@ -567,13 +566,13 @@
     // User balances
     const userBalances = {
         usd: {{ Auth::user()->account_bal }},
-        btc: {{ $cbalance->btc }},
-        eth: {{ $cbalance->eth }},
-        usdt: {{ $cbalance->usdt }},
-        ltc: {{ $cbalance->ltc }},
-        xrp: {{ $cbalance->xrp }},
-        bnb: {{ $cbalance->bnb }},
-        ada: {{ $cbalance->ada }},
+        btc: {{ $cbalance->btc ?? 0 }},
+        eth: {{ $cbalance->eth ?? 0 }},
+        usdt: {{ $cbalance->usdt ?? 0 }},
+        ltc: {{ $cbalance->ltc ?? 0 }},
+        xrp: {{ $cbalance->xrp ?? 0 }},
+        bnb: {{ $cbalance->bnb ?? 0 }},
+        ada: {{ $cbalance->ada ?? 0 }},
         link: {{ $cbalance->link ?? 0 }},
         aave: {{ $cbalance->aave ?? 0 }},
         bch: {{ $cbalance->bch ?? 0 }},

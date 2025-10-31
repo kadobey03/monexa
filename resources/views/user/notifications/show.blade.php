@@ -2,7 +2,7 @@
 @section('title', 'Bildirim Detayları')
 
 @section('content')
-<div class="container mx-auto px-4 py-6" x-data="{ showDeleteModal: false }">
+<div class="container mx-auto px-4 py-6">
     <!-- Back button and header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
         <div class="flex items-center mb-4 sm:mb-0">
@@ -23,10 +23,7 @@
     </div>
 
     <!-- Notification Card with slight animation on load -->
-    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden transform transition-all duration-300 ease-in-out hover:shadow-lg border border-gray-200 dark:border-gray-700"
-         x-data="{ show: false }"
-         x-init="setTimeout(() => show = true, 100)"
-         :class="{ 'translate-y-0 opacity-100': show, 'translate-y-4 opacity-0': !show }">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden transform transition-all duration-300 ease-in-out hover:shadow-lg border border-gray-200 dark:border-gray-700 animate-fade-in">
 
         <!-- Header with title -->
         <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
@@ -55,22 +52,19 @@
             </div>
 
             @if($notification->source_id && $notification->source_type)
-                <div class="mt-8" x-data="{ isOpen: true }">
-                    <div class="flex items-center justify-between cursor-pointer mb-2" @click="isOpen = !isOpen">
+                <div class="mt-8">
+                    <div class="flex items-center justify-between cursor-pointer mb-2" onclick="toggleRelatedInfo()">
                         <h3 class="text-base font-semibold text-gray-800 dark:text-white flex items-center">
                             <i data-lucide="link" class="w-4 h-4 mr-2"></i>
                             Related Information
                         </h3>
                         <button class="text-gray-500 dark:text-gray-400 focus:outline-none">
-                            <i x-show="!isOpen" data-lucide="chevron-down" class="w-5 h-5"></i>
-                            <i x-show="isOpen" data-lucide="chevron-up" class="w-5 h-5"></i>
+                            <i id="chevron-down-icon" data-lucide="chevron-down" class="w-5 h-5 hidden"></i>
+                            <i id="chevron-up-icon" data-lucide="chevron-up" class="w-5 h-5"></i>
                         </button>
                     </div>
 
-                    <div x-show="isOpen" x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 transform -translate-y-2"
-                         x-transition:enter-end="opacity-100 transform translate-y-0"
-                         class="rounded-lg bg-gray-50 dark:bg-gray-900/30 mt-2">
+                    <div id="related-info-content" class="rounded-lg bg-gray-50 dark:bg-gray-900/30 mt-2">
                         @php
                             $sourceModel = null;
                             try {
@@ -169,18 +163,7 @@
                     Back to Notifications
                 </a>
 
-                {{-- @if(!$notification->is_read)
-                    <form method="post" action="/mark-all-read" class="inline-block">
-                        @csrf
-                        <input type="hidden" name="notification_id" value="{{ $notification->id }}">
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium bg-primary-600 dark:bg-primary-700 text-white hover:bg-primary-700 dark:hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900 transition-all duration-200">
-                            <i data-lucide="check-circle" class="w-4 h-4 mr-2"></i>
-                            Mark as Read
-                        </button>
-                    </form>
-                @endif --}}
-
-                <button @click="showDeleteModal = true" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium bg-red-600 dark:bg-red-700 text-white hover:bg-red-700 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition-all duration-200">
+                <button onclick="showDeleteModal()" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium bg-red-600 dark:bg-red-700 text-white hover:bg-red-700 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition-all duration-200">
                     <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
                     Delete
                 </button>
@@ -189,22 +172,8 @@
     </div>
 
     <!-- Delete confirmation modal -->
-    <div x-show="showDeleteModal"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-50"
-         @click.away="showDeleteModal = false">
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md mx-auto shadow-xl transform transition-all duration-300"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 transform scale-95"
-             x-transition:enter-end="opacity-100 transform scale-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100 transform scale-100"
-             x-transition:leave-end="opacity-0 transform scale-95">
+    <div id="deleteModal" class="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 opacity-0 pointer-events-none">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md mx-auto shadow-xl transform transition-all duration-300 scale-95">
             <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 dark:bg-red-900/30 rounded-full mb-4">
                 <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600 dark:text-red-400"></i>
             </div>
@@ -213,7 +182,7 @@
                 Are you sure you want to delete this notification? This action cannot be undone.
             </p>
             <div class="flex justify-center gap-3">
-                <button @click="showDeleteModal = false" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900">
+                <button onclick="hideDeleteModal()" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900">
                     Cancel
                 </button>
                 <form method="POST" action="/notifications/delete">
@@ -229,10 +198,97 @@
     </div>
 </div>
 
-<!-- Initialize Lucide icons -->
+<!-- Modal and Animation Management -->
 <script>
+    // Modal management functions
+    function showDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        if (modal) {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100');
+            
+            const modalContent = modal.querySelector('.bg-white, .bg-gray-800');
+            if (modalContent) {
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    
+    function hideDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        if (modal) {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100');
+            
+            const modalContent = modal.querySelector('.bg-white, .bg-gray-800');
+            if (modalContent) {
+                modalContent.classList.add('scale-95');
+                modalContent.classList.remove('scale-100');
+            }
+            
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }
+    }
+    
+    // Related info toggle function
+    function toggleRelatedInfo() {
+        const content = document.getElementById('related-info-content');
+        const downIcon = document.getElementById('chevron-down-icon');
+        const upIcon = document.getElementById('chevron-up-icon');
+        
+        if (content) {
+            content.classList.toggle('hidden');
+        }
+        
+        if (downIcon && upIcon) {
+            downIcon.classList.toggle('hidden');
+            upIcon.classList.toggle('hidden');
+        }
+    }
+    
+    // Modal click outside to close
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('deleteModal');
+        if (e.target === modal) {
+            hideDeleteModal();
+        }
+    });
+    
+    // ESC key to close modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            hideDeleteModal();
+        }
+    });
+    
+    // Initialize animations and icons on DOM load
     document.addEventListener('DOMContentLoaded', function() {
-        lucide.createIcons();
+        // Initialize Lucide icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        // Add fade-in animation to notification card
+        const notificationCard = document.querySelector('.animate-fade-in');
+        if (notificationCard) {
+            setTimeout(() => {
+                notificationCard.style.opacity = '1';
+                notificationCard.style.transform = 'translateY(0)';
+            }, 100);
+        }
     });
 </script>
+
+<style>
+    .animate-fade-in {
+        opacity: 0;
+        transform: translateY(1rem);
+        transition: all 0.3s ease-in-out;
+    }
+</style>
 @endsection

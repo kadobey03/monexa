@@ -1,58 +1,58 @@
-@props([
-    'type' => 'info', // 'success', 'error', 'warning', 'info'
-    'title' => null,
-    'dismissable' => false
-])
+@props(['type' => 'info', 'title' => null, 'dismissible' => false])
 
 @php
     $typeClasses = [
-        'success' => 'bg-success-50 border-success-200 text-success-800',
-        'error' => 'bg-error-50 border-error-200 text-error-800',
-        'warning' => 'bg-warning-50 border-warning-200 text-warning-800',
-        'info' => 'bg-info-50 border-info-200 text-info-800'
+        'success' => 'alert-success',
+        'warning' => 'alert-warning',
+        'danger' => 'alert-danger',
+        'error' => 'alert-danger',
+        'info' => 'alert-info'
     ];
-
-    $iconMap = [
+    
+    $iconClasses = [
+        'success' => 'text-semantic-success-500',
+        'warning' => 'text-semantic-warning-500',
+        'danger' => 'text-semantic-danger-500',
+        'error' => 'text-semantic-danger-500',
+        'info' => 'text-semantic-info-500'
+    ];
+    
+    $icons = [
         'success' => 'check-circle',
-        'error' => 'exclamation-circle',
-        'warning' => 'exclamation-triangle',
-        'info' => 'information-circle'
+        'warning' => 'alert-triangle',
+        'danger' => 'alert-circle',
+        'error' => 'alert-circle',
+        'info' => 'info'
     ];
 @endphp
 
-<div {{ $attributes->merge([
-    'class' => 'rounded-lg p-4 border ' . ($typeClasses[$type] ?? $typeClasses['info']),
-    'role' => 'alert'
-]) }}>
-    <div class="flex items-start">
+<div class="{{ $typeClasses[$type] ?? $typeClasses['info'] }} animate-fade-in"
+     x-data="{ show: true }"
+     x-show="show"
+     x-transition
+     x-transition:leave="transition ease-in duration-200"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0">
+    <div class="flex">
         <div class="flex-shrink-0">
-            <x-ui.icon :name="$iconMap[$type] ?? 'information-circle'" class="h-5 w-5" />
+            <i data-lucide="{{ $icons[$type] ?? $icons['info'] }}" class="h-5 w-5 {{ $iconClasses[$type] ?? $iconClasses['info'] }}"></i>
         </div>
-
         <div class="ml-3 flex-1">
             @if($title)
-                <h3 class="text-sm font-medium">
+                <h3 class="text-sm font-medium mb-1">
                     {{ $title }}
                 </h3>
             @endif
-
-            <div class="text-sm mt-1">
+            <div class="text-sm">
                 {{ $slot }}
             </div>
         </div>
-
-        @if($dismissable)
+        @if($dismissible)
             <div class="ml-auto pl-3">
-                <div class="-mx-1.5 -my-1.5">
-                    <button
-                        type="button"
-                        class="inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-primary-500 hover:bg-transparent"
-                        onclick="this.closest('[role=alert]').remove()"
-                        aria-label="{{ __('Dismiss') }}"
-                    >
-                        <x-ui.icon name="x-mark" class="h-5 w-5" />
-                    </button>
-                </div>
+                <button @click="show = false" class="modal-close">
+                    <span class="sr-only">Dismiss</span>
+                    <i data-lucide="x" class="h-4 w-4"></i>
+                </button>
             </div>
         @endif
     </div>

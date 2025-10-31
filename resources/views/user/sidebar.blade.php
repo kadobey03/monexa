@@ -1,177 +1,197 @@
-<!-- Sidenav -->
-<div class="sidenav" id="sidenav-main">
-    <!-- Sidenav header -->
-    <div class="sidenav-header d-flex align-items-center">
-        <a class="navbar-brand" href="{{ route('dashboard') }}">
-            <img src="{{ asset('storage/' . $settings->logo) }}" class="navbar-brand-img" alt="logo">
+<!-- Modern Sidebar - Pure Tailwind -->
+<div id="sidenav-main" class="fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 transform transition-transform duration-300 ease-in-out">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-6 border-b border-gray-700">
+        <a href="{{ route('dashboard') }}" class="flex items-center space-x-3">
+            <img src="{{ asset('storage/' . $settings->logo) }}" class="h-10 w-auto" alt="logo">
         </a>
-        <div class="ml-auto">
-            <!-- Sidenav toggler -->
-            <div class="sidenav-toggler sidenav-toggler-dark d-md-none" data-action="sidenav-unpin"
-                data-target="#sidenav-main">
-                <div class="sidenav-toggler-inner">
-                    <i class="bg-white sidenav-toggler-line"></i>
-                    <i class="bg-white sidenav-toggler-line"></i>
-                    <i class="bg-white sidenav-toggler-line"></i>
+        <!-- Mobile toggle -->
+        <button class="md:hidden text-gray-400 hover:text-white transition-colors">
+            <i class="fas fa-bars text-xl"></i>
+        </button>
+    </div>
+
+    <!-- User Profile -->
+    <div class="p-6 border-b border-gray-700">
+        <div class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <i class="fas fa-user-circle text-2xl text-white"></i>
+            </div>
+            <h5 class="text-white font-semibold text-lg">{{ Auth::user()->name }}</h5>
+            <span class="text-green-400 text-sm flex items-center justify-center">
+                <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                Online
+            </span>
+            
+            <!-- Live Balance -->
+            <a href="#" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 mt-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white rounded-xl transition-all duration-200 border border-white/20">
+                <i class="fas fa-coins text-yellow-400"></i>
+                <span class="text-sm font-medium">Live: {{ Auth::user()->currency }}{{ number_format(Auth::user()->account_bal, 2, '.', ',') }}</span>
+            </a>
+
+            <!-- Demo Balance -->
+            @if(Auth::user()->demo_balance > 0)
+            <a href="{{ route('demo.dashboard') }}" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 mt-2 bg-gradient-to-r from-green-500/20 to-emerald-500/20 hover:from-green-500/30 hover:to-emerald-500/30 text-white rounded-xl transition-all duration-200 border border-green-400/30">
+                <i class="fas fa-graduation-cap text-green-400"></i>
+                <span class="text-sm font-medium">Demo: {{ Auth::user()->currency }}{{ number_format(Auth::user()->demo_balance, 2, '.', ',') }}</span>
+            </a>
+            @endif
+        </div>
+    </div>
+    <!-- Navigation Menu -->
+    <nav class="flex-1 p-6 overflow-y-auto">
+        <div class="space-y-2">
+            <!-- Home -->
+            <a href="{{ route('dashboard') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-home text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+
+            <!-- Deposit -->
+            <a href="{{ route('deposits') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('deposits') || request()->routeIs('payment') || request()->routeIs('pay.crypto') ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-download text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Deposit</span>
+            </a>
+
+            @if ($mod['investment'] || $mod['cryptoswap'])
+            <!-- Withdraw -->
+            <a href="{{ route('withdrawalsdeposits') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('withdrawalsdeposits') || request()->routeIs('withdrawfunds') ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-arrow-alt-circle-up text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Withdraw</span>
+            </a>
+            @endif
+
+            @if ($mod['investment'])
+            <!-- Trading History -->
+            <a href="{{ route('tradinghistory') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('tradinghistory') ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-history text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Trading History</span>
+            </a>
+            @endif
+
+            <!-- Transactions -->
+            <a href="{{ route('accounthistory') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('accounthistory') ? 'bg-gradient-to-r from-indigo-600 to-indigo-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-money-check-alt text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Transactions</span>
+            </a>
+
+            <!-- Notifications -->
+            <a href="{{ route('notifications') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('notifications') ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-lg' : '' }}">
+                <div class="relative">
+                    <i class="fas fa-bell text-xl group-hover:scale-110 transition-transform"></i>
+                    @livewire('user.notifications-count')
+                </div>
+                <span class="font-medium">Notifications</span>
+            </a>
+
+            @if ($mod['cryptoswap'])
+            <!-- Crypto Swap -->
+            <a href="{{ route('assetbalance') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('assetbalance') || request()->routeIs('swaphistory') ? 'bg-gradient-to-r from-orange-600 to-orange-700 text-white shadow-lg' : '' }}">
+                <i class="fab fa-stack-exchange text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Crypto Swap</span>
+            </a>
+            @endif
+
+            @if ($moresettings->use_transfer)
+            <!-- Transfer -->
+            <a href="{{ route('transferview') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('transferview') ? 'bg-gradient-to-r from-cyan-600 to-cyan-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-exchange text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Transfer Funds</span>
+            </a>
+            @endif
+
+            @if ($mod['subscription'])
+            <!-- Managed Accounts -->
+            <a href="{{ route('subtrade') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('subtrade') ? 'bg-gradient-to-r from-pink-600 to-pink-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-receipt text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Managed Accounts</span>
+            </a>
+            @endif
+
+            <!-- Profile -->
+            <a href="{{ route('profile') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('profile') ? 'bg-gradient-to-r from-gray-600 to-gray-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-address-card text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Profile</span>
+            </a>
+
+            @if ($mod['investment'])
+            <!-- Trading Plans -->
+            <a href="{{ route('mplans') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('mplans') ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-hand-holding-seedling text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Investment Plans</span>
+            </a>
+
+            <!-- My Plans -->
+            <a href="{{ route('myplans', 'All') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('myplans') || request()->routeIs('plandetails') ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-chart-line text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">My Investments</span>
+            </a>
+
+            <!-- Demo Trading -->
+            <a href="{{ route('demo.dashboard') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('demo.dashboard') || request()->routeIs('demo.trade') ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-graduation-cap text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Demo Trading</span>
+            </a>
+            @endif
+
+            @if ($mod['membership'])
+            <!-- Education -->
+            <a href="{{ route('user.courses') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('user.mycourses') || request()->routeIs('user.courses') || request()->routeIs('user.course.details') ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg' : '' }}">
+                <i class="fas fa-graduation-cap text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Education</span>
+            </a>
+            @endif
+
+            @if ($mod['signal'])
+            <!-- Trade Signals -->
+            <a href="{{ route('tsignals') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('tsignals') ? 'bg-gradient-to-r from-red-500 to-pink-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-wave-square text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Trade Signals</span>
+            </a>
+            @endif
+
+            <!-- Referrals -->
+            <a href="{{ route('referuser') }}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200 group {{ request()->routeIs('referuser') ? 'bg-gradient-to-r from-yellow-600 to-orange-600 text-white shadow-lg' : '' }}">
+                <i class="fas fa-retweet text-xl group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Referrals</span>
+            </a>
+        </div>
+    </nav>
+    <!-- Help Section -->
+    <div class="p-6 border-t border-gray-700">
+        <div class="bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-2xl p-4 border border-amber-400/30">
+            <div class="flex items-start gap-3 mb-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-headset text-white text-lg"></i>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold text-sm">Need Help?</h5>
+                    <p class="text-gray-300 text-xs leading-relaxed">
+                        24/7 customer support available
+                    </p>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- User mini profile -->
-    <div class="text-center sidenav-user d-flex flex-column align-items-center justify-content-between">
-        <!-- Avatar -->
-        <div>
-            <a href="#" class="avatar rounded-circle avatar-xl">
-                <i class="fas fa-user-circle fa-4x"></i>
+            <a href="{{ route('support') }}"
+               class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium text-sm rounded-xl transition-all duration-200 border border-white/30 hover:border-white/50">
+                <i class="fas fa-comment text-xs"></i>
+                Contact Support
             </a>
-            <div class="mt-4">
-                <h5 class="mb-0 text-white"> {{ Auth::user()->name }}</h5>
-                <span class="mb-3 text-sm text-white d-block opacity-8">online</span>
-
-                <!-- Live Balance -->
-                <a href="#" class="shadow btn btn-sm btn-white btn-icon rounded-pill hover-translate-y-n3 mb-2">
-                    <span class="btn-inner--icon"><i class="far fa-coins"></i></span>
-                    <span class="btn-inner--text">Live: {{ Auth::user()->currency }}{{ number_format(Auth::user()->account_bal, 2, '.', ',') }}</span>
-                </a>
-
-                <!-- Demo Balance -->
-                @if(Auth::user()->demo_balance > 0)
-                <a href="{{ route('demo.dashboard') }}" class="shadow btn btn-sm btn-success btn-icon rounded-pill hover-translate-y-n3">
-                    <span class="btn-inner--icon"><i class="fas fa-graduation-cap"></i></span>
-                    <span class="btn-inner--text">Demo: {{ Auth::user()->currency }}{{ number_format(Auth::user()->demo_balance, 2, '.', ',') }}</span>
-                </a>
-                @endif
-            </div>
-        </div>
-        <!-- User info -->
-        <!-- Actions -->
-        <div class="mt-4 w-100 actions d-flex justify-content-between">
-            {{-- <a href="{{ route('profile') }}" class="pl-0 text-white action-item action-item-lg">
-                <i class="far fa-user"></i>
-            </a> --}}
-            {{-- <a href="#modal-chat" class="text-white action-item action-item-lg" data-toggle="modal">
-                <i class="far fa-comment-alt"></i>
-            </a>
-            <a href="shop/invoices.html" class="pr-0 text-white action-item action-item-lg">
-                <i class="far fa-receipt"></i>
-            </a> --}}
-        </div>
-    </div>
-    <!-- Application nav -->
-    <div class="clearfix nav-application">
-        <a href="{{ route('dashboard') }}"
-            class="text-sm btn btn-square {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <span class="btn-inner--icon d-block"><i class="far fa-home fa-2x"></i></span>
-            <span class="pt-2 btn-inner--icon d-block">Home</span>
-        </a>
-        <a href="{{ route('deposits') }}"
-            class="text-sm btn btn-square {{ request()->routeIs('deposits') ? 'active' : '' }} {{ request()->routeIs('payment') ? 'active' : '' }} {{ request()->routeIs('pay.crypto') ? 'active' : '' }}">
-            <span class="btn-inner--icon d-block"><i class="far fa-download fa-2x"></i></span>
-            <span class="pt-2 btn-inner--icon d-block">Deposit</span>
-        </a>
-        @if ($mod['investment'] || $mod['cryptoswap'])
-            <a href="{{ route('withdrawalsdeposits') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('withdrawalsdeposits') ? 'active' : '' }} {{ request()->routeIs('withdrawfunds') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block"><i class="fas fa-arrow-alt-circle-up fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">Withdraw</span>
-            </a>
-        @endif
-        @if ($mod['investment'])
-            <a href="{{ route('tradinghistory') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('tradinghistory') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block"><i class="fal fa-history fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">İşlem Geçmişi</span>
-            </a>
-        @endif
-        <a href="{{ route('accounthistory') }}"
-            class="text-sm btn btn-square {{ request()->routeIs('accounthistory') ? 'active' : '' }}">
-            <span class="btn-inner--icon d-block"><i class="fas fa-money-check-alt fa-2x"></i></span>
-            <span class="pt-2 btn-inner--icon d-block">Transactions</span>
-        </a>
-        <a href="{{ route('notifications') }}"
-            class="text-sm btn btn-square {{ request()->routeIs('notifications') ? 'active' : '' }}">
-            <span class="btn-inner--icon d-block">
-                <i class="fas fa-bell fa-2x"></i>
-                @livewire('user.notifications-count')
-            </span>
-            <span class="pt-2 btn-inner--icon d-block">Notifications</span>
-        </a>
-        @if ($mod['cryptoswap'])
-            <a href="{{ route('assetbalance') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('assetbalance') ? 'active' : '' }} {{ request()->routeIs('swaphistory') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block"><i class="fab fa-stack-exchange fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">Swap Crypto</span>
-            </a>
-        @endif
-        @if ($moresettings->use_transfer)
-            <a href="{{ route('transferview') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('transferview') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block"><i class="fas fa-exchange fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">Transfer funds</span>
-            </a>
-        @endif
-        @if ($mod['subscription'])
-            <a href="{{ route('subtrade') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('subtrade') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block"><i class="far fa-receipt fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">Managed Accounts</span>
-            </a>
-        @endif
-        <a href="{{ route('profile') }}"
-            class="text-sm btn btn-square {{ request()->routeIs('profile') ? 'active' : '' }}">
-            <span class="btn-inner--icon d-block"><i class="fas fa-address-card fa-2x"></i></span>
-            <span class="pt-2 btn-inner--icon d-block">Profile</span>
-        </a>
-        @if ($mod['investment'])
-            <a href="{{ route('mplans') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('mplans') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block"><i class="fas fa-hand-holding-seedling fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">Trading Plans</span>
-            </a>
-
-            <a href="{{ route('myplans', 'All') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('myplans') ? 'active' : '' }} {{ request()->routeIs('plandetails') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block"><i class="far fa-hand-holding-seedling fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">My Plans</span>
-            </a>
-
-            <!-- Demo Trading Section -->
-            <a href="{{ route('demo.dashboard') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('demo.dashboard') ? 'active' : '' }} {{ request()->routeIs('demo.trade') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block"><i class="fas fa-graduation-cap fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">Demo Trading</span>
-            </a>
-        @endif
-        @if ($mod['membership'])
-            <a href="{{ route('user.courses') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('user.mycourses') ? 'active' : '' }} {{ request()->routeIs('user.courses') ? 'active' : '' }} {{ request()->routeIs('user.course.details') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block"><i class="fas fa-graduation-cap fa-2x"></i></span>
-                <span class="pt-2 btn-inner--icon d-block">Education</span>
-            </a>
-        @endif
-        @if ($mod['signal'])
-            <a href="{{ route('tsignals') }}"
-                class="text-sm btn btn-square {{ request()->routeIs('tsignals') ? 'active' : '' }}">
-                <span class="btn-inner--icon d-block">
-                    <i class="fas fa-wave-square fa-2x"></i>
-                </span>
-                <span class="pt-2 btn-inner--icon d-block">Trade Signals</span>
-            </a>
-        @endif
-        <a href="{{ route('referuser') }}"
-            class="text-sm btn btn-square {{ request()->routeIs('referuser') ? 'active' : '' }}">
-            <span class="btn-inner--icon d-block"><i class="fas fa-retweet fa-2x"></i></span>
-            <span class="pt-2 btn-inner--icon d-block">Referrals</span>
-        </a>
-    </div>
-    <!-- Misc area -->
-    <div class="card bg-gradient-warning">
-        <div class="card-body">
-            <h5 class="text-white">Need Help!</h5>
-            <p class="mb-4 text-white">
-                Contact our 24/7 customer support center
-            </p>
-            <a href="{{ route('support') }}" class="btn btn-sm btn-block btn-white rounded-pill">Contact Us</a>
         </div>
     </div>
 </div>

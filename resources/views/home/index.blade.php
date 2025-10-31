@@ -1,4 +1,6 @@
-@extends('layouts.base')
+@extends('layouts.master')
+@section('pageTitle', 'Ana Sayfa')
+@php $layoutType = 'base'; @endphp
 
 @section('title', 'Ana Sayfa')
 
@@ -32,45 +34,45 @@
                     <div class="tradingview-widget-container__widget"></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
                     {
-                    "symbols": [
-                        {
-                        "proName": "BIST:XU100",
-                        "title": "BIST 100"
-                        },
-                        {
-                        "proName": "SPX500",
-                        "title": "S&P 500"
-                        },
-                        {
-                        "proName": "NDX",
-                        "title": "NASDAQ 100"
-                        },
-                        {
-                        "proName": "FX:USDTRY",
-                        "title": "USD/TRY"
-                        },
-                        {
-                        "proName": "FX:EURTRY",
-                        "title": "EUR/TRY"
-                        },
-                        {
-                        "proName": "FX:GBPTRY",
-                        "title": "GBP/TRY"
-                        },
-                        {
-                        "proName": "FX:BTCTRY",
-                        "title": "BTC/TRY"
-                        },
-                        {
-                        "proName": "FX:ETHTRY",
-                        "title": "ETH/TRY"
-                        }
-                    ],
-                    "showSymbolLogo": true,
-                    "colorTheme": "dark",
-                    "isTransparent": false,
-                    "displayMode": "adaptive",
-                    "locale": "tr"
+                        "symbols": [
+                            {
+                                "proName": "BIST:XU100",
+                                "title": "BIST 100"
+                            },
+                            {
+                                "proName": "SPX500",
+                                "title": "S&P 500"
+                            },
+                            {
+                                "proName": "NDX",
+                                "title": "NASDAQ 100"
+                            },
+                            {
+                                "proName": "FX:USDTRY",
+                                "title": "USD/TRY"
+                            },
+                            {
+                                "proName": "FX:EURTRY",
+                                "title": "EUR/TRY"
+                            },
+                            {
+                                "proName": "FX:GBPTRY",
+                                "title": "GBP/TRY"
+                            },
+                            {
+                                "proName": "FX:BTCTRY",
+                                "title": "BTC/TRY"
+                            },
+                            {
+                                "proName": "FX:ETHTRY",
+                                "title": "ETH/TRY"
+                            }
+                        ],
+                        "showSymbolLogo": true,
+                        "colorTheme": "dark",
+                        "isTransparent": false,
+                        "displayMode": "adaptive",
+                        "locale": "tr"
                     }
                     </script>
                 </div>

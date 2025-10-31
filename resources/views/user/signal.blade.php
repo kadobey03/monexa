@@ -1,8 +1,8 @@
 @extends('layouts.dasht')
 @section('title', $title)
 @section('content')
-<!-- Alpine.js Component for Signal Subscriptions -->
-<div x-data="signalManager()" class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+<!-- Signal Subscriptions Component -->
+<div id="signalsApp" class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Header Section -->
@@ -110,7 +110,7 @@
 
                 <!-- Action Button -->
                 <div class="p-6 pt-0">
-                    <button @click="openSubscriptionModal('{{ $signal->id }}', '{{ $signal->name }}', '{{ $signal->price }}')"
+                    <button onclick="signalManager.openSubscriptionModal('{{ $signal->id }}', '{{ $signal->name }}', '{{ $signal->price }}')"
                             class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
                         <i data-lucide="plus-circle" class="w-5 h-5 inline mr-2"></i>
                         Subscribe Now
@@ -140,33 +140,14 @@
         </div>
 
         <!-- Subscription Modal -->
-        <div x-show="showModal"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             class="fixed inset-0 z-50 overflow-y-auto"
-             aria-labelledby="modal-title"
-             role="dialog"
-             aria-modal="true"
-             style="display: none;">
-
+        <div id="subscriptionModal" class="fixed inset-0 z-50 overflow-y-auto transition-all duration-300 opacity-0" style="display: none;">
             <!-- Backdrop -->
             <div class="fixed inset-0 bg-gray-500 dark:bg-gray-900 bg-opacity-75 dark:bg-opacity-75 transition-opacity"
-                 @click="closeModal()"></div>
+                 onclick="signalManager.closeModal()"></div>
 
             <!-- Modal Content -->
             <div class="flex min-h-full items-end sm:items-center justify-center p-4 text-center sm:p-0">
-                <div x-show="showModal"
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                     x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:leave="transition ease-in duration-200"
-                     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                     class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-gray-900 px-6 pt-6 pb-6 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-8">
+                <div id="modalContent" class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-gray-900 px-6 pt-6 pb-6 text-left shadow-2xl transition-all duration-300 opacity-0 scale-95 sm:my-8 sm:w-full sm:max-w-lg sm:p-8">
 
                     <!-- Modal Header -->
                     <div class="flex items-center justify-between mb-6">
@@ -176,10 +157,10 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900 dark:text-white">Subscribe to Signal</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400" x-text="selectedSignal.name"></p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" id="selectedSignalName"></p>
                             </div>
                         </div>
-                        <button @click="closeModal()"
+                        <button onclick="signalManager.closeModal()"
                                 class="rounded-lg p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                             <i data-lucide="x" class="w-6 h-6"></i>
                         </button>
@@ -188,7 +169,7 @@
                     <!-- Subscription Form -->
                     <form method="POST" action="{{ route('newdeposit') }}" class="space-y-6">
                         @csrf
-                        <input type="hidden" name="asset" :value="selectedSignal.name">
+                        <input type="hidden" name="asset" id="hiddenAssetName">
 
                         <!-- Payment Method Selection -->
                         <div>
@@ -217,7 +198,7 @@
                             <div class="relative">
                                 <input type="number"
                                        name="amount"
-                                       :value="selectedSignal.price"
+                                       id="amountInput"
                                        readonly
                                        class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-lg">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-4">
@@ -233,7 +214,7 @@
                         <!-- Action Buttons -->
                         <div class="flex gap-3 pt-4">
                             <button type="button"
-                                    @click="closeModal()"
+                                    onclick="signalManager.closeModal()"
                                     class="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold py-3 px-6 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                                 Cancel
                             </button>
@@ -250,35 +231,74 @@
     </div>
 </div>
 
-<!-- Alpine.js Script -->
 <script>
-function signalManager() {
-    return {
-        showModal: false,
-        selectedSignal: {
+// Signal Manager - Vanilla JavaScript
+class SignalManager {
+    constructor() {
+        this.showModal = false;
+        this.selectedSignal = {
             id: '',
             name: '',
             price: ''
-        },
+        };
+        this.init();
+    }
 
-        openSubscriptionModal(id, name, price) {
-            this.selectedSignal = { id, name, price };
-            this.showModal = true;
-            document.body.style.overflow = 'hidden';
-        },
-
-        closeModal() {
-            this.showModal = false;
-            document.body.style.overflow = 'auto';
+    init() {
+        // Initialize Lucide icons when page loads
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
         }
+    }
+
+    openSubscriptionModal(id, name, price) {
+        this.selectedSignal = { id, name, price };
+        this.showModal = true;
+        
+        // Update modal content
+        const modal = document.getElementById('subscriptionModal');
+        const modalContent = document.getElementById('modalContent');
+        const signalNameEl = document.getElementById('selectedSignalName');
+        const assetNameInput = document.getElementById('hiddenAssetName');
+        const amountInput = document.getElementById('amountInput');
+        
+        if (modal) modal.style.display = 'flex';
+        if (modalContent) {
+            modalContent.style.opacity = '1';
+            modalContent.style.transform = 'scale(1)';
+        }
+        if (signalNameEl) signalNameEl.textContent = name;
+        if (assetNameInput) assetNameInput.value = name;
+        if (amountInput) amountInput.value = price;
+        
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeModal() {
+        this.showModal = false;
+        
+        const modal = document.getElementById('subscriptionModal');
+        const modalContent = document.getElementById('modalContent');
+        
+        if (modalContent) {
+            modalContent.style.opacity = '0';
+            modalContent.style.transform = 'scale(0.95)';
+        }
+        
+        setTimeout(() => {
+            if (modal) modal.style.display = 'none';
+        }, 300);
+        
+        document.body.style.overflow = 'auto';
     }
 }
 
-// Initialize Lucide icons when page loads
+// Global instance
+let signalManager = null;
+
+// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    signalManager = new SignalManager();
 });
 </script>
 
