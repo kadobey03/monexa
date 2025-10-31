@@ -4,8 +4,7 @@
 - **PSR-4 autoloading**: Namespace `App\` mapped to `app/`
 - **Controllers**: ResourceController pattern, single responsibility
 - **Models**: Eloquent with proper relationships, scopes, mutators
-- **Middleware**: Authentication, verification, KYC checks
-- **Service classes**: Business logic in `App\Services\`
+- **Services**: Business logic in `App\Services\`
 - **Repositories**: Data access patterns where used
 
 ## Naming Conventions
@@ -30,3 +29,9 @@
 - Use database transactions for critical operations
 - Apply middleware for route protection
 - Utilize Laravel's localization features (tr locale)
+
+## Docker Deployment Standards
+- **MANDATORY**: All Laravel artisan commands MUST be executed inside Docker container
+- **Command Pattern**: `docker-compose exec app-monexa php artisan [command]`
+- **Container Service**: Use `app-monexa` as main PHP-FPM container
+- **Never Use**: Direct `php artisan` commands on host system

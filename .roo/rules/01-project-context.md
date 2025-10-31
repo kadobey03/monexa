@@ -1,38 +1,13 @@
-# Monexa Finance Project Context
+# Monexa Finance Platform Context
 
-## Project Overview
-- **Platform**: Laravel-based financial trading platform
-- **Domain**: Fintech, investment, cryptocurrency, forex trading
-- **Technologies**: Laravel 12, PHP 8.3+, Livewire 3, Jetstream, MySQL
-- **Language**: Turkish (tr locale), some technical terms in English
+**Stack**: Laravel 12, PHP 8.3+, Livewire 3, Jetstream, MySQL, Docker  
+**Domain**: Fintech - crypto/forex trading, investment plans, CRM/lead management  
+**Language**: Turkish (tr locale) with English technical terms  
 
-## Core Features
-- User authentication & KYC verification
-- Investment plans & portfolio management
-- Crypto trading & copy trading
-- Lead management system (CRM)
-- Real-time trading data
-- Multi-currency support
-- Payment integrations (Stripe, Paystack)
+**Core Features**: Authentication/KYC, investment plans, crypto/copy trading, lead management CRM, real-time data, multi-currency, payments (Stripe/Paystack)
 
-## Architecture Patterns
-- Repository pattern in some areas
-- Service layer for business logic  
-- Observer pattern for model events
-- Livewire components for real-time UI
-- API integrations with external services
+**Architecture**: Repository pattern, Service layer, Observer pattern, Livewire real-time UI, API integrations
 
-## Key Models & Relationships
-- User (extends Authenticatable, has lead system)
-- Settings (global configuration)
-- Plans (investment plans)
-- Deposits/Withdrawals (financial transactions)
-- Admin (staff management)
-- Lead management system
+**Key Models**: User (with lead system), Settings, Plans, Deposits/Withdrawals, Admin, LeadAssignmentHistory
 
-## Security Requirements
-- KYC verification required
-- 2FA support
-- CRON endpoint protection with keys
-- Email verification
-- Input validation & sanitization
+**Security**: KYC verification, 2FA, CRON endpoint protection, email verification, input validation

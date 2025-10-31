@@ -31,8 +31,18 @@
 - **Validation**: Client-side + server-side validation
 - **Events**: Emit events for cross-component communication
 
+## Docker Deployment Commands
+- **MANDATORY**: All Laravel commands MUST run inside Docker container
+- **Pattern**: `docker-compose exec app-monexa php artisan [command]`
+- **Never**: Direct `php artisan` commands on host
+- **Examples**:
+  - `docker-compose exec app-monexa php artisan migrate`
+  - `docker-compose exec app-monexa php artisan cache:clear`
+  - `docker-compose exec app-monexa php artisan queue:work`
+
 ## Testing Requirements
 - **Feature Tests**: For API endpoints and user flows
 - **Unit Tests**: For business logic and calculations
 - **Integration Tests**: For payment and external APIs
 - **Security Tests**: For authentication and authorization
+- **Container Testing**: Run tests inside container with `docker-compose exec app-monexa php artisan test`

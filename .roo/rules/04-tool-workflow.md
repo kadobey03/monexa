@@ -21,6 +21,7 @@
 
 ### System Operations
 - **execute_command**: Execute CLI commands (artisan, composer, npm etc.), optional cwd parameter
+- **Docker Commands**: ALL Laravel commands MUST use `docker-compose exec app-monexa php artisan [command]`
 - **fetch_instructions**: Get instructions for MCP server, mode creation (create_mcp_server, create_mode)
 
 ### MCP Integration
@@ -54,6 +55,7 @@ When you need to read more than 5 files, prioritize the most critical files firs
 - **Analysis Phase**: composer.json → config/app.php → routes → models
 - **Planning Phase**: Read related files in batch, identify patterns
 - **Implementation Phase**: Make related changes in single apply_diff
+- **Docker Commands**: Always use `docker-compose exec app-monexa php artisan` for Laravel operations
 - **Verification Phase**: Check file status only when necessary
 
 ## File Reading Strategy
@@ -84,7 +86,7 @@ When you need to read more than 5 files, prioritize the most critical files firs
 - **read_file**: Maximum 5 files per request, PDF/DOCX support for binary files
 - **apply_diff**: SEARCH section requires exact match, whitespace sensitive
 - **write_to_file**: Complete content required, line_count parameter mandatory
-- **execute_command**: Each command runs in new terminal instance
+- **execute_command**: Each command runs in new terminal instance, Docker commands mandatory for Laravel
 - **MCP Tools**: Requires server connection, one tool at a time usage
 - **File Paths**: Workspace relative paths (c:/Users/kadobey/Desktop/Monexa/monexafinans)
 
