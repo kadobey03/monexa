@@ -1,0 +1,249 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class ConsolidateDatabaseSchema extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        // Add missing indexes and constraints to users table
+        Schema::table('users', function (Blueprint $table) {
+            // Lead management indexes
+            $table->index(['lead_status', 'lead_score'], 'idx_users_lead_status_score');
+            $table->index(['assign_to', 'lead_status'], 'idx_users_assign_to_status');
+            $table->index(['assign_to', 'next_follow_up_date'], 'idx_users_lead_assignment');
+            $table->index(['lead_source', 'created_at'], 'idx_users_lead_source_created');
+
+            // Foreign key constraints
+            $table->foreign('assign_to', 'fk_users_assign_to')
+                  ->references('id')->on('admins')
+                  ->onDelete('set null');
+        });
+
+        // Add missing indexes and constraints to deposits table
+        Schema::table('deposits', function (Blueprint $table) {
+            // Performance indexes
+            $table->index(['user', 'status'], 'idx_deposits_user_status');
+            $table->index(['created_at'], 'idx_deposits_created_at');
+            $table->index(['amount'], 'idx_deposits_amount');
+            $table->index(['status', 'created_at'], 'idx_deposits_status_created');
+            $table->index(['user', 'amount'], 'idx_deposits_user_amount');
+
+            // Foreign key constraints
+            $table->foreign('user', 'fk_deposits_user')
+                  ->references('id')->on('users')
+                  ->onDelete('cascade');
+
+            // Data integrity constraints
+            $table->decimal('amount', 15, 2)->nullable()->change();
+            $table->check('amount > 0', 'chk_deposits_amount_positive');
+        });
+
+        // Add missing indexes and constraints to withdrawals table
+        Schema::table('withdrawals', function (Blueprint $table) {
+            // Performance indexes
+            $table->index(['user', 'status'], 'idx_withdrawals_user_status');
+            $table->index(['created_at'], 'idx_withdrawals_created_at');
+            $table->index(['amount'], 'idx_withdrawals_amount');
+            $table->index(['status', 'created_at'], 'idx_withdrawals_status_created');
+            $table->index(['user', 'amount'], 'idx_withdrawals_user_amount');
+
+            // Foreign key constraints
+            $table->foreign('user', 'fk_withdrawals_user')
+                  ->references('id')->on('users')
+                  ->onDelete('cascade');
+
+            // Data integrity constraints
+            $table->decimal('amount', 15, 2)->nullable()->change();
+            $table->decimal('to_deduct', 15, 2)->nullable()->change();
+            $table->decimal('charges', 15, 2)->nullable()->change();
+            $table->check('amount > 0', 'chk_withdrawals_amount_positive');
+        });
+
+        // Add missing indexes and constraints to plans table
+        Schema::table('plans', function (Blueprint $table) {
+            // Performance indexes
+            $table->index(['name', 'status'], 'idx_plans_active');
+            $table->index(['price', 'increment_interval'], 'idx_plans_price_duration');
+            $table->index(['created_at'], 'idx_plans_created_at');
+
+            // Data type optimizations
+            $table->decimal('price', 15, 2)->nullable()->change();
+            $table->decimal('increment_amount', 15, 2)->nullable()->change();
+            $table->decimal('total_return', 15, 2)->nullable()->change();
+            $table->decimal('total_duration', 15, 2)->nullable()->change();
+
+            // Data integrity constraints
+            $table->check('price >= 0', 'chk_plans_price_positive');
+            $table->check('increment_amount >= 0', 'chk_plans_increment_positive');
+        });
+
+        // Add missing indexes and constraints to user_plans table
+        Schema::table('user_plans', function (Blueprint $table) {
+            // Performance indexes
+            $table->index(['user', 'plan'], 'idx_user_plans_user_plan');
+            $table->index(['user', 'status'], 'idx_user_plans_user_status');
+            $table->index(['plan', 'status'], 'idx_user_plans_plan_status');
+            $table->index(['status', 'end_date'], 'idx_user_plans_status_end');
+            $table->index(['start_date', 'end_date'], 'idx_user_plans_date_range');
+            $table->index(['user', 'end_date'], 'idx_user_plans_user_end_date');
+
+            // Foreign key constraints
+            $table->foreign('user', 'fk_user_plans_user')
+                  ->references('id')->on('users')
+                  ->onDelete('cascade');
+            $table->foreign('plan', 'fk_user_plans_plan')
+                  ->references('id')->on('plans')
+                  ->onDelete('cascade');
+
+            // Data type optimizations
+            $table->decimal('amount', 15, 2)->nullable()->change();
+            $table->decimal('expected_return', 15, 2)->nullable()->change();
+            $table->decimal('profit_earned', 15, 2)->nullable()->change();
+            $table->boolean('active')->default(true)->change();
+            $table->boolean('activated')->default(false)->change();
+
+            // Data integrity constraints
+            $table->check('amount > 0', 'chk_user_plans_amount_positive');
+            $table->check('expected_return >= 0', 'chk_user_plans_return_positive');
+        });
+
+        // Add missing indexes and constraints to admins table
+        Schema::table('admins', function (Blueprint $table) {
+            // Performance indexes
+            $table->index(['email'], 'idx_admins_email');
+            $table->index(['status'], 'idx_admins_status');
+            $table->index(['type'], 'idx_admins_type');
+            $table->index(['supervisor_id'], 'idx_admins_supervisor');
+            $table->index(['admin_group_id'], 'idx_admins_group');
+            $table->index(['department'], 'idx_admins_department');
+            $table->index(['is_available', 'status'], 'idx_admins_available');
+
+            // Foreign key constraints
+            $table->foreign('supervisor_id', 'fk_admins_supervisor')
+                  ->references('id')->on('admins')
+                  ->onDelete('set null');
+            $table->foreign('role_id', 'fk_admins_role')
+                  ->references('id')->on('roles')
+                  ->onDelete('set null');
+            $table->foreign('admin_group_id', 'fk_admins_group_id')
+                  ->references('id')->on('admin_groups')
+                  ->onDelete('set null');
+
+            // Data type optimizations
+            $table->decimal('monthly_target', 15, 2)->nullable()->change();
+            $table->decimal('current_performance', 15, 2)->nullable()->change();
+            $table->integer('leads_assigned_count')->default(0)->change();
+            $table->integer('leads_converted_count')->default(0)->change();
+            $table->integer('max_leads_per_day')->nullable()->change();
+            $table->integer('hierarchy_level')->nullable()->change();
+        });
+
+        // Add missing indexes to lead_assignment_history table
+        if (Schema::hasTable('lead_assignment_history')) {
+            Schema::table('lead_assignment_history', function (Blueprint $table) {
+                $table->index(['user_id', 'assigned_at'], 'idx_lead_history_user_assigned');
+                $table->index(['assigned_to_admin_id', 'assignment_started_at'], 'idx_lead_history_admin_started');
+                $table->index(['assignment_outcome', 'assignment_ended_at'], 'idx_lead_history_outcome_ended');
+                $table->index(['assigned_by_admin_id', 'created_at'], 'idx_lead_history_assigned_by');
+            });
+        }
+
+        // Add missing indexes to notifications table
+        if (Schema::hasTable('notifications')) {
+            Schema::table('notifications', function (Blueprint $table) {
+                $table->index(['user_id', 'is_read', 'created_at'], 'idx_notifications_user_read_created');
+                $table->index(['created_at'], 'idx_notifications_created_at');
+            });
+        }
+
+        \Illuminate\Support\Facades\Log::info('Database schema consolidation completed successfully');
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        // Drop foreign key constraints
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('fk_users_assign_to');
+            $table->dropIndex('idx_users_lead_status_score');
+            $table->dropIndex('idx_users_assign_to_status');
+            $table->dropIndex('idx_users_lead_assignment');
+            $table->dropIndex('idx_users_lead_source_created');
+        });
+
+        Schema::table('deposits', function (Blueprint $table) {
+            $table->dropForeign('fk_deposits_user');
+            $table->dropCheck('chk_deposits_amount_positive');
+            $table->dropIndex('idx_deposits_user_status');
+            $table->dropIndex('idx_deposits_created_at');
+            $table->dropIndex('idx_deposits_amount');
+            $table->dropIndex('idx_deposits_status_created');
+            $table->dropIndex('idx_deposits_user_amount');
+            $table->string('amount')->nullable()->change();
+        });
+
+        Schema::table('withdrawals', function (Blueprint $table) {
+            $table->dropForeign('fk_withdrawals_user');
+            $table->dropCheck('chk_withdrawals_amount_positive');
+            $table->dropIndex('idx_withdrawals_user_status');
+            $table->dropIndex('idx_withdrawals_created_at');
+            $table->dropIndex('idx_withdrawals_amount');
+            $table->dropIndex('idx_withdrawals_status_created');
+            $table->dropIndex('idx_withdrawals_user_amount');
+            $table->string('amount')->nullable()->change();
+            $table->string('to_deduct')->nullable()->change();
+            $table->string('charges')->nullable()->change();
+        });
+
+        Schema::table('plans', function (Blueprint $table) {
+            $table->dropCheck('chk_plans_price_positive');
+            $table->dropCheck('chk_plans_increment_positive');
+            $table->dropIndex('idx_plans_active');
+            $table->dropIndex('idx_plans_price_duration');
+            $table->dropIndex('idx_plans_created_at');
+            $table->string('price')->nullable()->change();
+            $table->string('increment_amount')->nullable()->change();
+            $table->string('total_return')->nullable()->change();
+            $table->string('total_duration')->nullable()->change();
+        });
+
+        Schema::table('user_plans', function (Blueprint $table) {
+            $table->dropForeign('fk_user_plans_user');
+            $table->dropForeign('fk_user_plans_plan');
+            $table->dropCheck('chk_user_plans_amount_positive');
+            $table->dropCheck('chk_user_plans_return_positive');
+            $table->dropIndex('idx_user_plans_user_plan');
+            $table->dropIndex('idx_user_plans_user_status');
+            $table->dropIndex('idx_user_plans_plan_status');
+            $table->dropIndex('idx_user_plans_status_end');
+            $table->dropIndex('idx_user_plans_date_range');
+            $table->dropIndex('idx_user_plans_user_end_date');
+            $table->string('amount')->nullable()->change();
+            $table->string('expected_return')->nullable()->change();
+            $table->string('profit_earned')->nullable()->change();
+        });
+
+        Schema::table('admins', function (Blueprint $table) {
+            $table->dropForeign('fk_admins_supervisor');
+            $table->dropForeign('fk_admins_role');
+            $table->dropForeign('fk_admins_group_id');
+            $table->dropIndex('idx_admins_email');
+            $table->dropIndex('idx_admins_status');
+            $table->dropIndex('idx_admins_type');
+            $table->dropIndex('idx_admins_supervisor');
+            $table->dropIndex('idx_admins_group');
+            $table->dropIndex('idx_admins_department');
+            $table->dropIndex('idx_admins_available');
+        });
+
+        \Illuminate\Support\Facades\Log::info('Database schema consolidation reversed successfully');
+    }
+}

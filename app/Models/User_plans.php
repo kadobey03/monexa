@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 
 class User_plans extends Model
 {
     use HasFactory;
+
+    protected $table = 'user_plans';
 
     protected $fillable = [
         'plan',
@@ -25,21 +30,43 @@ class User_plans extends Model
         'symbol',
         'user',
         'user_name',
-        'user_email'
+        'user_email',
+        'start_date',
+        'end_date',
+        'expected_return',
+        'status'
     ];
 
     protected $casts = [
         'activated_at' => 'datetime',
         'last_growth' => 'datetime',
         'expire_date' => 'datetime',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'amount' => 'decimal:2',
+        'expected_return' => 'decimal:2',
+        'profit_earned' => 'decimal:2',
+        'active' => 'boolean',
     ];
 
-    public function dplan(){
-        return $this->belongsTo(Plans::class, 'plan', 'id');
+    /**
+     * Enhanced relationships
+     */
+    public function plan(): BelongsTo
+    {
+        return $this->belongsTo(Plans::class, 'plan');
     }
 
-    public function user(){
-        return $this->belongsTo(User::class, 'user', 'id');
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user');
+    }
+
+    /**
+     * Legacy relationships (kept for backward compatibility)
+     */
+    public function dplan(){
+        return $this->plan();
     }
 
     public function getUserNameAttribute(){
@@ -95,7 +122,7 @@ class User_plans extends Model
                 if ($tradeCount > 0) {
                     // Geçersiz user ID'yi null yap
                     self::where('user', $invalidId)->update(['user' => null]);
-                    \Log::info("Geçersiz user ID {$invalidId} düzeltildi. {$tradeCount} kayıt etkilendi.");
+                    \Illuminate\Support\Facades\Log::info("Geçersiz user ID {$invalidId} düzeltildi. {$tradeCount} kayıt etkilendi.");
                 }
             }
 
@@ -105,6 +132,98 @@ class User_plans extends Model
         }
 
         return 0;
+    }
+
+    /**
+     * Business logic scopes
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('active', true);
+    }
+
+    public function scopeCompleted(Builder $query): Builder
+    {
+        return $query->where('status', 'completed');
+    }
+
+    public function scopeExpired(Builder $query): Builder
+    {
+        return $query->where('end_date', '<', now());
+    }
+
+    public function scopeByPlan(Builder $query, int $planId): Builder
+    {
+        return $query->where('plan', $planId);
+    }
+
+    public function scopeByDateRange(Builder $query, $startDate, $endDate): Builder
+    {
+        return $query->whereBetween('created_at', [$startDate, $endDate]);
+    }
+
+    public function scopeHighValue(Builder $query, float $threshold = 1000): Builder
+    {
+        return $query->where('amount', '>=', $threshold);
+    }
+
+    public function scopeProfitable(Builder $query, float $minProfit = 100): Builder
+    {
+        return $query->where('profit_earned', '>=', $minProfit);
+    }
+
+    /**
+     * Business logic methods
+     */
+    public function isActive(): bool
+    {
+        return $this->active && $this->status === 'active';
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->status === 'completed';
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->end_date && $this->end_date->isPast();
+    }
+
+    public function getTotalReturn(): float
+    {
+        return $this->profit_earned + $this->amount;
+    }
+
+    public function getCurrentValue(): float
+    {
+        return $this->amount + $this->profit_earned;
+    }
+
+    public function getProgressPercentage(): float
+    {
+        if (!$this->start_date || !$this->end_date) {
+            return 0;
+        }
+
+        $totalDays = $this->start_date->diffInDays($this->end_date);
+        $elapsedDays = $this->start_date->diffInDays(now());
+
+        if ($totalDays <= 0) {
+            return 100;
+        }
+
+        return min(100, ($elapsedDays / $totalDays) * 100);
+    }
+
+    public function getFormattedAmount(): string
+    {
+        return number_format($this->amount, 2) . ' ' . ($this->user?->currency ?? 'USD');
+    }
+
+    public function getFormattedProfit(): string
+    {
+        return number_format($this->profit_earned, 2) . ' ' . ($this->user?->currency ?? 'USD');
     }
 
     /**

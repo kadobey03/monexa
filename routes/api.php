@@ -1,11 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\ApiAuthController;
-use App\Http\Controllers\ImageController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserImportController;
-use App\Http\Controllers\Api\UserStatusController;
+use App\Http\Controllers\Api\AuthApiController;
+use App\Http\Controllers\Api\UserApiController;
+use App\Http\Controllers\Api\FinancialApiController;
+use App\Http\Controllers\Api\DepositApiController;
+use App\Http\Controllers\Api\WithdrawalApiController;
+use App\Http\Controllers\Api\PlanApiController;
+use App\Http\Controllers\Api\NotificationApiController;
+use App\Http\Controllers\Api\Admin\AdminUserApiController;
+use App\Http\Controllers\Api\Admin\AdminApiController;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,22 +23,57 @@ use App\Http\Controllers\Api\UserStatusController;
 |
 */
 
-Route::post('/create-account', [ApiAuthController::class, 'register']);
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Authentication Routes
+Route::prefix('auth')->middleware('throttle:60,1')->group(function () {
+    Route::post('login', [AuthApiController::class, 'login']);
+    Route::post('register', [AuthApiController::class, 'register']);
+    Route::post('logout', [AuthApiController::class, 'logout'])->middleware('auth:sanctum');
+    Route::post('refresh', [AuthApiController::class, 'refresh'])->middleware('auth:sanctum');
 });
 
-// User Import Routes - Protected with custom header
-Route::prefix('import')->name('api.import.')->group(function () {
-    Route::post('/users', [UserImportController::class, 'importUser'])->name('users');
-    Route::post('/users/bulk', [UserImportController::class, 'bulkImportUsers'])->name('users.bulk');
+// Authenticated API Routes
+Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function () {
+    // User Profile & KYC
+    Route::prefix('user')->group(function () {
+        Route::get('profile', [UserApiController::class, 'profile']);
+        Route::put('profile', [UserApiController::class, 'updateProfile']);
+        Route::post('kyc/upload', [UserApiController::class, 'uploadKyc']);
+        Route::get('kyc/status', [UserApiController::class, 'kycStatus']);
+    });
+
+    // Financial Operations
+    Route::prefix('financial')->group(function () {
+        Route::get('balance', [FinancialApiController::class, 'balance']);
+
+        // Deposits
+        Route::get('deposits', [DepositApiController::class, 'index']);
+        Route::post('deposits', [DepositApiController::class, 'store']);
+        Route::get('deposits/{deposit}', [DepositApiController::class, 'show']);
+
+        // Withdrawals
+        Route::get('withdrawals', [WithdrawalApiController::class, 'index']);
+        Route::post('withdrawals', [WithdrawalApiController::class, 'store']);
+        Route::get('withdrawals/{withdrawal}', [WithdrawalApiController::class, 'show']);
+    });
+
+    // Investment Plans
+    Route::apiResource('plans', PlanApiController::class)->except(['destroy']);
+    Route::post('plans/{plan}/invest', [PlanApiController::class, 'invest']);
+    Route::get('my-investments', [PlanApiController::class, 'myInvestments']);
+
+    // Notifications
+    Route::prefix('notifications')->group(function () {
+        Route::get('/', [NotificationApiController::class, 'index']);
+        Route::get('count', [NotificationApiController::class, 'count']);
+        Route::post('{notification}/read', [NotificationApiController::class, 'markAsRead']);
+    });
 });
 
-// User Status Routes - Protected with custom header
-Route::prefix('users')->name('api.users.')->group(function () {
-    Route::get('/status/statistics', [UserStatusController::class, 'getStatusStatistics'])->name('status.statistics');
-    Route::get('/status', [UserStatusController::class, 'getUsersStatus'])->name('status');
-    Route::get('/status/{identifier}', [UserStatusController::class, 'getUserStatus'])->name('status.single');
+// Admin APIs (with admin middleware)
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    Route::apiResource('users', AdminUserApiController::class);
+    Route::post('users/{user}/assign-lead', [AdminUserApiController::class, 'assignLead']);
+    Route::get('dashboard/stats', [AdminApiController::class, 'dashboardStats']);
 });
 
 // Admin API Routes - Web authentication for admin dashboard

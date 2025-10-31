@@ -178,6 +178,8 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\NotificationServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
+        App\Providers\ServiceServiceProvider::class,
 
     ],
 

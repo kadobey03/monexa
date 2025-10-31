@@ -1,0 +1,65 @@
+// Monexa Fintech Color System
+// Primary palette (fintech theme)
+--primary-500: #2563eb; // Primary blue
+--primary-600: #1d4ed8; // Darker blue
+--primary-400: #3b82f6; // Lighter blue
+--primary-100: #dbeafe; // Light blue
+--primary-50: #eff6ff; // Very light blue
+
+// Success (financial operations)
+--success-500: #10b981; // Green
+--success-600: #059669; // Darker green
+--success-100: #d1fae5; // Light green
+--success-50: #ecfdf5; // Very light green
+
+// Warning (pending transactions)
+--warning-500: #f59e0b; // Orange
+--warning-600: #d97706; // Darker orange
+--warning-100: #fef3c7; // Light orange
+--warning-50: #fffbeb; // Very light orange
+
+// Error (failed operations)
+--error-500: #ef4444; // Red
+--error-600: #dc2626; // Darker red
+--error-100: #fee2e2; // Light red
+--error-50: #fef2f2; // Very light red
+
+// Info (notifications, alerts)
+--info-500: #06b6d4; // Cyan
+--info-600: #0891b2; // Darker cyan
+--info-100: #cffafe; // Light cyan
+--info-50: #ecfeff; // Very light cyan
+
+// Neutral (text, backgrounds)
+--neutral-900: #111827; // Dark text
+--neutral-800: #1f2937;
+--neutral-700: #374151;
+--neutral-600: #4b5563;
+--neutral-500: #6b7280;
+--neutral-400: #9ca3af;
+--neutral-300: #d1d5db;
+--neutral-200: #e5e7eb;
+--neutral-100: #f3f4f6;
+--neutral-50: #f9fafb; // Light background
+--neutral-25: #fdfdfe; // Very light background
+
+// Financial specific colors
+--currency-gold: #fbbf24; // Gold for premium features
+--currency-silver: #9ca3af; // Silver for secondary features
+
+// Status colors
+--status-pending: var(--warning-500);
+--status-processing: var(--info-500);
+--status-completed: var(--success-500);
+--status-failed: var(--error-500);
+--status-cancelled: var(--neutral-500);
+
+// Semantic color variables
+--color-text-primary: var(--neutral-900);
+--color-text-secondary: var(--neutral-600);
+--color-text-muted: var(--neutral-500);
+--color-border: var(--neutral-200);
+--color-border-focus: var(--primary-500);
+--color-surface: var(--neutral-50);
+--color-surface-hover: var(--neutral-100);
+--color-background: var(--neutral-25);

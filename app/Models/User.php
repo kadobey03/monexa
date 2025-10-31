@@ -14,6 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -85,19 +86,77 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
 
-    public function dp()
+    /**
+     * Optimized financial relationships
+     */
+    public function deposits(): HasMany
     {
         return $this->hasMany(Deposit::class, 'user');
     }
 
-    public function wd()
+    public function withdrawals(): HasMany
     {
         return $this->hasMany(Withdrawal::class, 'user');
     }
 
-    public function tuser()
+    public function userPlans(): HasMany
+    {
+        return $this->hasMany(User_plans::class, 'user', 'id');
+    }
+
+    public function activePlans(): HasMany
+    {
+        return $this->userPlans()->where('status', 'active');
+    }
+
+    public function investments(): HasMany
+    {
+        return $this->hasMany(Investment::class, 'user', 'id');
+    }
+
+    /**
+     * Lead management relationships
+     */
+    public function assignedAdmin(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'assign_to');
+    }
+
+    public function leadAssignmentHistory(): HasMany
+    {
+        return $this->hasMany(LeadAssignmentHistory::class, 'user_id');
+    }
+
+    public function currentAssignment(): HasOne
+    {
+        return $this->hasOne(LeadAssignmentHistory::class, 'user_id')
+                    ->where('assignment_outcome', LeadAssignmentHistory::OUTCOME_ACTIVE)
+                    ->whereNull('assignment_ended_at')
+                    ->latest('assignment_started_at');
+    }
+
+    public function latestAssignment(): HasOne
+    {
+        return $this->hasOne(LeadAssignmentHistory::class, 'user_id')
+                    ->latest('assignment_started_at');
+    }
+
+    /**
+     * Legacy relationships (kept for backward compatibility)
+     */
+    public function dp()
+    {
+        return $this->deposits();
+    }
+
+    public function wd()
+    {
+        return $this->withdrawals();
+    }
+
+    public function tuser()
+    {
+        return $this->assignedAdmin();
     }
 
     public function dplan()
@@ -107,12 +166,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function plans()
     {
-        return $this->hasMany(User_plans::class, 'user', 'id');
+        return $this->userPlans();
     }
 
     public function uplans()
     {
-        return $this->hasMany(Investment::class, 'user', 'id');
+        return $this->investments();
     }
 
     /**
@@ -203,41 +262,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $value;
     }
 
-    /**
-     * Get the admin assigned to this user
-     */
-    public function assignedAdmin()
-    {
-        return $this->belongsTo(Admin::class, 'assign_to');
-    }
-
-    /**
-     * Get the lead assignment history for this user.
-     */
-    public function leadAssignmentHistory(): HasMany
-    {
-        return $this->hasMany(LeadAssignmentHistory::class, 'user_id');
-    }
-
-    /**
-     * Get the current active assignment.
-     */
-    public function currentAssignment(): HasOne
-    {
-        return $this->hasOne(LeadAssignmentHistory::class, 'user_id')
-                    ->where('assignment_outcome', LeadAssignmentHistory::OUTCOME_ACTIVE)
-                    ->whereNull('assignment_ended_at')
-                    ->latest('assignment_started_at');
-    }
-
-    /**
-     * Get the most recent assignment.
-     */
-    public function latestAssignment(): HasOne
-    {
-        return $this->hasOne(LeadAssignmentHistory::class, 'user_id')
-                    ->latest('assignment_started_at');
-    }
 
     /**
      * Get all notes for this lead.
@@ -636,9 +660,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Scope for high-value leads.
+     * Scope for high-value leads (enhanced with return type).
      */
-    public function scopeHighValue($query, float $threshold = 5000)
+    public function scopeHighValue(Builder $query, float $threshold = 5000): Builder
     {
         return $query->where('estimated_value', '>=', $threshold);
     }
@@ -713,11 +737,24 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->lead_score;
     }
 
+
+    /**
+     * Enhanced search method with lead fields
+     */
     public static function search($search): \Illuminate\Database\Eloquent\Builder
     {
-        return empty($search) ? static::query()
-            : static::query()->where('id', 'like', '%' . $search . '%')
-            ->orWhere('name', 'like', '%' . $search . '%')
-            ->orWhere('email', 'like', '%' . $search . '%');
+        if (empty($search)) {
+            return static::query();
+        }
+
+        return static::query()->where(function ($query) use ($search) {
+            $query->where('id', 'like', '%' . $search . '%')
+                  ->orWhere('name', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%')
+                  ->orWhere('phone', 'like', '%' . $search . '%')
+                  ->orWhere('company_name', 'like', '%' . $search . '%')
+                  ->orWhere('lead_status', 'like', '%' . $search . '%')
+                  ->orWhere('lead_source', 'like', '%' . $search . '%');
+        });
     }
 }

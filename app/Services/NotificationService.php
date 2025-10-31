@@ -523,4 +523,64 @@ class NotificationService
             return 0;
         }
     }
+
+    /**
+     * Send deposit confirmation notification
+     */
+    public function sendDepositConfirmation(\App\Models\Deposit $deposit): void
+    {
+        $user = $deposit->duser;
+        $settings = \App\Models\Settings::where('id', '1')->first();
+
+        $this->notifyDeposit($user, $deposit->amount, $settings->currency, $deposit->id);
+    }
+
+    /**
+     * Send withdrawal status notification
+     */
+    public function sendWithdrawalStatus(\App\Models\Withdrawal $withdrawal): void
+    {
+        $user = $withdrawal->duser;
+        $settings = \App\Models\Settings::where('id', '1')->first();
+
+        $this->notifyWithdrawal($user, $withdrawal->amount, $settings->currency, $withdrawal->id);
+    }
+
+    /**
+     * Send plan investment notification
+     */
+    public function sendPlanInvestmentNotification(\App\Models\User_plans $userPlan): void
+    {
+        $user = $userPlan->user;
+        $plan = $userPlan->dplan;
+        $settings = \App\Models\Settings::where('id', '1')->first();
+
+        $this->notifyPlanPurchase($user, $plan->name, $userPlan->amount, $settings->currency, $userPlan->id);
+    }
+
+    /**
+     * Send plan completion notification
+     */
+    public function sendPlanCompletionNotification(\App\Models\User_plans $userPlan): void
+    {
+        $user = $userPlan->user;
+        $settings = \App\Models\Settings::where('id', '1')->first();
+
+        $userTitle = 'Investment Plan Completed';
+        $userMessage = "Your investment plan has been completed. Your capital has been returned.";
+
+        $adminTitle = 'Plan Completion';
+        $adminMessage = "User {$user->name} ({$user->email}) investment plan has been completed.";
+
+        $this->notifyUserAndAdmins(
+            $user->id,
+            $userTitle,
+            $userMessage,
+            $adminTitle,
+            $adminMessage,
+            'plan_completion',
+            $userPlan->id,
+            'App\\Models\\User_plans'
+        );
+    }
 }

@@ -1,36 +1,14 @@
 <div>
-    @if (count($plans) > 0)
-        <div class="mt-4 row">
-            <div class="col-md-8">
-                <div class="card">
-                    <x-danger-alert />
-                    <x-success-alert />
-                    <div class="card-body">
-                        <!-- Remove 'active' class, this is just to show in Codepen thumbnail -->
-                        <div class="select-menu" id="planSelectMenu">
-                            <div class="select-btn" onclick="togglePlanSelector()">
-                                <div class="d-flex">
-                                    @if ($planSelected)
-                                        <span class="mr-2 fas fa-hand-holding-seedling"></span>
-                                        <span class="sBtn-text">{{ $planSelected->name }}</span>
-                                    @else
-                                        <span class="sBtn-text">Select your a plan</span>
-                                    @endif
-                                </div>
-                                <i class="fas fa-angle-down"></i>
-                            </div>
+    <x-layout.card
+        title="Investment Plans"
+        subtitle="Choose and invest in a plan to start earning">
 
-                            <ul class="options">
-                                @foreach ($plans as $plan)
-                                    <li class="option" wire:click="selectPlan({{ $plan->id }})"
-                                        onclick="closePlanSelector()">
-                                        <i class="fas fa-hand-holding-seedling"></i>
-                                        <span class="option-text">{{ $plan->name }}</span>
-                                    </li>
-                                @endforeach
-
-                            </ul>
-                        </div>
+        <x-slot name="header">
+            <x-financial.balance-card
+                :balance="$user->account_bal"
+                :currency="$currency"
+                label="Available Balance" />
+        </x-slot>
                         <div class="mt-5">
                             <div class="">
                                 <p>Choose Quick Amount to Invest</p>

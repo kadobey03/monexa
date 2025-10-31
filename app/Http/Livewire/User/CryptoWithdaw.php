@@ -2,110 +2,157 @@
 
 namespace App\Http\Livewire\User;
 
-use App\Mail\NewNotification;
-use App\Models\BncTransaction;
+use App\Services\FinancialService;
+use App\Services\UserService;
+use App\Services\NotificationService;
 use App\Models\Settings;
-use App\Models\User;
-use App\Models\Wdmethod;
 use App\Traits\BinanceApi;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
+use Livewire\Attributes\Validate;
+use Livewire\Attributes\On;
+use Illuminate\Support\Facades\Log;
 
 class CryptoWithdaw extends Component
 {
     use BinanceApi;
-    public $payment_mode;
-    public $otpCode;
+
+    #[Validate('required|numeric|min:0.01')]
     public $amount;
 
-    public function render()
+    #[Validate('required|string|max:6')]
+    public $otpCode;
+
+    public $payment_mode = 'USDT';
+    public $processing = false;
+    public $otpRequested = false;
+    public $currency = 'USD';
+
+    public function __construct(
+        private FinancialService $financialService,
+        private UserService $userService,
+        private NotificationService $notificationService
+    ) {}
+
+    public function mount()
     {
-        return view('livewire.user.crypto-withdaw');
+        $settings = Settings::where('id', '1')->first();
+        $this->currency = $settings->currency ?? 'USD';
     }
 
     public function requestOtp()
     {
-        sleep(2);
-        $code = $this->RandomStringGenerator(5);
-        $user = Auth::user();
-        User::where('id', $user->id)->update([
-            'withdrawotp' => $code,
-        ]);
+        $this->processing = true;
 
-        $message = "You have initiated a withdrawal request, use the OTP: $code to complete your request.";
-        $subject = "OTP Request";
-        Mail::to($user->email)->send(new NewNotification($message, $subject, $user->name));
-        session()->flash('status', 'Action Successful!, OTP have been sent to your email');
+        try {
+            // Generate and update OTP via UserService
+            $otpCode = $this->userService->generateWithdrawalOtp(auth()->user());
+            $this->otpRequested = true;
+
+            session()->flash('success', 'OTP has been sent to your email');
+        } catch (\Exception $e) {
+            Log::error('OTP generation failed', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage()
+            ]);
+            session()->flash('error', 'Failed to send OTP. Please try again.');
+        } finally {
+            $this->processing = false;
+        }
     }
 
     public function withdraw()
     {
-        $settings = Settings::where('id', '1')->first();
-        $method = Wdmethod::where('name', $this->payment_mode)->first();
-        //get user
-        $user = User::where('id', Auth::user()->id)->first();
+        $this->validate();
 
-        if ($method->charges_type == 'percentage') {
-            $charges = $this->amount * $method->charges_amount / 100;
-        } else {
-            $charges = $method->charges_amount;
-        }
+        $this->processing = true;
 
-        $to_withdraw = $this->amount + $charges;
-
-        if (Auth::user()->sendotpemail == "Yes" and $this->otpCode != Auth::user()->withdrawotp) {
-            session()->flash('error', 'OTP is incorrect, please recheck the code');
-        } elseif ($settings->enable_kyc == "yes" and Auth::user()->account_verify != "Verified") {
-            session()->flash('error', 'Your account must be verified before you can make withdrawal. please complete your KYC verification');
-        } elseif (Auth::user()->account_bal < $to_withdraw) {
-            session()->flash('error', 'Sorry, your account balance is insufficient for this request.');
-        } elseif ($this->amount < $method->minimum) {
-            session()->flash("error", "Sorry, The minimum amount you can withdraw is $settings->currency$method->minimum, please try another payment method.");
-        } else {
-
-            $http_response = $this->payout($this->amount, $this->RandomStringGenerator(10), $user->email);
-            $data = json_decode($http_response);
-
-            if ($data->status == "FAIL") {
-                session()->flash('error', 'Something went wrong, please contact our support team if problem persist');
-
-                // send mail to admin
-                Mail::to($settings->contact_email)->send(new NewNotification("There was a failed USDT withdrawal from your Binance account by $user->name, possible reasons maybe insufficient fund. Please login your binance account or your website to view more details and take neccesary action", "Failed USDT Withdrawal from your Binance account.", 'Admin'));
-            } else {
-                // get values from api.
-                $values = $data->data;
-
-                $brecord = new BncTransaction();
-                $brecord->user_id = Auth::user()->id;
-                $brecord->prepay_id = $values->requestId;
-                $brecord->type = 'Withrdawal';
-                $brecord->status = 'Pending';
-                $brecord->save();
-
-                //debit user
-                User::where('id', $user->id)->update([
-                    'account_bal' => $user->account_bal - $to_withdraw,
-                    'withdrawotp' => NULL,
-                ]);
-
-                Mail::to($settings->contact_email)->send(new NewNotification("There was a successful USDT withdrawal from your Binance account by $user->name", "Successful USDT Withdrawal from your Binance account.", 'Admin'));
+        try {
+            // Check OTP if required
+            if (auth()->user()->sendotpemail == "Yes" && !$this->userService->verifyWithdrawalOtp(auth()->user(), $this->otpCode)) {
+                session()->flash('error', 'OTP is incorrect, please recheck the code');
+                return;
             }
+
+            // Process withdrawal via FinancialService
+            $result = $this->financialService->processWithdrawal([
+                'amount' => $this->amount,
+                'payment_mode' => $this->payment_mode,
+                'paydetails' => auth()->user()->email, // Binance email
+            ], auth()->user());
+
+            if ($result->success) {
+                // Binance payout logic using trait
+                $http_response = $this->payout($this->amount, $this->generateRandomString(10), auth()->user()->email);
+                $data = json_decode($http_response);
+
+                if ($data->status == "FAIL") {
+                    session()->flash('error', 'Something went wrong, please contact our support team if problem persists');
+                    Log::error('Binance payout failed', [
+                        'user_id' => auth()->id(),
+                        'response' => $http_response
+                    ]);
+                } else {
+                    // Create Binance transaction record
+                    $this->createBinanceRecord($data->data->requestId);
+
+                    // Emit events for real-time updates
+                    $this->emit('withdrawal-processed', $result->withdrawal);
+                    $this->emit('balance-updated');
+                    $this->emit('notification-count-updated');
+
+                    $this->reset(['amount', 'otpCode']);
+                    session()->flash('success', 'Withdrawal request submitted successfully');
+                }
+            } else {
+                session()->flash('error', $result->errorMessage ?? 'Failed to process withdrawal');
+            }
+        } catch (\Exception $e) {
+            Log::error('Withdrawal processing failed in Livewire component', [
+                'user_id' => auth()->id(),
+                'error' => $e->getMessage()
+            ]);
+            session()->flash('error', 'An error occurred processing your withdrawal');
+        } finally {
+            $this->processing = false;
         }
     }
 
 
-    // for front end content management
-    function RandomStringGenerator($n)
+    /**
+     * Generate random string
+     */
+    private function generateRandomString(int $n): string
     {
-        $generated_string = "";
-        $domain = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        $len = strlen($domain);
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $randomString = '';
+
         for ($i = 0; $i < $n; $i++) {
-            $index = rand(0, $len - 1);
-            $generated_string = $generated_string . $domain[$index];
+            $index = rand(0, strlen($characters) - 1);
+            $randomString .= $characters[$index];
         }
-        // Return the random generated string 
-        return $generated_string;
+
+        return $randomString;
+    }
+
+    /**
+     * Create Binance transaction record
+     */
+    private function createBinanceRecord(string $requestId): void
+    {
+        \App\Models\BncTransaction::create([
+            'user_id' => auth()->id(),
+            'prepay_id' => $requestId,
+            'type' => 'Withdrawal',
+            'status' => 'Pending'
+        ]);
+    }
+
+    public function render()
+    {
+        return view('livewire.user.crypto-withdaw', [
+            'settings' => Settings::where('id', '1')->first(),
+            'user' => auth()->user()
+        ]);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Carbon\Carbon;
@@ -159,6 +160,38 @@ class Admin extends Authenticatable
     }
 
     /**
+     * Enhanced lead management relationships
+     */
+    public function allAssignedUsers(): HasMany
+    {
+        return $this->hasMany(User::class, 'assign_to');
+    }
+
+    public function currentLeads(): HasMany
+    {
+        return $this->assignedUsers()->whereNull('cstatus')->orWhere('cstatus', '!=', 'Customer');
+    }
+
+    public function convertedCustomers(): HasMany
+    {
+        return $this->assignedUsers()->where('cstatus', 'Customer');
+    }
+
+    public function hotLeads(): HasMany
+    {
+        return $this->assignedUsers()
+                    ->whereNull('cstatus')
+                    ->where('lead_score', '>=', 70);
+    }
+
+    public function leadsNeedingFollowUp(): HasMany
+    {
+        return $this->assignedUsers()
+                    ->whereNull('cstatus')
+                    ->where('next_follow_up_date', '<=', now());
+    }
+
+    /**
      * Get the users assigned to this admin.
      */
     public function assignedUsers(): HasMany
@@ -236,6 +269,38 @@ class Admin extends Authenticatable
     public function scopeWithCapacity($query)
     {
         return $query->whereRaw('leads_assigned_count < COALESCE(max_leads_per_day, 999999)');
+    }
+
+    /**
+     * Enhanced scope for lead management
+     */
+    public function scopeAvailableForLeads(Builder $query): Builder
+    {
+        return $query->active()
+                    ->available()
+                    ->withCapacity()
+                    ->orderBy('leads_assigned_count', 'asc');
+    }
+
+    public function scopeByPerformance(Builder $query, float $minPerformance = 0): Builder
+    {
+        return $query->where('current_performance', '>=', $minPerformance);
+    }
+
+    public function scopeByLeadCount(Builder $query, int $minLeads = 0, int $maxLeads = null): Builder
+    {
+        $query->where('leads_assigned_count', '>=', $minLeads);
+
+        if ($maxLeads !== null) {
+            $query->where('leads_assigned_count', '<=', $maxLeads);
+        }
+
+        return $query;
+    }
+
+    public function scopeByConversionRate(Builder $query, float $minRate = 0): Builder
+    {
+        return $query->whereRaw('(leads_converted_count / GREATEST(leads_assigned_count, 1)) * 100 >= ?', [$minRate]);
     }
 
     /**
@@ -593,26 +658,26 @@ class Admin extends Authenticatable
     public function calculateEfficiencyRating(): float
     {
         $rating = 0;
-        
+
         // Conversion rate (0-40 points)
         if ($this->leads_assigned_count > 0) {
             $conversionRate = ($this->leads_converted_count / $this->leads_assigned_count) * 100;
             $rating += min(40, $conversionRate);
         }
-        
+
         // Target achievement (0-30 points)
         if ($this->monthly_target > 0) {
             $targetAchievement = ($this->current_performance / $this->monthly_target) * 100;
             $rating += min(30, $targetAchievement * 0.3);
         }
-        
+
         // Activity level (0-20 points)
         if ($this->last_activity) {
             $daysSinceActivity = Carbon::now()->diffInDays($this->last_activity);
             $activityScore = max(0, 20 - ($daysSinceActivity * 2));
             $rating += $activityScore;
         }
-        
+
         // Workload management (0-10 points)
         $capacity = $this->getAssignmentCapacity();
         if ($capacity['capacity_percentage'] <= 80) {
@@ -620,8 +685,62 @@ class Admin extends Authenticatable
         } elseif ($capacity['capacity_percentage'] <= 100) {
             $rating += 5; // At capacity but manageable
         }
-        
+
         return min(100, $rating);
+    }
+
+    /**
+     * Enhanced business logic for lead management
+     */
+    public function getLeadStats(): array
+    {
+        $assignedUsers = $this->allAssignedUsers;
+
+        return [
+            'total_assigned' => $assignedUsers->count(),
+            'active_leads' => $this->currentLeads()->count(),
+            'converted_customers' => $this->convertedCustomers()->count(),
+            'hot_leads' => $this->hotLeads()->count(),
+            'needs_follow_up' => $this->leadsNeedingFollowUp()->count(),
+            'conversion_rate' => $this->getConversionRate(),
+            'capacity_used' => $this->getAssignmentCapacity()['capacity_percentage'],
+        ];
+    }
+
+    public function canTakeMoreLeads(): bool
+    {
+        return $this->isAvailableForAssignment();
+    }
+
+    public function getWorkloadStatus(): string
+    {
+        $capacity = $this->getAssignmentCapacity();
+
+        if ($capacity['capacity_percentage'] >= 90) {
+            return 'overloaded';
+        } elseif ($capacity['capacity_percentage'] >= 70) {
+            return 'busy';
+        } elseif ($capacity['capacity_percentage'] >= 40) {
+            return 'moderate';
+        } else {
+            return 'light';
+        }
+    }
+
+    public function getPerformanceTier(): string
+    {
+        $performance = $this->current_performance ?? 0;
+        $conversionRate = $this->getConversionRate();
+
+        if ($performance >= 10000 && $conversionRate >= 30) {
+            return 'elite';
+        } elseif ($performance >= 5000 && $conversionRate >= 20) {
+            return 'high';
+        } elseif ($performance >= 2000 && $conversionRate >= 10) {
+            return 'medium';
+        } else {
+            return 'low';
+        }
     }
 
     /**
