@@ -43,6 +43,13 @@
 
 When you need to read more than 5 files, prioritize the most critical files first, then use subsequent read_file requests for additional files
 
+## Tool Usage Efficiency Rules
+- **Wait for Confirmation**: Her tool kullanımından sonra mutlaka user confirmation bekle
+- **One Tool Per Message**: Her mesajda sadece bir tool kullan
+- **Complete Information**: Tool parametreleri için gereken tüm bilgiyi topla
+- **Error Handling**: Tool başarısızlığı durumunda alternatif yöntemler dene
+- **Context Awareness**: environment_details'i her zaman değerlendir
+
 ## Laravel Project Workflow
 - **Analysis Phase**: composer.json → config/app.php → routes → models
 - **Planning Phase**: İlgili dosyaları toplu oku, pattern'leri tespit et
@@ -72,3 +79,18 @@ When you need to read more than 5 files, prioritize the most critical files firs
 - **Single Responsibility**: Her değişiklik tek sorumluluğa odaklanmalı
 - **Test Consideration**: Yazılan kodun test edilebilirliğini düşün
 - **Documentation**: Karmaşık business logic'i dokümante et
+
+## Tool Limitations & Constraints
+- **read_file**: Maksimum 5 dosya per request, binary files için PDF/DOCX desteği
+- **apply_diff**: SEARCH section exact match gerektirir, whitespace sensitive
+- **write_to_file**: Complete content required, line_count parametresi zorunlu
+- **execute_command**: Her command yeni terminal instance'da çalışır
+- **MCP Tools**: Server connection gerektirir, one tool at a time usage
+- **File Paths**: Workspace relative paths (c:/Users/kadobey/Desktop/Monexa/monexafinans)
+
+## Best Practices Summary
+- **Analysis First**: Proje yapısını ve environment_details'i önce analiz et
+- **Batch Operations**: İlgili dosyaları tek seferde oku ve düzenle
+- **Error Prevention**: Tool parametrelerini kullanmadan önce doğrula
+- **User Feedback**: Her tool kullanımından sonra confirmation bekle
+- **Efficiency Focus**: Minimum tool usage ile maximum sonuç al
