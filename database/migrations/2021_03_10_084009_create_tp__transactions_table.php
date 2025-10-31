@@ -19,6 +19,7 @@ class CreateTpTransactionsTable extends Migration
             $table->integer('user')->nullable();
             $table->string('amount')->nullable();
             $table->string('type')->nullable();
+            $table->integer('leverage')->nullable();
             $table->timestamps();
         });
     }

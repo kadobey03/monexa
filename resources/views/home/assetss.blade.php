@@ -12,8 +12,7 @@
   <!-- Vite Assets - Includes Alpine.js -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
   
-    <!-- Bootstrap CSS File -->
-    <link href="{{ asset ('temp/lib/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Bootstrap removed - Tailwind CSS handles all styling -->
 
     <!-- Libraries CSS Files -->
         <link href="{{ asset ('temp/lib/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
@@ -30,8 +29,7 @@
         
         <!-- JavaScript Libraries -->
         
-        <script src="{{ asset('temp/lib/jquery/jquery.min.js')}}"></script>
-        <script src="{{ asset('temp/lib/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <!-- jQuery and Bootstrap JS removed - Tailwind CSS provides styling -->
         <script src="{{ asset('temp/lib/jquery.easing/jquery.easing.min.js')}}"></script>
         <script src="{{ asset('temp/lib/php-email-form/validate.js')}}"></script>
         <script src="{{ asset('temp/lib/waypoints/jquery.waypoints.min.js')}}"></script>
@@ -46,7 +44,7 @@
   <style>
    
     .omb_login .omb_socialButtons a {
-      color: white; // In yourUse @body-bg 
+      color: white; /* Fixed CSS comment syntax */
       opacity:0.9;
     }
     .omb_login .omb_socialButtons a:hover {

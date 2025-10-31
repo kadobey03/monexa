@@ -7,7 +7,6 @@
 import '../css/app.css';
 
 // Core JavaScript modules
-import './bootstrap';
 import { CSRFManager } from './utils/csrf-manager';
 import { NotificationManager } from './utils/notification-manager';
 import { AdminManager } from './modules/admin-management';
@@ -145,8 +144,7 @@ class Application {
      */
     async loadVueComponent(componentName) {
         const componentMap = {
-            'LeadAssignment': () => import('./components/vue/admin/LeadAssignment.vue'),
-            'SmartDataTable': () => import('./components/vue/common/SmartDataTable.vue'),
+            'SmartDataTable': () => import('./components/common/SmartDataTable.vue'),
             // Add more components as needed
         };
 

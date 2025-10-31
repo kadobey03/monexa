@@ -14,6 +14,7 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -91,11 +92,16 @@ class CreateNewUser implements CreatesNewUsers
         $cryptoaccnt->save();
         $request->session()->forget('ref_by');
 
+        // Welcome email gönderme işlemi geçici olarak devre dışı bırakıldı
+        // Mailhog bağlantı hatası nedeniyle mail gönderimi kapatıldı
+        /*
         try {
             Mail::to($user->email)->send(new WelcomeEmail($user));
         } catch (\Exception $e) {
             \Log::error('Failed to send welcome email to user: ' . $user->email . '. Error: ' . $e->getMessage());
         }
+        */
+        \Log::info('Welcome email sending disabled for user: ' . $user->email);
 
         return $user;
     }

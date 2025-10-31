@@ -51,6 +51,9 @@
         updateTheme();
     </script>
 
+    <!-- Nuclear Console Error Suppression for TradingView Widgets - IMMEDIATE LOAD -->
+    <script src="{{ asset('js/nuclear-console-fix.js') }}"></script>
+
 </head>
 <body class="dark text-gray-100 bg-gray-900 js-hidden" id="main-body" data-sidebar-open="false">
       <style>

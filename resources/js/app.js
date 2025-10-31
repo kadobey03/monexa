@@ -7,10 +7,7 @@
 // Core CSS imports - Vite will handle optimization and tree-shaking
 import '../css/app.css';
 
-// Essential polyfills for older browsers (conditionally loaded)
-if (!window.Promise) {
-    import('es6-promise/auto');
-}
+// Note: Promise polyfill removed - all modern browsers support Promise natively
 
 // Core application initialization
 import './main.js';

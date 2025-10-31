@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Mail\NewRegistration;
 use Illuminate\Support\Facades\Mail;
 
@@ -54,13 +55,18 @@ class SocialLoginController extends Controller
 
         if ($user) {
             Auth::login($user);
-            DB::table('activities')->insert([
-                'user' => $user->id,
-                'ip_address' => $request->ip(),
-                'device' => Browser::deviceType(),
-                'browser' => Browser::browserName(),
-                'os' => Browser::platformName(),
-            ]);
+            try {
+                DB::table('activities')->insert([
+                    'user' => $user->id,
+                    'ip_address' => $request->ip(),
+                    'device' => Browser::deviceType(),
+                    'browser' => Browser::browserName(),
+                    'os' => Browser::platformName(),
+                ]);
+            } catch (\Exception $e) {
+                // Activity logging failed, but continue authentication
+                \Log::debug('Activity logging failed: ' . $e->getMessage());
+            }
             return redirect()->route('dashboard');
         } else {
 

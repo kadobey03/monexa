@@ -31,9 +31,15 @@
                         <div class="flex items-center justify-center mb-6">
                             <div class="relative">
                                 <!-- Remove glow effect -->
-                                <img src="{{ asset('storage/'.$settings->logo)}}"
-                                     class="relative h-16 w-auto"
-                                     alt="{{ $settings->site_name }}" />
+                                @if($settings && $settings->logo)
+                                    <img src="{{ asset('storage/'.$settings->logo)}}"
+                                         class="relative h-16 w-auto"
+                                         alt="{{ $settings->site_name ?? 'Site Logo' }}" />
+                                @else
+                                    <div class="relative h-16 w-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center">
+                                        <span class="text-white font-bold text-xl">{{ substr($settings->site_name ?? 'SITE', 0, 1) }}</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
@@ -42,7 +48,7 @@
                             Tekrar Hoş Geldiniz
                         </h1>
                         <h2 class="text-lg sm:text-xl font-semibold mb-3">
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{{ $settings->site_name }}</span>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{{ $settings->site_name ?? 'Trading Platform' }}</span>
                         </h2>
                         <p class="text-gray-300 text-sm sm:text-base">
                             Ticaret panelinize erişin
@@ -219,7 +225,7 @@
 
                         <!-- Copyright -->
                         <p class="text-xs text-gray-500">
-                            © {{ date('Y') }} {{ $settings->site_name }}. Tüm hakları saklıdır.
+                            © {{ date('Y') }} {{ $settings->site_name ?? 'Trading Platform' }}. Tüm hakları saklıdır.
                         </p>
                     </div>
                 </div>

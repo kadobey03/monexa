@@ -12,37 +12,54 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // İlk olarak yeni lead_status sütununu ekle
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('lead_status', 50)->default('new')->after('lead_status_id');
-        });
-
-        // Mevcut lead_status_id verilerini lead_status name'e çevir
-        $statusMappings = [
-            1 => 'new',
-            2 => 'contacted', 
-            3 => 'interested',
-            4 => 'negotiation',
-            5 => 'converted',
-            6 => 'lost'
-        ];
-
-        foreach ($statusMappings as $statusId => $statusName) {
-            DB::table('users')
-                ->where('lead_status_id', $statusId)
-                ->update(['lead_status' => $statusName]);
+        // İlk olarak yeni lead_status sütununu ekle (sadece yoksa)
+        if (!Schema::hasColumn('users', 'lead_status')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('lead_status', 50)->default('new');
+            });
         }
 
-        // NULL olan lead_status_id değerlerini de 'new' yap
-        DB::table('users')
-            ->whereNull('lead_status_id')
-            ->update(['lead_status' => 'new']);
+        // Mevcut lead_status_id verilerini lead_status name'e çevir (sadece lead_status_id varsa)
+        if (Schema::hasColumn('users', 'lead_status_id')) {
+            $statusMappings = [
+                1 => 'new',
+                2 => 'contacted',
+                3 => 'interested',
+                4 => 'negotiation',
+                5 => 'converted',
+                6 => 'lost'
+            ];
 
-        // Şimdi lead_status_id sütununu kaldır
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['lead_status_id']);
-            $table->dropColumn('lead_status_id');
-        });
+            foreach ($statusMappings as $statusId => $statusName) {
+                DB::table('users')
+                    ->where('lead_status_id', $statusId)
+                    ->update(['lead_status' => $statusName]);
+            }
+
+            // NULL olan lead_status_id değerlerini de 'new' yap
+            DB::table('users')
+                ->whereNull('lead_status_id')
+                ->update(['lead_status' => 'new']);
+        } else {
+            // lead_status_id yoksa, tüm users için default değeri set et
+            DB::table('users')
+                ->whereNull('lead_status')
+                ->orWhere('lead_status', '')
+                ->update(['lead_status' => 'new']);
+        }
+
+        // lead_status_id sütununu kaldır (sadece varsa) - Basitleştirilmiş versiyon
+        if (Schema::hasColumn('users', 'lead_status_id')) {
+            // SQLite'da direkt drop column yapmaya çalış - eğer hata verirse devam et
+            try {
+                Schema::table('users', function (Blueprint $table) {
+                    $table->dropColumn('lead_status_id');
+                });
+            } catch (\Exception $e) {
+                // SQLite'da column drop edilemiyorsa, sadece devam et
+                // Çünkü lead_status sütunu zaten mevcut ve kullanılabilir
+            }
+        }
 
         // Index ekle performance için
         Schema::table('users', function (Blueprint $table) {

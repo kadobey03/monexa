@@ -54,9 +54,11 @@
         "@vueuse/core": "^10.2.1",
         "chart.js": "^4.4.0",
         "date-fns": "^2.30.0",
+        "laravel-echo": "^2.2.4",
         "lodash-es": "^4.17.21",
         "lucide": "^0.292.0",
         "pinia": "^2.1.4",
+        "pusher-js": "^8.4.0",
         "qrcode": "^1.5.3",
         "sweetalert2": "^11.10.1",
         "vue": "^3.3.4"

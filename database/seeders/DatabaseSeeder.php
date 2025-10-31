@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
             SettingsSeeder::class,
         ]);
         
-        \App\Models\Adverts::factory(7)->create();
+        // \App\Models\Adverts::factory(7)->create(); // Commented out - table doesn't exist
     }
 }

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $settings->site_name }} - @yield('title', 'Secure Trading Platform')</title>
+    <title>{{ $settings->site_name ?? 'Trading Platform' }} - @yield('title', 'Secure Trading Platform')</title>
 
     <!-- Favicon -->
-    <link href="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
+    <link href="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
 
     <!-- Inter Font - Local -->
     <link href="{{ asset('vendor/fonts/inter.css') }}" rel="stylesheet">
@@ -20,12 +20,9 @@
     <!-- Lucide Icons - Local -->
     <script src="{{ asset('vendor/lucide/lucide.js') }}"></script>
 
-    <!-- Bootstrap CSS & JS - Local -->
-    <link href="{{ asset('vendor/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <!-- All styles now handled by Vite with Tailwind CSS -->
 
-<title>{{$settings->site_name }}</title>
+<title>{{ $settings->site_name ?? 'Trading Platform' }}</title>
 <meta name="theme-color" content="#4D7DE6">
 <meta name="msapplication-navbutton-color" content="#4D7DE6">
 <!-- iOS Safari -->
@@ -37,27 +34,27 @@
 <!-- iOS Safari -->
 <meta name="apple-mobile-web-app-status-bar-style" content="#4D7DE6">
 
-<link href="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
+<link href="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
 <!-- <link rel="icon" sizes="192x192" href="404.html"> -->
 
-<meta name="keywords" content="{{$settings->site_name }}" />
+<meta name="keywords" content="{{ $settings->site_name ?? 'Trading Platform' }}" />
 <meta property="og:image" content="temp/custom/images/icon/icon-310x310.png" />
 
-<meta name="msapplication-square310x310logo" content="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
-<meta name="msapplication-square70x70logo" content="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
-<meta name="msapplication-square150x150logo" content="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
-<meta name="msapplication-wide310x150logo" content="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
+<meta name="msapplication-square310x310logo" content="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
+<meta name="msapplication-square70x70logo" content="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
+<meta name="msapplication-square150x150logo" content="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
+<meta name="msapplication-wide310x150logo" content="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
 
-<link rel="apple-touch-icon-precomposed" href="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
+<link rel="apple-touch-icon-precomposed" href="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}">
 <!-- <link rel="apple-touch-icon-precomposed" sizes="57x57" href="404.html" /> -->
 <!-- <link rel="apple-touch-icon-precomposed" sizes="72x72" href="404.html" /> -->
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" />
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ $settings->favicon ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" />
 
 
-<meta property="og:site_name" content="{{$settings->site_name }}">
-<meta property="og:title" content="Trading With {{$settings->site_name }}" />
-<meta name="description" content="{{$settings->site_name }} LIMITED???
+<meta property="og:site_name" content="{{ $settings->site_name ?? 'Trading Platform' }}">
+<meta property="og:title" content="Trading With {{ $settings->site_name ?? 'Trading Platform' }}" />
+<meta name="description" content="{{ $settings->site_name ?? 'Trading Platform' }} LIMITED???
 INVEST IN A LEADING
 TRADE AND INVESTMENT
 COMPANY, OPERATING IN
@@ -68,7 +65,7 @@ RESEARCH AND ANALYSIS:
 ASSISTING BOTH INDIVIDUALS & COMPANIES INVEST IN THE
 COMMERCIAL MARKET.TRAINING CLIENTS & INVESTORS TO BECOME
 EXPERTISE.???">
-<meta property="og:description" content="{{$settings->site_name }} LIMITED???
+<meta property="og:description" content="{{ $settings->site_name ?? 'Trading Platform' }} LIMITED???
 INVEST IN A LEADING
 TRADE AND INVESTMENT
 COMPANY, OPERATING IN

@@ -10,7 +10,7 @@ import { leadAssignmentApi } from '@/admin/leads/vue/services/leadAssignmentApi.
 // Import components dynamically for better code splitting
 const FilterPanel = () => import('@/admin/leads/vue/components/FilterPanel.vue');
 const LeadAssignmentTable = () => import('@/admin/leads/vue/components/LeadAssignmentTable.vue');
-const BulkActionPanel = () => import('@/admin/admin/leads/vue/components/BulkActionPanel.vue');
+const BulkActionPanel = () => import('@/admin/leads/vue/components/BulkActionPanel.vue');
 
 // Import stores
 import { useLeadStore } from '@/admin/leads/vue/stores/leadStore.js';

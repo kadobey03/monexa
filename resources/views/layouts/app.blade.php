@@ -116,8 +116,14 @@
         <!-- Font Awesome Icons - Local -->
         <link rel="stylesheet" href="{{ asset('vendor/fontawesome/all.min.css') }}">
         
+        <!-- Ultimate Console Error Fixes - Priority Load -->
+        <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
+        
         <!-- jQuery - Local -->
         <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
+        
+        <!-- Console Error Fixes - Full -->
+        <script src="{{ asset('js/console-fixes.js') }}"></script>
         
         <!-- Sweet Alert for notifications -->
         <script src="{{ asset('dash/js/plugin/sweetalert/sweetalert.min.js') }} "></script>

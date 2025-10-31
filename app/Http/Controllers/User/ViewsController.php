@@ -64,9 +64,23 @@ class ViewsController extends Controller
         }
 
         if (DB::table('crypto_accounts')->where('user_id', Auth::user()->id)->doesntExist()) {
-            $cryptoaccnt = new CryptoAccount();
-            $cryptoaccnt->user_id = Auth::user()->id;
-            $cryptoaccnt->save();
+            try {
+                CryptoAccount::create([
+                    'user_id' => Auth::user()->id,
+                    'btc' => 0.00,
+                    'eth' => 0.00,
+                    'ltc' => 0.00,
+                    'xrp' => 0.00,
+                    'link' => 0.00,
+                    'bat' => 0.00,
+                    'aave' => 0.00,
+                    'usdt' => 0.00,
+                    'xlm' => 0.00,
+                    'bch' => 0.00,
+                ]);
+            } catch (\Exception $e) {
+                \Log::debug('CryptoAccount creation failed: ' . $e->getMessage());
+            }
         }
 
         //sum total deposited
@@ -106,15 +120,100 @@ class ViewsController extends Controller
             'deposited' => $total_deposited,
             'total_withdrawal' => $total_withdrawal,
             'trading_accounts' => Mt4Details::where('client_id', Auth::user()->id)->count(),
-            'plans' => User_plans::where('user', Auth::user()->id)->where('active', 'yes')->orderByDesc('id')->skip(0)->take(2)->get(),
+            'plans' => User_plans::where('user', Auth::user()->id)->orderByDesc('id')->skip(0)->take(2)->get(),
             't_history' => Tp_Transaction::where('user', Auth::user()->id)
-                ->whereIn('type',  ['Sell','Buy','WIN','LOSE'])
+                ->whereIn('type', ['Sell','Buy','WIN','LOSE'])
                 ->orderByDesc('id')->skip(0)->take(5)
                 ->get(),
              'instruments' => $instruments,
             'bitcoin_price' => $bitcoin_price,
             'btc_equivalent' => $btc_equivalent,
         ]);
+    }
+
+    /**
+     * Get dashboard data for AJAX requests (User Dashboard)
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDashboardData(Request $request)
+    {
+        try {
+            $user = User::find(auth()->user()->id);
+            
+            // Basic statistics
+            $total_deposited = DB::table('deposits')->where('user', $user->id)->where('status', 'Processed')->sum('amount');
+            $total_withdrawal = DB::table('withdrawals')->where('user', $user->id)->where('status', 'Processed')->sum('amount');
+            $active_plans = User_plans::where('user', $user->id)->where('active', 'yes')->count();
+            $total_plans = User_plans::where('user', $user->id)->count();
+            
+            // Recent transactions
+            $recent_transactions = Tp_Transaction::where('user', $user->id)
+                ->orderByDesc('id')
+                ->limit(5)
+                ->get()
+                ->map(function($transaction) {
+                    return [
+                        'message' => $transaction->plan . ' - ' . number_format($transaction->amount, 2) . ' TL',
+                        'created_at' => $transaction->created_at->toISOString(),
+                        'type' => $transaction->type
+                    ];
+                });
+
+            // Chart data - Last 7 days balance changes
+            $chartData = [];
+            for ($i = 6; $i >= 0; $i--) {
+                $date = now()->subDays($i);
+                $dayTransactions = Tp_Transaction::where('user', $user->id)
+                    ->whereDate('created_at', $date)
+                    ->sum('amount');
+                
+                $chartData[] = [
+                    'date' => $date->format('d.m'),
+                    'amount' => $dayTransactions
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'stats' => [
+                        'balance' => [
+                            'value' => $user->account_bal,
+                            'change' => 0 // Could calculate change here
+                        ],
+                        'deposits' => [
+                            'value' => $total_deposited,
+                            'change' => 0
+                        ],
+                        'withdrawals' => [
+                            'value' => $total_withdrawal,
+                            'change' => 0
+                        ],
+                        'active_plans' => [
+                            'value' => $active_plans,
+                            'change' => 0
+                        ]
+                    ],
+                    'charts' => [
+                        'balance' => [
+                            'labels' => array_column($chartData, 'date'),
+                            'values' => array_column($chartData, 'amount')
+                        ]
+                    ],
+                    'recentActivities' => $recent_transactions->toArray()
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('User dashboard data error: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Dashboard verileri yüklenirken hata oluştu'
+            ], 500);
+        }
     }
 
 

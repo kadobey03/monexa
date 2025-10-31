@@ -71,7 +71,11 @@ class DashboardModule {
         this.setState({ loading: true });
 
         try {
-            const response = await CSRFManager.get('/admin/dashboard/data');
+            // Dinamik endpoint belirleme - admin veya user
+            const isAdminPath = window.location.pathname.includes('/admin/');
+            const endpoint = isAdminPath ? '/admin/dashboard/data' : '/dashboard/data';
+            
+            const response = await CSRFManager.get(endpoint);
             const data = await response.json();
 
             if (data.success) {
@@ -407,7 +411,10 @@ class DashboardModule {
 
     async changeDateRange(range) {
         try {
-            const response = await CSRFManager.get(`/admin/dashboard/data?range=${range}`);
+            const isAdminPath = window.location.pathname.includes('/admin/');
+            const endpoint = isAdminPath ? '/admin/dashboard/data' : '/dashboard/data';
+            
+            const response = await CSRFManager.get(`${endpoint}?range=${range}`);
             const data = await response.json();
 
             if (data.success) {
@@ -542,7 +549,10 @@ class DashboardModule {
      */
     async exportReport() {
         try {
-            const response = await CSRFManager.get('/admin/dashboard/export', {
+            const isAdminPath = window.location.pathname.includes('/admin/');
+            const endpoint = isAdminPath ? '/admin/dashboard/export' : '/dashboard/export';
+            
+            const response = await CSRFManager.get(endpoint, {
                 responseType: 'blob'
             });
 

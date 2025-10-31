@@ -61,14 +61,14 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::requestPasswordResetLinkView(function () {
             return view('auth.forgot-password',[
                 'title' => 'Enter email to reset your password',
-                'settings' => Settings::first(),
+                'settings' => Settings::first() ?: (object)['site_name' => 'Trading Platform', 'favicon' => null],
             ]);
         });
 
         Fortify::resetPasswordView(function ($request) {
             return view('auth.reset-password', [
                 'title' => 'Reset Password',
-                'settings' => Settings::first(),
+                'settings' => Settings::first() ?: (object)['site_name' => 'Trading Platform', 'favicon' => null],
                 'request' => $request,
             ]);
         });
@@ -76,21 +76,21 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::twoFactorChallengeView(function () {
             return view('auth.two-factor-challenge', [
                 'title' => 'Two Factor Authentication',
-                'settings' => Settings::first(),
+                'settings' => Settings::first() ?: (object)['site_name' => 'Trading Platform', 'favicon' => null],
             ]);
         });
 
         Fortify::confirmPasswordView(function () {
             return view('auth.confirm-password', [
                 'title' => 'Password Confirmation',
-                'settings' => Settings::first(),
+                'settings' => Settings::first() ?: (object)['site_name' => 'Trading Platform', 'favicon' => null],
             ]);
         });
 
         Fortify::loginView(function () {
             return view('auth.login', [
                 'title' => 'Giriş Yap',
-                'settings' => Settings::first(),
+                'settings' => Settings::first() ?: (object)['site_name' => 'Trading Platform', 'favicon' => null],
             ]);
         });
 
@@ -104,7 +104,7 @@ class FortifyServiceProvider extends ServiceProvider
             
             return view('auth.register', [
                 'title' => 'Kayıt Ol',
-                'settings' => Settings::first(),
+                'settings' => Settings::first() ?: (object)['site_name' => 'Trading Platform', 'favicon' => null],
                 'currencies' => $currencies ?? [],
             ]);
         });

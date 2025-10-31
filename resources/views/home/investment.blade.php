@@ -478,7 +478,7 @@
     </div>
 </section>
 
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- jQuery no longer needed - Tailwind CSS provides all styling -->
 <script type="text/javascript">
 $(document).ready(function(){
 

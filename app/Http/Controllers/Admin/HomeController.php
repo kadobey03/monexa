@@ -79,6 +79,207 @@ class HomeController extends Controller
             'unverifiedusers' => $unverifiedusers,
         ]);
     }
+
+    /**
+     * Get dashboard data for AJAX requests
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getDashboardData(Request $request)
+    {
+        try {
+            $range = $request->input('range', '30days');
+            
+            // Calculate date range
+            $dateRanges = [
+                '7days' => now()->subDays(7),
+                '30days' => now()->subDays(30),
+                '90days' => now()->subDays(90),
+                '1year' => now()->subYear(),
+            ];
+            
+            $startDate = $dateRanges[$range] ?? now()->subDays(30);
+            
+            // Get basic statistics
+            $stats = [
+                'users' => [
+                    'value' => User::count(),
+                    'change' => $this->calculatePercentageChange(
+                        User::where('created_at', '>=', $startDate)->count(),
+                        User::where('created_at', '>=', $startDate->copy()->subDays($startDate->diffInDays(now())))->count()
+                    )
+                ],
+                'revenue' => [
+                    'value' => DB::table('deposits')->where('status', 'Processed')->sum('amount'),
+                    'change' => $this->calculatePercentageChange(
+                        DB::table('deposits')->where('status', 'Processed')->where('created_at', '>=', $startDate)->sum('amount'),
+                        DB::table('deposits')->where('status', 'Processed')
+                            ->whereBetween('created_at', [$startDate->copy()->subDays($startDate->diffInDays(now())), $startDate])
+                            ->sum('amount')
+                    )
+                ],
+                'leads' => [
+                    'value' => User::whereNull('cstatus')->orWhere('cstatus', '!=', 'Customer')->count(),
+                    'change' => $this->calculatePercentageChange(
+                        User::whereNull('cstatus')->where('created_at', '>=', $startDate)->count(),
+                        User::whereNull('cstatus')
+                            ->whereBetween('created_at', [$startDate->copy()->subDays($startDate->diffInDays(now())), $startDate])
+                            ->count()
+                    )
+                ]
+            ];
+
+            // Get chart data
+            $charts = [
+                'revenue' => $this->getRevenueChartData($startDate),
+                'users' => $this->getUsersChartData(),
+                'activity' => $this->getActivityChartData($startDate)
+            ];
+
+            // Get recent activities
+            $recentActivities = $this->getRecentActivities();
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'stats' => $stats,
+                    'charts' => $charts,
+                    'recentActivities' => $recentActivities,
+                    'notifications' => []
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Dashboard data error: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Dashboard verileri yüklenirken hata oluştu'
+            ], 500);
+        }
+    }
+
+    /**
+     * Calculate percentage change between two values
+     */
+    private function calculatePercentageChange($current, $previous)
+    {
+        if ($previous == 0) {
+            return $current > 0 ? 100 : 0;
+        }
+        
+        return round((($current - $previous) / $previous) * 100, 2);
+    }
+
+    /**
+     * Get revenue chart data
+     */
+    private function getRevenueChartData($startDate)
+    {
+        $deposits = DB::table('deposits')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(amount) as total'))
+            ->where('status', 'Processed')
+            ->where('created_at', '>=', $startDate)
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        return [
+            'labels' => $deposits->pluck('date')->map(function($date) {
+                return \Carbon\Carbon::parse($date)->format('d.m');
+            })->toArray(),
+            'values' => $deposits->pluck('total')->toArray()
+        ];
+    }
+
+    /**
+     * Get users chart data (pie chart)
+     */
+    private function getUsersChartData()
+    {
+        return [
+            'labels' => ['Aktif', 'Engellenmiş', 'Doğrulanmamış', 'Müşteri'],
+            'values' => [
+                User::where('status', 'active')->count(),
+                User::where('status', 'blocked')->count(),
+                User::where('account_verify', '!=', 'yes')->count(),
+                User::where('cstatus', 'Customer')->count()
+            ]
+        ];
+    }
+
+    /**
+     * Get activity chart data
+     */
+    private function getActivityChartData($startDate)
+    {
+        $activities = collect();
+        
+        // Combine different activities
+        $userRegistrations = User::select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        $deposits = DB::table('deposits')
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
+            ->where('created_at', '>=', $startDate)
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        // Merge and process data
+        $dates = collect();
+        for ($date = $startDate->copy(); $date <= now(); $date->addDay()) {
+            $dateStr = $date->format('Y-m-d');
+            $userCount = $userRegistrations->where('date', $dateStr)->first()->count ?? 0;
+            $depositCount = $deposits->where('date', $dateStr)->first()->count ?? 0;
+            
+            $dates->push([
+                'date' => $date->format('d.m'),
+                'count' => $userCount + $depositCount
+            ]);
+        }
+
+        return [
+            'labels' => $dates->pluck('date')->toArray(),
+            'values' => $dates->pluck('count')->toArray()
+        ];
+    }
+
+    /**
+     * Get recent activities
+     */
+    private function getRecentActivities()
+    {
+        $activities = collect();
+
+        // Recent user registrations
+        $recentUsers = User::latest()->take(5)->get()->map(function($user) {
+            return [
+                'message' => $user->name . ' sisteme kayıt oldu',
+                'created_at' => $user->created_at->toISOString(),
+                'importance' => 'normal'
+            ];
+        });
+
+        // Recent deposits
+        $recentDeposits = Deposit::with('duser')->latest()->take(5)->get()->map(function($deposit) {
+            return [
+                'message' => ($deposit->duser->name ?? 'Kullanıcı') . ' ' . number_format($deposit->amount, 2) . ' TL yatırdı',
+                'created_at' => $deposit->created_at->toISOString(),
+                'importance' => 'high'
+            ];
+        });
+
+        return $activities->merge($recentUsers)->merge($recentDeposits)
+            ->sortByDesc('created_at')
+            ->take(10)
+            ->values()
+            ->toArray();
+    }
     //Plans route
     public function plans()
     {

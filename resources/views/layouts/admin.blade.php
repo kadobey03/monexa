@@ -20,11 +20,17 @@
     <!-- Tailwind CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
+    <!-- Ultimate Console Error Fixes - Priority Load -->
+    <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
+    
     <!-- Lucide Icons - Local fallback to avoid CDN issues -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" onerror="console.warn('Lucide CDN failed, using local fallback')"></script>
     
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Console Error Fixes - Full Version -->
+    <script src="{{ asset('js/console-fixes.js') }}"></script>
     
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

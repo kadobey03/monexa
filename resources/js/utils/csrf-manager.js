@@ -188,6 +188,40 @@ class ModernCSRFManager {
     }
 
     /**
+     * Configure Axios with CSRF token
+     */
+    configureAxios(axiosInstance) {
+        if (!axiosInstance) {
+            axiosInstance = window.axios;
+        }
+        
+        if (!axiosInstance) {
+            console.warn('Axios not found, skipping CSRF configuration');
+            return;
+        }
+        
+        // Set CSRF token header
+        axiosInstance.defaults.headers.common['X-CSRF-TOKEN'] = this.getToken();
+        axiosInstance.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+        
+        // Add response interceptor to handle token refresh
+        axiosInstance.interceptors.response.use(
+            response => response,
+            async error => {
+                if (error.response?.status === 419) {
+                    await this.refreshToken();
+                    // Update the failed request with new token
+                    error.config.headers['X-CSRF-TOKEN'] = this.getToken();
+                    return axiosInstance.request(error.config);
+                }
+                return Promise.reject(error);
+            }
+        );
+        
+        console.log('✅ Axios configured with CSRF protection');
+    }
+
+    /**
      * Setup global defaults for axios and jQuery
      */
     setupGlobalDefaults() {

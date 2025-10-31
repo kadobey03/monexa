@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\Settings;
 
 class JetstreamServiceProvider extends ServiceProvider
@@ -35,8 +36,7 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::deleteUsersUsing(DeleteUser::class);
 
         Fortify::authenticateUsing(function (Request $request) {
-             $user = User::where('email', $request->email) ->orWhere('username', $request->email)->first();
-            // $user = User::where('email', $request->email)->first();
+            $user = User::where('email', $request->email)->first();
             
             if (
                 $user &&
@@ -79,13 +79,18 @@ class JetstreamServiceProvider extends ServiceProvider
                     $os = 'iOS';
                 }
                 
-                DB::table('activities')->insert([
-                    'user' => $user->id,
-                    'ip_address' => $request->ip(),
-                    'device' => $device,
-                    'browser' => $browser,
-                    'os' => $os,
-                ]);
+                try {
+                    DB::table('activities')->insert([
+                        'user' => $user->id,
+                        'ip_address' => $request->ip(),
+                        'device' => $device,
+                        'browser' => $browser,
+                        'os' => $os,
+                    ]);
+                } catch (\Exception $e) {
+                    // Activity logging failed, but continue authentication
+                    \Log::debug('Activity logging failed: ' . $e->getMessage());
+                }
                 return $user;
             }
         });

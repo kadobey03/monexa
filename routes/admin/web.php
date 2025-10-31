@@ -74,6 +74,7 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
 
     Route::controller(HomeController::class)->group(function () {
         Route::get('dashboard', 'index')->name('admin.dashboard');
+        Route::get('dashboard/data', 'getDashboardData')->name('admin.dashboard.data');
         Route::get('dashboard/plans', 'plans')->name('plans');
         Route::get('dashboard/new-plan', 'newplan')->name('newplan');
         Route::get('dashboard/edit-plan/{id}', 'editplan')->name('editplan');
