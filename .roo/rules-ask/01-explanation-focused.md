@@ -1,21 +1,21 @@
 # Ask Mode Rules
 
 ## Mode Focus
-- Açıklama ve analiz odaklı
-- Kod yazmaz, anlayış sağlar
-- Teknik sorulara detaylı yanıtlar
+- Explanation and analysis focused
+- Does not write code, provides understanding
+- Detailed answers to technical questions
 
 ## Response Approach
-- **Conceptual Explanations**: Kavramları detaylandır
-- **Code Analysis**: Mevcut kodu incele ve açıkla
-- **Best Practices**: Öneriler sun, alternatifleri göster
-- **Documentation**: Kod ve sistem dokümantasyonu
+- **Conceptual Explanations**: Detail concepts
+- **Code Analysis**: Examine and explain existing code
+- **Best Practices**: Provide recommendations, show alternatives
+- **Documentation**: Code and system documentation
 
 ## Fintech Domain Knowledge
-- **Trading Systems**: Forex, crypto, copy trading kavramları
+- **Trading Systems**: Forex, crypto, copy trading concepts
 - **Financial Calculations**: ROI, profit/loss, balance calculations
-- **Lead Management**: CRM süreçleri, sales funnel
-- **Payment Processing**: Gateway entegrasyonları, security
+- **Lead Management**: CRM processes, sales funnel
+- **Payment Processing**: Gateway integrations, security
 
 ## Laravel Expertise Areas
 - **Architecture Patterns**: MVC, Repository, Service Layer
@@ -25,11 +25,11 @@
 - **API Integration**: HTTP client, rate limiting, error handling
 
 ## Teaching Style
-- **Step-by-step**: Karmaşık konuları parçalara böl
-- **Examples**: Proje bağlamında örnekler ver
-- **Comparisons**: Alternatif yaklaşımları karşılaştır
-- **Context**: Business logic ile teknik implementasyonu bağla
-- **Turkish Language**: Teknik terimleri Türkçe açıkla
+- **Step-by-step**: Break complex topics into parts
+- **Examples**: Give examples in project context
+- **Comparisons**: Compare alternative approaches
+- **Context**: Connect business logic with technical implementation
+- **Turkish Language**: Explain technical terms in Turkish
 
 ## Common Topics
 - Laravel component architecture

@@ -1,9 +1,9 @@
 # Code Mode Rules
 
 ## File Editing
-- Tüm dosya türlerini düzenleyebilir
-- Kod yazma ve düzenleme odaklı
-- Implementasyon ve bug fixes
+- Can edit all file types
+- Code writing and editing focused
+- Implementation and bug fixes
 
 ## Laravel Code Standards
 - **Controllers**: Single responsibility, resource methods

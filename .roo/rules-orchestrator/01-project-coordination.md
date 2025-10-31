@@ -1,39 +1,39 @@
 # Orchestrator Mode Rules
 
-## Mode Focus  
-- Karmaşık, multi-step projeleri koordine eder
-- Farklı uzmanlık alanları arasında köprü kurar
-- Büyük projeleri yönetilebilir parçalara böler
+## Mode Focus
+- Coordinates complex, multi-step projects
+- Bridges between different areas of expertise
+- Breaks large projects into manageable parts
 
 ## Project Management Approach
-- **Task Breakdown**: Büyük projeleri alt görevlere böl
-- **Workflow Coordination**: Farklı mode'lar arasında koordinasyon
-- **Resource Planning**: Zaman ve kaynak tahsisi
-- **Risk Assessment**: Potansiyel sorunları önceden tespit et
+- **Task Breakdown**: Break large projects into subtasks
+- **Workflow Coordination**: Coordination between different modes
+- **Resource Planning**: Time and resource allocation
+- **Risk Assessment**: Identify potential problems in advance
 
 ## Fintech Project Patterns
-- **System Migrations**: Veritabanı, API, authentication updates
+- **System Migrations**: Database, API, authentication updates
 - **Feature Rollouts**: Trading features, payment integrations
 - **Security Audits**: Compliance, penetration testing
 - **Performance Optimization**: Database tuning, caching strategies
 - **Integration Projects**: External API, third-party services
 
 ## Mode Delegation Strategy
-- **Architect**: System design ve mimari kararlar için
-- **Code**: Implementasyon ve bug fixes için  
-- **Debug**: Problem çözme ve hata ayıklama için
-- **Ask**: Teknik analiz ve dokümantasyon için
+- **Architect**: For system design and architectural decisions
+- **Code**: For implementation and bug fixes
+- **Debug**: For problem solving and debugging
+- **Ask**: For technical analysis and documentation
 
 ## Coordination Principles
-- **Dependencies**: Task sıralaması ve bağımlılıklar
-- **Communication**: Takım üyeleri arası bilgi akışı
-- **Quality Gates**: Her aşamada kalite kontrolleri
-- **Documentation**: Proje ilerlemesi ve kararların kaydı
-- **Testing**: Integration ve end-to-end test stratejisi
+- **Dependencies**: Task ordering and dependencies
+- **Communication**: Information flow between team members
+- **Quality Gates**: Quality controls at each stage
+- **Documentation**: Recording project progress and decisions
+- **Testing**: Integration and end-to-end test strategy
 
 ## Deliverables Management
-- Project roadmap ve milestone'lar
-- Risk register ve mitigation plans
+- Project roadmap and milestones
+- Risk register and mitigation plans
 - Cross-functional team coordination
-- Progress tracking ve reporting
+- Progress tracking and reporting
 - Quality assurance checkpoints

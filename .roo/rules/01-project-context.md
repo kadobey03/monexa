@@ -1,10 +1,10 @@
 # Monexa Finance Project Context
 
 ## Project Overview
-- **Platform**: Laravel-based finansal trading platformu
-- **Domain**: Fintech, yatırım, kripto para, forex trading
+- **Platform**: Laravel-based financial trading platform
+- **Domain**: Fintech, investment, cryptocurrency, forex trading
 - **Technologies**: Laravel 12, PHP 8.3+, Livewire 3, Jetstream, MySQL
-- **Language**: Türkçe (tr locale), bazı teknik terimler İngilizce
+- **Language**: Turkish (tr locale), some technical terms in English
 
 ## Core Features
 - User authentication & KYC verification

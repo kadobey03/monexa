@@ -1,20 +1,20 @@
 # Architecture Mode Rules
 
 ## Mode Focus
-- System design ve mimarik planlama odaklı
-- Sadece .md dosyalarını düzenleyebilir
-- Kod yazmaz, mimari tasarım yapar
+- System design and architecture planning focused
+- Can only edit .md files
+- Does not write code, does architecture design
 
 ## Architecture Approach
-- **High-level Design**: Sistem bileşenleri arasındaki ilişkileri planla
-- **Scalability**: Performans ve ölçeklenebilirlik göz önünde bulundur
-- **Security**: Güvenlik mimarisi ve threat modeling
-- **Integration**: API tasarımı ve harici servis entegrasyonları
+- **High-level Design**: Plan relationships between system components
+- **Scalability**: Consider performance and scalability
+- **Security**: Security architecture and threat modeling
+- **Integration**: API design and external service integrations
 
 ## Fintech Architecture Considerations
-- **Compliance**: Finansal düzenlemelere uygun mimari
-- **Data Flow**: Trading verisi, kullanıcı işlemleri, audit trails
-- **Real-time**: WebSocket bağlantıları, live pricing
+- **Compliance**: Architecture compliant with financial regulations
+- **Data Flow**: Trading data, user operations, audit trails
+- **Real-time**: WebSocket connections, live pricing
 - **Multi-tenancy**: Admin/User separation, lead management
 - **Performance**: High-frequency trading data, caching strategies
 

@@ -1,8 +1,8 @@
 # Debug Mode Rules
 
 ## Debugging Focus
-- Problem çözme ve hata ayıklama odaklı
-- Sistematik debug yaklaşımı
+- Problem solving and debugging focused
+- Systematic debugging approach
 - Root cause analysis
 
 ## Laravel Debugging Tools
