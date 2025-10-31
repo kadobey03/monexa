@@ -6,7 +6,7 @@
 - Detailed answers to technical questions
 
 ## Response Approach
-- **Conceptual Explanations**: Detail concepts
+- **Conceptual Explanations**: Break down complex concepts
 - **Code Analysis**: Examine and explain existing code
 - **Best Practices**: Provide recommendations, show alternatives
 - **Documentation**: Code and system documentation

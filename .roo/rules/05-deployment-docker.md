@@ -13,28 +13,6 @@
 - **Never run**: Direct `php artisan` commands on host system
 - **Always use**: Container-based execution for consistency
 
-## Container Command Examples
-```bash
-# Migration commands
-docker-compose exec app-monexa php artisan migrate
-docker-compose exec app-monexa php artisan migrate:fresh --seed
-
-# Cache commands
-docker-compose exec app-monexa php artisan cache:clear
-docker-compose exec app-monexa php artisan config:cache
-docker-compose exec app-monexa php artisan route:cache
-
-# Queue commands
-docker-compose exec app-monexa php artisan queue:work
-docker-compose exec app-monexa php artisan queue:restart
-
-# Storage commands
-docker-compose exec app-monexa php artisan storage:link
-
-# Custom commands
-docker-compose exec app-monexa php artisan [custom:command]
-```
-
 ## Development Workflow
 - **Container Start**: `docker-compose up -d`
 - **Container Stop**: `docker-compose down`
