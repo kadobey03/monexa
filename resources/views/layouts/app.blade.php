@@ -113,8 +113,8 @@
             }
         </script>
         
-        <!-- Font Awesome Icons - Local -->
-        <link rel="stylesheet" href="{{ asset('vendor/fontawesome/all.min.css') }}">
+        <!-- FontAwesome REMOVED - Using unified Lucide icons instead -->
+        <!-- Unified Icon Service loaded via Vite assets -->
         
         <!-- Ultimate Console Error Fixes - Priority Load -->
         <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>

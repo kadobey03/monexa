@@ -1,5 +1,5 @@
 
-@extends('layouts.base')
+@extends('layouts.master', ['layoutType' => 'base'])
 @inject('content', 'App\Http\Controllers\FrontController')
 @section('title', 'Hakkımızda')
 

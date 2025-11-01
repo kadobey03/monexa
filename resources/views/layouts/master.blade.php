@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" 
+<html lang="{{ app()->getLocale() }}"
       class="h-full"
       data-layout="{{ $layoutType ?? 'default' }}">
 
@@ -11,8 +11,8 @@
     <title>{{ $title ?? (isset($settings) ? $settings->site_name : 'Monexa') }} | {{ $pageTitle ?? 'Professional Trading' }}</title>
     
     <!-- Favicon -->
-    <link rel="icon" 
-          href="{{ (isset($settings) && $settings->favicon) ? asset('storage/' . $settings->favicon) : asset('favicon.ico') }}" 
+    <link rel="icon"
+          href="{{ (isset($settings) && $settings->favicon) ? asset('storage/' . $settings->favicon) : asset('favicon.ico') }}"
           type="image/png" />
     
     <!-- Preconnect for Performance -->
@@ -21,12 +21,28 @@
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
-    <!-- Lucide Icons (Modern replacement for Font Awesome) -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- SEO Meta Tags & Structured Data -->
+    @include('components.seo-meta', [
+        'pageType' => $pageType ?? 'homepage',
+        'additionalData' => $additionalData ?? []
+    ])
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Ultimate Console Error Fixes -->
+    <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
+    
+    <!-- Console Error Fixes -->
+    <script src="{{ asset('js/console-fixes.js') }}"></script>
     
     @stack('head-scripts')
     @stack('head-styles')
@@ -34,151 +50,406 @@
 
 <body class="h-full antialiased dark:bg-gray-900">
     
-    <!-- Theme Detection & Management -->
+    <!-- Enhanced Theme Detection & Management -->
     <script>
-        // Dark mode detection and storage
-        const getPreferredTheme = () => {
-            if (localStorage.getItem('theme')) {
-                return localStorage.getItem('theme');
-            }
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        };
-        
-        const setTheme = (theme) => {
-            localStorage.setItem('theme', theme);
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-        };
-        
-        // Layout utilities
-        const LayoutManager = {
-            // State
-            sidebarOpen: false,
-            sidebarCollapsed: localStorage.getItem('sidebar-collapsed') === 'true',
-            mobileMenuOpen: false,
-            notificationsOpen: false,
-            isLoading: true,
+        // Enhanced theme management with better persistence
+        const ThemeManager = {
+            getPreferredTheme() {
+                if (localStorage.getItem('theme')) {
+                    return localStorage.getItem('theme');
+                }
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            },
             
-            // Layout type
+            setTheme(theme) {
+                localStorage.setItem('theme', theme);
+                document.documentElement.classList.toggle('dark', theme === 'dark');
+                
+                // Update theme-specific elements
+                this.updateThemeElements(theme);
+                
+                // Dispatch custom event for components
+                document.dispatchEvent(new CustomEvent('theme-changed', {
+                    detail: { theme }
+                }));
+            },
+            
+            updateThemeElements(theme) {
+                // Update icons
+                const sunIcons = document.querySelectorAll('.sun-icon');
+                const moonIcons = document.querySelectorAll('.moon-icon');
+                
+                sunIcons.forEach(icon => {
+                    icon.style.display = theme === 'dark' ? 'block' : 'none';
+                });
+                
+                moonIcons.forEach(icon => {
+                    icon.style.display = theme === 'dark' ? 'none' : 'block';
+                });
+            },
+            
+            toggleTheme() {
+                const currentTheme = this.getPreferredTheme();
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                this.setTheme(newTheme);
+            }
+        };
+        
+        // Enhanced Layout Manager
+        const LayoutManager = {
+            // State management
+            state: {
+                sidebarOpen: false,
+                sidebarCollapsed: localStorage.getItem('sidebar-collapsed') === 'true',
+                mobileMenuOpen: false,
+                notificationsOpen: false,
+                profileOpen: false,
+                quickActionsOpen: false,
+                isLoading: true,
+                openMenus: {}
+            },
+            
+            // Configuration based on layout type
+            config: {
+                admin: {
+                    sidebar: true,
+                    header: true,
+                    mobileNav: false,
+                    footer: false,
+                    theme: 'admin'
+                },
+                dashboard: {
+                    sidebar: true,
+                    header: true,
+                    mobileNav: true,
+                    footer: false,
+                    theme: 'dark'
+                },
+                app: {
+                    sidebar: false,
+                    header: false,
+                    mobileNav: false,
+                    footer: true,
+                    theme: 'light'
+                },
+                guest: {
+                    sidebar: false,
+                    header: true,
+                    mobileNav: false,
+                    footer: true,
+                    theme: 'light'
+                },
+                base: {
+                    sidebar: false,
+                    header: true,
+                    mobileNav: false,
+                    footer: true,
+                    theme: 'dark'
+                },
+                default: {
+                    sidebar: false,
+                    header: false,
+                    mobileNav: false,
+                    footer: true,
+                    theme: 'light'
+                }
+            },
+            
+            // Get current layout type
             get layout() {
                 return document.documentElement.getAttribute('data-layout') || 'default';
             },
             
-            // Theme utilities
-            get isDarkMode() {
-                return localStorage.getItem('theme') === 'dark';
+            // Get current layout configuration
+            get config() {
+                return this.config[this.layout] || this.config.default;
             },
             
+            // Get responsive breakpoints
             get isMobile() {
                 return window.innerWidth < 768;
             },
             
-            // Theme toggle
+            get isTablet() {
+                return window.innerWidth >= 768 && window.innerWidth < 1024;
+            },
+            
+            // Theme management
             toggleTheme() {
-                const currentTheme = localStorage.getItem('theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                setTheme(newTheme);
-                
-                // Dispatch custom event for components that need to listen
-                document.dispatchEvent(new CustomEvent('theme-changed', { 
-                    detail: { theme: newTheme } 
-                }));
+                ThemeManager.toggleTheme();
             },
             
             // Sidebar management
             toggleSidebar() {
-                if (this.layout === 'admin' || this.layout === 'dashboard') {
-                    this.sidebarOpen = !this.sidebarOpen;
-                    document.dispatchEvent(new CustomEvent('sidebar-toggle', {
-                        detail: { open: this.sidebarOpen }
-                    }));
-                }
+                if (!this.config.sidebar) return;
+                
+                this.state.sidebarOpen = !this.state.sidebarOpen;
+                this.updateSidebarState();
+                
+                document.dispatchEvent(new CustomEvent('sidebar-toggle', {
+                    detail: { open: this.state.sidebarOpen }
+                }));
             },
             
             toggleSidebarCollapse() {
-                if (this.layout === 'admin') {
-                    this.sidebarCollapsed = !this.sidebarCollapsed;
-                    localStorage.setItem('sidebar-collapsed', this.sidebarCollapsed.toString());
+                if (!this.config.sidebar || this.layout !== 'admin') return;
+                
+                this.state.sidebarCollapsed = !this.state.sidebarCollapsed;
+                localStorage.setItem('sidebar-collapsed', this.state.sidebarCollapsed.toString());
+                this.updateSidebarCollapse();
+            },
+            
+            // Mobile menu management
+            toggleMobileMenu() {
+                this.state.mobileMenuOpen = !this.state.mobileMenuOpen;
+                this.updateMobileMenuState();
+            },
+            
+            // Notifications management
+            toggleNotifications() {
+                this.state.notificationsOpen = !this.state.notificationsOpen;
+                this.updateDropdownState('notifications');
+            },
+            
+            // Profile dropdown management
+            toggleProfileDropdown() {
+                this.state.profileOpen = !this.state.profileOpen;
+                this.updateDropdownState('profile');
+            },
+            
+            // Quick actions management
+            toggleQuickActions() {
+                this.state.quickActionsOpen = !this.state.quickActionsOpen;
+                this.updateDropdownState('quick-actions');
+            },
+            
+            // Submenu management
+            toggleSubMenu(menuId) {
+                if (this.state.sidebarCollapsed) return;
+                
+                const isOpen = this.state.openMenus[menuId] || false;
+                this.state.openMenus[menuId] = !isOpen;
+                this.updateSubMenu(menuId, !isOpen);
+            },
+            
+            // Update functions
+            updateSidebarState() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                const menuIcon = document.getElementById('menu-icon');
+                const closeIcon = document.getElementById('close-icon');
+                
+                if (sidebar) {
+                    if (this.state.sidebarOpen) {
+                        sidebar.classList.remove('-translate-x-full');
+                        sidebar.classList.add('translate-x-0');
+                        if (overlay) overlay.classList.remove('hidden');
+                        if (menuIcon) menuIcon.classList.add('hidden');
+                        if (closeIcon) closeIcon.classList.remove('hidden');
+                    } else {
+                        sidebar.classList.add('-translate-x-full');
+                        sidebar.classList.remove('translate-x-0');
+                        if (overlay) overlay.classList.add('hidden');
+                        if (menuIcon) menuIcon.classList.remove('hidden');
+                        if (closeIcon) closeIcon.classList.add('hidden');
+                    }
                 }
             },
             
-            // Mobile menu
-            toggleMobileMenu() {
-                this.mobileMenuOpen = !this.mobileMenuOpen;
-                document.dispatchEvent(new CustomEvent('mobile-menu-toggle', {
-                    detail: { open: this.mobileMenuOpen }
-                }));
+            updateSidebarCollapse() {
+                const sidebar = document.getElementById('sidebar');
+                const mainContent = document.getElementById('main-content') || document.getElementById('mainContent');
+                
+                if (sidebar && mainContent) {
+                    if (this.state.sidebarCollapsed) {
+                        sidebar.classList.remove('w-64');
+                        sidebar.classList.add('w-20');
+                        mainContent.classList.remove('lg:ml-64');
+                        mainContent.classList.add('lg:ml-20');
+                    } else {
+                        sidebar.classList.remove('w-20');
+                        sidebar.classList.add('w-64');
+                        mainContent.classList.remove('lg:ml-20');
+                        mainContent.classList.add('lg:ml-64');
+                    }
+                    
+                    this.updateMenuTextVisibility(!this.state.sidebarCollapsed);
+                }
             },
             
-            // Notifications
-            toggleNotifications() {
-                this.notificationsOpen = !this.notificationsOpen;
-                document.dispatchEvent(new CustomEvent('notifications-toggle', {
-                    detail: { open: this.notificationsOpen }
-                }));
+            updateMobileMenuState() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu) {
+                    mobileMenu.style.display = this.state.mobileMenuOpen ? 'block' : 'none';
+                }
+            },
+            
+            updateDropdownState(type) {
+                const dropdown = document.getElementById(`${type}-dropdown`);
+                const menu = document.getElementById(`${type}-menu`);
+                
+                if (dropdown && menu) {
+                    if (this.state[`${type}Open`]) {
+                        menu.classList.remove('hidden', 'opacity-0');
+                        menu.classList.add('opacity-100');
+                        dropdown.classList.add('active');
+                    } else {
+                        menu.classList.add('hidden', 'opacity-0');
+                        menu.classList.remove('opacity-100');
+                        dropdown.classList.remove('active');
+                    }
+                }
+            },
+            
+            updateSubMenu(menuId, show) {
+                const content = document.getElementById(`${menuId}Content`);
+                const chevron = document.getElementById(`${menuId}Chevron`);
+                
+                if (content) {
+                    content.style.display = show ? 'block' : 'none';
+                }
+                
+                if (chevron) {
+                    chevron.classList.toggle('rotate-180', show);
+                }
+            },
+            
+            updateMenuTextVisibility(show) {
+                const menuSpans = document.querySelectorAll('#sidebarNav span.font-medium');
+                const sectionTitles = document.querySelectorAll('#sidebarNav span.text-xs.font-semibold');
+                const chevrons = document.querySelectorAll('#sidebarNav i[id$="Chevron"]');
+                
+                menuSpans.forEach(span => {
+                    span.style.display = show ? 'block' : 'none';
+                });
+                
+                sectionTitles.forEach(title => {
+                    title.style.display = show ? 'block' : 'none';
+                });
+                
+                chevrons.forEach(chevron => {
+                    chevron.style.display = show ? 'block' : 'none';
+                });
             },
             
             // Initialize layout
             init() {
                 // Initialize theme
-                setTheme(getPreferredTheme());
+                ThemeManager.setTheme(ThemeManager.getPreferredTheme());
                 
-                // Initialize icons
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
+                // Apply initial layout states
+                if (this.config.sidebar && this.state.sidebarCollapsed) {
+                    this.updateSidebarCollapse();
                 }
                 
-                // Hide loading screen after delay
+                // Initialize icons
+                // Icons initialized via unified Icon Service
+                
+                // Hide loading screen
                 setTimeout(() => {
-                    this.isLoading = false;
+                    this.state.isLoading = false;
                     document.dispatchEvent(new CustomEvent('loading-complete'));
-                }, 500);
-                
-                // Listen for theme changes
-                document.addEventListener('theme-changed', (e) => {
-                    if (typeof lucide !== 'undefined') {
-                        setTimeout(() => lucide.createIcons(), 100);
-                    }
-                });
-                
-                // Global click listeners for outside clicks
-                document.addEventListener('click', (e) => {
-                    // Close dropdowns when clicking outside
-                    if (this.notificationsOpen && !e.target.closest('.notifications-dropdown')) {
-                        this.toggleNotifications();
+                    
+                    const loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) {
+                        loadingScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 500);
                     }
                     
-                    if (this.mobileMenuOpen && !e.target.closest('.mobile-menu')) {
-                        this.toggleMobileMenu();
+                    const mainLayout = document.getElementById('main-layout');
+                    if (mainLayout) {
+                        mainLayout.style.opacity = '1';
                     }
+                }, 500);
+                
+                // Event listeners
+                this.setupEventListeners();
+            },
+            
+            setupEventListeners() {
+                // Theme changes
+                document.addEventListener('theme-changed', (e) => {
+                    // Icons initialized via unified Icon Service
+                });
+                
+                // Outside click listeners
+                document.addEventListener('click', (e) => {
+                    this.handleOutsideClick(e);
+                });
+                
+                // Window resize
+                window.addEventListener('resize', () => {
+                    this.handleResize();
+                });
+                
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    this.handleKeyboardShortcuts(e);
                 });
             },
             
-            // Body class management
-            updateBodyClasses() {
-                const body = document.body;
-                const classes = ['h-full', 'antialiased', 'bg-gray-50', 'dark:bg-gray-900'];
+            handleOutsideClick(e) {
+                // Close dropdowns when clicking outside
+                Object.keys(this.state).forEach(key => {
+                    if (key.endsWith('Open') && this.state[key]) {
+                        const dropdown = document.getElementById(`${key.replace('Open', '')}-dropdown`);
+                        if (dropdown && !dropdown.contains(e.target)) {
+                            this.state[key] = false;
+                            this.updateDropdownState(key.replace('Open', ''));
+                        }
+                    }
+                });
                 
-                if (this.layout === 'admin') {
-                    classes.push('min-h-screen', 'flex', 'overflow-hidden');
-                } else if (this.layout === 'dashboard') {
-                    classes.push('dark', 'text-gray-100', 'bg-gray-900', 'js-hidden');
-                } else if (this.layout === 'guest') {
-                    classes.push('bg-white', 'dark:bg-gray-900');
+                // Close sidebar on mobile when clicking overlay
+                if (this.state.sidebarOpen && this.isMobile) {
+                    const overlay = document.getElementById('sidebar-overlay');
+                    if (overlay && e.target === overlay) {
+                        this.state.sidebarOpen = false;
+                        this.updateSidebarState();
+                    }
+                }
+            },
+            
+            handleResize() {
+                // Reset mobile states on desktop
+                if (!this.isMobile) {
+                    if (this.state.mobileMenuOpen) {
+                        this.state.mobileMenuOpen = false;
+                        this.updateMobileMenuState();
+                    }
+                }
+            },
+            
+            handleKeyboardShortcuts(e) {
+                // ESC key to close modals/dropdowns
+                if (e.key === 'Escape') {
+                    Object.keys(this.state).forEach(key => {
+                        if (key.endsWith('Open') && this.state[key]) {
+                            this.state[key] = false;
+                            const type = key.replace('Open', '');
+                            this.updateDropdownState(type);
+                        }
+                    });
                 }
                 
-                body.className = classes.join(' ');
+                // Ctrl/Cmd + D for theme toggle
+                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                    e.preventDefault();
+                    this.toggleTheme();
+                }
             }
         };
         
         // Initialize on DOM load
         document.addEventListener('DOMContentLoaded', () => {
             LayoutManager.init();
-            LayoutManager.updateBodyClasses();
         });
     </script>
 
-    <!-- Loading Screen -->
-    <div id="loading-screen" 
+    <!-- Enhanced Loading Screen -->
+    <div id="loading-screen"
          class="fixed inset-0 bg-white dark:bg-gray-900 z-50 flex items-center justify-center transition-opacity duration-500"
          style="opacity: 0;">
         <div class="text-center">
@@ -187,30 +458,17 @@
         </div>
     </div>
 
-    <!-- Loading completion handler -->
-    <script>
-        document.addEventListener('loading-complete', () => {
-            const loadingScreen = document.getElementById('loading-screen');
-            if (loadingScreen) {
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                }, 500);
-            }
-        });
-    </script>
-
     <!-- Main Layout Container -->
-    <div id="main-layout" 
+    <div id="main-layout"
          class="min-h-screen transition-opacity duration-500"
          style="opacity: 0;"
-         @if(($layoutType ?? 'default') === 'admin') data-admin-layout="true" @endif>
+         data-layout-type="{{ $layoutType ?? 'default' }}">
         
         <!-- Admin Layout -->
         @if(($layoutType ?? 'default') === 'admin')
             @include('layouts.components.admin-sidebar')
             @include('layouts.components.admin-header')
-            <main id="admin-main" 
+            <main id="admin-main"
                   class="flex-1 flex flex-col overflow-hidden transition-all duration-300"
                   data-sidebar-collapsed="false">
                 @yield('content')
@@ -223,16 +481,72 @@
             @include('layouts.components.dashboard-sidebar')
             <div class="flex min-h-screen bg-gray-900">
                 @yield('content')
-                <!-- Mobile Bottom Navigation -->
                 @include('layouts.components.mobile-nav')
             </div>
         @endif
         
-        <!-- Guest Layout -->
+        <!-- App Layout (Enhanced) -->
+        @if(($layoutType ?? 'default') === 'app')
+            <div class="min-h-screen flex flex-col">
+                <!-- App Header (Optional) -->
+                @isset($showHeader)
+                    @include('layouts.components.base-header')
+                @endisset
+                
+                <!-- Main Content -->
+                <main class="flex-1">
+                    @yield('content')
+                </main>
+                
+                <!-- App Footer -->
+                @isset($showFooter)
+                    @include('layouts.components.default-footer')
+                @endisset
+            </div>
+        @endif
+        
+        <!-- Guest Layout (Enhanced) -->
         @if(($layoutType ?? 'default') === 'guest')
-            <main class="container mx-auto px-4">
-                @yield('content')
-            </main>
+            <div class="min-h-screen flex flex-col">
+                <!-- Guest Header -->
+                <header class="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex justify-between items-center h-16">
+                            <!-- Logo -->
+                            <div class="flex-shrink-0">
+                                @if(isset($settings) && $settings->logo)
+                                    <img src="{{ asset('storage/'.$settings->logo)}}" class="h-8 w-auto" alt="{{$settings->site_name}}">
+                                @else
+                                    <span class="text-2xl font-bold text-blue-600">{{ $settings->site_name ?? 'Monexa' }}</span>
+                                @endif
+                            </div>
+                            
+                            <!-- Theme Toggle -->
+                            <button onclick="LayoutManager.toggleTheme()" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <i data-lucide="moon" class="w-5 h-5 sun-icon"></i>
+                                <i data-lucide="sun" class="w-5 h-5 moon-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Main Content Area -->
+                <main class="flex-1 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+                    @yield('content')
+                </main>
+
+                <!-- Guest Footer -->
+                <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                        <div class="text-center text-sm text-gray-500 dark:text-gray-400">
+                            <p>© {{ date('Y') }} {{ $settings->site_name ?? 'Monexa' }}. Tüm hakları saklıdır.</p>
+                            @if (isset($settings) && $settings->google_translate == 'on')
+                                @include('layouts.lang')
+                            @endif
+                        </div>
+                    </div>
+                </footer>
+            </div>
         @endif
         
         <!-- Base Layout (Landing/Trading) -->
@@ -257,74 +571,332 @@
     <!-- Global Scripts -->
     @stack('scripts')
     
-    <!-- Core JavaScript -->
+    <!-- Enhanced Core JavaScript -->
     <script>
         // Global notification system
-        window.showNotification = (message, type = 'success') => {
+        window.showNotification = (message, type = 'success', duration = 5000) => {
             const notification = document.createElement('div');
-            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 ${
-                type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full ${
+                type === 'success' ? 'bg-green-500 text-white' :
+                type === 'error' ? 'bg-red-500 text-white' :
+                type === 'warning' ? 'bg-yellow-500 text-white' :
+                'bg-blue-500 text-white'
             }`;
-            notification.textContent = message;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : type === 'warning' ? 'exclamation' : 'info'}-circle mr-3"></i>
+                    <span>${message}</span>
+                    <button class="ml-4 text-white hover:text-gray-200" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
             document.body.appendChild(notification);
             
             // Animate in
             setTimeout(() => {
-                notification.style.transform = 'translateY(0)';
+                notification.style.transform = 'translateX(0)';
                 notification.style.opacity = '1';
             }, 10);
             
             // Auto remove
             setTimeout(() => {
-                notification.style.transform = 'translateY(-100%)';
+                notification.style.transform = 'translateX(full)';
                 notification.style.opacity = '0';
-                setTimeout(() => notification.remove(), 300);
-            }, 5000);
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, duration);
         };
         
-        // Utility functions for layout management
+        // Enhanced utility functions
         window.toggleTheme = () => LayoutManager.toggleTheme();
         window.toggleSidebar = () => LayoutManager.toggleSidebar();
+        window.toggleSidebarCollapse = () => LayoutManager.toggleSidebarCollapse();
         window.toggleMobileMenu = () => LayoutManager.toggleMobileMenu();
         window.toggleNotifications = () => LayoutManager.toggleNotifications();
+        window.toggleProfileDropdown = () => LayoutManager.toggleProfileDropdown();
+        window.toggleQuickActions = () => LayoutManager.toggleQuickActions();
+        window.toggleSubMenu = (menuId) => LayoutManager.toggleSubMenu(menuId);
         
-        // Initialize Lucide icons after DOM is ready
+        // SweetAlert2 integration
+        window.showAlert = (title, text, icon = 'success') => {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title,
+                    text,
+                    icon,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false
+                });
+            }
+        };
+        
+        // Enhanced DOM ready handler
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+            // Initialize Lucide icons
+            // Icons initialized via unified Icon Service
+            
+            // Initialize components
+            initializeComponents();
+            
+            // Global event listeners
+            setupGlobalEventListeners();
+        });
+        
+        function initializeComponents() {
+            // Initialize tooltips if any
+            const tooltipElements = document.querySelectorAll('[data-tooltip]');
+            tooltipElements.forEach(element => {
+                element.addEventListener('mouseenter', showTooltip);
+                element.addEventListener('mouseleave', hideTooltip);
+            });
+            
+            // Initialize forms
+            const forms = document.querySelectorAll('form[data-validate]');
+            forms.forEach(form => {
+                form.addEventListener('submit', validateForm);
+            });
+        }
+        
+        function setupGlobalEventListeners() {
+            // Keyboard shortcuts
+            document.addEventListener('keydown', handleGlobalShortcuts);
+            
+            // Auto-save for forms
+            const autosaveForms = document.querySelectorAll('form[data-autosave]');
+            autosaveForms.forEach(form => {
+                form.addEventListener('input', debounce(autoSaveForm, 1000));
+            });
+        }
+        
+        function handleGlobalShortcuts(e) {
+            // Ctrl/Cmd + / for help
+            if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+                e.preventDefault();
+                showNotification('Keyboard Shortcuts: Ctrl+D (Theme), Ctrl+/ (Help), ESC (Close)', 'info', 3000);
+            }
+        }
+        
+        // Utility functions
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        function autoSaveForm(e) {
+            const form = e.target;
+            const formData = new FormData(form);
+            // Implement auto-save logic here
+            console.log('Auto-saving form...', Object.fromEntries(formData));
+        }
+        
+        // Listen for custom events from components
+        document.addEventListener('sidebar-toggle', handleSidebarToggle);
+        document.addEventListener('theme-changed', handleThemeChange);
+        document.addEventListener('notification-toggle', handleNotificationToggle);
+        
+        function handleSidebarToggle(e) {
+            console.log('Sidebar toggled:', e.detail);
+        }
+        
+        function handleThemeChange(e) {
+            console.log('Theme changed:', e.detail.theme);
+            // Update any theme-dependent components
+        }
+        
+        function handleNotificationToggle(e) {
+            console.log('Notification toggle:', e.detail);
+        }
+        
+        // Crypto prices integration (for dashboard layout)
+        if (document.documentElement.getAttribute('data-layout') === 'dashboard') {
+            initializeCryptoPrices();
+        }
+        
+        function initializeCryptoPrices() {
+            // Crypto price fetching logic
+            async function fetchCryptoPrices() {
+                try {
+                    const response = await fetch('/api/crypto/prices');
+                    const data = await response.json();
+                    updateCryptoDisplay(data);
+                } catch (error) {
+                    console.error('Error fetching crypto prices:', error);
+                }
             }
             
-            // Fade in main layout
-            setTimeout(() => {
-                const mainLayout = document.getElementById('main-layout');
-                if (mainLayout) {
-                    mainLayout.style.opacity = '1';
+            function updateCryptoDisplay(data) {
+                const elements = {
+                    btc: document.getElementById('btc-price') || document.getElementById('mobile-btc-price'),
+                    eth: document.getElementById('eth-price') || document.getElementById('mobile-eth-price')
+                };
+                
+                if (data.bitcoin && elements.btc) {
+                    elements.btc.textContent = '$' + Math.round(data.bitcoin.usd).toLocaleString();
                 }
-            }, 100);
-        });
-        
-        // Listen for sidebar state changes
-        document.addEventListener('sidebar-toggle', (e) => {
-            const adminMain = document.getElementById('admin-main');
-            if (adminMain && LayoutManager.layout === 'admin') {
-                const adminMain = document.getElementById('admin-main');
-                if (e.detail.open) {
-                    adminMain.style.marginLeft = LayoutManager.sidebarCollapsed ? '80px' : '256px';
-                } else {
-                    adminMain.style.marginLeft = '0';
+                
+                if (data.ethereum && elements.eth) {
+                    elements.eth.textContent = '$' + Math.round(data.ethereum.usd).toLocaleString();
                 }
             }
-        });
+            
+            // Fetch prices initially and then every 30 seconds
+            fetchCryptoPrices();
+            setInterval(fetchCryptoPrices, 30000);
+        }
+        
+        // jQuery integration for legacy compatibility
+        if (typeof $ !== 'undefined') {
+            $(document).ready(function() {
+                console.log('jQuery ready - legacy compatibility mode');
+                
+                // Initialize any jQuery plugins here
+                $('.modal').modal();
+                $('.dropdown').dropdown();
+            });
+        }
     </script>
     
     <!-- Livewire Scripts -->
     @livewireScripts
     
+    <!-- Global Styles -->
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.4);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.6);
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: rgba(75, 85, 99, 0.4);
+        }
+        
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: rgba(75, 85, 99, 0.6);
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+        }
+        
+        /* Focus styles */
+        button:focus,
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid theme('colors.blue.500');
+            outline-offset: 2px;
+        }
+        
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Layout-specific styles */
+        [data-layout-type="admin"] .sidebar {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        [data-layout-type="dashboard"] {
+            background: theme('colors.gray.900');
+            color: theme('colors.gray.100');
+        }
+        
+        [data-layout-type="dashboard"] .card {
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        /* Animation utilities */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .bounce-in {
+            animation: bounceIn 0.6s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes bounceIn {
+            0%, 20%, 40%, 60%, 80% {
+                transform: translateY(0);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Utility classes */
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glassmorphism {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+    
     <!-- Language Component -->
-    @include('layouts.components.language-switcher')
+    @include('layouts.lang')
     
     <!-- Live Chat Component -->
-    @include('layouts.components.live-chat')
+    @include('layouts.livechat')
 </body>
 
 </html>

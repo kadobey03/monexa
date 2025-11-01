@@ -23,8 +23,7 @@
     <!-- Tailwind CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Lucide Icons - Loaded via unified Icon Service -->
     
     @stack('head-scripts')
     @stack('head-styles')
@@ -111,9 +110,7 @@
         
         // Initialize Lucide icons after DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+            // Icons initialized via unified Icon Service
         });
     </script>
 </body>

@@ -3,523 +3,620 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
     './storage/framework/views/*.php',
     './resources/views/**/*.blade.php',
-    './resources/js/**/*.vue',
-    './resources/js/**/*.js',
-    './themes/**/*.blade.php',
-    './themes/**/*.js',
-    './themes/**/*.vue',
   ],
 
-  darkMode: 'class', // Enable dark mode with class strategy
-  
-  // Enable JIT mode for Tailwind CSS v3+
-  mode: 'jit',
-  
-  // Future flags for upcoming features
-  future: {
-    hoverOnlyWhenSupported: true,
-    respectDefaultRingColorOpacity: true,
-  },
+  safelist: [
+    // REAL-WORLD CLASSES ANALYZED FROM ACTUAL VIEWS
+    'min-h-screen',
+    'flex',
+    'flex-col',
+    'flex-row',
+    'items-center',
+    'justify-center',
+    'justify-between',
+    'gap-2',
+    'gap-4',
+    'gap-6',
+    'grid',
+    'grid-cols-1',
+    'md:grid-cols-2',
+    'sm:grid-cols-3',
+    'lg:grid-cols-4',
+    
+    // Container utilities
+    'container',
+    'mx-auto',
+    'px-3',
+    'px-4',
+    'px-6',
+    'py-3',
+    'py-4',
+    'py-6',
+    'py-8',
+    'sm:px-6',
+    'sm:px-4',
+    'lg:px-6',
+    'lg:px-8',
+    'sm:py-8',
+    'sm:py-6',
+    'sm:py-4',
+    
+    // Typography
+    'text-xs',
+    'text-sm',
+    'text-base',
+    'text-lg',
+    'text-xl',
+    'text-2xl',
+    'text-3xl',
+    'sm:text-xs',
+    'sm:text-sm',
+    'sm:text-base',
+    'sm:text-lg',
+    'sm:text-xl',
+    'sm:text-2xl',
+    'sm:text-3xl',
+    'lg:text-4xl',
+    'font-medium',
+    'font-semibold',
+    'font-bold',
+    'text-center',
+    'text-left',
+    
+    // Colors - Core
+    'bg-white',
+    'bg-gray-50',
+    'bg-gray-100',
+    'bg-gray-200',
+    'bg-gray-800',
+    'bg-gray-900',
+    'bg-blue-50',
+    'bg-blue-100',
+    'bg-blue-600',
+    'bg-blue-700',
+    'bg-blue-900',
+    'bg-green-50',
+    'bg-green-100',
+    'bg-green-500',
+    'bg-green-600',
+    'bg-green-800',
+    'bg-red-50',
+    'bg-red-100',
+    'bg-red-500',
+    'bg-red-600',
+    'bg-red-800',
+    'bg-yellow-50',
+    'bg-yellow-100',
+    'bg-yellow-500',
+    'bg-yellow-600',
+    'bg-yellow-800',
+    'bg-indigo-500',
+    'bg-indigo-600',
+    'bg-purple-500',
+    'bg-purple-600',
+    'bg-amber-500',
+    'bg-orange-500',
+    
+    // Text colors
+    'text-white',
+    'text-gray-300',
+    'text-gray-400',
+    'text-gray-500',
+    'text-gray-600',
+    'text-gray-700',
+    'text-gray-800',
+    'text-gray-900',
+    'text-blue-300',
+    'text-blue-400',
+    'text-blue-600',
+    'text-blue-700',
+    'text-blue-800',
+    'text-green-300',
+    'text-green-400',
+    'text-green-600',
+    'text-green-700',
+    'text-green-800',
+    'text-red-300',
+    'text-red-400',
+    'text-red-600',
+    'text-red-700',
+    'text-red-800',
+    'text-yellow-300',
+    'text-yellow-400',
+    'text-yellow-600',
+    'text-yellow-700',
+    'text-yellow-800',
+    'text-indigo-400',
+    'text-purple-400',
+    'text-amber-400',
+    'text-orange-400',
+    
+    // Spacing
+    'm-4',
+    'mt-1',
+    'mt-2',
+    'mt-3',
+    'mt-4',
+    'mt-6',
+    'mt-8',
+    'mb-1',
+    'mb-2',
+    'mb-3',
+    'mb-4',
+    'mb-6',
+    'mb-8',
+    'ml-2',
+    'ml-3',
+    'ml-4',
+    'ml-10',
+    'ml-12',
+    'mr-1',
+    'mr-2',
+    'mr-3',
+    'mr-4',
+    'p-1',
+    'p-2',
+    'p-3',
+    'p-4',
+    'p-6',
+    'p-8',
+    'px-2',
+    'px-3',
+    'px-4',
+    'px-5',
+    'px-6',
+    'px-8',
+    'px-10',
+    'px-12',
+    'py-1',
+    'py-2',
+    'py-3',
+    'py-4',
+    'py-6',
+    'py-8',
+    'pl-3',
+    'pl-4',
+    'pl-10',
+    'pr-3',
+    'pr-4',
+    'pr-12',
+    
+    // Border & Rounded
+    'border',
+    'border-2',
+    'border-gray-100',
+    'border-gray-200',
+    'border-gray-300',
+    'border-gray-600',
+    'border-gray-700',
+    'border-gray-800',
+    'border-blue-500',
+    'border-blue-600',
+    'border-blue-500/20',
+    'border-blue-500/30',
+    'border-green-500/30',
+    'border-red-500/30',
+    'border-yellow-500/30',
+    'rounded',
+    'rounded-lg',
+    'rounded-xl',
+    'rounded-full',
+    'rounded-l-md',
+    'rounded-r-md',
+    'rounded-tl-md',
+    'rounded-tr-md',
+    'rounded-bl-md',
+    'rounded-br-md',
+    
+    // Shadows
+    'shadow-sm',
+    'shadow-lg',
+    'shadow-xl',
+    'shadow-none',
+    
+    // Background gradients
+    'bg-gradient-to-br',
+    'bg-gradient-to-r',
+    'from-gray-50',
+    'to-gray-100',
+    'from-gray-800',
+    'to-gray-700',
+    'from-gray-800/50',
+    'to-gray-700/50',
+    'from-blue-500/20',
+    'to-indigo-500/20',
+    'from-blue-600',
+    'to-blue-700',
+    'from-blue-700',
+    'to-blue-800',
+    'from-amber-500/20',
+    'to-orange-500/20',
+    'from-green-500/20',
+    'to-emerald-500/20',
+    'from-red-500/20',
+    'to-pink-500/20',
+    'from-yellow-500/10',
+    'to-orange-500/10',
+    'from-purple-500/10',
+    'to-indigo-500/10',
+    
+    // Text gradients
+    'bg-clip-text',
+    'text-transparent',
+    'from-blue-600',
+    'to-blue-600',
+    
+    // Background opacity
+    'bg-white/70',
+    'bg-white/80',
+    'bg-gray-800/50',
+    'bg-gray-800/70',
+    'bg-gray-900/50',
+    'bg-gray-900/20',
+    'bg-gray-700/50',
+    'bg-gray-700/20',
+    'bg-green-100/20',
+    'bg-green-500/20',
+    'bg-red-100/20',
+    'bg-red-500/20',
+    'bg-yellow-100/20',
+    'bg-yellow-500/20',
+    'bg-blue-100/20',
+    'bg-blue-500/20',
+    'bg-blue-600/10',
+    'bg-blue-900/20',
+    'bg-indigo-900/30',
+    'bg-amber-600/10',
+    'bg-orange-600/10',
+    
+    // Dark mode
+    'dark:bg-gray-900',
+    'dark:bg-gray-800',
+    'dark:bg-gray-700',
+    'dark:bg-gray-600',
+    'dark:bg-gray-900/50',
+    'dark:bg-gray-900/20',
+    'dark:bg-gray-800/50',
+    'dark:bg-gray-800/80',
+    'dark:bg-gray-700/50',
+    'dark:bg-gray-700/20',
+    'dark:bg-gray-700/30',
+    'dark:bg-blue-900/30',
+    'dark:bg-blue-900/20',
+    'dark:from-gray-900',
+    'dark:from-gray-800',
+    'dark:to-gray-800',
+    'dark:to-gray-700',
+    'dark:text-white',
+    'dark:text-gray-100',
+    'dark:text-gray-300',
+    'dark:text-gray-400',
+    'dark:text-gray-500',
+    'dark:border-gray-700',
+    'dark:border-gray-600',
+    'dark:border-gray-800',
+    'dark:hover:bg-gray-700',
+    'dark:hover:bg-gray-600',
+    'dark:hover:bg-gray-800',
+    'dark:hover:text-blue-400',
+    'dark:hover:text-gray-200',
+    'dark:hover:text-blue-300',
+    
+    // Hover states
+    'hover:bg-white',
+    'hover:bg-gray-300',
+    'hover:bg-gray-100',
+    'hover:bg-gray-200',
+    'hover:bg-blue-700',
+    'hover:bg-blue-800',
+    'hover:bg-green-200',
+    'hover:bg-red-200',
+    'hover:bg-yellow-200',
+    'hover:text-blue-600',
+    'hover:text-amber-100',
+    'hover:text-blue-100',
+    'hover:text-amber-200',
+    'hover:text-white',
+    'hover:scale-105',
+    'hover:scale-[1.02]',
+    'hover:shadow-xl',
+    'hover:border-gray-600',
+    'hover:border-blue-500',
+    
+    // Focus states
+    'focus:outline-none',
+    'focus:ring-2',
+    'focus:ring-blue-500',
+    'focus:ring-blue-500/20',
+    'focus:border-blue-500',
+    'focus:border-transparent',
+    
+    // Transitions
+    'transition-all',
+    'transition-colors',
+    'transition-transform',
+    'duration-200',
+    'duration-300',
+    'duration-500',
+    
+    // Display & Positioning
+    'hidden',
+    'block',
+    'inline',
+    'inline-flex',
+    'relative',
+    'absolute',
+    'fixed',
+    'sticky',
+    'top-0',
+    'left-0',
+    'right-0',
+    'bottom-0',
+    'inset-0',
+    'inset-y-0',
+    'z-10',
+    'z-50',
+    
+    // Sizing
+    'w-3',
+    'w-4',
+    'w-5',
+    'w-6',
+    'w-8',
+    'w-10',
+    'w-12',
+    'w-16',
+    'w-full',
+    'w-100',
+    'h-3',
+    'h-4',
+    'h-5',
+    'h-6',
+    'h-8',
+    'h-10',
+    'h-12',
+    'h-16',
+    'h-32',
+    'h-full',
+    'min-w-[80px]',
+    'min-w-[200px]',
+    'min-w-[300px]',
+    'max-w-md',
+    'max-w-2xl',
+    'max-w-3xl',
+    'max-w-4xl',
+    'max-w-6xl',
+    'max-h-[90vh]',
+    'max-h-[calc(90vh-200px)]',
+    'max-h-[calc(100vh-2rem)]',
+    'max-h-[calc(90vh-8rem)]',
+    'max-h-[85vh]',
+    
+    // Overflow
+    'overflow-hidden',
+    'overflow-y-auto',
+    'overflow-x-auto',
+    
+    // Cursor
+    'cursor-pointer',
+    'cursor-not-allowed',
+    
+    // Backdrop
+    'backdrop-blur-sm',
+    
+    // Animations & Transforms
+    'transform',
+    'scale-95',
+    'scale-100',
+    'translateY',
+    'translateX',
+    '-translate-y-2',
+    'translate-y-0',
+    '-translate-y-full',
+    'translate-x-full',
+    'translate-x-0',
+    
+    // Opacity
+    'opacity-0',
+    'opacity-50',
+    'opacity-70',
+    'opacity-75',
+    'opacity-80',
+    'opacity-90',
+    'opacity-100',
+    'opacity-75',
+    
+    // Whitespace
+    'whitespace-nowrap',
+    'whitespace-normal',
+    
+    // Media queries
+    'sm:block',
+    'sm:hidden',
+    'sm:flex-1',
+    'sm:text-xs',
+    'sm:text-sm',
+    'sm:text-base',
+    'sm:text-lg',
+    'sm:text-xl',
+    'sm:text-2xl',
+    'sm:text-3xl',
+    'sm:inline',
+    'sm:inline-flex',
+    'sm:items-center',
+    'sm:justify-center',
+    'sm:justify-between',
+    'sm:space-x-3',
+    'sm:ml-3',
+    'sm:flex',
+    'sm:px-4',
+    'sm:px-6',
+    'sm:py-8',
+    'sm:py-6',
+    'sm:py-4',
+    'sm:p-6',
+    'sm:p-8',
+    'sm:mt-0',
+    'sm:col-span-2',
+    'sm:order-1',
+    'sm:order-2',
+    'sm:grid-cols-2',
+    'sm:grid-cols-3',
+    'sm:rounded-md',
+    'sm:rounded-lg',
+    'sm:rounded-tl-md',
+    'sm:rounded-tr-md',
+    'sm:rounded-bl-md',
+    'sm:rounded-br-md',
+    'sm:mx-auto',
+    'sm:w-auto',
+    'sm:w-full',
+    'sm:text-left',
+    'sm:text-center',
+    
+    // Large screens
+    'lg:block',
+    'lg:hidden',
+    'lg:flex',
+    'lg:items-center',
+    'lg:px-6',
+    'lg:px-8',
+    'lg:py-8',
+    'lg:text-left',
+    'lg:text-4xl',
+    'lg:grid-cols-2',
+    'lg:grid-cols-4',
+    'lg:col-span-2',
+    
+    // Misc
+    'space-x-1',
+    'space-x-2',
+    'space-x-3',
+    'space-x-4',
+    'space-y-1',
+    'space-y-2',
+    'space-y-3',
+    'space-y-4',
+    'space-y-6',
+    'space-y-8',
+    'divide-y',
+    'divide-gray-700/50',
+    'divide-gray-800',
+    'divide-gray-700',
+    
+    // Special utilities
+    'sr-only',
+    'select-none',
+    'user-select-none',
+    'truncate',
+    
+    // Icon sizes
+    'w-3',
+    'h-3',
+    'w-4',
+    'h-4',
+    'w-5',
+    'h-5',
+    'w-6',
+    'h-6',
+    'w-8',
+    'h-8',
+    'w-12',
+    'h-12',
+    'w-16',
+    'h-16',
+  ],
 
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Inter', 'Nunito', ...defaultTheme.fontFamily.sans],
-      },
-      
-      // Design Token System
       colors: {
-        // Base Design Tokens
-        base: {
-          // Neutral palette for UI structure
-          white: '#ffffff',
-          gray: {
-            50: '#fafafa',
-            100: '#f4f4f5',
-            200: '#e4e4e7',
-            300: '#d4d4d8',
-            400: '#a1a1aa',
-            500: '#71717a',
-            600: '#52525b',
-            700: '#3f3f46',
-            800: '#27272a',
-            900: '#18181b',
-            950: '#09090b',
-          }
+        // Core colors - analyzed from actual usage
+        gray: {
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#9ca3af',
+          500: '#6b7280',
+          600: '#4b5563',
+          700: '#374151',
+          800: '#1f2937',
+          900: '#111827',
         },
-        
-        // Brand Design Tokens
-        brand: {
-          primary: {
-            50: '#eff6ff',
-            100: '#dbeafe',
-            200: '#bfdbfe',
-            300: '#93c5fd',
-            400: '#60a5fa',
-            500: '#3b82f6',
-            600: '#2563eb',
-            700: '#1d4ed8',
-            800: '#1e40af',
-            900: '#1e3a8a',
-            950: '#172554',
-          },
-          secondary: {
-            50: '#f8fafc',
-            100: '#f1f5f9',
-            200: '#e2e8f0',
-            300: '#cbd5e1',
-            400: '#94a3b8',
-            500: '#64748b',
-            600: '#475569',
-            700: '#334155',
-            800: '#1e293b',
-            900: '#0f172a',
-            950: '#020617',
-          }
-        },
-        
-        // Semantic Design Tokens
-        semantic: {
-          success: {
-            50: '#ecfdf5',
-            100: '#d1fae5',
-            200: '#a7f3d0',
-            300: '#6ee7b7',
-            400: '#34d399',
-            500: '#10b981',
-            600: '#059669',
-            700: '#047857',
-            800: '#065f46',
-            900: '#064e3b',
-          },
-          warning: {
-            50: '#fffbeb',
-            100: '#fef3c7',
-            200: '#fde68a',
-            300: '#fcd34d',
-            400: '#fbbf24',
-            500: '#f59e0b',
-            600: '#d97706',
-            700: '#b45309',
-            800: '#92400e',
-            900: '#78350f',
-          },
-          danger: {
-            50: '#fef2f2',
-            100: '#fee2e2',
-            200: '#fecaca',
-            300: '#fca5a5',
-            400: '#f87171',
-            500: '#ef4444',
-            600: '#dc2626',
-            700: '#b91c1c',
-            800: '#991b1b',
-            900: '#7f1d1d',
-          },
-          info: {
-            50: '#eff6ff',
-            100: '#dbeafe',
-            200: '#bfdbfe',
-            300: '#93c5fd',
-            400: '#60a5fa',
-            500: '#3b82f6',
-            600: '#2563eb',
-            700: '#1d4ed8',
-            800: '#1e40af',
-            900: '#1e3a8a',
-          }
-        },
-        
-        // Status colors for leads
-        status: {
-          new: '#3b82f6',        // blue
-          contacted: '#f59e0b',  // yellow
-          qualified: '#10b981',  // green
-          proposal: '#8b5cf6',   // purple
-          negotiation: '#f97316', // orange
-          won: '#059669',        // emerald
-          lost: '#dc2626',       // red
-          nurturing: '#6366f1',  // indigo
-        },
-        
-        // Priority colors
-        priority: {
-          low: '#6b7280',        // gray
-          medium: '#f59e0b',     // yellow
-          high: '#f97316',       // orange
-          urgent: '#dc2626',     // red
-        },
-        
-        // Legacy support - mapped to design tokens
-        admin: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-        },
-        primary: {
+        blue: {
           50: '#eff6ff',
           100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
           500: '#3b82f6',
           600: '#2563eb',
           700: '#1d4ed8',
           800: '#1e40af',
           900: '#1e3a8a',
-        }
+        },
+        green: {
+          100: '#dcfce7',
+          500: '#10b981',
+          600: '#059669',
+          800: '#166534',
+        },
+        red: {
+          100: '#fee2e2',
+          500: '#ef4444',
+          600: '#dc2626',
+          800: '#991b1b',
+        },
+        yellow: {
+          100: '#fef3c7',
+          500: '#f59e0b',
+          600: '#d97706',
+          800: '#92400e',
+        },
+        indigo: {
+          500: '#6366f1',
+          600: '#4f46e5',
+        },
+        purple: {
+          500: '#8b5cf6',
+          600: '#7c3aed',
+        },
+        amber: {
+          500: '#f59e0b',
+          600: '#d97706',
+        },
+        orange: {
+          500: '#f97316',
+          600: '#ea580c',
+        },
+        emerald: {
+          500: '#10b981',
+          600: '#059669',
+        },
+        pink: {
+          500: '#ec4899',
+          600: '#db2777',
+        },
       },
       
-      // Design Token Spacing System
       spacing: {
-        // Base spacing scale (4px base)
-        'xs': '0.25rem',    // 4px
-        'sm': '0.5rem',     // 8px
-        'md': '0.75rem',    // 12px
-        'lg': '1rem',       // 16px
-        'xl': '1.5rem',     // 24px
-        '2xl': '2rem',      // 32px
-        '3xl': '3rem',      // 48px
-        '4xl': '4rem',      // 64px
-        '5xl': '6rem',      // 96px
-        '6xl': '8rem',      // 128px
-        
-        // Extended spacing
         '18': '4.5rem',
         '88': '22rem',
-        '128': '32rem',
       },
       
-      // Typography Design Tokens
-      fontSize: {
-        'xs': ['0.75rem', { lineHeight: '1rem' }],
-        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
-        'base': ['1rem', { lineHeight: '1.5rem' }],
-        'lg': ['1.125rem', { lineHeight: '1.75rem' }],
-        'xl': ['1.25rem', { lineHeight: '1.75rem' }],
-        '2xl': ['1.5rem', { lineHeight: '2rem' }],
-        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
-        '5xl': ['3rem', { lineHeight: '1' }],
-        '6xl': ['3.75rem', { lineHeight: '1' }],
-        '7xl': ['4.5rem', { lineHeight: '1' }],
-        '8xl': ['6rem', { lineHeight: '1' }],
-        '9xl': ['8rem', { lineHeight: '1' }],
+      maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem',
       },
       
-      // Border Radius Design Tokens
-      borderRadius: {
-        'none': '0',
-        'sm': '0.125rem',
-        'md': '0.375rem',
-        'lg': '0.5rem',
-        'xl': '0.75rem',
-        '2xl': '1rem',
-        '3xl': '1.5rem',
-        '4xl': '2rem',
-        'full': '9999px',
-      },
-      
-      // Shadow Design Tokens
-      boxShadow: {
-        'xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        'sm': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-        'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-        '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
-        'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-        'strong': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-        'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-        'none': 'none',
-      },
-      
-      // Height/Width Design Tokens
-      height: {
-        'xs': '1rem',
-        'sm': '1.5rem',
-        'md': '2rem',
-        'lg': '2.5rem',
-        'xl': '3rem',
-        '2xl': '3.5rem',
-        '3xl': '4rem',
+      minHeight: {
         '128': '32rem',
       },
       
       maxHeight: {
         '128': '32rem',
       },
-      
-      // Animation Design Tokens
-      animation: {
-        'fade-in': 'fadeIn 0.3s ease-out',
-        'fade-out': 'fadeOut 0.5s ease-in-out',
-        'slide-in': 'slideIn 0.3s ease-out',
-        'slide-out': 'slideOut 0.3s ease-out',
-        'bounce-light': 'bounceLight 1s infinite',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'slide-up': 'slideUp 0.3s ease-out',
-        'slide-down': 'slideDown 0.3s ease-out',
-        'scale-in': 'scaleIn 0.2s ease-out',
-      },
-      
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        fadeOut: {
-          '0%': { opacity: '1', transform: 'translateY(0)' },
-          '100%': { opacity: '0', transform: 'translateY(-10px)' },
-        },
-        slideIn: {
-          '0%': { opacity: '0', transform: 'translateX(100%)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-        slideOut: {
-          '0%': { opacity: '1', transform: 'translateX(0)' },
-          '100%': { opacity: '0', transform: 'translateX(100%)' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        slideDown: {
-          '0%': { opacity: '0', transform: 'translateY(-10px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.95)' },
-          '100%': { opacity: '1', transform: 'scale(1)' },
-        },
-        bounceLight: {
-          '0%, 100%': { transform: 'translateY(-5%)', opacity: '0.8' },
-          '50%': { transform: 'translateY(0)', opacity: '1' },
-        }
-      },
-      
-      // Backdrop Design Tokens
-      backdropBlur: {
-        'xs': '2px',
-      },
-      
-      // Border Radius Design Tokens (already above, but keeping for consistency)
-      borderRadius: {
-        'none': '0',
-        'sm': '0.125rem',
-        'md': '0.375rem',
-        'lg': '0.5rem',
-        'xl': '0.75rem',
-        '2xl': '1rem',
-        '3xl': '1.5rem',
-        '4xl': '2rem',
-        'full': '9999px',
-      },
-      
-      // Z-Index Design Tokens
-      zIndex: {
-        '10': '10',
-        '20': '20',
-        '30': '30',
-        '40': '40',
-        '50': '50',
-        '60': '60',
-        '70': '70',
-        '80': '80',
-        '90': '90',
-        '100': '100',
-      },
-      
-      // Screen Size Design Tokens
-      screens: {
-        'xs': '475px',
-        'sm': '640px',
-        'md': '768px',
-        'lg': '1024px',
-        'xl': '1280px',
-        '2xl': '1536px',
-        '3xl': '1600px',
-        '4xl': '1920px',
-      },
-      
-      // Container queries support
-      containers: {
-        xs: '20rem',
-        sm: '24rem',
-        md: '28rem',
-        lg: '32rem',
-        xl: '36rem',
-        '2xl': '42rem',
-        '3xl': '48rem',
-        '4xl': '56rem',
-        '5xl': '64rem',
-        '6xl': '72rem',
-        '7xl': '80rem',
-      },
     },
   },
 
-  plugins: [
-    require('@tailwindcss/forms')({
-      strategy: 'class', // Use class strategy to avoid conflicts
-    }),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/container-queries'),
-    
-    // Custom plugin for table utilities
-    function({ addUtilities, theme }) {
-      const newUtilities = {
-        '.table-compact': {
-          '& th, & td': {
-            padding: theme('spacing.2') + ' ' + theme('spacing.4'),
-            fontSize: theme('fontSize.sm'),
-            lineHeight: theme('lineHeight.4'),
-          },
-        },
-        '.table-comfortable': {
-          '& th, & td': {
-            padding: theme('spacing.3') + ' ' + theme('spacing.6'),
-            fontSize: theme('fontSize.sm'),
-            lineHeight: theme('lineHeight.5'),
-          },
-        },
-        '.table-spacious': {
-          '& th, & td': {
-            padding: theme('spacing.4') + ' ' + theme('spacing.8'),
-            fontSize: theme('fontSize.base'),
-            lineHeight: theme('lineHeight.6'),
-          },
-        },
-        '.scrollbar-thin': {
-          '&::-webkit-scrollbar': {
-            width: '6px',
-          },
-          '&::-webkit-scrollbar-track': {
-            backgroundColor: theme('colors.gray.100'),
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: theme('colors.gray.400'),
-            borderRadius: theme('borderRadius.full'),
-          },
-          '&::-webkit-scrollbar-thumb:hover': {
-            backgroundColor: theme('colors.gray.500'),
-          },
-        },
-        '.scrollbar-none': {
-          '-ms-overflow-style': 'none',
-          'scrollbar-width': 'none',
-          '&::-webkit-scrollbar': {
-            display: 'none',
-          },
-        },
-        '.glass': {
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-        },
-        '.glass-dark': {
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-        },
-      }
-      
-      addUtilities(newUtilities)
-    },
-    
-    // Custom plugin for status indicators
-    function({ addComponents, theme }) {
-      const statusComponents = {
-        '.status-badge': {
-          display: 'inline-flex',
-          alignItems: 'center',
-          padding: theme('spacing.1') + ' ' + theme('spacing.2'),
-          borderRadius: theme('borderRadius.full'),
-          fontSize: theme('fontSize.xs'),
-          fontWeight: theme('fontWeight.medium'),
-          textTransform: 'capitalize',
-        },
-        '.status-new': {
-          backgroundColor: theme('colors.blue.100'),
-          color: theme('colors.blue.800'),
-        },
-        '.status-contacted': {
-          backgroundColor: theme('colors.yellow.100'),
-          color: theme('colors.yellow.800'),
-        },
-        '.status-qualified': {
-          backgroundColor: theme('colors.green.100'),
-          color: theme('colors.green.800'),
-        },
-        '.status-proposal': {
-          backgroundColor: theme('colors.purple.100'),
-          color: theme('colors.purple.800'),
-        },
-        '.status-negotiation': {
-          backgroundColor: theme('colors.orange.100'),
-          color: theme('colors.orange.800'),
-        },
-        '.status-won': {
-          backgroundColor: theme('colors.emerald.100'),
-          color: theme('colors.emerald.800'),
-        },
-        '.status-lost': {
-          backgroundColor: theme('colors.red.100'),
-          color: theme('colors.red.800'),
-        },
-        '.status-nurturing': {
-          backgroundColor: theme('colors.indigo.100'),
-          color: theme('colors.indigo.800'),
-        },
-        '.dark .status-new': {
-          backgroundColor: theme('colors.blue.900') + '33',
-          color: theme('colors.blue.400'),
-        },
-        '.dark .status-contacted': {
-          backgroundColor: theme('colors.yellow.900') + '33',
-          color: theme('colors.yellow.400'),
-        },
-        '.dark .status-qualified': {
-          backgroundColor: theme('colors.green.900') + '33',
-          color: theme('colors.green.400'),
-        },
-        '.dark .status-proposal': {
-          backgroundColor: theme('colors.purple.900') + '33',
-          color: theme('colors.purple.400'),
-        },
-        '.dark .status-negotiation': {
-          backgroundColor: theme('colors.orange.900') + '33',
-          color: theme('colors.orange.400'),
-        },
-        '.dark .status-won': {
-          backgroundColor: theme('colors.emerald.900') + '33',
-          color: theme('colors.emerald.400'),
-        },
-        '.dark .status-lost': {
-          backgroundColor: theme('colors.red.900') + '33',
-          color: theme('colors.red.400'),
-        },
-        '.dark .status-nurturing': {
-          backgroundColor: theme('colors.indigo.900') + '33',
-          color: theme('colors.indigo.400'),
-        },
-      }
-      
-      addComponents(statusComponents)
-    }
-  ],
+  plugins: [],
 }

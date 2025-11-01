@@ -11,8 +11,8 @@
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- FontAwesome - Local -->
-    <link rel="stylesheet" href="{{ asset('vendor/fontawesome/all.min.css') }}">
+    <!-- FontAwesome REMOVED - Using unified Lucide icons instead -->
+    <!-- Unified Icon Service loaded via Vite assets -->
 
     <!-- jQuery - Local -->
     <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
@@ -317,16 +317,16 @@
                 <div class="hidden md:flex items-center">
                     <div class="flex space-x-1 mr-4">
                         <a href="#" class="text-gray-400 hover:text-gray-200 p-1" aria-label="Desktop Version">
-                            <i class="fas fa-desktop"></i>
+                            <i data-lucide="monitor" class="w-4 h-4"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-gray-200 p-1" aria-label="Windows App">
-                            <i class="fab fa-windows"></i>
+                            <i data-lucide="smartphone" class="w-4 h-4"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-gray-200 p-1" aria-label="Android App">
-                            <i class="fab fa-android"></i>
+                            <i data-lucide="smartphone" class="w-4 h-4"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-gray-200 p-1" aria-label="iOS App">
-                            <i class="fab fa-apple"></i>
+                            <i data-lucide="smartphone" class="w-4 h-4"></i>
                         </a>
                     </div>
 
@@ -423,7 +423,7 @@
                     <div class="flex items-center justify-between px-4">
                         <div class="flex items-center space-x-3">
                             <a href="login" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                                <i class="fas fa-lock mr-1"></i> Giriş Yap
+                                <i data-lucide="lock" class="w-4 h-4 mr-1"></i> Giriş Yap
                             </a>
                             <a href="register" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
                                 Kayıt Ol
@@ -491,15 +491,15 @@
                         <div class="flex space-x-4">
                             <a href="#" class="text-gray-400 hover:text-white">
                                 <span class="sr-only">Twitter</span>
-                                <i class="fab fa-twitter"></i>
+                                <i data-lucide="twitter" class="w-5 h-5"></i>
                             </a>
                             <a href="#" class="text-gray-400 hover:text-white">
                                 <span class="sr-only">LinkedIn</span>
-                                <i class="fab fa-linkedin"></i>
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
                             </a>
                             <a href="mailto:{{$settings->contact_email}}" class="text-gray-400 hover:text-white">
                                 <span class="sr-only">Email</span>
-                                <i class="fas fa-envelope"></i>
+                                <i data-lucide="mail" class="w-5 h-5"></i>
                             </a>
                         </div>
                     </div>
@@ -551,19 +551,19 @@
                     </div>
                     <div class="flex items-center space-x-6">
                         <a href="#" class="flex items-center text-gray-400 hover:text-white" aria-label="Web Platform">
-                            <i class="fas fa-desktop mr-2"></i>
+                            <i data-lucide="monitor" class="w-4 h-4 mr-2"></i>
                             <span class="text-sm">Web</span>
                         </a>
                         <a href="#" class="flex items-center text-gray-400 hover:text-white" aria-label="Windows App">
-                            <i class="fab fa-windows mr-2"></i>
+                            <i data-lucide="smartphone" class="w-4 h-4 mr-2"></i>
                             <span class="text-sm">Windows</span>
                         </a>
                         <a href="#" class="flex items-center text-gray-400 hover:text-white" aria-label="Android App">
-                            <i class="fab fa-android mr-2"></i>
+                            <i data-lucide="smartphone" class="w-4 h-4 mr-2"></i>
                             <span class="text-sm">Android</span>
                         </a>
                         <a href="#" class="flex items-center text-gray-400 hover:text-white" aria-label="iOS App">
-                            <i class="fab fa-apple mr-2"></i>
+                            <i data-lucide="smartphone" class="w-4 h-4 mr-2"></i>
                             <span class="text-sm">iOS</span>
                         </a>
                     </div>
@@ -600,7 +600,7 @@
 <!-- Live Chat Button -->
 {{-- <div class="fixed bottom-20 right-6 z-40">
     <button onclick="openLiveChat(event)" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50">
-        <i class="fas fa-comments text-xl"></i>
+        <i data-lucide="message-circle" class="w-5 h-5"></i>
     </button>
 </div> --}}
 

@@ -12,6 +12,9 @@ import '../css/app.css';
 // Core application initialization
 import './main.js';
 
+// Unified Icon Service - Centralized icon management
+import './icon-service.js';
+
 // Modern ES6 imports with dynamic loading
 import axios from 'axios';
 import { CSRFManager } from './utils/csrf-manager.js';

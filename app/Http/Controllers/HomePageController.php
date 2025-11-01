@@ -77,6 +77,8 @@ class HomePageController extends Controller
              'btcStats' => $btcStats,
             'mplans' => Plans::where('type','Main')->get(),
             'pplans' => Plans::where('type','Promo')->get(),
+            'pageType' => 'homepage',
+            'breadcrumbs' => []
         ));
     }
 
@@ -118,11 +120,18 @@ class HomePageController extends Controller
     //FAQ route
     public function faq(){
 
+        $breadcrumbs = [
+            ['name' => 'Ana Sayfa', 'url' => url('/')],
+            ['name' => 'SSS', 'url' => null]
+        ];
+
         return view('home.faq')
         ->with(array(
             'title' => 'FAQs',
             'faqs'=> Faq::orderby('id', 'desc')->get(),
             'settings' => Settings::where('id', '=', '1')->first(),
+            'pageType' => 'faq',
+            'breadcrumbs' => $breadcrumbs
         ));
     }
 
@@ -269,24 +278,37 @@ class HomePageController extends Controller
     //about route
     public function about(){
 
+        $breadcrumbs = [
+            ['name' => 'Ana Sayfa', 'url' => url('/')],
+            ['name' => 'Hakkımızda', 'url' => null]
+        ];
+
         return view('home.about')
         ->with(array(
             'mplans' => Plans::where('type','Main')->get(),
-
             'title' => 'About',
             'settings' => Settings::where('id', '=', '1')->first(),
+            'pageType' => 'about',
+            'breadcrumbs' => $breadcrumbs
         ));
     }
 
     //Contact route
     public function contact(){
+
+        $breadcrumbs = [
+            ['name' => 'Ana Sayfa', 'url' => url('/')],
+            ['name' => 'İletişim', 'url' => null]
+        ];
+
         return view('home.contact')
         ->with(array(
             'mplans' => Plans::where('type','Main')->get(),
-                'pplans' => Plans::where('type','Promo')->get(),
-
+            'pplans' => Plans::where('type','Promo')->get(),
             'title' => 'Contact',
             'settings' => Settings::where('id', '=', '1')->first(),
+            'pageType' => 'contact',
+            'breadcrumbs' => $breadcrumbs
         ));
     }
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\AutoTaskController;
 use App\Http\Controllers\AutoRoiController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\SitemapController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -133,3 +134,13 @@ Route::get('index2', function(){
     return response()->file(public_path('nexa-landing/index.php'));
 })->name('index2');
 
+// SEO Routes
+Route::get('sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('sitemap/{type}', [SitemapController::class, 'type'])->name('sitemap.type');
+
+// Security & SEO - Dynamic robots.txt
+Route::get('robots.txt', function() {
+    $environment = app()->environment('production') ? 'production' : 'development';
+    $content = view('robots.robots', compact('environment'))->render();
+    return response($content, 200, ['Content-Type' => 'text/plain']);
+})->name('robots');

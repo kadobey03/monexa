@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master', ['layoutType' => 'app'])
 @section('title', 'Plan Ödemesi')
 
 @section('styles')

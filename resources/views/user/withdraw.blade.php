@@ -1,5 +1,5 @@
 
-@extends('layouts.dasht')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
 

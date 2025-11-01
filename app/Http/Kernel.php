@@ -23,6 +23,10 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        
+        // Production Security Middleware'leri
+        \App\Http\Middleware\InputSanitizer::class,
+        \App\Http\Middleware\SecurityHeaders::class,
     ];
 
     /**
@@ -79,5 +83,15 @@ class Kernel extends HttpKernel
         'hierarchy' => \App\Http\Middleware\HierarchyMiddleware::class,
         'admin.activity' => \App\Http\Middleware\AdminActivityMiddleware::class,
         'validate.lead.assignment' => \App\Http\Middleware\ValidateLeadAssignment::class,
+        
+        // Security Middleware'leri
+        'rate.limit.financial' => \App\Http\Middleware\RateLimitMiddleware::class,
+        'rate.limit.login' => \App\Http\Middleware\RateLimitMiddleware::class,
+        'rate.limit.api' => \App\Http\Middleware\RateLimitMiddleware::class,
+        'rate.limit.form' => \App\Http\Middleware\RateLimitMiddleware::class,
+        'rate.limit.kyc' => \App\Http\Middleware\RateLimitMiddleware::class,
+        'rate.limit.admin' => \App\Http\Middleware\RateLimitMiddleware::class,
+        'rate.limit.webhook' => \App\Http\Middleware\RateLimitMiddleware::class,
+        'rate.limit.cron' => \App\Http\Middleware\RateLimitMiddleware::class,
     ];
 }

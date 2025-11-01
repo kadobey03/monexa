@@ -23,8 +23,7 @@
     <!-- Ultimate Console Error Fixes - Priority Load -->
     <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
     
-    <!-- Lucide Icons - Local fallback to avoid CDN issues -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" onerror="console.warn('Lucide CDN failed, using local fallback')"></script>
+    <!-- Lucide Icons - Loaded via unified Icon Service -->
     
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

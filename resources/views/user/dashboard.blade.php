@@ -1,4 +1,4 @@
-@extends('layouts.dasht')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
 <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8" data-dashboard="true">
@@ -480,34 +480,103 @@
                     hide_side_toolbar: false,
                     container_id: "tradingview_advanced"
                 });
-                // Fetch live prices for tickers (using CoinGecko and public APIs)
+                // Fetch live prices via unified API service
                 async function fetchCryptoPrices() {
                     try {
-                        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd');
-                        const data = await res.json();
-                        document.getElementById('btc-price').textContent = '$' + data.bitcoin.usd.toLocaleString();
-                        document.getElementById('eth-price').textContent = '$' + data.ethereum.usd.toLocaleString();
-                    } catch {}
+                        const response = await fetch('/api/market-rates?type=crypto', {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+                        
+                        if (response.ok) {
+                            const result = await response.json();
+                            if (result.success && result.data) {
+                                if (result.data.bitcoin) {
+                                    document.getElementById('btc-price').textContent = '$' + result.data.bitcoin.usd.toLocaleString();
+                                }
+                                if (result.data.ethereum) {
+                                    document.getElementById('eth-price').textContent = '$' + result.data.ethereum.usd.toLocaleString();
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        console.log('Crypto prices fetch failed:', error);
+                        // Fallback to static values
+                        document.getElementById('btc-price').textContent = '$67,420';
+                        document.getElementById('eth-price').textContent = '$3,240';
+                    }
                 }
+                
                 async function fetchForexPrices() {
                     try {
-                        const res = await fetch('https://api.exchangerate.host/latest?base=EUR&symbols=USD,GBP');
-                        const data = await res.json();
-                        document.getElementById('eurusd-price').textContent = data.rates.USD.toFixed(4);
-                        document.getElementById('gbpusd-price').textContent = (data.rates.USD / data.rates.GBP).toFixed(4);
-                    } catch {}
+                        const response = await fetch('/api/market-rates?type=forex', {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+                        
+                        if (response.ok) {
+                            const result = await response.json();
+                            if (result.success && result.data) {
+                                if (result.data.USD) {
+                                    document.getElementById('eurusd-price').textContent = result.data.USD.toFixed(4);
+                                    if (result.data.GBP) {
+                                        document.getElementById('gbpusd-price').textContent = (result.data.USD / result.data.GBP).toFixed(4);
+                                    }
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        console.log('Forex prices fetch failed:', error);
+                        // Fallback values
+                        document.getElementById('eurusd-price').textContent = '1.0850';
+                        document.getElementById('gbpusd-price').textContent = '1.2750';
+                    }
                 }
+                
                 async function fetchStockPrices() {
-                    // Free stock APIs are limited; demo with static values or integrate with a paid API for production
-                    document.getElementById('aapl-price').textContent = '195.10';
-                    document.getElementById('tsla-price').textContent = '850.20';
+                    try {
+                        const response = await fetch('/api/market-rates?type=stocks', {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+                        
+                        if (response.ok) {
+                            const result = await response.json();
+                            if (result.success && result.data) {
+                                if (result.data.AAPL) {
+                                    document.getElementById('aapl-price').textContent = result.data.AAPL.price.toFixed(2);
+                                }
+                                if (result.data.TSLA) {
+                                    document.getElementById('tsla-price').textContent = result.data.TSLA.price.toFixed(2);
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        console.log('Stock prices fetch failed:', error);
+                        // Fallback values for demo
+                        document.getElementById('aapl-price').textContent = '195.10';
+                        document.getElementById('tsla-price').textContent = '850.20';
+                    }
                 }
+                
+                // Initialize price fetching
                 fetchCryptoPrices();
                 fetchForexPrices();
                 fetchStockPrices();
+                
+                // Set up auto-refresh intervals
                 setInterval(fetchCryptoPrices, 60000);
                 setInterval(fetchForexPrices, 60000);
-                setInterval(fetchStockPrices, 60000);
+                setInterval(fetchStockPrices, 30000);
             </script>
         </div>
         <div class="xl:col-span-1 flex flex-col gap-4 sm:gap-6">

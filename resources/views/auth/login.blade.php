@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.master', ['layoutType' => 'guest'])
 @section('title', 'Giriş Yap')
 @section('content')
 

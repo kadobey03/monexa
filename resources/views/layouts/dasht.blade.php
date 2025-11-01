@@ -789,17 +789,16 @@
   </style>
 </div>
 
-<!-- Script for Lucide Icons - Local -->
-<script src="{{ asset('vendor/lucide/lucide.js') }}"></script>
+<!-- Lucide Icons - Loaded via unified Icon Service -->
 <script>
   // Initialize Lucide icons
+  // Icons initialized via unified Icon Service
   document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    // Icons auto-initialized via unified Icon Service
   });
 
   // Re-initialize icons when Alpine renders new content
-  // Initialize icons after DOM is loaded
-  lucide.createIcons();
+  // Icons auto-initialized via unified Icon Service
 </script>
 
 <style>

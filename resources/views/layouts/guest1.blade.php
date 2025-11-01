@@ -17,8 +17,7 @@
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Lucide Icons - Local -->
-    <script src="{{ asset('vendor/lucide/lucide.js') }}"></script>
+    <!-- Lucide Icons - Loaded via unified Icon Service -->
 
     <!-- All styles now handled by Vite with Tailwind CSS -->
 
@@ -253,9 +252,7 @@ EXPERTISE.???">
             }
             
             // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+            // Icons initialized via unified Icon Service
         });
     </script>
  <!-- Language Selector -->

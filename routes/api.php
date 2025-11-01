@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DepositApiController;
 use App\Http\Controllers\Api\WithdrawalApiController;
 use App\Http\Controllers\Api\PlanApiController;
 use App\Http\Controllers\Api\NotificationApiController;
+use App\Http\Controllers\Api\MarketRatesController;
 use App\Http\Controllers\Api\Admin\AdminUserApiController;
 use App\Http\Controllers\Api\Admin\AdminApiController;
 use App\Http\Controllers\ImageController;
@@ -138,4 +139,13 @@ Route::prefix('images')->name('api.images.')->group(function () {
         Route::put('/{id}', [ImageController::class, 'update'])->name('update');
         Route::delete('/{id}', [ImageController::class, 'destroy'])->name('destroy');
     });
+});
+
+// Market Rates Routes (Public API for dashboard)
+Route::prefix('market-rates')->name('api.market-rates.')->group(function () {
+    Route::get('/', [MarketRatesController::class, 'index'])->name('index');
+    Route::get('/crypto-prices', [MarketRatesController::class, 'cryptoPrices'])->name('crypto-prices');
+    Route::get('/forex-rates', [MarketRatesController::class, 'forexRates'])->name('forex-rates');
+    Route::get('/stock-prices', [MarketRatesController::class, 'stockPrices'])->name('stock-prices');
+    Route::get('/overview', [MarketRatesController::class, 'marketOverview'])->name('overview');
 });

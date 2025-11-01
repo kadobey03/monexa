@@ -1,7 +1,7 @@
-@extends('layouts.dasht')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
-@section('content')
 
+@section('content')
 <!-- Simple Header -->
 <div class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800" x-cloak>
     <div class="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">

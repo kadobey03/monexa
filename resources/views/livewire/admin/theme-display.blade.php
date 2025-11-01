@@ -1,59 +1,68 @@
 <div>
     @if ($settings->theme == 'purposeTheme')
-        <hr>
-        <div class="form-row mt-4">
-            <div class="col-12">
-                <h5 class="">Website theme colour. Double click to save.
-                    Current theme colour have a blue border</h5>
-            </div>
-            <div class="col-md-4 p-2">
-                <div class="flex-wrap btn-group-toggle d-flex justify-content-around" data-toggle="buttons">
-                    <label
-                        class="mb-2 shadow btn {{ $settings->website_theme == 'purpose.css' ? 'active border border-primary rounded-lg' : '' }}"
-                        wire:click="setTheme('purpose.css')">
-                        <img src="{{ asset('dash/images/purpose.png') }}" alt="" class="img-fluid">
-                        <input type="radio" name="theme" value="purpose.css" autocomplete="off">
-                    </label>
+        <div class="space-y-6">
+            <hr class="border-admin-200 dark:border-admin-700">
+            <div class="flex flex-wrap gap-4 mt-4">
+                <div class="w-full">
+                    <h5 class="text-lg font-medium text-admin-700 dark:text-admin-300 mb-4">
+                        Website theme colour. Double click to save.
+                        <span class="text-sm text-admin-500 dark:text-admin-400">Current theme colour have a blue border</span>
+                    </h5>
                 </div>
-            </div>
-            <div class="col-md-4 p-2">
-                <div class="flex-wrap btn-group-toggle d-flex justify-content-around" data-toggle="buttons">
-                    <label
-                        class="mb-2 shadow btn {{ $settings->website_theme == 'blue.css' ? 'active border border-primary' : '' }}"
-                        wire:click="setTheme('blue.css')">
-                        <img src="{{ asset('dash/images/blue.png') }}" class="img-fluid">
-                        <input type="radio" name="theme" value="blue.css" autocomplete="off">
-                    </label>
+                
+                <div class="w-full md:w-1/3 p-2">
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button
+                            class="p-3 mb-2 rounded-lg shadow-lg transition-all {{ $settings->website_theme == 'purpose.css' ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'bg-white dark:bg-admin-700 hover:shadow-xl' }} border-2 {{ $settings->website_theme == 'purpose.css' ? 'border-blue-500' : 'border-admin-200 dark:border-admin-600' }}"
+                            wire:click="setTheme('purpose.css')"
+                            type="button">
+                            <img src="{{ asset('dash/images/purpose.png') }}" class="max-w-full h-auto rounded-lg" alt="Purpose Theme">
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 p-2">
-                <div class="flex-wrap btn-group-toggle d-flex justify-content-around" data-toggle="buttons">
-                    <label
-                        class="mb-2 shadow btn {{ $settings->website_theme == 'green.css' ? 'active border border-primary' : '' }}"
-                        wire:click="setTheme('green.css')">
-                        <img src="{{ asset('dash/images/green.png') }}" class="img-fluid">
-                        <input type="radio" name="theme" value="green.css" autocomplete="off">
-                    </label>
+                
+                <div class="w-full md:w-1/3 p-2">
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button
+                            class="p-3 mb-2 rounded-lg shadow-lg transition-all {{ $settings->website_theme == 'blue.css' ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'bg-white dark:bg-admin-700 hover:shadow-xl' }} border-2 {{ $settings->website_theme == 'blue.css' ? 'border-blue-500' : 'border-admin-200 dark:border-admin-600' }}"
+                            wire:click="setTheme('blue.css')"
+                            type="button">
+                            <img src="{{ asset('dash/images/blue.png') }}" class="max-w-full h-auto rounded-lg" alt="Blue Theme">
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 p-2">
-                <div class="flex-wrap btn-group-toggle d-flex justify-content-around" data-toggle="buttons">
-                    <label
-                        class="mb-2 shadow btn {{ $settings->website_theme == 'brown.css' ? 'active border border-primary' : '' }}"
-                        wire:click="setTheme('brown.css')">
-                        <img src="{{ asset('dash/images/brown.png') }}" class="img-fluid">
-                        <input type="radio" name="theme" value="brown.css" autocomplete="off">
-                    </label>
+                
+                <div class="w-full md:w-1/3 p-2">
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button
+                            class="p-3 mb-2 rounded-lg shadow-lg transition-all {{ $settings->website_theme == 'green.css' ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'bg-white dark:bg-admin-700 hover:shadow-xl' }} border-2 {{ $settings->website_theme == 'green.css' ? 'border-blue-500' : 'border-admin-200 dark:border-admin-600' }}"
+                            wire:click="setTheme('green.css')"
+                            type="button">
+                            <img src="{{ asset('dash/images/green.png') }}" class="max-w-full h-auto rounded-lg" alt="Green Theme">
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 p-2">
-                <div class="flex-wrap btn-group-toggle d-flex justify-content-around" data-toggle="buttons">
-                    <label
-                        class="mb-2 shadow btn {{ $settings->website_theme == 'dark.css' ? 'active border border-primary' : '' }}"
-                        wire:click="setTheme('dark.css')">
-                        <img src="{{ asset('dash/images/dark.png') }}" class="img-fluid">
-                        <input type="radio" name="theme" value="dark.css" autocomplete="off">
-                    </label>
+                
+                <div class="w-full md:w-1/3 p-2">
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button
+                            class="p-3 mb-2 rounded-lg shadow-lg transition-all {{ $settings->website_theme == 'brown.css' ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'bg-white dark:bg-admin-700 hover:shadow-xl' }} border-2 {{ $settings->website_theme == 'brown.css' ? 'border-blue-500' : 'border-admin-200 dark:border-admin-600' }}"
+                            wire:click="setTheme('brown.css')"
+                            type="button">
+                            <img src="{{ asset('dash/images/brown.png') }}" class="max-w-full h-auto rounded-lg" alt="Brown Theme">
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="w-full md:w-1/3 p-2">
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button
+                            class="p-3 mb-2 rounded-lg shadow-lg transition-all {{ $settings->website_theme == 'dark.css' ? 'ring-2 ring-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'bg-white dark:bg-admin-700 hover:shadow-xl' }} border-2 {{ $settings->website_theme == 'dark.css' ? 'border-blue-500' : 'border-admin-200 dark:border-admin-600' }}"
+                            wire:click="setTheme('dark.css')"
+                            type="button">
+                            <img src="{{ asset('dash/images/dark.png') }}" class="max-w-full h-auto rounded-lg" alt="Dark Theme">
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
