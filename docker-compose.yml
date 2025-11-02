@@ -1,5 +1,5 @@
 services:
-  # PHP-FPM Service
+  # PHP Application Service
   app-monexa:
     build:
       context: .
@@ -7,11 +7,22 @@ services:
     container_name: app-monexa
     restart: unless-stopped
     working_dir: /var/www/html
-    volumes:
-      - ./:/var/www/html
-      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    command: /usr/local/bin/start.sh
+    ports:
+      - "8000:8000"
     depends_on:
       - mysql-monexa
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - DB_HOST=mysql-monexa
+      - DB_DATABASE=monexa
+      - DB_USERNAME=monexa_user
+      - DB_PASSWORD=sPl2ltlt1emaV5t9
+      - REDIS_HOST=redis-monexa
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:4n8fOHWzYGMZkW3nP2LvQq6XjV5R9cT8hE2sA7dF1kL=
 
   # Nginx Service
   nginx-monexa:

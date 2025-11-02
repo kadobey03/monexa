@@ -44,14 +44,18 @@ RUN docker-php-ext-install opcache
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy existing application directory contents
+# Copy only necessary files for initial build
+COPY composer.json composer.lock /var/www/html/
+COPY .env.example /var/www/html/.env.example
+
+# Install PHP dependencies for Laravel 12
+RUN cd /var/www/html && composer update --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-gmp --ignore-platform-req=php --no-scripts
+
+# Copy all application files
 COPY . /var/www/html
 
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html
-
-# Install PHP dependencies for Laravel 12
-RUN composer update --no-dev --optimize-autoloader --no-interaction --ignore-platform-req=ext-gmp --ignore-platform-req=php --no-scripts
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/www/html/storage/logs \

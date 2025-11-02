@@ -162,7 +162,57 @@
             
             // Get current layout configuration
             get config() {
-                return this.config[this.layout] || this.config.default;
+                const layouts = this._layouts || this._defineLayouts();
+                return layouts[this.layout] || layouts.default;
+            },
+            
+            // Define layout configurations
+            _defineLayouts() {
+                this._layouts = {
+                    admin: {
+                        sidebar: true,
+                        header: true,
+                        mobileNav: false,
+                        footer: false,
+                        theme: 'admin'
+                    },
+                    dashboard: {
+                        sidebar: true,
+                        header: true,
+                        mobileNav: true,
+                        footer: false,
+                        theme: 'dark'
+                    },
+                    app: {
+                        sidebar: false,
+                        header: false,
+                        mobileNav: false,
+                        footer: true,
+                        theme: 'light'
+                    },
+                    guest: {
+                        sidebar: false,
+                        header: true,
+                        mobileNav: false,
+                        footer: true,
+                        theme: 'light'
+                    },
+                    base: {
+                        sidebar: false,
+                        header: true,
+                        mobileNav: false,
+                        footer: true,
+                        theme: 'dark'
+                    },
+                    default: {
+                        sidebar: false,
+                        header: false,
+                        mobileNav: false,
+                        footer: true,
+                        theme: 'light'
+                    }
+                };
+                return this._layouts;
             },
             
             // Get responsive breakpoints

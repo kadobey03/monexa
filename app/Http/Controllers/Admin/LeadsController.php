@@ -1456,42 +1456,21 @@ class LeadsController extends Controller
         }
     }
 
+    // Helper methods that use parent controller's response methods with exact signatures
     /**
      * Standard success response format.
      */
-    protected function successResponse($data, string $message = 'İşlem başarılı', array $meta = []): JsonResponse
+    protected function successResponse(mixed $data = null, string $message = 'İşlem başarılı', int $statusCode = 200): JsonResponse
     {
-        return response()->json([
-            'success' => true,
-            'message' => $message,
-            'data' => $data,
-            'meta' => array_merge([
-                'timestamp' => now()->toISOString(),
-                'version' => '1.0'
-            ], $meta)
-        ]);
+        return parent::successResponse($data, $message, $statusCode);
     }
 
     /**
      * Standard error response format.
      */
-    protected function errorResponse(string $message, string $errorCode = 'UNKNOWN_ERROR', int $statusCode = 500, $errorDetails = null): JsonResponse
+    protected function errorResponse(string $message, int $statusCode = 400, array $errors = []): JsonResponse
     {
-        $response = [
-            'success' => false,
-            'message' => $message,
-            'error_code' => $errorCode,
-            'meta' => [
-                'timestamp' => now()->toISOString(),
-                'version' => '1.0'
-            ]
-        ];
-        
-        if ($errorDetails) {
-            $response['error_details'] = $errorDetails;
-        }
-        
-        return response()->json($response, $statusCode);
+        return parent::errorResponse($message, $statusCode, $errors);
     }
 
     /**

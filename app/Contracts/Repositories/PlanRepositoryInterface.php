@@ -3,6 +3,7 @@
 namespace App\Contracts\Repositories;
 
 use App\Models\UserPlan;
+use App\Models\User_plans;
 use App\Models\Plans;
 use Illuminate\Database\Eloquent\Collection;
 
