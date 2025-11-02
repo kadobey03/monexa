@@ -21,7 +21,10 @@ RUN apt-get update && apt-get install -y \
     jpegoptim optipng pngquant gifsicle \
     vim \
     nano \
-    netcat-openbsd
+    netcat-openbsd \
+    nginx \
+    supervisor \
+    su-exec
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -42,22 +45,19 @@ RUN docker-php-ext-install opcache
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install sudo for user management in entrypoint
-RUN apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*
+# Create user with same UID/GID as host user
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+RUN groupadd -g ${GROUP_ID} hostgroup && \
+    useradd -u ${USER_ID} -g hostgroup -m -s /bin/bash hostuser
 
-# Copy application files (ownership will be handled by start script)
-COPY . /var/www/html
+# Copy application files first with proper ownership
+COPY --chown=hostuser:hostgroup . /var/www/html
 
-# Copy custom PHP configuration from copied files
-RUN cp /var/www/html/docker/php/local.ini /usr/local/etc/php/conf.d/local.ini
+# Copy custom PHP configuration
+COPY docker/php/local.ini /usr/local/etc/php/conf.d/local.ini
 
-# Make start script executable
-RUN chmod +x /var/www/html/docker/scripts/start.sh
-
-# Install PHP dependencies (will be updated by start script if needed)
-RUN cd /var/www/html && composer install --no-dev --optimize-autoloader --no-interaction --no-scripts || echo "Composer install will be handled by start script"
-
-# Create necessary directories (ownership will be handled by start script)
+# Create necessary directories with proper ownership
 RUN mkdir -p /var/www/html/storage/logs \
     && mkdir -p /var/www/html/storage/framework/cache \
     && mkdir -p /var/www/html/storage/framework/sessions \
@@ -66,133 +66,130 @@ RUN mkdir -p /var/www/html/storage/logs \
     && mkdir -p /var/www/html/storage/app/public \
     && mkdir -p /var/www/html/bootstrap/cache
 
-# Set basic permissions (will be overridden by start script)
-RUN chmod -R 755 /var/www/html \
-    && chmod -R 775 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
+# Install dependencies as hostuser
+USER hostuser
+RUN composer install --no-dev --optimize-autoloader --no-interaction || echo "Composer install will be handled by entrypoint"
 
-# Expose port 9000 for PHP-FPM
-EXPOSE 9000
-
-# Create entrypoint script directly in the image to avoid volume mount issues
-RUN cat > /usr/local/bin/docker-entrypoint.sh << 'EOF'
-#!/bin/bash
-
-# Exit on any error
-set -e
-
-# Get host user ID and group ID from environment variables
-HOST_UID=${HOST_UID:-1000}
-HOST_GID=${HOST_GID:-1000}
-
-echo "Starting Laravel 12 application setup with user mapping..."
-echo "Host UID: $HOST_UID, Host GID: $HOST_GID"
-
-# Create a group with the host GID if it doesn't exist
-if ! getent group $HOST_GID > /dev/null 2>&1; then
-    echo "Creating group with GID $HOST_GID..."
-    groupadd -g $HOST_GID hostgroup
-else
-    echo "Group with GID $HOST_GID already exists"
-fi
-
-# Create a user with the host UID if it doesn't exist
-if ! getent passwd $HOST_UID > /dev/null 2>&1; then
-    echo "Creating user with UID $HOST_UID..."
-    useradd -u $HOST_UID -g $HOST_GID -d /var/www/html -s /bin/bash hostuser
-else
-    echo "User with UID $HOST_UID already exists"
-    # Update existing user's group if needed
-    usermod -g $HOST_GID $(getent passwd $HOST_UID | cut -d: -f1)
-fi
-
-# Get the username for the host UID
-HOST_USER=$(getent passwd $HOST_UID | cut -d: -f1)
-HOST_GROUP=$(getent group $HOST_GID | cut -d: -f1)
-
-echo "Using user: $HOST_USER ($HOST_UID) and group: $HOST_GROUP ($HOST_GID)"
-
-# Wait for MySQL to be ready
-echo "Waiting for MySQL to be ready..."
-while ! nc -z mysql-monexa 3306; do
-    sleep 1
-done
-echo "MySQL is ready!"
-
-# Wait for Redis to be ready
-echo "Waiting for Redis to be ready..."
-while ! nc -z redis-monexa 6379; do
-    sleep 1
-done
-echo "Redis is ready!"
-
-# Create necessary directories with proper ownership
-echo "Creating necessary directories..."
-mkdir -p /var/www/html/storage/logs \
-         /var/www/html/storage/framework/cache \
-         /var/www/html/storage/framework/sessions \
-         /var/www/html/storage/framework/views \
-         /var/www/html/storage/framework/testing \
-         /var/www/html/storage/app/public \
-         /var/www/html/bootstrap/cache
-
-# Set proper ownership for Laravel directories
-echo "Setting proper ownership for Laravel directories..."
-chown -R $HOST_UID:$HOST_GID /var/www/html/storage
-chown -R $HOST_UID:$HOST_GID /var/www/html/bootstrap/cache
+# Switch back to root for final setup
+USER root
 
 # Set proper permissions
-echo "Setting proper permissions..."
-chmod -R 775 /var/www/html/storage
-chmod -R 775 /var/www/html/bootstrap/cache
+RUN chown -R hostuser:hostgroup /var/www/html && \
+    chmod -R 755 /var/www/html && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Ensure the application files have correct ownership (skip .git directory)
-echo "Ensuring application files have correct ownership..."
-find /var/www/html -maxdepth 1 -type f -exec chown $HOST_UID:$HOST_GID {} \; 2>/dev/null || true
-find /var/www/html -maxdepth 1 -type d -not -name ".git" -exec chown $HOST_UID:$HOST_GID {} \; 2>/dev/null || true
+# Copy nginx configuration
+COPY docker/nginx/default.conf /etc/nginx/sites-available/default
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
+    rm -f /etc/nginx/sites-enabled/default
 
-# Create storage symlink if it doesn't exist (run as the host user)
-if [ ! -L /var/www/html/public/storage ]; then
-    echo "Creating storage symlink..."
-    su -s /bin/bash $HOST_USER -c "cd /var/www/html && php artisan storage:link" 2>/dev/null || echo "Storage link failed, but continuing..."
-fi
+# Create nginx configuration for our Laravel app
+RUN echo 'server { \
+    listen 80; \
+    listen [::]:80; \
+    server_name localhost; \
+    root /var/www/html/public; \
+    index index.php index.html index.htm; \
+    \
+    add_header X-Frame-Options "SAMEORIGIN" always; \
+    add_header X-XSS-Protection "1; mode=block" always; \
+    add_header X-Content-Type-Options "nosniff" always; \
+    add_header Referrer-Policy "no-referrer-when-downgrade" always; \
+    add_header Content-Security-Policy "default-src '\''self'\'' http: https: data: blob: '\''unsafe-inline'\'' '\''unsafe-eval'\''; script-src '\''self'\'' '\''unsafe-inline'\'' '\''unsafe-eval'\'' https: http: cdn.jsdelivr.net unpkg.com cdnjs.cloudflare.com; style-src '\''self'\'' '\''unsafe-inline'\'' https: http: fonts.googleapis.com cdn.jsdelivr.net unpkg.com; img-src '\''self'\'' data: blob: https: http:; font-src '\''self'\'' https: http: data: fonts.gstatic.com; connect-src '\''self'\'' https: http: wss: ws:;" always; \
+    \
+    server_tokens off; \
+    \
+    gzip on; \
+    gzip_vary on; \
+    gzip_min_length 1024; \
+    gzip_proxied expired no-cache no-store private auth; \
+    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json application/xml image/svg+xml font/ttf font/opentype application/vnd.ms-fontobject; \
+    \
+    location / { \
+        try_files $uri $uri/ /index.php?$query_string; \
+    } \
+    \
+    location ~ \.php$ { \
+        try_files $uri =404; \
+        fastcgi_split_path_info ^(.+\.php)(/.+)$; \
+        fastcgi_pass 127.0.0.1:9000; \
+        fastcgi_index index.php; \
+        include fastcgi_params; \
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name; \
+        fastcgi_param PATH_INFO $fastcgi_path_info; \
+        \
+        fastcgi_read_timeout 300; \
+        fastcgi_connect_timeout 300; \
+        fastcgi_send_timeout 300; \
+        fastcgi_buffer_size 128k; \
+        fastcgi_buffers 4 256k; \
+        fastcgi_busy_buffers_size 256k; \
+        fastcgi_temp_file_write_size 256k; \
+        fastcgi_intercept_errors on; \
+    } \
+    \
+    location ~* \.(css|js|jpg|jpeg|gif|png|webp|svg|ico|xml|pdf|txt)$ { \
+        expires 1y; \
+        add_header Cache-Control "public, no-transform, immutable"; \
+        add_header Vary "Accept-Encoding"; \
+        access_log off; \
+        log_not_found off; \
+    } \
+    \
+    location ~ /\. { \
+        deny all; \
+        access_log off; \
+        log_not_found off; \
+    } \
+    \
+    location ~ /\.(htaccess|htpasswd|ini|log|sh|sql|conf|yml|yaml|json)$ { \
+        deny all; \
+        access_log off; \
+        log_not_found off; \
+    } \
+    \
+    location ~ /(composer\.(json|lock)|package\.(json|lock)|\.env)$ { \
+        deny all; \
+        access_log off; \
+        log_not_found off; \
+    } \
+    \
+    location ~ ^/(app|bootstrap|config|database|resources|routes|tests|vendor)/ { \
+        deny all; \
+        access_log off; \
+        log_not_found off; \
+    } \
+    \
+    error_page 404 /index.php; \
+    error_page 500 502 503 504 /50x.html; \
+    location = /50x.html { \
+        root /var/www/html/public; \
+    } \
+    \
+    client_max_body_size 100M; \
+    client_body_buffer_size 1M; \
+    client_header_buffer_size 4k; \
+    large_client_header_buffers 4 8k; \
+    client_body_timeout 30s; \
+    client_header_timeout 30s; \
+    \
+    keepalive_timeout 30s; \
+    keepalive_requests 1000; \
+    send_timeout 30s; \
+    reset_timedout_connection on; \
+    \
+    tcp_nopush on; \
+    tcp_nodelay on; \
+    \
+    sendfile on; \
+    sendfile_max_chunk 1m; \
+}' > /etc/nginx/sites-available/default
 
-# Install/update composer dependencies if needed (run as host user)
-if [ -f /var/www/html/composer.json ]; then
-    echo "Checking composer dependencies..."
-    su -s /bin/bash $HOST_USER -c "cd /var/www/html && composer install --no-dev --optimize-autoloader --no-interaction" 2>/dev/null || echo "Composer install failed, but continuing..."
-fi
-
-# Generate application key if needed (run as host user)
-if ! grep -q "APP_KEY=base64:" /var/www/html/.env 2>/dev/null; then
-    echo "Generating application key..."
-    su -s /bin/bash $HOST_USER -c "cd /var/www/html && php artisan key:generate --force" 2>/dev/null || echo "Key generation failed, but continuing..."
-fi
-
-# Clear and cache config (run as host user)
-echo "Clearing and caching configuration..."
-su -s /bin/bash $HOST_USER -c "cd /var/www/html && php artisan config:clear" 2>/dev/null || echo "Config clear failed, but continuing..."
-su -s /bin/bash $HOST_USER -c "cd /var/www/html && php artisan config:cache" 2>/dev/null || echo "Config cache failed, but continuing..."
-
-# Run migrations if requested via environment variable
-if [ "$RUN_MIGRATIONS" = "true" ]; then
-    echo "Running database migrations..."
-    su -s /bin/bash $HOST_USER -c "cd /var/www/html && php artisan migrate --force" 2>/dev/null || echo "Migrations failed, but continuing..."
-fi
-
-echo "Laravel 12 application setup completed!"
-
-# Update PHP-FPM configuration to run as host user
-echo "Updating PHP-FPM configuration..."
-sed -i "s/user = www-data/user = $HOST_USER/g" /usr/local/etc/php-fpm.d/www.conf
-sed -i "s/group = www-data/group = $HOST_GROUP/g" /usr/local/etc/php-fpm.d/www.conf
-
-# Start PHP-FPM
-echo "Starting PHP-FPM as user $HOST_USER ($HOST_UID)..."
-exec php-fpm
-EOF
-
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Use the entrypoint script from a fixed location
+# Expose port 80
+EXPOSE 80
+
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
