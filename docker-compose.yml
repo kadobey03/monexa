@@ -7,7 +7,6 @@ services:
     container_name: app-monexa
     restart: unless-stopped
     working_dir: /var/www/html
-    command: /usr/local/bin/start.sh
     ports:
       - "8000:8000"
     depends_on:
@@ -23,6 +22,9 @@ services:
       - APP_ENV=local
       - APP_DEBUG=true
       - APP_KEY=base64:4n8fOHWzYGMZkW3nP2LvQq6XjV5R9cT8hE2sA7dF1kL=
+      - HOST_UID=${HOST_UID:-1000}
+      - HOST_GID=${HOST_GID:-1000}
+      - RUN_MIGRATIONS=${RUN_MIGRATIONS:-false}
 
   # Nginx Service
   nginx-monexa:

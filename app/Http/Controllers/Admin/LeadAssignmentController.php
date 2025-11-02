@@ -79,7 +79,7 @@ class LeadAssignmentController extends Controller
                     'assigned_by_admin_id' => $authAdmin->id
                 ]);
 
-                return $this->successResponse([
+                return $this->successResponseWithMeta([
                     'lead' => $this->formatLeadResponse($lead),
                     'assignment' => null
                 ], 'Lead başarıyla atama kaldırıldı');
@@ -101,7 +101,7 @@ class LeadAssignmentController extends Controller
             // Check if it's the same admin (no change needed)
             if ($previousAdminId == $newAdminId) {
                 DB::rollBack();
-                return $this->successResponse([
+                return $this->successResponseWithMeta([
                     'lead' => $this->formatLeadResponse($lead),
                     'assignment' => $lead->currentAssignment
                 ], 'Lead zaten bu admin\'e atanmış');
@@ -162,7 +162,7 @@ class LeadAssignmentController extends Controller
                 'assignment_id' => $assignment->id
             ]);
 
-            return $this->successResponse([
+            return $this->successResponseWithMeta([
                 'lead' => $this->formatLeadResponse($lead->fresh(['assignedAdmin'])),
                 'assignment' => $assignment
             ], 'Lead başarıyla atandı');
@@ -394,7 +394,7 @@ class LeadAssignmentController extends Controller
                 'skipped' => $skippedCount
             ]);
 
-            return $this->successResponse([
+            return $this->successResponseWithMeta([
                 'bulk_assignment_id' => $bulkAssignmentId,
                 'summary' => [
                     'total_requested' => $totalCount,
@@ -500,7 +500,7 @@ class LeadAssignmentController extends Controller
                 ];
             });
 
-            return $this->successResponse([
+            return $this->successResponseWithMeta([
                 'history' => $formattedHistory,
                 'pagination' => [
                     'current_page' => $history->currentPage(),
@@ -577,7 +577,7 @@ class LeadAssignmentController extends Controller
                     });
             });
 
-            return $this->successResponse([
+            return $this->successResponseWithMeta([
                 'admins' => $availableAdmins,
                 'total_count' => $availableAdmins->count(),
                 'cache_key' => $cacheKey
@@ -662,7 +662,7 @@ class LeadAssignmentController extends Controller
                 $validation['warnings'][] = 'Lead zaten bu admin\'e atanmış';
             }
 
-            return $this->successResponse($validation, 'Atama validasyonu tamamlandı');
+            return $this->successResponseWithMeta($validation, 'Atama validasyonu tamamlandı');
 
         } catch (\Exception $e) {
             Log::error('Assignment validation failed', [
@@ -772,7 +772,7 @@ class LeadAssignmentController extends Controller
                 ];
             });
 
-            return $this->successResponse($stats, 'Assignment istatistikleri başarıyla getirildi');
+            return $this->successResponseWithMeta($stats, 'Assignment istatistikleri başarıyla getirildi');
 
         } catch (\Exception $e) {
             Log::error('Failed to fetch assignment stats', [
@@ -891,9 +891,9 @@ class LeadAssignmentController extends Controller
     }
 
     /**
-     * Standard success response format
+     * Standard success response format with meta support
      */
-    protected function successResponse($data, string $message = 'İşlem başarılı', array $meta = []): JsonResponse
+    protected function successResponseWithMeta($data, string $message = 'İşlem başarılı', array $meta = []): JsonResponse
     {
         return response()->json([
             'success' => true,

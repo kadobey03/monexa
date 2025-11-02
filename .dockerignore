@@ -7,7 +7,10 @@ README.md
 # Docker files
 Dockerfile
 docker-compose.yml
-docker/
+# Allow docker config files but exclude other docker files
+docker/README.md
+docker/entrypoint.sh
+# Keep docker/php/ and docker/scripts/ for container setup
 
 # Node modules and build artifacts
 node_modules/

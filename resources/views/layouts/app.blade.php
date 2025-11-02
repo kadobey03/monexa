@@ -116,8 +116,9 @@
         <!-- FontAwesome REMOVED - Using unified Lucide icons instead -->
         <!-- Unified Icon Service loaded via Vite assets -->
         
-        <!-- Ultimate Console Error Fixes - Priority Load -->
+        <!-- Console Error Fixes - Ultimate System -->
         <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
+        <script src="{{ asset('js/websocket-fix.js') }}"></script>
         
         <!-- jQuery - Local -->
         <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>

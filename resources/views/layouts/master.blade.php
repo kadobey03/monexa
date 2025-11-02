@@ -32,16 +32,40 @@
         'additionalData' => $additionalData ?? []
     ])
     
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- jQuery with Fallback -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script>
+        if (!window.jQuery) {
+            document.write('<script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"><\/script>');
+        }
+    </script>
     
-    <!-- SweetAlert2 -->
+    <!-- Bootstrap JavaScript with Fallback -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <script>
+        if (!window.bootstrap) {
+            document.write('<script src="{{ asset('vendor/bootstrap/bootstrap.bundle.min.js') }}"><\/script>');
+        }
+    </script>
+    
+    <!-- SweetAlert2 with Fallback -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        if (!window.Swal) {
+            document.write('<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
+        }
+    </script>
     
-    <!-- Ultimate Console Error Fixes -->
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Console Error Fixes - Ultimate System -->
     <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
-    
-    <!-- Console Error Fixes -->
+    <script src="{{ asset('js/websocket-fix.js') }}"></script>
     <script src="{{ asset('js/console-fixes.js') }}"></script>
     
     @stack('head-scripts')
@@ -806,20 +830,92 @@
             setInterval(fetchCryptoPrices, 30000);
         }
         
-        // jQuery integration for legacy compatibility
+        // jQuery integration for legacy compatibility with Bootstrap
         if (typeof $ !== 'undefined') {
             $(document).ready(function() {
                 console.log('jQuery ready - legacy compatibility mode');
                 
-                // Initialize any jQuery plugins here
-                $('.modal').modal();
-                $('.dropdown').dropdown();
+                // Initialize Bootstrap components
+                if (typeof bootstrap !== 'undefined') {
+                    // Initialize modals with Bootstrap 5
+                    const modalElements = document.querySelectorAll('.modal');
+                    modalElements.forEach(modalEl => {
+                        new bootstrap.Modal(modalEl);
+                    });
+                    
+                    // Initialize dropdowns
+                    const dropdownElements = document.querySelectorAll('.dropdown-toggle');
+                    dropdownElements.forEach(dropdownEl => {
+                        new bootstrap.Dropdown(dropdownEl);
+                    });
+                    
+                    // Initialize tooltips
+                    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+                    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+                    
+                    console.log('Bootstrap components initialized');
+                } else {
+                    console.warn('Bootstrap not loaded, skipping component initialization');
+                }
+                
+                // Initialize Lucide icons
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                    console.log('Lucide icons initialized');
+                }
             });
         }
     </script>
     
     <!-- Livewire Scripts -->
+    @livewireScriptConfig
     @livewireScripts
+    
+    <!-- Enhanced Livewire Configuration -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configure Livewire if available
+            if (typeof Livewire !== 'undefined') {
+                // Configure Livewire for better UX
+                Livewire.onPageExpired((response, message) => {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Oturum Süresi Doldu',
+                            text: 'Sayfayı yeniden yüklemek için tamam\'a tıklayın.',
+                            icon: 'warning',
+                            confirmButtonText: 'Tamam'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        if (confirm('Oturum süresi doldu. Sayfayı yeniden yüklemek istiyor musunuz?')) {
+                            window.location.reload();
+                        }
+                    }
+                });
+                
+                // Loading states
+                Livewire.onLoading(() => {
+                    document.body.classList.add('loading');
+                });
+                
+                Livewire.onLoadingDone(() => {
+                    document.body.classList.remove('loading');
+                });
+                
+                console.log('Livewire configured successfully');
+            } else {
+                console.warn('Livewire not loaded');
+            }
+        });
+        
+        // Theme integration with Livewire
+        document.addEventListener('theme-changed', (e) => {
+            if (typeof Livewire !== 'undefined') {
+                Livewire.emit('theme-changed', e.detail.theme);
+            }
+        });
+    </script>
     
     <!-- Global Styles -->
     <style>

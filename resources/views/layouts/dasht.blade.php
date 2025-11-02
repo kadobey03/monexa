@@ -9,11 +9,32 @@
 <link href="{{ $settings->favicon ? asset('storage/' . $settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
     <!-- Inter Font - Local -->
     <link href="{{ asset('vendor/fonts/inter.css') }}" rel="stylesheet">
-    <!-- SweetAlert2 - Local -->
-    <link href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"></script>
-    <!-- jQuery - Local -->
-    <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
+    <!-- SweetAlert2 with CDN fallback -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" media="none" onload="if(!window.Swal)this.media='all'">
+    
+    <!-- jQuery with CDN fallback -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script>
+        if (!window.jQuery) {
+            document.write('<script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"><\/script>');
+        }
+    </script>
+    
+    <!-- SweetAlert2 with fallback -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        if (!window.Swal) {
+            document.write('<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
+        }
+    </script>
+    
+    <!-- Bootstrap Bundle for modal support -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
 
     <!-- Tailwind CSS Local -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -51,8 +72,10 @@
         updateTheme();
     </script>
 
-    <!-- Nuclear Console Error Suppression for TradingView Widgets - IMMEDIATE LOAD -->
-    <script src="{{ asset('js/nuclear-console-fix.js') }}"></script>
+    <!-- Console Error Fixes - Ultimate System -->
+    <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
+    <script src="{{ asset('js/websocket-fix.js') }}"></script>
+    <script src="{{ asset('js/console-fixes.js') }}"></script>
 
 </head>
 <body class="dark text-gray-100 bg-gray-900 js-hidden" id="main-body" data-sidebar-open="false">
@@ -1082,7 +1105,104 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
+    
+    // Initialize Bootstrap components
+    if (typeof bootstrap !== 'undefined') {
+        // Initialize modals
+        const modalElements = document.querySelectorAll('.modal');
+        modalElements.forEach(modalEl => {
+            new bootstrap.Modal(modalEl);
+        });
+        
+        // Initialize dropdowns
+        const dropdownElements = document.querySelectorAll('.dropdown-toggle');
+        dropdownElements.forEach(dropdownEl => {
+            new bootstrap.Dropdown(dropdownEl);
+        });
+        
+        // Initialize tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        
+        console.log('Bootstrap components initialized in dasht layout');
+    }
+    
+    // Fix jQuery modal and dropdown functions
+    if (typeof $ !== 'undefined' && typeof bootstrap !== 'undefined') {
+        $.fn.modal = function(options) {
+            return this.each(function() {
+                if (options === 'show') {
+                    const modal = new bootstrap.Modal(this);
+                    modal.show();
+                } else if (options === 'hide') {
+                    const modal = bootstrap.Modal.getInstance(this);
+                    if (modal) modal.hide();
+                } else {
+                    new bootstrap.Modal(this, options);
+                }
+            });
+        };
+        
+        $.fn.dropdown = function(options) {
+            return this.each(function() {
+                if (options === 'toggle') {
+                    const dropdown = new bootstrap.Dropdown(this);
+                    dropdown.toggle();
+                } else {
+                    new bootstrap.Dropdown(this, options);
+                }
+            });
+        };
+    }
 });
+</script>
+
+<!-- Livewire Scripts -->
+@livewireScriptConfig
+@livewireScripts
+
+<!-- Enhanced Livewire Configuration for dasht layout -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configure Livewire if available
+        if (typeof Livewire !== 'undefined') {
+            // Configure Livewire for better UX
+            Livewire.onPageExpired((response, message) => {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: 'Oturum Süresi Doldu',
+                        text: 'Sayfayı yeniden yüklemek için tamam\'a tıklayın.',
+                        icon: 'warning',
+                        confirmButtonText: 'Tamam'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    if (confirm('Oturum süresi doldu. Sayfayı yeniden yüklemek istiyor musunuz?')) {
+                        window.location.reload();
+                    }
+                }
+            });
+            
+            // Loading states
+            Livewire.onLoading(() => {
+                document.body.classList.add('loading');
+            });
+            
+            Livewire.onLoadingDone(() => {
+                document.body.classList.remove('loading');
+                
+                // Re-initialize icons after Livewire updates
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            });
+            
+            console.log('Livewire configured successfully in dasht layout');
+        } else {
+            console.warn('Livewire not loaded in dasht layout');
+        }
+    });
 </script>
 
 @yield('scripts')
