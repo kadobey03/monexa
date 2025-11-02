@@ -6,25 +6,14 @@ services:
       dockerfile: Dockerfile
     container_name: app-monexa
     restart: unless-stopped
-    working_dir: /var/www/html
+    security_opt:
+      - apparmor=unconfined
     ports:
       - "8000:8000"
     depends_on:
       - mysql-monexa
     volumes:
-      - ./:/var/www/html
-    environment:
-      - DB_HOST=mysql-monexa
-      - DB_DATABASE=monexa
-      - DB_USERNAME=monexa_user
-      - DB_PASSWORD=sPl2ltlt1emaV5t9
-      - REDIS_HOST=redis-monexa
-      - APP_ENV=local
-      - APP_DEBUG=true
-      - APP_KEY=base64:4n8fOHWzYGMZkW3nP2LvQq6XjV5R9cT8hE2sA7dF1kL=
-      - HOST_UID=${HOST_UID:-1000}
-      - HOST_GID=${HOST_GID:-1000}
-      - RUN_MIGRATIONS=${RUN_MIGRATIONS:-false}
+      - ./:/var/www/html:rw
 
   # Nginx Service
   nginx-monexa:
