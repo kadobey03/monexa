@@ -1,98 +1,84 @@
 # Tool Compatibility & Workflow Optimization
 
 ## Efficient Tool Usage Strategy
-- **Minimize Requests**: Get maximum benefit from each tool usage
-- **Batch Operations**: Group operations whenever possible
-- **Strategic Reading**: Read necessary files at once (max 5 files)
-- **Context Preservation**: Use read information in subsequent operations
+- **Batch Operations**: Read max 5 files at once, group related operations
+- **codebase_search**: MANDATORY FIRST for ANY new code exploration
+- **Wait for Confirmation**: One tool per message, confirm before proceeding
+- **Context Preservation**: Use information from previous operations
 
 ## Available Tools & Capabilities
 
 ### File Operations
-- **read_file**: Can read up to 5 files in a single request, PDF/DOCX supported, line-numbered output
-- **write_to_file**: Create new file or completely rewrite, automatic directory creation
-- **apply_diff**: Edit multiple files with targeted changes in single request (SEARCH/REPLACE), start_line required
-- **insert_content**: Add content to specific line number (0=end of file, 1+=before specific line)
+- **read_file**: Max 5 files, PDF/DOCX support, line-numbered output
+- **write_to_file**: Complete rewrite, auto-create directories, line_count required
+- **apply_diff**: Targeted SEARCH/REPLACE with start_line, exact whitespace match
+- **insert_content**: Add at line number (0=end, 1+=before line)
 
 ### Code Analysis Tools
-- **search_files**: Regex search across files, context-rich results, file_pattern filter
-- **list_files**: List directory contents (recursive=true/false), workspace relative paths
-- **list_code_definition_names**: List code definitions (class, function), single file or directory
+- **search_files**: Regex search, context results, file_pattern filter
+- **list_files**: Directory contents, recursive option
+- **list_code_definition_names**: Code definitions overview
+- **codebase_search**: Semantic search (MANDATORY first step)
 
 ### System Operations
-- **execute_command**: Execute CLI commands (artisan, composer, npm etc.), optional cwd parameter
-- **Docker Commands**: ALL Laravel commands MUST use `docker-compose exec app-monexa php artisan [command]`
-- **fetch_instructions**: Get instructions for MCP server, mode creation (create_mcp_server, create_mode)
+- **execute_command**: CLI commands, Docker MANDATORY: `docker-compose exec app-monexa php artisan [command]`
+- **fetch_instructions**: MCP server, mode creation instructions
 
-### MCP Integration
-- **use_mcp_tool**: Use MCP server tools (context7, fetch API etc.), JSON arguments
-- **access_mcp_resource**: Access MCP server resources, URI-based resources
+### MCP Integration Tools
+- **use_mcp_tool**: JSON arguments, sequential execution only
+- **access_mcp_resource**: URI-based resources
+
+#### MCP Servers
+**Puppeteer** (`puppeteer`): Web automation, testing, screenshots
+- Tools: navigate, screenshot, click, fill, select, hover, evaluate
+- Resource: `console://logs` for browser console
+- Security: Use `allowDangerous: true` for `--no-sandbox`
+
+**MCP_DOCKER** (`MCP_DOCKER`): Content fetching, library docs, knowledge graph
+- Tools: fetch, resolve-library-id, get-library-docs, knowledge graph management
+- Parameters: url, max_length, raw, start_index, libraryName, context7CompatibleLibraryID
 
 ### Communication & Management
-- **ask_followup_question**: Ask user optional questions (2-4 suggestions), optional mode switching
-- **update_todo_list**: Task tracking and progress monitoring ([x], [-], [ ] statuses)
-- **attempt_completion**: Present final results (user confirmation required first)
-- **switch_mode**: Switch to different modes (code, architect, ask, debug, orchestrator etc.)
-- **new_task**: Create new task instance (mode + message parameters)
+- **ask_followup_question**: 2-4 suggestions, optional mode switching
+- **update_todo_list**: Track progress ([x], [-], [ ])
+- **attempt_completion**: Present final results
+- **switch_mode**: Change modes (code, architect, debug, etc.)
 
-## Multi-File Operations Strategy
-- **IMPORTANT: You MUST use multiple files in a single operation whenever possible to maximize efficiency and minimize back-and-forth.**
-- **Efficient Reading Strategy**: Get maximum benefit from each tool usage
-- **Batch Operations**: Group operations whenever possible
-- **Strategic Reading**: Read necessary files at once (max 5 files)
-- **Context Preservation**: Use read information in subsequent operations
+## Workflow Patterns
 
-When you need to read more than 5 files, prioritize the most critical files first, then use subsequent read_file requests for additional files
+### Laravel Project Workflow
+1. **Analysis**: codebase_search → composer.json → config → routes → models
+2. **Planning**: Read related files in batch (model + controller + migration)
+3. **Implementation**: Single apply_diff for related changes
+4. **Verification**: Check status only when necessary
 
-## Tool Usage Efficiency Rules
-- **Wait for Confirmation**: Always wait for user confirmation after each tool usage
-- **One Tool Per Message**: Use only one tool per message
-- **Complete Information**: Gather all necessary information for tool parameters
-- **Error Handling**: Try alternative methods when tool fails
-- **Context Awareness**: Always evaluate environment_details
+### MCP Usage Patterns
+**Web Testing**: navigate → interact (click/fill) → screenshot → console logs
+**Documentation**: resolve-library-id → get-library-docs → fetch → knowledge graph
+**Laravel Testing**: Docker environment, multi-page workflows, error monitoring
+**Fintech Testing**: Auth flows (2FA, KYC), financial operations, real-time features
 
-## Laravel Project Workflow
-- **Analysis Phase**: composer.json → config/app.php → routes → models
-- **Planning Phase**: Read related files in batch, identify patterns
-- **Implementation Phase**: Make related changes in single apply_diff
-- **Docker Commands**: Always use `docker-compose exec app-monexa php artisan` for Laravel operations
-- **Verification Phase**: Check file status only when necessary
-
-## File Reading Strategy
-- **Related Files**: Read related files together (model + controller + migration)
-- **Context Gathering**: First understand general structure, then go into details
-- **Prioritize Critical**: Give priority to core business logic files
-- **Avoid Re-reading**: Don't re-read previously read files
-
-## Implementation Patterns
-- **Single Request Rule**: Try to complete an operation in single tool call
-- **Progressive Enhancement**: Progress from simple → complex structure
-- **Dependency Aware**: Consider dependencies
-- **Error Prevention**: Anticipate possible errors beforehand
+## Key Rules & Constraints
+- **Multi-File Strategy**: Read related files together, batch operations
+- **MCP Sequential**: One tool per request, parameter validation required
+- **Docker Commands**: Always use container-based Laravel commands
+- **File Paths**: Workspace relative paths (/home/kadir/dev/monexafinans)
+- **Error Prevention**: Validate parameters, prepare fallbacks
 
 ## Financial System Specific
-- **Transaction Safety**: Perform critical operations within DB::transaction()
-- **Validation First**: Plan input validation before writing code
-- **Security Checks**: Include Auth, KYC, CRON_KEY controls
-- **Logging Strategy**: Define log points for audit trail
+- **Transaction Safety**: DB::transaction() for critical operations
+- **Security**: Auth, KYC, CRON_KEY verification required
+- **Validation**: Input validation, bcmath for calculations
+- **Audit**: Log financial operations
 
-## Code Quality Gates
-- **Pre-implementation**: Validate requirements before writing code
-- **Single Responsibility**: Each change should focus on single responsibility
-- **Test Consideration**: Consider testability of written code
-- **Documentation**: Document complex business logic
+## Tool Limitations
+- read_file: 5 files max, whitespace sensitive for apply_diff
+- MCP: Server connection required, sequential execution only
+- Docker: Container commands mandatory for Laravel
 
-## Tool Limitations & Constraints
-- **read_file**: Maximum 5 files per request, PDF/DOCX support for binary files
-- **apply_diff**: SEARCH section requires exact match, whitespace sensitive
-- **write_to_file**: Complete content required, line_count parameter mandatory
-- **execute_command**: Each command runs in new terminal instance, Docker commands mandatory for Laravel
-- **MCP Tools**: Requires server connection, one tool at a time usage
-- **File Paths**: Workspace relative paths (c:/Users/kadobey/Desktop/Monexa/monexafinans)
-
-## Best Practices Summary
-- **Analysis First**: Analyze project structure and environment_details first
-- **Batch Operations**: Read and edit related files at once
-- **Error Prevention**: Validate tool parameters before usage
-- **User Feedback**: Wait for confirmation after each tool usage
-- **Efficiency Focus**: Achieve maximum results with minimum tool usage
+## Best Practices
+- Use codebase_search first for ANY new code exploration
+- Batch read/edit operations for efficiency
+- Wait for user confirmation after each tool
+- Validate parameters before tool usage
+- Consider security implications for MCP tools
