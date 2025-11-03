@@ -1,7 +1,9 @@
-FROM php:8.3-fpm
+FROM php:8.4-fpm
 
 # Set working directory
 WORKDIR /var/www/html
+
+ARG CACHE_TIMESTAMP="$(date +%s)"
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -21,7 +23,8 @@ RUN apt-get update && apt-get install -y \
     jpegoptim optipng pngquant gifsicle \
     vim \
     nano \
-    netcat-openbsd
+    netcat-openbsd \
+    gosu
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -42,21 +45,16 @@ RUN docker-php-ext-install opcache
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create appuser with UID and GID 1000
-RUN groupadd -g 1000 appuser && useradd -u 1000 -g appuser -m appuser
-# Switch to non-root user
-USER appuser
 
 # Copy custom PHP configuration
 COPY docker/php/local.ini /usr/local/etc/php/conf.d/local.ini
 
-# Install composer dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction || echo "Composer install will be handled by entrypoint"
-
-
+# Copy entrypoint script
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Expose PHP-FPM port
 EXPOSE 9000
 
-ENTRYPOINT ["/var/www/html/docker/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["php-fpm"]

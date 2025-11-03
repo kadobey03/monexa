@@ -4,16 +4,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - BUILDKIT_INLINE_CACHE=1
     container_name: app-monexa
     restart: unless-stopped
-    security_opt:
-      - apparmor=unconfined
-    ports:
-      - "8000:8000"
+    command: php-fpm
+    env_file:
+      - .env.docker.local
     depends_on:
       - mysql-monexa
     volumes:
-      - ./:/var/www/html:rw
+      - ./:/var/www/html
 
   # Nginx Service
   nginx-monexa:
@@ -21,7 +22,7 @@ services:
     container_name: nginx-monexa
     restart: unless-stopped
     ports:
-      - "8211:80"
+      - "8080:80"
     volumes:
       - ./:/var/www/html
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -53,7 +54,7 @@ services:
     container_name: pma-monexa
     restart: unless-stopped
     ports:
-      - "8111:80"
+      - "8081:80"
     environment:
       PMA_HOST: mysql-monexa
       PMA_PORT: 3306
@@ -67,12 +68,6 @@ services:
       MAX_EXECUTION_TIME: 300
     depends_on:
       - mysql-monexa
-
-# Docker Networks
-networks:
-  default:
-    external: true
-    name: proxy-network
 
 # Volumes
 volumes:
