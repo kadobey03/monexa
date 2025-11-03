@@ -27,6 +27,9 @@ class ConsolidateDatabaseSchema extends Migration
 
         // Add missing indexes and constraints to deposits table
         Schema::table('deposits', function (Blueprint $table) {
+            // First change column type to match users.id
+            $table->unsignedBigInteger('user')->nullable()->change();
+            
             // Performance indexes
             $table->index(['user', 'status'], 'idx_deposits_user_status');
             $table->index(['created_at'], 'idx_deposits_created_at');
@@ -41,11 +44,13 @@ class ConsolidateDatabaseSchema extends Migration
 
             // Data integrity constraints
             $table->decimal('amount', 15, 2)->nullable()->change();
-            $table->check('amount > 0', 'chk_deposits_amount_positive');
         });
 
         // Add missing indexes and constraints to withdrawals table
         Schema::table('withdrawals', function (Blueprint $table) {
+            // First change column type to match users.id
+            $table->unsignedBigInteger('user')->nullable()->change();
+            
             // Performance indexes
             $table->index(['user', 'status'], 'idx_withdrawals_user_status');
             $table->index(['created_at'], 'idx_withdrawals_created_at');
@@ -62,7 +67,6 @@ class ConsolidateDatabaseSchema extends Migration
             $table->decimal('amount', 15, 2)->nullable()->change();
             $table->decimal('to_deduct', 15, 2)->nullable()->change();
             $table->decimal('charges', 15, 2)->nullable()->change();
-            $table->check('amount > 0', 'chk_withdrawals_amount_positive');
         });
 
         // Add missing indexes and constraints to plans table
@@ -79,12 +83,14 @@ class ConsolidateDatabaseSchema extends Migration
             $table->decimal('total_duration', 15, 2)->nullable()->change();
 
             // Data integrity constraints
-            $table->check('price >= 0', 'chk_plans_price_positive');
-            $table->check('increment_amount >= 0', 'chk_plans_increment_positive');
         });
 
         // Add missing indexes and constraints to user_plans table
         Schema::table('user_plans', function (Blueprint $table) {
+            // First change column types to match referenced tables
+            $table->unsignedBigInteger('user')->nullable()->change();
+            $table->unsignedBigInteger('plan')->nullable()->change();
+            
             // Performance indexes
             $table->index(['user', 'plan'], 'idx_user_plans_user_plan');
             $table->index(['user', 'status'], 'idx_user_plans_user_status');
@@ -109,8 +115,6 @@ class ConsolidateDatabaseSchema extends Migration
             $table->boolean('activated')->default(false)->change();
 
             // Data integrity constraints
-            $table->check('amount > 0', 'chk_user_plans_amount_positive');
-            $table->check('expected_return >= 0', 'chk_user_plans_return_positive');
         });
 
         // Add missing indexes and constraints to admins table
@@ -181,7 +185,6 @@ class ConsolidateDatabaseSchema extends Migration
 
         Schema::table('deposits', function (Blueprint $table) {
             $table->dropForeign('fk_deposits_user');
-            $table->dropCheck('chk_deposits_amount_positive');
             $table->dropIndex('idx_deposits_user_status');
             $table->dropIndex('idx_deposits_created_at');
             $table->dropIndex('idx_deposits_amount');
@@ -192,7 +195,6 @@ class ConsolidateDatabaseSchema extends Migration
 
         Schema::table('withdrawals', function (Blueprint $table) {
             $table->dropForeign('fk_withdrawals_user');
-            $table->dropCheck('chk_withdrawals_amount_positive');
             $table->dropIndex('idx_withdrawals_user_status');
             $table->dropIndex('idx_withdrawals_created_at');
             $table->dropIndex('idx_withdrawals_amount');
@@ -204,8 +206,6 @@ class ConsolidateDatabaseSchema extends Migration
         });
 
         Schema::table('plans', function (Blueprint $table) {
-            $table->dropCheck('chk_plans_price_positive');
-            $table->dropCheck('chk_plans_increment_positive');
             $table->dropIndex('idx_plans_active');
             $table->dropIndex('idx_plans_price_duration');
             $table->dropIndex('idx_plans_created_at');
@@ -218,8 +218,6 @@ class ConsolidateDatabaseSchema extends Migration
         Schema::table('user_plans', function (Blueprint $table) {
             $table->dropForeign('fk_user_plans_user');
             $table->dropForeign('fk_user_plans_plan');
-            $table->dropCheck('chk_user_plans_amount_positive');
-            $table->dropCheck('chk_user_plans_return_positive');
             $table->dropIndex('idx_user_plans_user_plan');
             $table->dropIndex('idx_user_plans_user_status');
             $table->dropIndex('idx_user_plans_plan_status');

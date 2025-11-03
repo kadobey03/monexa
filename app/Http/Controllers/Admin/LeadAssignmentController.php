@@ -909,21 +909,17 @@ class LeadAssignmentController extends Controller
     /**
      * Standard error response format
      */
-    protected function errorResponse(string $message, string $errorCode = 'UNKNOWN_ERROR', int $statusCode = 500, $errorDetails = null): JsonResponse
+    protected function errorResponse(string $message, int $statusCode = 500, array $errors = []): JsonResponse
     {
         $response = [
             'success' => false,
             'message' => $message,
-            'error_code' => $errorCode,
+            'errors' => $errors,
             'meta' => [
                 'timestamp' => now()->toISOString(),
                 'version' => '2.0'
             ]
         ];
-        
-        if ($errorDetails) {
-            $response['error_details'] = $errorDetails;
-        }
         
         return response()->json($response, $statusCode);
     }

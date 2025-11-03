@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @inject('content', 'App\Http\Controllers\FrontController')
-@section('title', '{{$title}}')
+@section('title', $title)
 
 @section('content')
 
