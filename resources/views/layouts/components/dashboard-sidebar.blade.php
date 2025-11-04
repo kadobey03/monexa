@@ -111,6 +111,55 @@
 </aside>
 
 <!-- Mobile Overlay -->
-<div id="dashboard-sidebar-overlay" 
-     class="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden">
+<div id="dashboard-sidebar-overlay"
+     class="fixed inset-0 z-40 bg-black bg-opacity-50 hidden transition-opacity duration-300 md:hidden"
+     onclick="toggleDashboardSidebar()">
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle responsive behavior
+    function handleResize() {
+        const sidebar = document.getElementById('dashboard-sidebar');
+        const overlay = document.getElementById('dashboard-sidebar-overlay');
+        
+        if (window.innerWidth >= 768) { // md breakpoint
+            // On desktop, ensure sidebar is visible and overlay is hidden
+            if (sidebar) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+            }
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.classList.remove('opacity-50');
+            }
+        } else {
+            // On mobile, ensure sidebar is hidden by default
+            if (sidebar) {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+            }
+            if (overlay) {
+                overlay.classList.add('hidden');
+                overlay.classList.remove('opacity-50');
+            }
+        }
+    }
+    
+    // Run on load and resize
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    // Handle escape key to close sidebar on mobile
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const sidebar = document.getElementById('dashboard-sidebar');
+            const overlay = document.getElementById('dashboard-sidebar-overlay');
+            
+            if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
+                toggleDashboardSidebar();
+            }
+        }
+    });
+});
+</script>

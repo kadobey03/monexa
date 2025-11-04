@@ -3,8 +3,14 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
-            <!-- Left: Logo & Market Info -->
+            <!-- Left: Sidebar Toggle & Logo -->
             <div class="flex items-center space-x-4">
+                <!-- Sidebar Toggle Button -->
+                <button onclick="toggleDashboardSidebar()"
+                        class="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 md:hidden">
+                    <x-heroicon name="bars-3" class="w-6 h-6" />
+                </button>
+                
                 <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 group">
                     @isset($settings)
                         <img src="{{ asset('storage/'.$settings->logo) }}" class="h-8 w-auto" alt="Logo" />
@@ -172,12 +178,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Dashboard Sidebar Toggle
+    window.toggleDashboardSidebar = function() {
+        const sidebar = document.getElementById('dashboard-sidebar');
+        const overlay = document.getElementById('dashboard-sidebar-overlay');
+        
+        if (sidebar && overlay) {
+            const isHidden = sidebar.classList.contains('-translate-x-full');
+            
+            if (isHidden) {
+                // Show sidebar
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                overlay.classList.remove('hidden');
+                overlay.classList.add('opacity-50');
+            } else {
+                // Hide sidebar
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                overlay.classList.add('hidden');
+                overlay.classList.remove('opacity-50');
+            }
+        }
+    };
+
     // Mobile Menu Toggle
     window.toggleMobileMenu = function() {
-        // This should be handled by the main layout manager
-        if (window.LayoutManager && window.LayoutManager.toggleMobileMenu) {
-            window.LayoutManager.toggleMobileMenu();
-        }
+        // Mobile menu is the same as sidebar toggle on dashboard
+        toggleDashboardSidebar();
     };
 
     // Click away functionality
