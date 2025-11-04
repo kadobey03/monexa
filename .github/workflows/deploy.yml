@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Deploy to HestiaCP server
+      - name: Deploy to OVH server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
