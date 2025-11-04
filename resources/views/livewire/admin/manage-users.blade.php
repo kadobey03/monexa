@@ -1,577 +1,572 @@
 @php
-     if (Auth('admin')->User()->dashboard_style == 'light') {
-         $text = 'dark';
-         $bg = 'light';
-     } else {
-         $bg = 'dark';
-         $text = 'light';
-     }
- @endphp
- <div>
-     <div class="main-panel">
-         <div class="content">
-             <div class="page-inner">
-                 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center mb-4 gap-3">
-                     <div class="flex-grow-1">
-                         <h1 class="fw-bold text-primary mb-1" style="font-size: 1.75rem; line-height: 1.2;">
-                             <i class="fas fa-users me-2"></i>{{ $settings->site_name }} Kullanıcıları
-                         </h1>
-                         <p class="text-muted mb-0" style="font-size: 1rem;">Kullanıcı hesaplarını yönetin ve düzenleyin</p>
-                     </div>
-                     <div class="d-flex gap-2 flex-shrink-0">
-                         <span class="badge bg-primary fs-6 px-3 py-2" style="border-radius: 8px; font-weight: 500;">
-                             <i class="fas fa-user-check me-1"></i>{{ $users->total() }} Kullanıcı
-                         </span>
-                     </div>
-                 </div>
-                 {{-- Genel Error Handling Alert Bölümü --}}
-                 <div id="general-error-alert" class="alert alert-danger alert-dismissible fade show border-0 bg-light" role="alert" style="display: none;">
-                     <div class="d-flex align-items-center">
-                         <i class="fas fa-exclamation-triangle me-2 text-danger"></i>
-                         <div class="flex-grow-1">
-                             <strong>Bir Hata Oluştu!</strong>
-                             <span id="error-message-text">Lütfen tekrar deneyin veya sistem yöneticisiyle iletişime geçin.</span>
-                         </div>
-                         <button type="button" class="btn-close" onclick="hideErrorAlert()" aria-label="Hata mesajını kapat"></button>
-                     </div>
-                 </div>
-
-                 {{-- Başarı Mesajları --}}
-                 <div id="success-alert" class="alert alert-success alert-dismissible fade show border-0 bg-light" role="alert" style="display: none;">
-                     <div class="d-flex align-items-center">
-                         <i class="fas fa-check-circle me-2 text-success"></i>
-                         <div class="flex-grow-1">
-                             <strong>Başarılı!</strong>
-                             <span id="success-message-text">İşlem başarıyla tamamlandı.</span>
-                         </div>
-                         <button type="button" class="btn-close" onclick="hideSuccessAlert()" aria-label="Başarı mesajını kapat"></button>
-                     </div>
-                 </div>
-
-                 {{-- Uyarı Mesajları --}}
-                 <div id="warning-alert" class="alert alert-warning alert-dismissible fade show border-0 bg-light" role="alert" style="display: none;">
-                     <div class="d-flex align-items-center">
-                         <i class="fas fa-exclamation-circle me-2 text-warning"></i>
-                         <div class="flex-grow-1">
-                             <strong>Dikkat!</strong>
-                             <span id="warning-message-text">Lütfen dikkatli olun.</span>
-                         </div>
-                         <button type="button" class="btn-close" onclick="hideWarningAlert()" aria-label="Uyarı mesajını kapat"></button>
-                     </div>
-                 </div>
-
-                 {{-- Bilgi Mesajları --}}
-                 <div id="info-alert" class="alert alert-info alert-dismissible fade show border-0 bg-light" role="alert" style="display: none;">
-                     <div class="d-flex align-items-center">
-                         <i class="fas fa-info-circle me-2 text-info"></i>
-                         <div class="flex-grow-1">
-                             <strong>Bilgi:</strong>
-                             <span id="info-message-text">Bilgilendirme mesajı.</span>
-                         </div>
-                         <button type="button" class="btn-close" onclick="hideInfoAlert()" aria-label="Bilgi mesajını kapat"></button>
-                     </div>
-                 </div>
-
-                 <x-danger-alert />
-                 <x-success-alert />
-
-                 <div class="row">
-                     <div class="col-12">
-                         <div class="card border-0 shadow-lg"
-                              role="region"
-                              aria-labelledby="users-management-heading"
-                              style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.08);">
-                             <div class="card-header bg-gradient-primary text-white border-0 p-4"
-                                  style="border-radius: 12px 12px 0 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                                 <div class="row align-items-center">
-                                     <div class="col-lg-6 col-md-12 mb-3 mb-md-0">
-                                         <div class="search-box position-relative">
-                                             <div class="input-group input-group-lg">
-                                                 <span class="input-group-text bg-white border-end-0" style="border-radius: 8px 0 0 8px;">
-                                                     <i class="fas fa-search text-primary" style="font-size: 1.1rem;"></i>
-                                                 </span>
-                                                 <input wire:model.debounce.500ms='searchvalue'
-                                                     class="form-control border-start-0 border-end-0"
-                                                     type="search"
-                                                     placeholder="👤 İsim, kullanıcı adı veya 📧 e-posta adresi ile ara..."
-                                                     aria-label="Kullanıcı arama"
-                                                     style="border-radius: 0; font-size: 0.95rem; padding: 0.75rem 1rem;"
-                                                     autocomplete="off" />
-                                                 <span class="input-group-text bg-white border-start-0" style="border-radius: 0 8px 8px 0;">
-                                                     <i class="fas fa-filter text-muted" style="font-size: 0.9rem;"></i>
-                                                 </span>
-                                             </div>
-                                             <div class="search-suggestions position-absolute bg-white border shadow-sm rounded mt-1 w-100" style="display: none; z-index: 1000;">
-                                                 <div class="p-2 text-muted small">
-                                                     <i class="fas fa-lightbulb me-1"></i>
-                                                     İpucu: Hızlı arama için isim, kullanıcı adı veya e-posta adresinin baş harflerini yazın
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-
-                                     <div class="col-lg-6 col-md-12">
-                                         @if ($checkrecord)
-                                             <div class="d-flex flex-wrap gap-2 justify-content-md-end">
-                                                 <div class="d-flex">
-                                                     <select wire:model='action'
-                                                         class="form-select form-select-sm me-2"
-                                                         style="min-width: 150px;"
-                                                         aria-label="Toplu İşlemler">
-                                                         <option value="Delete">🗑️ Sil</option>
-                                                         <option value="Clear">🧹 Hesabı Temizle</option>
-                                                     </select>
-                                                     <button class="btn btn-danger btn-sm"
-                                                         wire:click='delsystemuser' type="button">
-                                                         <i class="fas fa-check me-1"></i>Uygula
-                                                     </button>
-                                                 </div>
-                                                 <button class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                                     data-bs-target="#TradingModal" type="button">
-                                                     <i class="fas fa-coins me-1"></i>ROI Ekle
-                                                 </button>
-                                                 <button class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                                     data-bs-target="#topupModal" type="button">
-                                                     <i class="fas fa-plus me-1"></i>Bakiye Yükle
-                                                 </button>
-                                             </div>
-                                         @else
-                                             <div class="d-flex flex-wrap gap-2 justify-content-md-end">
-                                                 <button class="btn btn-primary" type="button"
-                                                     data-bs-toggle="modal" data-bs-target="#adduser">
-                                                     <i class="fas fa-user-plus me-2"></i>Yeni Kullanıcı
-                                                 </button>
-                                                 <a class="btn btn-info" href="{{ route('emailservices') }}">
-                                                     <i class="fas fa-envelope me-2"></i>Mesaj Gönder
-                                                 </a>
-                                             </div>
-                                         @endif
-                                     </div>
-                                </div>
-                            </div>
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    <table class="table table-hover mb-0 user-management-table"
-                                           role="table"
-                                           aria-label="Kullanıcı listesi tablosu"
-                                           style="border-collapse: separate; border-spacing: 0;">
-                                        <thead class="table-light" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-bottom: 3px solid #dee2e6;">
-                                            <tr class="table-header-row">
-                                                <th class="border-0 fw-bold text-center" style="width: 50px;" scope="col">
-                                                    <input type="checkbox" wire:model='selectPage'
-                                                           class="form-check-input"
-                                                           aria-label="Tüm kullanıcıları seç"
-                                                           title="Tüm kullanıcıları seç" />
-                                                </th>
-                                                <th class="border-0 fw-bold" scope="col">
-                                                    <i class="fas fa-user me-2 text-primary" aria-hidden="true"></i>Müşteri Adı
-                                                </th>
-                                                <th class="border-0 fw-bold" scope="col">
-                                                    <i class="fas fa-at me-2 text-primary" aria-hidden="true"></i>Kullanıcı Adı
-                                                </th>
-                                                <th class="border-0 fw-bold" scope="col">
-                                                    <i class="fas fa-envelope me-2 text-primary" aria-hidden="true"></i>E-posta
-                                                </th>
-                                                <th class="border-0 fw-bold" scope="col">
-                                                    <i class="fas fa-phone me-2 text-primary" aria-hidden="true"></i>Telefon
-                                                </th>
-                                                <th class="border-0 fw-bold text-center" scope="col">
-                                                    <i class="fas fa-toggle-on me-2 text-primary" aria-hidden="true"></i>Durum
-                                                </th>
-                                                <th class="border-0 fw-bold" scope="col">
-                                                    <i class="fas fa-calendar me-2 text-primary" aria-hidden="true"></i>Kayıt Tarihi
-                                                </th>
-                                                <th class="border-0 fw-bold text-center" scope="col">
-                                                    <i class="fas fa-cogs me-2 text-primary" aria-hidden="true"></i>İşlem
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="userslisttbl">
-
-                                            @forelse ($users as $user)
-                                                <tr class="align-middle user-table-row"
-                                                    role="row"
-                                                    tabindex="0"
-                                                    data-user-id="{{ $user->id }}"
-                                                    style="transition: all 0.2s ease-in-out; border-bottom: 1px solid #e9ecef;"
-                                                    onmouseover="this.style.backgroundColor='#f8f9ff'; this.style.transform='translateX(2px)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)';"
-                                                    onmouseout="this.style.backgroundColor='transparent'; this.style.transform='translateX(0)'; this.style.boxShadow='none';">
-                                                    <td class="text-center" style="padding: 1rem 0.75rem; vertical-align: middle;">
-                                                        <input type="checkbox" wire:model='checkrecord'
-                                                            value="{{ $user->id }}"
-                                                            class="form-check-input"
-                                                            aria-label="{{ $user->name }} kullanıcısını seç" />
-                                                    </td>
-                                                    <td style="padding: 1rem 0.75rem; vertical-align: middle;">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar-wrapper me-3">
-                                                                <div class="avatar avatar-sm">
-                                                                    <span class="avatar-initial bg-label-primary rounded-circle" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem;">
-                                                                        {{ substr($user->name, 0, 1) }}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <span class="fw-bold text-dark" style="font-size: 0.95rem;">{{ $user->name }}</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td style="padding: 1rem 0.75rem; vertical-align: middle;">
-                                                        <span class="badge bg-light text-secondary border" style="font-size: 0.8rem; padding: 0.5rem 0.75rem;">{{ $user->username }}</span>
-                                                    </td>
-                                                    <td style="padding: 1rem 0.75rem; vertical-align: middle;">
-                                                        <span class="text-muted" style="font-size: 0.9rem;">{{ $user->email }}</span>
-                                                    </td>
-                                                    <td style="padding: 1rem 0.75rem; vertical-align: middle;">
-                                                        <span class="fw-medium text-dark">{{ $user->phone ?? '-' }}</span>
-                                                    </td>
-                                                    <td class="text-center" style="padding: 1rem 0.75rem; vertical-align: middle;">
-                                                        @if ($user->status == 'active')
-                                                            <span class="badge bg-success rounded-pill px-3" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
-                                                                <i class="fas fa-check-circle me-1"></i>Aktif
-                                                            </span>
-                                                        @else
-                                                            <span class="badge bg-danger rounded-pill px-3" style="font-size: 0.8rem; padding: 0.5rem 1rem;">
-                                                                <i class="fas fa-times-circle me-1"></i>Pasif
-                                                            </span>
-                                                        @endif
-                                                    </td>
-                                                    <td style="padding: 1rem 0.75rem; vertical-align: middle;">
-                                                        <small class="text-muted fw-medium">{{ $user->created_at->format('d M Y') }}</small>
-                                                        <br>
-                                                        <small class="text-muted">{{ $user->created_at->diffForHumans() }}</small>
-                                                    </td>
-                                                    <td class="text-center" style="padding: 1rem 0.75rem; vertical-align: middle;">
-                                                        <a class='btn btn-outline-primary btn-sm'
-                                                            href="{{ route('viewuser', $user->id) }}"
-                                                            role="button"
-                                                            aria-label="{{ $user->name }} kullanıcısını yönet"
-                                                            style="border-radius: 6px; padding: 0.5rem 1rem; font-weight: 500; transition: all 0.2s ease;">
-                                                            <i class="fas fa-edit me-1"></i>Yönet
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="8" class="text-center py-5" role="status" aria-live="polite">
-                                                        <div class="empty-state">
-                                                            <i class="fas fa-users fa-3x text-muted mb-3" aria-hidden="true"></i>
-                                                            <h5 class="text-muted" id="no-users-heading">Kullanıcı Bulunamadı</h5>
-                                                            <p class="text-muted" aria-describedby="no-users-heading">Henüz hiç kullanıcı eklenmemiş veya arama kriterlerinize uygun kullanıcı bulunamadı.</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="card-footer bg-light border-0">
-                                <div class="row align-items-center justify-content-between">
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <div class="d-flex align-items-center">
-                                                <label class="form-label mb-0 me-2 text-muted">Sayfa başına:</label>
-                                                <select wire:model='pagenum' class="form-select form-select-sm" style="width: auto;">
-                                                    <option>10</option>
-                                                    <option>20</option>
-                                                    <option>50</option>
-                                                    <option>100</option>
-                                                    <option>200</option>
-                                                </select>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <label class="form-label mb-0 me-2 text-muted">Sırala:</label>
-                                                <select wire:model='orderby' class="form-select form-select-sm me-2" style="width: auto;">
-                                                    <option value="id">ID</option>
-                                                    <option value="name">İsim</option>
-                                                    <option value="email">E-posta</option>
-                                                    <option value="created_at">Kayıt Tarihi</option>
-                                                </select>
-                                                <select wire:model='orderdirection' class="form-select form-select-sm" style="width: auto;">
-                                                    <option value="desc">↓ Azalan</option>
-                                                    <option value="asc">↑ Artan</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                                        <div class="pagination-info text-muted">
-                                            {{ $users->firstItem() ?? 0 }}-{{ $users->lastItem() ?? 0 }} arası,
-                                            toplam {{ $users->total() }} kullanıcı
-                                        </div>
-                                        <div class="mt-2">
-                                            {!! $users->links() !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+     $isDark = Auth('admin')->User()->dashboard_style !== 'light';
+@endphp
+<div class="min-h-screen bg-gray-50 {{ $isDark ? 'dark:bg-gray-900' : '' }}">
+    <!-- Header Section -->
+    <div class="bg-white {{ $isDark ? 'dark:bg-gray-800' : '' }} shadow-sm border-b border-gray-200 {{ $isDark ? 'dark:border-gray-700' : '' }}">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                <div class="flex-1">
+                    <h1 class="text-2xl font-bold text-gray-900 {{ $isDark ? 'dark:text-white' : '' }} flex items-center">
+                        <i class="fas fa-users text-blue-600 mr-3"></i>
+                        {{ $settings->site_name }} Kullanıcıları
+                    </h1>
+                    <p class="mt-1 text-sm text-gray-500 {{ $isDark ? 'dark:text-gray-400' : '' }}">
+                        Kullanıcı hesaplarını yönetin ve düzenleyin
+                    </p>
+                </div>
+                <div class="flex items-center">
+                    <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-800 {{ $isDark ? 'dark:bg-blue-800 dark:text-blue-100' : '' }}">
+                        <i class="fas fa-user-check mr-2"></i>
+                        {{ $users->total() }} Kullanıcı
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Modern Modals --}}
-    <!-- Kullanıcı Ekle Modal -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Modal açılışını dinle
-            const addUserBtn = document.querySelector('[data-bs-target="#adduser"]');
-            const addUserModal = document.getElementById('adduser');
-
-            if (addUserBtn && addUserModal) {
-                addUserBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    // Modal functionality replaced with Alpine.js in new layout
-                    modal.show();
-                });
-            }
-
-            // Kullanıcı başarıyla eklendiğinde modal'ı kapat ve başarı mesajı göster
-            document.addEventListener('livewire:init', function () {
-                Livewire.on('userAdded', function() {
-                    if (addUserModal) {
-                        // Modal functionality replaced with Alpine.js in new layout
-                        if (modal) {
-                            modal.hide();
-                        }
-                    }
-                });
-
-                // Başarı mesajını göster
-                Livewire.on('showSuccessMessage', function() {
-                    const successAlert = document.getElementById('success-alert');
-                    const successMessageText = document.getElementById('success-message-text');
-
-                    if (successAlert && successMessageText) {
-                        successMessageText.textContent = 'Kullanıcı başarıyla oluşturuldu!';
-                        successAlert.style.display = 'block';
-
-                        // 5 saniye sonra otomatik gizle
-                        setTimeout(function() {
-                            successAlert.style.display = 'none';
-                        }, 5000);
-                    }
-                });
-            });
-        });
-    </script>
-    <div class="modal fade" tabindex="-1" id="adduser" aria-labelledby="addUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header bg-primary text-white border-0">
-                    <h5 class="modal-title fw-bold" id="addUserModalLabel">
-                        <i class="fas fa-user-plus me-2"></i>Yeni Kullanıcı Ekle
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Kapat"></button>
+    <!-- Alert Messages -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        {{-- Error Alert --}}
+        <div id="general-error-alert" class="hidden mb-4">
+            <div class="rounded-md bg-red-50 p-4 border border-red-200 {{ $isDark ? 'dark:bg-red-900 dark:border-red-700' : '' }}">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-triangle text-red-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-red-800 {{ $isDark ? 'dark:text-red-100' : '' }}">
+                            Bir Hata Oluştu!
+                        </h3>
+                        <div class="mt-2 text-sm text-red-700 {{ $isDark ? 'dark:text-red-200' : '' }}">
+                            <span id="error-message-text">Lütfen tekrar deneyin veya sistem yöneticisiyle iletişime geçin.</span>
+                        </div>
+                    </div>
+                    <div class="ml-auto pl-3">
+                        <button onclick="document.getElementById('general-error-alert').classList.add('hidden')"
+                                class="text-red-400 hover:text-red-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="modal-body p-4">
-                    <form method="POST" wire:submit.prevent='saveUser'>
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <label for="usernameinput" class="form-label fw-bold">
-                                    <i class="fas fa-at me-2 text-primary"></i>Kullanıcı Adı
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light">@</span>
-                                    <input type="text" id="usernameinput"
-                                        class="form-control form-control-lg border-0 shadow-sm @error('username') is-invalid @enderror"
-                                        name="username" wire:model.defer='username'
-                                        placeholder="Sadece harf, rakam ve alt çizgi kullanın" required>
-                                </div>
-                                @error('username')
-                                    <div class="text-danger mt-1">
-                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
-                                    </div>
-                                @enderror
+            </div>
+        </div>
+
+        {{-- Success Alert --}}
+        <div id="success-alert" class="hidden mb-4">
+            <div class="rounded-md bg-green-50 p-4 border border-green-200 {{ $isDark ? 'dark:bg-green-900 dark:border-green-700' : '' }}">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-green-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-green-800 {{ $isDark ? 'dark:text-green-100' : '' }}">
+                            Başarılı!
+                        </h3>
+                        <div class="mt-2 text-sm text-green-700 {{ $isDark ? 'dark:text-green-200' : '' }}">
+                            <span id="success-message-text">İşlem başarıyla tamamlandı.</span>
+                        </div>
+                    </div>
+                    <div class="ml-auto pl-3">
+                        <button onclick="document.getElementById('success-alert').classList.add('hidden')"
+                                class="text-green-400 hover:text-green-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <x-danger-alert />
+        <x-success-alert />
+
+        <!-- Main Content Card -->
+        <div class="bg-white {{ $isDark ? 'dark:bg-gray-800' : '' }} shadow-xl rounded-lg border border-gray-200 {{ $isDark ? 'dark:border-gray-700' : '' }}">
+            <!-- Card Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4 rounded-t-lg">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+                    <!-- Search Box -->
+                    <div class="flex-1 lg:max-w-md">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
                             </div>
-                            <div class="col-12">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-user me-2 text-primary"></i>Ad Soyad
-                                </label>
-                                <input type="text" class="form-control form-control-lg border-0 shadow-sm @error('fullname') is-invalid @enderror"
-                                    name="name" wire:model.defer='fullname'
-                                    placeholder="Ad ve soyad girin (min. 2 karakter)" required>
-                                @error('fullname')
-                                    <div class="text-danger mt-1">
-                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-envelope me-2 text-primary"></i>E-posta Adresi
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light">
-                                        <i class="fas fa-envelope text-muted"></i>
-                                    </span>
-                                    <input type="email" class="form-control form-control-lg border-0 shadow-sm @error('email') is-invalid @enderror"
-                                        name="email" wire:model.defer='email'
-                                        placeholder="ornek@domain.com" required>
-                                </div>
-                                @error('email')
-                                    <div class="text-danger mt-1">
-                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-lock me-2 text-primary"></i>Şifre
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light">
-                                        <i class="fas fa-key text-muted"></i>
-                                    </span>
-                                    <input type="password" class="form-control form-control-lg border-0 shadow-sm @error('password') is-invalid @enderror"
-                                        name="password" wire:model.defer='password'
-                                        placeholder="En az 8 karakter, büyük/küçük harf ve rakam" required>
-                                </div>
-                                @error('password')
-                                    <div class="text-danger mt-1">
-                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
-                                    </div>
-                                @enderror
-                                <div class="form-text">
-                                    <small class="text-muted">
-                                        <i class="fas fa-info-circle me-1"></i>
-                                        Şifre en az 8 karakter içermelidir.
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-lock me-2 text-primary"></i>Şifre Onayı
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light">
-                                        <i class="fas fa-check text-muted"></i>
-                                    </span>
-                                    <input type="password" class="form-control form-control-lg border-0 shadow-sm @error('password_confirmation') is-invalid @enderror"
-                                        name="password_confirmation" wire:model.defer='password_confirmation'
-                                        placeholder="Şifreyi tekrar girin" required>
-                                </div>
-                                @error('password_confirmation')
-                                    <div class="text-danger mt-1">
-                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-mobile-alt me-2 text-primary"></i>Cep Telefonu (İsteğe bağlı)
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light">
-                                        <i class="fas fa-phone text-muted"></i>
-                                    </span>
-                                    <input type="tel" class="form-control form-control-lg border-0 shadow-sm @error('mobile_number') is-invalid @enderror"
-                                        name="mobile_number" wire:model.defer='mobile_number'
-                                        placeholder="+90 5XX XXX XX XX">
-                                </div>
-                                @error('mobile_number')
-                                    <div class="text-danger mt-1">
-                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
-                                    </div>
-                                @enderror
-                                <div class="form-text">
-                                    <small class="text-muted">
-                                        <i class="fas fa-info-circle me-1"></i>
-                                        Ülke kodu ile birlikte girin (örnek: +90 5XX XXX XX XX)
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-birthday-cake me-2 text-primary"></i>Doğum Tarihi (İsteğe bağlı)
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light">
-                                        <i class="fas fa-calendar text-muted"></i>
-                                    </span>
-                                    <input type="date" class="form-control form-control-lg border-0 shadow-sm @error('date_of_birth') is-invalid @enderror"
-                                        name="date_of_birth" wire:model.defer='date_of_birth'>
-                                </div>
-                                @error('date_of_birth')
-                                    <div class="text-danger mt-1">
-                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
-                                    </div>
-                                @enderror
-                                <div class="form-text">
-                                    <small class="text-muted">
-                                        <i class="fas fa-info-circle me-1"></i>
-                                        Doğum tarihi bilgisi profil için kullanılır
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-flag me-2 text-primary"></i>Uyruk (İsteğe bağlı)
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light">
-                                        <i class="fas fa-globe text-muted"></i>
-                                    </span>
-                                    <input type="text" class="form-control form-control-lg border-0 shadow-sm @error('nationality') is-invalid @enderror"
-                                        name="nationality" wire:model.defer='nationality'
-                                        placeholder="Türk">
-                                </div>
-                                @error('nationality')
-                                    <div class="text-danger mt-1">
-                                        <small><i class="fas fa-exclamation-triangle me-1"></i>{{ $message }}</small>
-                                    </div>
-                                @enderror
-                                <div class="form-text">
-                                    <small class="text-muted">
-                                        <i class="fas fa-info-circle me-1"></i>
-                                        Uyruk bilgisini girin (örnek: Türk)
-                                    </small>
-                                </div>
+                            <input wire:model.debounce.500ms="searchvalue"
+                                   type="search"
+                                   class="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                   placeholder="👤 İsim, kullanıcı adı veya 📧 e-posta ile ara..."
+                                   aria-label="Kullanıcı arama"
+                                   autocomplete="off">
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i class="fas fa-filter text-gray-400"></i>
                             </div>
                         </div>
-                        <div class="d-grid mt-4">
-                            <button type="submit" class="btn btn-primary btn-lg" wire:loading.attr="disabled" wire:target="saveUser">
-                                <span wire:loading.remove wire:target="saveUser">
-                                    <i class="fas fa-user-plus me-2"></i>Kullanıcı Ekle
-                                </span>
-                                <span wire:loading wire:target="saveUser">
-                                    <i class="fas fa-spinner fa-spin me-2"></i>Kayıt Ediliyor...
-                                </span>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap items-center gap-2">
+                        @if ($checkrecord)
+                            <div class="flex items-center space-x-2">
+                                <select wire:model="action"
+                                        class="rounded-lg border-gray-300 text-sm focus:ring-blue-500 focus:border-blue-500 bg-white">
+                                    <option value="Delete">🗑️ Sil</option>
+                                    <option value="Clear">🧹 Hesabı Temizle</option>
+                                </select>
+                                <button wire:click="delsystemuser"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                    <i class="fas fa-check mr-2"></i>Uygula
+                                </button>
+                            </div>
+                            <button onclick="openModal('TradingModal')"
+                                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                <i class="fas fa-coins mr-2"></i>ROI Ekle
                             </button>
+                            <button onclick="openModal('topupModal')"
+                                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                <i class="fas fa-plus mr-2"></i>Bakiye Yükle
+                            </button>
+                        @else
+                            <button onclick="openModal('adduser')"
+                                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <i class="fas fa-user-plus mr-2"></i>Yeni Kullanıcı
+                            </button>
+                            <a href="{{ route('emailservices') }}"
+                               class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <i class="fas fa-envelope mr-2"></i>Mesaj Gönder
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <!-- Table Section -->
+            <div class="overflow-hidden">
+                <!-- Desktop Table -->
+                <div class="hidden lg:block">
+                    <table class="min-w-full divide-y divide-gray-200 {{ $isDark ? 'dark:divide-gray-700' : '' }}">
+                        <thead class="bg-gray-50 {{ $isDark ? 'dark:bg-gray-700' : '' }}">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <input type="checkbox"
+                                           wire:model="selectPage"
+                                           class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                           aria-label="Tüm kullanıcıları seç">
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <i class="fas fa-user mr-2 text-blue-600"></i>Müşteri Adı
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <i class="fas fa-at mr-2 text-blue-600"></i>Kullanıcı Adı
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <i class="fas fa-envelope mr-2 text-blue-600"></i>E-posta
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <i class="fas fa-phone mr-2 text-blue-600"></i>Telefon
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <i class="fas fa-toggle-on mr-2 text-blue-600"></i>Durum
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <i class="fas fa-calendar mr-2 text-blue-600"></i>Kayıt Tarihi
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <i class="fas fa-cogs mr-2 text-blue-600"></i>İşlem
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white {{ $isDark ? 'dark:bg-gray-800' : '' }} divide-y divide-gray-200 {{ $isDark ? 'dark:divide-gray-700' : '' }}">
+                            @forelse ($users as $user)
+                                <tr class="hover:bg-gray-50 {{ $isDark ? 'dark:hover:bg-gray-700' : '' }} transition-colors duration-150 ease-in-out">
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <input type="checkbox"
+                                               wire:model="checkrecord"
+                                               value="{{ $user->id }}"
+                                               class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                               aria-label="{{ $user->name }} kullanıcısını seç">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <div class="h-10 w-10 rounded-full bg-blue-100 {{ $isDark ? 'dark:bg-blue-800' : '' }} flex items-center justify-center">
+                                                    <span class="text-sm font-medium text-blue-800 {{ $isDark ? 'dark:text-blue-100' : '' }}">
+                                                        {{ substr($user->name, 0, 1) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-gray-900 {{ $isDark ? 'dark:text-white' : '' }}">
+                                                    {{ $user->name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 {{ $isDark ? 'dark:bg-gray-700 dark:text-gray-200' : '' }}">
+                                            {{ $user->username }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }}">
+                                        {{ $user->email }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 {{ $isDark ? 'dark:text-white' : '' }}">
+                                        {{ $user->phone ?? '-' }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        @if ($user->status == 'active')
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                <i class="fas fa-check-circle mr-1"></i>Aktif
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                <i class="fas fa-times-circle mr-1"></i>Pasif
+                                            </span>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }}">
+                                        <div class="text-sm">{{ $user->created_at->format('d M Y') }}</div>
+                                        <div class="text-xs text-gray-400">{{ $user->created_at->diffForHumans() }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                        <a href="{{ route('viewuser', $user->id) }}"
+                                           class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-150 ease-in-out {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-600' : '' }}">
+                                            <i class="fas fa-edit mr-2"></i>Yönet
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="px-6 py-12 text-center">
+                                        <div class="text-gray-400">
+                                            <i class="fas fa-users text-6xl mb-4"></i>
+                                            <h3 class="text-lg font-medium text-gray-900 {{ $isDark ? 'dark:text-white' : '' }} mb-2">Kullanıcı Bulunamadı</h3>
+                                            <p class="text-sm text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }}">
+                                                Henüz hiç kullanıcı eklenmemiş veya arama kriterlerinize uygun kullanıcı bulunamadı.
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile Cards -->
+                <div class="lg:hidden">
+                    <div class="space-y-4 p-4">
+                        @forelse ($users as $user)
+                            <div class="bg-white {{ $isDark ? 'dark:bg-gray-700' : '' }} rounded-lg shadow border border-gray-200 {{ $isDark ? 'dark:border-gray-600' : '' }} p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox"
+                                               wire:model="checkrecord"
+                                               value="{{ $user->id }}"
+                                               class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 mr-3">
+                                        <div class="h-8 w-8 rounded-full bg-blue-100 {{ $isDark ? 'dark:bg-blue-800' : '' }} flex items-center justify-center mr-3">
+                                            <span class="text-xs font-medium text-blue-800 {{ $isDark ? 'dark:text-blue-100' : '' }}">
+                                                {{ substr($user->name, 0, 1) }}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-sm font-medium text-gray-900 {{ $isDark ? 'dark:text-white' : '' }}">{{ $user->name }}</h3>
+                                            <p class="text-xs text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }}">{{ $user->email }}</p>
+                                        </div>
+                                    </div>
+                                    @if ($user->status == 'active')
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <i class="fas fa-check-circle mr-1"></i>Aktif
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            <i class="fas fa-times-circle mr-1"></i>Pasif
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 text-xs text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-3">
+                                    <div>
+                                        <span class="font-medium">Kullanıcı Adı:</span>
+                                        <span class="ml-1 px-2 py-1 bg-gray-100 {{ $isDark ? 'dark:bg-gray-600' : '' }} rounded">{{ $user->username }}</span>
+                                    </div>
+                                    <div>
+                                        <span class="font-medium">Telefon:</span> {{ $user->phone ?? '-' }}
+                                    </div>
+                                    <div class="col-span-2">
+                                        <span class="font-medium">Kayıt:</span> {{ $user->created_at->format('d M Y') }} ({{ $user->created_at->diffForHumans() }})
+                                    </div>
+                                </div>
+                                <div class="flex justify-end">
+                                    <a href="{{ route('viewuser', $user->id) }}"
+                                       class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 {{ $isDark ? 'dark:bg-gray-600 dark:border-gray-500 dark:text-gray-200 dark:hover:bg-gray-500' : '' }}">
+                                        <i class="fas fa-edit mr-1"></i>Yönet
+                                    </a>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-center py-12">
+                                <i class="fas fa-users text-4xl text-gray-300 mb-4"></i>
+                                <h3 class="text-lg font-medium text-gray-900 {{ $isDark ? 'dark:text-white' : '' }} mb-2">Kullanıcı Bulunamadı</h3>
+                                <p class="text-sm text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }}">
+                                    Henüz hiç kullanıcı eklenmemiş veya arama kriterlerinize uygun kullanıcı bulunamadı.
+                                </p>
+                            </div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer / Pagination -->
+            <div class="bg-gray-50 {{ $isDark ? 'dark:bg-gray-700' : '' }} px-6 py-4 border-t border-gray-200 {{ $isDark ? 'dark:border-gray-600' : '' }} rounded-b-lg">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+                    <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <label class="text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }}">Sayfa başına:</label>
+                            <select wire:model="pagenum"
+                                    class="rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 {{ $isDark ? 'dark:bg-gray-600 dark:border-gray-500 dark:text-white' : '' }}">
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                                <option>200</option>
+                            </select>
                         </div>
-                    </form>
+                        <div class="flex items-center space-x-2">
+                            <label class="text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }}">Sırala:</label>
+                            <select wire:model="orderby"
+                                    class="rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 {{ $isDark ? 'dark:bg-gray-600 dark:border-gray-500 dark:text-white' : '' }}">
+                                <option value="id">ID</option>
+                                <option value="name">İsim</option>
+                                <option value="email">E-posta</option>
+                                <option value="created_at">Kayıt Tarihi</option>
+                            </select>
+                            <select wire:model="orderdirection"
+                                    class="rounded-md border-gray-300 shadow-sm text-sm focus:border-blue-500 focus:ring-blue-500 {{ $isDark ? 'dark:bg-gray-600 dark:border-gray-500 dark:text-white' : '' }}">
+                                <option value="desc">↓ Azalan</option>
+                                <option value="asc">↑ Artan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex flex-col sm:items-end">
+                        <div class="text-sm text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                            {{ $users->firstItem() ?? 0 }}-{{ $users->lastItem() ?? 0 }} arası,
+                            toplam {{ $users->total() }} kullanıcı
+                        </div>
+                        <div>
+                            <x-admin-pagination :paginator="$users" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    {{-- Yeni kullanıcı ekleme modalı sonu --}}
+</div>
 
-    <!-- ROI Ekleme Modal -->
-    <div id="TradingModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header bg-warning text-dark border-0">
-                    <h5 class="modal-title fw-bold">
-                        <i class="fas fa-coins me-2"></i>Seçili Kullanıcılara ROI Ekle
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<!-- Modern Modal System with Tailwind CSS -->
+
+<!-- Add User Modal -->
+<div id="adduser" class="hidden fixed inset-0 z-50 overflow-y-auto" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="closeModal('adduser')"></div>
+        
+        <!-- Modal panel -->
+        <div class="inline-block align-bottom bg-white {{ $isDark ? 'dark:bg-gray-800' : '' }} rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg leading-6 font-medium text-white" id="addUserModalLabel">
+                        <i class="fas fa-user-plus mr-2"></i>Yeni Kullanıcı Ekle
+                    </h3>
+                    <button onclick="closeModal('adduser')" class="text-white hover:text-gray-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
                 </div>
-                <div class="modal-body p-4">
-                    <div class="alert alert-warning border-0 bg-light">
-                        <i class="fas fa-info-circle me-2"></i>
-                        <strong>Toplu ROI Ekleme:</strong> Seçili kullanıcılara aynı plan üzerinden ROI eklenecektir.
-                    </div>
-                    <form role="form" method="post" wire:submit.prevent='addRoi'>
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">
-                                <i class="fas fa-chart-line me-2 text-warning"></i>Yatırım Planı Seçin
+            </div>
+
+            <!-- Modal Body -->
+            <div class="px-6 py-6">
+                <form wire:submit.prevent="saveUser">
+                    <div class="space-y-6">
+                        <!-- Ad Soyad -->
+                        <div>
+                            <label for="fullname" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-user mr-2 text-blue-600"></i>Ad Soyad
                             </label>
-                            <select class="form-select form-select-lg border-0 shadow-sm" name="plan"
-                                wire:model.defer='plan' required>
+                            <input type="text"
+                                   wire:model.defer="fullname"
+                                   id="fullname"
+                                   class="block w-full px-3 py-3 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400' : '' }} @error('fullname') border-red-300 @enderror"
+                                   placeholder="Ad ve soyad girin"
+                                   required>
+                            @error('fullname')
+                                <p class="mt-2 text-sm text-red-600">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <!-- E-posta -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-envelope mr-2 text-blue-600"></i>E-posta
+                            </label>
+                            <input type="email"
+                                   wire:model.defer="email"
+                                   id="email"
+                                   class="block w-full px-3 py-3 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400' : '' }} @error('email') border-red-300 @enderror"
+                                   placeholder="ornek@domain.com"
+                                   required>
+                            @error('email')
+                                <p class="mt-2 text-sm text-red-600">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <!-- Telefon -->
+                        <div>
+                            <label for="mobile_number" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-phone mr-2 text-blue-600"></i>Telefon
+                            </label>
+                            <input type="tel"
+                                   wire:model.defer="mobile_number"
+                                   id="mobile_number"
+                                   class="block w-full px-3 py-3 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400' : '' }} @error('mobile_number') border-red-300 @enderror"
+                                   placeholder="+90 5XX XXX XX XX"
+                                   required>
+                            @error('mobile_number')
+                                <p class="mt-2 text-sm text-red-600">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <!-- Rol -->
+                        <div>
+                            <label for="user_role" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-user-tag mr-2 text-blue-600"></i>Rol
+                            </label>
+                            <select wire:model.defer="user_role"
+                                    id="user_role"
+                                    class="block w-full px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white' : '' }} @error('user_role') border-red-300 @enderror"
+                                    required>
+                                <option value="user" selected>Kullanıcı</option>
+                                <option value="admin">Admin</option>
+                                <option value="moderator">Moderatör</option>
+                            </select>
+                            @error('user_role')
+                                <p class="mt-2 text-sm text-red-600">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <!-- Şifre -->
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-lock mr-2 text-blue-600"></i>Şifre
+                            </label>
+                            <input type="password"
+                                   wire:model.defer="password"
+                                   id="password"
+                                   class="block w-full px-3 py-3 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400' : '' }} @error('password') border-red-300 @enderror"
+                                   placeholder="En az 8 karakter"
+                                   required>
+                            @error('password')
+                                <p class="mt-2 text-sm text-red-600">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
+                        <!-- Şifre Tekrar -->
+                        <div>
+                            <label for="password_confirmation" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-lock mr-2 text-blue-600"></i>Şifre Tekrar
+                            </label>
+                            <input type="password"
+                                   wire:model.defer="password_confirmation"
+                                   id="password_confirmation"
+                                   class="block w-full px-3 py-3 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400' : '' }} @error('password_confirmation') border-red-300 @enderror"
+                                   placeholder="Şifreyi tekrar girin"
+                                   required>
+                            @error('password_confirmation')
+                                <p class="mt-2 text-sm text-red-600">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Butonlar -->
+                    <div class="mt-8 flex space-x-3">
+                        <button type="button"
+                                onclick="closeModal('adduser')"
+                                class="flex-1 py-3 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-600' : '' }}">
+                            <i class="fas fa-times mr-2"></i>İptal
+                        </button>
+                        <button type="submit"
+                                wire:loading.attr="disabled"
+                                wire:target="saveUser"
+                                class="flex-1 py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span wire:loading.remove wire:target="saveUser" class="flex items-center justify-center">
+                                <i class="fas fa-user-plus mr-2"></i>Kullanıcı Ekle
+                            </span>
+                            <span wire:loading wire:target="saveUser" class="flex items-center justify-center">
+                                <i class="fas fa-spinner fa-spin mr-2"></i>Ekleniyor...
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Trading/ROI Modal -->
+<div id="TradingModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="closeModal('TradingModal')"></div>
+        
+        <!-- Modal panel -->
+        <div class="inline-block align-bottom bg-white {{ $isDark ? 'dark:bg-gray-800' : '' }} rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <!-- Modal Header -->
+            <div class="bg-yellow-500 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg leading-6 font-medium text-white">
+                        <i class="fas fa-coins mr-2"></i>Seçili Kullanıcılara ROI Ekle
+                    </h3>
+                    <button onclick="closeModal('TradingModal')" class="text-white hover:text-gray-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="px-6 py-6">
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-info-circle text-yellow-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-700">
+                                <strong>Toplu ROI Ekleme:</strong> Seçili kullanıcılara aynı plan üzerinden ROI eklenecektir.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <form wire:submit.prevent="addRoi">
+                    <div class="space-y-6">
+                        <!-- Plan Selection -->
+                        <div>
+                            <label for="plan" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-chart-line mr-2 text-yellow-500"></i>Yatırım Planı Seçin
+                            </label>
+                            <select wire:model.defer="plan"
+                                    id="plan"
+                                    class="block w-full px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white' : '' }}"
+                                    required>
                                 <option value="">Plan seçin...</option>
                                 @foreach ($plans as $plan)
                                     <option value="{{ $plan->id }}">
@@ -580,115 +575,222 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">
-                                <i class="fas fa-calendar me-2 text-warning"></i>Tarih
+
+                        <!-- Date -->
+                        <div>
+                            <label for="datecreated" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-calendar mr-2 text-yellow-500"></i>Tarih
                             </label>
-                            <input type="date" wire:model.defer='datecreated'
-                                class="form-control form-control-lg border-0 shadow-sm" required>
+                            <input type="date"
+                                   wire:model.defer="datecreated"
+                                   id="datecreated"
+                                   class="block w-full px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white' : '' }}"
+                                   required>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-warning btn-lg w-100">
-                                    <i class="fas fa-plus-circle me-2"></i>ROI Geçmişi Ekle
-                                </button>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                            <i class="fas fa-plus-circle mr-2"></i>ROI Geçmişi Ekle
+                        </button>
+
+                        <!-- Info Alert -->
+                        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-lightbulb text-blue-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-blue-700">
+                                        <strong>İpucu:</strong> Sistem, kullanıcıların yatırım tutarı ve seçili planda belirtilen yüzde üzerinden ROI'yi otomatik hesaplayacaktır.
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                        <div class="mt-3">
-                            <div class="alert alert-info border-0 bg-light">
-                                <small>
-                                    <i class="fas fa-lightbulb me-1"></i>
-                                    <strong>İpucu:</strong> Sistem, kullanıcıların yatırım tutarı ve seçili planda belirtilen
-                                    yüzde üzerinden ROI'yi otomatik hesaplayacaktır. Planın yüzde türü olarak % kullanması
-                                    gerektiğini unutmayın.
-                                </small>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- /send a single user email Modal -->
+</div>
 
-    <!-- Bakiye Yükleme Modal -->
-    <div id="topupModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header bg-success text-white border-0">
-                    <h5 class="modal-title fw-bold">
-                        <i class="fas fa-wallet me-2"></i>Bakiye İşlemleri
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+<!-- Topup Modal -->
+<div id="topupModal" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" onclick="closeModal('topupModal')"></div>
+        
+        <!-- Modal panel -->
+        <div class="inline-block align-bottom bg-white {{ $isDark ? 'dark:bg-gray-800' : '' }} rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <!-- Modal Header -->
+            <div class="bg-green-600 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg leading-6 font-medium text-white">
+                        <i class="fas fa-wallet mr-2"></i>Bakiye İşlemleri
+                    </h3>
+                    <button onclick="closeModal('topupModal')" class="text-white hover:text-gray-200">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
                 </div>
-                <div class="modal-body p-4">
-                    <div class="alert alert-success border-0 bg-light">
-                        <i class="fas fa-info-circle me-2"></i>
-                        <strong>Bakiye Yükleme:</strong> Seçili kullanıcıların hesaplarına para ekleme veya çıkarma işlemi yapın.
+            </div>
+
+            <!-- Modal Body -->
+            <div class="px-6 py-6">
+                <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-info-circle text-green-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-green-700">
+                                <strong>Bakiye Yükleme:</strong> Seçili kullanıcıların hesaplarına para ekleme veya çıkarma işlemi yapın.
+                            </p>
+                        </div>
                     </div>
-                    <form method="post" wire:submit.prevent='topup'>
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">
-                                <i class="fas fa-money-bill me-2 text-success"></i>Tutar
+                </div>
+
+                <form wire:submit.prevent="topup">
+                    <div class="space-y-6">
+                        <!-- Amount -->
+                        <div>
+                            <label for="topamount" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-money-bill mr-2 text-green-600"></i>Tutar
                             </label>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-text bg-light border-0">
-                                    <i class="fas fa-dollar-sign text-muted"></i>
-                                </span>
-                                <input class="form-control border-0 shadow-sm" placeholder="0.00"
-                                    type="number" step="any" name="amount" wire:model.defer='topamount' required>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-dollar-sign text-gray-400"></i>
+                                </div>
+                                <input type="number"
+                                       step="any"
+                                       wire:model.defer="topamount"
+                                       id="topamount"
+                                       class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400' : '' }}"
+                                       placeholder="0.00"
+                                       required>
                             </div>
                             @if($topamount)
-                                <div class="form-text">
-                                    <small class="text-muted">Girilen tutar: <strong>{{ $topamount }}</strong></small>
-                                </div>
+                                <p class="mt-2 text-sm text-gray-500">
+                                    Girilen tutar: <strong>{{ $topamount }}</strong>
+                                </p>
                             @endif
                         </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">
-                                <i class="fas fa-piggy-bank me-2 text-success"></i>Hesap Türü
+
+                        <!-- Account Type -->
+                        <div>
+                            <label for="topcolumn" class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-2">
+                                <i class="fas fa-piggy-bank mr-2 text-green-600"></i>Hesap Türü
                             </label>
-                            <select class="form-select form-select-lg border-0 shadow-sm" wire:model.defer='topcolumn'
-                                name="type" required>
+                            <select wire:model.defer="topcolumn"
+                                    id="topcolumn"
+                                    class="block w-full px-3 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm {{ $isDark ? 'dark:bg-gray-700 dark:border-gray-600 dark:text-white' : '' }}"
+                                    required>
                                 <option value="">Hesap türü seçin...</option>
                                 <option value="Bonus">🎁 Bonus Hesabı</option>
                                 <option value="balance">💰 Ana Bakiye</option>
                             </select>
                         </div>
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">
-                                <i class="fas fa-exchange-alt me-2 text-success"></i>İşlem Türü
+
+                        <!-- Transaction Type -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 {{ $isDark ? 'dark:text-gray-300' : '' }} mb-3">
+                                <i class="fas fa-exchange-alt mr-2 text-green-600"></i>İşlem Türü
                             </label>
-                            <div class="row g-2">
-                                <div class="col-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="credit"
-                                            wire:model.defer='toptype' value="Credit">
-                                        <label class="form-check-label fw-bold text-success" for="credit">
-                                            <i class="fas fa-plus-circle me-1"></i>Ekle (Kredi)
-                                        </label>
-                                    </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="flex items-center">
+                                    <input type="radio"
+                                           wire:model.defer="toptype"
+                                           value="Credit"
+                                           id="credit"
+                                           class="focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300">
+                                    <label for="credit" class="ml-3 block text-sm font-medium text-green-700">
+                                        <i class="fas fa-plus-circle mr-1"></i>Ekle (Kredi)
+                                    </label>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="debit"
-                                            wire:model.defer='toptype' value="Debit">
-                                        <label class="form-check-label fw-bold text-danger" for="debit">
-                                            <i class="fas fa-minus-circle me-1"></i>Çıkar (Borç)
-                                        </label>
-                                    </div>
+                                <div class="flex items-center">
+                                    <input type="radio"
+                                           wire:model.defer="toptype"
+                                           value="Debit"
+                                           id="debit"
+                                           class="focus:ring-red-500 h-4 w-4 text-red-600 border-gray-300">
+                                    <label for="debit" class="ml-3 block text-sm font-medium text-red-700">
+                                        <i class="fas fa-minus-circle mr-1"></i>Çıkar (Borç)
+                                    </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-success btn-lg">
-                                <i class="fas fa-save me-2"></i>İşlemi Kaydet
-                            </button>
-                        </div>
-                    </form>
-                </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <i class="fas fa-save mr-2"></i>İşlemi Kaydet
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- Bakiye yükleme modalı sonu -->
+</div>
+
+<!-- JavaScript for Modal Functionality -->
+<script>
+    // Modal Functions
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modals = ['adduser', 'TradingModal', 'topupModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (modal && !modal.classList.contains('hidden')) {
+                    closeModal(modalId);
+                }
+            });
+        }
+    });
+
+    // Livewire Events
+    document.addEventListener('livewire:init', function () {
+        // Close modal and show success message when user is added
+        Livewire.on('userAdded', function() {
+            closeModal('adduser');
+            
+            const successAlert = document.getElementById('success-alert');
+            const successMessageText = document.getElementById('success-message-text');
+
+            if (successAlert && successMessageText) {
+                successMessageText.textContent = 'Kullanıcı başarıyla oluşturuldu!';
+                successAlert.classList.remove('hidden');
+
+                // Auto hide after 5 seconds
+                setTimeout(function() {
+                    successAlert.classList.add('hidden');
+                }, 5000);
+            }
+        });
+
+        // Handle other success messages
+        Livewire.on('showSuccessMessage', function(message) {
+            const successAlert = document.getElementById('success-alert');
+            const successMessageText = document.getElementById('success-message-text');
+
+            if (successAlert && successMessageText) {
+                successMessageText.textContent = message || 'İşlem başarıyla tamamlandı!';
+                successAlert.classList.remove('hidden');
+
+                setTimeout(function() {
+                    successAlert.classList.add('hidden');
+                }, 5000);
+            }
+        });
+    });
+</script>
 </div>

@@ -65,6 +65,45 @@ module.exports = {
     'text-center',
     'text-left',
     
+    // Admin Colors
+    'bg-admin-50',
+    'bg-admin-100',
+    'bg-admin-200',
+    'bg-admin-300',
+    'bg-admin-400',
+    'bg-admin-500',
+    'bg-admin-600',
+    'bg-admin-700',
+    'bg-admin-800',
+    'bg-admin-900',
+    'text-admin-50',
+    'text-admin-100',
+    'text-admin-200',
+    'text-admin-300',
+    'text-admin-400',
+    'text-admin-500',
+    'text-admin-600',
+    'text-admin-700',
+    'text-admin-800',
+    'text-admin-900',
+    'border-admin-500',
+    'border-admin-600',
+    'border-admin-700',
+    'border-admin-800',
+    'hover:bg-admin-700',
+    'hover:bg-admin-800',
+    'hover:text-admin-100',
+    'hover:text-admin-200',
+    'dark:bg-admin-800',
+    'dark:bg-admin-900',
+    'dark:text-admin-100',
+    'dark:text-admin-200',
+    'dark:text-admin-300',
+    'dark:text-admin-400',
+    'dark:border-admin-700',
+    'dark:hover:bg-admin-700',
+    'dark:hover:text-admin-100',
+
     // Colors - Core
     'bg-white',
     'bg-gray-50',
@@ -532,6 +571,74 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // PROFESSIONAL SLATE-BASED ADMIN THEME
+        // Modern fintech-grade color system with perfect dark/light compatibility
+        admin: {
+          50: '#f8fafc',    // Lightest - card backgrounds (light mode)
+          100: '#f1f5f9',   // Very light - hover states (light mode)
+          200: '#e2e8f0',   // Light - borders (light mode)
+          300: '#cbd5e1',   // Medium light - disabled text
+          400: '#94a3b8',   // Medium - secondary text
+          500: '#64748b',   // Primary - main text (light mode)
+          600: '#475569',   // Dark - headings (light mode)
+          700: '#334155',   // Darker - active states (light mode)
+          800: '#1e293b',   // Very dark - backgrounds (dark mode)
+          900: '#0f172a',   // Darkest - main backgrounds (dark mode)
+        },
+        
+        // ACCENT COLORS - Professional fintech palette
+        primary: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',   // Main primary - buttons, links
+          600: '#2563eb',   // Hover primary
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
+        },
+        
+        success: {
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#22c55e',   // Success green
+          600: '#16a34a',
+          700: '#15803d',
+          800: '#166534',
+          900: '#14532d',
+        },
+        
+        warning: {
+          50: '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b',   // Warning amber
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
+        },
+        
+        danger: {
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#f87171',
+          500: '#ef4444',   // Error red
+          600: '#dc2626',
+          700: '#b91c1c',
+          800: '#991b1b',
+          900: '#7f1d1d',
+        },
+        
         // Core colors - analyzed from actual usage
         gray: {
           50: '#f9fafb',

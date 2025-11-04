@@ -368,7 +368,7 @@ class HomeController extends Controller
         $blocked_users = User::where('status', 'blocked')->count();
         $pending_verification = User::where('account_verify', '!=', 'yes')->count();
 
-        return view('admin.users-modern', [
+        return view('admin.users-management', [
             'title' => 'All users',
             'users' => $users,
             'user_count' => $user_count,

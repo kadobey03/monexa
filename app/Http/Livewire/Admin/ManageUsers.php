@@ -37,14 +37,12 @@ class ManageUsers extends Component
     public $checkrecord = [];
     public $selected = '';
     public $action = 'Delete';
-    public $username;
     public $fullname;
     public $email;
     public $password;
     public $password_confirmation;
     public $mobile_number;
-    public $date_of_birth;
-    public $nationality;
+    public $user_role = 'user';
     public $message;
     public $subject;
     public $plan;
@@ -57,13 +55,11 @@ class ManageUsers extends Component
 
     protected $rules = [
         'fullname' => 'required|max:255',
-        'username' => 'required|unique:users,username|regex:/^[a-zA-Z0-9_]+$/|min:3|max:50',
         'email' => 'required|email|max:255|unique:users',
-        'password' => 'required|max:100',
+        'password' => 'required|min:8|max:100',
         'password_confirmation' => 'required|same:password',
-        'mobile_number' => 'nullable|string|max:20',
-        'date_of_birth' => 'nullable|date|before:today',
-        'nationality' => 'nullable|string|max:100',
+        'mobile_number' => 'required|string|max:20',
+        'user_role' => 'required|in:user,admin,moderator',
     ];
 
 
@@ -111,15 +107,27 @@ class ManageUsers extends Component
     {
         $this->validate();
 
+        // E-posta adresinden otomatik username oluştur
+        $emailParts = explode('@', $this->email);
+        $baseUsername = $emailParts[0];
+        
+        // Username'in benzersiz olduğundan emin ol
+        $username = $baseUsername;
+        $counter = 1;
+        while (User::where('username', $username)->exists()) {
+            $username = $baseUsername . $counter;
+            $counter++;
+        }
+
         $thisid = DB::table('users')->insertGetId([
             'name' => $this->fullname,
             'email' => $this->email,
             'ref_by' => NULL,
-            'username' => $this->username,
+            'username' => $username,
             'password' => Hash::make($this->password),
-            'phone' => $this->mobile_number ?: NULL,
-            'dob' => $this->date_of_birth ?: NULL,
-            'nationality' => $this->nationality ?: NULL,
+            'phone' => $this->mobile_number,
+            'role' => $this->user_role,
+            'status' => 'active',
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
@@ -138,7 +146,7 @@ class ManageUsers extends Component
         session()->flash('success', 'Kullanıcı başarıyla oluşturuldu!');
 
         // Reset form fields
-        $this->reset(['username', 'fullname', 'email', 'password', 'password_confirmation', 'mobile_number', 'date_of_birth', 'nationality']);
+        $this->reset(['fullname', 'email', 'password', 'password_confirmation', 'mobile_number', 'user_role']);
 
         // Emit event to close modal and show success message
         $this->dispatch('userAdded');

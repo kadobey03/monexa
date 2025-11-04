@@ -1,14 +1,7 @@
  <!-- Top Up Modal -->
- <div id="topupModal" x-data="{ open: false }" x-show="open" @open-topup-modal.window="open = true"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+ <div id="topupModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="open = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('topupModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
@@ -16,7 +9,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="wallet" class="h-5 w-5 mr-2" />{{ $user->name }} Hesabına Kredi/Debit Uygula
                  </h4>
-                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('topupModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -70,16 +63,9 @@
  </div>
 
  <!-- Edit User Modal -->
- <div id="editModal" x-data="{ open: false }" x-show="open" @open-edit-modal.window="open = true" 
-      x-transition:enter="transition ease-out duration-300" 
-      x-transition:enter-start="opacity-0" 
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200" 
-      x-transition:leave-start="opacity-100" 
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+ <div id="editModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="open = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('editModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
@@ -87,7 +73,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="user-pen" class="h-5 w-5 mr-2" />{{ $user->name }} Kullanıcısını Düzenle
                  </h4>
-                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('editModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -158,16 +144,9 @@
  </div>
 
  <!-- Trading Modal -->
- <div id="tradingModal" x-data="{ open: false }" x-show="open" @open-trading-modal.window="open = true" 
-      x-transition:enter="transition ease-out duration-300" 
-      x-transition:enter-start="opacity-0" 
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200" 
-      x-transition:leave-start="opacity-100" 
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+ <div id="tradingModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="open = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('tradingModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
@@ -175,7 +154,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="arrow-trending-up" class="h-5 w-5 mr-2" />{{ $user->name }} için Manuel İşlem
                  </h4>
-                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('tradingModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -274,16 +253,9 @@
  </div>
 
  <!-- Email Modal -->
- <div id="emailModal" x-data="{ open: false }" x-show="open" @open-email-modal.window="open = true" 
-      x-transition:enter="transition ease-out duration-300" 
-      x-transition:enter-start="opacity-0" 
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200" 
-      x-transition:leave-start="opacity-100" 
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+ <div id="emailModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="open = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('emailModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
@@ -291,7 +263,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="envelope" class="h-5 w-5 mr-2" />{{ $user->name }} kullanıcısına E-posta Gönder
                  </h4>
-                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('emailModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -328,16 +300,9 @@
  </div>
 
  <!-- Delete Modal -->
- <div id="deleteModal" x-data="{ open: false }" x-show="open" @open-delete-modal.window="open = true" 
-      x-transition:enter="transition ease-out duration-300" 
-      x-transition:enter-start="opacity-0" 
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200" 
-      x-transition:leave-start="opacity-100" 
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+ <div id="deleteModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="open = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('deleteModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -345,7 +310,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="exclamation-triangle" class="h-5 w-5 mr-2" />Kullanıcı Hesabını Sil
                  </h4>
-                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('deleteModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -358,7 +323,7 @@
                      </p>
                  </div>
                  <div class="flex space-x-3">
-                     <button @click="resetPasswordOpen = false" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                     <button onclick="closeModal('deleteModal')" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                          <x-heroicon name="x-mark" class="h-4 w-4 mr-2 inline" />İptal
                      </button>
                      <a href="{{ url('admin/dashboard/delsystemuser') }}/{{ $user->id }}" onclick="return confirm('Bu işlem geri alınamaz. {{ $user->name }} kullanıcısını gerçekten silmek istiyor musunuz?')" class="flex-1 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
@@ -367,19 +332,13 @@
                  </div>
              </div>
          </div>
+     </div>
+ </div>
 
  <!-- Reset Password Modal -->
- <div id="resetPasswordModal" x-data="{ resetPasswordOpen: false }"
-      x-show="resetPasswordOpen"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+ <div id="resetPasswordModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="resetPasswordOpen = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('resetPasswordModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -387,7 +346,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="key" class="h-5 w-5 mr-2" />Kullanıcı Şifresini Sıfırla
                  </h4>
-                 <button @click="resetPasswordOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('resetPasswordModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -401,7 +360,7 @@
                      </div>
                  </div>
                  <div class="flex space-x-3">
-                     <button @click="open = false" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                     <button onclick="closeModal('resetPasswordModal')" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                          <x-heroicon name="x-mark" class="h-4 w-4 mr-2 inline" />İptal
                      </button>
                      <a href="{{ url('admin/dashboard/resetpswd') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısının şifresini gerçekten sıfırlamak istiyor musunuz? Yeni şifre: user01236')" class="flex-1 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
@@ -411,18 +370,12 @@
              </div>
          </div>
      </div>
+ </div>
 
  <!-- Tax Modal -->
- <div id="taxModal" x-data="{ taxOpen: false }" x-show="taxOpen" @open-tax-modal.window="taxOpen = true"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+ <div id="taxModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="taxOpen = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('taxModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -430,7 +383,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="calculator" class="h-5 w-5 mr-2" />{{ $user->name }} için Kullanıcı Vergisi
                  </h4>
-                 <button @click="taxOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('taxModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -464,17 +417,9 @@
  </div>
 
  <!-- Withdrawal Code Modal -->
- <div id="withdrawalCodeModal" x-data="{ withdrawalCodeOpen: false }"
-      x-show="withdrawalCodeOpen"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+ <div id="withdrawalCodeModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="withdrawalCodeOpen = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('withdrawalCodeModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -482,7 +427,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="key" class="h-5 w-5 mr-2" />{{ $user->name }} için Para Çekme Kodu
                  </h4>
-                 <button @click="withdrawalCodeOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('withdrawalCodeModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -516,16 +461,9 @@
  </div>
 
  <!-- Notify User Modal -->
- <div id="notifyModal" x-data="{ notifyOpen: false }" x-show="notifyOpen" @open-notify-modal.window="notifyOpen = true"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+ <div id="notifyModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="notifyOpen = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('notifyModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -533,7 +471,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="bell" class="h-5 w-5 mr-2" />{{ $user->username }} Dashboard Bildirimi
                  </h4>
-                 <button @click="notifyOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('notifyModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -567,16 +505,9 @@
  </div>
 
  <!-- Number of Trades Modal -->
- <div id="tradesModal" x-data="{ tradesOpen: false }" x-show="tradesOpen" @open-trades-modal.window="tradesOpen = true"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+ <div id="tradesModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="tradesOpen = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('tradesModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -584,7 +515,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="hash" class="h-5 w-5 mr-2" />{{ $user->name }} için İşlem Sayısı Belirleme
                  </h4>
-                 <button @click="tradesOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('tradesModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -613,16 +544,9 @@
  </div>
 
  <!-- Signal Modal -->
- <div id="signalModal" x-data="{ signalOpen: false }" x-show="signalOpen" @open-signal-modal.window="signalOpen = true"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
+ <div id="signalModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="signalOpen = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('signalModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
@@ -630,7 +554,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="radio" class="h-5 w-5 mr-2" />{{ $user->name }} için Sinyal Oluştur
                  </h4>
-                 <button @click="signalOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('signalModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -715,19 +639,11 @@
          </div>
      </div>
  </div>
- </div>
 
  <!-- Switch User Modal -->
- <div id="switchUserModal" x-data="{ open: false }" x-show="open" @open-switch-user-modal.window="open = true" 
-      x-transition:enter="transition ease-out duration-300" 
-      x-transition:enter-start="opacity-0" 
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200" 
-      x-transition:leave-start="opacity-100" 
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+ <div id="switchUserModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-         <div class="fixed inset-0 transition-opacity" @click="open = false">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('switchUserModal')">
              <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
          </div>
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -735,7 +651,7 @@
                  <h4 class="text-lg font-semibold text-white flex items-center">
                      <x-heroicon name="user-switch" class="h-5 w-5 mr-2" />{{ $user->name }} olarak giriş yap
                  </h4>
-                 <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                 <button onclick="closeModal('switchUserModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
                      <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
@@ -748,7 +664,7 @@
                      </p>
                  </div>
                  <div class="flex space-x-3">
-                     <button @click="open = false" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                     <button onclick="closeModal('switchUserModal')" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                          <x-heroicon name="x-mark" class="h-4 w-4 mr-2 inline" />İptal
                      </button>
                      <a href="{{ url('admin/dashboard/switchuser') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısı olarak giriş yapmak istediğinizden emin misiniz? Yönetici paneline istediğiniz zaman dönebilirsiniz.')" class="flex-1 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">

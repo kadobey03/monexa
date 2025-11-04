@@ -2,7 +2,7 @@
 
 ## Container Setup
 - **Containers**: `app-monexa` (PHP-FPM), `mysql-monexa`, `nginx-monexa`, `redis-monexa`, `phpmyadmin-monexa`
-- **Ports**: App `localhost:8211`, phpMyAdmin `localhost:8111`, MySQL `localhost:3306`
+- **Ports**: App `localhost:8080`, phpMyAdmin `localhost:8081`, MySQL `localhost:3306`
 - **Network**: `proxy-network` for container communication
 
 ## Laravel Command Execution
@@ -24,7 +24,7 @@
 ## Database Access
 - **Internal**: `mysql-monexa:3306` (from PHP container)
 - **External**: `localhost:3306` (from host)
-- **Web UI**: `localhost:8111` (phpMyAdmin)
+- **Web UI**: `localhost:8081` (phpMyAdmin)
 
 ## Best Practices
 - Use container commands for all Laravel operations

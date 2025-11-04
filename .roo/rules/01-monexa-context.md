@@ -1,6 +1,6 @@
 # Monexa Finance Platform
 
-**Stack**: Laravel 12, PHP 8.3+, Livewire 3, Jetstream, MySQL, Docker  
+**Stack**: Laravel 12, PHP 8.3+, Livewire 3, Jetstream, MySQL, Docker , Tailwind 
 **Domain**: Fintech - crypto/forex trading, investment plans, CRM/lead management  
 **Language**: Turkish (tr locale) with English technical terms  
 

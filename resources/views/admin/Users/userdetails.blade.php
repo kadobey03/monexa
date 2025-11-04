@@ -16,21 +16,15 @@
             </a>
             
             <!-- Actions Dropdown -->
-            <div class="relative" x-data="{ open: false }">
-                <button @click="open = !open"
+            <div class="relative" id="actionsDropdown">
+                <button onclick="toggleActionsDropdown()"
                         class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                     İşlemler
                     <x-heroicon name="chevron-down" class="ml-2 h-4 w-4" />
                 </button>
                 
-                <div x-show="open" @click.outside="open = false"
-                     x-transition:enter="transition ease-out duration-100"
-                     x-transition:enter-start="transform opacity-0 scale-95"
-                     x-transition:enter-end="transform opacity-100 scale-100"
-                     x-transition:leave="transition ease-in duration-75"
-                     x-transition:leave-start="transform opacity-100 scale-100"
-                     x-transition:leave-end="transform opacity-0 scale-95"
-                     class="absolute right-0 mt-2 w-64 bg-white dark:bg-admin-800 rounded-md shadow-lg z-50 border border-gray-200 dark:border-admin-600">
+                <div id="actionsDropdownContent" style="display: none;"
+                     class="absolute right-0 mt-2 w-64 bg-white dark:bg-admin-800 rounded-md shadow-lg z-50 border border-gray-200 dark:border-admin-600 opacity-0 transform scale-95 transition-all duration-100">
                     <div class="py-1">
                         <a href="{{ route('loginactivity', $user->id) }}"
                            class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
@@ -419,72 +413,252 @@
 </div>
 
 <script>
-// Basit event dispatch fonksiyonları
-window.openTopupModal = function() {
-    window.dispatchEvent(new CustomEvent('open-topup-modal'));
-};
+// Vanilla JavaScript Modal Sistemi
+let currentOpenModal = null;
+let actionsDropdownOpen = false;
 
-window.openEditModal = function() {
-    window.dispatchEvent(new CustomEvent('open-edit-modal'));
-};
+// Modal açma fonksiyonu
+function openModal(modalId) {
+    console.log('🔍 MODAL DEBUG - Opening attempt:', modalId); // Enhanced debug log
+    
+    // DOM element kontrolü
+    const modal = document.getElementById(modalId);
+    console.log('🔍 MODAL DEBUG - Element search result:', {
+        modalId: modalId,
+        elementFound: modal ? 'YES' : 'NO',
+        elementType: modal ? modal.tagName : 'N/A',
+        elementClasses: modal ? modal.className : 'N/A'
+    });
+    
+    closeAllModals(); // Önce tüm modalleri kapat
+    
+    if (modal) {
+        console.log('🔍 MODAL DEBUG - Before opening:', {
+            modalId: modalId,
+            currentDisplay: modal.style.display,
+            visibility: modal.style.visibility,
+            zIndex: modal.style.zIndex
+        });
+        
+        // Modal'ı görünür yap
+        modal.style.display = 'block';
+        modal.style.visibility = 'visible';
+        modal.style.zIndex = '9999';
+        modal.classList.remove('opacity-0');
+        modal.classList.add('opacity-100');
+        
+        // Body scroll'unu engelle
+        document.body.style.overflow = 'hidden';
+        currentOpenModal = modalId;
+        
+        // Modal içeriğine fade-in animasyonu
+        const modalContent = modal.querySelector('.inline-block');
+        if (modalContent) {
+            modalContent.classList.add('animate-fadeIn');
+            modalContent.style.transform = 'scale(1)';
+        }
+        
+        // Forced reflow to ensure styles apply
+        modal.offsetHeight;
+        
+        console.log('🔍 MODAL DEBUG - After opening:', {
+            modalId: modalId,
+            currentDisplay: modal.style.display,
+            visibility: modal.style.visibility,
+            zIndex: modal.style.zIndex,
+            opacity: modal.classList.contains('opacity-100')
+        });
+    } else {
+        console.error('🚨 MODAL DEBUG - Element NOT FOUND:', modalId);
+        console.log('🔍 MODAL DEBUG - Available modals check:');
+        
+        // Tüm modal'ları kontrol et
+        const allModals = [
+            'topupModal', 'editModal', 'tradingModal', 'emailModal', 'deleteModal',
+            'resetPasswordModal', 'taxModal', 'withdrawalCodeModal', 'notifyModal',
+            'tradesModal', 'signalModal', 'switchUserModal'
+        ];
+        
+        allModals.forEach(id => {
+            const element = document.getElementById(id);
+            console.log(`🔍 ${id}:`, element ? 'EXISTS' : 'MISSING');
+        });
+    }
+}
 
-window.openTradingModal = function() {
-    window.dispatchEvent(new CustomEvent('open-trading-modal'));
-};
+// Modal kapatma fonksiyonu
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0');
+        
+        const modalContent = modal.querySelector('.inline-block');
+        if (modalContent) {
+            modalContent.style.transform = 'scale(0.95)';
+        }
+        
+        setTimeout(() => {
+            modal.style.display = 'none';
+            modal.style.visibility = 'hidden';
+            document.body.style.overflow = 'auto'; // Scroll'u geri aç
+            currentOpenModal = null;
+        }, 300);
+    }
+}
 
-window.openSignalModal = function() {
-    window.dispatchEvent(new CustomEvent('open-signal-modal'));
-};
+// Tüm modalleri kapatma
+function closeAllModals() {
+    const modals = [
+        'topupModal', 'editModal', 'tradingModal', 'emailModal', 'deleteModal',
+        'resetPasswordModal', 'taxModal', 'withdrawalCodeModal', 'notifyModal',
+        'tradesModal', 'signalModal', 'switchUserModal'
+    ];
+    
+    modals.forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        if (modal && modal.style.display !== 'none') {
+            closeModal(modalId);
+        }
+    });
+}
 
-window.openEmailModal = function() {
-    window.dispatchEvent(new CustomEvent('open-email-modal'));
-};
+// Actions dropdown toggle
+function toggleActionsDropdown() {
+    const dropdown = document.getElementById('actionsDropdownContent');
+    if (!dropdown) return;
+    
+    actionsDropdownOpen = !actionsDropdownOpen;
+    
+    if (actionsDropdownOpen) {
+        dropdown.style.display = 'block';
+        setTimeout(() => {
+            dropdown.classList.remove('opacity-0', 'scale-95');
+            dropdown.classList.add('opacity-100', 'scale-100');
+        }, 10);
+    } else {
+        dropdown.classList.remove('opacity-100', 'scale-100');
+        dropdown.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => {
+            dropdown.style.display = 'none';
+        }, 100);
+    }
+}
 
-window.openNotifyModal = function() {
-    window.dispatchEvent(new CustomEvent('open-notify-modal'));
-};
+// Dropdown'u kapat
+function closeActionsDropdown() {
+    if (actionsDropdownOpen) {
+        const dropdown = document.getElementById('actionsDropdownContent');
+        if (dropdown) {
+            dropdown.classList.remove('opacity-100', 'scale-100');
+            dropdown.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                dropdown.style.display = 'none';
+                actionsDropdownOpen = false;
+            }, 100);
+        }
+    }
+}
 
-window.openTaxModal = function() {
-    window.dispatchEvent(new CustomEvent('open-tax-modal'));
-};
-
+// Modal açma fonksiyonları
+window.openTopupModal = function() { openModal('topupModal'); };
+window.openEditModal = function() { openModal('editModal'); };
+window.openTradingModal = function() { openModal('tradingModal'); };
+window.openSignalModal = function() { openModal('signalModal'); };
+window.openEmailModal = function() { openModal('emailModal'); };
+window.openNotifyModal = function() { openModal('notifyModal'); };
+window.openTaxModal = function() { openModal('taxModal'); };
 window.openWithdrawalCodeModal = function() {
-    window.dispatchEvent(new CustomEvent('open-withdrawal-code-modal'));
+    console.log('openWithdrawalCodeModal called'); // Debug log
+    openModal('withdrawalCodeModal');
 };
-
-window.openTradesModal = function() {
-    window.dispatchEvent(new CustomEvent('open-trades-modal'));
-};
-
-window.openSwitchUserModal = function() {
-    window.dispatchEvent(new CustomEvent('open-switch-user-modal'));
-};
-
+window.openTradesModal = function() { openModal('tradesModal'); };
+window.openSwitchUserModal = function() { openModal('switchUserModal'); };
 window.openResetPasswordModal = function() {
-    window.dispatchEvent(new CustomEvent('open-reset-password-modal'));
+    console.log('openResetPasswordModal called'); // Debug log
+    openModal('resetPasswordModal');
 };
+window.openDeleteModal = function() { openModal('deleteModal'); };
 
-window.openDeleteModal = function() {
-    window.dispatchEvent(new CustomEvent('open-delete-modal'));
-};
+// Event listener'lar
+document.addEventListener('DOMContentLoaded', function() {
+    // ESC tuşu ile modal kapatma
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && currentOpenModal) {
+            closeModal(currentOpenModal);
+        }
+    });
+    
+    // Dış tıklama ile dropdown kapatma
+    document.addEventListener('click', function(e) {
+        const actionsDropdown = document.getElementById('actionsDropdown');
+        if (actionsDropdownOpen && actionsDropdown && !actionsDropdown.contains(e.target)) {
+            closeActionsDropdown();
+        }
+    });
+});
 
-// Debug için console.log ekleyelim
+// Debug fonksiyonu
 window.debugModals = function() {
-    console.log('Modal elements:');
-    console.log('Topup modal:', document.querySelector('#topupModal'));
-    console.log('Edit modal:', document.querySelector('#editModal'));
-    console.log('Trading modal:', document.querySelector('#tradingModal'));
-    console.log('Signal modal:', document.querySelector('#signalModal'));
-    console.log('Email modal:', document.querySelector('#emailModal'));
-    console.log('Notify modal:', document.querySelector('#notifyModal'));
-    console.log('Tax modal:', document.querySelector('#taxModal'));
-    console.log('Withdrawal code modal:', document.querySelector('#withdrawalCodeModal'));
-    console.log('Trades modal:', document.querySelector('#tradesModal'));
-    console.log('Switch user modal:', document.querySelector('#switchUserModal'));
-    console.log('Reset password modal:', document.querySelector('#resetPasswordModal'));
-    console.log('Delete modal:', document.querySelector('#deleteModal'));
+    console.log('Modal System Debug:');
+    console.log('Current open modal:', currentOpenModal);
+    console.log('Actions dropdown open:', actionsDropdownOpen);
+    
+    const modals = [
+        'topupModal', 'editModal', 'tradingModal', 'emailModal', 'deleteModal',
+        'resetPasswordModal', 'taxModal', 'withdrawalCodeModal', 'notifyModal',
+        'tradesModal', 'signalModal', 'switchUserModal'
+    ];
+    
+    modals.forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        console.log(`${modalId}:`, modal ? 'exists' : 'missing', modal?.style.display || 'none');
+    });
+};
+
+// Problem olan modallar için özel debug fonksiyonu
+window.debugProblemModals = function() {
+    console.log('=== Problem Modal Debug ===');
+    
+    console.log('Button elements check:');
+    const withdrawalBtn = document.querySelector('[onclick*="openWithdrawalCodeModal"]');
+    const resetBtn = document.querySelector('[onclick*="openResetPasswordModal"]');
+    console.log('Withdrawal button found:', withdrawalBtn ? 'YES' : 'NO');
+    console.log('Reset password button found:', resetBtn ? 'YES' : 'NO');
+    
+    console.log('Modal elements check:');
+    const withdrawalModal = document.getElementById('withdrawalCodeModal');
+    const resetModal = document.getElementById('resetPasswordModal');
+    console.log('withdrawalCodeModal element:', withdrawalModal ? 'EXISTS' : 'MISSING');
+    console.log('resetPasswordModal element:', resetModal ? 'EXISTS' : 'MISSING');
+    
+    if (withdrawalModal) {
+        console.log('withdrawalCodeModal display:', withdrawalModal.style.display);
+        console.log('withdrawalCodeModal classes:', withdrawalModal.className);
+    }
+    
+    if (resetModal) {
+        console.log('resetPasswordModal display:', resetModal.style.display);
+        console.log('resetPasswordModal classes:', resetModal.className);
+    }
+    
+    console.log('Functions check:');
+    console.log('openWithdrawalCodeModal exists:', typeof window.openWithdrawalCodeModal);
+    console.log('openResetPasswordModal exists:', typeof window.openResetPasswordModal);
+    console.log('openModal exists:', typeof window.openModal);
 };
 </script>
+
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.2s ease-out;
+}
+</style>
 
 @include('admin.Users.users_actions')
 @endsection
