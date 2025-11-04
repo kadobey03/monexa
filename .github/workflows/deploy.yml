@@ -36,6 +36,10 @@ jobs:
               echo "⚠️ Docker Hub is not accessible, using no-build strategy"
             fi
             
+            # Build frontend assets with Node.js
+            echo "🔨 Building frontend assets..."
+            docker-compose -f docker-compose.prod.yml run --rm node-monexa || { echo "❌ Frontend build failed"; exit 1; }
+            
             # Stop containers gracefully
             echo "⏹️ Stopping containers..."
             docker-compose -f docker-compose.prod.yml down --remove-orphans || true
