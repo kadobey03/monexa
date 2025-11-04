@@ -76,6 +76,75 @@
     
     
     
+    <!-- TradingView Scripts for Dashboard Layout -->
+    @if(($layoutType ?? 'default') === 'dashboard')
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    
+    <!-- Comprehensive Console Error Suppression for TradingView -->
+    <script type="text/javascript">
+        // Store original console methods
+        const originalConsole = {
+            error: console.error,
+            warn: console.warn,
+            log: console.log
+        };
+        
+        // Function to check if message should be suppressed
+        function shouldSuppress(message) {
+            const suppressPatterns = [
+                'Unable to check top-level optout',
+                'Failed to read a named property',
+                'cross-origin frame',
+                'Blocked a frame with origin "https://s.tradingview.com"',
+                'Blocked a frame with origin "https://www.tradingview-widget.com"',
+                'checkPageOptout',
+                'Invalid environment undefined',
+                'snowplow-embed-widget-tracker',
+                'embed_timeline_widget',
+                'runtime-embed_timeline_widget'
+            ];
+            
+            return suppressPatterns.some(pattern => message.includes(pattern));
+        }
+        
+        // Override console.error with comprehensive filtering
+        console.error = function(...args) {
+            const message = args.join(' ');
+            if (!shouldSuppress(message)) {
+                originalConsole.error.apply(console, args);
+            }
+        };
+        
+        // Also suppress console.warn for TradingView widgets
+        console.warn = function(...args) {
+            const message = args.join(' ');
+            if (!shouldSuppress(message)) {
+                originalConsole.warn.apply(console, args);
+            }
+        };
+        
+        // Suppress window error events from TradingView
+        window.addEventListener('error', function(e) {
+            if (e.filename && (
+                e.filename.includes('tradingview') ||
+                e.filename.includes('snowplow') ||
+                e.message.includes('cross-origin')
+            )) {
+                e.preventDefault();
+                return false;
+            }
+        }, true);
+        
+        // Suppress unhandled promise rejections from TradingView
+        window.addEventListener('unhandledrejection', function(e) {
+            if (e.reason && e.reason.toString().includes('cross-origin')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+    @endif
+    
     @stack('head-scripts')
     @stack('head-styles')
 </head>

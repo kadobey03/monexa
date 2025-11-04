@@ -33,22 +33,21 @@
             <div class="flex items-center space-x-3">
                 
                 <!-- Quick Actions Dropdown -->
-                <div class="hidden md:block relative" x-data="{ open: false }">
-                    <button @click="open = !open"
+                <div class="hidden md:block relative">
+                    <button onclick="toggleQuickActions()"
                             class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
                         <x-heroicon name="bolt" class="w-4 h-4" />
                         <span>Hızlı İşlem</span>
                         <x-heroicon name="chevron-down" class="w-4 h-4" />
                     </button>
 
-                    <div x-show="open" @click.away="open = false"
-                         class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20">
+                    <div id="quickActionsDropdown" class="hidden absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20">
                         <div class="p-2">
                             <a href="{{ route('deposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                                 <x-heroicon name="plus-circle" class="w-4 h-4 mr-3 text-green-500" />
                                 Para Yatırma
                             </a>
-                            <a href="{{ route('withdrawals') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
+                            <a href="{{ route('withdrawalsdeposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                                 <x-heroicon name="minus-circle" class="w-4 h-4 mr-3 text-red-500" />
                                 Para Çekme
                             </a>
@@ -61,16 +60,16 @@
                 </div>
 
                 <!-- Dark Mode Toggle -->
-                <button @click="toggleTheme()"
+                <button onclick="toggleTheme()"
                         class="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-                    <x-heroicon name="sun" class="w-5 h-5" :class="{ 'hidden': isDarkMode }" />
-                    <x-heroicon name="moon" class="w-5 h-5" :class="{ 'hidden': !isDarkMode }" />
+                    <x-heroicon name="sun" class="w-5 h-5" id="sunIcon" />
+                    <x-heroicon name="moon" class="w-5 h-5 hidden" id="moonIcon" />
                 </button>
 
                 <!-- User Profile -->
                 @auth
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open"
+                    <div class="relative">
+                        <button onclick="toggleProfileDropdown()"
                                 class="flex items-center space-x-3 px-2 py-2 text-sm rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
                             <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-medium">
                                 {{ Str::upper(substr(auth()->user()->name, 0, 1)) }}
@@ -86,8 +85,7 @@
                             <x-heroicon name="chevron-down" class="w-4 h-4 text-gray-400" />
                         </button>
 
-                        <div x-show="open" @click.away="open = false"
-                             class="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20">
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20">
                             
                             <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                                 <div class="flex items-center space-x-3">
@@ -132,7 +130,7 @@
                 @endauth
 
                 <!-- Mobile Menu Button -->
-                <button @click="toggleMobileMenu()"
+                <button onclick="toggleMobileMenu()"
                         class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
                     <x-heroicon name="bars-3" class="w-5 h-5" />
                 </button>
@@ -140,3 +138,82 @@
         </div>
     </div>
 </nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Quick Actions Dropdown
+    window.toggleQuickActions = function() {
+        const dropdown = document.getElementById('quickActionsDropdown');
+        dropdown.classList.toggle('hidden');
+    };
+
+    // Profile Dropdown
+    window.toggleProfileDropdown = function() {
+        const dropdown = document.getElementById('profileDropdown');
+        dropdown.classList.toggle('hidden');
+    };
+
+    // Theme Toggle
+    window.toggleTheme = function() {
+        const html = document.documentElement;
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        
+        if (html.classList.contains('dark')) {
+            html.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            html.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+    };
+
+    // Mobile Menu Toggle
+    window.toggleMobileMenu = function() {
+        // This should be handled by the main layout manager
+        if (window.LayoutManager && window.LayoutManager.toggleMobileMenu) {
+            window.LayoutManager.toggleMobileMenu();
+        }
+    };
+
+    // Click away functionality
+    document.addEventListener('click', function(event) {
+        const quickActionsDropdown = document.getElementById('quickActionsDropdown');
+        const profileDropdown = document.getElementById('profileDropdown');
+        
+        // Close quick actions dropdown if clicking outside
+        if (quickActionsDropdown && !quickActionsDropdown.contains(event.target) &&
+            !event.target.closest('button[onclick="toggleQuickActions()"]')) {
+            quickActionsDropdown.classList.add('hidden');
+        }
+        
+        // Close profile dropdown if clicking outside
+        if (profileDropdown && !profileDropdown.contains(event.target) &&
+            !event.target.closest('button[onclick="toggleProfileDropdown()"]')) {
+            profileDropdown.classList.add('hidden');
+        }
+    });
+
+    // Initialize theme on page load
+    const savedTheme = localStorage.getItem('theme') ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    
+    const html = document.documentElement;
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+    
+    if (savedTheme === 'dark') {
+        html.classList.add('dark');
+        if (sunIcon) sunIcon.classList.add('hidden');
+        if (moonIcon) moonIcon.classList.remove('hidden');
+    } else {
+        html.classList.remove('dark');
+        if (sunIcon) sunIcon.classList.remove('hidden');
+        if (moonIcon) moonIcon.classList.add('hidden');
+    }
+});
+</script>

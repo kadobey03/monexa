@@ -465,20 +465,44 @@
             <div id="tradingview_advanced" class="w-full" style="height: 300px; min-height: 300px;"></div>
             
             <script type="text/javascript">
-                new TradingView.widget({
-                    autosize: true,
-                    symbol: "BINANCE:BTCUSDT",
-                    interval: "30",
-                    timezone: "Etc/UTC",
-                    theme: document.documentElement.classList.contains('dark') ? "dark" : "light",
-                    style: "1",
-                    locale: "en",
-                    toolbar_bg: "#f1f3f6",
-                    enable_publishing: false,
-                    allow_symbol_change: true,
-                    hide_side_toolbar: false,
-                    container_id: "tradingview_advanced"
-                });
+                // Initialize TradingView widget with error handling
+                function initializeTradingViewWidget() {
+                    if (typeof TradingView !== 'undefined' && TradingView.widget) {
+                        try {
+                            new TradingView.widget({
+                                autosize: true,
+                                symbol: "BINANCE:BTCUSDT",
+                                interval: "30",
+                                timezone: "Etc/UTC",
+                                theme: document.documentElement.classList.contains('dark') ? "dark" : "light",
+                                style: "1",
+                                locale: "en",
+                                toolbar_bg: "#f1f3f6",
+                                enable_publishing: false,
+                                allow_symbol_change: true,
+                                hide_side_toolbar: false,
+                                container_id: "tradingview_advanced"
+                            });
+                        } catch (error) {
+                            console.error('TradingView widget initialization failed:', error);
+                            // Show fallback content
+                            const container = document.getElementById('tradingview_advanced');
+                            if (container) {
+                                container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500 dark:text-gray-400"><p>Grafik yüklenemiyor. Lütfen sayfayı yenileyin.</p></div>';
+                            }
+                        }
+                    } else {
+                        // TradingView not loaded yet, retry after a short delay
+                        setTimeout(initializeTradingViewWidget, 500);
+                    }
+                }
+                
+                // Initialize when DOM is ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initializeTradingViewWidget);
+                } else {
+                    initializeTradingViewWidget();
+                }
                 // Fetch live prices via unified API service
                 async function fetchCryptoPrices() {
                     try {
