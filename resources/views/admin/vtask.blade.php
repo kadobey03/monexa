@@ -9,7 +9,7 @@
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Bana atanan görevleri görüntüle ve yönet</p>
         </div>
         <div class="flex items-center space-x-2">
-            <i data-lucide="clipboard-list" class="h-5 w-5 text-gray-500 dark:text-gray-400"></i>
+            <x-heroicon name="clipboard-list" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
             <span class="text-sm text-gray-500 dark:text-gray-400">{{ count($tasks) }} Görev</span>
         </div>
     </div>
@@ -25,7 +25,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="clipboard-list" class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="clipboard-list" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -40,7 +40,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="clock" class="h-6 w-6 text-yellow-600 dark:text-yellow-400"></i>
+                        <x-heroicon name="clock" class="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -57,7 +57,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="check-circle" class="h-6 w-6 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="check-circle" class="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -74,7 +74,7 @@
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-                <i data-lucide="list-todo" class="h-5 w-5 mr-2"></i>
+                <x-heroicon name="list-todo" class="h-5 w-5 mr-2" />
                 Görev Detayları
             </h2>
         </div>
@@ -120,7 +120,7 @@
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-8 w-8">
                                             <div class="h-8 w-8 rounded-full bg-gray-100 dark:bg-admin-700 flex items-center justify-center">
-                                                <i data-lucide="user" class="h-4 w-4 text-gray-600 dark:text-gray-400"></i>
+                                                <x-heroicon name="user" class="h-4 w-4 text-gray-600 dark:text-gray-400" />
                                             </div>
                                         </div>
                                         <div class="ml-3">
@@ -137,25 +137,25 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     <div class="flex items-center">
-                                        <i data-lucide="calendar" class="h-4 w-4 mr-1"></i>
+                                        <x-heroicon name="calendar-days" class="h-4 w-4 mr-1" />
                                         {{ $task->start_date }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     <div class="flex items-center">
-                                        <i data-lucide="calendar" class="h-4 w-4 mr-1"></i>
+                                        <x-heroicon name="calendar-days" class="h-4 w-4 mr-1" />
                                         {{ $task->end_date }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if ($task->status == 'Pending')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
-                                            <i data-lucide="clock" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="clock" class="w-3 h-3 mr-1" />
                                             Beklemede
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
-                                            <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
                                             {{ $task->status }}
                                         </span>
                                     @endif
@@ -168,12 +168,12 @@
                                         <a href="{{ url('admin/dashboard/markdone') }}/{{ $task->id }}"
                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:focus:ring-offset-admin-800"
                                            onclick="return confirm('Bu görevi tamamlandı olarak işaretlemek istediğinizden emin misiniz?')">
-                                            <i data-lucide="check" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="check" class="w-3 h-3 mr-1" />
                                             Tamamlandı İşaretle
                                         </a>
                                     @else
                                         <span class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-300">
-                                            <i data-lucide="check-circle-2" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="check-circle-2" class="w-3 h-3 mr-1" />
                                             Tamamlandı
                                         </span>
                                     @endif
@@ -183,7 +183,7 @@
                             <tr>
                                 <td colspan="8" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center">
-                                        <i data-lucide="clipboard-x" class="h-12 w-12 text-gray-400 mb-4"></i>
+                                        <x-heroicon name="clipboard-x" class="h-12 w-12 text-gray-400 mb-4" />
                                         <h3 class="text-sm font-medium text-gray-900 dark:text-white">Henüz görev yok</h3>
                                         <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Size atanan görevler burada görünecek.</p>
                                     </div>

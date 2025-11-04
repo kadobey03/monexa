@@ -20,7 +20,7 @@
 
                 <!-- Admin Badge -->
                 <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-4">
-                    <i data-lucide="shield-alert" class="w-4 h-4 text-red-400"></i>
+                    <x-heroicon name="shield-exclamation" class="w-4 h-4 text-red-400" />
                     <span class="text-red-300 text-sm font-bold">Yönetici Kurtarma</span>
                 </div>
 
@@ -36,7 +36,7 @@
             @if (Session::has('status'))
                 <div class="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl">
                     <div class="flex items-start gap-3">
-                        <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i>
+                        <x-heroicon name="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
                             <p class="text-green-300 font-bold mb-1">Başarı</p>
                             <p class="text-gray-300">{{ session('status') }}</p>
@@ -48,7 +48,7 @@
             @if (Session::has('message'))
                 <div class="mb-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
                     <div class="flex items-start gap-3">
-                        <i data-lucide="info" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
+                        <x-heroicon name="information-circle" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
                             <p class="text-blue-300 font-bold mb-1">Bilgi</p>
                             <p class="text-gray-300">{{ Session::get('message') }}</p>
@@ -60,7 +60,7 @@
             <!-- Security Notice -->
             <div class="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
                 <div class="flex items-start gap-3">
-                    <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0"></i>
+                    <x-heroicon name="exclamation-triangle" class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <div class="text-sm">
                         <p class="text-yellow-300 font-bold mb-1">Güvenlik Bildirimi</p>
                         <p class="text-gray-300">
@@ -90,12 +90,12 @@
                             required
                         >
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <i data-lucide="mail" class="h-5 w-5 text-gray-400"></i>
+                            <x-heroicon name="envelope" class="h-5 w-5 text-gray-400" />
                         </div>
                     </div>
                     @error('email')
                         <div class="flex items-center gap-2 text-red-400 text-sm">
-                            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                            <x-heroicon name="exclamation-circle" class="w-4 h-4" />
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
@@ -119,12 +119,12 @@
                             required
                         >
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <i data-lucide="key" class="h-5 w-5 text-gray-400"></i>
+                            <x-heroicon name="key" class="h-5 w-5 text-gray-400" />
                         </div>
                     </div>
                     @error('token')
                         <div class="flex items-center gap-2 text-red-400 text-sm">
-                            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                            <x-heroicon name="exclamation-circle" class="w-4 h-4" />
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
@@ -152,12 +152,12 @@
                             class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-300 focus:outline-none"
                             onclick="togglePassword('password')"
                         >
-                            <i data-lucide="eye" class="h-5 w-5" id="password-eye"></i>
+                            <x-heroicon name="eye" class="h-5 w-5" id="password-eye" />
                         </button>
                     </div>
                     @error('password')
                         <div class="flex items-center gap-2 text-red-400 text-sm">
-                            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                            <x-heroicon name="exclamation-circle" class="w-4 h-4" />
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
@@ -184,7 +184,7 @@
                             class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-300 focus:outline-none"
                             onclick="togglePassword('password_confirmation')"
                         >
-                            <i data-lucide="eye" class="h-5 w-5" id="password_confirmation-eye"></i>
+                            <x-heroicon name="eye" class="h-5 w-5" id="password_confirmation-eye" />
                         </button>
                     </div>
                 </div>
@@ -192,7 +192,7 @@
                 <!-- Password Requirements -->
                 <div class="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                     <h4 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
-                        <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                        <x-heroicon name="shield-check" class="w-4 h-4 text-green-400" />
                         Şifre Gereksinimleri
                     </h4>
                     <ul class="text-gray-300 text-xs space-y-1">
@@ -221,7 +221,7 @@
                     class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-red-500/25 focus:outline-none focus:ring-2 focus:ring-red-500/50"
                 >
                     <span class="flex items-center justify-center gap-2">
-                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        <x-heroicon name="shield-check" class="w-5 h-5" />
                         Yönetici Şifresini Sıfırla
                     </span>
                 </button>
@@ -231,7 +231,7 @@
             <div class="mt-6 text-center">
                 <a href="{{ route('adminlogin') }}"
                    class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                    <x-heroicon name="arrow-left" class="w-4 h-4" />
                     Yönetici Girişine Geri Dön
                 </a>
             </div>
@@ -242,15 +242,15 @@
                     <p class="text-xs text-gray-500 mb-2">Kurumsal düzeyde yönetici güvenliği</p>
                     <div class="flex items-center justify-center gap-4 text-gray-600">
                         <span class="flex items-center gap-1">
-                            <i data-lucide="shield" class="w-3 h-3"></i>
+                            <x-heroicon name="shield-check" class="w-3 h-3" />
                             <span class="text-xs">Sadece Yönetici</span>
                         </span>
                         <span class="flex items-center gap-1">
-                            <i data-lucide="lock" class="w-3 h-3"></i>
+                            <x-heroicon name="lock-closed" class="w-3 h-3" />
                             <span class="text-xs">Token Doğrulandı</span>
                         </span>
                         <span class="flex items-center gap-1">
-                            <i data-lucide="eye-off" class="w-3 h-3"></i>
+                            <x-heroicon name="eye-slash" class="w-3 h-3" />
                             <span class="text-xs">Güvenli Sıfırlama</span>
                         </span>
                     </div>
@@ -268,10 +268,10 @@
 </div>
 
 <!-- Add Lucide Icons Script -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        lucide.createIcons();
+        
 
         // Token input formatting
         const tokenInput = document.getElementById('token');
@@ -318,7 +318,7 @@
             eye.setAttribute('data-lucide', 'eye');
         }
 
-        lucide.createIcons();
+        
     }
 </script>
 

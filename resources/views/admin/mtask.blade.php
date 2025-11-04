@@ -9,7 +9,7 @@
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Tüm görevleri yönetin ve takip edin</p>
         </div>
         <div class="flex items-center space-x-2">
-            <i data-lucide="clipboard-check" class="h-5 w-5 text-gray-500 dark:text-gray-400"></i>
+            <x-heroicon name="clipboard-check" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
             <span class="text-sm text-gray-500 dark:text-gray-400">{{ count($tasks) }} Görev</span>
         </div>
     </div>
@@ -22,7 +22,7 @@
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-                <i data-lucide="list-todo" class="h-5 w-5 mr-2"></i>
+                <x-heroicon name="list-todo" class="h-5 w-5 mr-2" />
                 Görev Listesi
             </h2>
         </div>
@@ -68,25 +68,25 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     <div class="flex items-center">
-                                        <i data-lucide="calendar" class="h-4 w-4 mr-1"></i>
+                                        <x-heroicon name="calendar-days" class="h-4 w-4 mr-1" />
                                         {{ $task->start_date }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     <div class="flex items-center">
-                                        <i data-lucide="calendar" class="h-4 w-4 mr-1"></i>
+                                        <x-heroicon name="calendar-days" class="h-4 w-4 mr-1" />
                                         {{ $task->end_date }}
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if ($task->status == 'Pending')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
-                                            <i data-lucide="clock" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="clock" class="w-3 h-3 mr-1" />
                                             Beklemede
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
-                                            <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
                                             {{ $task->status }}
                                         </span>
                                     @endif
@@ -98,14 +98,14 @@
                                     @if ($task->status == 'Pending')
                                         <button onclick="openEditModal({{ $task->id }})"
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                                            <i data-lucide="edit" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="edit" class="w-3 h-3 mr-1" />
                                             Düzenle
                                         </button>
                                     @endif
                                     <a href="{{ url('admin/dashboard/deltask') }}/{{ $task->id }}"
                                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-admin-800"
                                        onclick="return confirm('Bu görevi silmek istediğinizden emin misiniz?')">
-                                        <i data-lucide="trash-2" class="w-3 h-3 mr-1"></i>
+                                        <x-heroicon name="trash-2" class="w-3 h-3 mr-1" />
                                         Sil
                                     </a>
                                 </td>
@@ -117,7 +117,7 @@
                                     <div class="flex items-center justify-between mb-4">
                                         <h3 class="text-lg font-medium text-gray-900 dark:text-white">Görev Düzenle</h3>
                                         <button onclick="closeEditModal({{ $task->id }})" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
-                                            <i data-lucide="x" class="h-6 w-6"></i>
+                                            <x-heroicon name="x-mark" class="h-6 w-6" />
                                         </button>
                                     </div>
                                     
@@ -189,7 +189,7 @@
                             <tr>
                                 <td colspan="7" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center">
-                                        <i data-lucide="clipboard-x" class="h-12 w-12 text-gray-400 mb-4"></i>
+                                        <x-heroicon name="clipboard-x" class="h-12 w-12 text-gray-400 mb-4" />
                                         <h3 class="text-sm font-medium text-gray-900 dark:text-white">Henüz görev yok</h3>
                                         <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Yeni görevler oluşturduğunuzda burada görünecek.</p>
                                     </div>

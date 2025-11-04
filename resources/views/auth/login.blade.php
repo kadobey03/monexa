@@ -7,7 +7,7 @@
     @if (Session::has('status'))
         <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-xl">
             <div class="flex items-center gap-3">
-                <i data-lucide="info" class="h-5 w-5 text-blue-600 dark:text-blue-400"></i>
+                <x-heroicon name="information-circle" class="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 <div class="text-sm text-blue-800 dark:text-blue-200">
                     {{ session('status') }}
                 </div>
@@ -41,7 +41,7 @@
         @error('email')
             <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl">
                 <div class="flex items-center gap-3">
-                    <i data-lucide="alert-circle" class="h-5 w-5 text-red-600 dark:text-red-400"></i>
+                    <x-heroicon name="exclamation-circle" class="h-5 w-5 text-red-600 dark:text-red-400" />
                     <div class="text-sm text-red-800 dark:text-red-200">
                         {{ $message }}
                     </div>
@@ -60,7 +60,7 @@
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i data-lucide="mail" class="h-5 w-5 text-gray-400"></i>
+                        <x-heroicon name="envelope" class="h-5 w-5 text-gray-400" />
                     </div>
                     <input type="email" name="email" id="email" required
                            autocomplete="email"
@@ -77,7 +77,7 @@
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i data-lucide="lock" class="h-5 w-5 text-gray-400"></i>
+                        <x-heroicon name="lock-closed" class="h-5 w-5 text-gray-400" />
                     </div>
                     <input type="password" name="password" id="password" required
                            autocomplete="current-password"
@@ -85,7 +85,7 @@
                            placeholder="Şifrenizi giriniz">
                     <button type="button" onclick="togglePasswordVisibility('password')"
                             class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                        <i data-lucide="eye" class="h-5 w-5" id="password-eye"></i>
+                        <x-heroicon name="eye" class="h-5 w-5" id="password-eye" />
                     </button>
                 </div>
             </div>
@@ -108,7 +108,7 @@
             <!-- Login Button -->
             <button type="submit"
                     class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                <i data-lucide="log-in" class="h-4 w-4"></i>
+                <x-heroicon name="arrow-right-on-rectangle" class="h-4 w-4" />
                 Giriş Yap
             </button>
         </form>
@@ -141,7 +141,7 @@
         
         // Re-initialize lucide icons
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            
         }
     }
 

@@ -13,7 +13,7 @@
             </div>
             <a href="{{ route('dashboard') }}"
                 class="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
-                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                <x-heroicon name="arrow-left" class="w-5 h-5" />
                 Back to Dashboard
             </a>
         </div>
@@ -27,7 +27,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 max-w-md mx-auto">
                 <div class="flex items-center gap-4">
                     <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-                        <i data-lucide="wallet" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="wallet" class="w-8 h-8 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Available Balance</p>
@@ -43,7 +43,7 @@
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 max-w-2xl mx-auto p-6 md:p-8">
             <div class="flex items-center mb-6">
                 <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl mr-4">
-                    <i data-lucide="send" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="send" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
                     <h2 class="text-xl font-bold text-gray-900 dark:text-white">Send Funds</h2>
@@ -59,7 +59,7 @@
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <i data-lucide="user" class="w-5 h-5 text-gray-400"></i>
+                            <x-heroicon name="user" class="w-5 h-5 text-gray-400" />
                         </div>
                         <input type="text" name="email" id="email"
                             class="block w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
@@ -74,7 +74,7 @@
                     </label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <i data-lucide="banknote" class="w-5 h-5 text-gray-400"></i>
+                            <x-heroicon name="banknote" class="w-5 h-5 text-gray-400" />
                         </div>
                         <input type="number" name="amount" id="amount"
                             min="{{ $moresettings->min_transfer }}"
@@ -90,7 +90,7 @@
                 <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl">
                     <div class="flex items-start">
                         <div class="flex-shrink-0">
-                            <i data-lucide="info" class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5"></i>
+                            <x-heroicon name="information-circle" class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" />
                         </div>
                         <div class="ml-3">
                             <h3 class="text-sm font-medium text-blue-800 dark:text-blue-300">Transfer Information</h3>
@@ -105,7 +105,7 @@
 
                 <button type="submit" id="subbtn"
                     class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl">
-                    <i data-lucide="send" class="w-5 h-5"></i>
+                    <x-heroicon name="send" class="w-5 h-5" />
                     <span>Transfer Funds</span>
                 </button>
             </form>
@@ -120,7 +120,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize Lucide icons
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
 
             // Form submission handler with improved UX

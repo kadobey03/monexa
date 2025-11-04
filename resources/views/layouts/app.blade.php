@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 
 <head>
-    <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -117,17 +117,17 @@
         <!-- Unified Icon Service loaded via Vite assets -->
         
         <!-- Console Error Fixes - Ultimate System -->
-        <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
-        <script src="{{ asset('js/websocket-fix.js') }}"></script>
+        
+        
         
         <!-- jQuery - Local -->
-        <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
+        
         
         <!-- Console Error Fixes - Full -->
-        <script src="{{ asset('js/console-fixes.js') }}"></script>
+        
         
         <!-- Sweet Alert for notifications -->
-        <script src="{{ asset('dash/js/plugin/sweetalert/sweetalert.min.js') }} "></script>
+        
         
         <!-- Vite Assets -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -480,17 +480,17 @@
     
     @section('scripts')
         <!-- Chart.js for charts - Local -->
-        <script defer src="{{ asset('vendor/chartjs/chart.umd.min.js') }}"></script>
+        
 
         <!-- Core functionality scripts -->
-        <script src="{{ asset('dash/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
-        <script src="{{ asset('dash/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
-        <script src="{{ asset('dash/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
-        <script src="{{ asset('dash/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
-        <script src="{{ asset('dash/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
+        
+        
+        
+        
+        
 
         <!-- Google Translate -->
-        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        
         <script type="text/javascript">
             function googleTranslateElementInit() {
                 new google.translate.TranslateElement({

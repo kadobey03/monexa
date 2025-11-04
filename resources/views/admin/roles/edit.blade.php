@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="edit-3" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="edit-3" class="w-6 h-6 text-white" />
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-admin-900 dark:text-white">{{ $role->display_name }} - Düzenle</h1>
@@ -18,7 +18,7 @@
             
             <a href="{{ route('admin.roles.index') }}" 
                class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
-                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
                 Geri Dön
             </a>
         </div>
@@ -303,7 +303,7 @@
                 <div class="flex items-center space-x-3">
                     <a href="{{ route('admin.roles.show', $role) }}" 
                        class="px-4 py-2 bg-admin-100 dark:bg-admin-700 text-admin-700 dark:text-admin-300 rounded-xl hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors">
-                        <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="eye" class="w-4 h-4 mr-2" />
                         Detayları Görüntüle
                     </a>
                 </div>
@@ -315,7 +315,7 @@
                     </a>
                     <button type="submit" 
                             class="px-6 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-xl shadow-lg hover:shadow-amber-500/25 transition-all duration-200">
-                        <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="save" class="w-4 h-4 mr-2" />
                         Değişiklikleri Kaydet
                     </button>
                 </div>
@@ -331,7 +331,7 @@ function roleEditManager() {
     return {
         init() {
             this.$nextTick(() => {
-                lucide.createIcons();
+                
                 this.updateCategoryCheckboxes();
             });
         },
@@ -379,7 +379,7 @@ function roleEditManager() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    
     
     // Update category checkboxes when individual permissions change
     document.querySelectorAll('input[name="permissions[]"]').forEach(checkbox => {

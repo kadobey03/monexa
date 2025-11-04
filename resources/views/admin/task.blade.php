@@ -7,7 +7,7 @@
             <div class="px-4 py-6 sm:px-6 lg:px-8">
                 <div class="flex items-center space-x-4">
                     <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
-                        <i data-lucide="clipboard-list" class="w-8 h-8 text-white"></i>
+                        <x-heroicon name="clipboard-list" class="w-8 h-8 text-white" />
                     </div>
                     <div>
                         <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Yeni Görev Oluştur</h1>
@@ -30,7 +30,7 @@
                     <!-- Form Header -->
                     <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-6 text-white">
                         <div class="flex items-center">
-                            <i data-lucide="plus-circle" class="w-6 h-6 mr-3"></i>
+                            <x-heroicon name="plus-circle" class="w-6 h-6 mr-3" />
                             <h2 class="text-xl font-bold">Görev Bilgileri</h2>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                             <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-800 hover:shadow-md transition-all duration-200">
                                 <div class="flex items-center mb-3">
                                     <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-3">
-                                        <i data-lucide="type" class="w-5 h-5 text-white"></i>
+                                        <x-heroicon name="type" class="w-5 h-5 text-white" />
                                     </div>
                                     <div>
                                         <h6 class="text-blue-700 dark:text-blue-300 font-semibold mb-1">Görev Başlığı</h6>
@@ -65,7 +65,7 @@
                             <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-4 rounded-xl border border-green-100 dark:border-green-800 hover:shadow-md transition-all duration-200">
                                 <div class="flex items-center mb-3">
                                     <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-3">
-                                        <i data-lucide="user-check" class="w-5 h-5 text-white"></i>
+                                        <x-heroicon name="user-check" class="w-5 h-5 text-white" />
                                     </div>
                                     <div>
                                         <h6 class="text-green-700 dark:text-green-300 font-semibold mb-1">Sorumlu Yönetici</h6>

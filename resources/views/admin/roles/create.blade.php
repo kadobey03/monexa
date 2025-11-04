@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="plus-circle" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="plus-circle" class="w-6 h-6 text-white" />
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Yeni Rol Oluştur</h1>
@@ -18,7 +18,7 @@
             
             <a href="{{ route('admin.roles.index') }}" 
                class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
-                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
                 Geri Dön
             </a>
         </div>
@@ -272,7 +272,7 @@
                 </a>
                 <button type="submit" 
                         class="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
-                    <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="save" class="w-4 h-4 mr-2" />
                     Rolü Oluştur
                 </button>
             </div>
@@ -287,7 +287,7 @@ function roleFormManager() {
     return {
         init() {
             this.$nextTick(() => {
-                lucide.createIcons();
+                
             });
         },
         
@@ -334,7 +334,7 @@ function roleFormManager() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    
     
     // Update category checkboxes when individual permissions change
     document.querySelectorAll('input[name="permissions[]"]').forEach(checkbox => {

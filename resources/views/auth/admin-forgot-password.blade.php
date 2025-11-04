@@ -13,12 +13,12 @@
             <div class="text-center mb-8">
                 <!-- Security Icon -->
                 <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-500/10 mb-4">
-                    <i data-lucide="shield-question" class="h-8 w-8 text-orange-400"></i>
+                    <x-heroicon name="shield-question" class="h-8 w-8 text-orange-400" />
                 </div>
 
                 <!-- Admin Badge -->
                 <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
-                    <i data-lucide="key" class="w-4 h-4 text-orange-400"></i>
+                    <x-heroicon name="key" class="w-4 h-4 text-orange-400" />
                     <span class="text-orange-300 text-sm font-bold">Yönetici Kurtarma</span>
                 </div>
 
@@ -37,7 +37,7 @@
             @if (session('status'))
                 <div class="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl">
                     <div class="flex items-start gap-3">
-                        <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i>
+                        <x-heroicon name="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
                             <p class="text-green-300 font-bold mb-1">Kurtarma E-postası Gönderildi</p>
                             <p class="text-gray-300">{{ session('status') }}</p>
@@ -49,7 +49,7 @@
             <!-- Recovery Instructions -->
             <div class="mb-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
                 <div class="flex items-start gap-3">
-                    <i data-lucide="info" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
+                    <x-heroicon name="information-circle" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                     <div class="text-sm">
                         <p class="text-blue-300 font-bold mb-1">Şifre Kurtarma Süreci</p>
                         <p class="text-gray-300">
@@ -81,12 +81,12 @@
                             autofocus
                         >
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <i data-lucide="mail" class="h-5 w-5 text-gray-400"></i>
+                            <x-heroicon name="envelope" class="h-5 w-5 text-gray-400" />
                         </div>
                     </div>
                     @error('email')
                         <div class="flex items-center gap-2 text-red-400 text-sm">
-                            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                            <x-heroicon name="exclamation-circle" class="w-4 h-4" />
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
@@ -96,7 +96,7 @@
                 <!-- Security Notice -->
                 <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-4">
                     <div class="flex items-start gap-3">
-                        <i data-lucide="shield-alert" class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0"></i>
+                        <x-heroicon name="shield-exclamation" class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
                             <p class="text-yellow-300 font-bold mb-1">Güvenlik Bildirimi</p>
                             <ul class="text-gray-300 space-y-1">
@@ -123,7 +123,7 @@
                     class="w-full bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/25 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
                 >
                     <span class="flex items-center justify-center gap-2">
-                        <i data-lucide="send" class="w-5 h-5"></i>
+                        <x-heroicon name="send" class="w-5 h-5" />
                         Kurtarma Talimatlarını Gönder
                     </span>
                 </button>
@@ -132,7 +132,7 @@
                 <div class="text-center">
                     <a href="{{ route('adminloginform') }}"
                        class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <x-heroicon name="arrow-left" class="w-4 h-4" />
                         Yönetici Girişine Geri Dön
                     </a>
                 </div>
@@ -141,7 +141,7 @@
             <!-- Recovery Process Steps -->
             <div class="mt-8 bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                 <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
-                    <i data-lucide="list-checks" class="w-4 h-4 text-blue-400"></i>
+                    <x-heroicon name="check-list" class="w-4 h-4 text-blue-400" />
                     Kurtarma Süreci
                 </h4>
                 <div class="space-y-3">
@@ -170,15 +170,15 @@
                     <p class="text-xs text-gray-500 mb-3">Kurumsal yönetici güvenliği</p>
                     <div class="flex items-center justify-center gap-4 text-gray-600">
                         <span class="flex items-center gap-1">
-                            <i data-lucide="shield-check" class="w-3 h-3"></i>
+                            <x-heroicon name="shield-check" class="w-3 h-3" />
                             <span class="text-xs">Şifrelenmiş</span>
                         </span>
                         <span class="flex items-center gap-1">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
+                            <x-heroicon name="clock" class="w-3 h-3" />
                             <span class="text-xs">Zaman Sınırlı</span>
                         </span>
                         <span class="flex items-center gap-1">
-                            <i data-lucide="eye" class="w-3 h-3"></i>
+                            <x-heroicon name="eye" class="w-3 h-3" />
                             <span class="text-xs">Denetim Günlüğü</span>
                         </span>
                     </div>
@@ -206,10 +206,10 @@
 </div>
 
 <!-- Add Lucide Icons Script -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        lucide.createIcons();
+        
 
         // Auto-focus email input
         const emailInput = document.getElementById('email');
@@ -240,12 +240,12 @@
         const submitButton = form.querySelector('button[type="submit"]');
 
         form.addEventListener('submit', function() {
-            submitButton.innerHTML = '<span class="flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Kurtarma E-postası Gönderiliyor...</span>';
+            submitButton.innerHTML = '<span class="flex items-center justify-center gap-2"><x-heroicon name="loader-2" class="w-5 h-5 animate-spin" />Kurtarma E-postası Gönderiliyor...</span>';
             submitButton.disabled = true;
 
             // Re-initialize icons
             setTimeout(() => {
-                lucide.createIcons();
+                
             }, 100);
         });
     });

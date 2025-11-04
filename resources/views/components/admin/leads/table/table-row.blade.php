@@ -16,7 +16,7 @@
     <td class="px-6 py-4">
         @if($lead->country)
             <div class="flex items-center">
-                <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-gray-500"></i>
+                <x-heroicon name="map-pin" class="w-4 h-4 mr-2 text-gray-500" />
                 <span class="text-sm font-medium text-gray-900 dark:text-white">
                     {{ $lead->country }}
                 </span>
@@ -46,7 +46,7 @@
     <td class="px-6 py-4">
         @if($lead->phone)
             <div class="flex items-center">
-                <i data-lucide="phone" class="w-4 h-4 mr-2 text-gray-500"></i>
+                <x-heroicon name="phone" class="w-4 h-4 mr-2 text-gray-500" />
                 <a href="tel:{{ $lead->phone }}" 
                    class="text-sm text-green-600 hover:text-green-800 hover:underline transition-colors">
                     {{ $lead->phone }}
@@ -61,7 +61,7 @@
     <td class="px-6 py-4">
         @if($lead->email)
             <div class="flex items-center">
-                <i data-lucide="mail" class="w-4 h-4 mr-2 text-gray-500"></i>
+                <x-heroicon name="envelope" class="w-4 h-4 mr-2 text-gray-500" />
                 <a href="mailto:{{ $lead->email }}" 
                    class="text-sm text-blue-600 hover:text-blue-800 hover:underline transition-colors">
                     {{ $lead->email }}
@@ -88,10 +88,10 @@
                     </div>
                     <span>{{ $lead->assignedAgent->name }}</span>
                 @else
-                    <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="user-plus" class="w-4 h-4 mr-2" />
                     <span>Atanmadı</span>
                 @endif
-                <i data-lucide="chevron-down" class="assigned-chevron ml-2 w-4 h-4 transition-transform duration-200"></i>
+                <x-heroicon name="chevron-down" class="assigned-chevron ml-2 w-4 h-4 transition-transform duration-200" />
             </button>
             
             <!-- Dropdown Menu -->
@@ -100,7 +100,7 @@
                 <!-- Unassign Option -->
                 <button onclick="handleAssignmentUpdate(event, {{ $lead->id }}, null, 'Atanmadı')"
                         class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-admin-200 hover:bg-gray-100 dark:hover:bg-admin-700 transition-colors {{ $lead->assign_to === null ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600' : '' }}">
-                    <i data-lucide="user-x" class="w-4 h-4 mr-3 text-red-500"></i>
+                    <x-heroicon name="user-minus" class="w-4 h-4 mr-3 text-red-500" />
                     Atamayı Kaldır
                 </button>
                 
@@ -162,7 +162,7 @@
                 @endif"
             >
                 <span class="status-name">{{ $lead->leadStatusName }}</span>
-                <i data-lucide="chevron-down" class="status-chevron ml-2 w-4 h-4 transition-transform duration-200"></i>
+                <x-heroicon name="chevron-down" class="status-chevron ml-2 w-4 h-4 transition-transform duration-200" />
             </button>
             
             <!-- Dropdown Menu -->
@@ -205,14 +205,13 @@
                   'bg-gray-100 text-gray-800 border border-gray-200' => !$lead->leadSource || !in_array($lead->leadSource->name, ['Website', 'Social Media', 'Email Campaign', 'Cold Call', 'Referral'])
               ])>
             @if($lead->leadSource)
-                <i data-lucide="{{ $lead->leadSource->name === 'Website' ? 'globe' : 
+                <x-heroicon name="{{ $lead->leadSource->name === 'Website' ? 'globe' : 
                                  ($lead->leadSource->name === 'Social Media' ? 'users' :
                                  ($lead->leadSource->name === 'Email Campaign' ? 'mail' :
-                                 ($lead->leadSource->name === 'Cold Call' ? 'phone' : 'user-plus'))) }}" 
-                   class="w-4 h-4 mr-2"></i>
+                                 ($lead->leadSource->name === 'Cold Call' ? 'phone' : 'user-plus'))) }}" class="w-4 h-4 mr-2" />
                 {{ $lead->leadSource->name }}
             @else
-                <i data-lucide="help-circle" class="w-4 h-4 mr-2"></i>
+                <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-2" />
                 Belirtilmedi
             @endif
         </span>
@@ -873,13 +872,12 @@ function showNotification(message, type = 'info', duration = 3000) {
     
     notification.innerHTML = `
         <div class="flex items-center">
-            <i data-lucide="${type === 'success' ? 'check-circle' :
+            <x-heroicon name="${type === 'success' ? 'check-circle' :
                              type === 'error' ? 'x-circle' :
-                             type === 'warning' ? 'alert-triangle' : 'info'}"
-               class="w-5 h-5 mr-2"></i>
+                             type === 'warning' ? 'alert-triangle' : 'info'}" class="w-5 h-5 mr-2" />
             <span>${message}</span>
             <button onclick="removeNotification('${notificationKey}')" class="ml-4 text-white hover:text-gray-200">
-                <i data-lucide="x" class="w-4 h-4"></i>
+                <x-heroicon name="x-mark" class="w-4 h-4" />
             </button>
         </div>
     `;
@@ -891,7 +889,7 @@ function showNotification(message, type = 'info', duration = 3000) {
     
     // Initialize Lucide icons for the notification
     if (window.lucide) {
-        window.lucide.createIcons();
+        window.
     }
     
     // Animate in

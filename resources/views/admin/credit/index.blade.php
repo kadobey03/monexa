@@ -10,7 +10,7 @@
         </div>
         <div class="flex items-center space-x-3">
             <button class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors">
-                <i data-lucide="file-text" class="h-4 w-4 mr-2"></i>
+                <x-heroicon name="file-text" class="h-4 w-4 mr-2" />
                 Rapor Oluştur
             </button>
         </div>
@@ -22,7 +22,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center">
-                        <i data-lucide="file-plus" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="file-plus" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -36,7 +36,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/50 rounded-xl flex items-center justify-center">
-                        <i data-lucide="clock" class="w-6 h-6 text-yellow-600 dark:text-yellow-400"></i>
+                        <x-heroicon name="clock" class="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -50,7 +50,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-xl flex items-center justify-center">
-                        <i data-lucide="check-circle" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="check-circle" class="w-6 h-6 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -64,7 +64,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-red-100 dark:bg-red-900/50 rounded-xl flex items-center justify-center">
-                        <i data-lucide="x-circle" class="w-6 h-6 text-red-600 dark:text-red-400"></i>
+                        <x-heroicon name="x-circle" class="w-6 h-6 text-red-600 dark:text-red-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -103,7 +103,7 @@
             </div>
             <div class="flex items-end">
                 <button class="w-full px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors">
-                    <i data-lucide="filter" class="h-4 w-4 mr-2 inline"></i>
+                    <x-heroicon name="funnel" class="h-4 w-4 mr-2 inline" />
                     Filtrele
                 </button>
             </div>
@@ -120,7 +120,7 @@
                         <input type="text" placeholder="Başvuru ara..." 
                                class="admin-input w-64 pl-10 pr-4 py-2 text-sm">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+                            <x-heroicon name="magnifying-glass" class="w-4 h-4 text-gray-400" />
                         </div>
                     </div>
                 </div>
@@ -167,13 +167,13 @@
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <div class="flex items-center justify-end space-x-2">
                                 <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 p-1 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors">
-                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                    <x-heroicon name="eye" class="w-4 h-4" />
                                 </button>
                                 <button class="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300 p-1 rounded-md hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
-                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                    <x-heroicon name="check" class="w-4 h-4" />
                                 </button>
                                 <button class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 p-1 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                    <x-heroicon name="x-mark" class="w-4 h-4" />
                                 </button>
                             </div>
                         </td>
@@ -204,10 +204,10 @@
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <div class="flex items-center justify-end space-x-2">
                                 <button class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 p-1 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors">
-                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                    <x-heroicon name="eye" class="w-4 h-4" />
                                 </button>
                                 <button class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 p-1 rounded-md hover:bg-gray-50 dark:hover:bg-gray-900/20 transition-colors">
-                                    <i data-lucide="file-text" class="w-4 h-4"></i>
+                                    <x-heroicon name="file-text" class="w-4 h-4" />
                                 </button>
                             </div>
                         </td>

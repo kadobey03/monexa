@@ -62,7 +62,7 @@
     {{-- Type Badge --}}
     <div class="absolute top-4 right-4 z-10">
         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-{{ $colors['accent'] }}-100 dark:bg-{{ $colors['accent'] }}-900/30 text-{{ $colors['accent'] }}-800 dark:text-{{ $colors['accent'] }}-300">
-            <i data-lucide="{{ $icon }}" class="w-3 h-3 mr-1"></i>
+            <x-heroicon name="{{ $icon }}" class="w-3 h-3 mr-1" />
             {{ $plan->tag ?? ucfirst($type) }}
         </span>
     </div>
@@ -72,7 +72,7 @@
         <div class="absolute inset-0 bg-black bg-opacity-20"></div>
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="text-center text-white">
-                <i data-lucide="{{ $icon }}" class="w-16 h-16 mx-auto mb-2 opacity-80"></i>
+                <x-heroicon name="{{ $icon }}" class="w-16 h-16 mx-auto mb-2 opacity-80" />
                 <div class="text-sm font-medium opacity-90">
                     {{ $type === 'real_estate' ? 'Real Estate Investment' : 
                        ($type === 'stock' ? 'Stock Market Investment' : 
@@ -112,7 +112,7 @@
             {{-- Investment Range --}}
             <div class="flex items-center justify-between py-2 px-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <div class="flex items-center">
-                    <i data-lucide="dollar-sign" class="w-4 h-4 {{ $colors['text'] }} mr-2"></i>
+                    <x-heroicon name="currency-dollar" class="w-4 h-4 {{ $colors['text'] }} mr-2" />
                     <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Investment Range</span>
                 </div>
                 <span class="text-sm font-bold text-gray-900 dark:text-white">
@@ -123,7 +123,7 @@
             {{-- Return Rate --}}
             <div class="flex items-center justify-between py-2 px-3 {{ $colors['bg'] }} rounded-lg">
                 <div class="flex items-center">
-                    <i data-lucide="trending-up" class="w-4 h-4 {{ $colors['text'] }} mr-2"></i>
+                    <x-heroicon name="arrow-trending-up" class="w-4 h-4 {{ $colors['text'] }} mr-2" />
                     <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Return Rate</span>
                 </div>
                 <span class="text-sm font-bold {{ $colors['text'] }}">
@@ -134,7 +134,7 @@
             {{-- Expected Return --}}
             <div class="flex items-center justify-between py-2 px-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                 <div class="flex items-center">
-                    <i data-lucide="target" class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2"></i>
+                    <x-heroicon name="view-finder" class="w-4 h-4 text-blue-600 dark:text-blue-400 mr-2" />
                     <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Total Expected Return</span>
                 </div>
                 <span class="text-sm font-bold text-blue-600 dark:text-blue-400">{{ $plan->expected_return }}%</span>
@@ -144,7 +144,7 @@
             @if($plan->gift > 0)
             <div class="flex items-center justify-between py-2 px-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
                 <div class="flex items-center">
-                    <i data-lucide="gift" class="w-4 h-4 text-purple-600 dark:text-purple-400 mr-2"></i>
+                    <x-heroicon name="gift" class="w-4 h-4 text-purple-600 dark:text-purple-400 mr-2" />
                     <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Welcome Bonus</span>
                 </div>
                 <span class="text-sm font-bold text-purple-600 dark:text-purple-400">
@@ -223,7 +223,7 @@
                     @mouseenter="selectedPlan = {{ $index }}"
                 >
                     <span class="flex items-center justify-center">
-                        <i data-lucide="invest" class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200"></i>
+                        <x-heroicon name="invest" class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform duration-200" />
                         Invest in {{ $type === 'real_estate' ? 'Real Estate' : ($type === 'stock' ? 'Stocks' : ($type === 'crypto' ? 'Crypto' : 'Plan')) }}
                     </span>
                 </button>
@@ -239,7 +239,7 @@
 // Initialize Lucide icons for plan cards
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

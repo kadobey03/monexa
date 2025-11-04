@@ -67,8 +67,8 @@
                     
                     <!-- Theme Toggle -->
                     <button onclick="toggleTheme()" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
-                        <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
-                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                        <x-heroicon name="moon" class="w-5 h-5 dark:hidden" />
+                        <x-heroicon name="sun" class="w-5 h-5 hidden dark:block" />
                     </button>
                 </div>
             </div>

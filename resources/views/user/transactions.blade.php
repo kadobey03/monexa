@@ -7,7 +7,7 @@
         <div class="mb-6 sm:mb-10">
             <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-6">
                 <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10 flex items-center justify-center backdrop-blur-sm">
-                    <i data-lucide="credit-card" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="credit-card" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div class="text-center sm:text-left">
                     <h1 class="text-2xl sm:text-3xl lg:text-4xl font-light text-slate-800 dark:text-white mb-1 sm:mb-2">
@@ -28,17 +28,17 @@
                 <div class="flex flex-col sm:flex-row gap-2 p-2 mb-6 sm:mb-8 bg-gray-800 rounded-xl sm:rounded-2xl backdrop-blur-sm">
                     <button id="deposits-tab"
                             class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105 bg-gray-700 text-white shadow-lg">
-                        <i data-lucide="arrow-down-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        <x-heroicon name="arrow-down-circle" class="w-4 h-4 sm:w-5 sm:h-5" />
                         <span class="text-sm sm:text-base">Yatırımlar</span>
                     </button>
                     <button id="withdrawals-tab"
                             class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105 text-slate-300 hover:text-white hover:bg-gray-700/50">
-                        <i data-lucide="arrow-up-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        <x-heroicon name="arrow-up-circle" class="w-4 h-4 sm:w-5 sm:h-5" />
                         <span class="text-sm sm:text-base">Çekimler</span>
                     </button>
                     <button id="others-tab"
                             class="w-full sm:w-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 transform hover:scale-105 text-slate-300 hover:text-white hover:bg-gray-700/50">
-                        <i data-lucide="activity" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                        <x-heroicon name="activity" class="w-4 h-4 sm:w-5 sm:h-5" />
                         <span class="text-sm sm:text-base">Diğerleri</span>
                     </button>
                 </div>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="relative">
                                 <input type="text" placeholder="Yatırımları ara..." class="w-full lg:w-80 pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 bg-gray-800 border border-gray-600 rounded-xl sm:rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base">
-                                <i data-lucide="search" class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400"></i>
+                                <x-heroicon name="magnifying-glass" class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@
                                     <div class="flex items-start justify-between mb-3">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 flex items-center justify-center">
-                                                <i data-lucide="arrow-down" class="w-5 h-5 text-emerald-500"></i>
+                                                <x-heroicon name="arrow-down" class="w-5 h-5 text-emerald-500" />
                                             </div>
                                             <div>
                                                 <div class="text-white font-medium">{{ Auth::user()->currency }}{{ number_format($deposit->amount, 2) }}</div>
@@ -97,7 +97,7 @@
                             @else
                                 <div class="text-center py-12">
                                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-800 mb-4">
-                                        <i data-lucide="arrow-down-circle" class="w-8 h-8 text-slate-400"></i>
+                                        <x-heroicon name="arrow-down-circle" class="w-8 h-8 text-slate-400" />
                                     </div>
                                     <h4 class="text-lg font-light text-white mb-2">Henüz yatırım yok</h4>
                                     <p class="text-slate-400 font-light text-sm">Yatırım geçmişiniz burada görünecek</p>
@@ -123,7 +123,7 @@
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center space-x-3">
                                                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 flex items-center justify-center">
-                                                        <i data-lucide="arrow-down" class="w-5 h-5 text-emerald-500"></i>
+                                                        <x-heroicon name="arrow-down" class="w-5 h-5 text-emerald-500" />
                                                     </div>
                                                     <div>
                                                         <div class="text-white font-medium">{{ Auth::user()->currency }}{{ number_format($deposit->amount, 2) }}</div>
@@ -159,7 +159,7 @@
                             @else
                                 <div class="text-center py-16">
                                     <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gray-800 mb-6">
-                                        <i data-lucide="arrow-down-circle" class="w-10 h-10 text-slate-400"></i>
+                                        <x-heroicon name="arrow-down-circle" class="w-10 h-10 text-slate-400" />
                                     </div>
                                     <h4 class="text-xl font-light text-white mb-3">Henüz yatırım yok</h4>
                                     <p class="text-slate-400 font-light">Yatırım geçmişiniz burada görünecek</p>
@@ -257,7 +257,7 @@
                             </div>
                             <div class="relative">
                                 <input type="text" placeholder="Çekimleri ara..." class="w-full lg:w-80 pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 bg-gray-800 border border-gray-600 rounded-xl sm:rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base">
-                                <i data-lucide="search" class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400"></i>
+                                <x-heroicon name="magnifying-glass" class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
                             </div>
                         </div>
 
@@ -269,7 +269,7 @@
                                     <div class="flex items-start justify-between mb-3">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500/20 to-pink-500/20 flex items-center justify-center">
-                                                <i data-lucide="arrow-up" class="w-5 h-5 text-red-500"></i>
+                                                <x-heroicon name="arrow-up" class="w-5 h-5 text-red-500" />
                                             </div>
                                             <div>
                                                 <div class="text-white font-medium">{{ Auth::user()->currency }}{{ number_format($withdrawal->amount, 2) }}</div>
@@ -306,7 +306,7 @@
                             @else
                                 <div class="text-center py-12">
                                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-800 mb-4">
-                                        <i data-lucide="arrow-up-circle" class="w-8 h-8 text-slate-400"></i>
+                                        <x-heroicon name="arrow-up-circle" class="w-8 h-8 text-slate-400" />
                                     </div>
                                     <h4 class="text-lg font-light text-white mb-2">Henüz çekim yok</h4>
                                     <p class="text-slate-400 font-light text-sm">Çekim geçmişiniz burada görünecek</p>
@@ -333,7 +333,7 @@
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center space-x-3">
                                                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500/20 to-pink-500/20 flex items-center justify-center">
-                                                        <i data-lucide="arrow-up" class="w-5 h-5 text-red-500"></i>
+                                                        <x-heroicon name="arrow-up" class="w-5 h-5 text-red-500" />
                                                     </div>
                                                     <div>
                                                         <div class="text-white font-medium">{{ Auth::user()->currency }}{{ number_format($withdrawal->amount, 2) }}</div>
@@ -373,7 +373,7 @@
                             @else
                                 <div class="text-center py-16">
                                     <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gray-800 mb-6">
-                                        <i data-lucide="arrow-up-circle" class="w-10 h-10 text-slate-400"></i>
+                                        <x-heroicon name="arrow-up-circle" class="w-10 h-10 text-slate-400" />
                                     </div>
                                     <h4 class="text-xl font-light text-white mb-3">Henüz çekim yok</h4>
                                     <p class="text-slate-400 font-light">Çekim geçmişiniz burada görünecek</p>
@@ -471,7 +471,7 @@
                             </div>
                             <div class="relative">
                                 <input type="text" placeholder="İşlemleri ara..." class="w-full lg:w-80 pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 bg-gray-800 border border-gray-600 rounded-xl sm:rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base">
-                                <i data-lucide="search" class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400"></i>
+                                <x-heroicon name="magnifying-glass" class="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-slate-400" />
                             </div>
                         </div>
 
@@ -483,7 +483,7 @@
                                     <div class="flex items-start justify-between mb-3">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500/20 to-blue-500/20 flex items-center justify-center">
-                                                <i data-lucide="activity" class="w-5 h-5 text-indigo-500"></i>
+                                                <x-heroicon name="activity" class="w-5 h-5 text-indigo-500" />
                                             </div>
                                             <div>
                                                 <div class="text-white font-medium">{{ $history->type }}</div>
@@ -512,7 +512,7 @@
                             @else
                                 <div class="text-center py-12">
                                     <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-800 mb-4">
-                                        <i data-lucide="activity" class="w-8 h-8 text-slate-400"></i>
+                                        <x-heroicon name="activity" class="w-8 h-8 text-slate-400" />
                                     </div>
                                     <h4 class="text-lg font-light text-white mb-2">Diğer işlem yok</h4>
                                     <p class="text-slate-400 font-light text-sm">Ek işlemler burada görünecek</p>
@@ -538,7 +538,7 @@
                                             <td class="px-6 py-4">
                                                 <div class="flex items-center space-x-3">
                                                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500/20 to-blue-500/20 flex items-center justify-center">
-                                                        <i data-lucide="activity" class="w-5 h-5 text-indigo-500"></i>
+                                                        <x-heroicon name="activity" class="w-5 h-5 text-indigo-500" />
                                                     </div>
                                                     <div>
                                                         <div class="text-white font-medium">{{ $history->type }}</div>
@@ -568,7 +568,7 @@
                             @else
                                 <div class="text-center py-16">
                                     <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gray-800 mb-6">
-                                        <i data-lucide="activity" class="w-10 h-10 text-slate-400"></i>
+                                        <x-heroicon name="activity" class="w-10 h-10 text-slate-400" />
                                     </div>
                                     <h4 class="text-xl font-light text-white mb-3">Diğer işlem yok</h4>
                                     <p class="text-slate-400 font-light">Ek işlemler burada görünecek</p>
@@ -828,7 +828,7 @@
 
 <script>
     // Initialize Lucide icons
-    lucide.createIcons();
+    
 
     // Transaction Tabs Manager
     class TransactionTabsManager {

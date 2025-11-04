@@ -13,12 +13,12 @@
         <!-- Action Buttons -->
         <div class="flex items-center space-x-3">
             <button class="admin-btn admin-btn-secondary flex items-center space-x-2" onclick="exportUsers()">
-                <i data-lucide="download" class="h-4 w-4"></i>
+                <x-heroicon name="arrow-down-tray" class="h-4 w-4" />
                 <span>Dışa Aktar</span>
             </button>
             
             <button class="admin-btn admin-btn-primary flex items-center space-x-2" onclick="openAddUserModal()">
-                <i data-lucide="plus" class="h-4 w-4"></i>
+                <x-heroicon name="plus" class="h-4 w-4" />
                 <span>Yeni Kullanıcı</span>
             </button>
         </div>
@@ -29,7 +29,7 @@
         <div class="admin-card p-6">
             <div class="flex items-center">
                 <div class="rounded-2xl bg-blue-100 dark:bg-blue-900/20 p-3">
-                    <i data-lucide="users" class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="users" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Toplam Kullanıcılar</p>
@@ -41,7 +41,7 @@
         <div class="admin-card p-6">
             <div class="flex items-center">
                 <div class="rounded-2xl bg-emerald-100 dark:bg-emerald-900/20 p-3">
-                    <i data-lucide="user-check" class="h-6 w-6 text-emerald-600 dark:text-emerald-400"></i>
+                    <x-heroicon name="user-check" class="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Aktif Kullanıcılar</p>
@@ -53,7 +53,7 @@
         <div class="admin-card p-6">
             <div class="flex items-center">
                 <div class="rounded-2xl bg-amber-100 dark:bg-amber-900/20 p-3">
-                    <i data-lucide="clock" class="h-6 w-6 text-amber-600 dark:text-amber-400"></i>
+                    <x-heroicon name="clock" class="h-6 w-6 text-amber-600 dark:text-amber-400" />
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Bekleyen Doğrulama</p>
@@ -65,7 +65,7 @@
         <div class="admin-card p-6">
             <div class="flex items-center">
                 <div class="rounded-2xl bg-red-100 dark:bg-red-900/20 p-3">
-                    <i data-lucide="user-x" class="h-6 w-6 text-red-600 dark:text-red-400"></i>
+                    <x-heroicon name="user-minus" class="h-6 w-6 text-red-600 dark:text-red-400" />
                 </div>
                 <div class="ml-4">
                     <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Engellenen</p>
@@ -81,7 +81,7 @@
             <!-- Search -->
             <div class="relative flex-1 max-w-md">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-                    <i data-lucide="search" class="h-4 w-4 text-admin-400"></i>
+                    <x-heroicon name="magnifying-glass" class="h-4 w-4 text-admin-400" />
                 </div>
                 <input 
                     type="text" 
@@ -110,7 +110,7 @@
                 </select>
 
                 <button class="admin-btn admin-btn-secondary" onclick="resetFilters()">
-                    <i data-lucide="x" class="h-4 w-4"></i>
+                    <x-heroicon name="x-mark" class="h-4 w-4" />
                 </button>
             </div>
         </div>
@@ -169,25 +169,25 @@
                             @switch($user->status ?? 'active')
                                 @case('active')
                                     <span class="badge badge-success">
-                                        <i data-lucide="check-circle" class="mr-1 h-3 w-3"></i>
+                                        <x-heroicon name="check-circle" class="mr-1 h-3 w-3" />
                                         Aktif
                                     </span>
                                     @break
                                 @case('blocked')
                                     <span class="badge badge-error">
-                                        <i data-lucide="x-circle" class="mr-1 h-3 w-3"></i>
+                                        <x-heroicon name="x-circle" class="mr-1 h-3 w-3" />
                                         Engelli
                                     </span>
                                     @break
                                 @case('pending')
                                     <span class="badge badge-warning">
-                                        <i data-lucide="clock" class="mr-1 h-3 w-3"></i>
+                                        <x-heroicon name="clock" class="mr-1 h-3 w-3" />
                                         Bekliyor
                                     </span>
                                     @break
                                 @default
                                     <span class="badge badge-info">
-                                        <i data-lucide="user" class="mr-1 h-3 w-3"></i>
+                                        <x-heroicon name="user" class="mr-1 h-3 w-3" />
                                         Bilinmiyor
                                     </span>
                             @endswitch
@@ -196,19 +196,19 @@
                             <div class="flex items-center space-x-2">
                                 <button class="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors" 
                                         onclick="viewUser({{ $user->id }})" title="Görüntüle">
-                                    <i data-lucide="eye" class="h-4 w-4"></i>
+                                    <x-heroicon name="eye" class="h-4 w-4" />
                                 </button>
                                 <button class="p-2 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg transition-colors" 
                                         onclick="editUser({{ $user->id }})" title="Düzenle">
-                                    <i data-lucide="edit" class="h-4 w-4"></i>
+                                    <x-heroicon name="edit" class="h-4 w-4" />
                                 </button>
                                 <button class="p-2 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors" 
                                         onclick="toggleUserStatus({{ $user->id }})" title="Durum Değiştir">
-                                    <i data-lucide="power" class="h-4 w-4"></i>
+                                    <x-heroicon name="power" class="h-4 w-4" />
                                 </button>
                                 <button class="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors" 
                                         onclick="deleteUser({{ $user->id }})" title="Sil">
-                                    <i data-lucide="trash-2" class="h-4 w-4"></i>
+                                    <x-heroicon name="trash-2" class="h-4 w-4" />
                                 </button>
                             </div>
                         </td>
@@ -217,7 +217,7 @@
                     <tr>
                         <td colspan="9" class="px-6 py-12 text-center">
                             <div class="flex flex-col items-center">
-                                <i data-lucide="users" class="h-12 w-12 text-admin-400 mb-4"></i>
+                                <x-heroicon name="users" class="h-12 w-12 text-admin-400 mb-4" />
                                 <h3 class="text-lg font-medium text-admin-900 dark:text-admin-100 mb-2">Kullanıcı bulunamadı</h3>
                                 <p class="text-admin-500 dark:text-admin-400">Henüz hiç kullanıcı eklenmemiş.</p>
                             </div>
@@ -246,19 +246,19 @@
             </div>
             <div class="flex items-center space-x-2">
                 <button class="admin-btn admin-btn-secondary" onclick="bulkActivate()">
-                    <i data-lucide="check" class="mr-2 h-4 w-4"></i>
+                    <x-heroicon name="check" class="mr-2 h-4 w-4" />
                     Aktifleştir
                 </button>
                 <button class="admin-btn admin-btn-secondary" onclick="bulkDeactivate()">
-                    <i data-lucide="x" class="mr-2 h-4 w-4"></i>
+                    <x-heroicon name="x-mark" class="mr-2 h-4 w-4" />
                     Devre Dışı Bırak
                 </button>
                 <button class="admin-btn admin-btn-secondary" onclick="bulkExport()">
-                    <i data-lucide="download" class="mr-2 h-4 w-4"></i>
+                    <x-heroicon name="arrow-down-tray" class="mr-2 h-4 w-4" />
                     Dışa Aktar
                 </button>
                 <button class="admin-btn admin-btn-secondary text-red-600" onclick="bulkDelete()">
-                    <i data-lucide="trash-2" class="mr-2 h-4 w-4"></i>
+                    <x-heroicon name="trash-2" class="mr-2 h-4 w-4" />
                     Sil
                 </button>
             </div>
@@ -277,7 +277,7 @@
                 <div class="modal-header">
                     <h3 class="text-lg font-semibold text-admin-900 dark:text-admin-100">Yeni Kullanıcı Ekle</h3>
                     <button onclick="closeAddUserModal()" class="p-2 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
-                        <i data-lucide="x" class="h-5 w-5"></i>
+                        <x-heroicon name="x-mark" class="h-5 w-5" />
                     </button>
                 </div>
 
@@ -327,7 +327,7 @@
                     <div class="modal-footer">
                         <button type="button" onclick="closeAddUserModal()" class="admin-btn admin-btn-secondary">İptal</button>
                         <button type="submit" class="admin-btn admin-btn-primary">
-                            <i data-lucide="plus" class="mr-2 h-4 w-4"></i>
+                            <x-heroicon name="plus" class="mr-2 h-4 w-4" />
                             Kullanıcı Ekle
                         </button>
                     </div>
@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initializeUserManagement() {
     // Initialize tooltips, modals, etc.
-    lucide.createIcons();
+    
 }
 
 // Modal Functions

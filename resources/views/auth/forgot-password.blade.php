@@ -17,7 +17,7 @@
             <div class="space-y-3">
                 <div class="flex items-center justify-center gap-2 mb-4">
                     <div class="p-2 bg-blue-500/20 rounded-lg">
-                        <i data-lucide="mail" class="w-6 h-6 text-blue-400"></i>
+                        <x-heroicon name="envelope" class="w-6 h-6 text-blue-400" />
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-bold text-white">Şifremi Unuttum?</h1>
                 </div>
@@ -33,7 +33,7 @@
             @error('email')
                 <div class="p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
                     <div class="flex items-center gap-3">
-                        <i data-lucide="alert-circle" class="w-5 h-5 text-red-400"></i>
+                        <x-heroicon name="exclamation-circle" class="w-5 h-5 text-red-400" />
                         <p class="text-red-300 text-sm font-bold">{{ $message }}</p>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     </label>
                     <div class="relative group">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                            <i data-lucide="mail" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                            <x-heroicon name="envelope" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                         </div>
                         <input type="email"
                                name="email"
@@ -69,7 +69,7 @@
                 <!-- Submit Button -->
                 <button type="submit"
                         class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 focus:ring-2 focus:ring-blue-400/20">
-                    <i data-lucide="send" class="w-5 h-5"></i>
+                    <x-heroicon name="send" class="w-5 h-5" />
                     <span>Sıfırlama Bağlantısı Gönder</span>
                 </button>
             </form>
@@ -102,7 +102,7 @@
             <!-- Security Notice -->
             <div class="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
                 <div class="flex items-start gap-3">
-                    <i data-lucide="shield-check" class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0"></i>
+                    <x-heroicon name="shield-check" class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                     <div>
                         <h4 class="text-sm font-bold text-amber-300 mb-1">Güvenlik Uyarısı</h4>
                         <p class="text-xs text-gray-300">
@@ -117,15 +117,15 @@
         <!-- Trust Indicators -->
         <div class="flex items-center justify-center gap-6 text-xs text-gray-500">
             <div class="flex items-center gap-1">
-                <i data-lucide="shield" class="w-3 h-3"></i>
+                <x-heroicon name="shield-check" class="w-3 h-3" />
                 <span>SSL Güvenli</span>
             </div>
             <div class="flex items-center gap-1">
-                <i data-lucide="lock" class="w-3 h-3"></i>
+                <x-heroicon name="lock-closed" class="w-3 h-3" />
                 <span>256-bit Şifreleme</span>
             </div>
             <div class="flex items-center gap-1">
-                <i data-lucide="award" class="w-3 h-3"></i>
+                <x-heroicon name="award" class="w-3 h-3" />
                 <span>Düzenlenmiş Platform</span>
             </div>
         </div>

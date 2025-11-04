@@ -8,11 +8,11 @@
         <div class="flex items-center space-x-4">
             <a href="{{ route('admin.managers.index') }}" 
                class="p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors">
-                <i data-lucide="arrow-left" class="w-5 h-5 text-admin-600 dark:text-admin-400"></i>
+                <x-heroicon name="arrow-left" class="w-5 h-5 text-admin-600 dark:text-admin-400" />
             </a>
             <div class="flex items-center space-x-3">
                 <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="user-plus" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="user-plus" class="w-6 h-6 text-white" />
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Yeni Yönetici Ekle</h1>
@@ -30,7 +30,7 @@
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <div class="flex items-center space-x-3 mb-6">
                 <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                    <i data-lucide="user" class="w-4 h-4 text-white"></i>
+                    <x-heroicon name="user" class="w-4 h-4 text-white" />
                 </div>
                 <h2 class="text-xl font-bold text-admin-900 dark:text-white">Kişisel Bilgiler</h2>
             </div>
@@ -39,7 +39,7 @@
                 <!-- First Name -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="user" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="user" class="w-4 h-4 inline mr-1" />
                         Ad *
                     </label>
                     <input type="text" 
@@ -56,7 +56,7 @@
                 <!-- Last Name -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="user" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="user" class="w-4 h-4 inline mr-1" />
                         Soyad *
                     </label>
                     <input type="text" 
@@ -73,7 +73,7 @@
                 <!-- Email -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="mail" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="envelope" class="w-4 h-4 inline mr-1" />
                         E-posta *
                     </label>
                     <input type="email" 
@@ -90,7 +90,7 @@
                 <!-- Phone -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="phone" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="phone" class="w-4 h-4 inline mr-1" />
                         Telefon
                     </label>
                     <input type="text" 
@@ -106,7 +106,7 @@
                 <!-- Employee ID -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="id-card" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="id-card" class="w-4 h-4 inline mr-1" />
                         Çalışan ID
                     </label>
                     <input type="text" 
@@ -122,7 +122,7 @@
                 <!-- Position -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="briefcase" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="briefcase" class="w-4 h-4 inline mr-1" />
                         Pozisyon
                     </label>
                     <input type="text" 
@@ -139,7 +139,7 @@
             <!-- Bio -->
             <div class="mt-6">
                 <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                    <i data-lucide="file-text" class="w-4 h-4 inline mr-1"></i>
+                    <x-heroicon name="file-text" class="w-4 h-4 inline mr-1" />
                     Kısa Biografi
                 </label>
                 <textarea name="bio" 
@@ -154,14 +154,14 @@
             <!-- Avatar Upload -->
             <div class="mt-6">
                 <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                    <i data-lucide="camera" class="w-4 h-4 inline mr-1"></i>
+                    <x-heroicon name="camera" class="w-4 h-4 inline mr-1" />
                     Profil Fotoğrafı
                 </label>
                 <div class="flex items-center space-x-6">
                     <div class="flex-shrink-0">
                         <div class="w-20 h-20 bg-admin-200 dark:bg-admin-700 rounded-full flex items-center justify-center" 
                              x-show="!avatarPreview">
-                            <i data-lucide="user" class="w-8 h-8 text-admin-400"></i>
+                            <x-heroicon name="user" class="w-8 h-8 text-admin-400" />
                         </div>
                         <img x-show="avatarPreview" 
                              :src="avatarPreview" 
@@ -186,7 +186,7 @@
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700 mt-6">
             <div class="flex items-center space-x-3 mb-6">
                 <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
-                    <i data-lucide="shield" class="w-4 h-4 text-white"></i>
+                    <x-heroicon name="shield-check" class="w-4 h-4 text-white" />
                 </div>
                 <h2 class="text-xl font-bold text-admin-900 dark:text-white">Rol ve Hiyerarşi</h2>
             </div>
@@ -195,7 +195,7 @@
                 <!-- Role -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="shield" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="shield-check" class="w-4 h-4 inline mr-1" />
                         Rol *
                     </label>
                     <select name="role_id" 
@@ -226,7 +226,7 @@
                 <!-- Supervisor -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="user-check" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="user-check" class="w-4 h-4 inline mr-1" />
                         Süpervizör
                     </label>
                     <select name="supervisor_id" 
@@ -250,7 +250,7 @@
                 <!-- Department -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="building" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="building" class="w-4 h-4 inline mr-1" />
                         Departman *
                     </label>
                     <select name="department" 
@@ -271,7 +271,7 @@
                 <!-- Admin Group -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="users" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="users" class="w-4 h-4 inline mr-1" />
                         Yönetici Grubu
                     </label>
                     <select name="admin_group_id" 
@@ -294,7 +294,7 @@
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700 mt-6">
             <div class="flex items-center space-x-3 mb-6">
                 <div class="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center">
-                    <i data-lucide="target" class="w-4 h-4 text-white"></i>
+                    <x-heroicon name="view-finder" class="w-4 h-4 text-white" />
                 </div>
                 <h2 class="text-xl font-bold text-admin-900 dark:text-white">Performans ve Hedefler</h2>
             </div>
@@ -303,7 +303,7 @@
                 <!-- Monthly Target -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="target" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="view-finder" class="w-4 h-4 inline mr-1" />
                         Aylık Hedef
                     </label>
                     <div class="relative">
@@ -324,7 +324,7 @@
                 <!-- Max Leads Per Day -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="users" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="users" class="w-4 h-4 inline mr-1" />
                         Günlük Max Lead
                     </label>
                     <input type="number" 
@@ -342,7 +342,7 @@
                 <!-- Time Zone -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="clock" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="clock" class="w-4 h-4 inline mr-1" />
                         Saat Dilimi
                     </label>
                     <select name="time_zone" 
@@ -371,7 +371,7 @@
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700 mt-6">
             <div class="flex items-center space-x-3 mb-6">
                 <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
-                    <i data-lucide="lock" class="w-4 h-4 text-white"></i>
+                    <x-heroicon name="lock-closed" class="w-4 h-4 text-white" />
                 </div>
                 <h2 class="text-xl font-bold text-admin-900 dark:text-white">Güvenlik</h2>
             </div>
@@ -380,7 +380,7 @@
                 <!-- Password -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="key" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="key" class="w-4 h-4 inline mr-1" />
                         Şifre *
                     </label>
                     <div class="relative">
@@ -430,7 +430,7 @@
                 <!-- Confirm Password -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="lock" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="lock-closed" class="w-4 h-4 inline mr-1" />
                         Şifre Onayı *
                     </label>
                     <div class="relative">
@@ -469,7 +469,7 @@
         <div class="flex items-center justify-between pt-6">
             <a href="{{ route('admin.managers.index') }}" 
                class="inline-flex items-center px-6 py-3 border border-admin-300 dark:border-admin-600 shadow-sm text-sm font-medium rounded-xl text-admin-700 dark:text-admin-300 bg-white dark:bg-admin-800 hover:bg-admin-50 dark:hover:bg-admin-700 transition-all duration-200">
-                <i data-lucide="x" class="w-4 h-4 mr-2"></i>
+                <x-heroicon name="x-mark" class="w-4 h-4 mr-2" />
                 İptal
             </a>
             
@@ -478,7 +478,7 @@
                 <button type="button" 
                         @click="saveDraft()"
                         class="inline-flex items-center px-6 py-3 border border-admin-300 dark:border-admin-600 shadow-sm text-sm font-medium rounded-xl text-admin-700 dark:text-admin-300 bg-white dark:bg-admin-800 hover:bg-admin-50 dark:hover:bg-admin-700 transition-all duration-200">
-                    <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="save" class="w-4 h-4 mr-2" />
                     Taslak Kaydet
                 </button>
                 
@@ -487,7 +487,7 @@
                         :disabled="!formValid"
                         :class="formValid ? 'opacity-100' : 'opacity-50 cursor-not-allowed'"
                         class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-200">
-                    <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="user-plus" class="w-4 h-4 mr-2" />
                     Yönetici Oluştur
                 </button>
             </div>
@@ -555,7 +555,7 @@ function createManagerForm() {
             }
             
             // Re-init lucide icons
-            lucide.createIcons();
+            
         },
         
         checkPasswordStrength() {
@@ -605,7 +605,7 @@ function createManagerForm() {
             this.passwordMatchStatus = true;
             this.passwordsMatch = password === confirmation;
             
-            lucide.createIcons();
+            
         },
         
         saveDraft() {
@@ -670,7 +670,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    lucide.createIcons();
+    
 });
 </script>
 @endpush

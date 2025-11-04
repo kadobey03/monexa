@@ -12,7 +12,7 @@
             </div>
             <a href="{{ route('dashboard') }}"
                class="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
-                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                <x-heroicon name="arrow-left" class="w-5 h-5" />
                 Back to Dashboard
             </a>
         </div>
@@ -27,13 +27,13 @@
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
                     <a href="{{ route('dashboard') }}" class="inline-flex items-center text-sm text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
-                        <i data-lucide="home" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="home" class="w-4 h-4 mr-2" />
                         Ana Sayfa
                     </a>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 mx-1"></i>
+                        <x-heroicon name="chevron-right" class="w-4 h-4 text-gray-400 mx-1" />
                         <span class="text-sm text-gray-500 dark:text-gray-400">Profil</span>
                     </div>
                 </li>
@@ -51,7 +51,7 @@
                             <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-full w-full h-full object-cover">
                         </div>
                         <div class="absolute inset-0 rounded-full flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                            <i data-lucide="camera" class="w-6 h-6 text-white"></i>
+                            <x-heroicon name="camera" class="w-6 h-6 text-white" />
                         </div>
                     </div>
                     <h2 class="text-xl font-bold text-white mt-4">{{ Auth::user()->name }}</h2>
@@ -63,11 +63,11 @@
             <div class="border-b border-gray-700 dark:border-gray-600">
                 <div class="flex px-6">
                     <button onclick="setActiveTab('per')" id="perTab" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors border-b-2 border-blue-500 text-blue-600 dark:text-blue-400">
-                        <i data-lucide="user" class="w-5 h-5"></i>
+                        <x-heroicon name="user" class="w-5 h-5" />
                         <span>Kişisel Bilgiler</span>
                     </button>
                     <button onclick="setActiveTab('pas')" id="pasTab" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors text-gray-300 dark:text-gray-400">
-                        <i data-lucide="lock" class="w-5 h-5"></i>
+                        <x-heroicon name="lock-closed" class="w-5 h-5" />
                         <span>Güvenlik</span>
                     </button>
                 </div>
@@ -79,7 +79,7 @@
                     <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 mb-6 rounded-lg">
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <i data-lucide="info" class="h-5 w-5 text-blue-500" aria-hidden="true"></i>
+                                <x-heroicon name="information-circle" class="h-5 w-5 text-blue-500" aria-hidden="true" />
                             </div>
                             <div class="ml-3">
                                 <p class="text-sm text-blue-700 dark:text-blue-400">
@@ -95,7 +95,7 @@
                     <div class="bg-indigo-50 dark:bg-indigo-900/20 border-l-4 border-indigo-500 p-4 mb-6 rounded-lg">
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <i data-lucide="shield" class="h-5 w-5 text-indigo-500" aria-hidden="true"></i>
+                                <x-heroicon name="shield-check" class="h-5 w-5 text-indigo-500" aria-hidden="true" />
                             </div>
                             <div class="ml-3">
                                 <p class="text-sm text-indigo-700 dark:text-indigo-400">
@@ -113,7 +113,7 @@
         <div class="bg-gray-900 dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-700 dark:border-gray-600 mt-8 p-6">
             <div class="flex items-center gap-4 mb-6">
                 <div class="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                    <i data-lucide="activity" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                    <x-heroicon name="activity" class="w-6 h-6 text-green-600 dark:text-green-400" />
                 </div>
                 <div>
                     <h2 class="text-xl font-bold text-white dark:text-white">Son Aktiviteler</h2>
@@ -124,7 +124,7 @@
             <div class="space-y-4">
                 <div class="flex items-center gap-4 p-4 rounded-xl bg-gray-800 dark:bg-gray-700/50 border border-gray-700 dark:border-gray-600">
                     <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-full">
-                        <i data-lucide="log-in" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="arrow-right-on-rectangle" class="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div class="flex-1">
                         <p class="text-sm font-medium text-white dark:text-white">Hesap Girişi</p>
@@ -137,7 +137,7 @@
 
                 <div class="flex items-center gap-4 p-4 rounded-xl bg-gray-800 dark:bg-gray-700/50 border border-gray-700 dark:border-gray-600">
                     <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-full">
-                        <i data-lucide="settings" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+                        <x-heroicon name="cog-6-tooth" class="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                     </div>
                     <div class="flex-1">
                         <p class="text-sm font-medium text-white dark:text-white">Profil Güncellendi</p>
@@ -234,7 +234,7 @@
 
             initializeLucideIcons() {
                 if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
+                    
                 }
             },
 

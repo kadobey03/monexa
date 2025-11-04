@@ -9,7 +9,7 @@
             <div class="flex items-center space-x-4">
                 <a href="{{ route('admin.managers.index') }}" 
                    class="p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors">
-                    <i data-lucide="arrow-left" class="w-5 h-5 text-admin-600 dark:text-admin-400"></i>
+                    <x-heroicon name="arrow-left" class="w-5 h-5 text-admin-600 dark:text-admin-400" />
                 </a>
                 <div class="flex items-center space-x-3">
                     <div class="relative">
@@ -19,7 +19,7 @@
                                  class="w-12 h-12 rounded-xl object-cover border-2 border-white shadow-lg">
                         @else
                             <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                                <i data-lucide="user" class="w-6 h-6 text-white"></i>
+                                <x-heroicon name="user" class="w-6 h-6 text-white" />
                             </div>
                         @endif
                         <div class="absolute -top-1 -right-1 w-4 h-4 {{ $manager->is_active ? 'bg-green-500' : 'bg-red-500' }} rounded-full border-2 border-white"></div>
@@ -46,7 +46,7 @@
             <div class="flex items-center space-x-2">
                 <a href="{{ route('admin.managers.show', $manager) }}" 
                    class="p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors">
-                    <i data-lucide="eye" class="w-4 h-4 text-admin-600 dark:text-admin-400"></i>
+                    <x-heroicon name="eye" class="w-4 h-4 text-admin-600 dark:text-admin-400" />
                 </a>
                 <button @click="toggleStatus()" 
                         class="p-2 rounded-lg transition-colors"
@@ -66,25 +66,25 @@
                 <button @click="activeTab = 'personal'" 
                         :class="activeTab === 'personal' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                    <i data-lucide="user" class="w-4 h-4 inline mr-2"></i>
+                    <x-heroicon name="user" class="w-4 h-4 inline mr-2" />
                     Kişisel Bilgiler
                 </button>
                 <button @click="activeTab = 'role'" 
                         :class="activeTab === 'role' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                    <i data-lucide="shield" class="w-4 h-4 inline mr-2"></i>
+                    <x-heroicon name="shield-check" class="w-4 h-4 inline mr-2" />
                     Rol & Hiyerarşi
                 </button>
                 <button @click="activeTab = 'performance'" 
                         :class="activeTab === 'performance' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                    <i data-lucide="target" class="w-4 h-4 inline mr-2"></i>
+                    <x-heroicon name="view-finder" class="w-4 h-4 inline mr-2" />
                     Performans
                 </button>
                 <button @click="activeTab = 'security'" 
                         :class="activeTab === 'security' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                    <i data-lucide="lock" class="w-4 h-4 inline mr-2"></i>
+                    <x-heroicon name="lock-closed" class="w-4 h-4 inline mr-2" />
                     Güvenlik
                 </button>
             </nav>
@@ -102,7 +102,7 @@
                 <!-- First Name -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="user" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="user" class="w-4 h-4 inline mr-1" />
                         Ad *
                     </label>
                     <input type="text" 
@@ -119,7 +119,7 @@
                 <!-- Last Name -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="user" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="user" class="w-4 h-4 inline mr-1" />
                         Soyad *
                     </label>
                     <input type="text" 
@@ -136,7 +136,7 @@
                 <!-- Email -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="mail" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="envelope" class="w-4 h-4 inline mr-1" />
                         E-posta *
                     </label>
                     <input type="email" 
@@ -153,7 +153,7 @@
                 <!-- Phone -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="phone" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="phone" class="w-4 h-4 inline mr-1" />
                         Telefon
                     </label>
                     <input type="text" 
@@ -169,7 +169,7 @@
                 <!-- Employee ID -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="id-card" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="id-card" class="w-4 h-4 inline mr-1" />
                         Çalışan ID
                     </label>
                     <input type="text" 
@@ -185,7 +185,7 @@
                 <!-- Position -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="briefcase" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="briefcase" class="w-4 h-4 inline mr-1" />
                         Pozisyon
                     </label>
                     <input type="text" 
@@ -202,7 +202,7 @@
             <!-- Bio -->
             <div class="mt-6">
                 <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                    <i data-lucide="file-text" class="w-4 h-4 inline mr-1"></i>
+                    <x-heroicon name="file-text" class="w-4 h-4 inline mr-1" />
                     Kısa Biografi
                 </label>
                 <textarea name="bio" 
@@ -217,7 +217,7 @@
             <!-- Avatar Upload -->
             <div class="mt-6">
                 <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                    <i data-lucide="camera" class="w-4 h-4 inline mr-1"></i>
+                    <x-heroicon name="camera" class="w-4 h-4 inline mr-1" />
                     Profil Fotoğrafı
                 </label>
                 <div class="flex items-center space-x-6">
@@ -230,7 +230,7 @@
                         @else
                             <div class="w-20 h-20 bg-admin-200 dark:bg-admin-700 rounded-full flex items-center justify-center" 
                                  x-show="!avatarPreview">
-                                <i data-lucide="user" class="w-8 h-8 text-admin-400"></i>
+                                <x-heroicon name="user" class="w-8 h-8 text-admin-400" />
                             </div>
                         @endif
                         <img x-show="avatarPreview" 
@@ -249,7 +249,7 @@
                                 <button type="button" 
                                         @click="removeCurrentAvatar()"
                                         class="text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
-                                    <i data-lucide="trash-2" class="w-3 h-3 inline mr-1"></i>
+                                    <x-heroicon name="trash-2" class="w-3 h-3 inline mr-1" />
                                     Mevcut fotoğrafı kaldır
                                 </button>
                             @endif
@@ -257,7 +257,7 @@
                                     x-show="avatarPreview"
                                     @click="cancelAvatarPreview()"
                                     class="text-xs text-admin-600 hover:text-admin-700 dark:text-admin-400 dark:hover:text-admin-300">
-                                <i data-lucide="x" class="w-3 h-3 inline mr-1"></i>
+                                <x-heroicon name="x-mark" class="w-3 h-3 inline mr-1" />
                                 İptal
                             </button>
                         </div>
@@ -275,7 +275,7 @@
                 <!-- Role -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="shield" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="shield-check" class="w-4 h-4 inline mr-1" />
                         Rol *
                     </label>
                     <select name="role_id" 
@@ -301,7 +301,7 @@
                     @if($manager->role_id != old('role_id'))
                         <div x-show="roleChanged" x-transition class="mt-2 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
                             <p class="text-sm text-amber-800 dark:text-amber-300">
-                                <i data-lucide="alert-triangle" class="w-4 h-4 inline mr-1"></i>
+                                <x-heroicon name="exclamation-triangle" class="w-4 h-4 inline mr-1" />
                                 Rol değiştirme işlemi yetkileri de etkileyecektir.
                             </p>
                         </div>
@@ -311,7 +311,7 @@
                 <!-- Supervisor -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="user-check" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="user-check" class="w-4 h-4 inline mr-1" />
                         Süpervizör
                     </label>
                     <select name="supervisor_id" 
@@ -337,7 +337,7 @@
                 <!-- Department -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="building" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="building" class="w-4 h-4 inline mr-1" />
                         Departman *
                     </label>
                     <select name="department" 
@@ -358,7 +358,7 @@
                 <!-- Admin Group -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="users" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="users" class="w-4 h-4 inline mr-1" />
                         Yönetici Grubu
                     </label>
                     <select name="admin_group_id" 
@@ -380,7 +380,7 @@
             @if($manager->subordinates()->count() > 0)
                 <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                     <h3 class="text-sm font-medium text-blue-800 dark:text-blue-300 mb-2">
-                        <i data-lucide="users" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="users" class="w-4 h-4 inline mr-1" />
                         Alt Yöneticiler ({{ $manager->subordinates()->count() }})
                     </h3>
                     <div class="space-y-2">
@@ -391,7 +391,7 @@
                                          class="w-6 h-6 rounded-full object-cover">
                                 @else
                                     <div class="w-6 h-6 bg-admin-200 dark:bg-admin-700 rounded-full flex items-center justify-center">
-                                        <i data-lucide="user" class="w-3 h-3 text-admin-400"></i>
+                                        <x-heroicon name="user" class="w-3 h-3 text-admin-400" />
                                     </div>
                                 @endif
                                 <span class="text-sm text-blue-700 dark:text-blue-300">
@@ -421,7 +421,7 @@
                 <div class="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-4 rounded-xl border border-green-200 dark:border-green-800">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
-                            <i data-lucide="trending-up" class="w-5 h-5 text-white"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-5 h-5 text-white" />
                         </div>
                         <div>
                             <p class="text-xs text-green-600 dark:text-green-400 font-medium">Bu Ay</p>
@@ -435,7 +435,7 @@
                 <div class="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-4 rounded-xl border border-blue-200 dark:border-blue-800">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                            <i data-lucide="target" class="w-5 h-5 text-white"></i>
+                            <x-heroicon name="view-finder" class="w-5 h-5 text-white" />
                         </div>
                         <div>
                             <p class="text-xs text-blue-600 dark:text-blue-400 font-medium">Hedef</p>
@@ -449,7 +449,7 @@
                 <div class="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 p-4 rounded-xl border border-purple-200 dark:border-purple-800">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
-                            <i data-lucide="percent" class="w-5 h-5 text-white"></i>
+                            <x-heroicon name="percent" class="w-5 h-5 text-white" />
                         </div>
                         <div>
                             <p class="text-xs text-purple-600 dark:text-purple-400 font-medium">Başarı</p>
@@ -463,7 +463,7 @@
                 <div class="bg-gradient-to-r from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 p-4 rounded-xl border border-amber-200 dark:border-amber-800">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
-                            <i data-lucide="users" class="w-5 h-5 text-white"></i>
+                            <x-heroicon name="users" class="w-5 h-5 text-white" />
                         </div>
                         <div>
                             <p class="text-xs text-amber-600 dark:text-amber-400 font-medium">Toplam Lead</p>
@@ -480,7 +480,7 @@
                 <!-- Monthly Target -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="target" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="view-finder" class="w-4 h-4 inline mr-1" />
                         Aylık Hedef
                     </label>
                     <div class="relative">
@@ -501,7 +501,7 @@
                 <!-- Max Leads Per Day -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="users" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="users" class="w-4 h-4 inline mr-1" />
                         Günlük Max Lead
                     </label>
                     <input type="number" 
@@ -519,7 +519,7 @@
                 <!-- Time Zone -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="clock" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="clock" class="w-4 h-4 inline mr-1" />
                         Saat Dilimi
                     </label>
                     <select name="time_zone" 
@@ -551,7 +551,7 @@
                 <!-- New Password -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="key" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="key" class="w-4 h-4 inline mr-1" />
                         Yeni Şifre
                     </label>
                     <div class="relative">
@@ -600,7 +600,7 @@
                 <!-- Confirm Password -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="lock" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="lock-closed" class="w-4 h-4 inline mr-1" />
                         Şifre Onayı
                     </label>
                     <div class="relative">
@@ -666,7 +666,7 @@
             @if($manager->last_login_at)
                 <div class="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                     <p class="text-sm text-blue-800 dark:text-blue-300">
-                        <i data-lucide="clock" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="clock" class="w-4 h-4 inline mr-1" />
                         Son giriş: {{ $manager->last_login_at->format('d.m.Y H:i') }}
                         @if($manager->last_login_ip)
                             ({{ $manager->last_login_ip }})
@@ -680,7 +680,7 @@
         <div class="flex items-center justify-between pt-6">
             <a href="{{ route('admin.managers.index') }}" 
                class="inline-flex items-center px-6 py-3 border border-admin-300 dark:border-admin-600 shadow-sm text-sm font-medium rounded-xl text-admin-700 dark:text-admin-300 bg-white dark:bg-admin-800 hover:bg-admin-50 dark:hover:bg-admin-700 transition-all duration-200">
-                <i data-lucide="x" class="w-4 h-4 mr-2"></i>
+                <x-heroicon name="x-mark" class="w-4 h-4 mr-2" />
                 İptal
             </a>
             
@@ -688,7 +688,7 @@
                 <!-- View Profile -->
                 <a href="{{ route('admin.managers.show', $manager) }}"
                    class="inline-flex items-center px-6 py-3 border border-admin-300 dark:border-admin-600 shadow-sm text-sm font-medium rounded-xl text-admin-700 dark:text-admin-300 bg-white dark:bg-admin-800 hover:bg-admin-50 dark:hover:bg-admin-700 transition-all duration-200">
-                    <i data-lucide="eye" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="eye" class="w-4 h-4 mr-2" />
                     Profili Görüntüle
                 </a>
                 
@@ -697,7 +697,7 @@
                         :disabled="!hasChanges"
                         :class="hasChanges ? 'opacity-100' : 'opacity-50 cursor-not-allowed'"
                         class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
-                    <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="save" class="w-4 h-4 mr-2" />
                     Değişiklikleri Kaydet
                 </button>
             </div>
@@ -871,7 +871,7 @@ function editManagerForm() {
             }
             
             // Re-init lucide icons
-            lucide.createIcons();
+            
         },
         
         checkPasswordStrength() {
@@ -921,14 +921,14 @@ function editManagerForm() {
             this.passwordMatchStatus = true;
             this.passwordsMatch = password === confirmation;
             
-            lucide.createIcons();
+            
         }
     }
 }
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    
 });
 </script>
 @endpush

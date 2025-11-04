@@ -14,10 +14,10 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
              <div class="bg-blue-600 dark:bg-blue-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="wallet" class="h-5 w-5 mr-2"></i>{{ $user->name }} Hesabına Kredi/Debit Uygula
+                     <x-heroicon name="wallet" class="h-5 w-5 mr-2" />{{ $user->name }} Hesabına Kredi/Debit Uygula
                  </h4>
                  <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6">
@@ -26,13 +26,13 @@
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="dollar-sign" class="h-4 w-4 inline mr-2 text-blue-600"></i>Tutar
+                                 <x-heroicon name="currency-dollar" class="h-4 w-4 inline mr-2 text-blue-600" />Tutar
                              </label>
                              <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" placeholder="Tutar girin" type="number" name="amount" min="0.01" step="0.01" required>
                          </div>
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="repeat" class="h-4 w-4 inline mr-2 text-blue-600"></i>Hesap Türü
+                                 <x-heroicon name="arrow-path" class="h-4 w-4 inline mr-2 text-blue-600" />Hesap Türü
                              </label>
                              <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" name="type" required>
                                  <option value="" selected disabled>Hesap Türünü Seçin</option>
@@ -46,7 +46,7 @@
                      </div>
                      <div class="mt-6">
                          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                             <i data-lucide="plus-circle" class="h-4 w-4 inline mr-2 text-blue-600"></i>İşlem Türü
+                             <x-heroicon name="plus-circle" class="h-4 w-4 inline mr-2 text-blue-600" />İşlem Türü
                          </label>
                          <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" name="t_type" required>
                              <option value="" selected disabled>İşlem Türünü Seçin</option>
@@ -54,13 +54,13 @@
                              <option value="Debit">➖ Bakiye Azalt</option>
                          </select>
                          <div class="mt-2 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-md">
-                             <p class="text-sm text-yellow-800 dark:text-yellow-300"><i data-lucide="alert-triangle" class="h-4 w-4 inline mr-1"></i> <strong>Not:</strong> Depozitoları borçlandıramazsınız</p>
+                             <p class="text-sm text-yellow-800 dark:text-yellow-300"><x-heroicon name="exclamation-triangle" class="h-4 w-4 inline mr-1" /> <strong>Not:</strong> Depozitoları borçlandıramazsınız</p>
                          </div>
                      </div>
                      <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                             <i data-lucide="check" class="h-4 w-4 mr-2"></i>İşlemi Gerçekleştir
+                             <x-heroicon name="check" class="h-4 w-4 mr-2" />İşlemi Gerçekleştir
                          </button>
                      </div>
                  </form>
@@ -85,10 +85,10 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
              <div class="bg-green-600 dark:bg-green-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="user-pen" class="h-5 w-5 mr-2"></i>{{ $user->name }} Kullanıcısını Düzenle
+                     <x-heroicon name="user-pen" class="h-5 w-5 mr-2" />{{ $user->name }} Kullanıcısını Düzenle
                  </h4>
                  <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6">
@@ -97,37 +97,37 @@
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="user" class="h-4 w-4 inline mr-2 text-green-600"></i>Kullanıcı Adı
+                                 <x-heroicon name="user" class="h-4 w-4 inline mr-2 text-green-600" />Kullanıcı Adı
                              </label>
                              <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->username }}" type="text" name="username" pattern="[a-zA-Z0-9_]{3,50}" maxlength="50" required>
                          </div>
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="user-circle" class="h-4 w-4 inline mr-2 text-green-600"></i>Ad Soyad
+                                 <x-heroicon name="user-circle" class="h-4 w-4 inline mr-2 text-green-600" />Ad Soyad
                              </label>
                              <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->name }}" type="text" name="name" required>
                          </div>
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="mail" class="h-4 w-4 inline mr-2 text-green-600"></i>E-posta Adresi
+                                 <x-heroicon name="envelope" class="h-4 w-4 inline mr-2 text-green-600" />E-posta Adresi
                              </label>
                              <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->email }}" type="email" name="email" maxlength="100" required>
                          </div>
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="phone" class="h-4 w-4 inline mr-2 text-green-600"></i>Telefon Numarası
+                                 <x-heroicon name="phone" class="h-4 w-4 inline mr-2 text-green-600" />Telefon Numarası
                              </label>
                              <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->phone }}" type="tel" name="phone" pattern="[+]?[0-9\s\-\(\)]{10,20}" maxlength="20" required>
                          </div>
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="flag" class="h-4 w-4 inline mr-2 text-green-600"></i>Ülke
+                                 <x-heroicon name="flag" class="h-4 w-4 inline mr-2 text-green-600" />Ülke
                              </label>
                              <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->country }}" type="text" name="country">
                          </div>
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="coins" class="h-4 w-4 inline mr-2 text-green-600"></i>Para Birimi
+                                 <x-heroicon name="coins" class="h-4 w-4 inline mr-2 text-green-600" />Para Birimi
                              </label>
                              <input name="s_currency" value="{{$user->currency}}" type="hidden">
                              <select name="currency" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white">
@@ -141,14 +141,14 @@
                      </div>
                      <div class="mt-6">
                          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                             <i data-lucide="link" class="h-4 w-4 inline mr-2 text-green-600"></i>Referans Linki
+                             <x-heroicon name="link" class="h-4 w-4 inline mr-2 text-green-600" />Referans Linki
                          </label>
                          <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" value="{{ $user->ref_link }}" type="url" name="ref_link" required>
                      </div>
                      <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                             <i data-lucide="save" class="h-4 w-4 mr-2"></i>Kullanıcı Bilgilerini Güncelle
+                             <x-heroicon name="save" class="h-4 w-4 mr-2" />Kullanıcı Bilgilerini Güncelle
                          </button>
                      </div>
                  </form>
@@ -173,10 +173,10 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
              <div class="bg-purple-600 dark:bg-purple-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="trending-up" class="h-5 w-5 mr-2"></i>{{ $user->name }} için Manuel İşlem
+                     <x-heroicon name="arrow-trending-up" class="h-5 w-5 mr-2" />{{ $user->name }} için Manuel İşlem
                  </h4>
                  <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6">
@@ -264,7 +264,7 @@
                      <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                             <i data-lucide="trending-up" class="h-4 w-4 mr-2"></i>İşlem Yap
+                             <x-heroicon name="arrow-trending-up" class="h-4 w-4 mr-2" />İşlem Yap
                          </button>
                      </div>
                  </form>
@@ -289,28 +289,28 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
              <div class="bg-indigo-600 dark:bg-indigo-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="mail" class="h-5 w-5 mr-2"></i>{{ $user->name }} kullanıcısına E-posta Gönder
+                     <x-heroicon name="envelope" class="h-5 w-5 mr-2" />{{ $user->name }} kullanıcısına E-posta Gönder
                  </h4>
                  <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6">
                  <div class="mb-4 p-3 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-700 rounded-md">
-                     <p class="text-sm text-indigo-800 dark:text-indigo-300"><i data-lucide="info" class="h-4 w-4 inline mr-1"></i>Bu mesaj <strong>{{ $user->name }}</strong> kullanıcısına gönderilecek</p>
+                     <p class="text-sm text-indigo-800 dark:text-indigo-300"><x-heroicon name="information-circle" class="h-4 w-4 inline mr-1" />Bu mesaj <strong>{{ $user->name }}</strong> kullanıcısına gönderilecek</p>
                  </div>
                  <form method="post" action="{{ route('sendmailtooneuser') }}">
                      @csrf
                      <div class="space-y-6">
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="type" class="h-4 w-4 inline mr-2 text-indigo-600"></i>E-posta Konusu
+                                 <x-heroicon name="type" class="h-4 w-4 inline mr-2 text-indigo-600" />E-posta Konusu
                              </label>
                              <input type="text" name="subject" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-admin-700 dark:text-white" placeholder="E-posta konusu" maxlength="100" required>
                          </div>
                          <div>
                              <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                 <i data-lucide="message-square" class="h-4 w-4 inline mr-2 text-indigo-600"></i>Mesaj İçeriği
+                                 <x-heroicon name="message-square" class="h-4 w-4 inline mr-2 text-indigo-600" />Mesaj İçeriği
                              </label>
                              <textarea placeholder="Mesajınızı buraya yazın..." class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-admin-700 dark:text-white" name="message" rows="8" maxlength="1000" required style="resize: vertical;"></textarea>
                          </div>
@@ -318,7 +318,7 @@
                      <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                             <i data-lucide="send" class="h-4 w-4 mr-2"></i>E-postayı Gönder
+                             <x-heroicon name="send" class="h-4 w-4 mr-2" />E-postayı Gönder
                          </button>
                      </div>
                  </form>
@@ -343,15 +343,15 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
              <div class="bg-red-600 dark:bg-red-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="alert-triangle" class="h-5 w-5 mr-2"></i>Kullanıcı Hesabını Sil
+                     <x-heroicon name="exclamation-triangle" class="h-5 w-5 mr-2" />Kullanıcı Hesabını Sil
                  </h4>
                  <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6 text-center">
                  <div class="mb-4">
-                     <i data-lucide="user-x" class="mx-auto h-12 w-12 text-red-600 mb-4"></i>
+                     <x-heroicon name="user-minus" class="mx-auto h-12 w-12 text-red-600 mb-4" />
                      <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{ $user->name }}'in Hesabını Sil?</h5>
                      <p class="text-gray-600 dark:text-gray-400">
                          Bu işlem geri alınamaz. Bu hesapla ilişkili tüm veriler kalıcı olarak silinecektir.
@@ -359,10 +359,10 @@
                  </div>
                  <div class="flex space-x-3">
                      <button @click="resetPasswordOpen = false" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                         <i data-lucide="x" class="h-4 w-4 mr-2 inline"></i>İptal
+                         <x-heroicon name="x-mark" class="h-4 w-4 mr-2 inline" />İptal
                      </button>
                      <a href="{{ url('admin/dashboard/delsystemuser') }}/{{ $user->id }}" onclick="return confirm('Bu işlem geri alınamaz. {{ $user->name }} kullanıcısını gerçekten silmek istiyor musunuz?')" class="flex-1 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                         <i data-lucide="trash-2" class="h-4 w-4 mr-2"></i>Evet, Hesabı Sil
+                         <x-heroicon name="trash-2" class="h-4 w-4 mr-2" />Evet, Hesabı Sil
                      </a>
                  </div>
              </div>
@@ -385,15 +385,15 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
              <div class="bg-yellow-500 dark:bg-yellow-600 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="key" class="h-5 w-5 mr-2"></i>Kullanıcı Şifresini Sıfırla
+                     <x-heroicon name="key" class="h-5 w-5 mr-2" />Kullanıcı Şifresini Sıfırla
                  </h4>
                  <button @click="resetPasswordOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6 text-center">
                  <div class="mb-4">
-                     <i data-lucide="lock" class="mx-auto h-12 w-12 text-yellow-500 mb-4"></i>
+                     <x-heroicon name="lock-closed" class="mx-auto h-12 w-12 text-yellow-500 mb-4" />
                      <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{ $user->name }} için Şifreyi Sıfırla?</h5>
                      <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-md">
                          <p class="text-sm text-yellow-800 dark:text-yellow-300 mb-2">Şifre şuna sıfırlanacak: <strong>user01236</strong></p>
@@ -402,10 +402,10 @@
                  </div>
                  <div class="flex space-x-3">
                      <button @click="open = false" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                         <i data-lucide="x" class="h-4 w-4 mr-2 inline"></i>İptal
+                         <x-heroicon name="x-mark" class="h-4 w-4 mr-2 inline" />İptal
                      </button>
                      <a href="{{ url('admin/dashboard/resetpswd') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısının şifresini gerçekten sıfırlamak istiyor musunuz? Yeni şifre: user01236')" class="flex-1 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-                         <i data-lucide="key" class="h-4 w-4 mr-2"></i>Şifreyi Sıfırla
+                         <x-heroicon name="key" class="h-4 w-4 mr-2" />Şifreyi Sıfırla
                      </a>
                  </div>
              </div>
@@ -428,10 +428,10 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
              <div class="bg-yellow-500 dark:bg-yellow-600 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="calculator" class="h-5 w-5 mr-2"></i>{{ $user->name }} için Kullanıcı Vergisi
+                     <x-heroicon name="calculator" class="h-5 w-5 mr-2" />{{ $user->name }} için Kullanıcı Vergisi
                  </h4>
                  <button @click="taxOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6">
@@ -454,7 +454,7 @@
                      <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-                             <i data-lucide="calculator" class="h-4 w-4 mr-2"></i>Kullanıcı Vergisi Belirle
+                             <x-heroicon name="calculator" class="h-4 w-4 mr-2" />Kullanıcı Vergisi Belirle
                          </button>
                      </div>
                  </form>
@@ -480,10 +480,10 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
              <div class="bg-green-600 dark:bg-green-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="key" class="h-5 w-5 mr-2"></i>{{ $user->name }} için Para Çekme Kodu
+                     <x-heroicon name="key" class="h-5 w-5 mr-2" />{{ $user->name }} için Para Çekme Kodu
                  </h4>
                  <button @click="withdrawalCodeOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6">
@@ -506,7 +506,7 @@
                      <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                             <i data-lucide="key" class="h-4 w-4 mr-2"></i>Para Çekme Kodunu Belirle
+                             <x-heroicon name="key" class="h-4 w-4 mr-2" />Para Çekme Kodunu Belirle
                          </button>
                      </div>
                  </form>
@@ -531,10 +531,10 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
              <div class="bg-blue-600 dark:bg-blue-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="bell" class="h-5 w-5 mr-2"></i>{{ $user->username }} Dashboard Bildirimi
+                     <x-heroicon name="bell" class="h-5 w-5 mr-2" />{{ $user->username }} Dashboard Bildirimi
                  </h4>
                  <button @click="notifyOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6">
@@ -557,7 +557,7 @@
                      <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                             <i data-lucide="send" class="h-4 w-4 mr-2"></i>Bildirimi Gönder
+                             <x-heroicon name="send" class="h-4 w-4 mr-2" />Bildirimi Gönder
                          </button>
                      </div>
                  </form>
@@ -582,10 +582,10 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
              <div class="bg-cyan-600 dark:bg-cyan-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="hash" class="h-5 w-5 mr-2"></i>{{ $user->name }} için İşlem Sayısı Belirleme
+                     <x-heroicon name="hash" class="h-5 w-5 mr-2" />{{ $user->name }} için İşlem Sayısı Belirleme
                  </h4>
                  <button @click="tradesOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6">
@@ -593,7 +593,7 @@
                      @csrf
                      <div>
                          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                             <i data-lucide="repeat" class="h-4 w-4 inline mr-2 text-cyan-600"></i>Para çekme öncesi işlem sayısı
+                             <x-heroicon name="arrow-path" class="h-4 w-4 inline mr-2 text-cyan-600" />Para çekme öncesi işlem sayısı
                          </label>
                          <input type="number" name="numberoftrades" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 dark:bg-admin-700 dark:text-white" placeholder="{{ $user->numberoftrades }}" min="0" required>
                          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
@@ -603,7 +603,7 @@
                      <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-                             <i data-lucide="hash" class="h-4 w-4 mr-2"></i>Para Çekme İçin İşlem Sayısı Belirle
+                             <x-heroicon name="hash" class="h-4 w-4 mr-2" />Para Çekme İçin İşlem Sayısı Belirle
                          </button>
                      </div>
                  </form>
@@ -628,10 +628,10 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
              <div class="bg-pink-600 dark:bg-pink-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="radio" class="h-5 w-5 mr-2"></i>{{ $user->name }} için Sinyal Oluştur
+                     <x-heroicon name="radio" class="h-5 w-5 mr-2" />{{ $user->name }} için Sinyal Oluştur
                  </h4>
                  <button @click="signalOpen = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6">
@@ -707,7 +707,7 @@
                      <div class="mt-6">
                          <input type="hidden" name="user_id" value="{{ $user->id }}">
                          <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500">
-                             <i data-lucide="radio" class="h-4 w-4 mr-2"></i>Sinyal Oluştur
+                             <x-heroicon name="radio" class="h-4 w-4 mr-2" />Sinyal Oluştur
                          </button>
                      </div>
                  </form>
@@ -733,15 +733,15 @@
          <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
              <div class="bg-teal-600 dark:bg-teal-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                  <h4 class="text-lg font-semibold text-white flex items-center">
-                     <i data-lucide="user-switch" class="h-5 w-5 mr-2"></i>{{ $user->name }} olarak giriş yap
+                     <x-heroicon name="user-switch" class="h-5 w-5 mr-2" />{{ $user->name }} olarak giriş yap
                  </h4>
                  <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                     <i data-lucide="x" class="h-5 w-5"></i>
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
                  </button>
              </div>
              <div class="p-6 text-center">
                  <div class="mb-4">
-                     <i data-lucide="user-circle" class="mx-auto h-12 w-12 text-teal-600 mb-4"></i>
+                     <x-heroicon name="user-circle" class="mx-auto h-12 w-12 text-teal-600 mb-4" />
                      <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{ $user->name }}'in Hesabına Geç?</h5>
                      <p class="text-gray-600 dark:text-gray-400">
                          Bu kullanıcı olarak giriş yapacaksınız. İstediğiniz zaman admin paneline dönebilirsiniz.
@@ -749,10 +749,10 @@
                  </div>
                  <div class="flex space-x-3">
                      <button @click="open = false" class="flex-1 py-2 px-4 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                         <i data-lucide="x" class="h-4 w-4 mr-2 inline"></i>İptal
+                         <x-heroicon name="x-mark" class="h-4 w-4 mr-2 inline" />İptal
                      </button>
                      <a href="{{ url('admin/dashboard/switchuser') }}/{{ $user->id }}" onclick="return confirm('{{ $user->name }} kullanıcısı olarak giriş yapmak istediğinizden emin misiniz? Yönetici paneline istediğiniz zaman dönebilirsiniz.')" class="flex-1 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                         <i data-lucide="log-in" class="h-4 w-4 mr-2"></i>Kullanıcı Hesabına Geç
+                         <x-heroicon name="arrow-right-on-rectangle" class="h-4 w-4 mr-2" />Kullanıcı Hesabına Geç
                      </a>
                  </div>
              </div>

@@ -6,7 +6,7 @@
     <div class="flex items-center justify-center min-h-[60vh]">
         <div class="text-center">
             <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                <i data-lucide="alert-triangle" class="w-12 h-12 text-red-600 dark:text-red-400"></i>
+                <x-heroicon name="exclamation-triangle" class="w-12 h-12 text-red-600 dark:text-red-400" />
             </div>
             <h2 class="text-2xl font-bold text-admin-900 dark:text-white mb-2">Yönetici Bulunamadı</h2>
             <p class="text-admin-600 dark:text-admin-400 mb-6">
@@ -14,7 +14,7 @@
             </p>
             <a href="{{ route('admin.managers.index') }}"
                class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors">
-                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
                 Yöneticiler Listesine Dön
             </a>
         </div>
@@ -28,7 +28,7 @@
             <div class="flex items-center space-x-6">
                 <a href="{{ route('admin.managers.index') }}" 
                    class="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors">
-                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <x-heroicon name="arrow-left" class="w-5 h-5" />
                 </a>
                 
                 <!-- Profile Image -->
@@ -39,11 +39,11 @@
                              class="w-24 h-24 rounded-2xl object-cover border-4 border-white/20 shadow-2xl">
                     @else
                         <div class="w-24 h-24 bg-white/20 rounded-2xl flex items-center justify-center border-4 border-white/20 shadow-2xl">
-                            <i data-lucide="user" class="w-12 h-12 text-white/70"></i>
+                            <x-heroicon name="user" class="w-12 h-12 text-white/70" />
                         </div>
                     @endif
                     <div class="absolute -bottom-2 -right-2 w-8 h-8 {{ $manager->is_active ? 'bg-green-500' : 'bg-red-500' }} rounded-full border-4 border-white flex items-center justify-center">
-                        <i data-lucide="{{ $manager->is_active ? 'check' : 'x' }}" class="w-4 h-4 text-white"></i>
+                        <x-heroicon name="{{ $manager->is_active ? 'check' : 'x' }}" class="w-4 h-4 text-white" />
                     </div>
                 </div>
                 
@@ -53,19 +53,19 @@
                     <div class="flex items-center space-x-4 text-white/80">
                         @if($manager->role)
                             <span class="flex items-center">
-                                <i data-lucide="shield" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="shield-check" class="w-4 h-4 mr-2" />
                                 {{ $manager->role->display_name }}
                             </span>
                         @endif
                         @if($manager->department)
                             <span class="flex items-center">
-                                <i data-lucide="building" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="building" class="w-4 h-4 mr-2" />
                                 {{ $manager->getDepartmentName() }}
                             </span>
                         @endif
                         @if($manager->employee_id)
                             <span class="flex items-center">
-                                <i data-lucide="id-card" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="id-card" class="w-4 h-4 mr-2" />
                                 {{ $manager->employee_id }}
                             </span>
                         @endif
@@ -80,7 +80,7 @@
             <div class="flex items-center space-x-3">
                 <a href="{{ route('admin.managers.edit', $manager) }}" 
                    class="inline-flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-xl transition-all duration-200">
-                    <i data-lucide="edit-3" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="edit-3" class="w-4 h-4 mr-2" />
                     Düzenle
                 </a>
                 
@@ -94,7 +94,7 @@
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" 
                             class="inline-flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-xl transition-all duration-200">
-                        <i data-lucide="more-horizontal" class="w-4 h-4"></i>
+                        <x-heroicon name="more-horizontal" class="w-4 h-4" />
                     </button>
                     
                     <div x-show="open" 
@@ -102,20 +102,20 @@
                          @click.away="open = false"
                          class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-elegant border border-admin-200 dark:border-admin-700 py-1 z-10">
                         <a href="#" class="flex items-center px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700">
-                            <i data-lucide="mail" class="w-4 h-4 mr-3"></i>
+                            <x-heroicon name="envelope" class="w-4 h-4 mr-3" />
                             E-posta Gönder
                         </a>
                         <a href="#" class="flex items-center px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700">
-                            <i data-lucide="key" class="w-4 h-4 mr-3"></i>
+                            <x-heroicon name="key" class="w-4 h-4 mr-3" />
                             Şifre Sıfırla
                         </a>
                         <a href="#" class="flex items-center px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700">
-                            <i data-lucide="download" class="w-4 h-4 mr-3"></i>
+                            <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-3" />
                             Rapor İndir
                         </a>
                         <hr class="my-1 border-admin-200 dark:border-admin-600">
                         <a href="#" class="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
-                            <i data-lucide="trash-2" class="w-4 h-4 mr-3"></i>
+                            <x-heroicon name="trash-2" class="w-4 h-4 mr-3" />
                             Hesabı Sil
                         </a>
                     </div>
@@ -140,19 +140,19 @@
                             $change = $lastMonth > 0 ? (($current - $lastMonth) / $lastMonth) * 100 : 0;
                         @endphp
                         @if($change > 0)
-                            <i data-lucide="trending-up" class="w-3 h-3 inline mr-1"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-3 h-3 inline mr-1" />
                             +{{ number_format($change, 1) }}% geçen aya göre
                         @elseif($change < 0)
-                            <i data-lucide="trending-down" class="w-3 h-3 inline mr-1"></i>
+                            <x-heroicon name="arrow-trending-down" class="w-3 h-3 inline mr-1" />
                             {{ number_format($change, 1) }}% geçen aya göre
                         @else
-                            <i data-lucide="minus" class="w-3 h-3 inline mr-1"></i>
+                            <x-heroicon name="minus" class="w-3 h-3 inline mr-1" />
                             Değişim yok
                         @endif
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="dollar-sign" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="currency-dollar" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -170,7 +170,7 @@
                     </div>
                 </div>
                 <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="target" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="view-finder" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -187,7 +187,7 @@
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="users" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -204,7 +204,7 @@
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="trending-up" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="arrow-trending-up" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -217,31 +217,31 @@
                 <button @click="activeTab = 'overview'" 
                         :class="activeTab === 'overview' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                    <i data-lucide="user" class="w-4 h-4 inline mr-2"></i>
+                    <x-heroicon name="user" class="w-4 h-4 inline mr-2" />
                     Genel Bakış
                 </button>
                 <button @click="activeTab = 'hierarchy'" 
                         :class="activeTab === 'hierarchy' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                    <i data-lucide="git-branch" class="w-4 h-4 inline mr-2"></i>
+                    <x-heroicon name="git-branch" class="w-4 h-4 inline mr-2" />
                     Hiyerarşi
                 </button>
                 <button @click="activeTab = 'performance'" 
                         :class="activeTab === 'performance' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                    <i data-lucide="bar-chart" class="w-4 h-4 inline mr-2"></i>
+                    <x-heroicon name="bar-chart" class="w-4 h-4 inline mr-2" />
                     Performans
                 </button>
                 <button @click="activeTab = 'activity'" 
                         :class="activeTab === 'activity' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                    <i data-lucide="activity" class="w-4 h-4 inline mr-2"></i>
+                    <x-heroicon name="activity" class="w-4 h-4 inline mr-2" />
                     Aktivite
                 </button>
                 <button @click="activeTab = 'settings'" 
                         :class="activeTab === 'settings' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
-                    <i data-lucide="settings" class="w-4 h-4 inline mr-2"></i>
+                    <x-heroicon name="cog-6-tooth" class="w-4 h-4 inline mr-2" />
                     Ayarlar
                 </button>
             </nav>
@@ -304,7 +304,7 @@
                             @forelse($manager->recentActivities()->take(5)->get() as $activity)
                                 <div class="flex items-center space-x-3 p-3 bg-white dark:bg-admin-800 rounded-lg border border-admin-200 dark:border-admin-600">
                                     <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
-                                        <i data-lucide="activity" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+                                        <x-heroicon name="activity" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
                                     </div>
                                     <div class="flex-1">
                                         <p class="text-sm text-admin-900 dark:text-white">{{ $activity->description }}</p>
@@ -407,7 +407,7 @@
                                      class="w-12 h-12 rounded-full object-cover">
                             @else
                                 <div class="w-12 h-12 bg-admin-200 dark:bg-admin-600 rounded-full flex items-center justify-center">
-                                    <i data-lucide="user" class="w-6 h-6 text-admin-400"></i>
+                                    <x-heroicon name="user" class="w-6 h-6 text-admin-400" />
                                 </div>
                             @endif
                             <div>
@@ -426,7 +426,7 @@
                             <div class="ml-auto">
                                 <a href="{{ route('admin.managers.show', $manager->supervisor) }}" 
                                    class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    <x-heroicon name="external-link" class="w-4 h-4" />
                                 </a>
                             </div>
                         </div>
@@ -449,7 +449,7 @@
                                              class="w-8 h-8 rounded-full object-cover">
                                     @else
                                         <div class="w-8 h-8 bg-admin-200 dark:bg-admin-600 rounded-full flex items-center justify-center">
-                                            <i data-lucide="user" class="w-4 h-4 text-admin-400"></i>
+                                            <x-heroicon name="user" class="w-4 h-4 text-admin-400" />
                                         </div>
                                     @endif
                                     <div class="flex-1">
@@ -466,7 +466,7 @@
                                         <span class="w-2 h-2 {{ $subordinate->is_active ? 'bg-green-500' : 'bg-red-500' }} rounded-full"></span>
                                         <a href="{{ route('admin.managers.show', $subordinate) }}" 
                                            class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-                                            <i data-lucide="external-link" class="w-3 h-3"></i>
+                                            <x-heroicon name="external-link" class="w-3 h-3" />
                                         </a>
                                     </div>
                                 </div>
@@ -589,7 +589,7 @@
                             @forelse($achievements as $achievement)
                                 <div class="flex items-center space-x-3">
                                     <div class="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center">
-                                        <i data-lucide="award" class="w-4 h-4 text-yellow-600 dark:text-yellow-400"></i>
+                                        <x-heroicon name="award" class="w-4 h-4 text-yellow-600 dark:text-yellow-400" />
                                     </div>
                                     <div>
                                         <p class="text-sm font-medium text-admin-900 dark:text-white">{{ $achievement['title'] }}</p>
@@ -735,19 +735,19 @@
                     <div class="space-y-3">
                         <button @click="resetPassword()" 
                                 class="w-full flex items-center px-4 py-3 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-lg transition-colors">
-                            <i data-lucide="key" class="w-4 h-4 mr-3"></i>
+                            <x-heroicon name="key" class="w-4 h-4 mr-3" />
                             Şifre Sıfırla
                         </button>
                         
                         <button @click="sendEmail()" 
                                 class="w-full flex items-center px-4 py-3 bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50 text-green-700 dark:text-green-300 rounded-lg transition-colors">
-                            <i data-lucide="mail" class="w-4 h-4 mr-3"></i>
+                            <x-heroicon name="envelope" class="w-4 h-4 mr-3" />
                             E-posta Gönder
                         </button>
                         
                         <button @click="generateReport()" 
                                 class="w-full flex items-center px-4 py-3 bg-purple-100 dark:bg-purple-900/30 hover:bg-purple-200 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-lg transition-colors">
-                            <i data-lucide="download" class="w-4 h-4 mr-3"></i>
+                            <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-3" />
                             Rapor İndir
                         </button>
                     </div>
@@ -760,7 +760,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
 function managerProfileData() {
     return {
@@ -966,7 +966,7 @@ function leadChart() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    
 });
 </script>
 @endpush

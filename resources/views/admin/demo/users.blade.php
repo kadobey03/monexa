@@ -14,13 +14,13 @@
                 @csrf
                 <button type="submit"
                         class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 dark:focus:ring-offset-admin-800">
-                    <i data-lucide="rotate-cw" class="h-4 w-4 mr-2"></i>
+                    <x-heroicon name="rotate-cw" class="h-4 w-4 mr-2" />
                     Toplu Sıfırla
                 </button>
             </form>
             <a href="{{ route('admin.demo.trades') }}"
                class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                <i data-lucide="trending-up" class="h-4 w-4 mr-2"></i>
+                <x-heroicon name="arrow-trending-up" class="h-4 w-4 mr-2" />
                 Demo İşlemler
             </a>
         </div>
@@ -35,7 +35,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="users" class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="users" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -49,7 +49,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="trending-up" class="h-6 w-6 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="arrow-trending-up" class="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -63,7 +63,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="dollar-sign" class="h-6 w-6 text-purple-600 dark:text-purple-400"></i>
+                        <x-heroicon name="currency-dollar" class="h-6 w-6 text-purple-600 dark:text-purple-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -77,7 +77,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="coins" class="h-6 w-6 text-yellow-600 dark:text-yellow-400"></i>
+                        <x-heroicon name="coins" class="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -102,12 +102,12 @@
             <div class="flex space-x-3">
                 <button type="submit"
                         class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                    <i data-lucide="search" class="h-4 w-4 mr-2"></i>
+                    <x-heroicon name="magnifying-glass" class="h-4 w-4 mr-2" />
                     Ara
                 </button>
                 <a href="{{ route('admin.demo.users') }}"
                    class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                    <i data-lucide="x" class="h-4 w-4 mr-2"></i>
+                    <x-heroicon name="x-mark" class="h-4 w-4 mr-2" />
                     Temizle
                 </a>
             </div>
@@ -147,12 +147,12 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($user->demo_mode)
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
-                                    <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i>
+                                    <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
                                     Aktif
                                 </span>
                             @else
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                                    <i data-lucide="x-circle" class="w-3 h-3 mr-1"></i>
+                                    <x-heroicon name="x-circle" class="w-3 h-3 mr-1" />
                                     Pasif
                                 </span>
                             @endif
@@ -164,7 +164,7 @@
                                     class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800"
                                     @click="openEditModal({{ $user->id }}, '{{ $user->name }}', {{ $user->demo_balance }})"
                                     title="Demo Bakiye Düzenle">
-                                <i data-lucide="edit" class="w-3 h-3 mr-1"></i>
+                                <x-heroicon name="edit" class="w-3 h-3 mr-1" />
                                 Düzenle
                             </button>
 
@@ -174,7 +174,7 @@
                                         class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 dark:focus:ring-offset-admin-800"
                                         onclick="return confirm('Bu kullanıcının demo hesabını sıfırlamak istediğinizden emin misiniz?')"
                                         title="Demo Hesap Sıfırla">
-                                    <i data-lucide="rotate-cw" class="w-3 h-3 mr-1"></i>
+                                    <x-heroicon name="rotate-cw" class="w-3 h-3 mr-1" />
                                     Sıfırla
                                 </button>
                             </form>
@@ -184,7 +184,7 @@
                     <tr>
                         <td colspan="8" class="px-6 py-12 text-center">
                             <div class="flex flex-col items-center">
-                                <i data-lucide="users" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4"></i>
+                                <x-heroicon name="users" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
                                 <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Kullanıcı bulunamadı</h3>
                                 <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Mevcut arama kriterlerinizle eşleşen kullanıcı yok.</p>
                             </div>
@@ -237,7 +237,7 @@
             
             <div class="sm:flex sm:items-start">
                 <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 sm:mx-0 sm:h-10 sm:w-10">
-                    <i data-lucide="edit" class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="edit" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Demo Bakiye Düzenle</h3>

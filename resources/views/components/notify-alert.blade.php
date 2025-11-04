@@ -13,7 +13,7 @@
         <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
                 <div class="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center">
-                    <i data-lucide="alert-circle" class="w-5 h-5 text-red-600"></i>
+                    <x-heroicon name="exclamation-circle" class="w-5 h-5 text-red-600" />
                 </div>
             </div>
             <div class="flex-1 min-w-0">
@@ -23,7 +23,7 @@
         </div>
         <button @click="show = false"
                 class="flex-shrink-0 ml-4 p-2 text-red-400 hover:text-red-600 hover:bg-red-500/10 rounded-lg transition-all duration-200">
-            <i data-lucide="x" class="w-4 h-4"></i>
+            <x-heroicon name="x-mark" class="w-4 h-4" />
         </button>
     </div>
 </div>
@@ -44,7 +44,7 @@
         <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
                 <div class="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center">
-                    <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600"></i>
+                    <x-heroicon name="exclamation-triangle" class="w-5 h-5 text-red-600" />
                 </div>
             </div>
             <div class="flex-1 min-w-0">
@@ -52,7 +52,7 @@
                 <ul class="space-y-1">
                     @foreach ($errors->all() as $error)
                         <li class="flex items-start space-x-2">
-                            <i data-lucide="dot" class="w-3 h-3 text-red-500 mt-1 flex-shrink-0"></i>
+                            <x-heroicon name="dot" class="w-3 h-3 text-red-500 mt-1 flex-shrink-0" />
                             <span class="text-sm text-red-700">{{ $error }}</span>
                         </li>
                     @endforeach
@@ -61,7 +61,7 @@
         </div>
         <button @click="show = false"
                 class="flex-shrink-0 ml-4 p-2 text-red-400 hover:text-red-600 hover:bg-red-500/10 rounded-lg transition-all duration-200">
-            <i data-lucide="x" class="w-4 h-4"></i>
+            <x-heroicon name="x-mark" class="w-4 h-4" />
         </button>
     </div>
 </div>
@@ -82,7 +82,7 @@
         <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
                 <div class="w-10 h-10 bg-amber-500/10 rounded-full flex items-center justify-center">
-                    <i data-lucide="bell" class="w-5 h-5 text-amber-600"></i>
+                    <x-heroicon name="bell" class="w-5 h-5 text-amber-600" />
                 </div>
             </div>
             <div class="flex-1 min-w-0">
@@ -92,7 +92,7 @@
         </div>
         <button @click="show = false"
                 class="flex-shrink-0 ml-4 p-2 text-amber-400 hover:text-amber-600 hover:bg-amber-500/10 rounded-lg transition-all duration-200">
-            <i data-lucide="x" class="w-4 h-4"></i>
+            <x-heroicon name="x-mark" class="w-4 h-4" />
         </button>
     </div>
 </div>
@@ -113,7 +113,7 @@
         <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
                 <div class="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center">
-                    <i data-lucide="radio" class="w-5 h-5 text-red-600"></i>
+                    <x-heroicon name="radio" class="w-5 h-5 text-red-600" />
                 </div>
             </div>
             <div class="flex-1 min-w-0">
@@ -123,14 +123,14 @@
                 </p>
                 <a href="{{ route('signal') }}"
                    class="inline-flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
-                    <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                    <x-heroicon name="shopping-cart" class="w-4 h-4" />
                     <span>Sinyal Satın Al</span>
                 </a>
             </div>
         </div>
         <button @click="show = false"
                 class="flex-shrink-0 ml-4 p-2 text-red-400 hover:text-red-600 hover:bg-red-500/10 rounded-lg transition-all duration-200">
-            <i data-lucide="x" class="w-4 h-4"></i>
+            <x-heroicon name="x-mark" class="w-4 h-4" />
         </button>
     </div>
 </div>
@@ -151,7 +151,7 @@
         <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
                 <div class="w-10 h-10 bg-red-500/10 rounded-full flex items-center justify-center">
-                    <i data-lucide="trending-up" class="w-5 h-5 text-red-600"></i>
+                    <x-heroicon name="arrow-trending-up" class="w-5 h-5 text-red-600" />
                 </div>
             </div>
             <div class="flex-1 min-w-0">
@@ -161,14 +161,14 @@
                 </p>
                 <a href="{{ route('mplans') }}"
                    class="inline-flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
-                    <i data-lucide="arrow-up-circle" class="w-4 h-4"></i>
+                    <x-heroicon name="arrow-up-circle" class="w-4 h-4" />
                     <span>Planı Yükselt</span>
                 </a>
             </div>
         </div>
         <button @click="show = false"
                 class="flex-shrink-0 ml-4 p-2 text-red-400 hover:text-red-600 hover:bg-red-500/10 rounded-lg transition-all duration-200">
-            <i data-lucide="x" class="w-4 h-4"></i>
+            <x-heroicon name="x-mark" class="w-4 h-4" />
         </button>
     </div>
 </div>

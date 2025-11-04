@@ -16,7 +16,7 @@
             <div class="flex flex-col sm:flex-row gap-3">
                 <a href="{{ route('swaphistory') }}"
                    class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
-                    <i data-lucide="history" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="history" class="w-4 h-4 mr-2" />
                     İşlem Geçmişi
                 </a>
             </div>
@@ -29,7 +29,7 @@
         <div class="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-blue-500/50 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
-                    <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400"></i>
+                    <x-heroicon name="currency-dollar" class="w-6 h-6 text-green-400" />
                 </div>
                 <div class="text-right">
                     <p class="text-xs text-gray-400 uppercase tracking-wide">Hesap Bakiyesi</p>
@@ -333,7 +333,7 @@
                 <div class="flex items-center justify-between py-3 px-4 bg-gray-900/50 rounded-lg border border-gray-700">
                     <div class="flex items-center">
                         <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center mr-3">
-                            <i data-lucide="dollar-sign" class="w-4 h-4 text-green-400"></i>
+                            <x-heroicon name="currency-dollar" class="w-4 h-4 text-green-400" />
                         </div>
                         <div class="text-gray-300">Account Balance</div>
                     </div>
@@ -452,7 +452,7 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center">
                                 <div class="mr-2">
-                                    <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400"></i>
+                                    <x-heroicon name="currency-dollar" class="w-6 h-6 text-green-400" />
                                 </div>
                                 <div class="font-medium text-lg text-white">{{ Auth::user()->currency }}<span id="sellReceiveAmount">0.00</span></div>
                             </div>
@@ -545,7 +545,7 @@
 </div>
 
 <!-- TradingView Widget -->
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
 <script type="text/javascript">
     // Fixed rates for all assets
     const fixedRates = {
@@ -891,7 +891,7 @@
 
         // Initialize Lucide icons
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            
         }
     });
 </script>

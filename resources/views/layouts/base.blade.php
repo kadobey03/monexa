@@ -12,13 +12,13 @@
     <!-- FontAwesome REMOVED - Using unified Lucide icons instead -->
 
     <!-- jQuery - Local -->
-    <script src="{{ asset('vendor/jquery/jquery-3.7.0.min.js') }}"></script>
+    
 
     <!-- DataTables JS - Local -->
-    <script type="text/javascript" src="{{ asset('vendor/datatables/datatables.min.js') }}"></script>
+    
 
     <!-- AOS JS - Local -->
-    <script src="{{ asset('vendor/aos/aos.js') }}"></script>
+    
 
     <title>{{$settings->site_name}} | CFD Ticareti — Hisse Senetleri, Altın, Petrol, Endeksler</title>
     <meta name="theme-color" content="#111827">

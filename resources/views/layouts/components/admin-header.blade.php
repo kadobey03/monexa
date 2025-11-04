@@ -4,7 +4,7 @@
         <!-- Mobile Menu Button -->
         <button @click="toggleSidebar()" 
                 class="lg:hidden p-2 rounded-lg text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-            <i data-lucide="menu" class="w-5 h-5"></i>
+            <x-heroicon name="bars-3" class="w-5 h-5" />
         </button>
 
         <!-- Page Title -->
@@ -20,7 +20,7 @@
         <div class="relative" x-data="{ open: false }">
             <button @click="open = !open; toggleNotifications()"
                     class="relative p-2 rounded-lg text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                <i data-lucide="bell" class="w-5 h-5"></i>
+                <x-heroicon name="bell" class="w-5 h-5" />
                 @php
                     $notificationCount = Auth::guard('admin')->user() ? 
                         \App\Models\Notification::where('admin_id', Auth::guard('admin')->user()->id)
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="p-4 text-center text-gray-500 dark:text-gray-400">
-                    <i data-lucide="bell" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+                    <x-heroicon name="bell" class="w-8 h-8 mx-auto mb-2 opacity-50" />
                     <p class="text-sm">Yeni bildirim yok</p>
                 </div>
             </div>
@@ -53,8 +53,8 @@
         <!-- Theme Toggle -->
         <button @click="toggleTheme()"
                 class="p-2 rounded-lg text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-            <i data-lucide="sun" class="w-5 h-5" :class="{ 'hidden': isDarkMode }"></i>
-            <i data-lucide="moon" class="w-5 h-5" :class="{ 'hidden': !isDarkMode }"></i>
+            <x-heroicon name="sun" class="w-5 h-5" :class="{ 'hidden': isDarkMode }" />
+            <x-heroicon name="moon" class="w-5 h-5" :class="{ 'hidden': !isDarkMode }" />
         </button>
 
         <!-- Profile Dropdown -->
@@ -68,7 +68,7 @@
                     <div class="text-sm font-medium text-gray-900 dark:text-white">{{ Auth::guard('admin')->user()?->firstName ?? 'Admin' }}</div>
                     <div class="text-xs text-gray-500">{{ Auth::guard('admin')->user()?->type ?? 'User' }}</div>
                 </div>
-                <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+                <x-heroicon name="chevron-down" class="w-4 h-4 text-gray-400" />
             </button>
 
             <!-- Profile Dropdown Menu -->
@@ -79,14 +79,14 @@
                 
                 <div class="p-2">
                     <a href="#" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                        <i data-lucide="user-cog" class="w-4 h-4 mr-3"></i>
+                        <x-heroicon name="user-cog" class="w-4 h-4 mr-3" />
                         Hesap Ayarları
                     </a>
                     <div class="border-t border-gray-200 dark:border-gray-700 my-2"></div>
                     <form action="{{ route('adminlogout') }}" method="POST">
                         @csrf
                         <button type="submit" class="w-full flex items-center px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                            <i data-lucide="log-out" class="w-4 h-4 mr-3"></i>
+                            <x-heroicon name="arrow-left-on-rectangle" class="w-4 h-4 mr-3" />
                             Çıkış Yap
                         </button>
                     </form>

@@ -3,7 +3,7 @@
 
 @section('scripts')
     @parent
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 @endsection
 
 @section('content')
@@ -42,16 +42,16 @@
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a href="{{ route('dashboard') }}"
                    class="group relative inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-lg rounded-xl border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
-                    <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+                    <x-heroicon name="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1" />
                     Back to Dashboard
                 </a>
                 <div class="flex items-center gap-4 text-blue-200">
                     <div class="flex items-center gap-2">
-                        <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                        <x-heroicon name="shield-check" class="w-4 h-4 text-green-400" />
                         <span class="text-sm">Secure</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <i data-lucide="trending-up" class="w-4 h-4 text-blue-400"></i>
+                        <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-blue-400" />
                         <span class="text-sm">Profitable</span>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                 <div class="relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-                            <i data-lucide="users" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
+                            <x-heroicon name="users" class="w-8 h-8 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div class="text-right">
                             <div class="text-3xl font-bold text-slate-900 dark:text-white">{{ count($copytradings) }}</div>
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2 text-green-600 dark:text-green-400">
-                        <i data-lucide="trending-up" class="w-4 h-4"></i>
+                        <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
                         <span class="text-sm font-medium">Active & Verified</span>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                 <div class="relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
-                            <i data-lucide="trending-up" class="w-8 h-8 text-green-600 dark:text-green-400"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-8 h-8 text-green-600 dark:text-green-400" />
                         </div>
                         <div class="text-right">
                             <div class="text-3xl font-bold text-slate-900 dark:text-white">87%</div>
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2 text-green-600 dark:text-green-400">
-                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                        <x-heroicon name="check-circle" class="w-4 h-4" />
                         <span class="text-sm font-medium">Profitable Trades</span>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                 <div class="relative bg-white dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700">
                     <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl">
-                            <i data-lucide="wallet" class="w-8 h-8 text-purple-600 dark:text-purple-400"></i>
+                            <x-heroicon name="wallet" class="w-8 h-8 text-purple-600 dark:text-purple-400" />
                         </div>
                         <div class="text-right">
                             <div class="text-3xl font-bold text-slate-900 dark:text-white">{{ $settings->currency }}50</div>
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400">
-                        <i data-lucide="dollar-sign" class="w-4 h-4"></i>
+                        <x-heroicon name="currency-dollar" class="w-4 h-4" />
                         <span class="text-sm font-medium">Start Small</span>
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                             </div>
                             <!-- Verified Badge -->
                             <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center border-3 border-white dark:border-slate-700 shadow-lg">
-                                <i data-lucide="check" class="w-5 h-5 text-white"></i>
+                                <x-heroicon name="check" class="w-5 h-5 text-white" />
                             </div>
                             <!-- Online Status Indicator -->
                             <div class="absolute top-2 right-2 w-5 h-5 bg-green-400 rounded-full border-3 border-white dark:border-slate-700 animate-pulse shadow-lg">
@@ -193,9 +193,9 @@
                             <div class="flex items-center justify-center gap-1">
                                 @for ($i = 1; $i <= 5; $i++)
                                     @if ($i <= $copytrading->rating)
-                                        <i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i>
+                                        <x-heroicon name="star" class="w-4 h-4 text-yellow-400 fill-yellow-400" />
                                     @else
-                                        <i data-lucide="star" class="w-4 h-4 text-slate-300 dark:text-slate-600"></i>
+                                        <x-heroicon name="star" class="w-4 h-4 text-slate-300 dark:text-slate-600" />
                                     @endif
                                 @endfor
                                 <span class="text-sm text-slate-500 dark:text-slate-400 ml-2">({{ $copytrading->rating }}/5)</span>
@@ -206,7 +206,7 @@
                         <div class="grid grid-cols-2 gap-4 mb-6">
                             <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
                                 <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="users" class="w-4 h-4 text-blue-500"></i>
+                                    <x-heroicon name="users" class="w-4 h-4 text-blue-500" />
                                     <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Followers</span>
                                 </div>
                                 <div class="text-lg font-bold text-slate-900 dark:text-white">{{ number_format($copytrading->followers) }}</div>
@@ -214,7 +214,7 @@
 
                             <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
                                 <div class="flex items-center gap-2 mb-1">
-                                    <i data-lucide="trending-up" class="w-4 h-4 text-green-500"></i>
+                                    <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-green-500" />
                                     <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Profit Rate</span>
                                 </div>
                                 <div class="text-lg font-bold text-green-600 dark:text-green-400">{{ $copytrading->equity }}%</div>
@@ -240,7 +240,7 @@
                             <button type="submit"
                                     class="w-full py-3 px-4 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group/btn">
                                 <span class="flex items-center justify-center gap-2">
-                                    <i data-lucide="x" class="w-4 h-4 transition-transform group-hover/btn:scale-110"></i>
+                                    <x-heroicon name="x-mark" class="w-4 h-4 transition-transform group-hover/btn:scale-110" />
                                     Stop Copying
                                 </span>
                             </button>
@@ -249,7 +249,7 @@
                         <button onclick="openInvestModal({{ $copytrading->id }}, '{{ $copytrading->name }}', {{ $copytrading->price }})"
                                 class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group/btn">
                             <span class="flex items-center justify-center gap-2">
-                                <i data-lucide="copy" class="w-4 h-4 transition-transform group-hover/btn:scale-110"></i>
+                                <x-heroicon name="copy" class="w-4 h-4 transition-transform group-hover/btn:scale-110" />
                                 Copy Expert
                             </span>
                         </button>
@@ -314,7 +314,7 @@
 <!-- Scripts -->
 <script>
     // Initialize Lucide Icons
-    lucide.createIcons();
+    
 
 
     // Smooth scrolling for anchor links

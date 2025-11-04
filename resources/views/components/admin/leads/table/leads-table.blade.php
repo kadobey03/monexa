@@ -7,7 +7,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
-                        <i data-lucide="users" class="w-6 h-6 mr-3 text-blue-600"></i>
+                        <x-heroicon name="users" class="w-6 h-6 mr-3 text-blue-600" />
                         Lead Yönetimi
                     </h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" id="total-leads-count">
@@ -20,9 +20,9 @@
                         <button
                             onclick="toggleColumnSettings()"
                             class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
-                            <i data-lucide="columns" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="view-columns" class="w-4 h-4 mr-2" />
                             Sütunlar
-                            <i data-lucide="chevron-down" class="w-4 h-4 ml-2 transition-transform duration-200" id="column-chevron"></i>
+                            <x-heroicon name="chevron-down" class="w-4 h-4 ml-2 transition-transform duration-200" id="column-chevron" />
                         </button>
                         
                         <!-- Column Settings Dropdown -->
@@ -79,7 +79,7 @@
                     <button
                         onclick="exportLeads()"
                         class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-sm font-medium rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 shadow-lg">
-                        <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
                         Export
                     </button>
                     @endcan
@@ -88,7 +88,7 @@
                     <button
                         onclick="refreshLeads()"
                         class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
-                        <i data-lucide="refresh-cw" class="w-4 h-4" id="refresh-icon"></i>
+                        <x-heroicon name="arrow-path" class="w-4 h-4" id="refresh-icon" />
                     </button>
                 </div>
             </div>
@@ -122,7 +122,7 @@
         <!-- Empty State -->
         <div id="empty-state" class="text-center py-16 bg-gray-50 dark:bg-admin-900/50" style="display: none;">
             <div class="mx-auto w-24 h-24 bg-gray-200 dark:bg-admin-700 rounded-full flex items-center justify-center mb-6">
-                <i data-lucide="users" class="w-12 h-12 text-gray-400 dark:text-gray-600"></i>
+                <x-heroicon name="users" class="w-12 h-12 text-gray-400 dark:text-gray-600" />
             </div>
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Lead bulunamadı</h3>
             <p class="text-gray-500 dark:text-gray-400 mb-6 max-w-md mx-auto">
@@ -131,7 +131,7 @@
             <button
                 onclick="clearFilters()"
                 class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
-                <i data-lucide="filter-x" class="w-4 h-4 mr-2"></i>
+                <x-heroicon name="filter-x" class="w-4 h-4 mr-2" />
                 Filtreleri Temizle
             </button>
         </div>
@@ -142,7 +142,7 @@
              style="display: none;">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <i data-lucide="check-circle" class="w-5 h-5 text-blue-600 mr-2"></i>
+                    <x-heroicon name="check-circle" class="w-5 h-5 text-blue-600 mr-2" />
                     <span class="text-sm font-medium text-blue-900 dark:text-blue-100">
                         <span id="selected-count">0</span> lead seçildi
                     </span>
@@ -152,28 +152,28 @@
                     <button
                         onclick="bulkAssign()"
                         class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 rounded-lg transition-colors">
-                        <i data-lucide="user-plus" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="user-plus" class="w-4 h-4 mr-1" />
                         Toplu Atama
                     </button>
                     
                     <button
                         onclick="bulkStatusUpdate()"
                         class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-lg transition-colors">
-                        <i data-lucide="edit" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="edit" class="w-4 h-4 mr-1" />
                         Durumu Değiştir
                     </button>
                     
                     <button
                         onclick="bulkDelete()"
                         class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-lg transition-colors">
-                        <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="trash-2" class="w-4 h-4 mr-1" />
                         Sil
                     </button>
                     
                     <button
                         onclick="clearSelection()"
                         class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                        <i data-lucide="x" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="x-mark" class="w-4 h-4 mr-1" />
                         Seçimi Temizle
                     </button>
                 </div>
@@ -215,7 +215,7 @@
                             onclick="goToPage(1)"
                             id="first-page-btn"
                             class="p-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white transition-colors">
-                            <i data-lucide="chevrons-left" class="w-4 h-4"></i>
+                            <x-heroicon name="chevron-double-left" class="w-4 h-4" />
                         </button>
                         
                         <!-- Previous Page -->
@@ -223,7 +223,7 @@
                             onclick="goToPreviousPage()"
                             id="prev-page-btn"
                             class="px-3 py-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white transition-colors">
-                            <i data-lucide="chevron-left" class="w-4 h-4 mr-1"></i>
+                            <x-heroicon name="chevron-left" class="w-4 h-4 mr-1" />
                             Önceki
                         </button>
                         
@@ -238,7 +238,7 @@
                             id="next-page-btn"
                             class="px-3 py-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white transition-colors">
                             Sonraki
-                            <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                            <x-heroicon name="chevron-right" class="w-4 h-4 ml-1" />
                         </button>
                         
                         <!-- Last Page -->
@@ -246,7 +246,7 @@
                             onclick="goToLastPage()"
                             id="last-page-btn"
                             class="p-2 text-sm border border-gray-300 dark:border-admin-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-admin-700 dark:text-white transition-colors">
-                            <i data-lucide="chevrons-right" class="w-4 h-4"></i>
+                            <x-heroicon name="chevron-double-right" class="w-4 h-4" />
                         </button>
                     </div>
                 </div>

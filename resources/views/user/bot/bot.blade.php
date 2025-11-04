@@ -36,12 +36,12 @@
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a href="{{ route('dashboard') }}"
                    class="group relative inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
-                    <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+                    <x-heroicon name="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1" />
                     Back to Dashboard
                 </a>
                 <a href="{{ route('user.bots.index') }}"
                    class="group relative inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-2xl text-white transition-all duration-300">
-                    <i data-lucide="bot" class="w-4 h-4"></i>
+                    <x-heroicon name="bot" class="w-4 h-4" />
                     View All Bots
                 </a>
             </div>
@@ -62,7 +62,7 @@
         <!-- AI Intelligence -->
         <div class="bg-white dark:bg-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/20 dark:border-gray-700/30 p-8 transition-all duration-300 hover:shadow-2xl">
             <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50 rounded-2xl flex items-center justify-center mb-6">
-                <i data-lucide="brain" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                <x-heroicon name="brain" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">AI Intelligence</h3>
             <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -73,7 +73,7 @@
         <!-- 24/7 Trading -->
         <div class="bg-white dark:bg-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/20 dark:border-gray-700/30 p-8 transition-all duration-300 hover:shadow-2xl">
             <div class="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/50 dark:to-green-800/50 rounded-2xl flex items-center justify-center mb-6">
-                <i data-lucide="clock" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                <x-heroicon name="clock" class="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">24/7 Trading</h3>
             <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -84,7 +84,7 @@
         <!-- Multi-Market -->
         <div class="bg-white dark:bg-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/20 dark:border-gray-700/30 p-8 transition-all duration-300 hover:shadow-2xl">
             <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50 rounded-2xl flex items-center justify-center mb-6">
-                <i data-lucide="globe" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                <x-heroicon name="globe" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Multi-Market</h3>
             <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -178,12 +178,12 @@
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="{{ route('user.bots.index') }}"
                class="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 rounded-2xl font-semibold hover:bg-blue-50 transition-colors">
-                <i data-lucide="bot" class="w-5 h-5"></i>
+                <x-heroicon name="bot" class="w-5 h-5" />
                 Browse Trading Bots
             </a>
             <a href="{{ route('user.bots.dashboard') }}"
                class="inline-flex items-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-2xl font-semibold hover:bg-white/20 transition-colors">
-                <i data-lucide="activity" class="w-5 h-5"></i>
+                <x-heroicon name="activity" class="w-5 h-5" />
                 My Investments
             </a>
         </div>
@@ -194,7 +194,7 @@
 @push('scripts')
 <script>
     // Initialize Lucide icons
-    lucide.createIcons();
+    
 </script>
 @endpush
 

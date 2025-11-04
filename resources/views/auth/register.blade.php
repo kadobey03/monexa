@@ -45,14 +45,14 @@
                         <!--</div>-->
                         <!--<div class="text-center p-3 bg-gray-800/50 rounded-xl border border-gray-700/50">-->
                         <!--    <div class="flex items-center justify-center gap-1 text-blue-400 mb-1">-->
-                        <!--        <i data-lucide="shield-check" class="w-3 h-3"></i>-->
+                        <!--        <x-heroicon name="shield-check" class="w-3 h-3" />-->
                         <!--        <span class="font-semibold">Bank-Grade</span>-->
                         <!--    </div>-->
                         <!--    <div class="text-gray-400">Security</div>-->
                         <!--</div>-->
                         <div class="text-center p-3 bg-gray-800/50 rounded-xl border border-gray-700/50">
                             <div class="flex items-center justify-center gap-1 text-cyan-400 mb-1">
-                                <i data-lucide="users" class="w-3 h-3"></i>
+                                <x-heroicon name="users" class="w-3 h-3" />
                                 <span class="font-semibold">1M+ Yatırımcı</span>
                             </div>
                             <div class="text-gray-400">Topluluk</div>
@@ -72,20 +72,20 @@
                     <div class="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
                         <div class="flex items-start gap-3">
                             <div class="p-1 bg-red-500/20 rounded-lg mt-0.5">
-                                <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400"></i>
+                                <x-heroicon name="exclamation-triangle" class="w-5 h-5 text-red-400" />
                             </div>
                             <div class="flex-1">
                                 <h4 class="text-lg font-bold text-red-300 mb-2">Lütfen Bu Sorunları Düzeltin:</h4>
                                 <ul class="space-y-1">
                                     @foreach ($errors->all() as $error)
                                         <li class="text-sm text-red-200 flex items-start gap-2">
-                                            <i data-lucide="x-circle" class="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0"></i>
+                                            <x-heroicon name="x-circle" class="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
                                             <span>{{ $error }}</span>
                                         </li>
                                     @endforeach
                                 </ul>
                                 <div class="mt-3 text-xs text-red-300/80">
-                                    <i data-lucide="info" class="w-3 h-3 inline mr-1"></i>
+                                    <x-heroicon name="information-circle" class="w-3 h-3 inline mr-1" />
                                     Lütfen aşağı kaydırarak vurgulanan alanları düzeltin, ardından tekrar deneyin.
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                         <div class="mb-6 p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
                             <div class="flex items-center gap-3">
                                 <div class="p-2 bg-blue-500/20 rounded-lg">
-                                    <i data-lucide="user-circle" class="w-5 h-5 text-blue-400"></i>
+                                    <x-heroicon name="user-circle" class="w-5 h-5 text-blue-400" />
                                 </div>
                                 <div>
                                     <h3 class="text-lg sm:text-xl font-bold text-white">Kişisel Bilgiler</h3>
@@ -121,7 +121,7 @@
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                                        <i data-lucide="user" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                                        <x-heroicon name="user" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                                     </div>
                                     <input type="text" name="username" id="username" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
@@ -129,7 +129,7 @@
                                 </div>
                                 @error('username')
                                     <p class="text-sm text-red-400 flex items-center gap-1">
-                                        <i data-lucide="alert-circle" class="w-4 h-4"></i>{{ $message }}
+                                        <x-heroicon name="exclamation-circle" class="w-4 h-4" />{{ $message }}
                                     </p>
                                 @enderror
                             </div>
@@ -141,7 +141,7 @@
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                                        <i data-lucide="user-check" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                                        <x-heroicon name="user-check" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                                     </div>
                                     <input type="text" name="name" id="name" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
@@ -149,7 +149,7 @@
                                 </div>
                                 @error('name')
                                     <p class="text-sm text-red-400 flex items-center gap-1">
-                                        <i data-lucide="alert-circle" class="w-4 h-4"></i>{{ $message }}
+                                        <x-heroicon name="exclamation-circle" class="w-4 h-4" />{{ $message }}
                                     </p>
                                 @enderror
                             </div>
@@ -161,7 +161,7 @@
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                                        <i data-lucide="mail" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                                        <x-heroicon name="envelope" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                                     </div>
                                     <input type="email" name="email" id="email" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
@@ -169,7 +169,7 @@
                                 </div>
                                 @error('email')
                                     <p class="text-sm text-red-400 flex items-center gap-1">
-                                        <i data-lucide="alert-circle" class="w-4 h-4"></i>{{ $message }}
+                                        <x-heroicon name="exclamation-circle" class="w-4 h-4" />{{ $message }}
                                     </p>
                                 @enderror
                             </div>
@@ -181,7 +181,7 @@
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                                        <i data-lucide="phone" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                                        <x-heroicon name="phone" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                                     </div>
                                     <input type="tel" name="phone" id="phone" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
@@ -198,7 +198,7 @@
                     <div class="mb-6 p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-purple-500/20 rounded-lg">
-                                <i data-lucide="globe-2" class="w-5 h-5 text-purple-400"></i>
+                                <x-heroicon name="globe-2" class="w-5 h-5 text-purple-400" />
                             </div>
                             <div>
                                 <h3 class="text-lg sm:text-xl font-bold text-white">Konum</h3>
@@ -215,7 +215,7 @@
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4 z-10">
-                                    <i data-lucide="flag" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                                    <x-heroicon name="flag" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                                 </div>
                                 <select name="country" id="country" required
                                         class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-8 py-4 text-white focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold appearance-none">
@@ -223,7 +223,7 @@
                                     @include('auth.countries')
                                 </select>
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                                    <i data-lucide="chevron-down" class="h-4 w-4 text-gray-400"></i>
+                                    <x-heroicon name="chevron-down" class="h-4 w-4 text-gray-400" />
                                 </div>
                             </div>
                         </div>
@@ -235,7 +235,7 @@
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4 z-10">
-                                    <i data-lucide="banknote" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                                    <x-heroicon name="banknote" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                                 </div>
                                 <input name="s_currency" value="{{ $settings->s_currency }}" id="s_c" type="hidden">
                                 <select name="currency" id="select_c" onchange="changecurr()" required
@@ -247,7 +247,7 @@
                                     @endforeach
                                 </select>
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-                                    <i data-lucide="chevron-down" class="h-4 w-4 text-gray-400"></i>
+                                    <x-heroicon name="chevron-down" class="h-4 w-4 text-gray-400" />
                                 </div>
                             </div>
                         </div> --}}
@@ -256,7 +256,7 @@
                     <!-- Trading Preferences Info -->
                     <div class="mt-6 p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
                         <div class="flex items-start gap-3">
-                            <i data-lucide="info" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
+                            <x-heroicon name="information-circle" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                             <div class="text-sm">
                                 <p class="text-blue-300 font-bold mb-1">Bölgesel Ticaret Bilgileri</p>
                                 <p class="text-gray-300">Konumunuz, bölgeye özel özellikler, uyumluluk ve daha hızlı ticaret yürütme için optimum sunucu bağlantıları sağlamamıza yardımcı olur.</p>
@@ -272,7 +272,7 @@
                     <div class="mb-6 p-4 bg-green-500/10 rounded-xl border border-green-500/20">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-green-500/20 rounded-lg">
-                                <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
+                                <x-heroicon name="shield-check" class="w-5 h-5 text-green-400" />
                             </div>
                             <div>
                                 <h3 class="text-lg sm:text-xl font-bold text-white">Hesap Güvenliği</h3>
@@ -289,7 +289,7 @@
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                                    <i data-lucide="lock" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                                    <x-heroicon name="lock-closed" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                                 </div>
                                 <input type="password" name="password" id="password" required
                                        autocomplete="new-password"
@@ -298,7 +298,7 @@
                             </div>
                             @error('password')
                                 <p class="text-sm text-red-400 flex items-center gap-1">
-                                    <i data-lucide="alert-circle" class="w-4 h-4"></i>{{ $message }}
+                                    <x-heroicon name="exclamation-circle" class="w-4 h-4" />{{ $message }}
                                 </p>
                             @enderror
                         </div>
@@ -310,7 +310,7 @@
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                                    <i data-lucide="key" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                                    <x-heroicon name="key" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                                 </div>
                                 <input type="password" name="password_confirmation" id="password_confirmation" required
                                        autocomplete="new-password"
@@ -347,7 +347,7 @@
                             <!-- CAPTCHA Input -->
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                                    <i data-lucide="calculator" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                                    <x-heroicon name="calculator" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                                 </div>
                                 <input type="number" name="captcha" id="captcha" required
                                        class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold text-center"
@@ -359,13 +359,13 @@
 
                             @error('captcha')
                                 <p class="text-sm text-red-400 flex items-center gap-1">
-                                    <i data-lucide="alert-circle" class="w-4 h-4"></i>{{ $message }}
+                                    <x-heroicon name="exclamation-circle" class="w-4 h-4" />{{ $message }}
                                 </p>
                             @enderror
 
                             <!-- Helper text -->
                             <p class="text-xs text-gray-400 flex items-center gap-1">
-                                <i data-lucide="info" class="w-3 h-3"></i>
+                                <x-heroicon name="information-circle" class="w-3 h-3" />
                                 İnsan olduğunuzu doğrulamak için bu basit matematik problemini çözün. Rastgele kodlar yazmaktan çok daha kolay!
                             </p>
                         </div>
@@ -383,15 +383,15 @@
                         <p class="text-sm font-bold text-gray-200 mb-2">Şifre Gereksinimleri:</p>
                         <ul class="text-xs text-gray-300 space-y-1">
                             <li class="flex items-center gap-2">
-                                <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                <x-heroicon name="check" class="w-3 h-3 text-green-400" />
                                 En az 8 karakter uzunluğunda
                             </li>
                             <li class="flex items-center gap-2">
-                                <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                <x-heroicon name="check" class="w-3 h-3 text-green-400" />
                                 Büyük ve küçük harf içerir
                             </li>
                             <li class="flex items-center gap-2">
-                                <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                                <x-heroicon name="check" class="w-3 h-3 text-green-400" />
                                 En az bir rakam veya özel karakter içerir
                             </li>
                         </ul>
@@ -430,7 +430,7 @@
                     <button type="button" id="prev-btn" onclick="oncekiAdim()"
                             style="display: none;"
                             class="inline-flex items-center gap-2 px-6 py-3 text-gray-400 hover:text-white transition-all duration-200 rounded-xl hover:bg-gray-800/50 group">
-                        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+                        <x-heroicon name="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                         <span class="font-bold">Önceki Adım</span>
                     </button>
 
@@ -443,16 +443,16 @@
                     <button type="button" id="next-btn" onclick="sonrakiAdim()"
                             class="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group">
                         <span>Devam Et</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        <x-heroicon name="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>
 
                     <!-- Create Account Button -->
                     <button type="submit" id="submit-btn"
                             style="display: none;"
                             class="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group">
-                        <i data-lucide="user-plus" class="w-5 h-5"></i>
+                        <x-heroicon name="user-plus" class="w-5 h-5" />
                         <span>Ticaret Hesabı Oluştur</span>
-                        <i data-lucide="sparkles" class="w-4 h-4 group-hover:rotate-12 transition-transform"></i>
+                        <x-heroicon name="sparkles" class="w-4 h-4 group-hover:rotate-12 transition-transform" />
                     </button>
                 </div>
 
@@ -471,15 +471,15 @@
                     <!-- Trust Indicators -->
                     <div class="flex items-center justify-center gap-8 py-4 text-xs text-gray-500">
                         <div class="flex items-center gap-1">
-                            <i data-lucide="shield" class="w-3 h-3"></i>
+                            <x-heroicon name="shield-check" class="w-3 h-3" />
                             <span>SSL Güvenliği</span>
                         </div>
                         <div class="flex items-center gap-1">
-                            <i data-lucide="lock" class="w-3 h-3"></i>
+                            <x-heroicon name="lock-closed" class="w-3 h-3" />
                             <span>256-bit Şifreleme</span>
                         </div>
                         <div class="flex items-center gap-1">
-                            <i data-lucide="award" class="w-3 h-3"></i>
+                            <x-heroicon name="award" class="w-3 h-3" />
                             <span>Düzenlenmiş Platform</span>
                         </div>
                     </div>
@@ -543,7 +543,7 @@
                 stepDiv.innerHTML = `
                     <div class="relative mb-2">
                         <div class="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${circleClass}">
-                            ${currentStep > index ? '<i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5"></i>' : (index + 1)}
+                            ${currentStep > index ? '<x-heroicon name="check" class="w-4 h-4 sm:w-5 sm:h-5" />' : (index + 1)}
                         </div>
                         ${currentStep === index ? '<div class="absolute inset-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-500 animate-ping opacity-20"></div>' : ''}
                     </div>
@@ -558,7 +558,7 @@
             });
             
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
         }
 
@@ -718,7 +718,7 @@
                     const submitBtn = form.querySelector('button[type="submit"]');
                     if (submitBtn) {
                         submitBtn.disabled = true;
-                        submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin mr-2"></i>Hesap Oluşturuluyor...';
+                        submitBtn.innerHTML = '<x-heroicon name="loader-2" class="w-4 h-4 animate-spin mr-2" />Hesap Oluşturuluyor...';
                     }
                 });
             }
@@ -734,7 +734,7 @@
 
             // Initialize Lucide icons
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
         });
     </script>

@@ -22,7 +22,7 @@
     <div class="flex items-center justify-between bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 rounded-2xl p-6 text-white shadow-lg">
         <div class="flex items-center space-x-4">
             <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                <i data-lucide="mail" class="w-8 h-8 text-white"></i>
+                <x-heroicon name="envelope" class="w-8 h-8 text-white" />
             </div>
             <div>
                 <h1 class="text-3xl font-bold mb-1">E-posta Servisleri</h1>
@@ -32,7 +32,7 @@
         <div>
             <a href='https://t.me/+VRumJJSKKGdjM2I0' 
                class="inline-flex items-center px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl text-white font-semibold transition-all duration-200 backdrop-blur-sm">
-                <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
+                <x-heroicon name="message-circle" class="w-5 h-5 mr-2" />
                 Yardım Al
             </a>
         </div>
@@ -47,7 +47,7 @@
 <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg border border-admin-200 dark:border-admin-700 overflow-hidden">
     <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-6">
         <div class="flex items-center space-x-3">
-            <i data-lucide="send" class="w-6 h-6 text-white"></i>
+            <x-heroicon name="send" class="w-6 h-6 text-white" />
             <h2 class="text-xl font-bold text-white">E-posta Oluşturma Formu</h2>
         </div>
     </div>
@@ -60,7 +60,7 @@
             <div class="form-card bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-700">
                 <div class="flex items-center space-x-4 mb-4">
                     <div class="category-icon w-12 h-12 bg-blue-600 text-white rounded-xl flex items-center justify-center">
-                        <i data-lucide="users" class="w-6 h-6"></i>
+                        <x-heroicon name="users" class="w-6 h-6" />
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-blue-900 dark:text-blue-100">Alıcı Kategorisi</h3>
@@ -79,7 +79,7 @@
             <div class="form-card hidden bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-6 rounded-xl border border-amber-200 dark:border-amber-700" id="select-user-view">
                 <div class="flex items-center space-x-4 mb-4">
                     <div class="user-icon w-12 h-12 bg-amber-600 text-white rounded-xl flex items-center justify-center">
-                        <i data-lucide="user-check" class="w-6 h-6"></i>
+                        <x-heroicon name="user-check" class="w-6 h-6" />
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-amber-900 dark:text-amber-100">Kullanıcı Seçimi</h3>
@@ -93,7 +93,7 @@
             <div class="form-card bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 p-6 rounded-xl border border-emerald-200 dark:border-emerald-700">
                 <div class="flex items-center space-x-4 mb-4">
                     <div class="greeting-icon w-12 h-12 bg-emerald-600 text-white rounded-xl flex items-center justify-center">
-                        <i data-lucide="hand" class="w-6 h-6"></i>
+                        <x-heroicon name="hand" class="w-6 h-6" />
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-emerald-900 dark:text-emerald-100">Selamlama ve Başlık</h3>
@@ -110,7 +110,7 @@
             <div class="form-card bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 p-6 rounded-xl border border-cyan-200 dark:border-cyan-700">
                 <div class="flex items-center space-x-4 mb-4">
                     <div class="subject-icon w-12 h-12 bg-cyan-600 text-white rounded-xl flex items-center justify-center">
-                        <i data-lucide="type" class="w-6 h-6"></i>
+                        <x-heroicon name="type" class="w-6 h-6" />
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-cyan-900 dark:text-cyan-100">E-posta Konusu</h3>
@@ -124,7 +124,7 @@
             <div class="form-card bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-rose-200 dark:border-rose-700">
                 <div class="flex items-center space-x-4 mb-4">
                     <div class="message-icon w-12 h-12 bg-rose-600 text-white rounded-xl flex items-center justify-center">
-                        <i data-lucide="file-text" class="w-6 h-6"></i>
+                        <x-heroicon name="file-text" class="w-6 h-6" />
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-rose-900 dark:text-rose-100">E-posta Mesajı</h3>
@@ -137,7 +137,7 @@
             <!-- Submit Button -->
             <div class="text-center pt-4">
                 <button type="submit" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200">
-                    <i data-lucide="send" class="w-5 h-5 mr-2"></i>
+                    <x-heroicon name="send" class="w-5 h-5 mr-2" />
                     E-postayı Gönder
                 </button>
             </div>
@@ -149,10 +149,10 @@
 
 @push('scripts')
 <!-- CKEditor -->
-<script src="//cdn.ckeditor.com/4.25.1-lts/standard/ckeditor.js"></script>
+
 <!-- Select2 -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize Lucide icons after content is loaded
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

@@ -7,7 +7,7 @@
         <div>
             <nav class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
                 <a href="{{ route('admin.copy.index') }}" class="hover:text-gray-900 dark:hover:text-white">Copy Trading</a>
-                <i data-lucide="chevron-right" class="w-4 h-4 mx-2"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4 mx-2" />
                 <span class="text-gray-900 dark:text-white">Statistics</span>
             </nav>
             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $title }}</h1>
@@ -16,12 +16,12 @@
         <div class="flex gap-3">
             <a href="{{ route('admin.copy.active-trades') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg font-medium hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors">
-                <i data-lucide="activity" class="w-4 h-4"></i>
+                <x-heroicon name="activity" class="w-4 h-4" />
                 Active Trades
             </a>
             <a href="{{ route('admin.copy.index') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <x-heroicon name="arrow-left" class="w-4 h-4" />
                 Back to List
             </a>
         </div>
@@ -38,7 +38,7 @@
                     <p class="text-blue-100 text-xs mt-1">{{ $statistics['active_experts'] }} active</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
-                    <i data-lucide="users" class="w-8 h-8"></i>
+                    <x-heroicon name="users" class="w-8 h-8" />
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
                     <p class="text-green-100 text-xs mt-1">{{ $statistics['active_copiers'] }} currently active</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
-                    <i data-lucide="copy" class="w-8 h-8"></i>
+                    <x-heroicon name="copy" class="w-8 h-8" />
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
                     <p class="text-purple-100 text-xs mt-1">All time copied amount</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
-                    <i data-lucide="dollar-sign" class="w-8 h-8"></i>
+                    <x-heroicon name="currency-dollar" class="w-8 h-8" />
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
                     <p class="text-orange-100 text-xs mt-1">Currently being copied</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
-                    <i data-lucide="trending-up" class="w-8 h-8"></i>
+                    <x-heroicon name="arrow-trending-up" class="w-8 h-8" />
                 </div>
             </div>
         </div>
@@ -126,7 +126,7 @@
                 @else
                     <div class="text-center py-8">
                         <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="trending-up" class="w-8 h-8 text-gray-400"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-8 h-8 text-gray-400" />
                         </div>
                         <p class="text-gray-600 dark:text-gray-400">No expert performance data available</p>
                     </div>
@@ -173,7 +173,7 @@
                 @else
                     <div class="text-center py-8">
                         <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="users" class="w-8 h-8 text-gray-400"></i>
+                            <x-heroicon name="users" class="w-8 h-8 text-gray-400" />
                         </div>
                         <p class="text-gray-600 dark:text-gray-400">No popularity data available</p>
                     </div>
@@ -235,7 +235,7 @@
                 @else
                     <div class="text-center py-8">
                         <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="activity" class="w-8 h-8 text-gray-400"></i>
+                            <x-heroicon name="activity" class="w-8 h-8 text-gray-400" />
                         </div>
                         <p class="text-gray-600 dark:text-gray-400">No recent copy trading activity</p>
                     </div>
@@ -253,7 +253,7 @@
         // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
         });
     </script>

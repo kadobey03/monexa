@@ -13,8 +13,8 @@
             <div class="text-center mb-8">
                 <!-- Dynamic Security Icon -->
                 <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-500/10 mb-4">
-                    <i data-lucide="smartphone" id="normalIcon" class="h-8 w-8 text-blue-400"></i>
-                    <i data-lucide="key-round" id="recoveryIcon" class="h-8 w-8 text-amber-400" style="display: none;"></i>
+                    <x-heroicon name="smartphone" class="h-8 w-8 text-blue-400" id="normalIcon" />
+                    <x-heroicon name="key-round" class="h-8 w-8 text-amber-400" id="recoveryIcon"  style="display: none;" />
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
@@ -33,8 +33,8 @@
             <!-- Dynamic Security Notice -->
             <div class="mb-6 p-4 rounded-xl border transition-all duration-300 bg-blue-500/10 border-blue-500/20" id="securityNotice">
                 <div class="flex items-start gap-3">
-                    <i data-lucide="shield-alert" id="normalNoticeIcon" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i>
-                    <i data-lucide="alert-triangle" id="recoveryNoticeIcon" class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" style="display: none;"></i>
+                    <x-heroicon name="shield-exclamation" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" id="normalNoticeIcon" />
+                    <x-heroicon name="exclamation-triangle" class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" id="recoveryNoticeIcon"  style="display: none;" />
                     <div class="text-sm">
                         <p class="font-bold mb-1 text-blue-300" id="noticeTitle">
                             <span id="normalNoticeTitle">Kimlik Doğrulayıcı Gerekli</span>
@@ -56,7 +56,7 @@
                     <div class="space-y-2">
                         @foreach ($errors->all() as $error)
                             <div class="flex items-center gap-3">
-                                <i data-lucide="alert-circle" class="w-5 h-5 text-red-400 flex-shrink-0"></i>
+                                <x-heroicon name="exclamation-circle" class="w-5 h-5 text-red-400 flex-shrink-0" />
                                 <span class="text-red-300 text-sm font-medium">{{ $error }}</span>
                             </div>
                         @endforeach
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Re-initialize Lucide icons if available
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            
         }
     }
 
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize Lucide icons
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

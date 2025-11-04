@@ -15,14 +15,14 @@
         <!-- Breadcrumb Navigation -->
         <nav class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
             <a href="{{ route('dashboard') }}" class="hover:text-gray-900 dark:hover:text-white transition-colors">
-                <i data-lucide="home" class="w-4 h-4"></i>
+                <x-heroicon name="home" class="w-4 h-4" />
             </a>
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <x-heroicon name="chevron-right" class="w-4 h-4" />
             <a href="{{ route('trade.index') }}" class="hover:text-gray-900 dark:hover:text-white transition-colors">Markets</a>
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <x-heroicon name="chevron-right" class="w-4 h-4" />
             @if($instrument)
                 <a href="{{ route('trade.single', $instrument->id) }}" class="hover:text-gray-900 dark:hover:text-white transition-colors">{{ $instrument->symbol }}</a>
-                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4" />
             @endif
             <span class="text-gray-900 dark:text-white">Monitor Trade</span>
         </nav>
@@ -275,9 +275,9 @@
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 rounded-full {{ $relatedTrade->type === 'Buy' ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30' }} flex items-center justify-center">
                                         @if($relatedTrade->type === 'Buy')
-                                            <i data-lucide="trending-up" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                                            <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-green-600 dark:text-green-400" />
                                         @else
-                                            <i data-lucide="trending-down" class="w-4 h-4 text-red-600 dark:text-red-400"></i>
+                                            <x-heroicon name="arrow-trending-down" class="w-4 h-4 text-red-600 dark:text-red-400" />
                                         @endif
                                     </div>
                                     <div>
@@ -337,20 +337,20 @@
                     @if($instrument)
                         <a href="{{ route('trade.single', $instrument->id) }}"
                            class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                            <i data-lucide="trending-up" class="w-4 h-4"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
                             Trade {{ $trade->assets }} Again
                         </a>
                     @endif
 
                     <a href="{{ route('trade.index') }}"
                        class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors">
-                        <i data-lucide="search" class="w-4 h-4"></i>
+                        <x-heroicon name="magnifying-glass" class="w-4 h-4" />
                         Browse Markets
                     </a>
 
                     <a href="{{ route('tradinghistory') }}"
                        class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors">
-                        <i data-lucide="history" class="w-4 h-4"></i>
+                        <x-heroicon name="history" class="w-4 h-4" />
                         All My Trades
                     </a>
                 </div>
@@ -359,7 +359,7 @@
             <!-- Risk Information -->
             <div class="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800 p-6">
                 <div class="flex items-start gap-3">
-                    <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5 flex-shrink-0"></i>
+                    <x-heroicon name="exclamation-triangle" class="w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5 flex-shrink-0" />
                     <div>
                         <h4 class="font-medium text-yellow-800 dark:text-yellow-300 mb-2">Risk Disclaimer</h4>
                         <p class="text-sm text-yellow-700 dark:text-yellow-400 leading-relaxed">
@@ -391,7 +391,7 @@ function tradeMonitor() {
             // Initialize Lucide icons
             this.$nextTick(() => {
                 if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
+                    
                 }
             });
         },
@@ -432,7 +432,7 @@ function tradeMonitor() {
 // Re-initialize icons after Alpine updates
 document.addEventListener('alpine:updated', () => {
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

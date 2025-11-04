@@ -2,7 +2,7 @@
     <div class="bg-indigo-50 dark:bg-indigo-900/20 border-l-4 border-indigo-500 p-4 mb-6 rounded-lg">
         <div class="flex">
             <div class="flex-shrink-0">
-                <i data-lucide="bell" class="h-5 w-5 text-indigo-500" aria-hidden="true"></i>
+                <x-heroicon name="bell" class="h-5 w-5 text-indigo-500" aria-hidden="true" />
             </div>
             <div class="ml-3">
                 <p class="text-sm text-indigo-700 dark:text-indigo-400">
@@ -23,7 +23,7 @@
                 <div class="flex items-start p-5 gap-4">
                     <div class="flex-shrink-0 pt-0.5">
                         <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                            <i data-lucide="shield" class="h-5 w-5 text-blue-600 dark:text-blue-400"></i>
+                            <x-heroicon name="shield-check" class="h-5 w-5 text-blue-600 dark:text-blue-400" />
                         </div>
                     </div>
                     <div class="flex-1 min-w-0">
@@ -58,7 +58,7 @@
                 <div class="flex items-start p-5 gap-4">
                     <div class="flex-shrink-0 pt-0.5">
                         <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                            <i data-lucide="trending-up" class="h-5 w-5 text-green-600 dark:text-green-400"></i>
+                            <x-heroicon name="arrow-trending-up" class="h-5 w-5 text-green-600 dark:text-green-400" />
                         </div>
                     </div>
                     <div class="flex-1 min-w-0">
@@ -93,7 +93,7 @@
                 <div class="flex items-start p-5 gap-4">
                     <div class="flex-shrink-0 pt-0.5">
                         <div class="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                            <i data-lucide="calendar" class="h-5 w-5 text-purple-600 dark:text-purple-400"></i>
+                            <x-heroicon name="calendar-days" class="h-5 w-5 text-purple-600 dark:text-purple-400" />
                         </div>
                     </div>
                     <div class="flex-1 min-w-0">
@@ -133,7 +133,7 @@
                     class="inline-flex items-center px-6 py-3 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
                 >
                     <span class="btn-text">
-                        <i data-lucide="save" class="mr-2 h-5 w-5"></i>
+                        <x-heroicon name="save" class="mr-2 h-5 w-5" />
                         Save Preferences
                     </span>
                     <span class="btn-loading" style="display: none;">
@@ -206,7 +206,7 @@ function hideLoadingState() {
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Lucide icons if available
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 
     document.getElementById('updateemailpref').addEventListener('submit', function(e) {

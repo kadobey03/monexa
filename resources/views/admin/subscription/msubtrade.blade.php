@@ -11,7 +11,7 @@
             </p>
         </div>
         <div class="flex items-center space-x-2">
-            <i data-lucide="activity" class="h-5 w-5 text-gray-500 dark:text-gray-400"></i>
+            <x-heroicon name="activity" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
             <span class="text-sm text-gray-500 dark:text-gray-400">{{ count($subscriptions) }} Hesap</span>
         </div>
     </div>
@@ -26,12 +26,12 @@
             <nav class="flex space-x-8 px-6 py-4" aria-label="Tabs">
                 <a href="{{ route('msubtrade') }}"
                    class="flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400">
-                    <i data-lucide="inbox" class="h-4 w-4 mr-2"></i>
+                    <x-heroicon name="inbox" class="h-4 w-4 mr-2" />
                     Gönderilen Hesaplar
                 </a>
                 <a href="{{ route('tacnts') }}"
                    class="flex items-center px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600">
-                    <i data-lucide="link" class="h-4 w-4 mr-2"></i>
+                    <x-heroicon name="link" class="h-4 w-4 mr-2" />
                     Bağlı Hesaplar
                 </a>
             </nav>
@@ -138,12 +138,12 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if ($sub->status == 'Pending')
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
-                                                <i data-lucide="clock" class="w-3 h-3 mr-1"></i>
+                                                <x-heroicon name="clock" class="w-3 h-3 mr-1" />
                                                 Beklemede
                                             </span>
                                         @else
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
-                                                <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i>
+                                                <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
                                                 {{ $sub->status }}
                                             </span>
                                         @endif
@@ -161,7 +161,7 @@
                                                 <input type="hidden" name="name" value="{{ $sub->account_name }}">
                                                 <input type="hidden" name="mt4id" value="{{ $sub->id }}">
                                                 <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                                                    <i data-lucide="play" class="w-3 h-3 mr-1"></i>
+                                                    <x-heroicon name="play" class="w-3 h-3 mr-1" />
                                                     İşle
                                                 </button>
                                             </form>
@@ -169,7 +169,7 @@
                                         <a href="{{ url('admin/dashboard/delsub') }}/{{ $sub->id }}"
                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-admin-800"
                                            onclick="return confirm('Bu hesabı silmek istediğinizden emin misiniz?')">
-                                            <i data-lucide="trash-2" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="trash-2" class="w-3 h-3 mr-1" />
                                             Sil
                                         </a>
                                     </td>
@@ -192,7 +192,7 @@
     <!-- Empty State -->
     @if($subscriptions->isEmpty())
         <div class="text-center py-12">
-            <i data-lucide="inbox" class="mx-auto h-12 w-12 text-gray-400"></i>
+            <x-heroicon name="inbox" class="mx-auto h-12 w-12 text-gray-400" />
             <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">Henüz hesap yok</h3>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Kullanıcılar trading hesaplarını gönderdiğinde burada görünecek.</p>
         </div>

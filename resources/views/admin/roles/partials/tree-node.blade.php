@@ -33,7 +33,7 @@
             {{ $role->hierarchy_level == 3 ? 'from-yellow-500 to-yellow-600' : '' }}
             {{ $role->hierarchy_level >= 4 ? 'from-purple-500 to-purple-600' : '' }}
             rounded-lg flex items-center justify-center">
-            <i data-lucide="shield" class="w-5 h-5 text-white"></i>
+            <x-heroicon name="shield-check" class="w-5 h-5 text-white" />
         </div>
         
         <!-- Role Information -->
@@ -60,25 +60,25 @@
             
             <div class="flex items-center space-x-4 text-sm text-admin-600 dark:text-admin-400">
                 <span class="flex items-center">
-                    <i data-lucide="users" class="w-4 h-4 mr-1"></i>
+                    <x-heroicon name="users" class="w-4 h-4 mr-1" />
                     {{ $role->admins->count() }} admin
                 </span>
                 
                 <span class="flex items-center">
-                    <i data-lucide="shield-check" class="w-4 h-4 mr-1"></i>
+                    <x-heroicon name="shield-check" class="w-4 h-4 mr-1" />
                     {{ $role->permissions->where('pivot.is_granted', true)->count() }} izin
                 </span>
                 
                 @if($hasChildren)
                     <span class="flex items-center">
-                        <i data-lucide="git-branch" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="git-branch" class="w-4 h-4 mr-1" />
                         {{ $role->childRoles->count() }} alt rol
                     </span>
                 @endif
                 
                 @if($role->settings && isset($role->settings['department']))
                     <span class="flex items-center">
-                        <i data-lucide="building" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="building" class="w-4 h-4 mr-1" />
                         {{ $role->settings['department'] }}
                     </span>
                 @endif
@@ -95,21 +95,21 @@
             <a href="{{ route('admin.roles.show', $role) }}" 
                class="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors" 
                title="Detayları Görüntüle">
-                <i data-lucide="eye" class="w-4 h-4"></i>
+                <x-heroicon name="eye" class="w-4 h-4" />
             </a>
             
             <!-- Edit Button -->
             <a href="{{ route('admin.roles.edit', $role) }}" 
                class="w-8 h-8 flex items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors" 
                title="Düzenle">
-                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                <x-heroicon name="edit-3" class="w-4 h-4" />
             </a>
             
             <!-- Permissions Button -->
             <a href="{{ route('admin.permissions.role-permissions', $role) }}"
                class="w-8 h-8 flex items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors" 
                title="İzinleri Yönet">
-                <i data-lucide="shield" class="w-4 h-4"></i>
+                <x-heroicon name="shield-check" class="w-4 h-4" />
             </a>
             
             <!-- Status Toggle -->
@@ -117,13 +117,13 @@
                 <button onclick="toggleRoleStatus({{ $role->id }}, false)" 
                         class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors" 
                         title="Pasif Yap">
-                    <i data-lucide="user-x" class="w-4 h-4"></i>
+                    <x-heroicon name="user-minus" class="w-4 h-4" />
                 </button>
             @else
                 <button onclick="toggleRoleStatus({{ $role->id }}, true)" 
                         class="w-8 h-8 flex items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors" 
                         title="Aktif Yap">
-                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <x-heroicon name="user-check" class="w-4 h-4" />
                 </button>
             @endif
             
@@ -132,7 +132,7 @@
                 <button onclick="deleteRole({{ $role->id }})" 
                         class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors" 
                         title="Sil">
-                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    <x-heroicon name="trash-2" class="w-4 h-4" />
                 </button>
             @endif
         </div>

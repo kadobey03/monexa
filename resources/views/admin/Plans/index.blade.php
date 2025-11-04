@@ -12,12 +12,12 @@
         <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 mt-4 sm:mt-0">
             <a href="{{ route('admin.plans.categories') }}"
                class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                <i data-lucide="grid" class="h-4 w-4 mr-2"></i>
+                <x-heroicon name="grid" class="h-4 w-4 mr-2" />
                 Plan Kategorileri
             </a>
             <a href="{{ route('admin.plans.create') }}"
                class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
+                <x-heroicon name="plus" class="h-4 w-4 mr-2" />
                 Yeni Plan Ekle
             </a>
         </div>
@@ -33,7 +33,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="credit-card" class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="credit-card" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -48,7 +48,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="check-circle" class="h-6 w-6 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="check-circle" class="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -63,7 +63,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="star" class="h-6 w-6 text-yellow-600 dark:text-yellow-400"></i>
+                        <x-heroicon name="star" class="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -78,7 +78,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="x-circle" class="h-6 w-6 text-red-600 dark:text-red-400"></i>
+                        <x-heroicon name="x-circle" class="h-6 w-6 text-red-600 dark:text-red-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -98,7 +98,7 @@
                 <div class="flex items-center space-x-2">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="search" class="h-4 w-4 text-gray-400"></i>
+                            <x-heroicon name="magnifying-glass" class="h-4 w-4 text-gray-400" />
                         </div>
                         <input type="text"
                                placeholder="Plan ara..."
@@ -182,7 +182,7 @@
                             <!-- Price Range -->
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <i data-lucide="dollar-sign" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2"></i>
+                                    <x-heroicon name="currency-dollar" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2" />
                                     <div>
                                         <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ $settings->currency }}{{ number_format($plan->min_amount, 2) }}</div>
                                         <div class="text-xs text-gray-500 dark:text-gray-400">{{ $settings->currency }}{{ number_format($plan->max_amount, 2) }}</div>
@@ -193,7 +193,7 @@
                             <!-- ROI -->
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <i data-lucide="trending-up" class="w-4 h-4 text-purple-600 dark:text-purple-400 mr-2"></i>
+                                    <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-purple-600 dark:text-purple-400 mr-2" />
                                     <span class="text-sm font-semibold text-purple-700 dark:text-purple-300">{{ $plan->roi_percentage }}%</span>
                                     <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">/ {{ $plan->roi_interval }}</span>
                                 </div>
@@ -212,10 +212,10 @@
                                     @csrf
                                     <button type="submit" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-all duration-200 {{ $plan->is_active ? 'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800' : 'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800' }}">
                                         @if($plan->is_active)
-                                            <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
                                             Aktif
                                         @else
-                                            <i data-lucide="x-circle" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="x-circle" class="w-3 h-3 mr-1" />
                                             Pasif
                                         @endif
                                     </button>
@@ -226,7 +226,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($plan->is_featured)
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
-                                        <i data-lucide="star" class="w-3 h-3 mr-1"></i>
+                                        <x-heroicon name="star" class="w-3 h-3 mr-1" />
                                         Öne Çıkan
                                     </span>
                                 @else
@@ -241,7 +241,7 @@
                                 <div class="flex items-center space-x-2">
                                     <a href="{{ route('admin.plans.edit', $plan) }}"
                                        class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                                        <i data-lucide="edit" class="w-3 h-3 mr-1"></i>
+                                        <x-heroicon name="edit" class="w-3 h-3 mr-1" />
                                         Düzenle
                                     </a>
                                     <form action="{{ route('admin.plans.destroy', $plan) }}" method="POST" class="inline" onsubmit="return confirm('Bu planı silmek istediğinizden emin misiniz?')">
@@ -249,7 +249,7 @@
                                         @method('DELETE')
                                         <button type="submit"
                                                 class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-admin-800">
-                                            <i data-lucide="trash-2" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="trash-2" class="w-3 h-3 mr-1" />
                                             Sil
                                         </button>
                                     </form>
@@ -260,12 +260,12 @@
                         <tr>
                             <td colspan="8" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center">
-                                    <i data-lucide="credit-card" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4"></i>
+                                    <x-heroicon name="credit-card" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
                                     <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Yatırım Planı Bulunamadı</h3>
                                     <p class="text-gray-400 dark:text-gray-500 text-sm mt-1 mb-6">Henüz hiç yatırım planı oluşturulmamış.</p>
                                     <a href="{{ route('admin.plans.create') }}"
                                        class="inline-flex items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                                        <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+                                        <x-heroicon name="plus" class="w-5 h-5 mr-2" />
                                         İlk Planı Oluştur
                                     </a>
                                 </div>

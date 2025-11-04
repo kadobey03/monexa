@@ -9,7 +9,7 @@
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Bana atanan yeni üyeleri yönet ve takip et</p>
         </div>
         <div class="flex items-center space-x-2">
-            <i data-lucide="users" class="h-5 w-5 text-gray-500 dark:text-gray-400"></i>
+            <x-heroicon name="users" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
             <span class="text-sm text-gray-500 dark:text-gray-400">{{ count($usersAssigned) }} Atanmış Üye</span>
         </div>
     </div>
@@ -22,7 +22,7 @@
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-                <i data-lucide="user-check" class="h-5 w-5 mr-2"></i>
+                <x-heroicon name="user-check" class="h-5 w-5 mr-2" />
                 Yeni Üyeler
             </h2>
         </div>
@@ -67,7 +67,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     <a href="tel:{{ $list->phone_number }}" class="flex items-center">
-                                        <i data-lucide="phone" class="h-4 w-4 mr-1"></i>
+                                        <x-heroicon name="phone" class="h-4 w-4 mr-1" />
                                         {{ $list->phone_number }}
                                     </a>
                                 </td>
@@ -89,7 +89,7 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                                     <div class="flex items-center">
-                                        <i data-lucide="calendar" class="h-4 w-4 mr-1"></i>
+                                        <x-heroicon name="calendar-days" class="h-4 w-4 mr-1" />
                                         {{ \Carbon\Carbon::parse($list->created_at)->toDayDateTimeString() }}
                                     </div>
                                 </td>
@@ -99,19 +99,19 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                                     @if ($list->cstatus == 'Customer')
                                         <span class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600">
-                                            <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
                                             Dönüştürüldü
                                         </span>
                                     @else
                                         <a href="{{ url('admin/dashboard/convert') }}/{{ $list->id }}"
                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                                            <i data-lucide="user-plus" class="w-3 h-3 mr-1"></i>
+                                            <x-heroicon name="user-plus" class="w-3 h-3 mr-1" />
                                             Dönüştür
                                         </a>
                                     @endif
                                     <button onclick="openEditModal({{ $list->id }})"
                                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                                        <i data-lucide="edit" class="w-3 h-3 mr-1"></i>
+                                        <x-heroicon name="edit" class="w-3 h-3 mr-1" />
                                         Durum Düzenle
                                     </button>
                                 </td>
@@ -123,7 +123,7 @@
                                     <div class="flex items-center justify-between mb-4">
                                         <h3 class="text-lg font-medium text-gray-900 dark:text-white">Kullanıcı Durumu Düzenle</h3>
                                         <button onclick="closeEditModal({{ $list->id }})" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
-                                            <i data-lucide="x" class="h-6 w-6"></i>
+                                            <x-heroicon name="x-mark" class="h-6 w-6" />
                                         </button>
                                     </div>
                                     
@@ -157,7 +157,7 @@
                             <tr>
                                 <td colspan="11" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center">
-                                        <i data-lucide="users" class="h-12 w-12 text-gray-400 mb-4"></i>
+                                        <x-heroicon name="users" class="h-12 w-12 text-gray-400 mb-4" />
                                         <h3 class="text-sm font-medium text-gray-900 dark:text-white">Henüz atanmış üye yok</h3>
                                         <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Size atanan yeni üyeler burada görünecek.</p>
                                     </div>

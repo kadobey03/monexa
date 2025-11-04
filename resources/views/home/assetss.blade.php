@@ -24,23 +24,23 @@
         <link href="{{ asset ('temp/lib/aos/aos.css')}}" rel="stylesheet">
         <link href="{{ asset ('temp/lib/venobox/venobox.css')}}" rel="stylesheet">
         <link href="{{ asset ('temp/lib/icofont/icofont.min.css')}}" rel="stylesheet">
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        
         <link href="{{asset('temp/css/frontend_style_blue.css')}}" rel="stylesheet">
         
         <!-- JavaScript Libraries -->
         
         <!-- jQuery and Bootstrap JS removed - Tailwind CSS provides styling -->
-        <script src="{{ asset('temp/lib/jquery.easing/jquery.easing.min.js')}}"></script>
-        <script src="{{ asset('temp/lib/php-email-form/validate.js')}}"></script>
-        <script src="{{ asset('temp/lib/waypoints/jquery.waypoints.min.js')}}"></script>
-        <script src="{{ asset('temp/lib/counterup/counterup.min.js')}}"></script>
-        <script src="{{ asset('temp/lib/isotope-layout/isotope.pkgd.min.js')}}"></script>
-        <script src="{{ asset('temp/lib/venobox/venobox.min.js')}}"></script>
-        <script src="{{ asset('temp/lib/owl.carousel/owl.carousel.min.js')}}"></script>
-        <script src="{{ asset('temp/lib/aos/aos.js')}}"></script>
+        
+        
+        
+        
+        
+        
+        
+        
 
         <!-- Template Main Javascript File -->
-        <script src="{{ asset('temp/js/main.js')}}"></script>
+        
   <style>
    
     .omb_login .omb_socialButtons a {

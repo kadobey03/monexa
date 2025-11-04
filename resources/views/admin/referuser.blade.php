@@ -9,7 +9,7 @@
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ $settings->site_name }} topluluğuna yeni kullanıcılar ekleyin</p>
         </div>
         <div class="flex items-center space-x-2">
-            <i data-lucide="user-plus" class="h-5 w-5 text-gray-500 dark:text-gray-400"></i>
+            <x-heroicon name="user-plus" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
             <span class="text-sm text-gray-500 dark:text-gray-400">Manuel Kayıt</span>
         </div>
     </div>
@@ -18,7 +18,7 @@
     @if (Session::has('message'))
         <div class="rounded-md bg-blue-50 dark:bg-blue-900/50 p-4 border border-blue-200 dark:border-blue-700">
             <div class="flex">
-                <i data-lucide="info" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3"></i>
+                <x-heroicon name="information-circle" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3" />
                 <div class="text-sm text-blue-700 dark:text-blue-300">{{ Session::get('message') }}</div>
             </div>
         </div>
@@ -27,7 +27,7 @@
     @if (count($errors) > 0)
         <div class="rounded-md bg-red-50 dark:bg-red-900/50 p-4 border border-red-200 dark:border-red-700">
             <div class="flex">
-                <i data-lucide="alert-triangle" class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 mr-3"></i>
+                <x-heroicon name="exclamation-triangle" class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 mr-3" />
                 <div class="text-sm text-red-700 dark:text-red-300">
                     @foreach ($errors->all() as $error)
                         <div>{{ $error }}</div>
@@ -41,7 +41,7 @@
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-                <i data-lucide="user-plus" class="h-5 w-5 mr-2"></i>
+                <x-heroicon name="user-plus" class="h-5 w-5 mr-2" />
                 Kullanıcı Bilgileri
             </h2>
         </div>
@@ -53,7 +53,7 @@
                 <!-- Username -->
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        <i data-lucide="at-sign" class="h-4 w-4 inline mr-1"></i>
+                        <x-heroicon name="at-sign" class="h-4 w-4 inline mr-1" />
                         Kullanıcı Adı
                     </label>
                     <input type="text"
@@ -71,7 +71,7 @@
                 <!-- Full Name -->
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        <i data-lucide="user" class="h-4 w-4 inline mr-1"></i>
+                        <x-heroicon name="user" class="h-4 w-4 inline mr-1" />
                         Ad Soyad
                     </label>
                     <input type="text"
@@ -89,7 +89,7 @@
                 <!-- Email Address -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        <i data-lucide="mail" class="h-4 w-4 inline mr-1"></i>
+                        <x-heroicon name="envelope" class="h-4 w-4 inline mr-1" />
                         E-posta Adresi
                     </label>
                     <input type="email"
@@ -107,7 +107,7 @@
                 <!-- Phone Number -->
                 <div>
                     <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        <i data-lucide="phone" class="h-4 w-4 inline mr-1"></i>
+                        <x-heroicon name="phone" class="h-4 w-4 inline mr-1" />
                         Telefon Numarası
                     </label>
                     <input type="tel"
@@ -126,7 +126,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            <i data-lucide="lock" class="h-4 w-4 inline mr-1"></i>
+                            <x-heroicon name="lock-closed" class="h-4 w-4 inline mr-1" />
                             Şifre
                         </label>
                         <div class="relative">
@@ -137,7 +137,7 @@
                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('password') border-red-300 @enderror"
                                    required>
                             <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                <i data-lucide="eye" class="h-4 w-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" id="password-eye"></i>
+                                <x-heroicon name="eye" class="h-4 w-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" id="password-eye" />
                             </button>
                         </div>
                         @error('password')
@@ -147,7 +147,7 @@
 
                     <div>
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            <i data-lucide="lock" class="h-4 w-4 inline mr-1"></i>
+                            <x-heroicon name="lock-closed" class="h-4 w-4 inline mr-1" />
                             Şifre Onayı
                         </label>
                         <div class="relative">
@@ -158,7 +158,7 @@
                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('password_confirmation') border-red-300 @enderror"
                                    required>
                             <button type="button" onclick="togglePassword('password_confirmation')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                <i data-lucide="eye" class="h-4 w-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" id="password_confirmation-eye"></i>
+                                <x-heroicon name="eye" class="h-4 w-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" id="password_confirmation-eye" />
                             </button>
                         </div>
                         @error('password_confirmation')
@@ -171,12 +171,12 @@
                 <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200 dark:border-admin-700">
                     <a href="{{ route('admin.dashboard') }}"
                        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:bg-admin-700 dark:border-admin-600 dark:text-gray-300 dark:hover:bg-admin-600">
-                        <i data-lucide="arrow-left" class="h-4 w-4 mr-2"></i>
+                        <x-heroicon name="arrow-left" class="h-4 w-4 mr-2" />
                         İptal
                     </a>
                     <button type="submit"
                             class="inline-flex items-center px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                        <i data-lucide="user-plus" class="h-4 w-4 mr-2"></i>
+                        <x-heroicon name="user-plus" class="h-4 w-4 mr-2" />
                         Kullanıcıyı Kaydet
                     </button>
                 </div>
@@ -187,7 +187,7 @@
     <!-- Information Card -->
     <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-lg p-6 border border-blue-200 dark:border-blue-700">
         <div class="flex items-start">
-            <i data-lucide="info" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3"></i>
+            <x-heroicon name="information-circle" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3" />
             <div>
                 <h3 class="font-medium text-blue-900 dark:text-blue-100">Önemli Bilgiler</h3>
                 <div class="mt-2 text-sm text-blue-700 dark:text-blue-300 space-y-1">
@@ -216,7 +216,7 @@ function togglePassword(fieldId) {
     
     // Refresh Lucide icons
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 }
 </script>

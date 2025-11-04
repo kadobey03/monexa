@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Yetki Yönetimi</h1>
@@ -19,19 +19,19 @@
             <div class="flex items-center space-x-3">
                 <button @click="showAuditLog()" 
                         class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
-                    <i data-lucide="history" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="history" class="w-4 h-4 mr-2" />
                     Değişim Geçmişi
                 </button>
                 
                 <a href="{{ route('admin.permissions.hierarchy') }}" 
                    class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
-                    <i data-lucide="git-branch" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="git-branch" class="w-4 h-4 mr-2" />
                     Hiyerarşi Görünümü
                 </a>
                 
                 <button @click="showBulkAssign()" 
                         class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
-                    <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="users" class="w-4 h-4 mr-2" />
                     Toplu Atama
                 </button>
             </div>
@@ -50,7 +50,7 @@
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="key" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="key" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="check-circle" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="check-circle" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="clock" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="clock" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -110,9 +110,9 @@
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" 
                             class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 text-admin-700 dark:text-admin-300 rounded-xl hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors">
-                        <i data-lucide="filter" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="funnel" class="w-4 h-4 mr-2" />
                         Filtrele
-                        <i data-lucide="chevron-down" class="w-4 h-4 ml-2"></i>
+                        <x-heroicon name="chevron-down" class="w-4 h-4 ml-2" />
                     </button>
                     
                     <div x-show="open" 
@@ -155,7 +155,7 @@
                             <hr class="border-admin-200 dark:border-admin-600">
                             
                             <button @click="resetFilters()" class="w-full text-sm text-admin-600 dark:text-admin-400 hover:text-admin-800 dark:hover:text-admin-200">
-                                <i data-lucide="x-circle" class="w-4 h-4 inline mr-1"></i>
+                                <x-heroicon name="x-circle" class="w-4 h-4 inline mr-1" />
                                 Filtreleri Temizle
                             </button>
                         </div>
@@ -167,13 +167,13 @@
                     <button @click="viewMode = 'matrix'" 
                             :class="viewMode === 'matrix' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
                             class="px-3 py-1 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                        <i data-lucide="grid" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="grid" class="w-4 h-4 mr-1" />
                         Matrix
                     </button>
                     <button @click="viewMode = 'list'" 
                             :class="viewMode === 'list' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
                             class="px-3 py-1 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                        <i data-lucide="list" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="list-bullet" class="w-4 h-4 mr-1" />
                         Liste
                     </button>
                 </div>
@@ -185,7 +185,7 @@
             <button @click="createRoleTemplate()" 
                     class="flex items-center justify-center p-4 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 border border-blue-200 dark:border-blue-800 rounded-xl transition-colors">
                 <div class="text-center">
-                    <i data-lucide="plus-circle" class="w-6 h-6 text-blue-600 dark:text-blue-400 mx-auto mb-2"></i>
+                    <x-heroicon name="plus-circle" class="w-6 h-6 text-blue-600 dark:text-blue-400 mx-auto mb-2" />
                     <p class="text-sm font-medium text-blue-700 dark:text-blue-300">Yeni Rol</p>
                 </div>
             </button>
@@ -193,7 +193,7 @@
             <button @click="importPermissions()" 
                     class="flex items-center justify-center p-4 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40 border border-green-200 dark:border-green-800 rounded-xl transition-colors">
                 <div class="text-center">
-                    <i data-lucide="upload" class="w-6 h-6 text-green-600 dark:text-green-400 mx-auto mb-2"></i>
+                    <x-heroicon name="arrow-up-tray" class="w-6 h-6 text-green-600 dark:text-green-400 mx-auto mb-2" />
                     <p class="text-sm font-medium text-green-700 dark:text-green-300">İzinleri İçe Aktar</p>
                 </div>
             </button>
@@ -201,7 +201,7 @@
             <button @click="exportPermissions()" 
                     class="flex items-center justify-center p-4 bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 dark:hover:bg-amber-900/40 border border-amber-200 dark:border-amber-800 rounded-xl transition-colors">
                 <div class="text-center">
-                    <i data-lucide="download" class="w-6 h-6 text-amber-600 dark:text-amber-400 mx-auto mb-2"></i>
+                    <x-heroicon name="arrow-down-tray" class="w-6 h-6 text-amber-600 dark:text-amber-400 mx-auto mb-2" />
                     <p class="text-sm font-medium text-amber-700 dark:text-amber-300">Rapor İndir</p>
                 </div>
             </button>
@@ -209,7 +209,7 @@
             <button @click="syncPermissions()" 
                     class="flex items-center justify-center p-4 bg-purple-50 dark:bg-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-900/40 border border-purple-200 dark:border-purple-800 rounded-xl transition-colors">
                 <div class="text-center">
-                    <i data-lucide="refresh-cw" class="w-6 h-6 text-purple-600 dark:text-purple-400 mx-auto mb-2"></i>
+                    <x-heroicon name="arrow-path" class="w-6 h-6 text-purple-600 dark:text-purple-400 mx-auto mb-2" />
                     <p class="text-sm font-medium text-purple-700 dark:text-purple-300">İzinleri Senkronize Et</p>
                 </div>
             </button>
@@ -263,7 +263,7 @@
                             <tr class="bg-admin-100 dark:bg-admin-700/30">
                                 <td colspan="{{ count($roles) + 1 }}" class="px-6 py-3 text-sm font-medium text-admin-900 dark:text-white">
                                     <div class="flex items-center">
-                                        <i data-lucide="{{ $categoryIcons[$category] ?? 'folder' }}" class="w-4 h-4 mr-2"></i>
+                                        <x-heroicon name="{{ $categoryIcons[$category] ?? 'folder' }}" class="w-4 h-4 mr-2" />
                                         {{ ucfirst($category) }} ({{ count($permissions) }})
                                         <button @click="toggleCategory('{{ $category }}')" class="ml-2">
                                             <i :data-lucide="expandedCategories.includes('{{ $category }}') ? 'chevron-down' : 'chevron-right'" 
@@ -313,13 +313,13 @@
                                                         :title="getPermissionTooltip({{ $role->id }}, {{ $permission->id }})">
                                                     
                                                     @if($hasPermission)
-                                                        <i data-lucide="check" class="w-4 h-4 text-white"></i>
+                                                        <x-heroicon name="check" class="w-4 h-4 text-white" />
                                                     @elseif($isInherited)
-                                                        <i data-lucide="arrow-down" class="w-4 h-4 text-white"></i>
+                                                        <x-heroicon name="arrow-down" class="w-4 h-4 text-white" />
                                                     @elseif($isDependency)
-                                                        <i data-lucide="link" class="w-4 h-4 text-white"></i>
+                                                        <x-heroicon name="link" class="w-4 h-4 text-white" />
                                                     @else
-                                                        <i data-lucide="x" class="w-3 h-3 text-admin-400"></i>
+                                                        <x-heroicon name="x-mark" class="w-3 h-3 text-admin-400" />
                                                     @endif
                                                 </button>
                                             </td>
@@ -342,7 +342,7 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-4">
                             <div class="w-12 h-12 bg-gradient-to-br from-{{ $role->getColorClass() }}-500 to-{{ $role->getColorClass() }}-600 rounded-xl flex items-center justify-center">
-                                <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                                <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                             </div>
                             <div>
                                 <h3 class="text-lg font-semibold text-admin-900 dark:text-white">{{ $role->display_name }}</h3>
@@ -360,7 +360,7 @@
                         
                         <a href="{{ route('admin.permissions.role-permissions', $role) }}"
                            class="inline-flex items-center px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-xl hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors">
-                            <i data-lucide="edit-3" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="edit-3" class="w-4 h-4 mr-2" />
                             Düzenle
                         </a>
                     </div>
@@ -375,14 +375,14 @@
                             @if($categoryPermissions->count() > 0)
                                 <div class="border border-admin-200 dark:border-admin-600 rounded-xl p-4">
                                     <h4 class="font-medium text-admin-900 dark:text-white mb-3 flex items-center">
-                                        <i data-lucide="{{ $categoryIcons[$category] ?? 'folder' }}" class="w-4 h-4 mr-2"></i>
+                                        <x-heroicon name="{{ $categoryIcons[$category] ?? 'folder' }}" class="w-4 h-4 mr-2" />
                                         {{ ucfirst($category) }}
                                         <span class="ml-auto text-xs text-admin-500">{{ $categoryPermissions->count() }}/{{ $permissions->count() }}</span>
                                     </h4>
                                     <div class="space-y-2">
                                         @foreach($categoryPermissions as $permission)
                                             <div class="flex items-center text-sm">
-                                                <i data-lucide="check" class="w-3 h-3 text-green-500 mr-2"></i>
+                                                <x-heroicon name="check" class="w-3 h-3 text-green-500 mr-2" />
                                                 <span class="text-admin-700 dark:text-admin-300">{{ $permission->display_name }}</span>
                                             </div>
                                         @endforeach
@@ -401,7 +401,7 @@
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-semibold text-admin-900 dark:text-white">Bekleyen Değişiklikler</h3>
             <button @click="clearChanges()" class="text-admin-400 hover:text-admin-600">
-                <i data-lucide="x" class="w-5 h-5"></i>
+                <x-heroicon name="x-mark" class="w-5 h-5" />
             </button>
         </div>
         
@@ -439,7 +439,7 @@
             <div class="flex items-center justify-between">
                 <h3 class="text-xl font-semibold text-admin-900 dark:text-white">Toplu İzin Atama</h3>
                 <button @click="showBulkModal = false" class="text-admin-400 hover:text-admin-600">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+                    <x-heroicon name="x-mark" class="w-6 h-6" />
                 </button>
             </div>
         </div>
@@ -545,7 +545,7 @@ function permissionsManager() {
         init() {
             // Initialize tooltips and other components
             this.$nextTick(() => {
-                lucide.createIcons();
+                
             });
         },
         
@@ -819,7 +819,7 @@ function permissionsManager() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    
 });
 </script>
 @endpush

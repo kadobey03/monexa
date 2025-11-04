@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-admin-900 dark:text-white">{{ $role->display_name }}</h1>
@@ -17,12 +17,12 @@
                 <div class="flex items-center space-x-2">
                     @if($role->is_active)
                         <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm font-medium">
-                            <i data-lucide="check-circle" class="w-4 h-4 inline mr-1"></i>
+                            <x-heroicon name="check-circle" class="w-4 h-4 inline mr-1" />
                             Aktif
                         </span>
                     @else
                         <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-full text-sm font-medium">
-                            <i data-lucide="x-circle" class="w-4 h-4 inline mr-1"></i>
+                            <x-heroicon name="x-circle" class="w-4 h-4 inline mr-1" />
                             Pasif
                         </span>
                     @endif
@@ -35,12 +35,12 @@
             <div class="flex items-center space-x-3">
                 <a href="{{ route('admin.roles.edit', $role) }}" 
                    class="inline-flex items-center px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl transition-all duration-200">
-                    <i data-lucide="edit-3" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="edit-3" class="w-4 h-4 mr-2" />
                     Düzenle
                 </a>
                 <a href="{{ route('admin.roles.index') }}" 
                    class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
-                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
                     Geri Dön
                 </a>
             </div>
@@ -56,7 +56,7 @@
                     <p class="text-2xl font-bold text-admin-900 dark:text-white">{{ $statistics['total_admins'] }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="users" class="w-6 h-6 text-white" />
                 </div>
             </div>
             <div class="mt-4">
@@ -74,7 +74,7 @@
                     <p class="text-2xl font-bold text-admin-900 dark:text-white">{{ $statistics['total_permissions'] }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                 </div>
             </div>
             <div class="mt-4">
@@ -91,7 +91,7 @@
                     <p class="text-2xl font-bold text-admin-900 dark:text-white">{{ $statistics['child_roles'] }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="git-branch" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="git-branch" class="w-6 h-6 text-white" />
                 </div>
             </div>
             <div class="mt-4">
@@ -115,7 +115,7 @@
                     <p class="text-2xl font-bold text-admin-900 dark:text-white">{{ $role->created_at->diffInDays() }}g</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="calendar" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="calendar-days" class="w-6 h-6 text-white" />
                 </div>
             </div>
             <div class="mt-4">
@@ -166,7 +166,7 @@
                             <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">Üst Rol</label>
                             <a href="{{ route('admin.roles.show', $role->parentRole) }}" 
                                class="mt-1 inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200">
-                                <i data-lucide="external-link" class="w-4 h-4 mr-1"></i>
+                                <x-heroicon name="external-link" class="w-4 h-4 mr-1" />
                                 {{ $role->parentRole->display_name }}
                             </a>
                         </div>
@@ -220,9 +220,9 @@
                                                         </div>
                                                         <div class="flex items-center space-x-2">
                                                             @if($permission->pivot->is_granted)
-                                                                <i data-lucide="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                                                                <x-heroicon name="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400" />
                                                             @else
-                                                                <i data-lucide="x-circle" class="w-5 h-5 text-red-600 dark:text-red-400"></i>
+                                                                <x-heroicon name="x-circle" class="w-5 h-5 text-red-600 dark:text-red-400" />
                                                             @endif
                                                         </div>
                                                     </div>
@@ -235,11 +235,11 @@
                         </div>
                     @else
                         <div class="text-center py-8">
-                            <i data-lucide="shield-off" class="w-16 h-16 text-admin-400 dark:text-admin-500 mx-auto mb-4"></i>
+                            <x-heroicon name="shield-off" class="w-16 h-16 text-admin-400 dark:text-admin-500 mx-auto mb-4" />
                             <p class="text-admin-600 dark:text-admin-400">Bu role henüz izin atanmamış.</p>
                             <a href="{{ route('admin.roles.edit', $role) }}" 
                                class="mt-4 inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
-                                <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="plus" class="w-4 h-4 mr-2" />
                                 İzin Ekle
                             </a>
                         </div>
@@ -262,7 +262,7 @@
                                 <a href="{{ route('admin.roles.show', $role->parentRole) }}" 
                                    class="flex items-center p-3 border border-admin-200 dark:border-admin-600 rounded-lg hover:bg-admin-50 dark:hover:bg-admin-700/30 transition-colors">
                                     <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-3">
-                                        <i data-lucide="arrow-up" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+                                        <x-heroicon name="arrow-up" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
                                     </div>
                                     <div>
                                         <p class="font-medium text-admin-900 dark:text-white">{{ $role->parentRole->display_name }}</p>
@@ -280,7 +280,7 @@
                                         <a href="{{ route('admin.roles.show', $childRole) }}" 
                                            class="flex items-center p-3 border border-admin-200 dark:border-admin-600 rounded-lg hover:bg-admin-50 dark:hover:bg-admin-700/30 transition-colors">
                                             <div class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mr-3">
-                                                <i data-lucide="arrow-down" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                                                <x-heroicon name="arrow-down" class="w-4 h-4 text-green-600 dark:text-green-400" />
                                             </div>
                                             <div>
                                                 <p class="font-medium text-admin-900 dark:text-white">{{ $childRole->display_name }}</p>
@@ -299,7 +299,7 @@
                     </div>
                 @else
                     <div class="text-center py-4">
-                        <i data-lucide="git-branch-plus" class="w-12 h-12 text-admin-400 dark:text-admin-500 mx-auto mb-2"></i>
+                        <x-heroicon name="git-branch-plus" class="w-12 h-12 text-admin-400 dark:text-admin-500 mx-auto mb-2" />
                         <p class="text-sm text-admin-600 dark:text-admin-400">Hiyerarşi bağlantısı yok</p>
                     </div>
                 @endif
@@ -342,7 +342,7 @@
                     </div>
                 @else
                     <div class="text-center py-4">
-                        <i data-lucide="user-x" class="w-12 h-12 text-admin-400 dark:text-admin-500 mx-auto mb-2"></i>
+                        <x-heroicon name="user-minus" class="w-12 h-12 text-admin-400 dark:text-admin-500 mx-auto mb-2" />
                         <p class="text-sm text-admin-600 dark:text-admin-400">Bu role henüz admin atanmamış</p>
                     </div>
                 @endif
@@ -355,26 +355,26 @@
                 <div class="space-y-3">
                     <a href="{{ route('admin.roles.edit', $role) }}" 
                        class="w-full flex items-center px-4 py-3 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors">
-                        <i data-lucide="edit-3" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="edit-3" class="w-5 h-5 mr-3" />
                         Rolü Düzenle
                     </a>
                     
                     <a href="{{ route('admin.permissions.role', $role) }}" 
                        class="w-full flex items-center px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
-                        <i data-lucide="shield" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="shield-check" class="w-5 h-5 mr-3" />
                         İzinleri Yönet
                     </a>
                     
                     <a href="{{ route('admin.managers.create', ['role' => $role->id]) }}" 
                        class="w-full flex items-center px-4 py-3 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
-                        <i data-lucide="user-plus" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="user-plus" class="w-5 h-5 mr-3" />
                         Admin Ekle
                     </a>
                     
                     @if(!$role->is_system_role)
                         <button @click="confirmDelete()" 
                                 class="w-full flex items-center px-4 py-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
-                            <i data-lucide="trash-2" class="w-5 h-5 mr-3"></i>
+                            <x-heroicon name="trash-2" class="w-5 h-5 mr-3" />
                             Rolü Sil
                         </button>
                     @endif
@@ -393,7 +393,7 @@ function roleShowManager() {
         
         init() {
             this.$nextTick(() => {
-                lucide.createIcons();
+                
             });
         },
         
@@ -434,7 +434,7 @@ function roleShowManager() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    
 });
 </script>
 @endpush

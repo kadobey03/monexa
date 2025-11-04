@@ -84,7 +84,7 @@
                     <a href="{{ $item['url'] }}" 
                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white transition-colors">
                         @if(isset($item['icon']))
-                            <i data-lucide="{{ $item['icon'] }}" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="{{ $item['icon'] }}" class="w-4 h-4 mr-2" />
                         @endif
                         {{ $item['label'] }}
                     </a>
@@ -120,7 +120,7 @@
 // Initialize Lucide icons for breadcrumb
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

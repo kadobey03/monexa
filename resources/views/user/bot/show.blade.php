@@ -9,7 +9,7 @@
                 <div>
                     <div class="flex items-center space-x-3 mb-3">
                         <a href="{{ route('user.bots.index') }}" class="inline-flex items-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
-                            <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
                             Back to Bots
                         </a>
                     </div>
@@ -60,14 +60,14 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                                 <div class="flex items-center mb-2">
-                                    <i data-lucide="target" class="w-4 h-4 text-gray-500 dark:text-gray-400 mr-2"></i>
+                                    <x-heroicon name="view-finder" class="w-4 h-4 text-gray-500 dark:text-gray-400 mr-2" />
                                     <span class="font-medium text-gray-900 dark:text-white">Strategy Type</span>
                                 </div>
                                 <p class="text-gray-600 dark:text-gray-400">{{ $bot->strategy ?? 'Advanced AI Trading' }}</p>
                             </div>
                             <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                                 <div class="flex items-center mb-2">
-                                    <i data-lucide="clock" class="w-4 h-4 text-gray-500 dark:text-gray-400 mr-2"></i>
+                                    <x-heroicon name="clock" class="w-4 h-4 text-gray-500 dark:text-gray-400 mr-2" />
                                     <span class="font-medium text-gray-900 dark:text-white">Trading Frequency</span>
                                 </div>
                                 <p class="text-gray-600 dark:text-gray-400">{{ $bot->trading_frequency ?? 'Multiple times daily' }}</p>
@@ -76,7 +76,7 @@
 
                         <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                             <div class="flex items-center mb-2">
-                                <i data-lucide="info" class="w-4 h-4 text-gray-500 dark:text-gray-400 mr-2"></i>
+                                <x-heroicon name="information-circle" class="w-4 h-4 text-gray-500 dark:text-gray-400 mr-2" />
                                 <span class="font-medium text-gray-900 dark:text-white">Description</span>
                             </div>
                             <p class="text-gray-600 dark:text-gray-400">{{ $bot->strategy_description ?? 'Advanced machine learning algorithms analyze market patterns to execute profitable trades.' }}</p>
@@ -193,7 +193,7 @@
                         <form id="cancelInvestmentForm" action="{{ route('user.bots.cancel', ['investment' => $userInvestment->id]) }}" method="POST">
                             @csrf
                             <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition-colors">
-                                <i data-lucide="x-circle" class="w-4 h-4 mr-2 inline"></i>
+                                <x-heroicon name="x-circle" class="w-4 h-4 mr-2 inline" />
                                 Cancel Investment
                             </button>
                         </form>
@@ -242,7 +242,7 @@
                             </div>
 
                             <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors">
-                                <i data-lucide="trending-up" class="w-4 h-4 mr-2 inline"></i>
+                                <x-heroicon name="arrow-trending-up" class="w-4 h-4 mr-2 inline" />
                                 Start Investment
                             </button>
                         </form>
@@ -252,7 +252,7 @@
                 <!-- Risk Information Card -->
                 <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4 flex items-center">
-                        <i data-lucide="shield-alert" class="w-4 h-4 mr-2 text-orange-500"></i>
+                        <x-heroicon name="shield-exclamation" class="w-4 h-4 mr-2 text-orange-500" />
                         Risk Information
                     </h3>
 
@@ -281,10 +281,10 @@
 </div>
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     // Initialize Lucide icons
-    lucide.createIcons();
+    
 
     // SweetAlert for cancel investment button
     document.addEventListener('DOMContentLoaded', function() {

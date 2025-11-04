@@ -8,7 +8,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Rol Yönetimi</h1>
@@ -19,13 +19,13 @@
             <div class="flex items-center space-x-3">
                 <a href="{{ route('admin.roles.hierarchy') }}" 
                    class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
-                    <i data-lucide="git-branch" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="git-branch" class="w-4 h-4 mr-2" />
                     Hiyerarşi
                 </a>
                 
                 <a href="{{ route('admin.roles.create') }}" 
                    class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
-                    <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="plus" class="w-4 h-4 mr-2" />
                     Yeni Rol
                 </a>
             </div>
@@ -41,7 +41,7 @@
                     <p class="text-2xl font-bold text-blue-700 dark:text-blue-300">{{ $stats['total_roles'] ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                     <p class="text-2xl font-bold text-green-700 dark:text-green-300">{{ $stats['active_roles'] ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="check-circle" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="check-circle" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                     <p class="text-2xl font-bold text-amber-700 dark:text-amber-300">{{ $stats['admin_roles'] ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="users" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
                     <p class="text-2xl font-bold text-purple-700 dark:text-purple-300">{{ $hierarchyLevels->max() + 1 ?? 1 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="layers" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -145,13 +145,13 @@
                         <button @click="viewMode = 'list'" 
                                 :class="viewMode === 'list' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
                                 class="px-3 py-1 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                            <i data-lucide="list" class="w-4 h-4 mr-1"></i>
+                            <x-heroicon name="list-bullet" class="w-4 h-4 mr-1" />
                             Liste
                         </button>
                         <button @click="viewMode = 'tree'" 
                                 :class="viewMode === 'tree' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
                                 class="px-3 py-1 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                            <i data-lucide="git-branch" class="w-4 h-4 mr-1"></i>
+                            <x-heroicon name="git-branch" class="w-4 h-4 mr-1" />
                             Ağaç
                         </button>
                     </div>
@@ -172,7 +172,7 @@
                             <div class="flex items-center space-x-4">
                                 <!-- Role Icon -->
                                 <div class="w-12 h-12 bg-gradient-to-br from-{{ $role->hierarchy_level % 6 === 0 ? 'blue' : ($role->hierarchy_level % 6 === 1 ? 'green' : ($role->hierarchy_level % 6 === 2 ? 'amber' : ($role->hierarchy_level % 6 === 3 ? 'red' : ($role->hierarchy_level % 6 === 4 ? 'purple' : 'indigo')))) }}-500 to-{{ $role->hierarchy_level % 6 === 0 ? 'blue' : ($role->hierarchy_level % 6 === 1 ? 'green' : ($role->hierarchy_level % 6 === 2 ? 'amber' : ($role->hierarchy_level % 6 === 3 ? 'red' : ($role->hierarchy_level % 6 === 4 ? 'purple' : 'indigo')))) }}-600 rounded-xl flex items-center justify-center">
-                                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                                 </div>
                                 
                                 <!-- Role Info -->
@@ -209,15 +209,15 @@
                             <div class="flex items-center space-x-2">
                                 <a href="{{ route('admin.roles.show', $role) }}" 
                                    class="p-2 text-admin-600 dark:text-admin-400 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
-                                    <i data-lucide="eye" class="w-4 h-4"></i>
+                                    <x-heroicon name="eye" class="w-4 h-4" />
                                 </a>
                                 <a href="{{ route('admin.roles.edit', $role) }}" 
                                    class="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg transition-colors">
-                                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                    <x-heroicon name="edit-3" class="w-4 h-4" />
                                 </a>
                                 <button @click="deleteRole({{ $role->id }})" 
                                         class="p-2 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-colors">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    <x-heroicon name="trash-2" class="w-4 h-4" />
                                 </button>
                             </div>
                         </div>
@@ -268,7 +268,7 @@ function rolesManager() {
         
         init() {
             this.$nextTick(() => {
-                lucide.createIcons();
+                
             });
         },
         
@@ -345,7 +345,7 @@ function rolesManager() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    
 });
 </script>
 @endpush

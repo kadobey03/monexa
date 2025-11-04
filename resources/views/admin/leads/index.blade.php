@@ -152,27 +152,27 @@
 
 @section('scripts')
     <!-- Core Dependencies -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/pinia@2/dist/pinia.iife.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/lodash/lodash.min.js"></script>
+    
+    
+    
+    
     
     <!-- Laravel Echo for WebSocket support (optional) -->
     @if(config('broadcasting.default') !== 'null')
-        <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
-        <script src="https://unpkg.com/laravel-echo/dist/echo.iife.js"></script>
+        
+        
     @endif
 
     <!-- Vue.js Lead Assignment Components -->
-    <script src="{{ asset('js/admin/leads/vue/services/leadAssignmentApi.js') }}"></script>
-    <script src="{{ asset('js/admin/leads/vue/stores/leadStore.js') }}"></script>
-    <script src="{{ asset('js/admin/leads/vue/components/AdminDropdown.vue.js') }}"></script>
-    <script src="{{ asset('js/admin/leads/vue/components/StatusDropdown.vue.js') }}"></script>
-    <script src="{{ asset('js/admin/leads/vue/components/FilterPanel.vue.js') }}"></script>
-    <script src="{{ asset('js/admin/leads/vue/components/LeadAssignmentRow.vue.js') }}"></script>
-    <script src="{{ asset('js/admin/leads/vue/components/LeadAssignmentTable.vue.js') }}"></script>
-    <script src="{{ asset('js/admin/leads/vue/components/BulkActionPanel.vue.js') }}"></script>
-    <script src="{{ asset('js/admin/leads/vue/LeadAssignmentApp.js') }}"></script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     <script>
         // Global configuration from Laravel

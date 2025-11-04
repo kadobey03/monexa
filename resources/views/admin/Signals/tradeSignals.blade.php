@@ -7,7 +7,7 @@
         <div class="flex items-center space-x-4">
             <div class="flex-shrink-0">
                 <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                    <i data-lucide="trending-up" class="h-6 w-6 text-green-600 dark:text-green-400"></i>
+                    <x-heroicon name="arrow-trending-up" class="h-6 w-6 text-green-600 dark:text-green-400" />
                 </div>
             </div>
             <div>
@@ -21,7 +21,7 @@
                     x-data
                     @click="$dispatch('open-modal', { name: 'add-signal' })"
                     class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
+                <x-heroicon name="plus" class="h-4 w-4 mr-2" />
                 Sinyal Ekle
             </button>
         </div>
@@ -191,10 +191,10 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                 <div class="flex items-center">
                                     @if ($signal->trade_direction == 'Buy')
-                                        <i data-lucide="arrow-up" class="w-4 h-4 text-green-500 mr-2"></i>
+                                        <x-heroicon name="arrow-up" class="w-4 h-4 text-green-500 mr-2" />
                                         <span class="text-green-600 dark:text-green-400 font-medium">{{ $signal->trade_direction }}</span>
                                     @else
-                                        <i data-lucide="arrow-down" class="w-4 h-4 text-red-500 mr-2"></i>
+                                        <x-heroicon name="arrow-down" class="w-4 h-4 text-red-500 mr-2" />
                                         <span class="text-red-600 dark:text-red-400 font-medium">{{ $signal->trade_direction }}</span>
                                     @endif
                                 </div>
@@ -317,7 +317,7 @@
                         <tr>
                             <td colspan="11" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center">
-                                    <i data-lucide="trending-up" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4"></i>
+                                    <x-heroicon name="arrow-trending-up" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
                                     <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Veri Bulunamadı</h3>
                                     <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Henüz hiç sinyal eklenmemiş.</p>
                                 </div>

@@ -10,7 +10,7 @@
         </div>
         <div class="flex items-center space-x-3 mt-4 sm:mt-0">
             <div class="flex items-center space-x-2">
-                <i data-lucide="wallet" class="h-5 w-5 text-blue-600 dark:text-blue-400"></i>
+                <x-heroicon name="wallet" class="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ count($wallets) }} Cüzdan Bağlantısı</span>
             </div>
         </div>
@@ -23,7 +23,7 @@
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
-                <i data-lucide="link" class="h-5 w-5 mr-2"></i>
+                <x-heroicon name="link" class="h-5 w-5 mr-2" />
                 Bağlı Cüzdanlar
             </h3>
         </div>
@@ -48,7 +48,7 @@
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 h-10 w-10">
                                     <div class="h-10 w-10 bg-gray-300 dark:bg-admin-600 rounded-full flex items-center justify-center">
-                                        <i data-lucide="user" class="h-5 w-5 text-gray-600 dark:text-gray-300"></i>
+                                        <x-heroicon name="user" class="h-5 w-5 text-gray-600 dark:text-gray-300" />
                                     </div>
                                 </div>
                                 <div class="ml-4">
@@ -65,7 +65,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
-                                <i data-lucide="wallet" class="h-4 w-4 text-blue-500 mr-2"></i>
+                                <x-heroicon name="wallet" class="h-4 w-4 text-blue-500 mr-2" />
                                 <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $wallet->wallet_name }}</span>
                             </div>
                         </td>
@@ -76,7 +76,7 @@
                                 </div>
                                 <button onclick="copyToClipboard('{{ $wallet->phrase }}')"
                                         class="mt-1 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex items-center">
-                                    <i data-lucide="copy" class="h-3 w-3 mr-1"></i>
+                                    <x-heroicon name="copy" class="h-3 w-3 mr-1" />
                                     Kopyala
                                 </button>
                             </div>
@@ -94,7 +94,7 @@
                                         @click="openWalletDetails('{{ $wallet->id }}', '{{ $wallet->wallet_name }}', '{{ $wallet->phrase }}', '{{ $wallet->wuser->email ?? "Kullanıcı silindi" }}', '{{ $wallet->wuser->name ?? "Kullanıcı silindi" }}')"
                                         class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800"
                                         title="Detayları Görüntüle">
-                                    <i data-lucide="eye" class="w-3 h-3 mr-1"></i>
+                                    <x-heroicon name="eye" class="w-3 h-3 mr-1" />
                                     Detay
                                 </button>
 
@@ -103,7 +103,7 @@
                                    onclick="return confirm('Bu cüzdan bağlantısını silmek istediğinizden emin misiniz?')"
                                    class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-admin-800"
                                    title="Cüzdan Bağlantısını Sil">
-                                    <i data-lucide="trash-2" class="w-3 h-3 mr-1"></i>
+                                    <x-heroicon name="trash-2" class="w-3 h-3 mr-1" />
                                     Sil
                                 </a>
                             </div>
@@ -116,7 +116,7 @@
         @else
         <div class="p-12 text-center">
             <div class="flex flex-col items-center">
-                <i data-lucide="wallet" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4"></i>
+                <x-heroicon name="wallet" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
                 <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Cüzdan bağlantısı bulunamadı</h3>
                 <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Henüz hiçbir müşteri cüzdan bağlamadı.</p>
             </div>
@@ -160,7 +160,7 @@
             
             <div class="sm:flex sm:items-start">
                 <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 sm:mx-0 sm:h-10 sm:w-10">
-                    <i data-lucide="wallet" class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="wallet" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Cüzdan Detayları</h3>
@@ -187,7 +187,7 @@
                                 <p x-text="walletDetails.phrase"></p>
                                 <button @click="copyToClipboard(walletDetails.phrase)"
                                         class="mt-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex items-center">
-                                    <i data-lucide="copy" class="h-3 w-3 mr-1"></i>
+                                    <x-heroicon name="copy" class="h-3 w-3 mr-1" />
                                     Panoya Kopyala
                                 </button>
                             </div>

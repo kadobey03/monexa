@@ -37,12 +37,12 @@
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a href="{{ route('dashboard') }}"
                    class="group relative inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-lg rounded-xl border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
-                    <i data-lucide="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+                    <x-heroicon name="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1" />
                     Back to Dashboard
                 </a>
                 <a href="{{ route('user.bots.dashboard') }}"
                    class="group relative inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-xl text-white transition-all duration-300">
-                    <i data-lucide="activity" class="w-4 h-4"></i>
+                    <x-heroicon name="activity" class="w-4 h-4" />
                     My Bot Investments
                 </a>
             </div>
@@ -76,7 +76,7 @@
                                      class="w-12 h-12 rounded-xl object-cover">
                             @else
                                 <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                                    <i data-lucide="bot" class="w-6 h-6 text-white"></i>
+                                    <x-heroicon name="bot" class="w-6 h-6 text-white" />
                                 </div>
                             @endif
                             <div>
@@ -170,7 +170,7 @@
                                          class="w-14 h-14 rounded-xl object-cover border-2 border-white dark:border-gray-700 shadow-lg">
                                 @else
                                     <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center border-2 border-white dark:border-gray-700 shadow-lg">
-                                        <i data-lucide="bot" class="w-7 h-7 text-white"></i>
+                                        <x-heroicon name="bot" class="w-7 h-7 text-white" />
                                     </div>
                                 @endif
                                 <div>
@@ -231,11 +231,11 @@
                         <!-- Performance Stats -->
                         {{-- <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-6">
                             <div class="flex items-center gap-1">
-                                <i data-lucide="users" class="w-3 h-3"></i>
+                                <x-heroicon name="users" class="w-3 h-3" />
                                 <span>{{ $bot->active_investments_count }} Active Users</span>
                             </div>
                             <div class="flex items-center gap-1">
-                                <i data-lucide="trending-up" class="w-3 h-3"></i>
+                                <x-heroicon name="arrow-trending-up" class="w-3 h-3" />
                                 <span>${{ number_format($bot->total_earned, 0) }} Total Earned</span>
                             </div>
                         </div> --}}
@@ -244,7 +244,7 @@
                         <a href="{{ route('user.bots.show', $bot) }}"
                            class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white rounded-xl font-medium transition-all duration-300 group">
                             <span>Invest Now</span>
-                            <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                            <x-heroicon name="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1" />
                         </a>
                     </div>
                 </div>
@@ -254,7 +254,7 @@
             @if($bots->count() === 0)
             <div class="text-center py-12">
                 <div class="w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="bot" class="w-12 h-12 text-gray-400"></i>
+                    <x-heroicon name="bot" class="w-12 h-12 text-gray-400" />
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Trading Bots Available</h3>
                 <p class="text-gray-600 dark:text-gray-400">Trading bots will be available soon. Check back later!</p>
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize Lucide icons
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 

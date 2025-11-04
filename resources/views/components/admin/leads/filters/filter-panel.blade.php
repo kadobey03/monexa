@@ -7,7 +7,7 @@
         <!-- Filter Header -->
         <div class="flex items-center justify-between mb-6">
             <div class="flex items-center space-x-3">
-                <i data-lucide="filter" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                <x-heroicon name="funnel" class="w-5 h-5 text-blue-600 dark:text-blue-400" />
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white">
                     Gelişmiş Filtreler
                 </h3>
@@ -40,7 +40,7 @@
                     class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                     id="clear-filters-btn"
                 >
-                    <i data-lucide="x-circle" class="w-4 h-4 mr-1"></i>
+                    <x-heroicon name="x-circle" class="w-4 h-4 mr-1" />
                     Temizle
                 </button>
             </div>
@@ -66,7 +66,7 @@
                         <option value="converted">Dönüştürüldü</option>
                         <option value="lost">Kaybedilen</option>
                     </select>
-                    <i data-lucide="chevron-down" class="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none"></i>
+                    <x-heroicon name="chevron-down" class="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                 </div>
             </div>
             
@@ -88,7 +88,7 @@
                             @endforeach
                         @endif
                     </select>
-                    <i data-lucide="chevron-down" class="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none"></i>
+                    <x-heroicon name="chevron-down" class="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                 </div>
             </div>
             
@@ -111,7 +111,7 @@
                             @endforeach
                         @endif
                     </select>
-                    <i data-lucide="chevron-down" class="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none"></i>
+                    <x-heroicon name="chevron-down" class="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                 </div>
             </div>
             
@@ -132,7 +132,7 @@
                         <option value="high">Yüksek</option>
                         <option value="urgent">Acil</option>
                     </select>
-                    <i data-lucide="chevron-down" class="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none"></i>
+                    <x-heroicon name="chevron-down" class="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                 </div>
             </div>
         </div>
@@ -253,7 +253,7 @@
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                     id="save-preset-btn"
                 >
-                    <i data-lucide="bookmark" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="bookmark" class="w-4 h-4 mr-2" />
                     Kayıtlı Filtrelere Ekle
                 </button>
                 
@@ -262,9 +262,9 @@
                         onclick="togglePresets()"
                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                     >
-                        <i data-lucide="folder" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="folder" class="w-4 h-4 mr-2" />
                         Kayıtlı Filtreler
-                        <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+                        <x-heroicon name="chevron-down" class="w-4 h-4 ml-1" />
                     </button>
                     
                     <div
@@ -298,7 +298,7 @@
                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 hover:bg-green-700 rounded-md"
                     id="export-btn"
                 >
-                    <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
                     Excel'e Aktar
                 </button>
             </div>

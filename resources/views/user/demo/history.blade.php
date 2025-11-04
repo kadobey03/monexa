@@ -16,15 +16,15 @@
             </div>
             <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <div class="inline-flex items-center justify-center gap-2 px-3 py-2 sm:px-4 sm:py-3 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-xs sm:text-sm lg:text-base">
-                    <i data-lucide="wallet" class="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5"></i>
+                    <x-heroicon name="wallet" class="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                     <span class="hidden sm:inline">Balance:</span> ${{ number_format(auth()->user()->demo_balance, 2) }}
                 </div>
                 <a href="{{ route('demo.trade') }}" class="inline-flex items-center justify-center gap-2 px-3 py-2 sm:px-4 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow transition-colors text-xs sm:text-sm lg:text-base">
-                    <i data-lucide="plus" class="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5"></i>
+                    <x-heroicon name="plus" class="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                     <span class="hidden sm:inline">New</span> Trade
                 </a>
                 <a href="{{ route('demo.dashboard') }}" class="inline-flex items-center justify-center gap-2 px-3 py-2 sm:px-4 sm:py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg shadow transition-colors text-xs sm:text-sm lg:text-base">
-                    <i data-lucide="arrow-left" class="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5"></i> Dashboard
+                    <x-heroicon name="arrow-left" class="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5" /> Dashboard
                 </a>
             </div>
         </div>
@@ -59,7 +59,7 @@
                     <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Total Trades</p>
                 </div>
                 <div class="p-2 sm:p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                    <i data-lucide="trending-up" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="arrow-trending-up" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-blue-600 dark:text-blue-400" />
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                     <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Win Rate</p>
                 </div>
                 <div class="p-2 sm:p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                    <i data-lucide="target" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-green-600 dark:text-green-400"></i>
+                    <x-heroicon name="view-finder" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-green-600 dark:text-green-400" />
                 </div>
             </div>
         </div>
@@ -97,7 +97,7 @@
                     <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Active Trades</p>
                 </div>
                 <div class="p-2 sm:p-3 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
-                    <i data-lucide="activity" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-orange-600 dark:text-orange-400"></i>
+                    <x-heroicon name="activity" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-orange-600 dark:text-orange-400" />
                 </div>
             </div>
         </div>
@@ -110,7 +110,7 @@
                 <h3 class="text-base sm:text-lg font-medium text-gray-900 dark:text-white">Filters</h3>
                 <button type="button" id="toggleFilters" class="text-xs sm:text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors">
                     <span id="filterToggleText">Show Filters</span>
-                    <i data-lucide="chevron-down" id="filterToggleIcon" class="w-3 h-3 sm:w-4 sm:h-4 inline-block ml-1 transition-transform"></i>
+                    <x-heroicon name="chevron-down" class="w-3 h-3 sm:w-4 sm:h-4 inline-block ml-1 transition-transform" id="filterToggleIcon" />
                 </button>
             </div>
         </div>
@@ -185,11 +185,11 @@
 
                 <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4">
                     <button type="submit" class="inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs sm:text-sm font-medium transition-colors">
-                        <i data-lucide="search" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                        <x-heroicon name="magnifying-glass" class="w-3 h-3 sm:w-4 sm:h-4" />
                         Apply Filters
                     </button>
                     <a href="{{ route('demo.history') }}" class="inline-flex items-center justify-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-xs sm:text-sm font-medium transition-colors">
-                        <i data-lucide="x" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                        <x-heroicon name="x-mark" class="w-3 h-3 sm:w-4 sm:h-4" />
                         Clear Filters
                     </a>
                 </div>
@@ -282,7 +282,7 @@
                             <button type="submit"
                                     class="inline-flex items-center px-3 py-1.5 text-xs font-medium bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-700 dark:text-red-400 rounded-lg transition-colors"
                                     onclick="return confirm('Are you sure you want to close this trade?')">
-                                <i data-lucide="x" class="w-3 h-3 mr-1"></i>
+                                <x-heroicon name="x-mark" class="w-3 h-3 mr-1" />
                                 Close
                             </button>
                         </form>
@@ -391,7 +391,7 @@
                                     <button type="submit"
                                             class="inline-flex items-center px-3 py-1.5 text-xs font-medium bg-red-100 hover:bg-red-200 dark:bg-red-900/30 dark:hover:bg-red-900/50 text-red-700 dark:text-red-400 rounded-lg transition-colors"
                                             onclick="return confirm('Are you sure you want to close this trade?')">
-                                        <i data-lucide="x" class="w-3 h-3 mr-1"></i>
+                                        <x-heroicon name="x-mark" class="w-3 h-3 mr-1" />
                                         Close
                                     </button>
                                 </form>
@@ -533,12 +533,12 @@
         @else
         <div class="p-6 sm:p-8 lg:p-12 text-center">
             <div class="mx-auto w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
-                <i data-lucide="bar-chart-3" class="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 dark:text-gray-500"></i>
+                <x-heroicon name="bar-chart-3" class="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 dark:text-gray-500" />
             </div>
             <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2">No Trading History</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 max-w-sm mx-auto">You haven't placed any demo trades yet. Start trading to build your history and track your performance!</p>
             <a href="{{ route('demo.trade') }}" class="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors text-sm sm:text-base">
-                <i data-lucide="plus" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                <x-heroicon name="plus" class="w-3 h-3 sm:w-4 sm:h-4" />
                 Place Your First Trade
             </a>
         </div>
@@ -549,7 +549,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize Lucide icons
-        lucide.createIcons();
+        
 
         // Filter toggle functionality
         const toggleFilters = document.getElementById('toggleFilters');

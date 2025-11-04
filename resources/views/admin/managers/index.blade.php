@@ -9,7 +9,7 @@
             <div>
                 <div class="flex items-center space-x-3 mb-2">
                     <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                        <i data-lucide="user-cog" class="w-6 h-6 text-white"></i>
+                        <x-heroicon name="user-cog" class="w-6 h-6 text-white" />
                     </div>
                     <div>
                         <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Yöneticiler</h1>
@@ -22,14 +22,14 @@
                 <!-- Add Manager Button -->
                 <a href="{{ route('admin.managers.create') }}" 
                    class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-green-500/25">
-                    <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="user-plus" class="w-4 h-4 mr-2" />
                     Yeni Yönetici
                 </a>
                 
                 <!-- Export Button -->
                 <button type="button"
                         class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 font-medium rounded-xl transition-all duration-200">
-                    <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
                     Dışa Aktar
                 </button>
             </div>
@@ -43,7 +43,7 @@
                         <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">Toplam Yönetici</p>
                         <p class="text-2xl font-bold text-blue-900 dark:text-blue-100">{{ $stats['total_admins'] }}</p>
                     </div>
-                    <i data-lucide="users" class="w-8 h-8 text-blue-500"></i>
+                    <x-heroicon name="users" class="w-8 h-8 text-blue-500" />
                 </div>
             </div>
             
@@ -53,7 +53,7 @@
                         <p class="text-sm text-green-600 dark:text-green-400 font-medium">Aktif</p>
                         <p class="text-2xl font-bold text-green-900 dark:text-green-100">{{ $stats['active_admins'] }}</p>
                     </div>
-                    <i data-lucide="user-check" class="w-8 h-8 text-green-500"></i>
+                    <x-heroicon name="user-check" class="w-8 h-8 text-green-500" />
                 </div>
             </div>
             
@@ -63,7 +63,7 @@
                         <p class="text-sm text-amber-600 dark:text-amber-400 font-medium">Müsait</p>
                         <p class="text-2xl font-bold text-amber-900 dark:text-amber-100">{{ $stats['available_admins'] }}</p>
                     </div>
-                    <i data-lucide="clock" class="w-8 h-8 text-amber-500"></i>
+                    <x-heroicon name="clock" class="w-8 h-8 text-amber-500" />
                 </div>
             </div>
             
@@ -73,7 +73,7 @@
                         <p class="text-sm text-purple-600 dark:text-purple-400 font-medium">Yüksek Performans</p>
                         <p class="text-2xl font-bold text-purple-900 dark:text-purple-100">{{ $stats['high_performers'] }}</p>
                     </div>
-                    <i data-lucide="trending-up" class="w-8 h-8 text-purple-500"></i>
+                    <x-heroicon name="arrow-trending-up" class="w-8 h-8 text-purple-500" />
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                 <!-- Search -->
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="search" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="magnifying-glass" class="w-4 h-4 inline mr-1" />
                         Arama
                     </label>
                     <input type="text" 
@@ -100,7 +100,7 @@
                 <!-- Role Filter -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="shield" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="shield-check" class="w-4 h-4 inline mr-1" />
                         Rol
                     </label>
                     <select name="role_id" 
@@ -118,7 +118,7 @@
                 <!-- Department Filter -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="building" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="building" class="w-4 h-4 inline mr-1" />
                         Departman
                     </label>
                     <select name="department" 
@@ -136,7 +136,7 @@
                 <!-- Status Filter -->
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <i data-lucide="activity" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="activity" class="w-4 h-4 inline mr-1" />
                         Durum
                     </label>
                     <select name="status" 
@@ -171,23 +171,23 @@
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" 
                                 class="inline-flex items-center px-3 py-1.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium rounded-lg hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors">
-                            <i data-lucide="settings" class="w-4 h-4 mr-1"></i>
+                            <x-heroicon name="cog-6-tooth" class="w-4 h-4 mr-1" />
                             Toplu İşlem
-                            <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
+                            <x-heroicon name="chevron-down" class="w-3 h-3 ml-1" />
                         </button>
                         
                         <div x-show="open" @click.away="open = false" x-transition
                              class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-elegant border border-admin-200 dark:border-admin-700 py-2 z-10">
                             <button @click="bulkAction('activate')" class="w-full px-4 py-2 text-left text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
-                                <i data-lucide="play" class="w-4 h-4 inline mr-2 text-green-500"></i>
+                                <x-heroicon name="play" class="w-4 h-4 inline mr-2 text-green-500" />
                                 Aktifleştir
                             </button>
                             <button @click="bulkAction('deactivate')" class="w-full px-4 py-2 text-left text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
-                                <i data-lucide="pause" class="w-4 h-4 inline mr-2 text-amber-500"></i>
+                                <x-heroicon name="pause" class="w-4 h-4 inline mr-2 text-amber-500" />
                                 Devre Dışı Bırak
                             </button>
                             <button @click="bulkAction('delete')" class="w-full px-4 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                <i data-lucide="trash-2" class="w-4 h-4 inline mr-2"></i>
+                                <x-heroicon name="trash-2" class="w-4 h-4 inline mr-2" />
                                 Sil
                             </button>
                         </div>
@@ -214,7 +214,7 @@
                                class="flex items-center space-x-1 hover:text-admin-700 dark:hover:text-admin-300">
                                 <span>Yönetici</span>
                                 @if(request('sort_by') === 'firstName')
-                                    <i data-lucide="chevron-{{ request('sort_direction') === 'asc' ? 'up' : 'down' }}" class="w-4 h-4"></i>
+                                    <x-heroicon name="chevron-{{ request('sort_direction') === 'asc' ? 'up' : 'down' }}" class="w-4 h-4" />
                                 @endif
                             </a>
                         </th>
@@ -224,7 +224,7 @@
                                class="flex items-center space-x-1 hover:text-admin-700 dark:hover:text-admin-300">
                                 <span>Hiyerarşi</span>
                                 @if(request('sort_by') === 'hierarchy_level')
-                                    <i data-lucide="chevron-{{ request('sort_direction') === 'asc' ? 'up' : 'down' }}" class="w-4 h-4"></i>
+                                    <x-heroicon name="chevron-{{ request('sort_direction') === 'asc' ? 'up' : 'down' }}" class="w-4 h-4" />
                                 @endif
                             </a>
                         </th>
@@ -233,7 +233,7 @@
                                class="flex items-center space-x-1 hover:text-admin-700 dark:hover:text-admin-300">
                                 <span>Performans</span>
                                 @if(request('sort_by') === 'current_performance')
-                                    <i data-lucide="chevron-{{ request('sort_direction') === 'asc' ? 'up' : 'down' }}" class="w-4 h-4"></i>
+                                    <x-heroicon name="chevron-{{ request('sort_direction') === 'asc' ? 'up' : 'down' }}" class="w-4 h-4" />
                                 @endif
                             </a>
                         </th>
@@ -367,7 +367,7 @@
                                     <button @click="openEditModal({{ $admin->id }})"
                                             class="text-admin-400 hover:text-amber-500 transition-colors"
                                             title="Düzenle">
-                                        <i data-lucide="edit" class="w-4 h-4"></i>
+                                        <x-heroicon name="edit" class="w-4 h-4" />
                                     </button>
                                 @endif
                                 
@@ -375,7 +375,7 @@
                                 <div class="relative" x-data="{ open: false }">
                                     <button @click="open = !open" 
                                             class="text-admin-400 hover:text-admin-600 dark:hover:text-admin-300 transition-colors">
-                                        <i data-lucide="more-vertical" class="w-4 h-4"></i>
+                                        <x-heroicon name="more-vertical" class="w-4 h-4" />
                                     </button>
                                     
                                     <div x-show="open" @click.away="open = false" x-transition
@@ -383,13 +383,13 @@
                                         @if($admin->status === 'Active')
                                             <a href="{{ route('admin.managers.deactivate', $admin) }}" 
                                                class="block px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
-                                                <i data-lucide="pause" class="w-4 h-4 inline mr-2 text-amber-500"></i>
+                                                <x-heroicon name="pause" class="w-4 h-4 inline mr-2 text-amber-500" />
                                                 Devre Dışı Bırak
                                             </a>
                                         @else
                                             <a href="{{ route('admin.managers.activate', $admin) }}" 
                                                class="block px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
-                                                <i data-lucide="play" class="w-4 h-4 inline mr-2 text-green-500"></i>
+                                                <x-heroicon name="play" class="w-4 h-4 inline mr-2 text-green-500" />
                                                 Aktifleştir
                                             </a>
                                         @endif
@@ -397,7 +397,7 @@
                                         @if($currentAdmin->canManageAdmin($admin))
                                             <button @click="openResetPasswordModal({{ $admin->id }}, '{{ $admin->getFullName() }}')"
                                                     class="w-full text-left px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
-                                                <i data-lucide="key" class="w-4 h-4 inline mr-2 text-purple-500"></i>
+                                                <x-heroicon name="key" class="w-4 h-4 inline mr-2 text-purple-500" />
                                                 Şifre Sıfırla
                                             </button>
                                         @endif
@@ -405,7 +405,7 @@
                                         @if($currentAdmin->canManageAdmin($admin) && $currentAdmin->id !== $admin->id)
                                             <button @click="deleteAdmin({{ $admin->id }}, '{{ $admin->getFullName() }}')"
                                                     class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                                <i data-lucide="trash-2" class="w-4 h-4 inline mr-2"></i>
+                                                <x-heroicon name="trash-2" class="w-4 h-4 inline mr-2" />
                                                 Sil
                                             </button>
                                         @endif
@@ -418,7 +418,7 @@
                     <tr>
                         <td colspan="7" class="px-6 py-12 text-center text-admin-500">
                             <div class="flex flex-col items-center space-y-3">
-                                <i data-lucide="users-x" class="w-12 h-12 text-admin-400"></i>
+                                <x-heroicon name="users-x" class="w-12 h-12 text-admin-400" />
                                 <p class="text-lg font-medium">Yönetici bulunamadı</p>
                                 <p class="text-sm">Arama kriterlerinizi değiştirmeyi deneyin</p>
                             </div>
@@ -453,10 +453,10 @@
             <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
                 <div class="bg-amber-600 dark:bg-amber-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                     <h4 class="text-lg font-semibold text-white flex items-center">
-                        <i data-lucide="user-pen" class="h-5 w-5 mr-2"></i>Yönetici Düzenle
+                        <x-heroicon name="user-pen" class="h-5 w-5 mr-2" />Yönetici Düzenle
                     </h4>
                     <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                        <i data-lucide="x" class="h-5 w-5"></i>
+                        <x-heroicon name="x-mark" class="h-5 w-5" />
                     </button>
                 </div>
                 <div class="p-6">
@@ -466,7 +466,7 @@
                             <!-- First Name -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <i data-lucide="user" class="h-4 w-4 inline mr-2 text-amber-600"></i>Ad *
+                                    <x-heroicon name="user" class="h-4 w-4 inline mr-2 text-amber-600" />Ad *
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                        type="text" name="firstName" x-model="manager.firstName" required>
@@ -475,7 +475,7 @@
                             <!-- Last Name -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <i data-lucide="user-circle" class="h-4 w-4 inline mr-2 text-amber-600"></i>Soyad *
+                                    <x-heroicon name="user-circle" class="h-4 w-4 inline mr-2 text-amber-600" />Soyad *
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                        type="text" name="lastName" x-model="manager.lastName" required>
@@ -484,7 +484,7 @@
                             <!-- Email -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <i data-lucide="mail" class="h-4 w-4 inline mr-2 text-amber-600"></i>E-posta *
+                                    <x-heroicon name="envelope" class="h-4 w-4 inline mr-2 text-amber-600" />E-posta *
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                        type="email" name="email" x-model="manager.email" required>
@@ -493,7 +493,7 @@
                             <!-- Phone -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <i data-lucide="phone" class="h-4 w-4 inline mr-2 text-amber-600"></i>Telefon
+                                    <x-heroicon name="phone" class="h-4 w-4 inline mr-2 text-amber-600" />Telefon
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                        type="tel" name="phone" x-model="manager.phone">
@@ -502,7 +502,7 @@
                             <!-- Role -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <i data-lucide="shield" class="h-4 w-4 inline mr-2 text-amber-600"></i>Rol
+                                    <x-heroicon name="shield-check" class="h-4 w-4 inline mr-2 text-amber-600" />Rol
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                         name="role_id" x-model="manager.role_id">
@@ -516,7 +516,7 @@
                             <!-- Supervisor -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <i data-lucide="user-check" class="h-4 w-4 inline mr-2 text-amber-600"></i>Süpervizör
+                                    <x-heroicon name="user-check" class="h-4 w-4 inline mr-2 text-amber-600" />Süpervizör
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                         name="supervisor_id" x-model="manager.supervisor_id">
@@ -530,7 +530,7 @@
                             <!-- Department -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <i data-lucide="building" class="h-4 w-4 inline mr-2 text-amber-600"></i>Departman
+                                    <x-heroicon name="building" class="h-4 w-4 inline mr-2 text-amber-600" />Departman
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                         name="department" x-model="manager.department">
@@ -544,7 +544,7 @@
                             <!-- Status -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <i data-lucide="activity" class="h-4 w-4 inline mr-2 text-amber-600"></i>Durum
+                                    <x-heroicon name="activity" class="h-4 w-4 inline mr-2 text-amber-600" />Durum
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                         name="status" x-model="manager.status">
@@ -557,7 +557,7 @@
                         
                         <div class="mt-6">
                             <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-                                <i data-lucide="save" class="h-4 w-4 mr-2"></i>Yönetici Bilgilerini Güncelle
+                                <x-heroicon name="save" class="h-4 w-4 mr-2" />Yönetici Bilgilerini Güncelle
                             </button>
                         </div>
                     </form>
@@ -584,17 +584,17 @@
             <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-purple-600 dark:bg-purple-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                     <h4 class="text-lg font-semibold text-white flex items-center">
-                        <i data-lucide="key" class="h-5 w-5 mr-2"></i>Şifre Sıfırla
+                        <x-heroicon name="key" class="h-5 w-5 mr-2" />Şifre Sıfırla
                     </h4>
                     <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
-                        <i data-lucide="x" class="h-5 w-5"></i>
+                        <x-heroicon name="x-mark" class="h-5 w-5" />
                     </button>
                 </div>
                 <div class="p-6">
                     <div class="mb-6">
                         <div class="flex items-center space-x-3 mb-4">
                             <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
-                                <i data-lucide="user" class="w-6 h-6 text-white"></i>
+                                <x-heroicon name="user" class="w-6 h-6 text-white" />
                             </div>
                             <div>
                                 <p class="text-lg font-medium text-admin-900 dark:text-white" x-text="admin.fullName"></p>
@@ -604,7 +604,7 @@
                         
                         <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-4">
                             <div class="flex">
-                                <i data-lucide="info" class="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 mr-3"></i>
+                                <x-heroicon name="information-circle" class="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 mr-3" />
                                 <div class="text-sm">
                                     <h4 class="font-medium text-amber-800 dark:text-amber-300 mb-1">Güvenlik Bilgisi</h4>
                                     <p class="text-amber-700 dark:text-amber-400">
@@ -618,7 +618,7 @@
                         <div x-show="admin.newPassword" x-transition class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
-                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                                    <x-heroicon name="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400" />
                                     <div>
                                         <p class="font-medium text-green-800 dark:text-green-300">Yeni Şifre Oluşturuldu</p>
                                         <p class="text-sm text-green-700 dark:text-green-400">Şifre başarıyla güncellendi.</p>
@@ -629,7 +629,7 @@
                                 <div class="flex items-center justify-between">
                                     <code class="text-sm font-mono text-admin-900 dark:text-white" x-text="admin.newPassword"></code>
                                     <button @click="copyPassword()" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
-                                        <i data-lucide="copy" class="w-4 h-4 inline mr-1"></i>Kopyala
+                                        <x-heroicon name="copy" class="w-4 h-4 inline mr-1" />Kopyala
                                     </button>
                                 </div>
                             </div>
@@ -640,7 +640,7 @@
                         <button @click="generateNewPassword()"
                                 x-show="!admin.newPassword"
                                 class="flex-1 flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                            <i data-lucide="refresh-cw" class="h-4 w-4 mr-2"></i>Yeni Şifre Oluştur
+                            <x-heroicon name="arrow-path" class="h-4 w-4 mr-2" />Yeni Şifre Oluştur
                         </button>
                         
                         <button @click="open = false"
@@ -936,7 +936,7 @@ function managersIndex() {
 
 // Initialize Lucide icons
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    
 });
 </script>
 @endpush

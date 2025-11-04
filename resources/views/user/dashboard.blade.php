@@ -30,15 +30,15 @@
         <div class="hidden sm:flex flex-col sm:flex-row gap-2 sm:gap-3">
             @if($settings->wallet_status == "on")
                 <a href="{{ route('connect_wallet') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg shadow hover:from-indigo-700 transition animate-pulse text-sm sm:text-base">
-                    <i data-lucide="link" class="w-4 h-4 sm:w-5 sm:h-5"></i> Cüzdanı Bağla
+                    <x-heroicon name="link" class="w-4 h-4 sm:w-5 sm:h-5" /> Cüzdanı Bağla
                 </a>
             @else
                 <div class="inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg text-sm sm:text-base">
-                    <i data-lucide="check-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i> Cüzdan Bağlandı
+                    <x-heroicon name="check-circle" class="w-4 h-4 sm:w-5 sm:h-5" /> Cüzdan Bağlandı
                 </div>
             @endif
             <a href="{{ route('trade.index') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition text-sm sm:text-base">
-                <i data-lucide="trending-up" class="w-4 h-4 sm:w-5 sm:h-5"></i> Şimdi Yatırım Yap
+                <x-heroicon name="arrow-trending-up" class="w-4 h-4 sm:w-5 sm:h-5" /> Şimdi Yatırım Yap
             </a>
         </div>
     </div>
@@ -73,7 +73,7 @@
         <div class="bg-white dark:bg-gray-900 rounded-xl p-4 sm:p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2">
-                    <i data-lucide="{{ $signalIcon }}" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>
+                    <x-heroicon name="{{ $signalIcon }}" class="w-5 h-5 text-gray-600 dark:text-gray-300" />
                     <h2 class="text-sm sm:text-base font-semibold text-gray-800 dark:text-gray-100">Ticaret Sinyal Gücü</h2>
                 </div>
                 <div class="flex items-center gap-2">
@@ -122,13 +122,13 @@
         <div class="flex justify-between items-start mb-4">
             <div class="text-center sm:text-left w-full sm:w-auto">
                 <h2 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-white flex items-center justify-center sm:justify-start">
-                    <i data-lucide="wallet" class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500 dark:text-gray-300"></i>
+                    <x-heroicon name="wallet" class="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500 dark:text-gray-300" />
                     Hesap Bakiyesi
                 </h2>
                 <p class="text-xs text-gray-500 dark:text-gray-400">Kullanılabilir fonlarınız</p>
             </div>
             {{-- <button id="toggleBalanceVisibility" class="text-gray-400 hover:text-gray-700 dark:hover:text-white">
-                <i data-lucide="eye" class="h-5 w-5" id="visibilityIcon"></i>
+                <x-heroicon name="eye" class="h-5 w-5" id="visibilityIcon" />
             </button> --}}
         </div>
 
@@ -160,7 +160,7 @@
             @endif
 
             <div class="inline-flex items-center px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 mb-4 w-fit mx-auto sm:mx-0">
-                <i data-lucide="check-circle" class="w-3 h-3 mr-1"></i> Çekim için Kullanılabilir
+                <x-heroicon name="check-circle" class="w-3 h-3 mr-1" /> Çekim için Kullanılabilir
             </div>
 
             @if(isset($settings->enable_kyc) && $settings->enable_kyc === 'yes')
@@ -168,17 +168,17 @@
                 <div class="mb-3 w-fit mx-auto sm:mx-0">
                     @if(Auth::user()->account_verify === 'Verified')
                         <div class="inline-flex items-center px-2 py-1 text-xs rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse">
-                            <i data-lucide="shield-check" class="w-3 h-3 mr-1"></i>
+                            <x-heroicon name="shield-check" class="w-3 h-3 mr-1" />
                             <span class="font-medium">Doğrulanmış Hesap</span>
                         </div>
                     @elseif(Auth::user()->account_verify === 'Under review')
                         <div class="inline-flex items-center px-2 py-1 text-xs rounded-full bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 animate-pulse">
-                            <i data-lucide="clock" class="w-3 h-3 mr-1"></i>
+                            <x-heroicon name="clock" class="w-3 h-3 mr-1" />
                             <span class="font-medium">İncelemede</span>
                         </div>
                     @else
                         <div class="inline-flex items-center px-2 py-1 text-xs rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 animate-pulse">
-                            <i data-lucide="alert-circle" class="w-3 h-3 mr-1"></i>
+                            <x-heroicon name="exclamation-circle" class="w-3 h-3 mr-1" />
                             <span class="font-medium">Doğrulanmamış</span>
                         </div>
                     @endif
@@ -189,10 +189,10 @@
 
             <div class="mt-auto flex flex-col sm:flex-row gap-2">
                 <a href="{{ route('deposits') }}" class="flex items-center justify-center w-full gap-1 text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-white transition">
-                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Yatırım
+                    <x-heroicon name="plus-circle" class="w-4 h-4" /> Yatırım
                 </a>
                 <a href="{{ route('withdrawalsdeposits') }}" class="flex items-center justify-center w-full gap-1 text-xs sm:text-sm font-medium px-3 sm:px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-white transition">
-                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i> Çekim
+                    <x-heroicon name="arrow-up-right" class="w-4 h-4" /> Çekim
                 </a>
             </div>
         </div>
@@ -214,7 +214,7 @@
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{{ $card['label'] }}</span>
                     <div class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-                        <i data-lucide="{{ $card['icon'] }}" class="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 dark:text-gray-300"></i>
+                        <x-heroicon name="{{ $card['icon'] }}" class="w-3 h-3 sm:w-4 sm:h-4 text-gray-500 dark:text-gray-300" />
                     </div>
                 </div>
 
@@ -223,7 +223,7 @@
                 </h3>
 
                 <div class="text-xs text-gray-500 dark:text-gray-400 mt-auto flex items-center gap-1">
-                    <i data-lucide="calendar" class="w-3 h-3"></i>
+                    <x-heroicon name="calendar-days" class="w-3 h-3" />
                     <span>{{ $card['label'] === 'Toplam Kar' ? 'Son dönem' : 'Tüm zaman' }}</span>
                 </div>
             </div>
@@ -242,7 +242,7 @@
                 <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-4 sm:p-6 shadow-sm">
                     <div class="flex flex-col sm:flex-row items-center gap-4">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-50 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
-                            <i data-lucide="check-circle" class="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400"></i>
+                            <x-heroicon name="check-circle" class="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
                         </div>
                         <div class="flex-1 text-center sm:text-left">
                             <h3 class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-1">
@@ -265,7 +265,7 @@
                         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                             <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
-                                    <i data-lucide="shield-check" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400"></i>
+                                    <x-heroicon name="shield-check" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
                                 </div>
                                 <div>
                                     <h3 class="text-base sm:text-lg font-medium text-gray-900 dark:text-white mb-1">
@@ -282,8 +282,7 @@
                                     class="w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/20">
                                 <span class="flex items-center justify-center gap-2">
                                     <span>Detayları Görüntüle</span>
-                                    <i data-lucide="chevron-down" id="kycChevron"
-                                       class="w-4 h-4 transition-transform"></i>
+                                    <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="kycChevron" />
                                 </span>
                             </button>
                         </div>
@@ -297,7 +296,7 @@
                             <!-- Under Review State -->
                             <div class="text-center space-y-4">
                                 <div class="w-16 h-16 mx-auto bg-yellow-50 dark:bg-yellow-900/20 rounded-full flex items-center justify-center">
-                                    <i data-lucide="clock" class="w-8 h-8 text-yellow-600 dark:text-yellow-400"></i>
+                                    <x-heroicon name="clock" class="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
                                 </div>
                                 <div>
                                     <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
@@ -324,7 +323,7 @@
                             <!-- Verification Needed State -->
                             <div class="text-center space-y-6">
                                 <div class="w-16 h-16 mx-auto bg-gray-50 dark:bg-gray-800 rounded-full flex items-center justify-center">
-                                    <i data-lucide="user-plus" class="w-8 h-8 text-gray-600 dark:text-gray-400"></i>
+                                    <x-heroicon name="user-plus" class="w-8 h-8 text-gray-600 dark:text-gray-400" />
                                 </div>
 
                                 <div>
@@ -339,11 +338,11 @@
                                 <!-- Benefits -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-sm mx-auto mb-6">
                                     <div class="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                                        <i data-lucide="shield" class="w-5 h-5 mx-auto mb-2 text-gray-600 dark:text-gray-400"></i>
+                                        <x-heroicon name="shield-check" class="w-5 h-5 mx-auto mb-2 text-gray-600 dark:text-gray-400" />
                                         <span class="text-xs text-gray-600 dark:text-gray-400">Gelişmiş Güvenlik</span>
                                     </div>
                                     <div class="text-center p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                                        <i data-lucide="trending-up" class="w-5 h-5 mx-auto mb-2 text-gray-600 dark:text-gray-400"></i>
+                                        <x-heroicon name="arrow-trending-up" class="w-5 h-5 mx-auto mb-2 text-gray-600 dark:text-gray-400" />
                                         <span class="text-xs text-gray-600 dark:text-gray-400">Daha Yüksek Limitler</span>
                                     </div>
                                 </div>
@@ -351,7 +350,7 @@
                                 <!-- Verify Button -->
                                 <a href="{{ route('account.verify') }}"
                                    class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                                    <x-heroicon name="user-check" class="w-4 h-4" />
                                     <span>Doğrulamayı Başlat</span>
                                 </a>
                             </div>
@@ -368,7 +367,7 @@
             <div class="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-2xl p-4 sm:p-6 border border-indigo-200 dark:border-indigo-700">
                 <div class="flex flex-col sm:flex-row items-start gap-4">
                     <div class="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl mx-auto sm:mx-0">
-                        <i data-lucide="wallet" class="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600 dark:text-indigo-400"></i>
+                        <x-heroicon name="wallet" class="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600 dark:text-indigo-400" />
                     </div>
                     <div class="flex-1 text-center sm:text-left">
                         <h3 class="text-base sm:text-lg font-semibold text-indigo-900 dark:text-indigo-100 mb-2">Kazanç Elde Etmek İçin Cüzdanınızı Bağlayın</h3>
@@ -378,13 +377,13 @@
                         </p>
                         <a href="{{ route('connect_wallet') }}"
                            class="inline-flex items-center gap-2 px-4 py-2 sm:py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02] text-sm sm:text-base">
-                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <x-heroicon name="plus" class="w-4 h-4" />
                             Cüzdanı Şimdi Bağla
                         </a>
                     </div>
                     <button onclick="this.parentElement.parentElement.parentElement.style.display='none'"
                             class="text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 absolute top-2 right-2 sm:relative sm:top-auto sm:right-auto">
-                        <i data-lucide="x" class="w-5 h-5"></i>
+                        <x-heroicon name="x-mark" class="w-5 h-5" />
                     </button>
                 </div>
             </div>
@@ -397,19 +396,19 @@
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
     <a href="{{ route('deposits') }}" class="flex flex-col items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-sm group py-3 px-2">
         <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 mb-1">
-            <i data-lucide="plus-circle" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>
+            <x-heroicon name="plus-circle" class="w-5 h-5 text-gray-600 dark:text-gray-300" />
         </span>
         <span class="font-medium text-xs text-gray-800 dark:text-gray-200">Yatırım</span>
     </a>
     <a href="{{ route('withdrawalsdeposits') }}" class="flex flex-col items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-sm group py-3 px-2">
         <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 mb-1">
-            <i data-lucide="arrow-up-right" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>
+            <x-heroicon name="arrow-up-right" class="w-5 h-5 text-gray-600 dark:text-gray-300" />
         </span>
         <span class="font-medium text-xs text-gray-800 dark:text-gray-200">Çekim</span>
     </a>
     <a href="{{ route('trade.index') }}" class="flex flex-col items-center justify-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition shadow-sm group py-3 px-2">
         <span class="flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 dark:bg-gray-800 mb-1">
-            <i data-lucide="trending-up" class="w-5 h-5 text-gray-600 dark:text-gray-300"></i>
+            <x-heroicon name="arrow-trending-up" class="w-5 h-5 text-gray-600 dark:text-gray-300" />
         </span>
         <span class="font-medium text-xs text-gray-800 dark:text-gray-200">Yatırım</span>
     </a>
@@ -464,7 +463,7 @@
             </div>
             <!-- Advanced TradingView Chart Widget -->
             <div id="tradingview_advanced" class="w-full" style="height: 300px; min-height: 300px;"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+            
             <script type="text/javascript">
                 new TradingView.widget({
                     autosize: true,
@@ -581,7 +580,7 @@
         </div>
         <div class="xl:col-span-1 flex flex-col gap-4 sm:gap-6">
             <div class="bg-gradient-to-br from-indigo-600 to-blue-500 text-white rounded-xl shadow p-4 sm:p-6 text-center flex flex-col items-center justify-center min-h-[120px]">
-                <i data-lucide="zap" class="w-8 h-8 sm:w-10 sm:h-10 mb-2"></i>
+                <x-heroicon name="bolt" class="w-8 h-8 sm:w-10 sm:h-10 mb-2" />
                 <h3 class="text-base sm:text-lg font-semibold mb-1">Hızlı Ticaret</h3>
                 <p class="text-xs sm:text-sm mb-3">Yeni bir işlem başlatın veya yatırım planlarını keşfedin.</p>
                 {{-- <a href="{{ route('mplans') }}" class="inline-block bg-white dark:bg-gray-900 text-indigo-600 dark:text-indigo-300 font-semibold px-4 py-2 rounded-lg shadow hover:bg-gray-100 dark:hover:bg-gray-800 transition">Start Trading</a> --}}
@@ -590,7 +589,7 @@
     class="bg-white dark:bg-gray-900 rounded-2xl shadow ring-1 ring-gray-200 dark:ring-gray-700 p-4 sm:p-6 space-y-4 sm:space-y-6">
     @csrf
     <h4 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-        <i data-lucide="bar-chart-3" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400"></i>
+        <x-heroicon name="bar-chart-3" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400" />
         İşlem Yerleştir
     </h4>
     <div id="notifiAlert"></div>
@@ -703,11 +702,11 @@
     <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4">
         <button type="submit" name="order_type" value="Buy"
             class="flex-1 bg-gradient-to-br from-green-500 to-emerald-600 text-white py-2 sm:py-3 rounded-xl shadow hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm sm:text-base font-semibold">
-            <i data-lucide="arrow-up-right" class="w-4 h-4"></i> SATIN AL
+            <x-heroicon name="arrow-up-right" class="w-4 h-4" /> SATIN AL
         </button>
         <button type="submit" name="order_type" value="Sell"
             class="flex-1 bg-gradient-to-br from-red-500 to-pink-600 text-white py-2 sm:py-3 rounded-xl shadow hover:opacity-90 transition-all flex items-center justify-center gap-2 text-sm sm:text-base font-semibold">
-            <i data-lucide="arrow-down-right" class="w-4 h-4"></i> SAT
+            <x-heroicon name="arrow-down-right" class="w-4 h-4" /> SAT
         </button>
     </div>
 </form>
@@ -735,7 +734,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold
                                         {{ $history->type == 'LOSE' ? 'bg-red-50 text-red-600 dark:bg-red-900/20' : 'bg-green-50 text-green-600 dark:bg-green-900/20' }}">
-                                        <i data-lucide="{{ $history->type == 'LOSE' ? 'arrow-down' : 'arrow-up' }}" class="w-3 h-3 sm:w-4 sm:h-4 mr-1"></i>
+                                        <x-heroicon name="{{ $history->type == 'LOSE' ? 'arrow-down' : 'arrow-up' }}" class="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                                         {{ $history->plan }}
                                     </span>
                                 </div>

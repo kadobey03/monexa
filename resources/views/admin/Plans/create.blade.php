@@ -139,7 +139,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('assets/admin/plugins/summernote/summernote-bs4.min.js') }}"></script>
+
 <script>
     $(document).ready(function() {
         $('.summernote').summernote({

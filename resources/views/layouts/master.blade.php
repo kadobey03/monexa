@@ -33,40 +33,37 @@
     ])
     
     <!-- jQuery with Fallback -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-            crossorigin="anonymous"></script>
+    
     <script>
         if (!window.jQuery) {
             document.write('<script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"><\/script>');
         }
     </script>
     
-    <!-- Bootstrap JavaScript with Fallback -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"></script>
+    <!-- Bootstrap JavaScript with Fallback (Only for layouts that need it) -->
+    @if(!in_array($layoutType ?? 'default', ['guest', 'default']))
+    
     <script>
         if (!window.bootstrap) {
             document.write('<script src="{{ asset('vendor/bootstrap/bootstrap.bundle.min.js') }}"><\/script>');
         }
     </script>
+    @endif
     
     <!-- SweetAlert2 with Fallback -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
         if (!window.Swal) {
             document.write('<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
         }
     </script>
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Heroicons Component - Pure SVG icons with no JavaScript dependencies -->
     
     <!-- Console Error Fixes - Ultimate System -->
-    <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
-    <script src="{{ asset('js/websocket-fix.js') }}"></script>
-    <script src="{{ asset('js/console-fixes.js') }}"></script>
+    
+    
+    
     
     @stack('head-scripts')
     @stack('head-styles')
@@ -597,8 +594,8 @@
                             
                             <!-- Theme Toggle -->
                             <button onclick="LayoutManager.toggleTheme()" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
-                                <i data-lucide="moon" class="w-5 h-5 sun-icon"></i>
-                                <i data-lucide="sun" class="w-5 h-5 moon-icon"></i>
+                                <x-heroicon name="moon" class="w-5 h-5 sun-icon" />
+                                <x-heroicon name="sun" class="w-5 h-5 moon-icon" />
                             </button>
                         </div>
                     </div>
@@ -711,8 +708,8 @@
         
         // Enhanced DOM ready handler
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Lucide icons
-            // Icons initialized via unified Icon Service
+            // Heroicons - No initialization needed (pure SVG components)
+            console.log('Heroicons loaded - pure SVG components ready');
             
             // Initialize components
             initializeComponents();
@@ -835,7 +832,7 @@
             $(document).ready(function() {
                 console.log('jQuery ready - legacy compatibility mode');
                 
-                // Initialize Bootstrap components
+                // Initialize Bootstrap components (only if Bootstrap is loaded)
                 if (typeof bootstrap !== 'undefined') {
                     // Initialize modals with Bootstrap 5
                     const modalElements = document.querySelectorAll('.modal');
@@ -855,14 +852,11 @@
                     
                     console.log('Bootstrap components initialized');
                 } else {
-                    console.warn('Bootstrap not loaded, skipping component initialization');
+                    console.log('Bootstrap not loaded - using pure Tailwind CSS layout');
                 }
                 
-                // Initialize Lucide icons
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                    console.log('Lucide icons initialized');
-                }
+                // Heroicons - No initialization needed (pure SVG components)
+                console.log('Heroicons: Pure SVG components loaded - no initialization required');
             });
         }
     </script>

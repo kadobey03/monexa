@@ -10,7 +10,7 @@
         </div>
         <div class="flex items-center space-x-3">
             <button class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors">
-                <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
+                <x-heroicon name="plus" class="h-4 w-4 mr-2" />
                 Yeni Demo Hesabı
             </button>
         </div>
@@ -22,7 +22,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center">
-                        <i data-lucide="users" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="users" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -36,7 +36,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-xl flex items-center justify-center">
-                        <i data-lucide="trending-up" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="arrow-trending-up" class="w-6 h-6 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -50,7 +50,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-xl flex items-center justify-center">
-                        <i data-lucide="dollar-sign" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+                        <x-heroicon name="currency-dollar" class="w-6 h-6 text-purple-600 dark:text-purple-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -64,7 +64,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/50 rounded-xl flex items-center justify-center">
-                        <i data-lucide="activity" class="w-6 h-6 text-orange-600 dark:text-orange-400"></i>
+                        <x-heroicon name="activity" class="w-6 h-6 text-orange-600 dark:text-orange-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -85,7 +85,7 @@
                         <input type="text" placeholder="Hesap ara..." 
                                class="admin-input w-64 pl-10 pr-4 py-2 text-sm">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="search" class="w-4 h-4 text-gray-400"></i>
+                            <x-heroicon name="magnifying-glass" class="w-4 h-4 text-gray-400" />
                         </div>
                     </div>
                 </div>
@@ -108,11 +108,11 @@
                     <tr>
                         <td colspan="6" class="px-6 py-12 text-center">
                             <div class="text-center">
-                                <i data-lucide="inbox" class="w-12 h-12 text-admin-400 mx-auto mb-4"></i>
+                                <x-heroicon name="inbox" class="w-12 h-12 text-admin-400 mx-auto mb-4" />
                                 <h3 class="text-lg font-medium text-admin-900 dark:text-admin-100 mb-2">Henüz demo hesabı yok</h3>
                                 <p class="text-admin-500 dark:text-admin-400 mb-6">Demo trading hesapları burada görüntülenecek</p>
                                 <button class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors">
-                                    <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
+                                    <x-heroicon name="plus" class="h-4 w-4 mr-2" />
                                     İlk demo hesabını oluştur
                                 </button>
                             </div>

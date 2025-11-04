@@ -11,17 +11,17 @@
         <div class="flex gap-3">
             <a href="{{ route('admin.copy.statistics') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg font-medium hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors">
-                <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                <x-heroicon name="bar-chart-3" class="w-4 h-4" />
                 Statistics
             </a>
             <a href="{{ route('admin.copy.active-trades') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg font-medium hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors">
-                <i data-lucide="activity" class="w-4 h-4"></i>
+                <x-heroicon name="activity" class="w-4 h-4" />
                 Active Trades
             </a>
             <a href="{{ route('admin.copy.create') }}"
                class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl">
-                <i data-lucide="plus" class="w-4 h-4"></i>
+                <x-heroicon name="plus" class="w-4 h-4" />
                 Add Expert
             </a>
         </div>
@@ -31,7 +31,7 @@
     @if(session('success'))
         <div class="mb-6 p-4 bg-green-100 dark:bg-green-900/30 border-l-4 border-green-500 text-green-700 dark:text-green-300 rounded-lg">
             <div class="flex items-center">
-                <i data-lucide="check-circle" class="w-5 h-5 mr-2"></i>
+                <x-heroicon name="check-circle" class="w-5 h-5 mr-2" />
                 {{ session('success') }}
             </div>
         </div>
@@ -40,7 +40,7 @@
     @if(session('error'))
         <div class="mb-6 p-4 bg-red-100 dark:bg-red-900/30 border-l-4 border-red-500 text-red-700 dark:text-red-300 rounded-lg">
             <div class="flex items-center">
-                <i data-lucide="alert-circle" class="w-5 h-5 mr-2"></i>
+                <x-heroicon name="exclamation-circle" class="w-5 h-5 mr-2" />
                 {{ session('error') }}
             </div>
         </div>
@@ -89,9 +89,9 @@
                                             <div class="flex items-center gap-1 mt-1">
                                                 @for($i = 1; $i <= 5; $i++)
                                                     @if($i <= $expert->rating)
-                                                        <i data-lucide="star" class="w-3 h-3 text-yellow-400 fill-current"></i>
+                                                        <x-heroicon name="star" class="w-3 h-3 text-yellow-400 fill-current" />
                                                     @else
-                                                        <i data-lucide="star" class="w-3 h-3 text-gray-300 dark:text-gray-600"></i>
+                                                        <x-heroicon name="star" class="w-3 h-3 text-gray-300 dark:text-gray-600" />
                                                     @endif
                                                 @endfor
                                                 <span class="ml-1 text-xs text-gray-600 dark:text-gray-400">({{ $expert->rating }})</span>
@@ -153,19 +153,19 @@
                                         <a href="{{ route('admin.copy.edit', $expert->id) }}"
                                            class="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
                                            title="Edit">
-                                            <i data-lucide="edit" class="w-4 h-4"></i>
+                                            <x-heroicon name="edit" class="w-4 h-4" />
                                         </a>
                                         
                                         @if($expert->active_copiers_count == 0)
                                             <button onclick="deleteExpert({{ $expert->id }})"
                                                     class="p-2 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
                                                     title="Delete">
-                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                <x-heroicon name="trash-2" class="w-4 h-4" />
                                             </button>
                                         @else
                                             <span class="p-2 bg-gray-100 dark:bg-gray-700 text-gray-400 rounded-lg cursor-not-allowed"
                                                   title="Cannot delete - has active copiers">
-                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                                <x-heroicon name="trash-2" class="w-4 h-4" />
                                             </span>
                                         @endif
                                     </div>
@@ -179,7 +179,7 @@
             <!-- Empty State -->
             <div class="text-center py-16">
                 <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="users" class="w-8 h-8 text-gray-400"></i>
+                    <x-heroicon name="users" class="w-8 h-8 text-gray-400" />
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Expert Traders</h3>
                 <p class="text-gray-600 dark:text-gray-400 mb-6">
@@ -187,7 +187,7 @@
                 </p>
                 <a href="{{ route('admin.copy.create') }}"
                    class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <x-heroicon name="plus" class="w-4 h-4" />
                     Add First Expert
                 </a>
             </div>
@@ -199,7 +199,7 @@
 
 @section('scripts')
     @parent
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
         function deleteExpert(expertId) {
             Swal.fire({
@@ -241,7 +241,7 @@
         // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
         });
     </script>

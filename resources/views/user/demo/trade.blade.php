@@ -16,11 +16,11 @@
             </div>
             <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <div class="inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm sm:text-base">
-                    <i data-lucide="wallet" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                    <x-heroicon name="wallet" class="w-4 h-4 sm:w-5 sm:h-5" />
                     Demo Balance: ${{ number_format(auth()->user()->demo_balance, 2) }}
                 </div>
                 <a href="{{ route('demo.dashboard') }}" class="inline-flex items-center justify-center gap-2 px-4 py-2 sm:py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg shadow transition-colors text-sm sm:text-base">
-                    <i data-lucide="arrow-left" class="w-4 h-4 sm:w-5 sm:h-5"></i> Back to Dashboard
+                    <x-heroicon name="arrow-left" class="w-4 h-4 sm:w-5 sm:h-5" /> Back to Dashboard
                 </a>
             </div>
         </div>
@@ -46,7 +46,7 @@
                             Place Demo Trade
                         </h2>
                         <div class="flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/20 rounded-full">
-                            <i data-lucide="shield-check" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+                            <x-heroicon name="shield-check" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
                             <span class="text-sm text-blue-600 dark:text-blue-400">Virtual Money</span>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                                     <input type="radio" name="order_type" value="Buy" class="sr-only peer" required>
                                     <div class="text-center peer-checked:text-green-600 dark:peer-checked:text-green-400">
                                         <div class="w-8 h-8 mx-auto mb-2 flex items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 peer-checked:bg-green-200 dark:peer-checked:bg-green-800/50">
-                                            <i data-lucide="trending-up" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                                            <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-green-600 dark:text-green-400" />
                                         </div>
                                         <span class="text-sm font-medium">BUY</span>
                                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Price goes up</p>
@@ -106,7 +106,7 @@
                                     <input type="radio" name="order_type" value="Sell" class="sr-only peer" required>
                                     <div class="text-center peer-checked:text-red-600 dark:peer-checked:text-red-400">
                                         <div class="w-8 h-8 mx-auto mb-2 flex items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30 peer-checked:bg-red-200 dark:peer-checked:bg-red-800/50">
-                                            <i data-lucide="trending-down" class="w-4 h-4 text-red-600 dark:text-red-400"></i>
+                                            <x-heroicon name="arrow-trending-down" class="w-4 h-4 text-red-600 dark:text-red-400" />
                                         </div>
                                         <span class="text-sm font-medium">SELL</span>
                                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Price goes down</p>
@@ -206,7 +206,7 @@
                     <div class="pt-4">
                         <button type="submit"
                                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
-                            <i data-lucide="play" class="w-5 h-5"></i>
+                            <x-heroicon name="play" class="w-5 h-5" />
                             Execute Demo Trade
                         </button>
                     </div>
@@ -282,7 +282,7 @@
                         <form action="{{ route('demo.reset') }}" method="POST" onsubmit="return confirm('Reset demo account to $100,000?')">
                             @csrf
                             <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2">
-                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                <x-heroicon name="arrow-path" class="w-4 h-4" />
                                 Reset Demo Account
                             </button>
                         </form>
@@ -296,7 +296,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize Lucide icons
-        lucide.createIcons();
+        
 
         // Form elements
         const assetSelect = document.getElementById('asset');

@@ -116,8 +116,8 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/admin/plugins/datatables/dataTables.bootstrap5.min.js') }}"></script>
+
+
 <script>
     $(document).ready(function() {
         $('#data-table').DataTable({

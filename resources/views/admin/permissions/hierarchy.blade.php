@@ -9,11 +9,11 @@
             <div class="flex items-center space-x-4">
                 <a href="{{ route('admin.permissions.index') }}" 
                    class="p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors">
-                    <i data-lucide="arrow-left" class="w-5 h-5 text-admin-600 dark:text-admin-400"></i>
+                    <x-heroicon name="arrow-left" class="w-5 h-5 text-admin-600 dark:text-admin-400" />
                 </a>
                 <div class="flex items-center space-x-3">
                     <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-                        <i data-lucide="git-branch" class="w-6 h-6 text-white"></i>
+                        <x-heroicon name="git-branch" class="w-6 h-6 text-white" />
                     </div>
                     <div>
                         <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Hiyerarşi Görünümü</h1>
@@ -27,32 +27,32 @@
                     <button @click="viewMode = 'tree'" 
                             :class="viewMode === 'tree' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
                             class="px-3 py-2 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                        <i data-lucide="git-branch" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="git-branch" class="w-4 h-4 mr-1" />
                         Ağaç
                     </button>
                     <button @click="viewMode = 'org'" 
                             :class="viewMode === 'org' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
                             class="px-3 py-2 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                        <i data-lucide="users" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="users" class="w-4 h-4 mr-1" />
                         Organizasyon
                     </button>
                     <button @click="viewMode = 'matrix'" 
                             :class="viewMode === 'matrix' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
                             class="px-3 py-2 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                        <i data-lucide="grid" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="grid" class="w-4 h-4 mr-1" />
                         Matrix
                     </button>
                 </div>
                 
                 <button @click="exportHierarchy()" 
                         class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
-                    <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
                     Dışa Aktar
                 </button>
                 
                 <button @click="showRestructure()" 
                         class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
-                    <i data-lucide="shuffle" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="shuffle" class="w-4 h-4 mr-2" />
                     Yeniden Yapılandır
                 </button>
             </div>
@@ -68,7 +68,7 @@
                     <p class="text-2xl font-bold text-blue-700 dark:text-blue-300">{{ $totalLevels ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="layers" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="layers" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
                     <p class="text-2xl font-bold text-green-700 dark:text-green-300">{{ $activeRoles ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
                     <p class="text-2xl font-bold text-purple-700 dark:text-purple-300">{{ $totalDepartments ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="building" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="building" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
                     <p class="text-2xl font-bold text-amber-700 dark:text-amber-300">{{ $totalUsers ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="users" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="users" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -116,7 +116,7 @@
                     <p class="text-2xl font-bold text-red-700 dark:text-red-300">{{ $hierarchyConflicts ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center">
-                    <i data-lucide="alert-triangle" class="w-6 h-6 text-white"></i>
+                    <x-heroicon name="exclamation-triangle" class="w-6 h-6 text-white" />
                 </div>
             </div>
         </div>
@@ -165,7 +165,7 @@
                                     <!-- Role Header -->
                                     <div class="flex items-center justify-between mb-3">
                                         <div class="w-10 h-10 bg-gradient-to-br from-{{ $role->getColorClass() }}-500 to-{{ $role->getColorClass() }}-600 rounded-lg flex items-center justify-center">
-                                            <i data-lucide="shield" class="w-5 h-5 text-white"></i>
+                                            <x-heroicon name="shield-check" class="w-5 h-5 text-white" />
                                         </div>
                                         <div class="text-right">
                                             <span class="px-2 py-1 bg-{{ $role->getColorClass() }}-200 dark:bg-{{ $role->getColorClass() }}-700 text-{{ $role->getColorClass() }}-800 dark:text-{{ $role->getColorClass() }}-200 text-xs font-medium rounded-lg">
@@ -209,7 +209,7 @@
                         
                         @if(!$loop->last)
                             <div class="flex justify-center mt-6">
-                                <i data-lucide="chevron-down" class="w-6 h-6 text-admin-400"></i>
+                                <x-heroicon name="chevron-down" class="w-6 h-6 text-admin-400" />
                             </div>
                         @endif
                     </div>
@@ -231,7 +231,7 @@
                     <div class="department-section">
                         <div class="flex items-center mb-6">
                             <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                                <i data-lucide="building" class="w-6 h-6 text-white"></i>
+                                <x-heroicon name="building" class="w-6 h-6 text-white" />
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-xl font-bold text-admin-900 dark:text-white">{{ ucfirst($department) }}</h3>
@@ -255,7 +255,7 @@
                                         @foreach($roles as $role)
                                             <div class="flex items-center space-x-3 p-4 bg-admin-50 dark:bg-admin-700/50 rounded-xl border border-admin-200 dark:border-admin-600">
                                                 <div class="w-10 h-10 bg-gradient-to-br from-{{ $role->getColorClass() }}-500 to-{{ $role->getColorClass() }}-600 rounded-lg flex items-center justify-center">
-                                                    <i data-lucide="shield" class="w-5 h-5 text-white"></i>
+                                                    <x-heroicon name="shield-check" class="w-5 h-5 text-white" />
                                                 </div>
                                                 <div class="flex-1">
                                                     <h4 class="font-medium text-admin-900 dark:text-white">{{ $role->display_name }}</h4>
@@ -263,7 +263,7 @@
                                                 </div>
                                                 <a href="{{ route('admin.permissions.role-permissions', $role) }}"
                                                    class="p-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-                                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                                    <x-heroicon name="external-link" class="w-4 h-4" />
                                                 </a>
                                             </div>
                                         @endforeach
@@ -323,7 +323,7 @@
                                 <td class="sticky left-0 bg-white dark:bg-admin-800 px-6 py-4 text-sm font-medium text-admin-900 dark:text-white border-r border-admin-200 dark:border-admin-600">
                                     <div class="flex items-center">
                                         <div class="w-8 h-8 bg-gradient-to-br from-{{ $rowRole->getColorClass() }}-500 to-{{ $rowRole->getColorClass() }}-600 rounded-lg flex items-center justify-center mr-3">
-                                            <i data-lucide="shield" class="w-4 h-4 text-white"></i>
+                                            <x-heroicon name="shield-check" class="w-4 h-4 text-white" />
                                         </div>
                                         <div>
                                             <p class="font-medium">{{ $rowRole->display_name }}</p>
@@ -342,15 +342,15 @@
                                                 <div class="w-6 h-6 bg-admin-300 dark:bg-admin-600 rounded-full"></div>
                                             @elseif($relationship === 'parent')
                                                 <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                                                    <i data-lucide="arrow-up" class="w-3 h-3 text-white"></i>
+                                                    <x-heroicon name="arrow-up" class="w-3 h-3 text-white" />
                                                 </div>
                                             @elseif($relationship === 'child')
                                                 <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                                                    <i data-lucide="arrow-down" class="w-3 h-3 text-white"></i>
+                                                    <x-heroicon name="arrow-down" class="w-3 h-3 text-white" />
                                                 </div>
                                             @elseif($relationship === 'sibling')
                                                 <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
-                                                    <i data-lucide="arrow-right" class="w-3 h-3 text-white"></i>
+                                                    <x-heroicon name="arrow-right" class="w-3 h-3 text-white" />
                                                 </div>
                                             @else
                                                 <div class="w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
@@ -374,7 +374,7 @@
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg font-semibold text-admin-900 dark:text-white">Rol Detayları</h3>
                     <button @click="selectedRole = null" class="p-2 text-admin-400 hover:text-admin-600 dark:hover:text-admin-300">
-                        <i data-lucide="x" class="w-5 h-5"></i>
+                        <x-heroicon name="x-mark" class="w-5 h-5" />
                     </button>
                 </div>
             </div>
@@ -387,7 +387,7 @@
                         <div class="bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4 mb-6">
                             <div class="flex items-center space-x-3">
                                 <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                                    <i data-lucide="shield" class="w-6 h-6 text-white"></i>
+                                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                                 </div>
                                 <div>
                                     <h4 class="font-semibold text-admin-900 dark:text-white" x-text="selectedRoleData.display_name"></h4>
@@ -419,7 +419,7 @@
                                     <template x-for="parent in selectedRoleData.parent_roles" :key="parent.id">
                                         <div class="flex items-center space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
                                             <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                                                <i data-lucide="arrow-up" class="w-4 h-4 text-white"></i>
+                                                <x-heroicon name="arrow-up" class="w-4 h-4 text-white" />
                                             </div>
                                             <div>
                                                 <p class="font-medium text-green-900 dark:text-green-100" x-text="parent.display_name"></p>
@@ -436,7 +436,7 @@
                                     <template x-for="child in selectedRoleData.child_roles" :key="child.id">
                                         <div class="flex items-center space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
                                             <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                                                <i data-lucide="arrow-down" class="w-4 h-4 text-white"></i>
+                                                <x-heroicon name="arrow-down" class="w-4 h-4 text-white" />
                                             </div>
                                             <div>
                                                 <p class="font-medium text-blue-900 dark:text-blue-100" x-text="child.display_name"></p>
@@ -452,19 +452,19 @@
                         <div class="space-y-3 pt-4 border-t border-admin-200 dark:border-admin-600">
                             <button @click="viewRolePermissions(selectedRoleData.id)" 
                                     class="w-full flex items-center justify-center px-4 py-3 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-xl hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors">
-                                <i data-lucide="key" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="key" class="w-4 h-4 mr-2" />
                                 İzinleri Görüntüle
                             </button>
                             
                             <button @click="editRole(selectedRoleData.id)" 
                                     class="w-full flex items-center justify-center px-4 py-3 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-xl hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors">
-                                <i data-lucide="edit-3" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="edit-3" class="w-4 h-4 mr-2" />
                                 Rolü Düzenle
                             </button>
                             
                             <button @click="manageUsers(selectedRoleData.id)" 
                                     class="w-full flex items-center justify-center px-4 py-3 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-xl hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors">
-                                <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="users" class="w-4 h-4 mr-2" />
                                 Kullanıcıları Yönet
                             </button>
                         </div>
@@ -481,7 +481,7 @@
                 <div class="flex items-center justify-between">
                     <h3 class="text-xl font-semibold text-admin-900 dark:text-white">Hiyerarşi Yeniden Yapılandırma</h3>
                     <button @click="showRestructureModal = false" class="text-admin-400 hover:text-admin-600">
-                        <i data-lucide="x" class="w-6 h-6"></i>
+                        <x-heroicon name="x-mark" class="w-6 h-6" />
                     </button>
                 </div>
             </div>
@@ -498,7 +498,7 @@
                                 <div class="flex items-center space-x-3">
                                     <input type="radio" x-model="restructureType" value="department" class="text-blue-600">
                                     <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                                        <i data-lucide="building" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                                        <x-heroicon name="building" class="w-5 h-5 text-blue-600 dark:text-blue-400" />
                                     </div>
                                     <div>
                                         <h5 class="font-medium text-admin-900 dark:text-white">Departman Bazlı</h5>
@@ -512,7 +512,7 @@
                                 <div class="flex items-center space-x-3">
                                     <input type="radio" x-model="restructureType" value="function" class="text-green-600">
                                     <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
-                                        <i data-lucide="layers" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                                        <x-heroicon name="layers" class="w-5 h-5 text-green-600 dark:text-green-400" />
                                     </div>
                                     <div>
                                         <h5 class="font-medium text-admin-900 dark:text-white">Fonksiyon Bazlı</h5>
@@ -526,7 +526,7 @@
                                 <div class="flex items-center space-x-3">
                                     <input type="radio" x-model="restructureType" value="permission" class="text-purple-600">
                                     <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
-                                        <i data-lucide="key" class="w-5 h-5 text-purple-600 dark:text-purple-400"></i>
+                                        <x-heroicon name="key" class="w-5 h-5 text-purple-600 dark:text-purple-400" />
                                     </div>
                                     <div>
                                         <h5 class="font-medium text-admin-900 dark:text-white">İzin Bazlı</h5>
@@ -540,7 +540,7 @@
                                 <div class="flex items-center space-x-3">
                                     <input type="radio" x-model="restructureType" value="custom" class="text-amber-600">
                                     <div class="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center">
-                                        <i data-lucide="settings" class="w-5 h-5 text-amber-600 dark:text-amber-400"></i>
+                                        <x-heroicon name="cog-6-tooth" class="w-5 h-5 text-amber-600 dark:text-amber-400" />
                                     </div>
                                     <div>
                                         <h5 class="font-medium text-admin-900 dark:text-white">Özel Yapılandırma</h5>
@@ -556,7 +556,7 @@
                         <h4 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">Değişiklik Önizlemesi</h4>
                         <div class="p-4 bg-admin-50 dark:bg-admin-700/50 rounded-xl border border-admin-200 dark:border-admin-600">
                             <p class="text-admin-700 dark:text-admin-300">
-                                <i data-lucide="info" class="w-4 h-4 inline mr-2"></i>
+                                <x-heroicon name="information-circle" class="w-4 h-4 inline mr-2" />
                                 Seçilen yapılandırma tipine göre hiyerarşi değişiklikleri burada gösterilecek.
                             </p>
                         </div>
@@ -583,7 +583,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://d3js.org/d3.v7.min.js"></script>
+
 <script>
 function hierarchyManager() {
     return {
@@ -595,7 +595,7 @@ function hierarchyManager() {
         
         init() {
             this.$nextTick(() => {
-                lucide.createIcons();
+                
                 this.initializeD3Tree();
             });
         },
@@ -712,7 +712,7 @@ function hierarchyManager() {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
+    
 });
 </script>
 @endpush

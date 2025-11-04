@@ -8,7 +8,7 @@
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 md:mb-8 gap-4">
             <div class="flex items-center gap-3 md:gap-4">
                 <a href="{{ route('myplans', 'All') }}" class="p-2 md:p-2 bg-gray-900 dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 border border-gray-700 dark:border-gray-600">
-                    <i data-lucide="arrow-left" class="w-5 h-5 md:w-6 md:h-6 text-gray-300 dark:text-gray-300"></i>
+                    <x-heroicon name="arrow-left" class="w-5 h-5 md:w-6 md:h-6 text-gray-300 dark:text-gray-300" />
                 </a>
                 <div>
                     <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Plan Details</h1>
@@ -46,7 +46,7 @@
                         <button
                             @click="showCancelModal = true"
                             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-all duration-200 text-sm">
-                            <i data-lucide="x" class="w-4 h-4"></i>
+                            <x-heroicon name="x-mark" class="w-4 h-4" />
                             <span>Cancel Plan</span>
                         </button>
                     @endif
@@ -62,7 +62,7 @@
                         <div class="bg-gray-800 dark:bg-gray-700/50 rounded-xl p-4 border border-gray-700 dark:border-gray-600">
                             <div class="flex items-start gap-3">
                                 <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex-shrink-0">
-                                    <i data-lucide="briefcase" class="w-5 h-5 md:w-6 md:h-6 text-blue-600 dark:text-blue-400"></i>
+                                    <x-heroicon name="briefcase" class="w-5 h-5 md:w-6 md:h-6 text-blue-600 dark:text-blue-400" />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="text-sm text-gray-300 dark:text-gray-400">Invested Amount</p>
@@ -77,7 +77,7 @@
                         <div class="bg-gray-800 dark:bg-gray-700/50 rounded-xl p-4 border border-gray-700 dark:border-gray-600">
                             <div class="flex items-start gap-3">
                                 <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg flex-shrink-0">
-                                    <i data-lucide="trending-up" class="w-5 h-5 md:w-6 md:h-6 text-green-600 dark:text-green-400"></i>
+                                    <x-heroicon name="arrow-trending-up" class="w-5 h-5 md:w-6 md:h-6 text-green-600 dark:text-green-400" />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="text-sm text-gray-300 dark:text-gray-400">Profit Earned</p>
@@ -92,7 +92,7 @@
                         <div class="bg-gray-800 dark:bg-gray-700/50 rounded-xl p-4 border border-gray-700 dark:border-gray-600">
                             <div class="flex items-start gap-3">
                                 <div class="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex-shrink-0">
-                                    <i data-lucide="wallet" class="w-5 h-5 md:w-6 md:h-6 text-purple-600 dark:text-purple-400"></i>
+                                    <x-heroicon name="wallet" class="w-5 h-5 md:w-6 md:h-6 text-purple-600 dark:text-purple-400" />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="text-sm text-gray-300 dark:text-gray-400">Total Return</p>
@@ -119,7 +119,7 @@
                         <div class="space-y-4">
                             <div class="flex items-center gap-3 md:gap-4">
                                 <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex-shrink-0">
-                                    <i data-lucide="calendar" class="w-4 h-4 md:w-5 md:h-5 text-blue-600 dark:text-blue-400"></i>
+                                    <x-heroicon name="calendar-days" class="w-4 h-4 md:w-5 md:h-5 text-blue-600 dark:text-blue-400" />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="text-sm text-gray-300 dark:text-gray-400">Duration</p>
@@ -129,7 +129,7 @@
 
                             <div class="flex items-center gap-3 md:gap-4">
                                 <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg flex-shrink-0">
-                                    <i data-lucide="calendar-plus" class="w-4 h-4 md:w-5 md:h-5 text-green-600 dark:text-green-400"></i>
+                                    <x-heroicon name="calendar-plus" class="w-4 h-4 md:w-5 md:h-5 text-green-600 dark:text-green-400" />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="text-sm text-gray-300 dark:text-gray-400">Start Date</p>
@@ -139,7 +139,7 @@
 
                             <div class="flex items-center gap-3 md:gap-4">
                                 <div class="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg flex-shrink-0">
-                                    <i data-lucide="calendar-check" class="w-4 h-4 md:w-5 md:h-5 text-red-600 dark:text-red-400"></i>
+                                    <x-heroicon name="calendar-check" class="w-4 h-4 md:w-5 md:h-5 text-red-600 dark:text-red-400" />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="text-sm text-gray-300 dark:text-gray-400">End Date</p>
@@ -152,7 +152,7 @@
                         <div class="space-y-4">
                             <div class="flex items-center gap-3 md:gap-4">
                                 <div class="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex-shrink-0">
-                                    <i data-lucide="bar-chart-2" class="w-4 h-4 md:w-5 md:h-5 text-amber-600 dark:text-amber-400"></i>
+                                    <x-heroicon name="bar-chart-2" class="w-4 h-4 md:w-5 md:h-5 text-amber-600 dark:text-amber-400" />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="text-sm text-gray-300 dark:text-gray-400">ROI Interval</p>
@@ -162,7 +162,7 @@
 
                             <div class="flex items-center gap-3 md:gap-4">
                                 <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg flex-shrink-0">
-                                    <i data-lucide="trending-up" class="w-4 h-4 md:w-5 md:h-5 text-green-600 dark:text-green-400"></i>
+                                    <x-heroicon name="arrow-trending-up" class="w-4 h-4 md:w-5 md:h-5 text-green-600 dark:text-green-400" />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="text-sm text-gray-300 dark:text-gray-400">Minimum Return</p>
@@ -172,7 +172,7 @@
 
                             <div class="flex items-center gap-3 md:gap-4">
                                 <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex-shrink-0">
-                                    <i data-lucide="trending-up" class="w-4 h-4 md:w-5 md:h-5 text-blue-600 dark:text-blue-400"></i>
+                                    <x-heroicon name="arrow-trending-up" class="w-4 h-4 md:w-5 md:h-5 text-blue-600 dark:text-blue-400" />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="text-sm text-gray-300 dark:text-gray-400">Maximum Return</p>
@@ -190,7 +190,7 @@
             <div class="p-4 md:p-6">
                 <div class="flex items-center gap-3 mb-4 md:mb-6">
                     <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex-shrink-0">
-                        <i data-lucide="list" class="w-4 h-4 md:w-5 md:h-5 text-indigo-600 dark:text-indigo-400"></i>
+                        <x-heroicon name="list-bullet" class="w-4 h-4 md:w-5 md:h-5 text-indigo-600 dark:text-indigo-400" />
                     </div>
                     <h3 class="text-lg font-semibold text-white dark:text-white">Transaction History</h3>
                 </div>
@@ -203,7 +203,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center gap-3">
                                         <div class="p-1.5 bg-green-100 dark:bg-green-900/30 rounded-full">
-                                            <i data-lucide="trending-up" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                                            <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-green-600 dark:text-green-400" />
                                         </div>
                                         <div>
                                             <p class="font-medium text-white dark:text-white text-sm">Profit</p>
@@ -219,7 +219,7 @@
                             <div class="p-6 text-center text-gray-400 dark:text-gray-400">
                                 <div class="flex flex-col items-center">
                                     <div class="p-3 bg-gray-700 dark:bg-gray-600 rounded-full mb-3">
-                                        <i data-lucide="info" class="w-6 h-6 text-gray-400 dark:text-gray-500"></i>
+                                        <x-heroicon name="information-circle" class="w-6 h-6 text-gray-400 dark:text-gray-500" />
                                     </div>
                                     <p class="text-sm">No transaction records found yet</p>
                                 </div>
@@ -243,7 +243,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="flex items-center">
                                                 <div class="p-1.5 bg-green-100 dark:bg-green-900/30 rounded-full mr-3">
-                                                    <i data-lucide="trending-up" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                                                    <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-green-600 dark:text-green-400" />
                                                 </div>
                                                 <span class="font-medium text-white dark:text-white">Profit</span>
                                             </div>
@@ -262,7 +262,7 @@
                                         <td colspan="3" class="px-6 py-10 text-center text-gray-400 dark:text-gray-400">
                                             <div class="flex flex-col items-center">
                                                 <div class="p-3 bg-gray-700 dark:bg-gray-600 rounded-full mb-3">
-                                                    <i data-lucide="info" class="w-6 h-6 text-gray-400 dark:text-gray-500"></i>
+                                                    <x-heroicon name="information-circle" class="w-6 h-6 text-gray-400 dark:text-gray-500" />
                                                 </div>
                                                 <p>No transaction records found yet</p>
                                             </div>
@@ -294,12 +294,12 @@
                                 <!-- Previous Button -->
                                 @if ($transactions->onFirstPage())
                                     <div class="px-3 py-2 text-gray-500 dark:text-gray-600 cursor-not-allowed">
-                                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                        <x-heroicon name="chevron-left" class="w-4 h-4" />
                                     </div>
                                 @else
                                     <a href="{{ $transactions->previousPageUrl() }}"
                                        class="px-3 py-2 text-gray-300 dark:text-gray-400 hover:text-white dark:hover:text-white hover:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-all duration-200 flex items-center gap-1">
-                                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                        <x-heroicon name="chevron-left" class="w-4 h-4" />
                                         <span class="hidden sm:inline">Previous</span>
                                     </a>
                                 @endif
@@ -350,11 +350,11 @@
                                     <a href="{{ $transactions->nextPageUrl() }}"
                                        class="px-3 py-2 text-gray-300 dark:text-gray-400 hover:text-white dark:hover:text-white hover:bg-gray-700 dark:hover:bg-gray-600 rounded-lg transition-all duration-200 flex items-center gap-1">
                                         <span class="hidden sm:inline">Next</span>
-                                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                        <x-heroicon name="chevron-right" class="w-4 h-4" />
                                     </a>
                                 @else
                                     <div class="px-3 py-2 text-gray-500 dark:text-gray-600 cursor-not-allowed">
-                                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                        <x-heroicon name="chevron-right" class="w-4 h-4" />
                                     </div>
                                 @endif
                             </div>
@@ -401,7 +401,7 @@
                     class="bg-gray-900 dark:bg-gray-800 rounded-2xl shadow-xl transform transition-all max-w-md w-full mx-4 p-6 z-10 border border-gray-700 dark:border-gray-600">
                     <div class="text-center">
                         <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 dark:bg-red-900/30 mb-4">
-                            <i data-lucide="alert-triangle" class="h-8 w-8 text-red-600 dark:text-red-400"></i>
+                            <x-heroicon name="exclamation-triangle" class="h-8 w-8 text-red-600 dark:text-red-400" />
                         </div>
                         <h3 class="text-xl font-semibold text-white dark:text-white mb-2">Cancel Investment Plan</h3>
                         <p class="mb-6 text-gray-300 dark:text-gray-400 text-sm md:text-base">Are you sure you want to cancel your <span class="font-semibold text-white">{{ $plan->uplan->name }}</span> plan?</p>
@@ -427,7 +427,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize Lucide icons
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
 
             // Calculate and display progress if needed

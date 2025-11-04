@@ -79,7 +79,7 @@
 @endpush
 
 @push('scripts')
-<script src="{{ asset('js/admin/leads/lead-detail.js') }}"></script>
+
 <script>
     // Initialize Lead Detail Manager
     document.addEventListener('DOMContentLoaded', function() {

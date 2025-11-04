@@ -36,24 +36,24 @@
                 <div class="hidden md:block relative" x-data="{ open: false }">
                     <button @click="open = !open"
                             class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-                        <i data-lucide="zap" class="w-4 h-4"></i>
+                        <x-heroicon name="bolt" class="w-4 h-4" />
                         <span>Hızlı İşlem</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        <x-heroicon name="chevron-down" class="w-4 h-4" />
                     </button>
 
                     <div x-show="open" @click.away="open = false"
                          class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20">
                         <div class="p-2">
                             <a href="{{ route('deposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                <i data-lucide="plus-circle" class="w-4 h-4 mr-3 text-green-500"></i>
+                                <x-heroicon name="plus-circle" class="w-4 h-4 mr-3 text-green-500" />
                                 Para Yatırma
                             </a>
                             <a href="{{ route('withdrawals') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                <i data-lucide="minus-circle" class="w-4 h-4 mr-3 text-red-500"></i>
+                                <x-heroicon name="minus-circle" class="w-4 h-4 mr-3 text-red-500" />
                                 Para Çekme
                             </a>
                             <a href="{{ route('trade.index') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-blue-500"></i>
+                                <x-heroicon name="arrow-trending-up" class="w-4 h-4 mr-3 text-blue-500" />
                                 Piyasa İşlemleri
                             </a>
                         </div>
@@ -63,8 +63,8 @@
                 <!-- Dark Mode Toggle -->
                 <button @click="toggleTheme()"
                         class="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-                    <i data-lucide="sun" class="w-5 h-5" :class="{ 'hidden': isDarkMode }"></i>
-                    <i data-lucide="moon" class="w-5 h-5" :class="{ 'hidden': !isDarkMode }"></i>
+                    <x-heroicon name="sun" class="w-5 h-5" :class="{ 'hidden': isDarkMode }" />
+                    <x-heroicon name="moon" class="w-5 h-5" :class="{ 'hidden': !isDarkMode }" />
                 </button>
 
                 <!-- User Profile -->
@@ -83,7 +83,7 @@
                                     Ticaret Hesabı
                                 </div>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+                            <x-heroicon name="chevron-down" class="w-4 h-4 text-gray-400" />
                         </button>
 
                         <div x-show="open" @click.away="open = false"
@@ -107,22 +107,22 @@
 
                             <div class="p-2">
                                 <a href="{{ route('profile') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                    <i data-lucide="user" class="w-4 h-4 mr-3"></i>
+                                    <x-heroicon name="user" class="w-4 h-4 mr-3" />
                                     Profil Ayarları
                                 </a>
                                 <a href="{{ route('accounthistory') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                    <i data-lucide="receipt" class="w-4 h-4 mr-3"></i>
+                                    <x-heroicon name="receipt" class="w-4 h-4 mr-3" />
                                     Hesap Geçmişi
                                 </a>
                                 <a href="{{ route('support') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                    <i data-lucide="help-circle" class="w-4 h-4 mr-3"></i>
+                                    <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-3" />
                                     Destek Merkezi
                                 </a>
                                 <div class="border-t border-gray-200 dark:border-gray-600 my-2"></div>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="w-full flex items-center px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md">
-                                        <i data-lucide="log-out" class="w-4 h-4 mr-3"></i>
+                                        <x-heroicon name="arrow-left-on-rectangle" class="w-4 h-4 mr-3" />
                                         Çıkış Yap
                                     </button>
                                 </form>
@@ -134,7 +134,7 @@
                 <!-- Mobile Menu Button -->
                 <button @click="toggleMobileMenu()"
                         class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-                    <i data-lucide="menu" class="w-5 h-5"></i>
+                    <x-heroicon name="bars-3" class="w-5 h-5" />
                 </button>
             </div>
         </div>

@@ -18,7 +18,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-4">
                         <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
-                            <i data-lucide="settings" class="w-8 h-8 text-white"></i>
+                            <x-heroicon name="cog-6-tooth" class="w-8 h-8 text-white" />
                         </div>
                         <div>
                             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Uygulama Ayarları</h1>
@@ -64,14 +64,14 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                         <nav class="flex flex-wrap" x-data="{ activeTab: 'info' }">
                         <button @click="activeTab = 'module'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900': activeTab === 'module', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300': activeTab !== 'module' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
                             <div class="flex items-center justify-center space-x-2">
-                                <i data-lucide="grid-3x3" class="w-5 h-5"></i>
+                                <x-heroicon name="squares-plus" class="w-5 h-5" />
                                 <span>Modül</span>
                             </div>
                         </button>
                             
                         <button @click="activeTab = 'info'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900': activeTab === 'info', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300': activeTab !== 'info' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
                             <div class="flex items-center justify-center space-x-2">
-                                <i data-lucide="info" class="w-5 h-5"></i>
+                                <x-heroicon name="information-circle" class="w-5 h-5" />
                                 <span>Site Bilgileri</span>
                             </div>
                         </button>

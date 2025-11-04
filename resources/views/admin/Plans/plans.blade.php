@@ -8,7 +8,7 @@
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                     <div class="flex items-center space-x-4 mb-4 lg:mb-0">
                         <div class="p-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl shadow-lg">
-                            <i data-lucide="credit-card" class="w-8 h-8 text-white"></i>
+                            <x-heroicon name="credit-card" class="w-8 h-8 text-white" />
                         </div>
                         <div>
                             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Sistem Planları</h1>
@@ -17,7 +17,7 @@
                         </div>
                         
                     <a href="{{ route('newplan') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
-                        <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+                        <x-heroicon name="plus" class="w-5 h-5 mr-2" />
                         Yeni Plan
                     </a>
                 </div>

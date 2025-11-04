@@ -76,8 +76,7 @@
             {{-- Trend --}}
             @if($trend && $trendValue)
                 <div class="flex items-center mt-2">
-                    <i data-lucide="{{ array_key_exists($trend, $trendIcons) ? $trendIcons[$trend] : 'minus' }}" 
-                       class="w-4 h-4 mr-1"></i>
+                    <x-heroicon name="{{ array_key_exists($trend, $trendIcons) ? $trendIcons[$trend] : 'minus' }}" class="w-4 h-4 mr-1" />
                     <span class="text-sm font-medium {{ 
                         $trend === 'up' ? 'text-green-600 dark:text-green-400' : 
                         ($trend === 'down' ? 'text-red-600 dark:text-red-400' : 'text-gray-500') 
@@ -96,7 +95,7 @@
         {{-- Icon --}}
         <div class="flex-shrink-0 ml-4">
             <div class="p-3 rounded-xl {{ $colorClass }}">
-                <i data-lucide="{{ $icon }}" class="{{ $iconSize }}"></i>
+                <x-heroicon name="{{ $icon }}" class="{{ $iconSize }}" />
             </div>
         </div>
     </div>
@@ -112,7 +111,7 @@
 // Initialize Lucide icons for stats cards
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

@@ -35,7 +35,7 @@
      x-transition:leave-end="opacity-0">
     <div class="flex">
         <div class="flex-shrink-0">
-            <i data-lucide="{{ $icons[$type] ?? $icons['info'] }}" class="h-5 w-5 {{ $iconClasses[$type] ?? $iconClasses['info'] }}"></i>
+            <x-heroicon name="{{ $icons[$type] ?? $icons['info'] }}" class="h-5 w-5 {{ $iconClasses[$type] ?? $iconClasses['info'] }}" />
         </div>
         <div class="ml-3 flex-1">
             @if($title)
@@ -51,7 +51,7 @@
             <div class="ml-auto pl-3">
                 <button @click="show = false" class="modal-close">
                     <span class="sr-only">Dismiss</span>
-                    <i data-lucide="x" class="h-4 w-4"></i>
+                    <x-heroicon name="x-mark" class="h-4 w-4" />
                 </button>
             </div>
         @endif

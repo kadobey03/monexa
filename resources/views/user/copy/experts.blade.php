@@ -27,17 +27,17 @@
                 <div class="flex flex-wrap items-center justify-center gap-4" x-cloak>
                     <a href="{{ route('copy.dashboard') }}"
                        class="inline-flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <x-heroicon name="arrow-left" class="w-4 h-4" />
                         Back to Dashboard
                     </a>
 
                     <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                         <div class="flex items-center gap-1">
-                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            <x-heroicon name="shield-check" class="w-4 h-4" />
                             <span>Verified</span>
                         </div>
                         <div class="flex items-center gap-1">
-                            <i data-lucide="trending-up" class="w-4 h-4"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
                             <span>Proven Results</span>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
         @if(session('success'))
             <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 rounded-lg" x-cloak>
                 <div class="flex items-center">
-                    <i data-lucide="check-circle" class="w-5 h-5 mr-2"></i>
+                    <x-heroicon name="check-circle" class="w-5 h-5 mr-2" />
                     {{ session('success') }}
                 </div>
             </div>
@@ -61,7 +61,7 @@
         @if(session('error'))
             <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-lg" x-cloak>
                 <div class="flex items-center">
-                    <i data-lucide="alert-circle" class="w-5 h-5 mr-2"></i>
+                    <x-heroicon name="exclamation-circle" class="w-5 h-5 mr-2" />
                     {{ session('error') }}
                 </div>
             </div>
@@ -74,7 +74,7 @@
                     <!-- Search Bar -->
                     <div class="flex-1 w-full md:w-auto">
                         <div class="relative">
-                            <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                            <x-heroicon name="magnifying-glass" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                             <input type="text"
                                    id="expertSearch"
                                    placeholder="Search experts by name..."
@@ -98,7 +98,7 @@
             <!-- No Search Results Message (initially hidden) -->
             <div id="noSearchResults" class="text-center py-16 hidden" x-cloak>
                 <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="search-x" class="w-8 h-8 text-gray-400"></i>
+                    <x-heroicon name="search-x" class="w-8 h-8 text-gray-400" />
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Experts Found</h3>
                 <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-4">
@@ -145,9 +145,9 @@
                                 <div class="flex items-center justify-center gap-1 mb-3">
                                     @for($i = 1; $i <= 5; $i++)
                                         @if($i <= $expert->rating)
-                                            <i data-lucide="star" class="w-4 h-4 text-yellow-500 fill-current"></i>
+                                            <x-heroicon name="star" class="w-4 h-4 text-yellow-500 fill-current" />
                                         @else
-                                            <i data-lucide="star" class="w-4 h-4 text-gray-300 dark:text-gray-600"></i>
+                                            <x-heroicon name="star" class="w-4 h-4 text-gray-300 dark:text-gray-600" />
                                         @endif
                                     @endfor
                                     <span class="ml-1 text-sm text-gray-500 dark:text-gray-400">({{ $expert->rating }})</span>
@@ -212,7 +212,7 @@
                                 <button class="w-full py-3 px-4 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-medium rounded-lg cursor-not-allowed"
                                         disabled x-cloak>
                                     <span class="flex items-center justify-center gap-2">
-                                        <i data-lucide="check" class="w-4 h-4"></i>
+                                        <x-heroicon name="check" class="w-4 h-4" />
                                         Already Copying
                                     </span>
                                 </button>
@@ -239,7 +239,7 @@
                                             onclick="console.log('Button clicked!'); try { startCopyTrading({{ $expert->id }}, {{ json_encode($expert->name) }}, {{ $expert->price }}); } catch(e) { console.error('Error:', e); alert('Error: ' + e.message); }"
                                             class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl" x-cloak>
                                         <span class="flex items-center justify-center gap-2">
-                                            <i data-lucide="copy" class="w-4 h-4"></i>
+                                            <x-heroicon name="copy" class="w-4 h-4" />
                                             Start Copying
                                         </span>
                                     </button>
@@ -253,7 +253,7 @@
             <!-- Empty State -->
             <div class="text-center py-16" x-cloak>
                 <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="users" class="w-8 h-8 text-gray-400"></i>
+                    <x-heroicon name="users" class="w-8 h-8 text-gray-400" />
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Expert Traders Available</h3>
                 <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
@@ -268,13 +268,13 @@
 
 @section('scripts')
     @parent
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    
     <script x-cloak>
         // Initialize Lucide icons when page loads
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing Lucide icons...');
-            lucide.createIcons();
+            
             console.log('SweetAlert2 available:', typeof Swal !== 'undefined');
 
             // Initialize search functionality

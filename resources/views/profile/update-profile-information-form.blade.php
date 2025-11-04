@@ -15,7 +15,7 @@
                 <div class="md:col-span-3">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="user" class="h-5 w-5 text-gray-400"></i>
+                            <x-heroicon name="user" class="h-5 w-5 text-gray-400" />
                         </div>
                         <input type="text"
                                id="fullName"
@@ -40,7 +40,7 @@
                 <div class="md:col-span-3">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="phone" class="h-5 w-5 text-gray-400"></i>
+                            <x-heroicon name="phone" class="h-5 w-5 text-gray-400" />
                         </div>
                         <input type="text"
                                id="phone"
@@ -64,7 +64,7 @@
                 <div class="md:col-span-3">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="mail" class="h-5 w-5 text-gray-400"></i>
+                            <x-heroicon name="envelope" class="h-5 w-5 text-gray-400" />
                         </div>
                         <input type="text"
                                id="emailAddress"
@@ -76,7 +76,7 @@
                     </div>
                     <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                         <span class="inline-flex items-center">
-                            <i data-lucide="info" class="h-3.5 w-3.5 mr-1 text-gray-400"></i>
+                            <x-heroicon name="information-circle" class="h-3.5 w-3.5 mr-1 text-gray-400" />
                             E-posta adresi değiştirilemez
                         </span>
                     </p>
@@ -94,7 +94,7 @@
                 <div class="md:col-span-3">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="globe" class="h-5 w-5 text-gray-400"></i>
+                            <x-heroicon name="globe" class="h-5 w-5 text-gray-400" />
                         </div>
                         <select
                             name="country"
@@ -352,7 +352,7 @@
                             <option value="Zimbabwe">Zimbabve</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                            <i data-lucide="chevron-down" class="h-5 w-5 text-gray-400"></i>
+                            <x-heroicon name="chevron-down" class="h-5 w-5 text-gray-400" />
                         </div>
                     </div>
                 </div>
@@ -369,7 +369,7 @@
                 <div class="md:col-span-3">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="at-sign" class="h-5 w-5 text-gray-400"></i>
+                            <x-heroicon name="at-sign" class="h-5 w-5 text-gray-400" />
                         </div>
                         <input type="text"
                                id="username"
@@ -381,7 +381,7 @@
                     </div>
                     <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                         <span class="inline-flex items-center">
-                            <i data-lucide="lock" class="h-3.5 w-3.5 mr-1 text-gray-400"></i>
+                            <x-heroicon name="lock-closed" class="h-3.5 w-3.5 mr-1 text-gray-400" />
                             Kullanıcı adı değiştirilemez
                         </span>
                     </p>
@@ -397,7 +397,7 @@
                         class="inline-flex items-center px-6 py-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
                     >
                         <span class="btn-text">
-                            <i data-lucide="save" class="mr-2 h-5 w-5"></i>
+                            <x-heroicon name="save" class="mr-2 h-5 w-5" />
                             Değişiklikleri Kaydet
                         </span>
                         <span class="btn-loading" style="display: none;">
@@ -437,7 +437,7 @@ function hideLoadingState() {
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Lucide icons if available
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 
     document.getElementById('updateprofileform').addEventListener('submit', function(e) {

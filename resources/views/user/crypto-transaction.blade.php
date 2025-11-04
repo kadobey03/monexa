@@ -13,7 +13,7 @@
                 <div class="flex items-center gap-4 mb-2">
                     <a href="{{ route('assetbalance') }}"
                        class="inline-flex items-center px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white text-sm font-medium rounded-lg border border-gray-600 hover:border-gray-500 transition-all duration-200">
-                        <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
                         Borsaya Dön
                     </a>
                 </div>
@@ -43,7 +43,7 @@
                                @input="filterTransactions()"
                                placeholder="Search by currency, amount, or date..."
                                class="w-full bg-gray-900 border border-gray-600 text-white rounded-lg px-4 py-3 pl-10 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-500">
-                        <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                        <x-heroicon name="magnifying-glass" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                     </div>
                 </div>
 
@@ -86,8 +86,8 @@
                 <div class="flex items-center gap-2">
                     <button @click="toggleView()"
                             class="inline-flex items-center px-3 py-1 bg-gray-700 hover:bg-gray-600 text-gray-300 text-xs font-medium rounded-md transition-colors duration-200">
-                        <i data-lucide="layout-grid" x-show="viewMode === 'table'" class="w-3 h-3 mr-1"></i>
-                        <i data-lucide="list" x-show="viewMode === 'cards'" class="w-3 h-3 mr-1"></i>
+                        <x-heroicon name="layout-grid" class="w-3 h-3 mr-1" x-show="viewMode === 'table'" />
+                        <x-heroicon name="list-bullet" class="w-3 h-3 mr-1" x-show="viewMode === 'cards'" />
                         <span x-text="viewMode === 'table' ? 'Card View' : 'Table View'"></span>
                     </button>
                 </div>
@@ -103,31 +103,31 @@
                             <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 <button @click="sortBy('source')" class="flex items-center gap-1 hover:text-gray-300 transition-colors">
                                     Source
-                                    <i data-lucide="chevron-up-down" class="w-3 h-3"></i>
+                                    <x-heroicon name="chevron-up-down" class="w-3 h-3" />
                                 </button>
                             </th>
                             <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 <button @click="sortBy('dest')" class="flex items-center gap-1 hover:text-gray-300 transition-colors">
                                     Destination
-                                    <i data-lucide="chevron-up-down" class="w-3 h-3"></i>
+                                    <x-heroicon name="chevron-up-down" class="w-3 h-3" />
                                 </button>
                             </th>
                             <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 <button @click="sortBy('amount')" class="flex items-center gap-1 hover:text-gray-300 transition-colors">
                                     Amount
-                                    <i data-lucide="chevron-up-down" class="w-3 h-3"></i>
+                                    <x-heroicon name="chevron-up-down" class="w-3 h-3" />
                                 </button>
                             </th>
                             <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 <button @click="sortBy('quantity')" class="flex items-center gap-1 hover:text-gray-300 transition-colors">
                                     Received
-                                    <i data-lucide="chevron-up-down" class="w-3 h-3"></i>
+                                    <x-heroicon name="chevron-up-down" class="w-3 h-3" />
                                 </button>
                             </th>
                             <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
                                 <button @click="sortBy('created_at')" class="flex items-center gap-1 hover:text-gray-300 transition-colors">
                                     Date
-                                    <i data-lucide="chevron-up-down" class="w-3 h-3"></i>
+                                    <x-heroicon name="chevron-up-down" class="w-3 h-3" />
                                 </button>
                             </th>
                             <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -184,13 +184,13 @@
                             <td colspan="6" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center">
                                     <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                                        <i data-lucide="activity" class="w-8 h-8 text-gray-500"></i>
+                                        <x-heroicon name="activity" class="w-8 h-8 text-gray-500" />
                                     </div>
                                     <h3 class="text-lg font-semibold text-white mb-2">No Transactions Found</h3>
                                     <p class="text-gray-400 mb-6">You haven't made any exchanges yet.</p>
                                     <a href="{{ route('assetbalance') }}"
                                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
-                                        <i data-lucide="repeat" class="w-4 h-4 mr-2"></i>
+                                        <x-heroicon name="arrow-path" class="w-4 h-4 mr-2" />
                                         Start Trading
                                     </a>
                                 </div>
@@ -211,7 +211,7 @@
                             <div class="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center">
                                 <span class="text-xs font-bold text-orange-400">{{ strtoupper($tran->source) }}</span>
                             </div>
-                            <i data-lucide="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            <x-heroicon name="arrow-right" class="w-4 h-4 text-gray-400" />
                             <div class="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
                                 <span class="text-xs font-bold text-green-400">{{ strtoupper($tran->dest) }}</span>
                             </div>
@@ -247,13 +247,13 @@
                 @empty
                 <div class="text-center py-12">
                     <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i data-lucide="activity" class="w-8 h-8 text-gray-500"></i>
+                        <x-heroicon name="activity" class="w-8 h-8 text-gray-500" />
                     </div>
                     <h3 class="text-lg font-semibold text-white mb-2">No Transactions Found</h3>
                     <p class="text-gray-400 mb-6">You haven't made any exchanges yet.</p>
                     <a href="{{ route('assetbalance') }}"
                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
-                        <i data-lucide="repeat" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="arrow-path" class="w-4 h-4 mr-2" />
                         Start Trading
                     </a>
                 </div>
@@ -272,7 +272,7 @@
                                 <div class="w-10 h-10 bg-orange-500/20 rounded-xl flex items-center justify-center">
                                     <span class="text-sm font-bold text-orange-400">{{ strtoupper($tran->source) }}</span>
                                 </div>
-                                <i data-lucide="arrow-right" class="w-5 h-5 text-gray-400"></i>
+                                <x-heroicon name="arrow-right" class="w-5 h-5 text-gray-400" />
                                 <div class="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
                                     <span class="text-sm font-bold text-green-400">{{ strtoupper($tran->dest) }}</span>
                                 </div>
@@ -304,7 +304,7 @@
                                 <div class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($tran->created_at)->format('g:i A') }}</div>
                             </div>
                             <button class="inline-flex items-center px-3 py-1 bg-gray-800 hover:bg-gray-700 text-blue-400 hover:text-blue-300 text-sm font-medium rounded-md transition-colors duration-200">
-                                <i data-lucide="external-link" class="w-3 h-3 mr-1"></i>
+                                <x-heroicon name="external-link" class="w-3 h-3 mr-1" />
                                 Details
                             </button>
                         </div>
@@ -313,13 +313,13 @@
                 @empty
                 <div class="col-span-full text-center py-12">
                     <div class="w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i data-lucide="activity" class="w-10 h-10 text-gray-500"></i>
+                        <x-heroicon name="activity" class="w-10 h-10 text-gray-500" />
                     </div>
                     <h3 class="text-xl font-semibold text-white mb-3">No Transactions Found</h3>
                     <p class="text-gray-400 mb-8 max-w-md mx-auto">You haven't made any exchanges yet. Start trading to see your transaction history here.</p>
                     <a href="{{ route('assetbalance') }}"
                        class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors duration-200">
-                        <i data-lucide="repeat" class="w-5 h-5 mr-2"></i>
+                        <x-heroicon name="arrow-path" class="w-5 h-5 mr-2" />
                         Start Trading
                     </a>
                 </div>
@@ -351,7 +351,7 @@ function transactionHistory() {
         init() {
             // Initialize Lucide icons
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
 
             // Listen for window resize to adjust view mode

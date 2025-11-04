@@ -7,7 +7,7 @@
     <div class="flex items-center justify-between bg-gradient-to-r from-violet-600 via-purple-700 to-indigo-600 rounded-2xl p-6 text-white shadow-lg">
         <div class="flex items-center space-x-4">
             <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-                <i data-lucide="trending-up" class="w-8 h-8 text-white"></i>
+                <x-heroicon name="arrow-trending-up" class="w-8 h-8 text-white" />
             </div>
             <div>
                 <h1 class="text-3xl font-bold mb-1">İşlem Yönetimi</h1>
@@ -16,11 +16,11 @@
         </div>
         <div class="flex items-center space-x-3">
             <div class="hidden md:flex items-center space-x-2 text-white/80">
-                <i data-lucide="home" class="w-4 h-4"></i>
+                <x-heroicon name="home" class="w-4 h-4" />
                 <span>Dashboard</span>
-                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4" />
                 <span>Yönetim</span>
-                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4" />
                 <span class="text-white font-semibold">İşlemler</span>
             </div>
         </div>
@@ -41,7 +41,7 @@
                 <p class="text-xs text-admin-400 mt-1">Tüm işlemler</p>
             </div>
             <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
-                <i data-lucide="trending-up" class="w-7 h-7 text-white"></i>
+                <x-heroicon name="arrow-trending-up" class="w-7 h-7 text-white" />
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
                 <p class="text-xs text-admin-400 mt-1">Devam eden</p>
             </div>
             <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center">
-                <i data-lucide="clock" class="w-7 h-7 text-white"></i>
+                <x-heroicon name="clock" class="w-7 h-7 text-white" />
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
                 <p class="text-xs text-admin-400 mt-1">Bitmiş işlemler</p>
             </div>
             <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center">
-                <i data-lucide="check-circle" class="w-7 h-7 text-white"></i>
+                <x-heroicon name="check-circle" class="w-7 h-7 text-white" />
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
                 <p class="text-xs text-admin-400 mt-1">USD değeri</p>
             </div>
             <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center">
-                <i data-lucide="dollar-sign" class="w-7 h-7 text-white"></i>
+                <x-heroicon name="currency-dollar" class="w-7 h-7 text-white" />
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="search" class="w-5 h-5 text-white"></i>
+                    <x-heroicon name="magnifying-glass" class="w-5 h-5 text-white" />
                 </div>
                 <div>
                     <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">Filtreler ve Arama</h2>
@@ -100,7 +100,7 @@
                 </div>
             </div>
             <button id="toggleFilters" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-lg">
-                <i data-lucide="filter" class="w-4 h-4 mr-2"></i>
+                <x-heroicon name="funnel" class="w-4 h-4 mr-2" />
                 Filtreleri Aç/Kapat
             </button>
         </div>
@@ -138,7 +138,7 @@
                 </div>
                 <div class="flex items-end">
                     <button type="submit" class="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-lg">
-                        <i data-lucide="search" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="magnifying-glass" class="w-4 h-4 mr-2" />
                         Filtrele
                     </button>
                 </div>
@@ -153,7 +153,7 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl flex items-center justify-center">
-                    <i data-lucide="bar-chart-3" class="w-5 h-5 text-white"></i>
+                    <x-heroicon name="bar-chart-3" class="w-5 h-5 text-white" />
                 </div>
                 <div>
                     <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">Kullanıcı İşlemleri</h2>
@@ -162,22 +162,22 @@
             </div>
             <div class="flex items-center space-x-3">
                 <button onclick="testRoutes()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-xl transition-colors shadow-lg">
-                    <i data-lucide="bug" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="bug" class="w-4 h-4 mr-2" />
                     Test
                 </button>
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" id="exportDropdown" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-xl transition-colors shadow-lg">
-                        <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
                         Dışa Aktar
                     </button>
                     <div x-show="open" @click.away="open = false" x-transition id="exportMenu" class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-xl border border-admin-200 dark:border-admin-700 z-50">
                         <a href="{{ route('admin.trades.export', ['format' => 'csv'] + request()->all()) }}"
                            class="flex items-center px-4 py-3 text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700 rounded-t-xl transition-colors">
-                            <i data-lucide="file-text" class="w-4 h-4 mr-2"></i>CSV
+                            <x-heroicon name="file-text" class="w-4 h-4 mr-2" />CSV
                         </a>
                         <a href="{{ route('admin.trades.export', ['format' => 'excel'] + request()->all()) }}"
                            class="flex items-center px-4 py-3 text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700 rounded-b-xl transition-colors">
-                            <i data-lucide="file-spreadsheet" class="w-4 h-4 mr-2"></i>Excel
+                            <x-heroicon name="file-spreadsheet" class="w-4 h-4 mr-2" />Excel
                         </a>
                     </div>
                 </div>
@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize Lucide icons after content is loaded
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 
     // Auto-dismiss alerts

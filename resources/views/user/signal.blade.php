@@ -10,10 +10,10 @@
             <!-- Breadcrumb -->
             <nav class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6" aria-label="Breadcrumb">
                 <a href="{{ route('dashboard') }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                    <i data-lucide="home" class="w-4 h-4 inline mr-1"></i>
+                    <x-heroicon name="home" class="w-4 h-4 inline mr-1" />
                     Dashboard
                 </a>
-                <i data-lucide="chevron-right" class="w-4 h-4 mx-2"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4 mx-2" />
                 <span class="text-gray-900 dark:text-gray-100 font-medium">Trading Signals</span>
             </nav>
 
@@ -21,7 +21,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                        <i data-lucide="signal" class="w-8 h-8 inline mr-3 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="signal" class="w-8 h-8 inline mr-3 text-blue-600 dark:text-blue-400" />
                         Premium Trading Signals
                     </h1>
                     <p class="text-gray-600 dark:text-gray-400 text-lg">
@@ -34,7 +34,7 @@
                     <div class="bg-white dark:bg-gray-900 rounded-xl p-4 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                                <i data-lucide="trending-up" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                                <x-heroicon name="arrow-trending-up" class="w-5 h-5 text-blue-600 dark:text-blue-400" />
                             </div>
                             <div>
                                 <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ count($signals) }}</p>
@@ -57,7 +57,7 @@
                     <!-- Premium Badge -->
                     <div class="absolute top-4 right-4">
                         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-                            <i data-lucide="star" class="w-3 h-3 mr-1"></i>
+                            <x-heroicon name="star" class="w-3 h-3 mr-1" />
                             Premium
                         </span>
                     </div>
@@ -65,7 +65,7 @@
                     <!-- Signal Icon & Name -->
                     <div class="flex items-center gap-3 mb-4">
                         <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl group-hover:scale-110 transition-transform duration-300">
-                            <i data-lucide="radio" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                            <x-heroicon name="radio" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                         </div>
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ $signal->name }}</h3>
                     </div>
@@ -83,25 +83,25 @@
                     <div class="space-y-3 mb-6">
                         <div class="flex items-center gap-3">
                             <div class="flex-shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                                <i data-lucide="check" class="w-3 h-3 text-green-600 dark:text-green-400"></i>
+                                <x-heroicon name="check" class="w-3 h-3 text-green-600 dark:text-green-400" />
                             </div>
                             <span class="text-sm text-gray-700 dark:text-gray-300">Success Rate: {{ $signal->increment_amount }}%</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="flex-shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                                <i data-lucide="check" class="w-3 h-3 text-green-600 dark:text-green-400"></i>
+                                <x-heroicon name="check" class="w-3 h-3 text-green-600 dark:text-green-400" />
                             </div>
                             <span class="text-sm text-gray-700 dark:text-gray-300">Real-time notifications</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="flex-shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                                <i data-lucide="check" class="w-3 h-3 text-green-600 dark:text-green-400"></i>
+                                <x-heroicon name="check" class="w-3 h-3 text-green-600 dark:text-green-400" />
                             </div>
                             <span class="text-sm text-gray-700 dark:text-gray-300">Expert analysis</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="flex-shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                                <i data-lucide="check" class="w-3 h-3 text-green-600 dark:text-green-400"></i>
+                                <x-heroicon name="check" class="w-3 h-3 text-green-600 dark:text-green-400" />
                             </div>
                             <span class="text-sm text-gray-700 dark:text-gray-300">24/7 support</span>
                         </div>
@@ -112,7 +112,7 @@
                 <div class="p-6 pt-0">
                     <button onclick="signalManager.openSubscriptionModal('{{ $signal->id }}', '{{ $signal->name }}', '{{ $signal->price }}')"
                             class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
-                        <i data-lucide="plus-circle" class="w-5 h-5 inline mr-2"></i>
+                        <x-heroicon name="plus-circle" class="w-5 h-5 inline mr-2" />
                         Subscribe Now
                     </button>
                 </div>
@@ -124,7 +124,7 @@
             <!-- Empty State -->
             <div class="col-span-full text-center py-16">
             <div class="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
-                <i data-lucide="signal" class="w-12 h-12 text-gray-400"></i>
+                <x-heroicon name="signal" class="w-12 h-12 text-gray-400" />
             </div>
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Signals Available</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
@@ -132,7 +132,7 @@
             </p>
             <a href="{{ route('dashboard') }}"
                class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
-                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                <x-heroicon name="arrow-left" class="w-5 h-5" />
                 Back to Dashboard
             </a>
         </div>
@@ -153,7 +153,7 @@
                     <div class="flex items-center justify-between mb-6">
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                                <i data-lucide="signal" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                                <x-heroicon name="signal" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                             </div>
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900 dark:text-white">Subscribe to Signal</h3>
@@ -162,7 +162,7 @@
                         </div>
                         <button onclick="signalManager.closeModal()"
                                 class="rounded-lg p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                            <i data-lucide="x" class="w-6 h-6"></i>
+                            <x-heroicon name="x-mark" class="w-6 h-6" />
                         </button>
                     </div>
 
@@ -174,7 +174,7 @@
                         <!-- Payment Method Selection -->
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-3">
-                                <i data-lucide="credit-card" class="w-4 h-4 inline mr-2"></i>
+                                <x-heroicon name="credit-card" class="w-4 h-4 inline mr-2" />
                                 Payment Method
                             </label>
                             <select name="payment_method"
@@ -192,7 +192,7 @@
                         <!-- Amount Display -->
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-3">
-                                <i data-lucide="dollar-sign" class="w-4 h-4 inline mr-2"></i>
+                                <x-heroicon name="currency-dollar" class="w-4 h-4 inline mr-2" />
                                 Subscription Amount ({{ Auth::user()->currency }})
                             </label>
                             <div class="relative">
@@ -206,7 +206,7 @@
                                 </div>
                             </div>
                             <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                                <i data-lucide="info" class="w-4 h-4 inline mr-1"></i>
+                                <x-heroicon name="information-circle" class="w-4 h-4 inline mr-1" />
                                 Recurring monthly subscription
                             </p>
                         </div>
@@ -220,7 +220,7 @@
                             </button>
                             <button type="submit"
                                     class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
-                                <i data-lucide="check-circle" class="w-5 h-5 inline mr-2"></i>
+                                <x-heroicon name="check-circle" class="w-5 h-5 inline mr-2" />
                                 Complete Subscription
                             </button>
                         </div>
@@ -247,7 +247,7 @@ class SignalManager {
     init() {
         // Initialize Lucide icons when page loads
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            
         }
     }
 

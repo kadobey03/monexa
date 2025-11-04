@@ -9,22 +9,22 @@
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <div class="mb-4 sm:mb-0">
                         <h1 class="text-3xl font-bold text-gray-900 flex items-center">
-                            <i data-lucide="users" class="w-8 h-8 text-blue-600 mr-3"></i>
+                            <x-heroicon name="users" class="w-8 h-8 text-blue-600 mr-3" />
                             Modern Lead Yönetimi
                         </h1>
                         <p class="text-gray-600 mt-1">Toplam: <span id="total-leads" class="font-semibold text-blue-600">0</span> lead</p>
                     </div>
                     <div class="flex space-x-3">
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="refresh-btn">
-                            <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="arrow-path" class="w-4 h-4 mr-2" />
                             Yenile
                         </button>
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="export-excel-btn">
-                            <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
                             Excel
                         </button>
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm" id="add-lead-btn">
-                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="plus" class="w-4 h-4 mr-2" />
                             Yeni Lead Ekle
                         </button>
                     </div>
@@ -40,7 +40,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-2">Arama</label>
                         <div class="relative">
                             <input type="text" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400" id="search-input" placeholder="İsim, email, telefon, şirket...">
-                            <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                            <x-heroicon name="magnifying-glass" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                         </div>
                     </div>
                     <div>
@@ -65,11 +65,11 @@
                 </div>
                 <div class="flex space-x-3 mt-4">
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="apply-filters">
-                        <i data-lucide="filter" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="funnel" class="w-4 h-4 mr-2" />
                         Filtrele
                     </button>
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="clear-filters">
-                        <i data-lucide="x" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="x-mark" class="w-4 h-4 mr-2" />
                         Temizle
                     </button>
                 </div>
@@ -81,26 +81,26 @@
             <div class="px-6 py-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <i data-lucide="check-circle" class="w-5 h-5 text-blue-600 mr-2"></i>
+                        <x-heroicon name="check-circle" class="w-5 h-5 text-blue-600 mr-2" />
                         <span class="text-sm font-medium text-blue-700">
                             <span id="selected-count">0</span> lead seçildi
                         </span>
                     </div>
                     <div class="flex space-x-3">
                         <button type="button" class="inline-flex items-center px-3 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors" id="bulk-assign-btn">
-                            <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="user-plus" class="w-4 h-4 mr-2" />
                             Ata
                         </button>
                         <button type="button" class="inline-flex items-center px-3 py-2 bg-green-100 text-green-700 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors" id="bulk-status-btn">
-                            <i data-lucide="edit" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="edit" class="w-4 h-4 mr-2" />
                             Durum
                         </button>
                         <button type="button" class="inline-flex items-center px-3 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors" id="bulk-delete-btn">
-                            <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="trash-2" class="w-4 h-4 mr-2" />
                             Sil
                         </button>
                         <button type="button" class="inline-flex items-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors" id="clear-selection-btn">
-                            <i data-lucide="x" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="x-mark" class="w-4 h-4 mr-2" />
                             Temizle
                         </button>
                     </div>
@@ -132,12 +132,12 @@
                 <!-- Empty State -->
                 <div id="empty-state" class="text-center py-16" style="display: none;">
                     <div class="mx-auto h-16 w-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                        <i data-lucide="users" class="w-8 h-8 text-gray-400"></i>
+                        <x-heroicon name="users" class="w-8 h-8 text-gray-400" />
                     </div>
                     <h3 class="text-lg font-medium text-gray-900 mb-2">Lead bulunamadı</h3>
                     <p class="text-gray-500 mb-6 max-w-md mx-auto">Henüz hiç lead eklenmemiş veya filtrelenmiş sonuç bulunamadı.</p>
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="empty-add-lead-btn">
-                        <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="plus" class="w-4 h-4 mr-2" />
                         İlk Lead'inizi Ekleyin
                     </button>
                 </div>
@@ -146,12 +146,12 @@
                 <div id="pagination-wrapper" class="bg-gray-50 px-6 py-4 flex items-center justify-between border-t border-gray-200" style="display: none;">
                     <div class="flex-1 flex justify-between sm:hidden">
                         <button id="prev-btn-mobile" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-                            <i data-lucide="chevron-left" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="chevron-left" class="w-4 h-4 mr-2" />
                             Önceki
                         </button>
                         <button id="next-btn-mobile" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
                             Sonraki
-                            <i data-lucide="chevron-right" class="w-4 h-4 ml-2"></i>
+                            <x-heroicon name="chevron-right" class="w-4 h-4 ml-2" />
                         </button>
                     </div>
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
@@ -180,7 +180,7 @@
             <div class="flex items-center justify-between pb-4 border-b border-gray-200">
                 <h3 class="text-lg font-semibold text-gray-900" id="addLeadModalLabel">Yeni Lead Ekle</h3>
                 <button type="button" class="text-gray-400 hover:text-gray-600 focus:outline-none" id="close-modal">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+                    <x-heroicon name="x-mark" class="w-6 h-6" />
                 </button>
             </div>
             
@@ -274,7 +274,7 @@ $(document).ready(function() {
     // Initialize Lucide Icons
     function initializeLucideIcons() {
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            
         }
     }
     
@@ -469,7 +469,7 @@ $(document).ready(function() {
                 <td class="column-ulke px-4 py-3 text-sm">
                     <div class="flex items-center">
                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                            <i data-lucide="globe" class="w-3 h-3 mr-1"></i>
+                            <x-heroicon name="globe" class="w-3 h-3 mr-1" />
                             ${lead.country || 'Belirtilmemiş'}
                         </span>
                     </div>
@@ -494,7 +494,7 @@ $(document).ready(function() {
                 <td class="column-phone px-4 py-3 text-sm text-gray-900">
                     ${lead.phone ? `
                         <div class="flex items-center">
-                            <i data-lucide="phone" class="w-4 h-4 text-gray-400 mr-2"></i>
+                            <x-heroicon name="phone" class="w-4 h-4 text-gray-400 mr-2" />
                             <a href="tel:${lead.phone}" class="text-blue-600 hover:text-blue-900 transition-colors">
                                 ${lead.phone}
                             </a>
@@ -508,7 +508,7 @@ $(document).ready(function() {
                 <td class="column-email px-4 py-3 text-sm">
                     ${lead.email ? `
                         <div class="flex items-center">
-                            <i data-lucide="mail" class="w-4 h-4 text-gray-400 mr-2"></i>
+                            <x-heroicon name="envelope" class="w-4 h-4 text-gray-400 mr-2" />
                             <a href="mailto:${lead.email}" class="text-blue-600 hover:text-blue-900 transition-colors truncate max-w-xs">
                                 ${lead.email}
                             </a>
@@ -534,7 +534,7 @@ $(document).ready(function() {
                                     <span class="text-gray-500 italic">Atanmamış</span>
                                 `}
                             </span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+                            <x-heroicon name="chevron-down" class="w-4 h-4 text-gray-400" />
                         </button>
                         <select class="assigned-select hidden w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="">Atanmamış</option>
@@ -554,7 +554,7 @@ $(document).ready(function() {
                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium" style="background-color: ${statusObj.color || '#6b7280'}20; color: ${statusObj.color || '#6b7280'}; border: 1px solid ${statusObj.color || '#6b7280'}40;">
                                 ${statusObj.display_name || statusObj.name || 'Bilinmeyen'}
                             </span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+                            <x-heroicon name="chevron-down" class="w-4 h-4 text-gray-400" />
                         </button>
                         <select class="status-select hidden w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             ${(leadStatuses && Array.isArray(leadStatuses)) ? leadStatuses.filter(status => status && status.name).map(status => `
@@ -570,7 +570,7 @@ $(document).ready(function() {
                 <td class="column-organization px-4 py-3 text-sm text-gray-900">
                     ${lead.organization ? `
                         <div class="flex items-center">
-                            <i data-lucide="building" class="w-4 h-4 text-gray-400 mr-2"></i>
+                            <x-heroicon name="building" class="w-4 h-4 text-gray-400 mr-2" />
                             <span>${lead.organization}</span>
                         </div>
                     ` : `
@@ -589,7 +589,7 @@ $(document).ready(function() {
                 <td class="column-company px-4 py-3 text-sm text-gray-900">
                     ${lead.company_name ? `
                         <div class="flex items-center">
-                            <i data-lucide="briefcase" class="w-4 h-4 text-gray-400 mr-2"></i>
+                            <x-heroicon name="briefcase" class="w-4 h-4 text-gray-400 mr-2" />
                             <span>${lead.company_name}</span>
                         </div>
                     ` : `
@@ -832,7 +832,7 @@ $(document).ready(function() {
         paginationContainer.append(`
             <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 ${prevDisabled}"
                     data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>
-                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                <x-heroicon name="chevron-left" class="w-4 h-4" />
             </button>
         `);
         
@@ -855,7 +855,7 @@ $(document).ready(function() {
         paginationContainer.append(`
             <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 ${nextDisabled}"
                     data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>
-                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4" />
             </button>
         `);
         

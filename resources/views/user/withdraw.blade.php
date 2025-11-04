@@ -13,7 +13,7 @@
             </div>
             <a href="{{ route('dashboard') }}"
                class="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
-                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                <x-heroicon name="arrow-left" class="w-5 h-5" />
                 Gösterge Paneline Dön
             </a>
         </div>
@@ -27,13 +27,13 @@
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
                     <a href="{{ route('dashboard') }}" class="inline-flex items-center text-sm text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
-                        <i data-lucide="home" class="w-4 h-4 mr-2"></i>
+                        <x-heroicon name="home" class="w-4 h-4 mr-2" />
                         Ana Sayfa
                     </a>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400 mx-1"></i>
+                        <x-heroicon name="chevron-right" class="w-4 h-4 text-gray-400 mx-1" />
                         <span class="text-sm text-gray-500 dark:text-gray-400">Çekim</span>
                     </div>
                 </li>
@@ -49,12 +49,11 @@
                         @elseif($payment_mode == 'Bank Transfer') bg-green-100 dark:bg-green-900/30
                         @elseif($payment_mode == 'USDT') bg-purple-100 dark:bg-purple-900/30
                         @endif">
-                        <i data-lucide="{{ $payment_mode == 'Bitcoin' ? 'bitcoin' : ($payment_mode == 'Ethereum' ? 'zap' : ($payment_mode == 'USDT' ? 'circle-dollar-sign' : 'building-bank')) }}"
-                           class="w-6 h-6
+                        <x-heroicon name="{{ $payment_mode == 'Bitcoin' ? 'bitcoin' : ($payment_mode == 'Ethereum' ? 'zap' : ($payment_mode == 'USDT' ? 'circle-dollar-sign' : 'building-bank')) }}" class="w-6 h-6
                            @if($payment_mode == 'Bitcoin' || $payment_mode == 'Ethereum') text-blue-600 dark:text-blue-400
                            @elseif($payment_mode == 'Bank Transfer') text-green-600 dark:text-green-400
                            @elseif($payment_mode == 'USDT') text-purple-600 dark:text-purple-400
-                           @endif"></i>
+                           @endif" />
                     </div>
                     <div>
                         <h2 class="text-2xl font-bold text-white dark:text-white">{{ $payment_mode }} Çekimi</h2>
@@ -100,7 +99,7 @@
                                 </label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i data-lucide="building-bank" class="h-5 w-5 text-gray-400"></i>
+                                        <x-heroicon name="building-bank" class="h-5 w-5 text-gray-400" />
                                     </div>
                                     <input type="text"
                                            name="bank_name"
@@ -117,7 +116,7 @@
                                 </label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i data-lucide="user" class="h-5 w-5 text-gray-400"></i>
+                                        <x-heroicon name="user" class="h-5 w-5 text-gray-400" />
                                     </div>
                                     <input type="text"
                                            name="account_name"
@@ -134,7 +133,7 @@
                                 </label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i data-lucide="hash" class="h-5 w-5 text-gray-400"></i>
+                                        <x-heroicon name="hash" class="h-5 w-5 text-gray-400" />
                                     </div>
                                     <input type="text"
                                            name="account_no"
@@ -151,7 +150,7 @@
                                 </label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i data-lucide="code" class="h-5 w-5 text-gray-400"></i>
+                                        <x-heroicon name="code" class="h-5 w-5 text-gray-400" />
                                     </div>
                                     <input type="text"
                                            name="swiftcode"
@@ -170,7 +169,7 @@
                         </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i data-lucide="wallet" class="h-5 w-5 text-gray-400"></i>
+                                <x-heroicon name="wallet" class="h-5 w-5 text-gray-400" />
                             </div>
                             <input type="text"
                                    name="details"
@@ -189,7 +188,7 @@
                 <!-- Submit Button -->
                 <div class="mt-8">
                     <button type="submit" class="w-full inline-flex justify-center items-center gap-2 py-3 px-5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl">
-                        <i data-lucide="arrow-right-circle" class="h-5 w-5"></i>
+                        <x-heroicon name="arrow-right-circle" class="h-5 w-5" />
                         <span>Çekimi Tamamla</span>
                     </button>
                 </div>
@@ -200,22 +199,22 @@
         <div class="bg-gray-900 dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-700 dark:border-gray-700 max-w-3xl mx-auto mt-8 p-6">
             <div class="flex items-center gap-3 mb-4">
                 <div class="p-2 bg-blue-500/20 dark:bg-blue-900/30 rounded-lg">
-                    <i data-lucide="info" class="w-5 h-5 text-blue-400 dark:text-blue-400"></i>
+                    <x-heroicon name="information-circle" class="w-5 h-5 text-blue-400 dark:text-blue-400" />
                 </div>
                 <h3 class="text-lg font-semibold text-white dark:text-white">Çekim Bilgileri</h3>
             </div>
 
             <div class="pl-10 space-y-3">
                 <div class="flex items-start">
-                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400 dark:text-green-400 mr-2 mt-0.5"></i>
+                    <x-heroicon name="check-circle" class="w-4 h-4 text-green-400 dark:text-green-400 mr-2 mt-0.5" />
                     <p class="text-sm text-gray-300 dark:text-gray-300">Çekimler genellikle 24 saat içinde işlenir</p>
                 </div>
                 <div class="flex items-start">
-                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400 dark:text-green-400 mr-2 mt-0.5"></i>
+                    <x-heroicon name="check-circle" class="w-4 h-4 text-green-400 dark:text-green-400 mr-2 mt-0.5" />
                     <p class="text-sm text-gray-300 dark:text-gray-300">Minimum çekim tutarı: {{ Auth::user()->currency }}50</p>
                 </div>
                 <div class="flex items-start">
-                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400 dark:text-green-400 mr-2 mt-0.5"></i>
+                    <x-heroicon name="check-circle" class="w-4 h-4 text-green-400 dark:text-green-400 mr-2 mt-0.5" />
                     <p class="text-sm text-gray-300 dark:text-gray-300">Tüm çekimlere {{ Auth::user()->currency }}5 ücret uygulanır</p>
                 </div>
             </div>
@@ -230,7 +229,7 @@
             <div id="modalContent" class="bg-gray-900 dark:bg-gray-900 rounded-2xl shadow-xl transform transition-all max-w-md w-full p-6 z-10 scale-95 opacity-0">
                 <div class="text-center">
                     <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-500/20 dark:bg-blue-900/30 mb-4">
-                        <i data-lucide="alert-circle" class="h-8 w-8 text-blue-400 dark:text-blue-400"></i>
+                        <x-heroicon name="exclamation-circle" class="h-8 w-8 text-blue-400 dark:text-blue-400" />
                     </div>
                     <h3 class="text-xl font-semibold text-white dark:text-white mb-2">Çekimi Onayla</h3>
                     <p class="mb-6 text-gray-300 dark:text-gray-400">
@@ -260,7 +259,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize Lucide icons
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
 
             // Withdrawal Manager
@@ -396,7 +395,7 @@
                         if (confirmButton) {
                             confirmButton.disabled = true;
                             confirmButton.innerHTML = '<i class="animate-spin w-4 h-4 mr-2" data-lucide="loader"></i>İşleniyor...';
-                            lucide.createIcons();
+                            
                         }
 
                         // Submit the form

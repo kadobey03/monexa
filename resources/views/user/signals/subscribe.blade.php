@@ -10,7 +10,7 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center">
-                    <i data-lucide="radio" class="w-6 h-6 text-blue-400"></i>
+                    <x-heroicon name="radio" class="w-6 h-6 text-blue-400" />
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-white">Trade Signals</h1>
@@ -21,12 +21,12 @@
             <!-- Signal Status Badge -->
             @if ($subscription)
                 <div class="flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-2">
-                    <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                    <x-heroicon name="check-circle" class="w-4 h-4 text-green-400" />
                     <span class="text-green-300 text-sm font-bold">Active Subscription</span>
                 </div>
             @else
                 <div class="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 rounded-full px-4 py-2">
-                    <i data-lucide="clock" class="w-4 h-4 text-yellow-400"></i>
+                    <x-heroicon name="clock" class="w-4 h-4 text-yellow-400" />
                     <span class="text-yellow-300 text-sm font-bold">No Active Subscription</span>
                 </div>
             @endif
@@ -43,7 +43,7 @@
             <div class="p-8 text-center">
                 <!-- Illustration -->
                 <div class="mx-auto w-24 h-24 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full flex items-center justify-center mb-6">
-                    <i data-lucide="trending-up" class="w-12 h-12 text-blue-400"></i>
+                    <x-heroicon name="arrow-trending-up" class="w-12 h-12 text-blue-400" />
                 </div>
 
                 <h3 class="text-2xl font-bold text-white mb-4">Unlock Premium Trading Signals</h3>
@@ -55,7 +55,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     <div class="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
                         <div class="w-10 h-10 bg-blue-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
-                            <i data-lucide="zap" class="w-5 h-5 text-blue-400"></i>
+                            <x-heroicon name="bolt" class="w-5 h-5 text-blue-400" />
                         </div>
                         <h4 class="text-white font-bold text-sm mb-2">Real-time Signals</h4>
                         <p class="text-gray-400 text-xs">Instant notifications for trading opportunities</p>
@@ -63,7 +63,7 @@
 
                     <div class="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
                         <div class="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
-                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-green-400"></i>
+                            <x-heroicon name="bar-chart-3" class="w-5 h-5 text-green-400" />
                         </div>
                         <h4 class="text-white font-bold text-sm mb-2">Market Analysis</h4>
                         <p class="text-gray-400 text-xs">Expert insights and market trends</p>
@@ -71,7 +71,7 @@
 
                     <div class="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
                         <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto mb-3">
-                            <i data-lucide="shield-check" class="w-5 h-5 text-purple-400"></i>
+                            <x-heroicon name="shield-check" class="w-5 h-5 text-purple-400" />
                         </div>
                         <h4 class="text-white font-bold text-sm mb-2">Risk Management</h4>
                         <p class="text-gray-400 text-xs">Strategic risk assessment and guidance</p>
@@ -84,7 +84,7 @@
                     class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 >
                     <span class="flex items-center gap-2">
-                        <i data-lucide="star" class="w-5 h-5"></i>
+                        <x-heroicon name="star" class="w-5 h-5" />
                         Subscribe to Premium Signals
                     </span>
                 </button>
@@ -126,24 +126,24 @@
                 <!-- Subscription Benefits -->
                 <div class="bg-gray-800/50 rounded-xl p-4 border border-gray-700 mb-6">
                     <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
-                        <i data-lucide="star" class="w-4 h-4 text-yellow-400"></i>
+                        <x-heroicon name="star" class="w-4 h-4 text-yellow-400" />
                         Your Benefits
                     </h4>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="flex items-center gap-3">
-                            <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                            <x-heroicon name="check-circle" class="w-4 h-4 text-green-400" />
                             <span class="text-gray-300 text-sm">Real-time trading signals</span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                            <x-heroicon name="check-circle" class="w-4 h-4 text-green-400" />
                             <span class="text-gray-300 text-sm">Market analysis reports</span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                            <x-heroicon name="check-circle" class="w-4 h-4 text-green-400" />
                             <span class="text-gray-300 text-sm">Risk management alerts</span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+                            <x-heroicon name="check-circle" class="w-4 h-4 text-green-400" />
                             <span class="text-gray-300 text-sm">24/7 signal access</span>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                     <!-- Renewal Section -->
                     <div class="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-xl p-4">
                         <div class="flex items-start gap-3">
-                            <i data-lucide="alert-circle" class="w-5 h-5 text-yellow-400 mt-0.5"></i>
+                            <x-heroicon name="exclamation-circle" class="w-5 h-5 text-yellow-400 mt-0.5" />
                             <div class="flex-1">
                                 <h4 class="text-yellow-300 font-bold text-sm mb-1">Subscription Renewal Required</h4>
                                 <p class="text-gray-300 text-sm mb-3">
@@ -164,7 +164,7 @@
                                     class="bg-gradient-to-r from-yellow-600 to-orange-600 hover:from-yellow-700 hover:to-orange-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 text-sm"
                                 >
                                     <span class="flex items-center gap-2">
-                                        <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                        <x-heroicon name="arrow-path" class="w-4 h-4" />
                                         Renew for
                                         @if ($subscription->subscription == 'Monthly')
                                             {{ $settings->currency }}{{ number_format($set->signal_monthly_fee, 2) }}
@@ -186,7 +186,7 @@
                 <!-- Usage Stats -->
                 <div class="bg-gray-900 rounded-2xl p-6 border border-gray-700">
                     <h4 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                        <i data-lucide="activity" class="w-5 h-5 text-blue-400"></i>
+                        <x-heroicon name="activity" class="w-5 h-5 text-blue-400" />
                         Usage Statistics
                     </h4>
 
@@ -209,21 +209,21 @@
                 <!-- Quick Actions -->
                 <div class="bg-gray-900 rounded-2xl p-6 border border-gray-700">
                     <h4 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
-                        <i data-lucide="settings" class="w-5 h-5 text-purple-400"></i>
+                        <x-heroicon name="cog-6-tooth" class="w-5 h-5 text-purple-400" />
                         Quick Actions
                     </h4>
 
                     <div class="space-y-3">
                         <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 text-sm flex items-center gap-2">
-                            <i data-lucide="bell" class="w-4 h-4"></i>
+                            <x-heroicon name="bell" class="w-4 h-4" />
                             Notification Settings
                         </button>
                         <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 text-sm flex items-center gap-2">
-                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <x-heroicon name="arrow-down-tray" class="w-4 h-4" />
                             Download History
                         </button>
                         <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 text-sm flex items-center gap-2">
-                            <i data-lucide="help-circle" class="w-4 h-4"></i>
+                            <x-heroicon name="question-mark-circle" class="w-4 h-4" />
                             Get Support
                         </button>
                     </div>
@@ -242,7 +242,7 @@
                 <h3 class="text-xl font-bold text-white">Subscribe to Premium Signals</h3>
                 <button onclick="signalApp.closeSubscribeModal()"
                         class="text-gray-400 hover:text-white transition-colors duration-200">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+                    <x-heroicon name="x-mark" class="w-6 h-6" />
                 </button>
             </div>
 
@@ -264,7 +264,7 @@
                     <h3 class="text-xl font-bold text-white">Renew Subscription</h3>
                     <button onclick="signalApp.closeRenewalModal()"
                             class="text-gray-400 hover:text-white transition-colors duration-200">
-                        <i data-lucide="x" class="w-6 h-6"></i>
+                        <x-heroicon name="x-mark" class="w-6 h-6" />
                     </button>
                 </div>
 
@@ -272,7 +272,7 @@
                 <div class="p-6">
                     <div class="text-center mb-6">
                         <div class="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="refresh-cw" class="w-8 h-8 text-yellow-400"></i>
+                            <x-heroicon name="arrow-path" class="w-8 h-8 text-yellow-400" />
                         </div>
                         <h4 class="text-lg font-bold text-white mb-2">Renew Your Subscription</h4>
                         <p class="text-gray-400 text-sm">
@@ -304,7 +304,7 @@
 </div>
 
 <!-- Add Lucide Icons Script -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
 <script>
 // Signals Subscription Manager - Vanilla JavaScript
 class SignalSubscriptionManager {
@@ -402,7 +402,7 @@ class SignalSubscriptionManager {
 
     initializeLucideIcons() {
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            
         }
     }
 }
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize Lucide icons
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

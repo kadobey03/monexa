@@ -52,7 +52,7 @@
                         Yatırım Yapın
                     </h2>
                     <div class="flex items-center gap-2 px-3 py-1 bg-green-50 dark:bg-green-900/20 rounded-full">
-                        <i data-lucide="shield-check" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="shield-check" class="w-4 h-4 text-green-600 dark:text-green-400" />
                         <span class="text-sm text-green-600 dark:text-green-400">Güvenli</span>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                 <div class="space-y-3">
                     @foreach ($dmethods as $method)
                     <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <i data-lucide="credit-card" class="w-4 h-4 text-gray-500 dark:text-gray-400"></i>
+                        <x-heroicon name="credit-card" class="w-4 h-4 text-gray-500 dark:text-gray-400" />
                         <span class="text-sm text-gray-700 dark:text-gray-300">{{$method->name}}</span>
                     </div>
                     @endforeach
@@ -167,7 +167,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        lucide.createIcons();
+        
     });
 
     function setAmount(amount) {

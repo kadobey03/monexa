@@ -10,17 +10,17 @@
             <!-- Breadcrumb -->
             <nav class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6" aria-label="Breadcrumb">
                 <a href="{{ route('dashboard') }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                    <i data-lucide="home" class="w-4 h-4 inline mr-1"></i>
+                    <x-heroicon name="home" class="w-4 h-4 inline mr-1" />
                     Dashboard
                 </a>
-                <i data-lucide="chevron-right" class="w-4 h-4 mx-2"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4 mx-2" />
                 <span class="text-gray-900 dark:text-gray-100 font-medium">Loan Application</span>
             </nav>
 
             <!-- Page Title -->
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                    <i data-lucide="credit-card" class="w-8 h-8 inline mr-3 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="credit-card" class="w-8 h-8 inline mr-3 text-blue-600 dark:text-blue-400" />
                     Loan Application
                 </h1>
                 <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
@@ -40,7 +40,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 text-center">
                 <div class="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl w-fit mx-auto mb-4">
-                    <i data-lucide="percent" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                    <x-heroicon name="percent" class="w-6 h-6 text-green-600 dark:text-green-400" />
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Competitive Rates</h3>
                 <p class="text-gray-600 dark:text-gray-400">Low interest rates starting from 5.5% APR</p>
@@ -48,7 +48,7 @@
 
             <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 text-center">
                 <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl w-fit mx-auto mb-4">
-                    <i data-lucide="clock" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="clock" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Quick Approval</h3>
                 <p class="text-gray-600 dark:text-gray-400">Get approved within 24-48 hours</p>
@@ -56,7 +56,7 @@
 
             <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 text-center">
                 <div class="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl w-fit mx-auto mb-4">
-                    <i data-lucide="shield-check" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+                    <x-heroicon name="shield-check" class="w-6 h-6 text-purple-600 dark:text-purple-400" />
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Secure Process</h3>
                 <p class="text-gray-600 dark:text-gray-400">Bank-level security and encryption</p>
@@ -68,7 +68,7 @@
             <!-- Form Header -->
             <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
                 <h2 class="text-xl font-bold text-white flex items-center">
-                    <i data-lucide="file-text" class="w-6 h-6 mr-2"></i>
+                    <x-heroicon name="file-text" class="w-6 h-6 mr-2" />
                     Loan Application Form
                 </h2>
             </div>
@@ -80,7 +80,7 @@
                 <!-- Loan Amount Section -->
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2">
-                        <i data-lucide="dollar-sign" class="w-5 h-5 inline mr-2 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="currency-dollar" class="w-5 h-5 inline mr-2 text-blue-600 dark:text-blue-400" />
                         Loan Details
                     </h3>
 
@@ -133,7 +133,7 @@
                          x-transition
                          class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
                         <h4 class="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">
-                            <i data-lucide="calculator" class="w-4 h-4 inline mr-1"></i>
+                            <x-heroicon name="calculator" class="w-4 h-4 inline mr-1" />
                             Estimated Monthly Payment
                         </h4>
                         <p class="text-2xl font-bold text-blue-600 dark:text-blue-400" x-text="`{{ $settings->currency }}${monthlyPayment.toFixed(2)}`"></p>
@@ -144,7 +144,7 @@
                 <!-- Credit Facility Section -->
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2">
-                        <i data-lucide="building-2" class="w-5 h-5 inline mr-2 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="building-2" class="w-5 h-5 inline mr-2 text-blue-600 dark:text-blue-400" />
                         Credit Facility Type
                     </h3>
 
@@ -179,7 +179,7 @@
                 <!-- Personal Information Section -->
                 <div class="space-y-4">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2">
-                        <i data-lucide="user" class="w-5 h-5 inline mr-2 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="user" class="w-5 h-5 inline mr-2 text-blue-600 dark:text-blue-400" />
                         Financial Information
                     </h3>
 
@@ -218,21 +218,21 @@
                 <!-- Terms and Conditions -->
                 <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                        <i data-lucide="file-check" class="w-5 h-5 inline mr-2 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="file-check" class="w-5 h-5 inline mr-2 text-blue-600 dark:text-blue-400" />
                         Terms & Conditions
                     </h3>
 
                     <div class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
                         <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5"></i>
+                            <x-heroicon name="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
                             <p>Interest rates are subject to credit assessment and may vary based on loan type and duration.</p>
                         </div>
                         <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5"></i>
+                            <x-heroicon name="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
                             <p>All loan applications are subject to approval and verification of provided information.</p>
                         </div>
                         <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5"></i>
+                            <x-heroicon name="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
                             <p>Early repayment options are available with potential fee reductions.</p>
                         </div>
                     </div>
@@ -256,12 +256,12 @@
                             :disabled="!acceptedTerms"
                             :class="acceptedTerms ? 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 transform hover:scale-105' : 'bg-gray-400 cursor-not-allowed'"
                             class="w-full text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 flex items-center justify-center gap-2">
-                        <i data-lucide="send" class="w-5 h-5"></i>
+                        <x-heroicon name="send" class="w-5 h-5" />
                         <span>Submit Loan Application</span>
                     </button>
 
                     <p class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4">
-                        <i data-lucide="shield" class="w-4 h-4 inline mr-1"></i>
+                        <x-heroicon name="shield-check" class="w-4 h-4 inline mr-1" />
                         Your information is encrypted and secure. We'll review your application within 24-48 hours.
                     </p>
                 </div>
@@ -274,12 +274,12 @@
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="{{ route('support') }}"
                    class="inline-flex items-center gap-2 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 font-semibold py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <i data-lucide="headphones" class="w-4 h-4"></i>
+                    <x-heroicon name="headphones" class="w-4 h-4" />
                     Contact Support
                 </a>
                 <a href="#"
                    class="inline-flex items-center gap-2 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 font-semibold py-2 px-4 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <x-heroicon name="arrow-down-tray" class="w-4 h-4" />
                     Download Brochure
                 </a>
             </div>
@@ -325,7 +325,7 @@ function loanApplication() {
 // Initialize Lucide icons when page loads
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

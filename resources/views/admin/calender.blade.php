@@ -9,7 +9,7 @@
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Yapılacaklar listenizi oluşturun ve takip edin</p>
         </div>
         <div class="flex items-center space-x-2">
-            <i data-lucide="calendar" class="h-5 w-5 text-gray-500 dark:text-gray-400"></i>
+            <x-heroicon name="calendar-days" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
             <span class="text-sm text-gray-500 dark:text-gray-400">{{ \Carbon\Carbon::now()->locale('tr')->isoFormat('dddd, D MMMM YYYY') }}</span>
         </div>
     </div>
@@ -18,7 +18,7 @@
     @if (Session::has('message'))
         <div class="rounded-md bg-blue-50 dark:bg-blue-900/50 p-4 border border-blue-200 dark:border-blue-700">
             <div class="flex">
-                <i data-lucide="info" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3"></i>
+                <x-heroicon name="information-circle" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3" />
                 <div class="text-sm text-blue-700 dark:text-blue-300">{{ Session::get('message') }}</div>
             </div>
         </div>
@@ -27,7 +27,7 @@
     @if (count($errors) > 0)
         <div class="rounded-md bg-red-50 dark:bg-red-900/50 p-4 border border-red-200 dark:border-red-700">
             <div class="flex">
-                <i data-lucide="alert-triangle" class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 mr-3"></i>
+                <x-heroicon name="exclamation-triangle" class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 mr-3" />
                 <div class="text-sm text-red-700 dark:text-red-300">
                     @foreach ($errors->all() as $error)
                         <div>{{ $error }}</div>
@@ -41,7 +41,7 @@
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700">
         <div class="p-6">
             <div class="mb-4 flex items-center">
-                <i data-lucide="calendar-days" class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2"></i>
+                <x-heroicon name="calendar-days" class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2" />
                 <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Takvim Görünümü</h2>
             </div>
             
@@ -55,7 +55,7 @@
     <!-- Additional Info -->
     <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-lg p-6 border border-blue-200 dark:border-blue-700">
         <div class="flex items-start">
-            <i data-lucide="lightbulb" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3"></i>
+            <x-heroicon name="lightbulb" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3" />
             <div>
                 <h3 class="font-medium text-blue-900 dark:text-blue-100">İpucu</h3>
                 <p class="mt-1 text-sm text-blue-700 dark:text-blue-300">

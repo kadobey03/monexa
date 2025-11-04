@@ -36,7 +36,7 @@
             <!-- Mobile menu button -->
             <div class="md:hidden">
                 <button @click="toggleMobileMenu()" class="text-gray-400 hover:text-white focus:outline-none focus:text-white">
-                    <i data-lucide="menu" class="h-6 w-6"></i>
+                    <x-heroicon name="bars-3" class="h-6 w-6" />
                 </button>
             </div>
         </div>

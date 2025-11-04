@@ -8,7 +8,7 @@
         <div class="mb-8">
             <div class="flex items-center space-x-4 mb-6">
                 <div class="w-16 h-16 rounded-3xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10 flex items-center justify-center backdrop-blur-sm">
-                    <i data-lucide="headphones" class="w-8 h-8 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="headphones" class="w-8 h-8 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
                     <h1 class="text-4xl font-light text-gray-800 dark:text-white mb-2">
@@ -35,7 +35,7 @@
             <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
                 <div class="flex items-center space-x-4 mb-4">
                     <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 flex items-center justify-center">
-                        <i data-lucide="mail" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="envelope" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 dark:text-white">E-posta Desteği</h3>
@@ -46,7 +46,7 @@
                 <a href="mailto:{{$settings->contact_email}}" 
                    class="inline-flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors">
                     <span>{{$settings->contact_email}}</span>
-                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                    <x-heroicon name="external-link" class="w-4 h-4" />
                 </a>
             </div>
 
@@ -85,7 +85,7 @@
                         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">E-posta Adresiniz</label>
                             <div class="flex items-center space-x-3">
-                                <i data-lucide="mail" class="w-5 h-5 text-gray-500"></i>
+                                <x-heroicon name="envelope" class="w-5 h-5 text-gray-500" />
                                 <span class="text-gray-800 dark:text-white">{{Auth::user()->email}}</span>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                                 </svg>
                                 <span>Gönderiliyor...</span>
                             </span>
-                            <i data-lucide="send" class="w-5 h-5" id="sendIcon"></i>
+                            <x-heroicon name="send" class="w-5 h-5" id="sendIcon" />
                         </button>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
                             Genellikle iş günlerinde 24 saat içinde yanıt veririz.
@@ -144,7 +144,7 @@
             <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 max-w-md w-full border border-gray-200 dark:border-gray-700 transition ease-out duration-300 transform scale-95" id="contactModalContent">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i data-lucide="message-circle" class="w-8 h-8 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="message-circle" class="w-8 h-8 text-green-600 dark:text-green-400" />
                     </div>
                     <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Canlı Sohbet Desteği</h3>
                     <p class="text-gray-500 dark:text-gray-400 mb-6">
@@ -174,7 +174,7 @@ let supportState = {
 // Initialize support form
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Lucide icons
-    lucide.createIcons();
+    
     
     // Initialize message input listener
     const messageInput = document.getElementById('message');

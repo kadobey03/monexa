@@ -118,7 +118,7 @@
 	
 	</div>
 </div>
-<script src="temp/custom/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+
 <script type="text/javascript">
 
 $('.sliderteam').slick({

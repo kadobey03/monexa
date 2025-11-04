@@ -10,10 +10,10 @@
             <!-- Breadcrumb -->
             <nav class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6" aria-label="Breadcrumb">
                 <a href="{{ route('dashboard') }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                    <i data-lucide="home" class="w-4 h-4 inline mr-1"></i>
+                    <x-heroicon name="home" class="w-4 h-4 inline mr-1" />
                     Dashboard
                 </a>
-                <i data-lucide="chevron-right" class="w-4 h-4 mx-2"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4 mx-2" />
                 <span class="text-gray-900 dark:text-gray-100 font-medium">My Trading Signals</span>
             </nav>
 
@@ -21,7 +21,7 @@
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                        <i data-lucide="activity" class="w-8 h-8 inline mr-3 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="activity" class="w-8 h-8 inline mr-3 text-blue-600 dark:text-blue-400" />
                         My Trading Signals
                     </h1>
                     <p class="text-gray-600 dark:text-gray-400 text-lg">
@@ -33,7 +33,7 @@
                 <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
                     <div class="flex items-center gap-4">
                         <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-                            <i data-lucide="radio" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                            <x-heroicon name="radio" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
                             <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Current Signal Plan</p>
@@ -69,7 +69,7 @@
                         <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ count($signals) }}</p>
                     </div>
                     <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-                        <i data-lucide="signal" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="signal" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                         </p>
                     </div>
                     <div class="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
-                        <i data-lucide="trending-up" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="arrow-trending-up" class="w-6 h-6 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                         </p>
                     </div>
                     <div class="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl">
-                        <i data-lucide="dollar-sign" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+                        <x-heroicon name="currency-dollar" class="w-6 h-6 text-purple-600 dark:text-purple-400" />
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
         <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 mb-8">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">
-                    <i data-lucide="filter" class="w-5 h-5 inline mr-2"></i>
+                    <x-heroicon name="funnel" class="w-5 h-5 inline mr-2" />
                     Signal Activity
                 </h2>
 
@@ -165,7 +165,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg mr-3">
-                                        <i data-lucide="trending-up" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+                                        <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
                                     </div>
                                     <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $signal->asset }}</span>
                                 </div>
@@ -175,12 +175,12 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($signal->order_type == 'Buy')
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
-                                    <i data-lucide="arrow-up" class="w-4 h-4 mr-1"></i>
+                                    <x-heroicon name="arrow-up" class="w-4 h-4 mr-1" />
                                     {{ $signal->order_type }}
                                 </span>
                                 @else
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300">
-                                    <i data-lucide="arrow-down" class="w-4 h-4 mr-1"></i>
+                                    <x-heroicon name="arrow-down" class="w-4 h-4 mr-1" />
                                     {{ $signal->order_type }}
                                 </span>
                                 @endif
@@ -207,7 +207,7 @@
                                 </span>
                                 @else
                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300">
-                                    <i data-lucide="check-circle" class="w-4 h-4 mr-1"></i>
+                                    <x-heroicon name="check-circle" class="w-4 h-4 mr-1" />
                                     {{ ucfirst($signal->status) }}
                                 </span>
                                 @endif
@@ -239,7 +239,7 @@
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center gap-3">
                         <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                            <i data-lucide="trending-up" class="w-5 h-5 text-blue-600 dark:text-blue-400"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-5 h-5 text-blue-600 dark:text-blue-400" />
                         </div>
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $signal->asset }}</h3>
                     </div>
@@ -252,7 +252,7 @@
                     </span>
                     @else
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300">
-                        <i data-lucide="check-circle" class="w-4 h-4 mr-1"></i>
+                        <x-heroicon name="check-circle" class="w-4 h-4 mr-1" />
                         Closed
                     </span>
                     @endif
@@ -265,12 +265,12 @@
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Order Type</p>
                         @if($signal->order_type == 'Buy')
                         <span class="inline-flex items-center px-2 py-1 rounded-lg text-sm font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
-                            <i data-lucide="arrow-up" class="w-4 h-4 mr-1"></i>
+                            <x-heroicon name="arrow-up" class="w-4 h-4 mr-1" />
                             {{ $signal->order_type }}
                         </span>
                         @else
                         <span class="inline-flex items-center px-2 py-1 rounded-lg text-sm font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300">
-                            <i data-lucide="arrow-down" class="w-4 h-4 mr-1"></i>
+                            <x-heroicon name="arrow-down" class="w-4 h-4 mr-1" />
                             {{ $signal->order_type }}
                         </span>
                         @endif
@@ -312,7 +312,7 @@
         <!-- Empty State -->
         <div class="text-center py-16">
             <div class="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
-                <i data-lucide="signal" class="w-12 h-12 text-gray-400"></i>
+                <x-heroicon name="signal" class="w-12 h-12 text-gray-400" />
             </div>
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Trading Signals</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
@@ -320,7 +320,7 @@
             </p>
             <a href="{{ route('tsignals') }}"
                class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
-                <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                <x-heroicon name="plus-circle" class="w-5 h-5" />
                 Subscribe to Signals
             </a>
         </div>
@@ -348,7 +348,7 @@ function signalDashboard() {
 // Initialize Lucide icons when page loads
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

@@ -36,7 +36,7 @@
     <div class="mb-6">
         <a href="{{ route('trade.index') }}"
            class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <x-heroicon name="arrow-left" class="w-4 h-4" />
             Pazarlara Dön
         </a>
     </div>
@@ -69,9 +69,9 @@
                         </div>
                         <div class="flex items-center gap-1 {{ $instrument->percent_change_24h >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
                             @if($instrument->percent_change_24h >= 0)
-                                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
                             @else
-                                <i data-lucide="trending-down" class="w-4 h-4"></i>
+                                <x-heroicon name="arrow-trending-down" class="w-4 h-4" />
                             @endif
                             <span>{{ number_format($instrument->percent_change_24h, 2) }}%</span>
                             <span class="text-sm">({{ $instrument->change >= 0 ? '+' : '' }}${{ number_format($instrument->change, 2) }})</span>
@@ -202,7 +202,7 @@
                                             </div>
                                             <div>
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
-                                                    <i data-lucide="activity" class="w-3 h-3 mr-1"></i>
+                                                    <x-heroicon name="activity" class="w-3 h-3 mr-1" />
                                                     Aktif
                                                 </span>
                                             </div>
@@ -223,9 +223,9 @@
                                             <div class="flex items-center gap-3">
                                                 <div class="w-10 h-10 rounded-full {{ $trade->type === 'Buy' ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30' }} flex items-center justify-center">
                                                     @if($trade->type === 'Buy')
-                                                        <i data-lucide="trending-up" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                                                        <x-heroicon name="arrow-trending-up" class="w-5 h-5 text-green-600 dark:text-green-400" />
                                                     @else
-                                                        <i data-lucide="trending-down" class="w-5 h-5 text-red-600 dark:text-red-400"></i>
+                                                        <x-heroicon name="arrow-trending-down" class="w-5 h-5 text-red-600 dark:text-red-400" />
                                                     @endif
                                                 </div>
                                                 <div>
@@ -285,7 +285,7 @@
                                     <!-- Action Button -->
                                     <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                                         <a href="{{ route('trade.monitor', $trade->id) }}" class="w-full py-2 px-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors text-sm font-medium group-hover:bg-blue-50 group-hover:text-blue-600 dark:group-hover:bg-blue-900/30 dark:group-hover:text-blue-400 block text-center">
-                                            <i data-lucide="eye" class="w-4 h-4 inline mr-2"></i>
+                                            <x-heroicon name="eye" class="w-4 h-4 inline mr-2" />
                                             İşlemi İzle
                                         </a>
                                     </div>
@@ -295,7 +295,7 @@
                     @else
                         <div class="text-center py-12">
                             <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                                <i data-lucide="chart-line" class="w-8 h-8 text-gray-400"></i>
+                                <x-heroicon name="chart-line" class="w-8 h-8 text-gray-400" />
                             </div>
                             <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Açık İşlem Yok</h4>
                             <p class="text-gray-600 dark:text-gray-400 mb-4">You don't have any open trades for {{ $instrument->symbol }}</p>
@@ -337,9 +337,9 @@
                                                 <!-- Closed Trade -->
                                                 <div class="w-8 h-8 rounded-full {{ $isSuccessful ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30' }} flex items-center justify-center">
                                                     @if($isSuccessful)
-                                                        <i data-lucide="check" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                                                        <x-heroicon name="check" class="w-4 h-4 text-green-600 dark:text-green-400" />
                                                     @else
-                                                        <i data-lucide="x" class="w-4 h-4 text-red-600 dark:text-red-400"></i>
+                                                        <x-heroicon name="x-mark" class="w-4 h-4 text-red-600 dark:text-red-400" />
                                                     @endif
                                                 </div>
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $isSuccessful ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400' }}">
@@ -349,7 +349,7 @@
                                             @else
                                                 <!-- Unknown Status -->
                                                 <div class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-                                                    <i data-lucide="help-circle" class="w-4 h-4 text-gray-500"></i>
+                                                    <x-heroicon name="question-mark-circle" class="w-4 h-4 text-gray-500" />
                                                 </div>
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400">
                                                     <div class="w-2 h-2 rounded-full bg-gray-500 mr-1"></div>
@@ -373,9 +373,9 @@
                                             <div class="flex items-center gap-3">
                                                 <div class="w-10 h-10 rounded-full {{ $trade->type === 'Buy' ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30' }} flex items-center justify-center">
                                                     @if($trade->type === 'Buy')
-                                                        <i data-lucide="trending-up" class="w-5 h-5 text-green-600 dark:text-green-400"></i>
+                                                        <x-heroicon name="arrow-trending-up" class="w-5 h-5 text-green-600 dark:text-green-400" />
                                                     @else
-                                                        <i data-lucide="trending-down" class="w-5 h-5 text-red-600 dark:text-red-400"></i>
+                                                        <x-heroicon name="arrow-trending-down" class="w-5 h-5 text-red-600 dark:text-red-400" />
                                                     @endif
                                                 </div>
                                                 <div>
@@ -444,7 +444,7 @@
                                     <!-- Action Button -->
                                     <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                                         <a href="{{ route('trade.monitor', $trade->id) }}" class="w-full py-2 px-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors text-sm font-medium group-hover:bg-blue-50 group-hover:text-blue-600 dark:group-hover:bg-blue-900/30 dark:group-hover:text-blue-400 block text-center">
-                                            <i data-lucide="bar-chart-3" class="w-4 h-4 inline mr-2"></i>
+                                            <x-heroicon name="bar-chart-3" class="w-4 h-4 inline mr-2" />
                                             Detayları Görüntüle
                                         </a>
                                     </div>
@@ -456,7 +456,7 @@
                             <div class="text-center mt-6 p-4 bg-gray-50 dark:bg-gray-700/30 rounded-lg">
                                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Son 10 işlem gösteriliyor</p>
                                 <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium">
-                                    <i data-lucide="history" class="w-4 h-4 inline mr-2"></i>
+                                    <x-heroicon name="history" class="w-4 h-4 inline mr-2" />
                                     Tüm Geçmişi Görüntüle
                                 </button>
                             </div>
@@ -464,7 +464,7 @@
                     @else
                         <div class="text-center py-12">
                             <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                                <i data-lucide="history" class="w-8 h-8 text-gray-400"></i>
+                                <x-heroicon name="history" class="w-8 h-8 text-gray-400" />
                             </div>
                             <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">İşlem Geçmişi Yok</h4>
                             <p class="text-gray-600 dark:text-gray-400 mb-4">You haven't completed any trades for {{ $instrument->symbol }} yet</p>
@@ -790,7 +790,7 @@ const TradingSingle = {
 
     initializeLucideIcons() {
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            
         }
     }
 };

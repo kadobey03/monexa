@@ -7,7 +7,7 @@
         <div>
             <nav class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
                 <a href="{{ route('admin.copy.index') }}" class="hover:text-gray-900 dark:hover:text-white">Copy Trading</a>
-                <i data-lucide="chevron-right" class="w-4 h-4 mx-2"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4 mx-2" />
                 <span class="text-gray-900 dark:text-white">Active Trades</span>
             </nav>
             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $title }}</h1>
@@ -16,12 +16,12 @@
         <div class="flex gap-3">
             <a href="{{ route('admin.copy.statistics') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg font-medium hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors">
-                <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                <x-heroicon name="bar-chart-3" class="w-4 h-4" />
                 Statistics
             </a>
             <a href="{{ route('admin.copy.index') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <x-heroicon name="arrow-left" class="w-4 h-4" />
                 Back to List
             </a>
         </div>
@@ -36,7 +36,7 @@
                     <p class="text-3xl font-bold">{{ $activeTrades->count() }}</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
-                    <i data-lucide="activity" class="w-6 h-6"></i>
+                    <x-heroicon name="activity" class="w-6 h-6" />
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                     <p class="text-3xl font-bold">${{ number_format($activeTrades->sum('amount'), 0) }}</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
-                    <i data-lucide="dollar-sign" class="w-6 h-6"></i>
+                    <x-heroicon name="currency-dollar" class="w-6 h-6" />
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
                     <p class="text-3xl font-bold">${{ number_format($activeTrades->sum('profit'), 2) }}</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
-                    <i data-lucide="trending-up" class="w-6 h-6"></i>
+                    <x-heroicon name="arrow-trending-up" class="w-6 h-6" />
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                     <p class="text-3xl font-bold">{{ $activeTrades->count() > 0 ? number_format($activeTrades->avg('profit'), 2) : '0.00' }}%</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
-                    <i data-lucide="percent" class="w-6 h-6"></i>
+                    <x-heroicon name="percent" class="w-6 h-6" />
                 </div>
             </div>
         </div>
@@ -159,9 +159,9 @@
                                                 @if($trade->expert)
                                                     @for($i = 1; $i <= 5; $i++)
                                                         @if($i <= $trade->expert->rating)
-                                                            <i data-lucide="star" class="w-3 h-3 text-yellow-400 fill-current"></i>
+                                                            <x-heroicon name="star" class="w-3 h-3 text-yellow-400 fill-current" />
                                                         @else
-                                                            <i data-lucide="star" class="w-3 h-3 text-gray-300 dark:text-gray-600"></i>
+                                                            <x-heroicon name="star" class="w-3 h-3 text-gray-300 dark:text-gray-600" />
                                                         @endif
                                                     @endfor
                                                 @endif
@@ -265,7 +265,7 @@
             <!-- Empty State -->
             <div class="text-center py-16">
                 <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="activity" class="w-8 h-8 text-gray-400"></i>
+                    <x-heroicon name="activity" class="w-8 h-8 text-gray-400" />
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Active Trades</h3>
                 <p class="text-gray-600 dark:text-gray-400 mb-6">
@@ -273,7 +273,7 @@
                 </p>
                 <a href="{{ route('admin.copy.index') }}"
                    class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
-                    <i data-lucide="users" class="w-4 h-4"></i>
+                    <x-heroicon name="users" class="w-4 h-4" />
                     Manage Experts
                 </a>
             </div>
@@ -296,7 +296,7 @@
         // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
         });
     </script>

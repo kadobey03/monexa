@@ -7,7 +7,7 @@
         <div>
             <nav class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
                 <a href="{{ route('admin.copy.index') }}" class="hover:text-gray-900 dark:hover:text-white">Copy Trading</a>
-                <i data-lucide="chevron-right" class="w-4 h-4 mx-2"></i>
+                <x-heroicon name="chevron-right" class="w-4 h-4 mx-2" />
                 <span class="text-gray-900 dark:text-white">Add Expert</span>
             </nav>
             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $title }}</h1>
@@ -15,7 +15,7 @@
         </div>
         <a href="{{ route('admin.copy.index') }}"
            class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <x-heroicon name="arrow-left" class="w-4 h-4" />
             Back to List
         </a>
     </div>
@@ -78,7 +78,7 @@
                             </label>
                             <div class="flex items-center space-x-4">
                                 <div id="photo-preview" class="w-20 h-20 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
-                                    <i data-lucide="camera" class="w-8 h-8 text-gray-400"></i>
+                                    <x-heroicon name="camera" class="w-8 h-8 text-gray-400" />
                                 </div>
                                 <div class="flex-1">
                                     <input type="file" 
@@ -274,12 +274,12 @@
                 <div class="flex items-center gap-4 pt-6 mt-6 border-t border-gray-200 dark:border-gray-700">
                     <button type="submit"
                             class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors shadow-lg hover:shadow-xl">
-                        <i data-lucide="save" class="w-4 h-4"></i>
+                        <x-heroicon name="save" class="w-4 h-4" />
                         Create Expert Trader
                     </button>
                     <a href="{{ route('admin.copy.index') }}"
                        class="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                        <i data-lucide="x" class="w-4 h-4"></i>
+                        <x-heroicon name="x-mark" class="w-4 h-4" />
                         Cancel
                     </a>
                 </div>
@@ -305,15 +305,15 @@
                 
                 reader.readAsDataURL(input.files[0]);
             } else {
-                preview.innerHTML = '<i data-lucide="camera" class="w-8 h-8 text-gray-400"></i>';
-                lucide.createIcons();
+                preview.innerHTML = '<x-heroicon name="camera" class="w-8 h-8 text-gray-400" />';
+                
             }
         }
 
         // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
         });
     </script>

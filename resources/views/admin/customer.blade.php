@@ -7,7 +7,7 @@
             <div class="px-4 py-6 sm:px-6 lg:px-8">
                 <div class="flex items-center space-x-4">
                     <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
-                        <i data-lucide="users" class="w-8 h-8 text-white"></i>
+                        <x-heroicon name="users" class="w-8 h-8 text-white" />
                     </div>
                     <div>
                         <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Üye Takip Sistemi</h1>
@@ -117,7 +117,7 @@
                                 <div class="relative">
                                 <input type="text" id="searchInput" placeholder="Üye ara..."
                                        class="w-full sm:w-64 pl-10 pr-4 py-2 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                <i data-lucide="search" class="absolute left-3 top-2.5 h-4 w-4 text-gray-400"></i>
+                                <x-heroicon name="magnifying-glass" class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
                                 </div>
                                 <div class="relative">
                                 <select id="statusFilter" class="appearance-none bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg px-4 py-2 pr-8 text-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -126,7 +126,7 @@
                                         <option value="blocked">Engellenmiş</option>
                                         <option value="pending">Beklemede</option>
                                     </select>
-                                <i data-lucide="chevron-down" class="absolute right-2 top-2.5 h-4 w-4 text-gray-400"></i>
+                                <x-heroicon name="chevron-down" class="absolute right-2 top-2.5 h-4 w-4 text-gray-400" />
                                 </div>
                             </div>
                         </div>

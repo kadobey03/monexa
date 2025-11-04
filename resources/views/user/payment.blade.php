@@ -18,7 +18,7 @@
         <!-- Header Section -->
         <div class="text-center mb-8">
             <div class="inline-flex items-center gap-3 px-4 py-2 bg-blue-500/10 rounded-full border border-blue-500/20 mb-6">
-                <i data-lucide="shield-check" class="w-5 h-5 text-blue-400"></i>
+                <x-heroicon name="shield-check" class="w-5 h-5 text-blue-400" />
                 <span class="text-sm font-medium text-blue-300">Güvenli Ödeme Ağ Geçidi</span>
             </div>
             <h1 class="text-3xl sm:text-4xl font-bold text-white mb-4">
@@ -35,7 +35,7 @@
             <div class="flex items-center space-x-2 sm:space-x-4 lg:space-x-8 min-w-max">
                 <div class="flex items-center">
                     <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                        <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-white"></i>
+                        <x-heroicon name="check" class="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                     <span class="ml-2 sm:ml-3 text-xs sm:text-sm font-medium text-blue-400 hidden sm:inline">Ödeme Yöntemi</span>
                     <span class="ml-2 text-xs font-medium text-blue-400 sm:hidden">Yöntem</span>
@@ -70,7 +70,7 @@
                     <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 gap-4">
                         <div class="flex items-center gap-3 sm:gap-4">
                             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
-                                <i data-lucide="credit-card" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400"></i>
+                                <x-heroicon name="credit-card" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
                             </div>
                             <div>
                                 <h2 class="text-lg sm:text-xl font-bold text-white">Ödeme Detayları</h2>
@@ -79,11 +79,11 @@
                         </div>
                         <div class="flex flex-wrap gap-2">
                             <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400 border border-green-500/30">
-                                <i data-lucide="shield" class="w-3 h-3 mr-1"></i>
+                                <x-heroicon name="shield-check" class="w-3 h-3 mr-1" />
                                 SSL Güvenli
                             </span>
                             <span class="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">
-                                <i data-lucide="clock" class="w-3 h-3 mr-1"></i>
+                                <x-heroicon name="clock" class="w-3 h-3 mr-1" />
                                 7/24 Destek
                             </span>
                         </div>
@@ -99,14 +99,14 @@
                         <div class="relative bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 border border-gray-700">
                             <div class="text-center">
                                 <div class="inline-flex items-center gap-2 text-xs sm:text-sm text-gray-400 mb-2">
-                                    <i data-lucide="banknote" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                                    <x-heroicon name="banknote" class="w-3 h-3 sm:w-4 sm:h-4" />
                                     <span>Yatırılacak Miktar</span>
                                 </div>
                                 <div class="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 break-all">
                                     {{ $amount }}<span class="text-lg sm:text-2xl text-gray-400">{{ Auth::user()->currency }}</span>
                                 </div>
                                 <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-amber-500/20 rounded-full border border-amber-500/30">
-                                    <i data-lucide="alert-triangle" class="w-3 h-3 sm:w-4 sm:h-4 text-amber-400"></i>
+                                    <x-heroicon name="exclamation-triangle" class="w-3 h-3 sm:w-4 sm:h-4 text-amber-400" />
                                     <span class="text-xs sm:text-sm text-amber-300">Gecikmeleri önlemek için tam miktarı gönderin</span>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                     <div class="bg-gray-800/30 rounded-2xl p-4 sm:p-6 border border-gray-700">
                         <div class="flex items-start gap-3 sm:gap-4">
                             <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="info" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+                                <x-heroicon name="information-circle" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                             </div>
                             <div class="flex-1 min-w-0">
                                 <h3 class="text-base sm:text-lg font-semibold text-white mb-3">Ödemenizi Nasıl Tamamlayacağınız</h3>
@@ -159,7 +159,7 @@
                         <!-- QR Code Section (Crypto only) -->
                         <div class="space-y-4 sm:space-y-6">
                             <h3 class="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
-                                <i data-lucide="qr-code" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+                                <x-heroicon name="qr-code" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                                 QR Kod Ödemesi
                             </h3>
 
@@ -172,7 +172,7 @@
                                     <button type="button"
                                             id="downloadQR"
                                             class="absolute top-2 right-2 p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200">
-                                        <i data-lucide="download" class="w-3 h-3 sm:w-4 sm:h-4 text-gray-600"></i>
+                                        <x-heroicon name="arrow-down-tray" class="w-3 h-3 sm:w-4 sm:h-4 text-gray-600" />
                                     </button>
                                 </div>
                             </div>
@@ -185,7 +185,7 @@
                         <!-- Bank Details Section (Currency only) -->
                         <div class="space-y-4 sm:space-y-6">
                             <h3 class="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
-                                <i data-lucide="building-2" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+                                <x-heroicon name="building-2" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                                 Banka Transfer Detayları
                             </h3>
 
@@ -201,7 +201,7 @@
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
                                             <button type="button" onclick="paymentManager.copyToClipboard('{{ $payment_mode->bankname }}')"
                                                     class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors">
-                                                <i data-lucide="copy" class="w-4 h-4"></i>
+                                                <x-heroicon name="copy" class="w-4 h-4" />
                                             </button>
                                         </div>
                                     </div>
@@ -214,7 +214,7 @@
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
                                             <button type="button" onclick="paymentManager.copyToClipboard('{{ $payment_mode->account_name }}')"
                                                     class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors">
-                                                <i data-lucide="copy" class="w-4 h-4"></i>
+                                                <x-heroicon name="copy" class="w-4 h-4" />
                                             </button>
                                         </div>
                                     </div>
@@ -227,7 +227,7 @@
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
                                             <button type="button" onclick="paymentManager.copyToClipboard('{{ $payment_mode->account_number }}')"
                                                     class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors">
-                                                <i data-lucide="copy" class="w-4 h-4"></i>
+                                                <x-heroicon name="copy" class="w-4 h-4" />
                                             </button>
                                         </div>
                                     </div>
@@ -241,7 +241,7 @@
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
                                             <button type="button" onclick="paymentManager.copyToClipboard('{{ $payment_mode->swift_code }}')"
                                                     class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors">
-                                                <i data-lucide="copy" class="w-4 h-4"></i>
+                                                <x-heroicon name="copy" class="w-4 h-4" />
                                             </button>
                                         </div>
                                     </div>
@@ -262,7 +262,7 @@
                             <!-- Wallet Address (Crypto only) -->
                             <div class="space-y-3">
                                 <label class="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
-                                    <i data-lucide="wallet" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+                                    <x-heroicon name="wallet" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                                     Cüzdan Adresi
                                 </label>
                                 <div class="relative group">
@@ -275,7 +275,7 @@
                                                 onclick="paymentManager.copyToClipboard('{{ $payment_mode->wallet_address }}')"
                                                 id="copyWalletBtn"
                                                 class="mt-2 sm:mt-0 px-4 py-3 bg-blue-600 hover:bg-blue-700 border border-blue-600 rounded-xl sm:rounded-l-none sm:rounded-r-xl text-white transition-all duration-200 flex items-center justify-center gap-2">
-                                            <i data-lucide="copy" class="w-3 h-3 sm:w-4 sm:h-4"></i>
+                                            <x-heroicon name="copy" class="w-3 h-3 sm:w-4 sm:h-4" />
                                             <span class="text-xs sm:text-sm font-medium">Copy</span>
                                         </button>
                                     </div>
@@ -284,7 +284,7 @@
                                 @if($payment_mode->network)
                                 <div class="mt-2 text-center">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
-                                        <i data-lucide="network" class="w-3 h-3 mr-1"></i>
+                                        <x-heroicon name="network" class="w-3 h-3 mr-1" />
                                         Network: {{ $payment_mode->network }}
                                     </span>
                                 </div>
@@ -295,7 +295,7 @@
                             <!-- File Upload -->
                             <div class="space-y-3">
                                 <label class="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
-                                    <i data-lucide="upload" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400"></i>
+                                    <x-heroicon name="arrow-up-tray" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                                     Ödeme Kanıtı Yükle
                                 </label>
 
@@ -314,7 +314,7 @@
 
                                         <div class="space-y-3 sm:space-y-4">
                                             <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto group-hover:bg-blue-500/30 transition-colors duration-200">
-                                                <i data-lucide="upload-cloud" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-400"></i>
+                                                <x-heroicon name="upload-cloud" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
                                             </div>
 
                                             <div id="uploadPrompt">
@@ -354,14 +354,14 @@
                                 class="w-full relative group overflow-hidden opacity-50 cursor-not-allowed">
                             <div class="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-200"></div>
                             <div class="relative bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl flex items-center justify-center gap-2 sm:gap-3 transition-all duration-200">
-                                <i data-lucide="send" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                <x-heroicon name="send" class="w-4 h-4 sm:w-5 sm:h-5" />
                                 <span class="text-sm sm:text-lg font-semibold">Ödeme Kanıtını Gönder</span>
                             </div>
                         </button>
 
                         <!-- Security Notice -->
                         <div class="mt-4 sm:mt-6 flex items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-400">
-                            <i data-lucide="shield-check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-400"></i>
+                            <x-heroicon name="shield-check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
                             <span>256-bit SSL şifreleme ile korunuyor</span>
                         </div>
                     </div>
@@ -373,7 +373,7 @@
         <div class="mt-8 sm:mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 text-center">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                    <i data-lucide="headphones" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400"></i>
+                    <x-heroicon name="headphones" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
                 </div>
                 <h3 class="text-base sm:text-lg font-semibold text-white mb-2">7/24 Destek</h3>
                 <p class="text-gray-400 text-xs sm:text-sm">Yardım mı lazım? Destek ekibimiz 24 saat hizmet veriyor</p>
@@ -381,7 +381,7 @@
 
             <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 text-center">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                    <i data-lucide="zap" class="w-5 h-5 sm:w-6 sm:h-6 text-green-400"></i>
+                    <x-heroicon name="bolt" class="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
                 </div>
                 <h3 class="text-base sm:text-lg font-semibold text-white mb-2">Anında İşleme</h3>
                 <p class="text-gray-400 text-xs sm:text-sm">Yatırımlar onaydan sonraki dakikalar içinde işlenir</p>
@@ -389,7 +389,7 @@
 
             <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 text-center md:col-span-1">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                    <i data-lucide="shield" class="w-5 h-5 sm:w-6 sm:h-6 text-purple-400"></i>
+                    <x-heroicon name="shield-check" class="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
                 </div>
                 <h3 class="text-base sm:text-lg font-semibold text-white mb-2">Banka Seviyesi Güvenlik</h3>
                 <p class="text-gray-400 text-xs sm:text-sm">Fonlarınız ve verileriniz kurumsal güvenlik önlemleriyle korunur</p>
@@ -638,7 +638,7 @@
 
         initializeLucide() {
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
         }
     }

@@ -84,9 +84,28 @@ export class DependencyManager {
         const loadingPromise = this._loadWithFallback(key, async () => {
             const lucide = await import('lucide');
             
-            // Initialize icons after loading
+            // Initialize icons after loading with safe configuration
             if (lucide.createIcons) {
-                lucide.createIcons();
+                lucide.createIcons({
+                    nameAttr: 'data-lucide',
+                    attrs: (name, props) => {
+                        // Ensure no null/undefined values for width/height
+                        const safeAttrs = {
+                            class: 'lucide-icon',
+                            'stroke-width': '1.5'
+                        };
+                        
+                        // Only add width/height if they have valid values
+                        if (props.width && props.width !== 'null' && props.width !== null) {
+                            safeAttrs.width = props.width;
+                        }
+                        if (props.height && props.height !== 'null' && props.height !== null) {
+                            safeAttrs.height = props.height;
+                        }
+                        
+                        return safeAttrs;
+                    }
+                });
             }
             
             return lucide;

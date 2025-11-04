@@ -23,7 +23,7 @@
                 onclick="closeEditModal()"
                 class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
             >
-                <i data-lucide="x" class="w-6 h-6"></i>
+                <x-heroicon name="x-mark" class="w-6 h-6" />
             </button>
         </div>
         
@@ -316,7 +316,7 @@
                         class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <span id="save-btn-text">
-                            <i data-lucide="save" class="w-4 h-4 mr-2 inline"></i>
+                            <x-heroicon name="save" class="w-4 h-4 mr-2 inline" />
                             <span>Kaydet</span>
                         </span>
                         <span id="save-btn-loading" class="flex items-center" style="display: none;">

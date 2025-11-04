@@ -8,7 +8,7 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between">
                     <div class="flex items-center space-x-4 mb-4 md:mb-0">
                         <div class="p-3 bg-gradient-to-r from-green-500 to-teal-600 rounded-xl shadow-lg">
-                            <i data-lucide="trending-up" class="w-8 h-8 text-white"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-8 h-8 text-white" />
                         </div>
                         <div>
                             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Sinyal Yönetimi</h1>
@@ -18,7 +18,7 @@
                     <div>
                         <a href="{{ route('newsignal') }}"
                            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
-                            <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+                            <x-heroicon name="plus" class="w-5 h-5 mr-2" />
                             Yeni Sinyal Ekle
                         </a>
                     </div>
@@ -38,7 +38,7 @@
                 <div class="bg-white dark:bg-admin-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-admin-700 hover:shadow-xl transition-all duration-300">
                         <div class="flex items-center">
                         <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mr-4">
-                            <i data-lucide="radio" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                            <x-heroicon name="radio" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
                             <div class="text-2xl font-bold text-gray-900 dark:text-white">{{ $signals->count() }}</div>
@@ -51,7 +51,7 @@
                 <div class="bg-white dark:bg-admin-800 rounded-2xl p-6 shadow-lg border border-gray-100 dark:border-admin-700 hover:shadow-xl transition-all duration-300">
                     <div class="flex items-center">
                         <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center mr-4">
-                            <i data-lucide="trending-up" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-6 h-6 text-green-600 dark:text-green-400" />
                         </div>
                         <div>
                             <div class="text-2xl font-bold text-gray-900 dark:text-white">

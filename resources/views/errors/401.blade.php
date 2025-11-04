@@ -9,7 +9,7 @@
         <!-- 401 Icon -->
         <div class="mb-8">
             <div class="w-24 h-24 mx-auto bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
-                <i data-lucide="lock" class="w-12 h-12 text-orange-600 dark:text-orange-400"></i>
+                <x-heroicon name="lock-closed" class="w-12 h-12 text-orange-600 dark:text-orange-400" />
             </div>
         </div>
 
@@ -26,12 +26,12 @@
         <div class="space-y-4">
             <a href="{{ route('login') }}"
                class="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                <i data-lucide="log-in" class="w-5 h-5 mr-2"></i>
+                <x-heroicon name="arrow-right-on-rectangle" class="w-5 h-5 mr-2" />
                 Giriş Yap
             </a>
             <a href="{{ route('register') }}"
                class="w-full inline-flex justify-center items-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-xl text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
+                <x-heroicon name="user-plus" class="w-5 h-5 mr-2" />
                 Hesap Oluştur
             </a>
         </div>
@@ -41,7 +41,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

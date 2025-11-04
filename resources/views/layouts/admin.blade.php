@@ -21,18 +21,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <!-- Ultimate Console Error Fixes - Priority Load -->
-    <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
     
-    <!-- Lucide Icons - Loaded via unified Icon Service -->
+    
+    <!-- Heroicons Component - Pure SVG icons with no JavaScript dependencies -->
     
     <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
     
     <!-- Console Error Fixes - Full Version -->
-    <script src="{{ asset('js/console-fixes.js') }}"></script>
+    
     
     <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     
     <style>
         .hidden-initial { display: none !important; }
@@ -145,7 +145,7 @@
             <div class="h-20 flex items-center justify-between px-6 border-b border-admin-200 dark:border-admin-700 bg-gradient-to-r from-primary-600 to-primary-700">
                 <div class="flex items-center space-x-3" id="sidebarHeader">
                     <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                        <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
+                        <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                     </div>
                     <div class="text-white" id="sidebarHeaderText">
                         @php $adminUser = Auth::guard('admin')->user(); @endphp
@@ -162,7 +162,7 @@
                 <a href="{{ route('admin.dashboard') }}" 
                    class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-700 dark:hover:text-primary-300 transition-all duration-200 group {{ request()->routeIs('admin.dashboard') ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300' : '' }}"
                    title="Kontrol Paneli">
-                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform"></i>
+                    <x-heroicon name="layout-dashboard" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
                     <span class="font-medium">Kontrol Paneli</span>
                 </a>
 
@@ -175,10 +175,10 @@
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700/50 transition-all duration-200 group"
                             title="Kullanıcıları Yönet">
                         <div class="flex items-center">
-                            <i data-lucide="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500"></i>
+                            <x-heroicon name="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500" />
                             <span class="font-medium">Kullanıcılar</span>
                         </div>
-                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="usersMenuChevron"></i>
+                        <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="usersMenuChevron" />
                     </button>
                     
                     <div class="mt-2 ml-12 space-y-1" id="usersMenuContent" style="display: none;">
@@ -197,14 +197,14 @@
                     <a href="{{ route('mdeposits') }}" 
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-200 group {{ request()->routeIs('mdeposits') ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300' : '' }}"
                        title="Yatırımları Yönet">
-                        <i data-lucide="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500"></i>
+                        <x-heroicon name="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500" />
                         <span class="font-medium">Yatırımlar</span>
                     </a>
 
                     <a href="{{ route('mwithdrawals') }}" 
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:text-rose-700 dark:hover:text-rose-300 transition-all duration-200 group {{ request()->routeIs('mwithdrawals') ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300' : '' }}"
                        title="Çekimleri Yönet">
-                        <i data-lucide="trending-down" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-rose-500"></i>
+                        <x-heroicon name="trending-down" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-rose-500" />
                         <span class="font-medium">Çekimler</span>
                     </a>
                 </div>
@@ -218,28 +218,28 @@
                     <a href="{{ route('emailservices') }}"
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 group {{ request()->routeIs('emailservices') ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : '' }}"
                        title="E-posta Servisleri">
-                        <i data-lucide="mail" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-blue-500"></i>
+                        <x-heroicon name="mail" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-blue-500" />
                         <span class="font-medium">E-posta Servisleri</span>
                     </a>
 
                     <a href="{{ route('kyc') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-700 dark:hover:text-teal-300 transition-all duration-200 group {{ request()->routeIs('kyc') ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300' : '' }}"
                        title="KYC Başvuruları">
-                        <i data-lucide="user-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-teal-500"></i>
+                        <x-heroicon name="user-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-teal-500" />
                         <span class="font-medium">KYC Başvuruları</span>
                     </a>
 
                     <a href="{{ route('admin.trades.index') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-violet-50 dark:hover:bg-violet-900/20 hover:text-violet-700 dark:hover:text-violet-300 transition-all duration-200 group {{ request()->routeIs('admin.trades.index') ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300' : '' }}"
                        title="İşlem Yönetimi">
-                        <i data-lucide="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-violet-500"></i>
+                        <x-heroicon name="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-violet-500" />
                         <span class="font-medium">İşlem Yönetimi</span>
                     </a>
 
                     <a href="{{ route('admin.leads.index') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-700 dark:hover:text-amber-300 transition-all duration-200 group {{ request()->routeIs('admin.leads.index') ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300' : '' }}"
                        title="Müşteri Adayları">
-                        <i data-lucide="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-amber-500"></i>
+                        <x-heroicon name="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-amber-500" />
                         <span class="font-medium">Müşteri Adayları</span>
                     </a>
                 </div>
@@ -253,7 +253,7 @@
                     <a href="{{ route('admin.phrases') }}"
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-pink-50 dark:hover:bg-pink-900/20 hover:text-pink-700 dark:hover:text-pink-300 transition-all duration-200 group {{ request()->routeIs('admin.phrases') ? 'bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300' : '' }}"
                        title="Dil/Cümleler">
-                        <i data-lucide="languages" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-pink-500"></i>
+                        <x-heroicon name="languages" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-pink-500" />
                         <span class="font-medium">Dil/Cümleler</span>
                     </a>
                 </div>
@@ -266,10 +266,10 @@
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-slate-50 dark:hover:bg-slate-900/20 hover:text-slate-700 dark:hover:text-slate-300 transition-all duration-200 group"
                             title="Görevler">
                         <div class="flex items-center">
-                            <i data-lucide="list-checks" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-slate-500"></i>
+                            <x-heroicon name="list-checks" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-slate-500" />
                             <span class="font-medium">Görevler</span>
                         </div>
-                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="tasksMenuChevron"></i>
+                        <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="tasksMenuChevron" />
                     </button>
                     
                     <div class="mt-2 ml-12 space-y-1" id="tasksMenuContent" style="display: none;">
@@ -296,7 +296,7 @@
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300 transition-all duration-200 group {{ request()->routeIs('admin.managers.*') ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' : '' }}"
                             title="Yöneticiler">
                         <div class="flex items-center">
-                            <i data-lucide="user-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500"></i>
+                            <x-heroicon name="user-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500" />
                             <span class="font-medium">Yöneticiler</span>
                         </div>
                         <div class="flex items-center space-x-2">
@@ -305,7 +305,7 @@
                                 $activeManagers = \App\Models\Admin::where('type', '!=', 'Super Admin')->where('status', 1)->count();
                             @endphp
                             <span class="text-xs bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-2 py-0.5 rounded-full font-medium">{{ $activeManagers }}</span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="managersMenuChevron"></i>
+                            <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="managersMenuChevron" />
                         </div>
                     </button>
                     
@@ -313,17 +313,17 @@
                         <a href="{{ route('admin.managers.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.managers.index') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300' : '' }}">
                             <span>Yöneticiler Listesi</span>
-                            <i data-lucide="list" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <x-heroicon name="list" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         <a href="{{ route('admin.managers.create') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.managers.create') ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300' : '' }}">
                             <span>Yönetici Ekle</span>
-                            <i data-lucide="user-plus" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <x-heroicon name="user-plus" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         <a href="{{ route('admin.hierarchy.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.hierarchy.*') ? 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300' : '' }}">
                             <span>Hiyerarşi Görünümü</span>
-                            <i data-lucide="git-branch" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <x-heroicon name="git-branch" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         
                         <!-- Legacy Routes (Backward Compatibility) -->
@@ -345,7 +345,7 @@
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-700 dark:hover:text-indigo-300 transition-all duration-200 group {{ request()->routeIs('admin.permissions.*') || request()->routeIs('admin.roles.*') ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300' : '' }}"
                             title="Yetkiler & Roller">
                         <div class="flex items-center">
-                            <i data-lucide="shield-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-indigo-500"></i>
+                            <x-heroicon name="shield-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-indigo-500" />
                             <span class="font-medium">Yetkiler & Roller</span>
                         </div>
                         <div class="flex items-center space-x-2">
@@ -354,7 +354,7 @@
                                 $totalPermissions = \App\Models\Permission::count();
                             @endphp
                             <span class="text-xs bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 px-2 py-0.5 rounded-full font-medium">{{ $totalRoles }}/{{ $totalPermissions }}</span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="permissionsMenuChevron"></i>
+                            <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="permissionsMenuChevron" />
                         </div>
                     </button>
                     
@@ -362,17 +362,17 @@
                         <a href="{{ route('admin.permissions.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.permissions.index') ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300' : '' }}">
                             <span>İzinler Matrisi</span>
-                            <i data-lucide="grid-3x3" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <x-heroicon name="grid-3x3" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         <a href="{{ route('admin.roles.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.roles.*') ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300' : '' }}">
                             <span>Rol Yönetimi</span>
-                            <i data-lucide="users" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <x-heroicon name="users" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         <a href="{{ route('admin.permissions.audit-log') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors flex items-center justify-between group">
                             <span>İzin Geçmişi</span>
-                            <i data-lucide="history" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <x-heroicon name="history" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                     </div>
                 </div>
@@ -387,7 +387,7 @@
                     <a href="{{ route('appsettingshow') }}"
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:text-orange-700 dark:hover:text-orange-300 transition-all duration-200 group {{ request()->routeIs('appsettingshow') ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300' : '' }}"
                        title="Sistem Ayarları">
-                        <i data-lucide="server" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-orange-500"></i>
+                        <x-heroicon name="server" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-orange-500" />
                         <span class="font-medium">Sistem Ayarları</span>
                     </a>
 
@@ -397,10 +397,10 @@
                                 class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 transition-all duration-200 group"
                                 title="Diğer Ayarlar">
                             <div class="flex items-center">
-                                <i data-lucide="settings" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-purple-500"></i>
+                                <x-heroicon name="settings" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-purple-500" />
                                 <span class="font-medium">Diğer Ayarlar</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="settingsMenuChevron"></i>
+                            <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="settingsMenuChevron" />
                         </button>
                         
                         <div class="mt-2 ml-12 space-y-1" id="settingsMenuContent" style="display: none;">
@@ -430,16 +430,16 @@
                     <button onclick="toggleDarkMode()"
                             class="p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors"
                             id="darkModeToggle" title="Tema Değiştir">
-                        <i data-lucide="sun" class="w-4 h-4" id="sunIcon"></i>
-                        <i data-lucide="moon" class="w-4 h-4" id="moonIcon" style="display: none;"></i>
+                        <x-heroicon name="sun" class="w-4 h-4" id="sunIcon" />
+                        <x-heroicon name="moon" class="w-4 h-4" id="moonIcon" style="display: none;" />
                     </button>
                     
                     <!-- Collapse Toggle (Desktop Only) -->
                     <button onclick="toggleSidebarCollapse()"
                             class="hidden lg:block p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors"
                             id="collapseToggle" title="Daralt">
-                        <i data-lucide="panel-left" class="w-4 h-4" id="panelLeftIcon"></i>
-                        <i data-lucide="panel-right" class="w-4 h-4" id="panelRightIcon" style="display: none;"></i>
+                        <x-heroicon name="panel-left" class="w-4 h-4" id="panelLeftIcon" />
+                        <x-heroicon name="panel-right" class="w-4 h-4" id="panelRightIcon" style="display: none;" />
                     </button>
                 </div>
                 
@@ -467,7 +467,7 @@
                     <!-- Mobile Menu Button -->
                     <button onclick="toggleMobileSidebar()"
                             class="lg:hidden p-2 rounded-lg text-admin-500 hover:text-admin-700 dark:hover:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
+                        <x-heroicon name="menu" class="w-6 h-6" />
                     </button>
 
                     <!-- Breadcrumbs -->
@@ -477,7 +477,7 @@
                                 @foreach($breadcrumbs as $breadcrumb)
                                     <li class="flex items-center">
                                         @if(!$loop->first)
-                                            <i data-lucide="chevron-right" class="w-4 h-4 text-admin-400 mx-2"></i>
+                                            <x-heroicon name="chevron-right" class="w-4 h-4 text-admin-400 mx-2" />
                                         @endif
                                         @if($loop->last)
                                             <span class="text-sm font-medium text-admin-900 dark:text-admin-100">{{ $breadcrumb['title'] }}</span>
@@ -499,7 +499,7 @@
                     <!-- Quick Search -->
                     <div class="hidden md:block relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="search" class="w-4 h-4 text-admin-400"></i>
+                            <x-heroicon name="search" class="w-4 h-4 text-admin-400" />
                         </div>
                         <input type="text"
                                placeholder="Kullanıcıları ara..."
@@ -511,7 +511,7 @@
                     <div class="relative" id="notificationsDropdown">
                         <button onclick="toggleNotificationsDropdown()"
                                 class="relative p-2 rounded-lg text-admin-500 hover:text-admin-700 dark:hover:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
-                            <i data-lucide="bell" class="w-5 h-5"></i>
+                            <x-heroicon name="bell" class="w-5 h-5" />
                             @php
                                 $notificationCount = $adminUser ? \App\Models\Notification::where('admin_id', $adminUser->id)->where('is_read', 0)->count() : 0;
                             @endphp
@@ -544,7 +544,7 @@
                                     </div>
                                 @else
                                     <div class="p-8 text-center">
-                                        <i data-lucide="bell-off" class="w-12 h-12 text-admin-400 mx-auto mb-3"></i>
+                                        <x-heroicon name="bell-off" class="w-12 h-12 text-admin-400 mx-auto mb-3" />
                                         <p class="text-sm text-admin-500">Yeni bildirim yok</p>
                                     </div>
                                 @endif
@@ -563,7 +563,7 @@
                                 <div class="text-sm font-medium text-admin-900 dark:text-admin-100">{{ $adminUser?->firstName ?? 'Admin' }}</div>
                                 <div class="text-xs text-admin-500">{{ $adminUser?->type ?? 'User' }}</div>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-admin-400"></i>
+                            <x-heroicon name="chevron-down" class="w-4 h-4 text-admin-400" />
                         </button>
 
                         <!-- Profile Dropdown Menu -->
@@ -585,18 +585,18 @@
 
                             <div class="p-2">
                                 <a href="{{ route('adminprofile') }}" class="flex items-center px-3 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
-                                    <i data-lucide="user-cog" class="w-4 h-4 mr-3"></i>
+                                    <x-heroicon name="user-cog" class="w-4 h-4 mr-3" />
                                     Hesap Ayarları
                                 </a>
                                 <a href="{{ url('admin/dashboard/adminchangepassword') }}" class="flex items-center px-3 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
-                                    <i data-lucide="key" class="w-4 h-4 mr-3"></i>
+                                    <x-heroicon name="key" class="w-4 h-4 mr-3" />
                                     Şifre Değiştir
                                 </a>
                                 <div class="border-t border-admin-200 dark:border-admin-700 my-2"></div>
                                 <form action="{{ route('adminlogout') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="w-full flex items-center px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
-                                        <i data-lucide="log-out" class="w-4 h-4 mr-3"></i>
+                                        <x-heroicon name="log-out" class="w-4 h-4 mr-3" />
                                         Çıkış Yap
                                     </button>
                                 </form>
@@ -638,8 +638,8 @@
 
         // Initialize admin layout
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Lucide Icons
-            lucide.createIcons();
+            // Load and initialize dependencies
+            initializeDependencies();
             
             // Apply initial theme
             applyTheme();
@@ -664,6 +664,44 @@
             
             console.log('Admin layout initialized');
         });
+
+        // Initialize critical dependencies
+        async function initializeDependencies() {
+            try {
+                // Heroicons - No initialization needed (pure SVG components)
+                console.log('✅ Heroicons loaded - pure SVG components ready');
+
+                // Load Chart.js for dashboard
+                if (window.location.pathname.includes('/admin/dashboard')) {
+                    if (typeof window.loadChart === 'function') {
+                        await window.loadChart();
+                        console.log('✅ Chart.js loaded for dashboard');
+                    } else {
+                        await loadChartFromCDN();
+                    }
+                }
+            } catch (error) {
+                console.warn('⚠️ Dependency loading failed:', error);
+            }
+        }
+
+        // CDN fallback for Chart.js
+        function loadChartFromCDN() {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                script.onload = () => {
+                    console.log('✅ Chart.js loaded from CDN fallback');
+                    window.Chart = Chart;
+                    resolve();
+                };
+                script.onerror = () => {
+                    console.warn('❌ Failed to load Chart.js from CDN');
+                    resolve(); // Continue without charts
+                };
+                document.head.appendChild(script);
+            });
+        }
 
         // Apply theme
         function applyTheme() {
@@ -748,10 +786,8 @@
                 updateMenuTextVisibility(true);
             }
             
-            // Re-initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+            // Heroicons - No re-initialization needed (pure SVG components)
+            console.log('Heroicons: Pure SVG components - no refresh required');
         }
 
         // Update menu text visibility
@@ -970,6 +1006,6 @@
     @yield('scripts')
 
     <!-- Application Scripts -->
-    <!-- Already loaded by @vite directive above -->
+    <!-- Already loaded by Vite directive above -->
 </body>
 </html>

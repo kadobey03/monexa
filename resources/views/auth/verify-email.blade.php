@@ -13,7 +13,7 @@
             <div class="text-center mb-8">
                 <!-- Email Icon -->
                 <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-500/10 mb-4">
-                    <i data-lucide="mail-check" class="h-8 w-8 text-green-400"></i>
+                    <x-heroicon name="mail-check" class="h-8 w-8 text-green-400" />
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
@@ -28,7 +28,7 @@
             @if (session('status'))
                 <div class="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl">
                     <div class="flex items-start gap-3">
-                        <i data-lucide="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i>
+                        <x-heroicon name="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
                             <p class="text-green-300 font-bold mb-1">Doğrulama E-postası Gönderildi</p>
                             <p class="text-gray-300">
@@ -42,7 +42,7 @@
             @if (session('message'))
                 <div class="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl">
                     <div class="flex items-start gap-3">
-                        <i data-lucide="info" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i>
+                        <x-heroicon name="information-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
                             <p class="text-green-300 font-bold mb-1">Güncelleme</p>
                             <p class="text-gray-300">{{ session('message') }}</p>
@@ -54,7 +54,7 @@
             <!-- Email Verification Instructions -->
             <div class="mb-8 p-6 bg-blue-500/10 border border-blue-500/20 rounded-xl">
                 <div class="flex items-start gap-4">
-                    <i data-lucide="mail" class="w-6 h-6 text-blue-400 mt-1 flex-shrink-0"></i>
+                    <x-heroicon name="envelope" class="w-6 h-6 text-blue-400 mt-1 flex-shrink-0" />
                     <div>
                         <h3 class="text-blue-300 font-bold text-lg mb-3">E-postanızı Kontrol Edin</h3>
                         <p class="text-gray-300 text-sm mb-4 leading-relaxed">
@@ -93,7 +93,7 @@
                         class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                     >
                         <span class="flex items-center justify-center gap-2">
-                            <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                            <x-heroicon name="arrow-path" class="w-5 h-5" />
                             Doğrulama E-postasını Tekrar Gönder
                         </span>
                     </button>
@@ -107,7 +107,7 @@
                         class="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white font-bold py-3 px-6 rounded-xl transition-all duration-200 border border-gray-600 hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500/50"
                     >
                         <span class="flex items-center justify-center gap-2">
-                            <i data-lucide="log-out" class="w-5 h-5"></i>
+                            <x-heroicon name="arrow-left-on-rectangle" class="w-5 h-5" />
                             Çıkış Yap
                         </span>
                     </button>
@@ -117,7 +117,7 @@
             <!-- Troubleshooting Tips -->
             <div class="mt-8 bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                 <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
-                    <i data-lucide="help-circle" class="w-4 h-4 text-yellow-400"></i>
+                    <x-heroicon name="question-mark-circle" class="w-4 h-4 text-yellow-400" />
                     E-posta Bulamıyor musunuz?
                 </h4>
                 <ul class="text-gray-300 text-xs space-y-2">
@@ -146,15 +146,15 @@
                     <p class="text-xs text-gray-500 mb-3">E-posta neden doğrulanıyor?</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                         <div class="flex flex-col items-center gap-1 text-gray-400">
-                            <i data-lucide="shield-check" class="w-4 h-4 text-green-400"></i>
+                            <x-heroicon name="shield-check" class="w-4 h-4 text-green-400" />
                             <span>Hesap Güvenliği</span>
                         </div>
                         <div class="flex flex-col items-center gap-1 text-gray-400">
-                            <i data-lucide="bell" class="w-4 h-4 text-blue-400"></i>
+                            <x-heroicon name="bell" class="w-4 h-4 text-blue-400" />
                             <span>Ticaret Uyarıları</span>
                         </div>
                         <div class="flex flex-col items-center gap-1 text-gray-400">
-                            <i data-lucide="key" class="w-4 h-4 text-purple-400"></i>
+                            <x-heroicon name="key" class="w-4 h-4 text-purple-400" />
                             <span>Şifre Kurtarma</span>
                         </div>
                     </div>
@@ -182,10 +182,10 @@
 </div>
 
 <!-- Add Lucide Icons Script -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        lucide.createIcons();
+        
 
         // Auto-check email status periodically (optional enhancement)
         let checkCount = 0;
@@ -218,11 +218,11 @@
                 checkCount = 0;
 
                 // Visual feedback
-                this.innerHTML = '<span class="flex items-center justify-center gap-2"><i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Gönderiliyor...</span>';
+                this.innerHTML = '<span class="flex items-center justify-center gap-2"><x-heroicon name="loader-2" class="w-5 h-5 animate-spin" />Gönderiliyor...</span>';
 
                 // Re-initialize icons after content change
                 setTimeout(() => {
-                    lucide.createIcons();
+                    
                 }, 100);
             });
         }

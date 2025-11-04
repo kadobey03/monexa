@@ -46,7 +46,7 @@
                            id="searchInput"
                            placeholder="Enstrüman ara..."
                            class="w-64 pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white">
-                    <i data-lucide="search" class="absolute left-3 top-2.5 h-5 w-5 text-gray-400"></i>
+                    <x-heroicon name="magnifying-glass" class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
                 </div>
 
                 <div class="hidden md:flex items-center gap-4 text-sm">
@@ -71,42 +71,42 @@
                 <button onclick="setSelectedType('all')"
                         data-filter="all"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 bg-blue-500 text-white shadow-md">
-                    <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                    <x-heroicon name="squares-plus" class="w-4 h-4" />
                     Tüm Pazarlar
                 </button>
 
                 <button onclick="setSelectedType('crypto')"
                         data-filter="crypto"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i data-lucide="bitcoin" class="w-4 h-4"></i>
+                    <x-heroicon name="bitcoin" class="w-4 h-4" />
                     Kripto Para
                 </button>
 
                 <button onclick="setSelectedType('stock')"
                         data-filter="stock"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i data-lucide="trending-up" class="w-4 h-4"></i>
+                    <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
                     Hisseler
                 </button>
 
                 <button onclick="setSelectedType('forex')"
                         data-filter="forex"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i data-lucide="globe" class="w-4 h-4"></i>
+                    <x-heroicon name="globe" class="w-4 h-4" />
                     Döviz
                 </button>
 
                 <button onclick="setSelectedType('commodity')"
                         data-filter="commodity"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <x-heroicon name="bolt" class="w-4 h-4" />
                     Emtialar
                 </button>
 
                 <button onclick="setSelectedType('bond')"
                         data-filter="bond"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <i data-lucide="landmark" class="w-4 h-4"></i>
+                    <x-heroicon name="landmark" class="w-4 h-4" />
                     Tahviller
                 </button>
             </div>
@@ -126,7 +126,7 @@
         <!-- No Results -->
         <div id="noResultsState" class="text-center py-12" style="display: none;">
             <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8">
-                <i data-lucide="search-x" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+                <x-heroicon name="search-x" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No instruments found</h3>
                 <p class="text-gray-600 dark:text-gray-400">Try adjusting your search or filter criteria</p>
             </div>
@@ -140,19 +140,19 @@
                 <div class="flex items-center gap-3 px-2">
                     <div class="flex items-center gap-2">
                         <template x-if="type === 'crypto'">
-                            <i data-lucide="bitcoin" class="w-5 h-5 text-orange-500"></i>
+                            <x-heroicon name="bitcoin" class="w-5 h-5 text-orange-500" />
                         </template>
                         <template x-if="type === 'stock'">
-                            <i data-lucide="trending-up" class="w-5 h-5 text-green-500"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-5 h-5 text-green-500" />
                         </template>
                         <template x-if="type === 'forex'">
-                            <i data-lucide="globe" class="w-5 h-5 text-blue-500"></i>
+                            <x-heroicon name="globe" class="w-5 h-5 text-blue-500" />
                         </template>
                         <template x-if="type === 'commodity'">
-                            <i data-lucide="zap" class="w-5 h-5 text-yellow-500"></i>
+                            <x-heroicon name="bolt" class="w-5 h-5 text-yellow-500" />
                         </template>
                         <template x-if="type === 'bond'">
-                            <i data-lucide="landmark" class="w-5 h-5 text-purple-500"></i>
+                            <x-heroicon name="landmark" class="w-5 h-5 text-purple-500" />
                         </template>
 
                         <h2 class="text-xl font-bold text-gray-900 dark:text-white capitalize" x-text="getTypeDisplayName(type)"></h2>
@@ -207,10 +207,10 @@
                                             <span :class="instrument.percent_change_24h >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
                                                   class="font-semibold flex items-center gap-1">
                                                 <template x-if="instrument.percent_change_24h >= 0">
-                                                    <i data-lucide="trending-up" class="w-3 h-3"></i>
+                                                    <x-heroicon name="arrow-trending-up" class="w-3 h-3" />
                                                 </template>
                                                 <template x-if="instrument.percent_change_24h < 0">
-                                                    <i data-lucide="trending-down" class="w-3 h-3"></i>
+                                                    <x-heroicon name="arrow-trending-down" class="w-3 h-3" />
                                                 </template>
                                                 <span x-text="formatPercentage(instrument.percent_change_24h)"></span>
                                             </span>
@@ -228,7 +228,7 @@
                                     <div class="col-span-4 md:col-span-3 text-right">
                                         <a :href="`{{ url('/dashboard/trade') }}/${instrument.id}`"
                                            class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm hover:shadow-md">
-                                            <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                            <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
                                             <span>İşle</span>
                                         </a>
                                     </div>
@@ -385,7 +385,7 @@ const TradingMarkets = {
             <div class="space-y-4">
                 <div class="flex items-center gap-3 px-2">
                     <div class="flex items-center gap-2">
-                        <i data-lucide="${iconMap[type] || 'circle'}" class="w-5 h-5 text-${type === 'crypto' ? 'orange' : type === 'stock' ? 'green' : type === 'forex' ? 'blue' : type === 'commodity' ? 'yellow' : 'purple'}-500"></i>
+                        <x-heroicon name="${iconMap[type] || 'circle'}" class="w-5 h-5 text-${type === 'crypto' ? 'orange' : type === 'stock' ? 'green' : type === 'forex' ? 'blue' : type === 'commodity' ? 'yellow' : 'purple'}-500" />
                         <h2 class="text-xl font-bold text-gray-900 dark:text-white capitalize">${displayName}</h2>
                         <span class="text-sm text-gray-500 dark:text-gray-400">(${instruments.length} enstrüman)</span>
                     </div>
@@ -443,7 +443,7 @@ const TradingMarkets = {
                     <div class="col-span-2 text-right hidden md:block">
                         <div class="flex flex-col items-end gap-1">
                             <span class="${changeClass} font-semibold flex items-center gap-1">
-                                <i data-lucide="${changeIcon}" class="w-3 h-3"></i>
+                                <x-heroicon name="${changeIcon}" class="w-3 h-3" />
                                 <span>${this.formatPercentage(instrument.percent_change_24h)}</span>
                             </span>
                             <span class="${changeClass} text-sm">${this.formatChange(instrument.change)}</span>
@@ -454,7 +454,7 @@ const TradingMarkets = {
                     </div>
                     <div class="col-span-4 md:col-span-3 text-right">
                         <a href="{{ url('/dashboard/trade') }}/${instrument.id}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm hover:shadow-md">
-                            <i data-lucide="trending-up" class="w-4 h-4"></i>
+                            <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
                             <span>İşle</span>
                         </a>
                     </div>
@@ -500,7 +500,7 @@ const TradingMarkets = {
 
     initializeLucideIcons() {
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            
         }
     }
 };

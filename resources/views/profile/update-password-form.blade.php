@@ -3,7 +3,7 @@
     <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 mb-6 rounded-lg">
         <div class="flex">
             <div class="flex-shrink-0">
-                <i data-lucide="lock" class="h-5 w-5 text-blue-500" aria-hidden="true"></i>
+                <x-heroicon name="lock-closed" class="h-5 w-5 text-blue-500" aria-hidden="true" />
             </div>
             <div class="ml-3">
                 <p class="text-sm text-blue-700 dark:text-blue-400">
@@ -26,7 +26,7 @@
                 </label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i data-lucide="key" class="h-5 w-5 text-gray-400"></i>
+                        <x-heroicon name="key" class="h-5 w-5 text-gray-400" />
                     </div>
                     <input
                         type="password"
@@ -42,8 +42,8 @@
                             onclick="togglePasswordVisibility('current_password')"
                             class="text-gray-400 hover:text-gray-500 focus:outline-none"
                         >
-                            <i data-lucide="eye" class="h-5 w-5 eye-icon"></i>
-                            <i data-lucide="eye-off" class="h-5 w-5 eye-off-icon" style="display: none;"></i>
+                            <x-heroicon name="eye" class="h-5 w-5 eye-icon" />
+                            <x-heroicon name="eye-slash" class="h-5 w-5 eye-off-icon" style="display: none;" />
                         </button>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                 </label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i data-lucide="lock" class="h-5 w-5 text-gray-400"></i>
+                        <x-heroicon name="lock-closed" class="h-5 w-5 text-gray-400" />
                     </div>
                     <input
                         type="password"
@@ -73,8 +73,8 @@
                             onclick="togglePasswordVisibility('password')"
                             class="text-gray-400 hover:text-gray-500 focus:outline-none"
                         >
-                            <i data-lucide="eye" class="h-5 w-5 eye-icon"></i>
-                            <i data-lucide="eye-off" class="h-5 w-5 eye-off-icon" style="display: none;"></i>
+                            <x-heroicon name="eye" class="h-5 w-5 eye-icon" />
+                            <x-heroicon name="eye-slash" class="h-5 w-5 eye-off-icon" style="display: none;" />
                         </button>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                 </label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i data-lucide="check-circle" class="h-5 w-5 text-gray-400"></i>
+                        <x-heroicon name="check-circle" class="h-5 w-5 text-gray-400" />
                     </div>
                     <input
                         type="password"
@@ -118,8 +118,8 @@
                             onclick="togglePasswordVisibility('password_confirmation')"
                             class="text-gray-400 hover:text-gray-500 focus:outline-none"
                         >
-                            <i data-lucide="eye" class="h-5 w-5 eye-icon"></i>
-                            <i data-lucide="eye-off" class="h-5 w-5 eye-off-icon" style="display: none;"></i>
+                            <x-heroicon name="eye" class="h-5 w-5 eye-icon" />
+                            <x-heroicon name="eye-slash" class="h-5 w-5 eye-off-icon" style="display: none;" />
                         </button>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                 type="submit"
                 class="inline-flex items-center px-6 py-4 border border-transparent rounded-xl shadow-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
             >
-                <i data-lucide="save" class="mr-2 h-5 w-5"></i>
+                <x-heroicon name="save" class="mr-2 h-5 w-5" />
                 Şifreyi Güncelle
             </button>
         </div>
@@ -144,7 +144,7 @@
     <div class="p-5">
         <div class="flex items-center gap-3 mb-4">
             <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
-                <i data-lucide="shield-check" class="h-5 w-5 text-indigo-600 dark:text-indigo-400"></i>
+                <x-heroicon name="shield-check" class="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
             </div>
             <h3 class="text-base font-medium text-gray-900 dark:text-white">Şifre Gereksinimleri</h3>
         </div>
@@ -152,7 +152,7 @@
         <div class="space-y-3 pl-2">
             <div class="flex items-start">
                 <div class="flex-shrink-0 mt-0.5">
-                    <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
+                    <x-heroicon name="check-circle" class="h-5 w-5 text-green-500" />
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
                     Minimum 8 karakter uzunluğunda - ne kadar çok olursa o kadar iyi
@@ -161,7 +161,7 @@
 
             <div class="flex items-start">
                 <div class="flex-shrink-0 mt-0.5">
-                    <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
+                    <x-heroicon name="check-circle" class="h-5 w-5 text-green-500" />
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
                     En az bir küçük harf
@@ -170,7 +170,7 @@
 
             <div class="flex items-start">
                 <div class="flex-shrink-0 mt-0.5">
-                    <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
+                    <x-heroicon name="check-circle" class="h-5 w-5 text-green-500" />
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
                     En az bir büyük harf
@@ -179,7 +179,7 @@
 
             <div class="flex items-start">
                 <div class="flex-shrink-0 mt-0.5">
-                    <i data-lucide="check-circle" class="h-5 w-5 text-green-500"></i>
+                    <x-heroicon name="check-circle" class="h-5 w-5 text-green-500" />
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
                     En az bir sayı veya özel sembol
@@ -248,7 +248,7 @@ function checkPasswordStrength(password) {
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Lucide icons if available
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

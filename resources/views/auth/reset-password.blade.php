@@ -7,7 +7,7 @@
         @if (Session::has('status'))
             <div class="p-4 bg-green-500/10 border border-green-500/20 rounded-xl">
                 <div class="flex items-center gap-3">
-                    <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+                    <x-heroicon name="check-circle" class="w-5 h-5 text-green-400" />
                     <p class="text-green-300 text-sm font-bold">{{ session('status') }}</p>
                 </div>
             </div>
@@ -16,7 +16,7 @@
         @if (Session::has('message'))
             <div class="p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
                 <div class="flex items-center gap-3">
-                    <i data-lucide="info" class="w-5 h-5 text-blue-400"></i>
+                    <x-heroicon name="information-circle" class="w-5 h-5 text-blue-400" />
                     <p class="text-blue-300 text-sm font-bold">{{ Session::get('message') }}</p>
                 </div>
             </div>
@@ -36,7 +36,7 @@
             <div class="space-y-3">
                 <div class="flex items-center justify-center gap-2 mb-4">
                     <div class="p-2 bg-blue-500/20 rounded-lg">
-                        <i data-lucide="key-round" class="w-6 h-6 text-blue-400"></i>
+                        <x-heroicon name="key-round" class="w-6 h-6 text-blue-400" />
                     </div>
                     <h1 class="text-2xl sm:text-3xl font-bold text-white">Şifre Sıfırlama</h1>
                 </div>
@@ -59,7 +59,7 @@
                     </label>
                     <div class="relative group">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                            <i data-lucide="mail" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                            <x-heroicon name="envelope" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                         </div>
                         <input type="email"
                                name="email"
@@ -71,7 +71,7 @@
                     </div>
                     @error('email')
                         <p class="text-sm text-red-400 flex items-center gap-1">
-                            <i data-lucide="alert-circle" class="w-4 h-4"></i>{{ $message }}
+                            <x-heroicon name="exclamation-circle" class="w-4 h-4" />{{ $message }}
                         </p>
                     @enderror
                 </div>
@@ -83,7 +83,7 @@
                     </label>
                     <div class="relative group">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                            <i data-lucide="lock" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                            <x-heroicon name="lock-closed" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                         </div>
                         <input type="password"
                                name="password"
@@ -96,12 +96,12 @@
                         <button type="button"
                                 class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-400 transition-colors"
                                 onclick="togglePassword('password')">
-                            <i data-lucide="eye" class="h-5 w-5" id="password-eye"></i>
+                            <x-heroicon name="eye" class="h-5 w-5" id="password-eye" />
                         </button>
                     </div>
                     @error('password')
                         <p class="text-sm text-red-400 flex items-center gap-1">
-                            <i data-lucide="alert-circle" class="w-4 h-4"></i>{{ $message }}
+                            <x-heroicon name="exclamation-circle" class="w-4 h-4" />{{ $message }}
                         </p>
                     @enderror
                 </div>
@@ -113,7 +113,7 @@
                     </label>
                     <div class="relative group">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                            <i data-lucide="key" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors"></i>
+                            <x-heroicon name="key" class="h-5 w-5 text-gray-400 group-focus-within:text-blue-400 transition-colors" />
                         </div>
                         <input type="password"
                                name="password_confirmation"
@@ -126,7 +126,7 @@
                         <button type="button"
                                 class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-blue-400 transition-colors"
                                 onclick="togglePassword('password_confirmation')">
-                            <i data-lucide="eye" class="h-5 w-5" id="password_confirmation-eye"></i>
+                            <x-heroicon name="eye" class="h-5 w-5" id="password_confirmation-eye" />
                         </button>
                     </div>
                 </div>
@@ -136,15 +136,15 @@
                     <p class="text-sm font-bold text-gray-200 mb-2">Şifre Gereksinimleri:</p>
                     <ul class="text-xs text-gray-300 space-y-1">
                         <li class="flex items-center gap-2">
-                            <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                            <x-heroicon name="check" class="w-3 h-3 text-green-400" />
                             En az 8 karakter uzunluğunda
                         </li>
                         <li class="flex items-center gap-2">
-                            <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                            <x-heroicon name="check" class="w-3 h-3 text-green-400" />
                             Büyük ve küçük harf içeriyor
                         </li>
                         <li class="flex items-center gap-2">
-                            <i data-lucide="check" class="w-3 h-3 text-green-400"></i>
+                            <x-heroicon name="check" class="w-3 h-3 text-green-400" />
                             En az bir rakam veya özel karakter içeriyor
                         </li>
                     </ul>
@@ -153,7 +153,7 @@
                 <!-- Submit Button -->
                 <button type="submit"
                         class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 focus:ring-2 focus:ring-blue-400/20">
-                    <i data-lucide="key-round" class="w-5 h-5"></i>
+                    <x-heroicon name="key-round" class="w-5 h-5" />
                     <span>Şifreyi Sıfırla</span>
                 </button>
             </form>
@@ -172,7 +172,7 @@
             <!-- Security Notice -->
             <div class="p-4 bg-amber-500/10 rounded-xl border border-amber-500/20">
                 <div class="flex items-start gap-3">
-                    <i data-lucide="shield-alert" class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0"></i>
+                    <x-heroicon name="shield-exclamation" class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                     <div>
                         <h4 class="text-sm font-bold text-amber-300 mb-1">Güvenlik Uyarısı</h4>
                         <p class="text-xs text-gray-300">
@@ -187,15 +187,15 @@
         <!-- Trust Indicators -->
         <div class="flex items-center justify-center gap-6 text-xs text-gray-500">
             <div class="flex items-center gap-1">
-                <i data-lucide="shield" class="w-3 h-3"></i>
+                <x-heroicon name="shield-check" class="w-3 h-3" />
                 <span>SSL Güvenli</span>
             </div>
             <div class="flex items-center gap-1">
-                <i data-lucide="lock" class="w-3 h-3"></i>
+                <x-heroicon name="lock-closed" class="w-3 h-3" />
                 <span>256-bit Şifreleme</span>
             </div>
             <div class="flex items-center gap-1">
-                <i data-lucide="award" class="w-3 h-3"></i>
+                <x-heroicon name="award" class="w-3 h-3" />
                 <span>Düzenlenmiş Platform</span>
             </div>
         </div>
@@ -217,7 +217,7 @@ function togglePassword(fieldId) {
 
     // Reinitialize Lucide icons
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 }
 </script>

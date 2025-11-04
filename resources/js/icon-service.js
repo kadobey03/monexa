@@ -76,14 +76,25 @@ class IconService {
     performInit() {
         try {
             if (typeof lucide !== 'undefined' && lucide.createIcons) {
-                // Initialize with optimized settings
+                // Initialize with safe settings - avoid null attributes
                 lucide.createIcons({
                     nameAttr: 'data-lucide',
-                    attrs: {
-                        width: null,
-                        height: null,
-                        strokeWidth: null,
-                        color: null
+                    attrs: (name, props) => {
+                        // Ensure no null/undefined values for width/height
+                        const safeAttrs = {
+                            class: 'lucide-icon',
+                            'stroke-width': '1.5'
+                        };
+                        
+                        // Only add width/height if they have valid values
+                        if (props.width && props.width !== 'null' && props.width !== null) {
+                            safeAttrs.width = props.width;
+                        }
+                        if (props.height && props.height !== 'null' && props.height !== null) {
+                            safeAttrs.height = props.height;
+                        }
+                        
+                        return safeAttrs;
                     }
                 });
                 this.initialized = true;
@@ -102,7 +113,23 @@ class IconService {
             try {
                 lucide.createIcons({
                     nameAttr: 'data-lucide',
-                    attrs: {}
+                    attrs: (name, props) => {
+                        // Ensure no null/undefined values for width/height
+                        const safeAttrs = {
+                            class: 'lucide-icon',
+                            'stroke-width': '1.5'
+                        };
+                        
+                        // Only add width/height if they have valid values
+                        if (props.width && props.width !== 'null' && props.width !== null) {
+                            safeAttrs.width = props.width;
+                        }
+                        if (props.height && props.height !== 'null' && props.height !== null) {
+                            safeAttrs.height = props.height;
+                        }
+                        
+                        return safeAttrs;
+                    }
                 });
             } catch (error) {
                 console.warn('Icon refresh failed:', error);

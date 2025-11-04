@@ -18,7 +18,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="activity" class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="activity" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -33,7 +33,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="dollar-sign" class="h-6 w-6 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="currency-dollar" class="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -48,7 +48,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="trending-up" class="h-6 w-6 text-purple-600 dark:text-purple-400"></i>
+                        <x-heroicon name="arrow-trending-up" class="h-6 w-6 text-purple-600 dark:text-purple-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -63,7 +63,7 @@
             <div class="flex items-center">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center">
-                        <i data-lucide="users" class="h-6 w-6 text-orange-600 dark:text-orange-400"></i>
+                        <x-heroicon name="users" class="h-6 w-6 text-orange-600 dark:text-orange-400" />
                     </div>
                 </div>
                 <div class="ml-4">
@@ -83,7 +83,7 @@
                 <div class="flex items-center space-x-2">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="search" class="h-4 w-4 text-gray-400"></i>
+                            <x-heroicon name="magnifying-glass" class="h-4 w-4 text-gray-400" />
                         </div>
                         <input type="text"
                                placeholder="Arama..."
@@ -102,7 +102,7 @@
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                             <div class="flex items-center space-x-1">
                                 <span>Müşteri Adı</span>
-                                <i data-lucide="chevron-down" class="h-3 w-3 text-gray-400"></i>
+                                <x-heroicon name="chevron-down" class="h-3 w-3 text-gray-400" />
                             </div>
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
@@ -150,7 +150,7 @@
                                         <div class="flex items-center">
                                             <div class="h-10 w-10 flex-shrink-0">
                                                 <div class="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
-                                                    <i data-lucide="user-x" class="w-5 h-5 text-gray-500 dark:text-gray-400"></i>
+                                                    <x-heroicon name="user-minus" class="w-5 h-5 text-gray-500 dark:text-gray-400" />
                                                 </div>
                                             </div>
                                             <div class="ml-4">
@@ -174,7 +174,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if(isset($plan->puser->currency) && $plan->puser->currency != null)
                                     <div class="flex items-center">
-                                        <i data-lucide="dollar-sign" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2"></i>
+                                        <x-heroicon name="currency-dollar" class="w-4 h-4 text-green-600 dark:text-green-400 mr-2" />
                                         <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $plan->puser->currency }}{{ number_format($plan->amount) }}</span>
                                     </div>
                                 @else
@@ -193,7 +193,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if(isset($plan->puser->currency) && $plan->puser->currency != null)
                                     <div class="flex items-center">
-                                        <i data-lucide="trending-up" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 mr-2"></i>
+                                        <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 mr-2" />
                                         <span class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">{{ $plan->puser->currency }}{{ $plan->profit_earned ? number_format($plan->profit_earned) : '0' }}</span>
                                     </div>
                                 @else
@@ -204,7 +204,7 @@
                             <!-- Start Date -->
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                 <div class="flex items-center">
-                                    <i data-lucide="calendar" class="w-4 h-4 text-gray-400 dark:text-gray-500 mr-2"></i>
+                                    <x-heroicon name="calendar-days" class="w-4 h-4 text-gray-400 dark:text-gray-500 mr-2" />
                                     {{ $plan->created_at->format('d/m/Y H:i') }}
                                 </div>
                             </td>
@@ -212,7 +212,7 @@
                             <!-- End Date -->
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                 <div class="flex items-center">
-                                    <i data-lucide="calendar-x" class="w-4 h-4 text-gray-400 dark:text-gray-500 mr-2"></i>
+                                    <x-heroicon name="calendar-x" class="w-4 h-4 text-gray-400 dark:text-gray-500 mr-2" />
                                     {{ \Carbon\Carbon::parse($plan->expire_date)->format('d/m/Y H:i') }}
                                 </div>
                             </td>
@@ -223,7 +223,7 @@
                                     <button @click="open = !open"
                                             class="inline-flex items-center justify-center px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                                         İşlemler
-                                        <i data-lucide="chevron-down" class="ml-2 h-4 w-4"></i>
+                                        <x-heroicon name="chevron-down" class="ml-2 h-4 w-4" />
                                     </button>
                                     <div x-show="open"
                                          @click.away="open = false"
@@ -240,14 +240,14 @@
                                                onclick="return confirm('Bu işlemi silmek istediğinizden emin misiniz?')"
                                                class="flex items-center px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-admin-700 hover:text-red-900 dark:hover:text-red-300"
                                                role="menuitem">
-                                                <i data-lucide="trash-2" class="w-4 h-4 mr-3"></i>
+                                                <x-heroicon name="trash-2" class="w-4 h-4 mr-3" />
                                                 Sil
                                             </a>
                                             @if(isset($plan->puser) && $plan->puser)
                                                 <a href="{{ route('user.plans', $plan->puser->id) }}"
                                                    class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700 hover:text-gray-900 dark:hover:text-white"
                                                    role="menuitem">
-                                                    <i data-lucide="user" class="w-4 h-4 mr-3"></i>
+                                                    <x-heroicon name="user" class="w-4 h-4 mr-3" />
                                                     Kullanıcı Detayları
                                                 </a>
                                             @endif
@@ -260,7 +260,7 @@
                         <tr>
                             <td colspan="8" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center">
-                                    <i data-lucide="activity" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4"></i>
+                                    <x-heroicon name="activity" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
                                     <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Aktif İşlem Bulunamadı</h3>
                                     <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Şu anda hiç aktif yatırım işlemi bulunmuyor.</p>
                                 </div>

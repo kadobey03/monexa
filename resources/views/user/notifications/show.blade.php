@@ -7,7 +7,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
         <div class="flex items-center mb-4 sm:mb-0">
             <a href="{{ route('notifications') }}" class="mr-3 flex items-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                <x-heroicon name="arrow-left" class="w-5 h-5" />
             </a>
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Notification Details</h1>
         </div>
@@ -39,7 +39,7 @@
             <!-- Metadata with modern styling -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mt-6">
                 <div class="flex items-center text-gray-600 dark:text-gray-400">
-                    <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="calendar-days" class="w-4 h-4 mr-2" />
                     <span class="mr-1 font-medium">Date:</span> {{ $notification->created_at->format('F d, Y h:i A') }}
                 </div>
                 <div class="flex items-center text-gray-600 dark:text-gray-400 sm:justify-end">
@@ -55,7 +55,7 @@
                 <div class="mt-8">
                     <div class="flex items-center justify-between cursor-pointer mb-2" onclick="toggleRelatedInfo()">
                         <h3 class="text-base font-semibold text-gray-800 dark:text-white flex items-center">
-                            <i data-lucide="link" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="link" class="w-4 h-4 mr-2" />
                             Related Information
                         </h3>
                         <button class="text-gray-500 dark:text-gray-400 focus:outline-none">
@@ -148,7 +148,7 @@
                             </div>
                         @else
                             <div class="p-4 text-center text-gray-500 dark:text-gray-400">
-                                <i data-lucide="info" class="h-6 w-6 mx-auto mb-2"></i>
+                                <x-heroicon name="information-circle" class="h-6 w-6 mx-auto mb-2" />
                                 <p>No related information available.</p>
                             </div>
                         @endif
@@ -159,12 +159,12 @@
             <!-- Action buttons with animations and confirmation modal -->
             <div class="flex flex-wrap gap-3 mt-8">
                 <a href="{{ route('notifications') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900 transition-all duration-200">
-                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
                     Back to Notifications
                 </a>
 
                 <button onclick="showDeleteModal()" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium bg-red-600 dark:bg-red-700 text-white hover:bg-red-700 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-gray-900 transition-all duration-200">
-                    <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="trash-2" class="w-4 h-4 mr-2" />
                     Delete
                 </button>
             </div>
@@ -175,7 +175,7 @@
     <div id="deleteModal" class="fixed inset-0 z-30 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 opacity-0 pointer-events-none">
         <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md mx-auto shadow-xl transform transition-all duration-300 scale-95">
             <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 dark:bg-red-900/30 rounded-full mb-4">
-                <i data-lucide="alert-triangle" class="w-6 h-6 text-red-600 dark:text-red-400"></i>
+                <x-heroicon name="exclamation-triangle" class="w-6 h-6 text-red-600 dark:text-red-400" />
             </div>
             <h3 class="text-lg font-medium text-center text-gray-900 dark:text-white mb-4">Delete Notification</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-6">
@@ -270,7 +270,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize Lucide icons
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            
         }
         
         // Add fade-in animation to notification card

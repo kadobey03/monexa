@@ -15,7 +15,7 @@
                     onclick="closeColumnSettingsModal()"
                     class="bg-white dark:bg-admin-800 rounded-md text-gray-400 hover:text-gray-600 focus:outline-none"
                 >
-                    <i data-lucide="x" class="h-6 w-6"></i>
+                    <x-heroicon name="x-mark" class="h-6 w-6" />
                 </button>
             </div>
             
@@ -37,7 +37,7 @@
                                 onclick="resetToDefaults()"
                                 class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-admin-600 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600"
                             >
-                                <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="arrow-path" class="w-4 h-4 mr-2" />
                                 Sıfırla
                             </button>
                             
@@ -45,7 +45,7 @@
                                 onclick="saveColumnSettings()"
                                 class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
                             >
-                                <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="save" class="w-4 h-4 mr-2" />
                                 Kaydet
                             </button>
                         </div>
@@ -73,7 +73,7 @@
                                             id="drag-handle-{{ $column['key'] ?? $index }}"
                                             class="cursor-move text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                                         >
-                                            <i data-lucide="grip-vertical" class="w-5 h-5"></i>
+                                            <x-heroicon name="grip-vertical" class="w-5 h-5" />
                                         </div>
                                         
                                         <!-- Column Info -->
@@ -136,7 +136,7 @@
                                                 class="p-2 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg transition-colors"
                                                 title="Sabitle"
                                             >
-                                                <i data-lucide="pin" class="w-4 h-4"></i>
+                                                <x-heroicon name="pin" class="w-4 h-4" />
                                             </button>
                                             @endif
                                         </div>
@@ -154,7 +154,7 @@
                     <!-- Summary -->
                     <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                         <div class="flex items-start space-x-3">
-                            <i data-lucide="info" class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5"></i>
+                            <x-heroicon name="information-circle" class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" />
                             <div class="text-sm text-blue-800 dark:text-blue-200">
                                 <p class="font-medium mb-1">Özet</p>
                                 <p>

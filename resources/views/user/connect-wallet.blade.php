@@ -17,7 +17,7 @@
                 <div class="flex-shrink-0">
                     <a href="{{ route('dashboard') }}"
                        class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 text-sm sm:text-base">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <x-heroicon name="arrow-left" class="w-4 h-4" />
                         <span class="hidden sm:inline">Back to Dashboard</span>
                         <span class="sm:hidden">Back</span>
                     </a>
@@ -31,14 +31,14 @@
                 <div class="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 p-3 sm:p-4 rounded-lg shadow-sm" x-data="{ show: true }" x-show="show">
                     <div class="flex items-start sm:items-center">
                         <div class="flex-shrink-0">
-                            <i data-lucide="alert-circle" class="h-4 w-4 sm:h-5 sm:w-5 text-red-400 mt-0.5 sm:mt-0"></i>
+                            <x-heroicon name="exclamation-circle" class="h-4 w-4 sm:h-5 sm:w-5 text-red-400 mt-0.5 sm:mt-0" />
                         </div>
                         <div class="ml-2 sm:ml-3 flex-1 min-w-0">
                             <p class="text-xs sm:text-sm text-red-700 dark:text-red-300 leading-relaxed">{{ Session::get('message') }}</p>
                         </div>
                         <div class="ml-2 sm:ml-3 flex-shrink-0">
                             <button @click="show = false" class="inline-flex text-red-400 hover:text-red-600 transition-colors">
-                                <i data-lucide="x" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                <x-heroicon name="x-mark" class="h-3 w-3 sm:h-4 sm:w-4" />
                             </button>
                         </div>
                     </div>
@@ -49,14 +49,14 @@
                 <div class="bg-green-50 dark:bg-green-900/20 border-l-4 border-green-400 p-3 sm:p-4 rounded-lg shadow-sm" x-data="{ show: true }" x-show="show">
                     <div class="flex items-start sm:items-center">
                         <div class="flex-shrink-0">
-                            <i data-lucide="check-circle" class="h-4 w-4 sm:h-5 sm:w-5 text-green-400 mt-0.5 sm:mt-0"></i>
+                            <x-heroicon name="check-circle" class="h-4 w-4 sm:h-5 sm:w-5 text-green-400 mt-0.5 sm:mt-0" />
                         </div>
                         <div class="ml-2 sm:ml-3 flex-1 min-w-0">
                             <p class="text-xs sm:text-sm text-green-700 dark:text-green-300 leading-relaxed">{{ Session::get('success') }}</p>
                         </div>
                         <div class="ml-2 sm:ml-3 flex-shrink-0">
                             <button @click="show = false" class="inline-flex text-green-400 hover:text-green-600 transition-colors">
-                                <i data-lucide="x" class="h-3 w-3 sm:h-4 sm:w-4"></i>
+                                <x-heroicon name="x-mark" class="h-3 w-3 sm:h-4 sm:w-4" />
                             </button>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                 <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border border-blue-200 dark:border-blue-700">
                     <div class="flex flex-col sm:flex-row items-start gap-3 sm:gap-4">
                         <div class="p-2 sm:p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg sm:rounded-xl flex-shrink-0">
-                            <i data-lucide="coins" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 dark:text-blue-400"></i>
+                            <x-heroicon name="coins" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div class="flex-1 min-w-0">
                             <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-blue-900 dark:text-blue-100 mb-2 leading-tight">Start Earning {{ $settings->currency }}{{ $settings->min_return }} Daily</h3>
@@ -81,15 +81,15 @@
                             </p>
                             <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm">
                                 <div class="flex items-center gap-1.5 sm:gap-2">
-                                    <i data-lucide="shield-check" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0"></i>
+                                    <x-heroicon name="shield-check" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0" />
                                     <span class="text-blue-700 dark:text-blue-300">Secure Connection</span>
                                 </div>
                                 <div class="flex items-center gap-1.5 sm:gap-2">
-                                    <i data-lucide="zap" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0"></i>
+                                    <x-heroicon name="bolt" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0" />
                                     <span class="text-blue-700 dark:text-blue-300">Instant Setup</span>
                                 </div>
                                 <div class="flex items-center gap-1.5 sm:gap-2">
-                                    <i data-lucide="trending-up" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0"></i>
+                                    <x-heroicon name="arrow-trending-up" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0" />
                                     <span class="text-blue-700 dark:text-blue-300">Daily Rewards</span>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                     <div class="p-4 sm:p-6 lg:p-8 border-b border-gray-200 dark:border-gray-700">
                         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                             <div class="p-2 sm:p-3 lg:p-4 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 rounded-lg sm:rounded-xl flex-shrink-0">
-                                <i data-lucide="wallet" class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-purple-600 dark:text-purple-400"></i>
+                                <x-heroicon name="wallet" class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-purple-600 dark:text-purple-400" />
                             </div>
                             <div class="min-w-0 flex-1">
                                 <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white leading-tight">Connect Your Wallet</h2>
@@ -118,7 +118,7 @@
                             <!-- Wallet Selection -->
                             <div>
                                 <label for="wallet" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 sm:mb-4">
-                                    <i data-lucide="wallet" class="w-4 h-4 inline mr-2"></i>
+                                    <x-heroicon name="wallet" class="w-4 h-4 inline mr-2" />
                                     Select Wallet Provider
                                 </label>
 
@@ -173,7 +173,7 @@
                                          class="p-3 sm:p-4 rounded-lg sm:rounded-xl cursor-pointer transition-all duration-200 border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500">
                                         <div class="text-center">
                                             <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-lg flex items-center justify-center">
-                                                <i data-lucide="more-horizontal" class="w-4 h-4 sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400"></i>
+                                                <x-heroicon name="more-horizontal" class="w-4 h-4 sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
                                             </div>
                                             <div class="text-xs sm:text-sm font-medium text-gray-900 dark:text-white leading-tight">Others</div>
                                         </div>
@@ -241,14 +241,14 @@
                             <!-- Recovery Phrase Section -->
                             <div x-show="selectedWallet" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" style="display: none;">
                                 <label for="mnemonic" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 sm:mb-4">
-                                    <i data-lucide="key" class="w-4 h-4 inline mr-2"></i>
+                                    <x-heroicon name="key" class="w-4 h-4 inline mr-2" />
                                     Recovery Phrase (Seed Phrase)
                                 </label>
 
                                 <!-- Security Warning -->
                                 <div class="bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-400 p-3 sm:p-4 rounded-lg mb-3 sm:mb-4">
                                     <div class="flex items-start">
-                                        <i data-lucide="alert-triangle" class="h-4 w-4 sm:h-5 sm:w-5 text-amber-400 mt-0.5 mr-2 sm:mr-3 flex-shrink-0"></i>
+                                        <x-heroicon name="exclamation-triangle" class="h-4 w-4 sm:h-5 sm:w-5 text-amber-400 mt-0.5 mr-2 sm:mr-3 flex-shrink-0" />
                                         <div class="text-xs sm:text-sm text-amber-700 dark:text-amber-300 leading-relaxed">
                                             <strong>Important:</strong> Your recovery phrase is encrypted and securely stored.
                                             We never store your private keys or access your funds.
@@ -293,7 +293,7 @@
                                         </span>
                                     </div>
                                     <div x-show="recoveryPhrase.length > 0 && !isValidPhrase" class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
-                                        <i data-lucide="alert-circle" class="w-3 h-3 sm:w-4 sm:h-4 text-amber-500 flex-shrink-0"></i>
+                                        <x-heroicon name="exclamation-circle" class="w-3 h-3 sm:w-4 sm:h-4 text-amber-500 flex-shrink-0" />
                                         <span class="text-amber-600 dark:text-amber-400 leading-tight">
                                             <span x-show="wordCount < 12">Recovery phrase too short</span>
                                             <span x-show="wordCount > 24">Recovery phrase too long</span>
@@ -314,7 +314,7 @@
                                         class="w-full inline-flex justify-center items-center gap-2 sm:gap-3 py-3 sm:py-4 px-4 sm:px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-lg sm:rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02] text-sm sm:text-base"
                                         :class="isConnecting ? 'opacity-75 cursor-wait' : ''">
                                     <div x-show="!isConnecting" class="flex items-center gap-2 sm:gap-3">
-                                        <i data-lucide="link" class="h-4 w-4 sm:h-5 sm:w-5"></i>
+                                        <x-heroicon name="link" class="h-4 w-4 sm:h-5 sm:w-5" />
                                         <span>Connect Wallet</span>
                                     </div>
                                     <div x-show="isConnecting" class="flex items-center gap-2 sm:gap-3">
@@ -331,21 +331,21 @@
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8">
                     <div class="text-center p-4 sm:p-6">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                            <i data-lucide="shield-check" class="w-5 h-5 sm:w-6 sm:h-6 text-green-600"></i>
+                            <x-heroicon name="shield-check" class="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
                         </div>
                         <h3 class="font-semibold text-gray-900 dark:text-white mb-1 sm:mb-2 text-sm sm:text-base">Bank-Level Security</h3>
                         <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Your data is encrypted using industry-standard security protocols</p>
                     </div>
                     <div class="text-center p-4 sm:p-6">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
-                            <i data-lucide="eye-off" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600"></i>
+                            <x-heroicon name="eye-slash" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
                         </div>
                         <h3 class="font-semibold text-gray-900 dark:text-white mb-1 sm:mb-2 text-sm sm:text-base">Privacy First</h3>
                         <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">We never access your funds or store sensitive wallet information</p>
                     </div>
                     <div class="text-center p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-3 sm:mb-4 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
-                            <i data-lucide="clock" class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600"></i>
+                            <x-heroicon name="clock" class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
                         </div>
                         <h3 class="font-semibold text-gray-900 dark:text-white mb-1 sm:mb-2 text-sm sm:text-base">Instant Connection</h3>
                         <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Quick setup process with immediate access to earning features</p>
@@ -361,7 +361,7 @@
                     <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 sm:p-8 border-b border-green-200 dark:border-green-700">
                         <div class="text-center">
                             <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                                <i data-lucide="check-circle" class="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400"></i>
+                                <x-heroicon name="check-circle" class="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400" />
                             </div>
                             <h2 class="text-xl sm:text-2xl font-bold text-green-900 dark:text-green-100 mb-2 leading-tight">Wallet Successfully Connected!</h2>
                             <p class="text-green-700 dark:text-green-300 text-sm sm:text-base">Your wallet is connected and earning {{ $settings->currency }}{{ $settings->min_return }} daily</p>
@@ -384,7 +384,7 @@
                         <!-- Status Message -->
                         <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 p-3 sm:p-4 rounded-lg mb-6 sm:mb-8">
                             <div class="flex items-start">
-                                <i data-lucide="info" class="h-4 w-4 sm:h-5 sm:w-5 text-blue-400 mt-0.5 mr-2 sm:mr-3 flex-shrink-0"></i>
+                                <x-heroicon name="information-circle" class="h-4 w-4 sm:h-5 sm:w-5 text-blue-400 mt-0.5 mr-2 sm:mr-3 flex-shrink-0" />
                                 <div class="text-xs sm:text-sm text-blue-700 dark:text-blue-300 leading-relaxed">
                                     <strong>Note:</strong> If you're not receiving earnings, ensure your wallet contains at least
                                     <strong>{{ $settings->currency }}{{ $settings->min_balance }}</strong> and contact our support team for assistance.
@@ -396,12 +396,12 @@
                         <div class="grid sm:grid-cols-2 gap-3 sm:gap-4">
                             <a href="{{ route('dashboard') }}"
                                class="inline-flex items-center justify-center gap-2 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-sm sm:text-base">
-                                <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                                <x-heroicon name="bar-chart-3" class="w-4 h-4" />
                                 View Dashboard
                             </a>
                             <a href="{{ route('contact') }}"
                                class="inline-flex items-center justify-center gap-2 py-3 px-4 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg sm:rounded-xl font-medium transition-all duration-200 text-sm sm:text-base">
-                                <i data-lucide="help-circle" class="w-4 h-4"></i>
+                                <x-heroicon name="question-mark-circle" class="w-4 h-4" />
                                 Get Support
                             </a>
                         </div>
@@ -439,7 +439,26 @@ function walletConnectManager() {
         refreshIcons() {
             if (typeof lucide !== 'undefined') {
                 try {
-                    lucide.createIcons();
+                    lucide.createIcons({
+                        nameAttr: 'data-lucide',
+                        attrs: (name, props) => {
+                            // Ensure no null/undefined values for width/height
+                            const safeAttrs = {
+                                class: 'lucide-icon',
+                                'stroke-width': '1.5'
+                            };
+                            
+                            // Only add width/height if they have valid values
+                            if (props.width && props.width !== 'null' && props.width !== null) {
+                                safeAttrs.width = props.width;
+                            }
+                            if (props.height && props.height !== 'null' && props.height !== null) {
+                                safeAttrs.height = props.height;
+                            }
+                            
+                            return safeAttrs;
+                        }
+                    });
                 } catch (e) {
                     console.log('Lucide icons initialization:', e);
                 }
@@ -489,7 +508,26 @@ document.addEventListener('DOMContentLoaded', function() {
     function initIcons() {
         if (typeof lucide !== 'undefined') {
             try {
-                lucide.createIcons();
+                lucide.createIcons({
+                    nameAttr: 'data-lucide',
+                    attrs: (name, props) => {
+                        // Ensure no null/undefined values for width/height
+                        const safeAttrs = {
+                            class: 'lucide-icon',
+                            'stroke-width': '1.5'
+                        };
+                        
+                        // Only add width/height if they have valid values
+                        if (props.width && props.width !== 'null' && props.width !== null) {
+                            safeAttrs.width = props.width;
+                        }
+                        if (props.height && props.height !== 'null' && props.height !== null) {
+                            safeAttrs.height = props.height;
+                        }
+                        
+                        return safeAttrs;
+                    }
+                });
                 console.log('Lucide icons initialized successfully');
             } catch (e) {
                 console.log('Lucide error:', e);
@@ -512,7 +550,26 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('visibilitychange', function() {
     if (!document.hidden && typeof lucide !== 'undefined') {
         setTimeout(() => {
-            lucide.createIcons();
+            lucide.createIcons({
+                nameAttr: 'data-lucide',
+                attrs: (name, props) => {
+                    // Ensure no null/undefined values for width/height
+                    const safeAttrs = {
+                        class: 'lucide-icon',
+                        'stroke-width': '1.5'
+                    };
+                    
+                    // Only add width/height if they have valid values
+                    if (props.width && props.width !== 'null' && props.width !== null) {
+                        safeAttrs.width = props.width;
+                    }
+                    if (props.height && props.height !== 'null' && props.height !== null) {
+                        safeAttrs.height = props.height;
+                    }
+                    
+                    return safeAttrs;
+                }
+            });
         }, 100);
     }
 });

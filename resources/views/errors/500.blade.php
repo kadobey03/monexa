@@ -9,7 +9,7 @@
         <!-- 500 Icon -->
         <div class="mb-8">
             <div class="w-24 h-24 mx-auto bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center">
-                <i data-lucide="alert-triangle" class="w-12 h-12 text-red-600 dark:text-red-400"></i>
+                <x-heroicon name="exclamation-triangle" class="w-12 h-12 text-red-600 dark:text-red-400" />
             </div>
         </div>
 
@@ -26,12 +26,12 @@
         <div class="space-y-4">
             <button onclick="window.location.reload()"
                     class="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                <i data-lucide="refresh-ccw" class="w-5 h-5 mr-2"></i>
+                <x-heroicon name="arrow-path" class="w-5 h-5 mr-2" />
                 Sayfayı Yenile
             </button>
             <a href="{{ url('/') }}"
                class="w-full inline-flex justify-center items-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-xl text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                <i data-lucide="home" class="w-5 h-5 mr-2"></i>
+                <x-heroicon name="home" class="w-5 h-5 mr-2" />
                 Ana Sayfaya Dön
             </a>
         </div>
@@ -54,7 +54,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        
     }
 });
 </script>

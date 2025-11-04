@@ -6,7 +6,7 @@
     <div class="flex items-center space-x-4">
         <div class="flex-shrink-0">
             <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                <i data-lucide="credit-card" class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+                <x-heroicon name="credit-card" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
         </div>
         <div>
@@ -27,7 +27,7 @@
                         :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900 dark:text-blue-400': activeTab === 'methods', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-admin-600': activeTab !== 'methods' }"
                         class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none">
                     <div class="flex items-center justify-center space-x-2">
-                        <i data-lucide="credit-card" class="w-4 h-4"></i>
+                        <x-heroicon name="credit-card" class="w-4 h-4" />
                         <span>Ödeme Yöntemleri</span>
                     </div>
                 </button>
@@ -36,7 +36,7 @@
                         :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900 dark:text-blue-400': activeTab === 'preferences', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-admin-600': activeTab !== 'preferences' }"
                         class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none">
                     <div class="flex items-center justify-center space-x-2">
-                        <i data-lucide="settings" class="w-4 h-4"></i>
+                        <x-heroicon name="cog-6-tooth" class="w-4 h-4" />
                         <span>Ödeme Tercihleri</span>
                     </div>
                 </button>
@@ -45,7 +45,7 @@
                         :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900 dark:text-blue-400': activeTab === 'coinpayment', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-admin-600': activeTab !== 'coinpayment' }"
                         class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none">
                     <div class="flex items-center justify-center space-x-2">
-                        <i data-lucide="coins" class="w-4 h-4"></i>
+                        <x-heroicon name="coins" class="w-4 h-4" />
                         <span>Coinpayment</span>
                     </div>
                 </button>
@@ -54,7 +54,7 @@
                         :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900 dark:text-blue-400': activeTab === 'gateways', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-admin-600': activeTab !== 'gateways' }"
                         class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none">
                     <div class="flex items-center justify-center space-x-2">
-                        <i data-lucide="link" class="w-4 h-4"></i>
+                        <x-heroicon name="link" class="w-4 h-4" />
                         <span>Gateway'ler</span>
                     </div>
                 </button>
@@ -63,7 +63,7 @@
                         :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900 dark:text-blue-400': activeTab === 'transfer', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-admin-600': activeTab !== 'transfer' }"
                         class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none">
                     <div class="flex items-center justify-center space-x-2">
-                        <i data-lucide="arrow-right-left" class="w-4 h-4"></i>
+                        <x-heroicon name="arrow-right-left" class="w-4 h-4" />
                         <span>Transfer</span>
                     </div>
                 </button>
@@ -241,8 +241,8 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         ${type === 'success' ?
-                            '<i data-lucide="check-circle" class="w-5 h-5"></i>' :
-                            '<i data-lucide="x-circle" class="w-5 h-5"></i>'
+                            '<x-heroicon name="check-circle" class="w-5 h-5" />' :
+                            '<x-heroicon name="x-circle" class="w-5 h-5" />'
                         }
                     </div>
                     <div class="ml-3">
@@ -250,7 +250,7 @@
                         <div class="mt-1 text-sm">${message}</div>
                     </div>
                     <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200 focus:outline-none">
-                        <i data-lucide="x" class="w-4 h-4"></i>
+                        <x-heroicon name="x-mark" class="w-4 h-4" />
                     </button>
                 </div>
             `;

@@ -13,7 +13,7 @@
                 </div>
                 <div class="hidden lg:block">
                     <div class="w-32 h-32 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
-                        <i data-lucide="bar-chart-3" class="w-16 h-16"></i>
+                        <x-heroicon name="bar-chart-3" class="w-16 h-16" />
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
             <div class="bg-white dark:bg-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/20 dark:border-gray-700/30 p-6">
                 <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50 rounded-2xl flex items-center justify-center">
-                        <i data-lucide="wallet" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="wallet" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
                 <div class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
@@ -45,7 +45,7 @@
             <div class="bg-white dark:bg-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/20 dark:border-gray-700/30 p-6">
                 <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/50 dark:to-green-800/50 rounded-2xl flex items-center justify-center">
-                        <i data-lucide="trending-up" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="arrow-trending-up" class="w-6 h-6 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
                 <div class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
@@ -57,7 +57,7 @@
             <div class="bg-white dark:bg-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/20 dark:border-gray-700/30 p-6">
                 <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900/50 dark:to-emerald-800/50 rounded-2xl flex items-center justify-center">
-                        <i data-lucide="arrow-up" class="w-6 h-6 text-emerald-600 dark:text-emerald-400"></i>
+                        <x-heroicon name="arrow-up" class="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                     </div>
                 </div>
                 <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-1">
@@ -69,7 +69,7 @@
             <div class="bg-white dark:bg-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/20 dark:border-gray-700/30 p-6">
                 <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gradient-to-br from-red-100 to-red-200 dark:from-red-900/50 dark:to-red-800/50 rounded-2xl flex items-center justify-center">
-                        <i data-lucide="arrow-down" class="w-6 h-6 text-red-600 dark:text-red-400"></i>
+                        <x-heroicon name="arrow-down" class="w-6 h-6 text-red-600 dark:text-red-400" />
                     </div>
                 </div>
                 <div class="text-2xl font-bold text-red-600 dark:text-red-400 mb-1">
@@ -81,7 +81,7 @@
             <div class="bg-white dark:bg-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/20 dark:border-gray-700/30 p-6">
                 <div class="flex items-center justify-between mb-4">
                     <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50 rounded-2xl flex items-center justify-center">
-                        <i data-lucide="bot" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="bot" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
                 <div class="text-2xl font-bold text-gray-900 dark:text-white mb-1">{{ $stats['active_bots'] }}</div>
@@ -97,7 +97,7 @@
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Your Investments</h2>
                             <a href="{{ route('user.bots.index') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-2xl transition-colors duration-200">
-                                <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                                <x-heroicon name="plus" class="w-4 h-4 mr-2" />
                                 New Investment
                             </a>
                         </div>
@@ -109,7 +109,7 @@
                                     <div class="flex items-start justify-between mb-4">
                                         <div class="flex items-center space-x-4">
                                             <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
-                                                <i data-lucide="bot" class="w-6 h-6 text-white"></i>
+                                                <x-heroicon name="bot" class="w-6 h-6 text-white" />
                                             </div>
                                             <div>
                                                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $investment->bot->name }}</h3>
@@ -159,12 +159,12 @@
                                         </div>
                                         <div class="flex space-x-2">
                                             <a href="{{ route('user.bots.show', $investment->bot) }}" class="inline-flex items-center px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200">
-                                                <i data-lucide="eye" class="w-3 h-3 mr-1"></i>
+                                                <x-heroicon name="eye" class="w-3 h-3 mr-1" />
                                                 View
                                             </a>
                                             @if($investment->status == 'active')
                                             <button class="inline-flex items-center px-3 py-1 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 text-xs font-medium rounded-lg hover:bg-red-200 dark:hover:bg-red-900/30 transition-colors duration-200">
-                                                <i data-lucide="pause" class="w-3 h-3 mr-1"></i>
+                                                <x-heroicon name="pause" class="w-3 h-3 mr-1" />
                                                 Pause
                                             </button>
                                             @endif
@@ -176,12 +176,12 @@
                         @else
                             <div class="text-center py-16">
                                 <div class="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
-                                    <i data-lucide="bot" class="w-12 h-12 text-gray-400"></i>
+                                    <x-heroicon name="bot" class="w-12 h-12 text-gray-400" />
                                 </div>
                                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Investments Yet</h3>
                                 <p class="text-gray-600 dark:text-gray-400 mb-6">Start your automated trading journey today</p>
                                 <a href="{{ route('user.bots.index') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white font-medium rounded-2xl transition-all duration-300 transform hover:scale-105">
-                                    <i data-lucide="plus" class="w-5 h-5 mr-2"></i>
+                                    <x-heroicon name="plus" class="w-5 h-5 mr-2" />
                                     Start Investing
                                 </a>
                             </div>
@@ -221,7 +221,7 @@
                         @else
                             <div class="text-center py-8">
                                 <div class="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <i data-lucide="activity" class="w-8 h-8 text-gray-400"></i>
+                                    <x-heroicon name="activity" class="w-8 h-8 text-gray-400" />
                                 </div>
                                 <p class="text-gray-600 dark:text-gray-400">No trading activity yet</p>
                             </div>
@@ -236,22 +236,22 @@
 
                         <div class="space-y-3">
                             <a href="{{ route('user.bots.index') }}" class="flex items-center w-full px-4 py-3 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 text-blue-700 dark:text-blue-300 rounded-2xl hover:from-blue-100 hover:to-blue-200 dark:hover:from-blue-900/30 dark:hover:to-blue-800/30 transition-all duration-200 group">
-                                <i data-lucide="plus" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200"></i>
+                                <x-heroicon name="plus" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
                                 <span class="font-medium">New Investment</span>
                             </a>
 
                             <a href="{{ route('withdrawalsdeposits') }}" class="flex items-center w-full px-4 py-3 bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 text-green-700 dark:text-green-300 rounded-2xl hover:from-green-100 hover:to-green-200 dark:hover:from-green-900/30 dark:hover:to-green-800/30 transition-all duration-200 group">
-                                <i data-lucide="download" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200"></i>
+                                <x-heroicon name="arrow-down-tray" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
                                 <span class="font-medium">Withdraw Funds</span>
                             </a>
 
                             <a href="{{ route('deposits') }}" class="flex items-center w-full px-4 py-3 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 text-blue-700 dark:text-blue-300 rounded-2xl hover:from-blue-100 hover:to-blue-200 dark:hover:from-blue-900/30 dark:hover:to-blue-800/30 transition-all duration-200 group">
-                                <i data-lucide="upload" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200"></i>
+                                <x-heroicon name="arrow-up-tray" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
                                 <span class="font-medium">Deposit Funds</span>
                             </a>
 
                             <a href="{{ route('support') }}" class="flex items-center w-full px-4 py-3 bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 text-orange-700 dark:text-orange-300 rounded-2xl hover:from-orange-100 hover:to-orange-200 dark:hover:from-orange-900/30 dark:hover:to-orange-800/30 transition-all duration-200 group">
-                                <i data-lucide="life-buoy" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200"></i>
+                                <x-heroicon name="life-buoy" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform duration-200" />
                                 <span class="font-medium">Get Support</span>
                             </a>
                         </div>
@@ -265,7 +265,7 @@
 @push('scripts')
 <script>
     // Initialize Lucide icons
-    lucide.createIcons();
+    
 </script>
 @endpush
 @endsection

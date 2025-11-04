@@ -22,7 +22,7 @@
                 <div class="mb-6 lg:mb-0">
                     <!-- Welcome Badge -->
                     <div class="mb-6 inline-flex items-center rounded-full bg-white/20 px-4 py-2 text-sm font-medium backdrop-blur-sm">
-                        <i data-lucide="shield-check" class="mr-2 h-4 w-4"></i>
+                        <x-heroicon name="shield-check" class="mr-2 h-4 w-4" />
                         Yönetim Paneli
                     </div>
                     
@@ -39,11 +39,11 @@
                     <!-- Date Time -->
                     <div class="flex items-center space-x-4 text-primary-200">
                         <div class="flex items-center">
-                            <i data-lucide="calendar" class="mr-2 h-4 w-4"></i>
+                            <x-heroicon name="calendar-days" class="mr-2 h-4 w-4" />
                             {{ \Carbon\Carbon::now()->locale('tr')->isoFormat('dddd, D MMMM YYYY') }}
                         </div>
                         <div class="flex items-center">
-                            <i data-lucide="clock" class="mr-2 h-4 w-4"></i>
+                            <x-heroicon name="clock" class="mr-2 h-4 w-4" />
                             <span id="live-clock">{{ now()->format('H:i:s') }}</span>
                         </div>
                     </div>
@@ -56,33 +56,33 @@
                        class="group flex items-center justify-between rounded-2xl bg-white/10 p-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:scale-105">
                         <div class="flex items-center space-x-3">
                             <div class="rounded-xl bg-emerald-500 p-2">
-                                <i data-lucide="trending-up" class="h-5 w-5 text-white"></i>
+                                <x-heroicon name="arrow-trending-up" class="h-5 w-5 text-white" />
                             </div>
                             <span class="font-semibold">Yatırımlar</span>
                         </div>
-                        <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
+                        <x-heroicon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>
                     
                     <a href="{{ route('mwithdrawals') }}" 
                        class="group flex items-center justify-between rounded-2xl bg-white/10 p-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:scale-105">
                         <div class="flex items-center space-x-3">
                             <div class="rounded-xl bg-rose-500 p-2">
-                                <i data-lucide="trending-down" class="h-5 w-5 text-white"></i>
+                                <x-heroicon name="arrow-trending-down" class="h-5 w-5 text-white" />
                             </div>
                             <span class="font-semibold">Çekimler</span>
                         </div>
-                        <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
+                        <x-heroicon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>
                     
                     <a href="{{ route('manageusers') }}" 
                        class="group flex items-center justify-between rounded-2xl bg-white/10 p-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:scale-105">
                         <div class="flex items-center space-x-3">
                             <div class="rounded-xl bg-blue-500 p-2">
-                                <i data-lucide="users" class="h-5 w-5 text-white"></i>
+                                <x-heroicon name="users" class="h-5 w-5 text-white" />
                             </div>
                             <span class="font-semibold">Kullanıcılar</span>
                         </div>
-                        <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
+                        <x-heroicon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>
                 </div>
                 @endif
@@ -98,7 +98,7 @@
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <div class="rounded-2xl bg-emerald-100 dark:bg-emerald-900/20 p-3">
-                        <i data-lucide="trending-up" class="h-8 w-8 text-emerald-600 dark:text-emerald-400"></i>
+                        <x-heroicon name="arrow-trending-up" class="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 animate-pulse rounded-full bg-emerald-500"></div>
@@ -118,7 +118,7 @@
                 </p>
                 
                 <div class="flex items-center text-xs text-admin-500 dark:text-admin-400">
-                    <i data-lucide="calendar" class="mr-1 h-3 w-3"></i>
+                    <x-heroicon name="calendar-days" class="mr-1 h-3 w-3" />
                     Tüm zamanlar toplamı
                 </div>
             </div>
@@ -130,7 +130,7 @@
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <div class="rounded-2xl bg-amber-100 dark:bg-amber-900/20 p-3">
-                        <i data-lucide="clock" class="h-8 w-8 text-amber-600 dark:text-amber-400"></i>
+                        <x-heroicon name="clock" class="h-8 w-8 text-amber-600 dark:text-amber-400" />
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 animate-bounce rounded-full bg-amber-500"></div>
@@ -150,7 +150,7 @@
                 </p>
                 
                 <div class="flex items-center text-xs text-admin-500 dark:text-admin-400">
-                    <i data-lucide="alert-triangle" class="mr-1 h-3 w-3"></i>
+                    <x-heroicon name="exclamation-triangle" class="mr-1 h-3 w-3" />
                     Onay bekliyor
                 </div>
             </div>
@@ -162,7 +162,7 @@
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <div class="rounded-2xl bg-rose-100 dark:bg-rose-900/20 p-3">
-                        <i data-lucide="trending-down" class="h-8 w-8 text-rose-600 dark:text-rose-400"></i>
+                        <x-heroicon name="arrow-trending-down" class="h-8 w-8 text-rose-600 dark:text-rose-400" />
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 rounded-full bg-rose-500"></div>
@@ -182,7 +182,7 @@
                 </p>
                 
                 <div class="flex items-center text-xs text-admin-500 dark:text-admin-400">
-                    <i data-lucide="check-circle" class="mr-1 h-3 w-3"></i>
+                    <x-heroicon name="check-circle" class="mr-1 h-3 w-3" />
                     Tamamlanan işlemler
                 </div>
             </div>
@@ -194,7 +194,7 @@
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <div class="rounded-2xl bg-blue-100 dark:bg-blue-900/20 p-3">
-                        <i data-lucide="loader" class="h-8 w-8 animate-spin text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="loader" class="h-8 w-8 animate-spin text-blue-600 dark:text-blue-400" />
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 animate-pulse rounded-full bg-blue-500"></div>
@@ -214,7 +214,7 @@
                 </p>
                 
                 <div class="flex items-center text-xs text-admin-500 dark:text-admin-400">
-                    <i data-lucide="clock" class="mr-1 h-3 w-3"></i>
+                    <x-heroicon name="clock" class="mr-1 h-3 w-3" />
                     İnceleniyor
                 </div>
             </div>
@@ -229,7 +229,7 @@
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <div class="rounded-2xl bg-purple-100 dark:bg-purple-900/20 p-3">
-                        <i data-lucide="users" class="h-6 w-6 text-purple-600 dark:text-purple-400"></i>
+                        <x-heroicon name="users" class="h-6 w-6 text-purple-600 dark:text-purple-400" />
                     </div>
                     <span class="rounded-full bg-purple-100 dark:bg-purple-900/20 px-3 py-1 text-xs font-semibold text-purple-700 dark:text-purple-300">
                         Toplam
@@ -247,7 +247,7 @@
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <div class="rounded-2xl bg-emerald-100 dark:bg-emerald-900/20 p-3">
-                        <i data-lucide="user-check" class="h-6 w-6 text-emerald-600 dark:text-emerald-400"></i>
+                        <x-heroicon name="user-check" class="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 animate-pulse rounded-full bg-emerald-500"></div>
@@ -266,7 +266,7 @@
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <div class="rounded-2xl bg-rose-100 dark:bg-rose-900/20 p-3">
-                        <i data-lucide="user-x" class="h-6 w-6 text-rose-600 dark:text-rose-400"></i>
+                        <x-heroicon name="user-minus" class="h-6 w-6 text-rose-600 dark:text-rose-400" />
                     </div>
                     <span class="rounded-full bg-rose-100 dark:bg-rose-900/20 px-3 py-1 text-xs font-semibold text-rose-700 dark:text-rose-300">
                         Engelli
@@ -284,7 +284,7 @@
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <div class="rounded-2xl bg-amber-100 dark:bg-amber-900/20 p-3">
-                        <i data-lucide="briefcase" class="h-6 w-6 text-amber-600 dark:text-amber-400"></i>
+                        <x-heroicon name="briefcase" class="h-6 w-6 text-amber-600 dark:text-amber-400" />
                     </div>
                     <span class="rounded-full bg-amber-100 dark:bg-amber-900/20 px-3 py-1 text-xs font-semibold text-amber-700 dark:text-amber-300">
                         Planlar
@@ -305,7 +305,7 @@
                 <div>
                     <h2 class="flex items-center text-2xl font-bold text-admin-900 dark:text-admin-100">
                         <div class="mr-4 flex h-8 w-8 items-center justify-center rounded-xl bg-primary-600">
-                            <i data-lucide="bar-chart-3" class="h-5 w-5 text-white"></i>
+                            <x-heroicon name="bar-chart-3" class="h-5 w-5 text-white" />
                         </div>
                         Gelişmiş Sistem Analitiği
                     </h2>
@@ -380,9 +380,35 @@ document.addEventListener('DOMContentLoaded', function() {
     updateClock();
     setInterval(updateClock, 1000);
     
-    // Initialize Chart
+    // Initialize Chart with proper loading
+    initializeChart();
+});
+
+async function initializeChart() {
     const ctx = document.getElementById('analyticsChart');
-    if (ctx) {
+    if (!ctx) return;
+
+    try {
+        // Wait for Chart.js to be available
+        let Chart = window.Chart;
+        
+        if (!Chart) {
+            console.log('📊 Loading Chart.js...');
+            // Try to load via dependency manager
+            if (typeof window.loadChart === 'function') {
+                Chart = await window.loadChart();
+            } else {
+                // Fallback to CDN loading
+                await loadChartFromCDN();
+                Chart = window.Chart;
+            }
+        }
+
+        if (!Chart) {
+            console.warn('❌ Chart.js could not be loaded');
+            return;
+        }
+
         const chartData = [
             {{ $chart_pdepsoit ?? 0 }},
             {{ $chart_pendepsoit ?? 0 }},
@@ -457,7 +483,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+        
+        console.log('✅ Dashboard chart initialized successfully');
+    } catch (error) {
+        console.error('❌ Chart initialization failed:', error);
+        // Hide chart container if initialization fails
+        const chartContainer = ctx.closest('.admin-card');
+        if (chartContainer) {
+            chartContainer.style.display = 'none';
+        }
     }
-});
+}
+
+// CDN fallback for Chart.js (dashboard specific)
+function loadChartFromCDN() {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+        script.onload = () => {
+            console.log('✅ Chart.js loaded from CDN for dashboard');
+            resolve();
+        };
+        script.onerror = () => {
+            console.warn('❌ Failed to load Chart.js from CDN');
+            reject(new Error('Chart.js CDN load failed'));
+        };
+        document.head.appendChild(script);
+    });
+}
 </script>
 @endpush

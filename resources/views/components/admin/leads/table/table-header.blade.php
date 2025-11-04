@@ -18,16 +18,8 @@
                 <div class="flex items-center space-x-2">
                     <span>ÜLKE</span>
                     <div class="flex flex-col">
-                        <i
-                            data-lucide="chevron-up"
-                            class="w-3 h-3 text-gray-400"
-                            id="sort-up-country"
-                        ></i>
-                        <i
-                            data-lucide="chevron-down"
-                            class="w-3 h-3 -mt-1 text-gray-400"
-                            id="sort-down-country"
-                        ></i>
+                        <x-heroicon name="chevron-up" class="w-3 h-3 text-gray-400" id="sort-up-country" />
+                        <x-heroicon name="chevron-down" class="w-3 h-3 -mt-1 text-gray-400" id="sort-down-country" />
                     </div>
                 </div>
             </div>
@@ -40,16 +32,8 @@
                 <div class="flex items-center space-x-2">
                     <span>AD SOYAD</span>
                     <div class="flex flex-col">
-                        <i
-                            data-lucide="chevron-up"
-                            class="w-3 h-3 text-gray-400"
-                            id="sort-up-name"
-                        ></i>
-                        <i
-                            data-lucide="chevron-down"
-                            class="w-3 h-3 -mt-1 text-gray-400"
-                            id="sort-down-name"
-                        ></i>
+                        <x-heroicon name="chevron-up" class="w-3 h-3 text-gray-400" id="sort-up-name" />
+                        <x-heroicon name="chevron-down" class="w-3 h-3 -mt-1 text-gray-400" id="sort-down-name" />
                     </div>
                 </div>
             </div>
@@ -62,16 +46,8 @@
                 <div class="flex items-center space-x-2">
                     <span>TELEFON NUMARASI</span>
                     <div class="flex flex-col">
-                        <i
-                            data-lucide="chevron-up"
-                            class="w-3 h-3 text-gray-400"
-                            id="sort-up-phone"
-                        ></i>
-                        <i
-                            data-lucide="chevron-down"
-                            class="w-3 h-3 -mt-1 text-gray-400"
-                            id="sort-down-phone"
-                        ></i>
+                        <x-heroicon name="chevron-up" class="w-3 h-3 text-gray-400" id="sort-up-phone" />
+                        <x-heroicon name="chevron-down" class="w-3 h-3 -mt-1 text-gray-400" id="sort-down-phone" />
                     </div>
                 </div>
             </div>
@@ -84,16 +60,8 @@
                 <div class="flex items-center space-x-2">
                     <span>EMAİL</span>
                     <div class="flex flex-col">
-                        <i
-                            data-lucide="chevron-up"
-                            class="w-3 h-3 text-gray-400"
-                            id="sort-up-email"
-                        ></i>
-                        <i
-                            data-lucide="chevron-down"
-                            class="w-3 h-3 -mt-1 text-gray-400"
-                            id="sort-down-email"
-                        ></i>
+                        <x-heroicon name="chevron-up" class="w-3 h-3 text-gray-400" id="sort-up-email" />
+                        <x-heroicon name="chevron-down" class="w-3 h-3 -mt-1 text-gray-400" id="sort-down-email" />
                     </div>
                 </div>
             </div>
@@ -106,16 +74,8 @@
                 <div class="flex items-center space-x-2">
                     <span>ASSIGNED</span>
                     <div class="flex flex-col">
-                        <i
-                            data-lucide="chevron-up"
-                            class="w-3 h-3 text-gray-400"
-                            id="sort-up-assign_to"
-                        ></i>
-                        <i
-                            data-lucide="chevron-down"
-                            class="w-3 h-3 -mt-1 text-gray-400"
-                            id="sort-down-assign_to"
-                        ></i>
+                        <x-heroicon name="chevron-up" class="w-3 h-3 text-gray-400" id="sort-up-assign_to" />
+                        <x-heroicon name="chevron-down" class="w-3 h-3 -mt-1 text-gray-400" id="sort-down-assign_to" />
                     </div>
                 </div>
             </div>
@@ -128,16 +88,8 @@
                 <div class="flex items-center space-x-2">
                     <span>STATUS</span>
                     <div class="flex flex-col">
-                        <i
-                            data-lucide="chevron-up"
-                            class="w-3 h-3 text-gray-400"
-                            id="sort-up-lead_status_id"
-                        ></i>
-                        <i
-                            data-lucide="chevron-down"
-                            class="w-3 h-3 -mt-1 text-gray-400"
-                            id="sort-down-lead_status_id"
-                        ></i>
+                        <x-heroicon name="chevron-up" class="w-3 h-3 text-gray-400" id="sort-up-lead_status_id" />
+                        <x-heroicon name="chevron-down" class="w-3 h-3 -mt-1 text-gray-400" id="sort-down-lead_status_id" />
                     </div>
                 </div>
             </div>
@@ -150,16 +102,8 @@
                 <div class="flex items-center space-x-2">
                     <span>VARONKA</span>
                     <div class="flex flex-col">
-                        <i
-                            data-lucide="chevron-up"
-                            class="w-3 h-3 text-gray-400"
-                            id="sort-up-organization"
-                        ></i>
-                        <i
-                            data-lucide="chevron-down"
-                            class="w-3 h-3 -mt-1 text-gray-400"
-                            id="sort-down-organization"
-                        ></i>
+                        <x-heroicon name="chevron-up" class="w-3 h-3 text-gray-400" id="sort-up-organization" />
+                        <x-heroicon name="chevron-down" class="w-3 h-3 -mt-1 text-gray-400" id="sort-down-organization" />
                     </div>
                 </div>
             </div>
@@ -172,16 +116,8 @@
                 <div class="flex items-center space-x-2">
                     <span>KAYNAK</span>
                     <div class="flex flex-col">
-                        <i
-                            data-lucide="chevron-up"
-                            class="w-3 h-3 text-gray-400"
-                            id="sort-up-lead_source_id"
-                        ></i>
-                        <i
-                            data-lucide="chevron-down"
-                            class="w-3 h-3 -mt-1 text-gray-400"
-                            id="sort-down-lead_source_id"
-                        ></i>
+                        <x-heroicon name="chevron-up" class="w-3 h-3 text-gray-400" id="sort-up-lead_source_id" />
+                        <x-heroicon name="chevron-down" class="w-3 h-3 -mt-1 text-gray-400" id="sort-down-lead_source_id" />
                     </div>
                 </div>
             </div>
@@ -194,16 +130,8 @@
                 <div class="flex items-center space-x-2">
                     <span>ŞİRKET</span>
                     <div class="flex flex-col">
-                        <i
-                            data-lucide="chevron-up"
-                            class="w-3 h-3 text-gray-400"
-                            id="sort-up-company_name"
-                        ></i>
-                        <i
-                            data-lucide="chevron-down"
-                            class="w-3 h-3 -mt-1 text-gray-400"
-                            id="sort-down-company_name"
-                        ></i>
+                        <x-heroicon name="chevron-up" class="w-3 h-3 text-gray-400" id="sort-up-company_name" />
+                        <x-heroicon name="chevron-down" class="w-3 h-3 -mt-1 text-gray-400" id="sort-down-company_name" />
                     </div>
                 </div>
             </div>

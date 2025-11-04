@@ -11,7 +11,7 @@
         <div>
             <button @click="addCourseModal = true"
                     class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
+                <x-heroicon name="plus" class="h-4 w-4 mr-2" />
                 Yeni Kurs Oluştur
             </button>
         </div>
@@ -118,15 +118,15 @@
                         <div class="flex items-center justify-between mb-4">
                             <button @click="openEditModal({{ $course->course->id }}, '{{ $course->course->course_title }}', '{{ $course->course->description }}', '{{ $course->course->category }}', {{ $course->course->amount ?? 0 }}, '{{ $course->course->course_image }}')"
                                     class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                                <i data-lucide="edit" class="w-3 h-3 mr-1"></i>
+                                <x-heroicon name="edit" class="w-3 h-3 mr-1" />
                                 Düzenle
                             </button>
                             
                             <a href="{{ route('lessons', $course->course->id) }}"
                                class="inline-flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">
-                                <i data-lucide="book-open" class="w-4 h-4 mr-1"></i>
+                                <x-heroicon name="book-open" class="w-4 h-4 mr-1" />
                                 <span>{{ count($course->lessons) }} {{ count($course->lessons) > 1 ? 'Ders' : 'Ders' }}</span>
-                                <i data-lucide="external-link" class="w-3 h-3 ml-1"></i>
+                                <x-heroicon name="external-link" class="w-3 h-3 ml-1" />
                             </a>
                         </div>
                         
@@ -140,7 +140,7 @@
                         <!-- Delete Button -->
                         <button @click="openDeleteModal({{ $course->course->id }}, '{{ $course->course->course_title }}')"
                                 class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-admin-800">
-                            <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
+                            <x-heroicon name="trash-2" class="w-4 h-4 mr-2" />
                             Kursu Sil
                         </button>
                     </div>
@@ -150,12 +150,12 @@
     @else
         <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700 p-12 text-center">
             <div class="flex flex-col items-center">
-                <i data-lucide="book" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4"></i>
+                <x-heroicon name="book" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
                 <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Henüz kurs eklenmemiş</h3>
                 <p class="text-gray-400 dark:text-gray-500 text-sm mt-1 mb-4">İlk kursunuzu oluşturmak için başlayın.</p>
                 <button @click="addCourseModal = true"
                         class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                    <i data-lucide="plus" class="h-4 w-4 mr-2"></i>
+                    <x-heroicon name="plus" class="h-4 w-4 mr-2" />
                     Kurs Ekle
                 </button>
             </div>
@@ -187,7 +187,7 @@
             
             <div class="sm:flex sm:items-start">
                 <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 sm:mx-0 sm:h-10 sm:w-10">
-                    <i data-lucide="edit" class="h-6 w-6 text-blue-600 dark:text-blue-400"></i>
+                    <x-heroicon name="edit" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Kurs Düzenle</h3>
@@ -298,7 +298,7 @@
             
             <div class="sm:flex sm:items-start">
                 <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900 sm:mx-0 sm:h-10 sm:w-10">
-                    <i data-lucide="trash-2" class="h-6 w-6 text-red-600 dark:text-red-400"></i>
+                    <x-heroicon name="trash-2" class="h-6 w-6 text-red-600 dark:text-red-400" />
                 </div>
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Kursu Sil</h3>

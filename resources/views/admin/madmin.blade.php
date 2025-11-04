@@ -16,7 +16,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800 rounded-2xl p-6 text-white shadow-2xl">
             <div class="flex items-center space-x-4">
                 <div class="bg-white/20 p-4 rounded-xl backdrop-blur-sm">
-                    <i data-lucide="user-cog" class="w-8 h-8"></i>
+                    <x-heroicon name="user-cog" class="w-8 h-8" />
                 </div>
                 <div>
                     <h1 class="text-3xl font-bold mb-2">Yöneticiler Paneli</h1>
@@ -42,7 +42,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                         <div class="bg-white/20 p-3 rounded-full backdrop-blur-sm">
-                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                            <x-heroicon name="shield-check" class="w-6 h-6" />
                         </div>
                         <div>
                             <h3 class="font-bold text-lg">{{ $admin->firstName }} {{ $admin->lastName }}</h3>
@@ -67,21 +67,21 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 <div class="p-6 space-y-4">
                     <div class="flex items-center space-x-3 group">
                     <div class="bg-blue-100 dark:bg-blue-900 p-2 rounded-lg group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors">
-                        <i data-lucide="mail" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="envelope" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
                     </div>
                     <span class="text-gray-700 dark:text-gray-300 group-hover:text-blue-600 transition-colors">{{ $admin->email }}</span>
                     </div>
                     
                     <div class="flex items-center space-x-3 group">
                     <div class="bg-green-100 dark:bg-green-900 p-2 rounded-lg group-hover:bg-green-200 dark:group-hover:bg-green-800 transition-colors">
-                        <i data-lucide="phone" class="w-4 h-4 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="phone" class="w-4 h-4 text-green-600 dark:text-green-400" />
                     </div>
                     <span class="text-gray-700 dark:text-gray-300 group-hover:text-green-600 transition-colors">{{ $admin->phone ?: 'Telefon yok' }}</span>
                     </div>
                     
                     <div class="flex items-center space-x-3 group">
                     <div class="bg-purple-100 dark:bg-purple-900 p-2 rounded-lg group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors">
-                        <i data-lucide="tag" class="w-4 h-4 text-purple-600 dark:text-purple-400"></i>
+                        <x-heroicon name="tag" class="w-4 h-4 text-purple-600 dark:text-purple-400" />
                     </div>
                     <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium">{{ $admin->type }}</span>
                     </div>
@@ -94,18 +94,18 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         @if ($admin->acnt_type_active == null || $admin->acnt_type_active == 'blocked')
                         <a href="{{ url('admin/dashboard/unblock') }}/{{ $admin->id }}"
                            class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 text-center transform hover:scale-105 shadow-lg">
-                            <i data-lucide="unlock" class="w-4 h-4 mr-2 inline"></i>Engeli Kaldır
+                            <x-heroicon name="lock-open" class="w-4 h-4 mr-2 inline" />Engeli Kaldır
                         </a>
                         @else
                         <a href="{{ url('admin/dashboard/ublock') }}/{{ $admin->id }}"
                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 text-center transform hover:scale-105 shadow-lg">
-                            <i data-lucide="lock" class="w-4 h-4 mr-2 inline"></i>Engelle
+                            <x-heroicon name="lock-closed" class="w-4 h-4 mr-2 inline" />Engelle
                         </a>
                         @endif
                         
                     <button onclick="openModal('editModal{{ $admin->id }}')"
                             class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        <i data-lucide="edit" class="w-4 h-4 mr-2 inline"></i>Düzenle
+                        <x-heroicon name="edit" class="w-4 h-4 mr-2 inline" />Düzenle
                     </button>
                     </div>
                     

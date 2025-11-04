@@ -923,6 +923,6 @@ z-index: 9999;
     return false;
     });
     });
-    </script><script ></script>
+    </script>
 
  @endsection

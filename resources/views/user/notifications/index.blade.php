@@ -29,7 +29,7 @@
     {{-- <div class="flex flex-wrap items-center gap-3 mt-6 md:mt-0">
       @if(count($notifications) > 0)
         <a href="/mark-all-read" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-600 text-white text-sm font-medium rounded-full transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-primary-500/25 dark:shadow-none">
-          <i data-lucide="check-circle" class="w-4 h-4 mr-2"></i>
+          <x-heroicon name="check-circle" class="w-4 h-4 mr-2" />
           Mark All as Read
         </a>
       @endif
@@ -48,13 +48,13 @@
          class="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-900/10 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-green-200/50 dark:border-green-700/30" role="alert">
       <div class="flex items-center">
         <div class="flex-shrink-0 bg-green-100 dark:bg-green-800/50 rounded-full p-1.5">
-          <i data-lucide="check-circle" class="h-5 w-5 text-green-600 dark:text-green-400"></i>
+          <x-heroicon name="check-circle" class="h-5 w-5 text-green-600 dark:text-green-400" />
         </div>
         <div class="ml-3 flex-1">
           <p class="text-sm font-medium text-green-800 dark:text-green-200">{{ session('success') }}</p>
         </div>
         <button @click="showSuccessAlert = false" class="ml-auto flex-shrink-0 p-1.5 rounded-full text-green-500 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-800/50 transition-colors">
-          <i data-lucide="x" class="h-4 w-4"></i>
+          <x-heroicon name="x-mark" class="h-4 w-4" />
         </button>
       </div>
     </div>
@@ -69,13 +69,13 @@
          class="bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-900/10 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-red-200/50 dark:border-red-700/30" role="alert">
       <div class="flex items-center">
         <div class="flex-shrink-0 bg-red-100 dark:bg-red-800/50 rounded-full p-1.5">
-          <i data-lucide="alert-circle" class="h-5 w-5 text-red-600 dark:text-red-400"></i>
+          <x-heroicon name="exclamation-circle" class="h-5 w-5 text-red-600 dark:text-red-400" />
         </div>
         <div class="ml-3 flex-1">
           <p class="text-sm font-medium text-red-800 dark:text-red-200">{{ session('error') }}</p>
         </div>
         <button @click="showErrorAlert = false" class="ml-auto flex-shrink-0 p-1.5 rounded-full text-red-500 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-800/50 transition-colors">
-          <i data-lucide="x" class="h-4 w-4"></i>
+          <x-heroicon name="x-mark" class="h-4 w-4" />
         </button>
       </div>
     </div>
@@ -87,7 +87,7 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
       <div class="flex items-center gap-3">
         <span class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
-          <i data-lucide="filter" class="h-4 w-4 text-gray-500 dark:text-gray-400"></i>
+          <x-heroicon name="funnel" class="h-4 w-4 text-gray-500 dark:text-gray-400" />
           Filter
         </span>
         <div class="flex rounded-full backdrop-blur-sm bg-gray-100/80 dark:bg-gray-700/80 p-1 overflow-hidden">
@@ -111,7 +111,7 @@
 
       <div class="relative flex-1 max-w-xs ml-auto">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <i data-lucide="search" class="h-4 w-4 text-gray-500 dark:text-gray-400"></i>
+          <x-heroicon name="magnifying-glass" class="h-4 w-4 text-gray-500 dark:text-gray-400" />
         </div>
         <input x-model="searchTerm" type="text" id="search" class="pl-10 pr-4 py-2.5 w-full bg-gray-100/80 dark:bg-gray-700/80 border-0 rounded-full text-sm focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-600 transition-all duration-200" placeholder="Search notifications...">
       </div>
@@ -140,7 +140,7 @@
                       ($notification->type === 'success' ? 'bg-gradient-to-br from-green-200 to-green-100 text-green-600 dark:from-green-900/40 dark:to-green-800/20 dark:text-green-500' :
                       ($notification->type === 'danger' ? 'bg-gradient-to-br from-red-200 to-red-100 text-red-600 dark:from-red-900/40 dark:to-red-800/20 dark:text-red-500' :
                       'bg-gradient-to-br from-blue-200 to-blue-100 text-blue-600 dark:from-blue-900/40 dark:to-blue-800/20 dark:text-blue-500')) }}">
-                      <i data-lucide="{{ $notification->type === 'warning' ? 'alert-triangle' : ($notification->type === 'success' ? 'check-circle' : ($notification->type === 'danger' ? 'alert-octagon' : 'info')) }}" class="h-7 w-7"></i>
+                      <x-heroicon name="{{ $notification->type === 'warning' ? 'alert-triangle' : ($notification->type === 'success' ? 'check-circle' : ($notification->type === 'danger' ? 'alert-octagon' : 'info')) }}" class="h-7 w-7" />
                     </div>
                     @if(!$notification->is_read)
                       <div class="absolute h-3 w-3 rounded-full bg-primary-500 dark:bg-primary-400 ring-2 ring-white dark:ring-gray-800 -mt-2 ml-10"></div>
@@ -163,11 +163,11 @@
                             ($notification->type === 'success' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
                             ($notification->type === 'danger' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400' :
                             'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400')) }}">
-                            <i data-lucide="{{ $notification->type === 'warning' ? 'alert-triangle' : ($notification->type === 'success' ? 'check-circle' : ($notification->type === 'danger' ? 'alert-octagon' : 'info')) }}" class="h-3 w-3 mr-1"></i>
+                            <x-heroicon name="{{ $notification->type === 'warning' ? 'alert-triangle' : ($notification->type === 'success' ? 'check-circle' : ($notification->type === 'danger' ? 'alert-octagon' : 'info')) }}" class="h-3 w-3 mr-1" />
                             {{ ucfirst($notification->type) }}
                           </span>
                           <span class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
-                            <i data-lucide="clock" class="h-3.5 w-3.5 mr-1"></i>
+                            <x-heroicon name="clock" class="h-3.5 w-3.5 mr-1" />
                             {{ $notification->created_at->diffForHumans() }}
                           </span>
                           <span class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
@@ -180,7 +180,7 @@
                       <!-- Modern Action Buttons with hover effects -->
                       <div class="flex items-center mt-4 md:mt-0 space-x-2 opacity-70 group-hover:opacity-100 transition-opacity duration-200">
                         <a href="{{ route('notifications.show', $notification->id) }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-md">
-                          <i data-lucide="eye" class="h-4 w-4 mr-1.5"></i>
+                          <x-heroicon name="eye" class="h-4 w-4 mr-1.5" />
                           View
                         </a>
 
@@ -189,7 +189,7 @@
                             @csrf
                             <input type="hidden" name="notification_id" value="{{ $notification->id }}">
                             <button type="submit" class="inline-flex items-center px-4 py-2 text-sm font-medium text-primary-600 dark:text-primary-400 bg-primary-100/80 dark:bg-primary-900/30 hover:bg-primary-200 dark:hover:bg-primary-900/50 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-md">
-                              <i data-lucide="check-circle" class="h-4 w-4 mr-1.5"></i>
+                              <x-heroicon name="check-circle" class="h-4 w-4 mr-1.5" />
                               Mark Read
                             </button>
                           </form>
@@ -200,7 +200,7 @@
                           @method('DELETE')
                           <input type="hidden" name="notification_id" value="{{ $notification->id }}">
                           <button type="button" @click="confirmDelete = true" class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 bg-red-50/80 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 rounded-full transition-all duration-200 hover:scale-105 hover:shadow-md">
-                            <i data-lucide="trash-2" class="h-4 w-4 mr-1.5"></i>
+                            <x-heroicon name="trash-2" class="h-4 w-4 mr-1.5" />
                             Delete
                           </button>
 
@@ -221,7 +221,7 @@
                                 <div class="p-6">
                                   <div class="flex items-center">
                                     <div class="flex-shrink-0 bg-gradient-to-br from-red-100 to-red-50 dark:from-red-900/30 dark:to-red-900/10 p-3 rounded-full">
-                                      <i data-lucide="trash-2" class="h-6 w-6 text-red-600 dark:text-red-400"></i>
+                                      <x-heroicon name="trash-2" class="h-6 w-6 text-red-600 dark:text-red-400" />
                                     </div>
                                     <div class="ml-4">
                                       <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Delete Notification</h3>
@@ -231,7 +231,7 @@
 
                                   <div class="mt-5 bg-red-50/50 dark:bg-red-900/10 rounded-xl p-4 border border-red-100 dark:border-red-900/20">
                                     <p class="text-sm text-red-800 dark:text-red-300 flex items-start">
-                                      <i data-lucide="alert-circle" class="h-5 w-5 mr-2 flex-shrink-0 text-red-500 dark:text-red-400"></i>
+                                      <x-heroicon name="exclamation-circle" class="h-5 w-5 mr-2 flex-shrink-0 text-red-500 dark:text-red-400" />
                                       Are you sure you want to permanently delete this notification?
                                     </p>
                                   </div>
@@ -280,7 +280,7 @@
         <div class="relative">
           <div class="absolute inset-0 bg-gradient-to-r from-primary-100 to-primary-50 dark:from-primary-900/10 dark:to-primary-800/5 animate-pulse rounded-full blur-xl opacity-70"></div>
           <div class="relative mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 shadow-inner">
-            <i data-lucide="bell-off" class="h-16 w-16 text-gray-400 dark:text-gray-500 animate-pulse"></i>
+            <x-heroicon name="bell-slash" class="h-16 w-16 text-gray-400 dark:text-gray-500 animate-pulse" />
           </div>
         </div>
         <h3 class="mt-8 text-xl font-semibold text-gray-900 dark:text-white">No Notifications</h3>
@@ -289,7 +289,7 @@
 
         <div class="mt-6">
           <a href="{{ route('dashboard') }}" class="inline-flex items-center px-5 py-3 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-600 text-white text-sm font-medium rounded-full transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-primary-500/25 dark:shadow-none">
-            <i data-lucide="arrow-left" class="h-4 w-4 mr-2"></i>
+            <x-heroicon name="arrow-left" class="h-4 w-4 mr-2" />
             Return to Dashboard
           </a>
         </div>
@@ -301,7 +301,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Initialize Lucide icons
-    lucide.createIcons();
+    
 
     // Add scroll reveal animations to notification items
     const notificationItems = document.querySelectorAll('#notifications-container > div > div');

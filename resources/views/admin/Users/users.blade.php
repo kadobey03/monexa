@@ -7,7 +7,7 @@
         <div class="px-4 py-6 sm:px-6 lg:px-8">
             <div class="flex items-center space-x-4">
                 <div class="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg">
-                    <i data-lucide="users" class="w-8 h-8 text-white"></i>
+                    <x-heroicon name="users" class="w-8 h-8 text-white" />
                 </div>
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Kullanıcı Yönetimi</h1>

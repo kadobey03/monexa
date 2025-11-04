@@ -14,9 +14,7 @@
     <link href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" media="none" onload="if(!window.Swal)this.media='all'">
     
     <!-- jQuery with CDN fallback -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-            crossorigin="anonymous"></script>
+    
     <script>
         if (!window.jQuery) {
             document.write('<script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"><\/script>');
@@ -24,7 +22,7 @@
     </script>
     
     <!-- SweetAlert2 with fallback -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
         if (!window.Swal) {
             document.write('<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
@@ -32,9 +30,7 @@
     </script>
     
     <!-- Bootstrap Bundle for modal support -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"></script>
+    
 
     <!-- Tailwind CSS Local -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -73,9 +69,11 @@
     </script>
 
     <!-- Console Error Fixes - Ultimate System -->
-    <script src="{{ asset('js/ultimate-console-fix.js') }}"></script>
-    <script src="{{ asset('js/websocket-fix.js') }}"></script>
-    <script src="{{ asset('js/console-fixes.js') }}"></script>
+    
+    
+    
+    
+    <!-- Heroicons Component - Pure SVG icons with no JavaScript dependencies -->
 
 </head>
 <body class="dark text-gray-100 bg-gray-900 js-hidden" id="main-body" data-sidebar-open="false">
@@ -179,23 +177,23 @@
         <div class="hidden md:block relative" id="quick-actions-dropdown">
           <button id="quick-actions-btn"
                   class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-            <i data-lucide="zap" class="w-4 h-4"></i>
+            <x-heroicon name="zap" class="w-4 h-4" />
             <span>Hızlı İşlem</span>
-            <i data-lucide="chevron-down" class="w-4 h-4" id="quick-actions-chevron"></i>
+            <x-heroicon name="chevron-down" class="w-4 h-4" id="quick-actions-chevron" />
           </button>
 
           <div id="quick-actions-menu" class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 js-hidden">
             <div class="p-2">
               <a href="{{ route('deposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                <i data-lucide="plus-circle" class="w-4 h-4 mr-3 text-green-500"></i>
+                <x-heroicon name="plus-circle" class="w-4 h-4 mr-3 text-green-500" />
                 Para Yatırma
               </a>
               <a href="{{ route('withdrawalsdeposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                <i data-lucide="minus-circle" class="w-4 h-4 mr-3 text-red-500"></i>
+                <x-heroicon name="minus-circle" class="w-4 h-4 mr-3 text-red-500" />
                 Para Çekme
               </a>
               <a href="{{ route('trade.index') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-blue-500"></i>
+                <x-heroicon name="trending-up" class="w-4 h-4 mr-3 text-blue-500" />
                 Piyasa İşlemleri
               </a>
             </div>
@@ -206,7 +204,7 @@
         <div class="relative" id="notifications-dropdown">
           <button id="notifications-btn"
                   class="relative p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-            <i data-lucide="bell" class="w-5 h-5"></i>
+            <x-heroicon name="bell" class="w-5 h-5" />
             @php
                 $unreadCount = \App\Models\Notification::where('user_id', Auth::id())
                     ->where('is_read', 0)
@@ -250,7 +248,7 @@
                     <div class="flex items-start">
                       <div class="flex-shrink-0 mt-0.5">
                         <span class="flex h-8 w-8 rounded-full items-center justify-center {{ $notification->type === 'warning' ? 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-500' : ($notification->type === 'success' ? 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-500' : ($notification->type === 'danger' ? 'bg-red-100 text-red-600 dark:bg-red-900/20 dark:text-red-500' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-500')) }}">
-                          <i data-lucide="{{ $notification->type === 'warning' ? 'alert-triangle' : ($notification->type === 'success' ? 'check-circle' : ($notification->type === 'danger' ? 'alert-octagon' : 'info')) }}" class="w-4 h-4"></i>
+                          <x-heroicon name="{{ $notification->type === 'warning' ? 'alert-triangle' : ($notification->type === 'success' ? 'check-circle' : ($notification->type === 'danger' ? 'alert-octagon' : 'info')) }}" class="w-4 h-4" />
                         </span>
                       </div>
                       <div class="ml-3 w-0 flex-1">
@@ -270,7 +268,7 @@
               @empty
                 <div class="py-8 text-center">
                   <div class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 mb-4">
-                    <i data-lucide="bell-off" class="h-6 w-6"></i>
+                    <x-heroicon name="bell-off" class="h-6 w-6" />
                   </div>
                   <p class="text-sm text-gray-600 dark:text-gray-400">Bildirim yok</p>
                       <p class="mt-1 text-xs text-gray-500 dark:text-gray-500">Bir şey olduğunda size haber vereceğiz</p>
@@ -289,8 +287,8 @@
         <!-- Dark Mode Toggle -->
         <button id="theme-toggle"
           class="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-          <i data-lucide="sun" id="sun-icon" class="w-5 h-5 js-hidden"></i>
-          <i data-lucide="moon" id="moon-icon" class="w-5 h-5"></i>
+          <x-heroicon name="sun" id="sun-icon" class="w-5 h-5 js-hidden" />
+          <x-heroicon name="moon" id="moon-icon" class="w-5 h-5" />
         </button>
 
         <!-- Language Translator (Desktop) -->
@@ -313,7 +311,7 @@
                 </div>
               </div>
             </div>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400" id="user-dropdown-chevron"></i>
+            <x-heroicon name="chevron-down" class="w-4 h-4 text-gray-400" id="user-dropdown-chevron" />
           </button>
 
           <div id="user-dropdown-menu" class="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 js-hidden">
@@ -338,22 +336,22 @@
             <!-- Menu Items -->
             <div class="p-2">
               <a href="{{ route('profile') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                <i data-lucide="user" class="w-4 h-4 mr-3"></i>
+                <x-heroicon name="user" class="w-4 h-4 mr-3" />
                 Profil Ayarları
               </a>
               <a href="{{ route('accounthistory') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                <i data-lucide="receipt" class="w-4 h-4 mr-3"></i>
+                <x-heroicon name="receipt" class="w-4 h-4 mr-3" />
                 Hesap Geçmişi
               </a>
               <a href="{{ route('support') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                <i data-lucide="help-circle" class="w-4 h-4 mr-3"></i>
+                <x-heroicon name="help-circle" class="w-4 h-4 mr-3" />
                 Destek Merkezi
               </a>
               <div class="border-t border-gray-200 dark:border-gray-600 my-2"></div>
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="w-full flex items-center px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md">
-                  <i data-lucide="log-out" class="w-4 h-4 mr-3"></i>
+                  <x-heroicon name="log-out" class="w-4 h-4 mr-3" />
                   Çıkış Yap
                 </button>
               </form>
@@ -364,8 +362,8 @@
         <!-- Mobile Menu Button -->
         <button id="mobile-menu-btn"
                 class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-          <i data-lucide="menu" id="menu-icon" class="w-5 h-5"></i>
-          <i data-lucide="x" id="close-icon" class="w-5 h-5 js-hidden"></i>
+          <x-heroicon name="menu" id="menu-icon" class="w-5 h-5" />
+          <x-heroicon name="x" id="close-icon" class="w-5 h-5 js-hidden" />
         </button>
       </div>
     </div>
@@ -453,28 +451,28 @@
         <!-- Overview Section -->
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
-                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                <x-heroicon name="layout-dashboard" class="w-4 h-4" />
                 <span>Genel Bakış</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('dashboard') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="layout-dashboard" class="w-5 h-5 mr-3" />
                         Ana Sayfa
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('accounthistory') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('accounthistory') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="receipt" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="receipt" class="w-5 h-5 mr-3" />
                         Hesap Özeti
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('tradinghistory') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('tradinghistory') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="activity" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="activity" class="w-5 h-5 mr-3" />
                         İşlem Geçmişi
                     </a>
                 </li>
@@ -488,28 +486,28 @@
         <!-- Wallet & Funds Section -->
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
-                <i data-lucide="wallet" class="w-4 h-4"></i>
+                <x-heroicon name="wallet" class="w-4 h-4" />
                 <span>Cüzdan ve Fonlar</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('deposits') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('deposits') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="plus-circle" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="plus-circle" class="w-5 h-5 mr-3" />
                         Para Yatırma
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('withdrawalsdeposits') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('withdrawalsdeposits') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="minus-circle" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="minus-circle" class="w-5 h-5 mr-3" />
                         Para Çekme
                     </a>
                 </li>
                 {{-- <li>
                     <a href="{{ route('assetbalance') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('assetbalance') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="repeat" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="arrow-path" class="w-5 h-5 mr-3" />
                         Currency Exchange
                         <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full">Swap</span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
@@ -520,7 +518,7 @@
                 <li>
                     <a href="/dashboard/trade"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('dashboard.trade') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="zap" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="zap" class="w-5 h-5 mr-3" />
                         İşlem Yap
                     </a>
                 </li>
@@ -530,14 +528,14 @@
         <!-- Account Management Section -->
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
-                <i data-lucide="user-circle" class="w-4 h-4"></i>
+                <x-heroicon name="user-circle" class="w-4 h-4" />
                 <span>Hesap Yönetimi</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('profile') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('profile') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="user" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="user" class="w-5 h-5 mr-3" />
                         Profil Ayarları
                     </a>
                 </li>
@@ -546,7 +544,7 @@
                     @if(Auth::user()->account_verify === 'Verified')
                         <!-- Verified Status -->
                         <div class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
-                            <i data-lucide="shield-check" class="w-5 h-5 mr-3 text-green-600 dark:text-green-400"></i>
+                            <x-heroicon name="shield-check" class="w-5 h-5 mr-3 text-green-600 dark:text-green-400" />
                             <span class="font-medium text-green-700 dark:text-green-300">Hesap Doğrulandı</span>
                         </div>
                     @else
@@ -554,9 +552,9 @@
                         <div class="relative">
                             <button id="kyc-toggle-btn"
                                     class="flex items-center w-full px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200 {{ request()->routeIs('account.verify') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                                <i data-lucide="shield-alert" class="w-5 h-5 mr-3"></i>
+                                <x-heroicon name="shield-alert" class="w-5 h-5 mr-3" />
                                 <span class="flex-1 text-left">Kimlik Doğrulama</span>
-                                <i data-lucide="chevron-down" id="kyc-chevron"
+                                <x-heroicon name="chevron-down" id="kyc-chevron"
                                    class="w-4 h-4 transition-transform duration-200"></i>
                             </button>
 
@@ -572,7 +570,7 @@
                                                         Doğrulamanız inceleniyor
                                                     </p>
                                                     <div class="flex items-center text-xs text-yellow-600 dark:text-yellow-400">
-                                                        <i data-lucide="clock" class="w-3 h-3 mr-1"></i>
+                                                        <x-heroicon name="clock" class="w-3 h-3 mr-1" />
                                                         <span>İşleniyor</span>
                                                     </div>
                                                 @else
@@ -581,7 +579,7 @@
                                                     </p>
                                                     <a href="{{ route('account.verify') }}"
                                                        class="inline-flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
-                                                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                                                        <x-heroicon name="shield-check" class="w-4 h-4" />
                                                         <span>Şimdi Doğrula</span>
                                                     </a>
                                 @endif
@@ -596,14 +594,14 @@
         <!-- Growth & Referrals Section -->
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
-                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                <x-heroicon name="trending-up" class="w-4 h-4" />
                 <span>Büyüme ve Ödüller</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('referuser') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('referuser') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="users" class="w-5 h-5 mr-3" />
                         Tavsiye Programı
                         <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full">{{$settings->referral_commission}}%</span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
@@ -617,14 +615,14 @@
         <!-- Support & Help Section -->
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
-                <i data-lucide="help-circle" class="w-4 h-4"></i>
+                <x-heroicon name="help-circle" class="w-4 h-4" />
                 <span>Destek ve Yardım</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('support') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('support') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
-                        <i data-lucide="headphones" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="headphones" class="w-5 h-5 mr-3" />
                         Destek Merkezi
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
                             Destek ekibimizden yardım alın
@@ -642,7 +640,7 @@
                     @csrf
                     <button type="submit"
                             class="flex items-center w-full px-3 py-2 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/50 transition-colors duration-150">
-                        <i data-lucide="log-out" class="w-5 h-5 mr-3"></i>
+                        <x-heroicon name="log-out" class="w-5 h-5 mr-3" />
                         <span>Çıkış Yap</span>
                     </button>
                 </form>
@@ -678,7 +676,7 @@
                   {{ request()->routeIs('deposits')
                      ? 'bg-blue-500/10 dark:bg-blue-400/10 scale-110'
                      : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-        <i data-lucide="banknote" class="w-6 h-6
+        <x-heroicon name="banknote" class="w-6 h-6
            {{ request()->routeIs('deposits')
               ? 'text-blue-600 dark:text-blue-400'
               : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
@@ -697,7 +695,7 @@
                   {{ request()->routeIs('profile')
                      ? 'bg-blue-500/10 dark:bg-blue-400/10 scale-110'
                      : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-        <i data-lucide="user" class="w-6 h-6
+        <x-heroicon name="user" class="w-6 h-6
            {{ request()->routeIs('profile')
               ? 'text-blue-600 dark:text-blue-400'
               : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
@@ -716,7 +714,7 @@
                   {{ request()->routeIs('trade.index')
                      ? 'bg-blue-500/10 dark:bg-blue-400/10 scale-110'
                      : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-        <i data-lucide="zap" class="w-6 h-6
+        <x-heroicon name="zap" class="w-6 h-6
            {{ request()->routeIs('trade.index')
               ? 'text-blue-600 dark:text-blue-400'
               : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
@@ -732,7 +730,7 @@
    class="flex flex-col items-center
           {{ request()->routeIs('support') ? 'text-blue-600 font-semibold' : 'text-gray-500' }}
           hover:text-blue-600">
-  <i data-lucide="life-buoy" class="w-6 h-6"></i>
+  <x-heroicon name="life-buoy" class="w-6 h-6" />
   <span class="text-xs mt-1">Destek</span>
 </a>
 
@@ -741,7 +739,7 @@
    <a href="{{ route('dashboard') }}"
    class="flex flex-col items-center
           {{ request()->routeIs('dashboard') ? 'text-blue-600' : 'text-gray-500' }} hover:text-blue-600">
- <i data-lucide="home" class="w-6 h-6 transition-colors duration-200"></i>
+ <x-heroicon name="home" class="w-6 h-6 transition-colors duration-200" />
   <span class="text-xs mt-1">Anasayfa</span>
 </a>
   </div>
@@ -765,7 +763,7 @@
         {{-- <a href="{{ route('assetbalance') }}" class="flex items-center p-3 rounded-lg text-gray-100
                           hover:bg-gray-800
                           transition-colors duration-200 group">
-          <i data-lucide="repeat" class="w-5 h-5 mr-3 text-indigo-400
+          <x-heroicon name="repeat" class="w-5 h-5 mr-3 text-indigo-400
                                         group-hover:scale-110 transition-transform duration-300"></i>
           <span class="font-medium">Currency Exchange</span>
           <span class="ml-auto text-xs font-bold text-indigo-400">Swap</span>
@@ -774,7 +772,7 @@
         <a href="#" class="flex items-center p-3 rounded-lg text-gray-100
                           hover:bg-gray-800
                           transition-colors duration-200 group">
-          <i data-lucide="users" class="w-5 h-5 mr-3 text-orange-400
+          <x-heroicon name="users" class="w-5 h-5 mr-3 text-orange-400
                                       group-hover:scale-110 transition-transform duration-300"></i>
           <span class="font-medium">Arkadaş Tavsiye Et</span>
           <span class="ml-auto text-xs font-bold text-orange-400">+{{$settings->referral_commission}}%</span>
@@ -783,7 +781,7 @@
         <a href="{{ route('support') }}" class="flex items-center p-3 rounded-lg text-gray-100
                                                hover:bg-gray-800
                                                transition-colors duration-200 group">
-          <i data-lucide="life-buoy" class="w-5 h-5 mr-3 text-cyan-400
+          <x-heroicon name="life-buoy" class="w-5 h-5 mr-3 text-cyan-400
                                            group-hover:scale-110 transition-transform duration-300"></i>
           <span class="font-medium">Destek</span>
         </a>
@@ -796,7 +794,7 @@
                      text-gray-400 hover:text-gray-200
                      hover:bg-gray-800
                      transition-colors duration-200">
-        <i data-lucide="x" class="w-5 h-5"></i>
+        <x-heroicon name="x" class="w-5 h-5" />
       </button>
     </div>
   </div>
@@ -812,16 +810,13 @@
   </style>
 </div>
 
-<!-- Lucide Icons - Loaded via unified Icon Service -->
+<!-- Heroicons - Pure SVG icons with no JavaScript dependencies -->
 <script>
-  // Initialize Lucide icons
-  // Icons initialized via unified Icon Service
+  // Heroicons Component - No initialization needed
+  // Icons rendered as pure SVG via Laravel Blade component
   document.addEventListener('DOMContentLoaded', function() {
-    // Icons auto-initialized via unified Icon Service
+    console.log('Heroicons loaded successfully - no JS initialization required');
   });
-
-  // Re-initialize icons when Alpine renders new content
-  // Icons auto-initialized via unified Icon Service
 </script>
 
 <style>
@@ -1101,10 +1096,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize crypto prices
     fetchCryptoPrices();
     
-    // Initialize Lucide icons
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    // Heroicons - No initialization needed (pure SVG components)
+    console.log('Heroicons: Pure SVG icons loaded - no JavaScript initialization required');
     
     // Initialize Bootstrap components
     if (typeof bootstrap !== 'undefined') {
@@ -1192,10 +1185,8 @@ document.addEventListener('DOMContentLoaded', () => {
             Livewire.onLoadingDone(() => {
                 document.body.classList.remove('loading');
                 
-                // Re-initialize icons after Livewire updates
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
+                // Heroicons - No re-initialization needed (pure SVG)
+                console.log('Livewire update complete - Heroicons ready');
             });
             
             console.log('Livewire configured successfully in dasht layout');

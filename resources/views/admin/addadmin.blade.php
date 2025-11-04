@@ -74,7 +74,7 @@
                                     <!-- Last Name -->
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                            <i data-lucide="user" class="w-4 h-4 inline mr-1"></i>
+                                            <x-heroicon name="user" class="w-4 h-4 inline mr-1" />
                                             Soyad
                                         </label>
                                         <input type="text"
@@ -99,7 +99,7 @@
                                     <!-- Email -->
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                            <i data-lucide="mail" class="w-4 h-4 inline mr-1"></i>
+                                            <x-heroicon name="envelope" class="w-4 h-4 inline mr-1" />
                                             E-posta Adresi
                                         </label>
                                         <input type="email"
@@ -121,7 +121,7 @@
                                     <!-- Phone -->
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                            <i data-lucide="phone" class="w-4 h-4 inline mr-1"></i>
+                                            <x-heroicon name="phone" class="w-4 h-4 inline mr-1" />
                                             Telefon Numarası
                                         </label>
                                         <input type="number"
@@ -144,7 +144,7 @@
                                 <!-- Admin Type -->
                                 <div class="space-y-2">
                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                        <i data-lucide="shield-check" class="w-4 h-4 inline mr-1"></i>
+                                        <x-heroicon name="shield-check" class="w-4 h-4 inline mr-1" />
                                         Yönetici Türü
                                     </label>
                                     <select name="type" required class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
@@ -165,7 +165,7 @@
                                     <!-- Password -->
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                            <i data-lucide="lock" class="w-4 h-4 inline mr-1"></i>
+                                            <x-heroicon name="lock-closed" class="w-4 h-4 inline mr-1" />
                                             Şifre
                                         </label>
                                         <input type="password"
@@ -186,7 +186,7 @@
                                     <!-- Confirm Password -->
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                            <i data-lucide="shield-check" class="w-4 h-4 inline mr-1"></i>
+                                            <x-heroicon name="shield-check" class="w-4 h-4 inline mr-1" />
                                             Şifreyi Onayla
                                         </label>
                                         <input type="password"
@@ -209,7 +209,7 @@
                                 <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                                     <div class="flex items-start">
                                         <div class="flex-shrink-0">
-                                            <i data-lucide="info" class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5"></i>
+                                            <x-heroicon name="information-circle" class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" />
                                         </div>
                                         <div class="ml-3">
                                             <h4 class="text-sm font-semibold text-blue-800 dark:text-blue-200">Güvenlik Uyarısı</h4>

@@ -12,13 +12,13 @@
             <div class="flex flex-col sm:flex-row gap-3">
                 <a href="{{ route('copy.experts') }}"
                    class="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base">
-                    <i data-lucide="users" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                    <x-heroicon name="users" class="w-4 h-4 sm:w-5 sm:h-5" />
                     <span class="hidden sm:inline">Browse Experts</span>
                     <span class="sm:hidden">Experts</span>
                 </a>
                 <button onclick="refreshDashboard()"
                         class="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base">
-                    <i data-lucide="refresh-cw" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                    <x-heroicon name="arrow-path" class="w-4 h-4 sm:w-5 sm:h-5" />
                     <span class="hidden sm:inline">Refresh</span>
                 </button>
             </div>
@@ -28,7 +28,7 @@
         @if(session('success'))
             <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/30 border-l-4 border-green-500 text-green-700 dark:text-green-300 rounded-xl shadow-sm">
                 <div class="flex items-center">
-                    <i data-lucide="check-circle" class="w-5 h-5 mr-2 flex-shrink-0"></i>
+                    <x-heroicon name="check-circle" class="w-5 h-5 mr-2 flex-shrink-0" />
                     <span class="font-medium">{{ session('success') }}</span>
                 </div>
             </div>
@@ -37,7 +37,7 @@
         @if(session('error'))
             <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/30 border-l-4 border-red-500 text-red-700 dark:text-red-300 rounded-xl shadow-sm">
                 <div class="flex items-center">
-                    <i data-lucide="alert-circle" class="w-5 h-5 mr-2 flex-shrink-0"></i>
+                    <x-heroicon name="exclamation-circle" class="w-5 h-5 mr-2 flex-shrink-0" />
                     <span class="font-medium">{{ session('error') }}</span>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                         <p class="text-xs text-gray-500 dark:text-gray-400">Experts being copied</p>
                     </div>
                     <div class="p-2 sm:p-3 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-xl flex-shrink-0">
-                        <i data-lucide="users" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="users" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                         <p class="text-xs text-gray-500 dark:text-gray-400">Capital deployed</p>
                     </div>
                     <div class="p-2 sm:p-3 bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 rounded-xl flex-shrink-0">
-                        <i data-lucide="dollar-sign" class="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400"></i>
+                        <x-heroicon name="currency-dollar" class="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                         <p class="text-xs text-gray-500 dark:text-gray-400">Portfolio value</p>
                     </div>
                     <div class="p-2 sm:p-3 bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-900/30 dark:to-indigo-800/30 rounded-xl flex-shrink-0">
-                        <i data-lucide="wallet" class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 dark:text-indigo-400"></i>
+                        <x-heroicon name="wallet" class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 dark:text-indigo-400" />
                     </div>
                 </div>
             </div>
@@ -114,7 +114,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
                             <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                                <i data-lucide="trending-up" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400"></i>
+                                <x-heroicon name="arrow-trending-up" class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400" />
                                 Active Copy Positions
                             </h2>
                             <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Currently copying {{ $copyTrades->where('active', 'yes')->count() }} expert trader(s)</p>
@@ -210,7 +210,7 @@
                                     <button type="button"
                                             class="view-details-btn flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm"
                                             data-id="{{ $copyTrade->id }}">
-                                        <i data-lucide="bar-chart-3" class="w-4 h-4 inline mr-2"></i>
+                                        <x-heroicon name="bar-chart-3" class="w-4 h-4 inline mr-2" />
                                         <span class="hidden sm:inline">View Details</span>
                                         <span class="sm:hidden">Details</span>
                                     </button>
@@ -218,7 +218,7 @@
                                             class="stop-copy-btn px-3 sm:px-4 py-2 sm:py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm flex items-center justify-center"
                                             data-id="{{ $copyTrade->id }}"
                                             data-name="{{ $copyTrade->name }}">
-                                        <i data-lucide="square" class="w-4 h-4"></i>
+                                        <x-heroicon name="square" class="w-4 h-4" />
                                         <span class="ml-1 sm:hidden">Stop</span>
                                     </button>
                                 </div>
@@ -234,7 +234,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 mb-6 sm:mb-8 overflow-hidden">
                 <div class="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/50 dark:to-gray-700/50">
                     <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <i data-lucide="history" class="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-400"></i>
+                        <x-heroicon name="history" class="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-400" />
                         Copy Trading History
                     </h2>
                     <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">Previous copy positions and their performance</p>
@@ -371,7 +371,7 @@
 
                 <div class="relative z-10">
                     <div class="w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-lg">
-                        <i data-lucide="copy" class="w-8 h-8 sm:w-12 sm:h-12 text-blue-600 dark:text-blue-400"></i>
+                        <x-heroicon name="copy" class="w-8 h-8 sm:w-12 sm:h-12 text-blue-600 dark:text-blue-400" />
                     </div>
                     <h3 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">Start Copy Trading</h3>
                     <p class="text-gray-600 dark:text-gray-400 mb-8 sm:mb-10 max-w-lg mx-auto text-base sm:text-lg leading-relaxed px-4">
@@ -382,7 +382,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10 max-w-4xl mx-auto">
                         <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl p-4 sm:p-6">
                             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                                <i data-lucide="users" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                                <x-heroicon name="users" class="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                             </div>
                             <h4 class="font-bold text-gray-900 dark:text-white mb-2 text-sm sm:text-base">Expert Traders</h4>
                             <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Copy from verified professional traders with proven track records</p>
@@ -390,7 +390,7 @@
 
                         <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-4 sm:p-6">
                             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                                <i data-lucide="trending-up" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                                <x-heroicon name="arrow-trending-up" class="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                             </div>
                             <h4 class="font-bold text-gray-900 dark:text-white mb-2 text-sm sm:text-base">Auto Trading</h4>
                             <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Trades are executed automatically when experts make moves</p>
@@ -398,7 +398,7 @@
 
                         <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-xl p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
                             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                                <i data-lucide="shield" class="w-5 h-5 sm:w-6 sm:h-6 text-white"></i>
+                                <x-heroicon name="shield-check" class="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                             </div>
                             <h4 class="font-bold text-gray-900 dark:text-white mb-2 text-sm sm:text-base">Risk Management</h4>
                             <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Set your own risk limits and stop-loss parameters</p>
@@ -408,13 +408,13 @@
                     <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-md mx-auto">
                         <a href="{{ route('copy.experts') }}"
                            class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base">
-                            <i data-lucide="search" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                            <x-heroicon name="magnifying-glass" class="w-4 h-4 sm:w-5 sm:h-5" />
                             <span class="hidden sm:inline">Browse Expert Traders</span>
                             <span class="sm:hidden">Browse Experts</span>
                         </a>
                         <button onclick="showHowItWorks()"
                                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base">
-                            <i data-lucide="help-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                            <x-heroicon name="question-mark-circle" class="w-4 h-4 sm:w-5 sm:h-5" />
                             How It Works
                         </button>
                     </div>
@@ -429,12 +429,12 @@
     <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-5xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200 dark:border-gray-700 mx-2 sm:mx-0">
         <div class="flex justify-between items-center p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
             <h3 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <i data-lucide="bar-chart-3" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400"></i>
+                <x-heroicon name="bar-chart-3" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
                 <span class="hidden sm:inline">Copy Position Details</span>
                 <span class="sm:hidden">Position Details</span>
             </h3>
             <button onclick="closeDetailsModal()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                <i data-lucide="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                <x-heroicon name="x-mark" class="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
         </div>
         <div id="detailsContent" class="p-4 sm:p-6">
@@ -448,11 +448,11 @@
     <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200 dark:border-gray-700 mx-2 sm:mx-0">
         <div class="flex justify-between items-center p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20">
             <h3 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <i data-lucide="help-circle" class="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400"></i>
+                <x-heroicon name="question-mark-circle" class="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
                 How Copy Trading Works
             </h3>
             <button onclick="closeHowItWorksModal()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                <i data-lucide="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                <x-heroicon name="x-mark" class="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
         </div>
         <div class="p-4 sm:p-6">
@@ -503,23 +503,23 @@
                     <h4 class="font-bold text-gray-900 dark:text-white mb-4 text-sm sm:text-base">Benefits of Copy Trading</h4>
                     <ul class="space-y-3">
                         <li class="flex items-center space-x-3">
-                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
+                            <x-heroicon name="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
                             <span class="text-gray-600 dark:text-gray-400 text-sm">No trading experience required</span>
                         </li>
                         <li class="flex items-center space-x-3">
-                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
+                            <x-heroicon name="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
                             <span class="text-gray-600 dark:text-gray-400 text-sm">Learn from expert strategies</span>
                         </li>
                         <li class="flex items-center space-x-3">
-                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
+                            <x-heroicon name="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
                             <span class="text-gray-600 dark:text-gray-400 text-sm">Diversify your portfolio</span>
                         </li>
                         <li class="flex items-center space-x-3">
-                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
+                            <x-heroicon name="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
                             <span class="text-gray-600 dark:text-gray-400 text-sm">24/7 automated trading</span>
                         </li>
                         <li class="flex items-center space-x-3">
-                            <i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0"></i>
+                            <x-heroicon name="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
                             <span class="text-gray-600 dark:text-gray-400 text-sm">Full control over your funds</span>
                         </li>
                     </ul>
@@ -539,7 +539,7 @@
 
 @section('scripts')
     @parent
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
         function stopCopyPosition(copyTradeId, expertName) {
             Swal.fire({
@@ -760,7 +760,7 @@
         // Initialize Lucide icons and add event listeners
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                
             }
 
             // Add event listeners for the details buttons
