@@ -134,12 +134,6 @@
                         </div>
                     </div>
                 @endauth
-
-                <!-- Mobile Menu Button -->
-                <button onclick="toggleMobileMenu()"
-                        class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-                    <x-heroicon name="bars-3" class="w-5 h-5" />
-                </button>
             </div>
         </div>
     </div>
@@ -178,35 +172,35 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Dashboard Sidebar Toggle
-    window.toggleDashboardSidebar = function() {
-        const sidebar = document.getElementById('dashboard-sidebar');
-        const overlay = document.getElementById('dashboard-sidebar-overlay');
-        
-        if (sidebar && overlay) {
-            const isHidden = sidebar.classList.contains('-translate-x-full');
+    // Dashboard Sidebar Toggle (Ensure it's available globally)
+    if (typeof window.toggleDashboardSidebar === 'undefined') {
+        window.toggleDashboardSidebar = function() {
+            const sidebar = document.getElementById('dashboard-sidebar');
+            const overlay = document.getElementById('dashboard-sidebar-overlay');
             
-            if (isHidden) {
-                // Show sidebar
-                sidebar.classList.remove('-translate-x-full');
-                sidebar.classList.add('translate-x-0');
-                overlay.classList.remove('hidden');
-                overlay.classList.add('opacity-50');
-            } else {
-                // Hide sidebar
-                sidebar.classList.add('-translate-x-full');
-                sidebar.classList.remove('translate-x-0');
-                overlay.classList.add('hidden');
-                overlay.classList.remove('opacity-50');
+            if (sidebar && overlay) {
+                const isHidden = sidebar.classList.contains('-translate-x-full');
+                
+                if (isHidden) {
+                    // Show sidebar
+                    sidebar.classList.remove('-translate-x-full');
+                    sidebar.classList.add('translate-x-0');
+                    overlay.classList.remove('hidden');
+                    overlay.classList.add('bg-opacity-50');
+                    // Prevent body scroll
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    // Hide sidebar
+                    sidebar.classList.add('-translate-x-full');
+                    sidebar.classList.remove('translate-x-0');
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('bg-opacity-50');
+                    // Restore body scroll
+                    document.body.style.overflow = '';
+                }
             }
-        }
-    };
-
-    // Mobile Menu Toggle
-    window.toggleMobileMenu = function() {
-        // Mobile menu is the same as sidebar toggle on dashboard
-        toggleDashboardSidebar();
-    };
+        };
+    }
 
     // Click away functionality
     document.addEventListener('click', function(event) {

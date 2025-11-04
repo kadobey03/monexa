@@ -342,6 +342,12 @@
                 }));
             },
             
+            // Dashboard-specific sidebar toggle
+            toggleDashboardSidebar() {
+                if (this.layout !== 'dashboard') return;
+                return this.toggleSidebar();
+            },
+            
             toggleSidebarCollapse() {
                 if (!this.config.sidebar || this.layout !== 'admin') return;
                 
@@ -385,24 +391,52 @@
             
             // Update functions
             updateSidebarState() {
-                const sidebar = document.getElementById('sidebar');
-                const overlay = document.getElementById('sidebar-overlay');
-                const menuIcon = document.getElementById('menu-icon');
-                const closeIcon = document.getElementById('close-icon');
+                // Handle different sidebar implementations based on layout
+                let sidebar, overlay, menuIcon, closeIcon, mainContent;
+                
+                if (this.layout === 'dashboard') {
+                    // Dashboard layout uses dashboard-sidebar component
+                    sidebar = document.getElementById('dashboard-sidebar');
+                    overlay = document.getElementById('dashboard-sidebar-overlay');
+                    menuIcon = document.getElementById('menu-icon');
+                    closeIcon = document.getElementById('close-icon');
+                    mainContent = document.getElementById('dashboard-main-content');
+                } else {
+                    // Other layouts use generic sidebar
+                    sidebar = document.getElementById('sidebar');
+                    overlay = document.getElementById('sidebar-overlay');
+                    menuIcon = document.getElementById('menu-icon');
+                    closeIcon = document.getElementById('close-icon');
+                    mainContent = document.getElementById('main-content') || document.getElementById('mainContent');
+                }
                 
                 if (sidebar) {
                     if (this.state.sidebarOpen) {
                         sidebar.classList.remove('-translate-x-full');
                         sidebar.classList.add('translate-x-0');
-                        if (overlay) overlay.classList.remove('hidden');
+                        if (overlay) {
+                            overlay.classList.remove('hidden');
+                            overlay.classList.add('opacity-50');
+                        }
                         if (menuIcon) menuIcon.classList.add('hidden');
                         if (closeIcon) closeIcon.classList.remove('hidden');
+                        
+                        // Prevent body scrolling on mobile when sidebar is open
+                        if (this.isMobile) {
+                            document.body.style.overflow = 'hidden';
+                        }
                     } else {
                         sidebar.classList.add('-translate-x-full');
                         sidebar.classList.remove('translate-x-0');
-                        if (overlay) overlay.classList.add('hidden');
+                        if (overlay) {
+                            overlay.classList.add('hidden');
+                            overlay.classList.remove('opacity-50');
+                        }
                         if (menuIcon) menuIcon.classList.remove('hidden');
                         if (closeIcon) closeIcon.classList.add('hidden');
+                        
+                        // Restore body scrolling
+                        document.body.style.overflow = '';
                     }
                 }
             },
@@ -630,11 +664,19 @@
         @if(($layoutType ?? 'default') === 'dashboard')
             @include('layouts.components.dashboard-header')
             @include('layouts.components.dashboard-sidebar')
-            <div class="flex min-h-screen bg-gray-900">
-                @yield('content')
+            <div class="min-h-screen bg-gray-900">
+                <!-- Main Content Area with proper sidebar spacing -->
+                <main class="transition-all duration-300 ease-in-out pt-16
+                           md:ml-0 md:pl-0
+                           lg:ml-64 lg:pl-4
+                           xl:ml-72 xl:pl-6"
+                      id="dashboard-main-content">
+                    @yield('content')
+                </main>
                 @include('layouts.components.mobile-nav')
             </div>
         @endif
+-------
         
         <!-- App Layout (Enhanced) -->
         @if(($layoutType ?? 'default') === 'app')
@@ -765,6 +807,7 @@
         // Enhanced utility functions
         window.toggleTheme = () => LayoutManager.toggleTheme();
         window.toggleSidebar = () => LayoutManager.toggleSidebar();
+        window.toggleDashboardSidebar = () => LayoutManager.toggleDashboardSidebar();
         window.toggleSidebarCollapse = () => LayoutManager.toggleSidebarCollapse();
         window.toggleMobileMenu = () => LayoutManager.toggleMobileMenu();
         window.toggleNotifications = () => LayoutManager.toggleNotifications();

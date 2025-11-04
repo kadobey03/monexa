@@ -1,5 +1,5 @@
 <aside id="dashboard-sidebar"
-       class="fixed z-50 md:z-40 top-0 left-0 w-72 h-full bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out md:translate-x-0 overflow-y-auto -translate-x-full">
+       class="fixed z-50 md:z-40 top-0 left-0 w-64 h-full bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:w-72 overflow-y-auto -translate-x-full">
     
     <!-- User Profile Section -->
     <div class="relative p-4 border-b border-gray-200 dark:border-gray-700">
@@ -118,6 +118,34 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Global sidebar toggle function
+    window.toggleDashboardSidebar = function() {
+        const sidebar = document.getElementById('dashboard-sidebar');
+        const overlay = document.getElementById('dashboard-sidebar-overlay');
+        
+        if (sidebar && overlay) {
+            const isHidden = sidebar.classList.contains('-translate-x-full');
+            
+            if (isHidden) {
+                // Show sidebar
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                overlay.classList.remove('hidden');
+                overlay.classList.add('bg-opacity-50');
+                // Prevent body scroll
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Hide sidebar
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                overlay.classList.add('hidden');
+                overlay.classList.remove('bg-opacity-50');
+                // Restore body scroll
+                document.body.style.overflow = '';
+            }
+        }
+    };
+
     // Handle responsive behavior
     function handleResize() {
         const sidebar = document.getElementById('dashboard-sidebar');
@@ -131,8 +159,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (overlay) {
                 overlay.classList.add('hidden');
-                overlay.classList.remove('opacity-50');
+                overlay.classList.remove('bg-opacity-50');
             }
+            // Restore body scroll on desktop
+            document.body.style.overflow = '';
         } else {
             // On mobile, ensure sidebar is hidden by default
             if (sidebar) {
@@ -141,8 +171,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (overlay) {
                 overlay.classList.add('hidden');
-                overlay.classList.remove('opacity-50');
+                overlay.classList.remove('bg-opacity-50');
             }
+            // Restore body scroll when hiding sidebar
+            document.body.style.overflow = '';
         }
     }
     
@@ -152,14 +184,43 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Handle escape key to close sidebar on mobile
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
+        if (e.key === 'Escape' && window.innerWidth < 768) {
             const sidebar = document.getElementById('dashboard-sidebar');
-            const overlay = document.getElementById('dashboard-sidebar-overlay');
             
             if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
                 toggleDashboardSidebar();
             }
         }
     });
+    
+    // Handle swipe gestures on mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    document.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    document.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+    
+    function handleSwipe() {
+        const sidebar = document.getElementById('dashboard-sidebar');
+        if (!sidebar || window.innerWidth >= 768) return;
+        
+        const swipeDistance = touchEndX - touchStartX;
+        const isOpen = !sidebar.classList.contains('-translate-x-full');
+        
+        // Swipe right to open (from left edge)
+        if (swipeDistance > 50 && touchStartX < 50 && !isOpen) {
+            toggleDashboardSidebar();
+        }
+        // Swipe left to close
+        else if (swipeDistance < -50 && isOpen) {
+            toggleDashboardSidebar();
+        }
+    }
 });
 </script>
