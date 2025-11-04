@@ -313,9 +313,6 @@
 
 <!-- Scripts -->
 <script>
-    // Initialize Lucide Icons
-    
-
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

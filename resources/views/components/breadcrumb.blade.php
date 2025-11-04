@@ -117,11 +117,9 @@
 {{-- Breadcrumb Script --}}
 @push('scripts')
 <script>
-// Initialize Lucide icons for breadcrumb
+
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof lucide !== 'undefined') {
-        
-    }
+    
 });
 </script>
 @endpush

@@ -9,16 +9,13 @@
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- FontAwesome REMOVED - Using unified Lucide icons instead -->
+    <!-- FontAwesome REMOVED - Using unified Heroicons instead -->
 
     <!-- jQuery - Local -->
-    
 
     <!-- DataTables JS - Local -->
-    
 
     <!-- AOS JS - Local -->
-    
 
     <title>{{$settings->site_name}} | CFD Ticareti — Hisse Senetleri, Altın, Petrol, Endeksler</title>
     <meta name="theme-color" content="#111827">

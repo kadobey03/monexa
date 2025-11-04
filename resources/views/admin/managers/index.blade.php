@@ -214,7 +214,7 @@
                                class="flex items-center space-x-1 hover:text-admin-700 dark:hover:text-admin-300">
                                 <span>Yönetici</span>
                                 @if(request('sort_by') === 'firstName')
-                                    <x-heroicon name="chevron-{{ request('sort_direction') === 'asc' ? 'up' : 'down' }}" class="w-4 h-4" />
+                                    <x-heroicon name="question-mark-circle" class="w-4 h-4" />
                                 @endif
                             </a>
                         </th>
@@ -224,7 +224,7 @@
                                class="flex items-center space-x-1 hover:text-admin-700 dark:hover:text-admin-300">
                                 <span>Hiyerarşi</span>
                                 @if(request('sort_by') === 'hierarchy_level')
-                                    <x-heroicon name="chevron-{{ request('sort_direction') === 'asc' ? 'up' : 'down' }}" class="w-4 h-4" />
+                                    <x-heroicon name="question-mark-circle" class="w-4 h-4" />
                                 @endif
                             </a>
                         </th>
@@ -233,7 +233,7 @@
                                class="flex items-center space-x-1 hover:text-admin-700 dark:hover:text-admin-300">
                                 <span>Performans</span>
                                 @if(request('sort_by') === 'current_performance')
-                                    <x-heroicon name="chevron-{{ request('sort_direction') === 'asc' ? 'up' : 'down' }}" class="w-4 h-4" />
+                                    <x-heroicon name="question-mark-circle" class="w-4 h-4" />
                                 @endif
                             </a>
                         </th>
@@ -307,7 +307,7 @@
                                     Seviye {{ $admin->hierarchy_level }}
                                 </span>
                                 @if($admin->supervisor)
-                                    <i data-lucide="arrow-up" class="w-3 h-3 text-admin-400" title="Rapor Veriyor: {{ $admin->supervisor->getFullName() }}"></i>
+                                    <x-heroicon name="arrow-up" class="w-3 h-3 text-admin-400" title="Rapor Veriyor: {{ $admin->supervisor->getFullName() }}" />
                                 @endif
                             </div>
                             <div class="text-xs text-admin-500">
@@ -934,7 +934,6 @@ function managersIndex() {
     }
 }
 
-// Initialize Lucide icons
 document.addEventListener('DOMContentLoaded', function() {
     
 });

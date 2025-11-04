@@ -158,7 +158,7 @@
     </div>
 </div>
 
-<!-- Initialize Lucide Icons -->
+<!-- Initialize Heroicons -->
 <script>
 function togglePasswordVisibility(fieldId) {
     const field = document.getElementById(fieldId);
@@ -166,22 +166,16 @@ function togglePasswordVisibility(fieldId) {
     
     if (field.type === 'password') {
         field.type = 'text';
-        eye.setAttribute('data-lucide', 'eye-off');
+        // Heroicon: eye icon changed to eye-slash;
     } else {
         field.type = 'password';
-        eye.setAttribute('data-lucide', 'eye');
+        // Heroicon: eye icon changed to eye;
     }
-    
-    // Re-initialize lucide icons
-    if (typeof lucide !== 'undefined') {
-        
-    }
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof lucide !== 'undefined') {
-        
-    }
+    
 });
 </script>
 @endsection

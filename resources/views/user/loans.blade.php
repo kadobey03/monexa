@@ -403,11 +403,8 @@ function loanHistory() {
     }
 }
 
-// Initialize Lucide icons when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof lucide !== 'undefined') {
-        
-    }
+    
 });
 </script>
 

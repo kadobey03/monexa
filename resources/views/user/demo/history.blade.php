@@ -85,7 +85,7 @@
                     <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">Total P&L</p>
                 </div>
                 <div class="p-2 sm:p-3 bg-{{ $totalPnL >= 0 ? 'green' : 'red' }}-100 dark:bg-{{ $totalPnL >= 0 ? 'green' : 'red' }}-900/30 rounded-lg">
-                    <i data-lucide="dollar-sign" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-{{ $totalPnL >= 0 ? 'green' : 'red' }}-600 dark:text-{{ $totalPnL >= 0 ? 'green' : 'red' }}-400"></i>
+                    <x-heroicon name="currency-dollar" class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-{{ $totalPnL >= 0 ? 'green' : 'red' }}-600 dark:text-{{ $totalPnL >= 0 ? 'green' : 'red' }}-400" />
                 </div>
             </div>
         </div>
@@ -548,8 +548,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Lucide icons
-        
 
         // Filter toggle functionality
         const toggleFilters = document.getElementById('toggleFilters');

@@ -14,9 +14,9 @@
             @if($hasChildren)
                 <button @click="toggleNode({{ $role->id }})" 
                         class="w-6 h-6 flex items-center justify-center rounded-full border border-admin-300 dark:border-admin-600 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
-                    <i data-lucide="chevron-right" 
+                    <x-heroicon name="chevron-right"
                        class="w-4 h-4 text-admin-600 dark:text-admin-400 transition-transform duration-200"
-                       :class="{ 'rotate-90': isExpanded({{ $role->id }}) }"></i>
+                       :class="{ 'rotate-90': isExpanded({{ $role->id }}) }" />
                 </button>
             @else
                 <div class="w-6 h-6 flex items-center justify-center">

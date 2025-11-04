@@ -734,7 +734,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold
                                         {{ $history->type == 'LOSE' ? 'bg-red-50 text-red-600 dark:bg-red-900/20' : 'bg-green-50 text-green-600 dark:bg-green-900/20' }}">
-                                        <x-heroicon name="{{ $history->type == 'LOSE' ? 'arrow-down' : 'arrow-up' }}" class="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                                        <x-heroicon name="question-mark-circle" class="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                                         {{ $history->plan }}
                                     </span>
                                 </div>

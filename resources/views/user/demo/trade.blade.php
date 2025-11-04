@@ -295,8 +295,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Lucide icons
-        
 
         // Form elements
         const assetSelect = document.getElementById('asset');

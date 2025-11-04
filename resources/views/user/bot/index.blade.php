@@ -314,10 +314,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize Lucide icons
-    if (typeof lucide !== 'undefined') {
-        
-    }
 });
 
 // CSS animation

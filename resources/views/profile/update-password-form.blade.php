@@ -246,9 +246,6 @@ function checkPasswordStrength(password) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Lucide icons if available
-    if (typeof lucide !== 'undefined') {
-        
-    }
+
 });
 </script>

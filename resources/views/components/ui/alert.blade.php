@@ -35,7 +35,7 @@
      x-transition:leave-end="opacity-0">
     <div class="flex">
         <div class="flex-shrink-0">
-            <x-heroicon name="{{ $icons[$type] ?? $icons['info'] }}" class="h-5 w-5 {{ $iconClasses[$type] ?? $iconClasses['info'] }}" />
+            <x-heroicon name="question-mark-circle" class="h-5 w-5 {{ $iconClasses[$type] ?? $iconClasses['info'] }}" />
         </div>
         <div class="ml-3 flex-1">
             @if($title)

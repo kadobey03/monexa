@@ -119,11 +119,9 @@
 {{-- Alert System Script --}}
 @push('scripts')
 <script>
-// Initialize Lucide icons for alerts
+
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof lucide !== 'undefined') {
-        
-    }
+    
 });
 </script>
 @endpush

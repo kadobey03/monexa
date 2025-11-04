@@ -140,7 +140,7 @@
                       ($notification->type === 'success' ? 'bg-gradient-to-br from-green-200 to-green-100 text-green-600 dark:from-green-900/40 dark:to-green-800/20 dark:text-green-500' :
                       ($notification->type === 'danger' ? 'bg-gradient-to-br from-red-200 to-red-100 text-red-600 dark:from-red-900/40 dark:to-red-800/20 dark:text-red-500' :
                       'bg-gradient-to-br from-blue-200 to-blue-100 text-blue-600 dark:from-blue-900/40 dark:to-blue-800/20 dark:text-blue-500')) }}">
-                      <x-heroicon name="{{ $notification->type === 'warning' ? 'alert-triangle' : ($notification->type === 'success' ? 'check-circle' : ($notification->type === 'danger' ? 'alert-octagon' : 'info')) }}" class="h-7 w-7" />
+                      <x-heroicon name="question-mark-circle" class="h-7 w-7" />
                     </div>
                     @if(!$notification->is_read)
                       <div class="absolute h-3 w-3 rounded-full bg-primary-500 dark:bg-primary-400 ring-2 ring-white dark:ring-gray-800 -mt-2 ml-10"></div>
@@ -163,7 +163,7 @@
                             ($notification->type === 'success' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :
                             ($notification->type === 'danger' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400' :
                             'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400')) }}">
-                            <x-heroicon name="{{ $notification->type === 'warning' ? 'alert-triangle' : ($notification->type === 'success' ? 'check-circle' : ($notification->type === 'danger' ? 'alert-octagon' : 'info')) }}" class="h-3 w-3 mr-1" />
+                            <x-heroicon name="question-mark-circle" class="h-3 w-3 mr-1" />
                             {{ ucfirst($notification->type) }}
                           </span>
                           <span class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
@@ -171,7 +171,11 @@
                             {{ $notification->created_at->diffForHumans() }}
                           </span>
                           <span class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
-                            <i data-lucide="{{ $notification->is_read ? 'check-circle-2' : 'circle' }}" class="h-3.5 w-3.5 mr-1 {{ $notification->is_read ? 'text-primary-500 dark:text-primary-400' : '' }}"></i>
+                            @if($notification->is_read)
+                              <x-heroicon name="check-circle" class="h-3.5 w-3.5 mr-1 text-primary-500 dark:text-primary-400" />
+                            @else
+                              <x-heroicon name="circle" class="h-3.5 w-3.5 mr-1" />
+                            @endif
                             {{ $notification->is_read ? 'Read' : 'Unread' }}
                           </span>
                         </div>
@@ -300,8 +304,6 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Lucide icons
-    
 
     // Add scroll reveal animations to notification items
     const notificationItems = document.querySelectorAll('#notifications-container > div > div');

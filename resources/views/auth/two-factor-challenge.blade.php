@@ -175,11 +175,10 @@
     </div>
 </div>
 
-<!-- Add Lucide Icons Script -->
+<!-- Add Heroicons Script -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
 
         // Auto-focus on code input
         const codeInput = document.getElementById('twofa');

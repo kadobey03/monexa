@@ -498,11 +498,6 @@ const TradingMarkets = {
         return '$' + num.toLocaleString();
     },
 
-    initializeLucideIcons() {
-        if (typeof lucide !== 'undefined') {
-            
-        }
-    }
 };
 
 // Global functions for onclick handlers

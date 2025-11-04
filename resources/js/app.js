@@ -20,7 +20,7 @@ import axios from 'axios';
 import { CSRFManager } from './utils/csrf-manager.js';
 import { NotificationManager } from './utils/notification-manager.js';
 import { EntryPointManager, autoPreload } from './utils/EntryPointManager.js';
-import { DependencyManager, loadSwal, loadLucide, loadChart, loadQR } from './utils/DependencyManager.js';
+import { DependencyManager, loadSwal, loadChart, loadQR } from './utils/DependencyManager.js';
 import { HMRManager, registerHMR, registerVueHMR, registerCSSHMR, registerAdminHMR } from './utils/HMRManager.js';
 
 // Initialize managers for better module and dependency management
@@ -31,7 +31,7 @@ const hmrManager = new HMRManager();
 // Auto-preload based on page type
 Promise.all([
     autoPreload(),
-    dependencyManager.preloadDependencies(['sweetalert2', 'lucide'])
+    dependencyManager.preloadDependencies(['sweetalert2'])
 ])
     .then(() => {
         console.log('✅ Auto-preload and dependency preload completed');
@@ -299,7 +299,6 @@ window.HMRManager = hmrManager;
 
 // Make dependency loaders globally available
 window.loadSwal = loadSwal;
-window.loadLucide = loadLucide;
 window.loadChart = loadChart;
 window.loadQR = loadQR;
 
@@ -310,7 +309,7 @@ window.registerCSSHMR = registerCSSHMR;
 window.registerAdminHMR = registerAdminHMR;
 
 // Export utilities for modern imports
-export { GlobalUtilities, AxiosConfig, entryPointManager, dependencyManager, hmrManager, loadSwal, loadLucide, loadChart, loadQR, registerHMR, registerVueHMR, registerCSSHMR, registerAdminHMR };
+export { GlobalUtilities, AxiosConfig, entryPointManager, dependencyManager, hmrManager, loadSwal, loadChart, loadQR, registerHMR, registerVueHMR, registerCSSHMR, registerAdminHMR };
 export default axios;
 
 // Enhanced HMR support for development
@@ -346,7 +345,7 @@ if (import.meta.hot) {
         console.log('🔥 HMR: DependencyManager reloaded');
         // Reset and reinitialize dependency manager
         dependencyManager.reset();
-        dependencyManager.preloadDependencies(['sweetalert2', 'lucide']).catch(console.error);
+        dependencyManager.preloadDependencies(['sweetalert2']).catch(console.error);
     });
     
     // HMR for HMR manager itself

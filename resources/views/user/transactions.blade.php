@@ -827,8 +827,6 @@
 </style>
 
 <script>
-    // Initialize Lucide icons
-    
 
     // Transaction Tabs Manager
     class TransactionTabsManager {

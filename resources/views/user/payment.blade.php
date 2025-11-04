@@ -637,9 +637,7 @@
         }
 
         initializeLucide() {
-            if (typeof lucide !== 'undefined') {
-                
-            }
+            
         }
     }
 
@@ -661,5 +659,4 @@
 </style>
 
 @endsection
-
 

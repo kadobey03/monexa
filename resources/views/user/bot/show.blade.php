@@ -283,8 +283,6 @@
 @push('scripts')
 
 <script>
-    // Initialize Lucide icons
-    
 
     // SweetAlert for cancel investment button
     document.addEventListener('DOMContentLoaded', function() {

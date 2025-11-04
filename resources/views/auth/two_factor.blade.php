@@ -198,11 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }, 100);
         }
-        
-        // Re-initialize Lucide icons if available
-        if (typeof lucide !== 'undefined') {
-            
-        }
+
     }
 
     // Event listeners
@@ -222,11 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize UI
     updateUI();
-    
-    // Initialize Lucide icons
-    if (typeof lucide !== 'undefined') {
-        
-    }
+
 });
 </script>
 

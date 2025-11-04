@@ -181,11 +181,10 @@
     </div>
 </div>
 
-<!-- Add Lucide Icons Script -->
+<!-- Add Heroicons Script -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
 
         // Auto-check email status periodically (optional enhancement)
         let checkCount = 0;

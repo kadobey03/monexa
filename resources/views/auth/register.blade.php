@@ -494,10 +494,6 @@
     </div>
 </div>
 
-
-
-
-
     <style>
         .form-step {
             opacity: 1;
@@ -556,10 +552,7 @@
                 
                 stepsContainer.appendChild(stepDiv);
             });
-            
-            if (typeof lucide !== 'undefined') {
-                
-            }
+
         }
 
         function updateNavigation() {
@@ -732,10 +725,6 @@
                 }, 100);
             }
 
-            // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                
-            }
         });
     </script>
 

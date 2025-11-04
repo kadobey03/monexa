@@ -248,7 +248,7 @@
                     <div class="flex items-start">
                       <div class="flex-shrink-0 mt-0.5">
                         <span class="flex h-8 w-8 rounded-full items-center justify-center {{ $notification->type === 'warning' ? 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-500' : ($notification->type === 'success' ? 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-500' : ($notification->type === 'danger' ? 'bg-red-100 text-red-600 dark:bg-red-900/20 dark:text-red-500' : 'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-500')) }}">
-                          <x-heroicon name="{{ $notification->type === 'warning' ? 'alert-triangle' : ($notification->type === 'success' ? 'check-circle' : ($notification->type === 'danger' ? 'alert-octagon' : 'info')) }}" class="w-4 h-4" />
+                          <x-heroicon name="question-mark-circle" class="w-4 h-4" />
                         </span>
                       </div>
                       <div class="ml-3 w-0 flex-1">

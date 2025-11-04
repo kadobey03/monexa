@@ -17,7 +17,7 @@
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Lucide Icons - Loaded via unified Icon Service -->
+    <!-- Heroicons - Loaded via unified Icon Service -->
 
     <!-- All styles now handled by Vite with Tailwind CSS -->
 
@@ -26,7 +26,6 @@
 <meta name="msapplication-navbutton-color" content="#4D7DE6">
 <!-- iOS Safari -->
 <meta name="apple-mobile-web-app-status-bar-style" content="#4D7DE6">
-
 
 <meta name="theme-color" content="#4D7DE6">
 <meta name="msapplication-navbutton-color" content="#4D7DE6">
@@ -49,7 +48,6 @@
 <!-- <link rel="apple-touch-icon-precomposed" sizes="72x72" href="404.html" /> -->
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" />
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ ($settings && $settings->favicon) ? asset('storage/'.$settings->favicon) : asset('favicon.ico') }}" />
-
 
 <meta property="og:site_name" content="{{ $settings->site_name ?? 'Trading Platform' }}">
 <meta property="og:title" content="Trading With {{ $settings->site_name ?? 'Trading Platform' }}" />
@@ -77,11 +75,9 @@ COMMERCIAL MARKET.TRAINING CLIENTS & INVESTORS TO BECOME
 EXPERTISE.???">
 <meta property="og:type" content="website" />
 
-
 <!-- <link href="404" rel="stylesheet" /> -->
 
 </head>
-
 
     <style>
         body {
@@ -147,12 +143,10 @@ EXPERTISE.???">
 </head>
 
 <body class="h-full bg-gray-300 font-sans antialiased transition-colors duration-300 text-gray-900 dark js-hidden" id="main-body">
-    
-    
+
     <!-- Theme Toggle (Hidden but accessible) -->
     <div class="fixed top-4 right-4 z-50">
-        
-        
+
         <button id="theme-toggle"
             class="relative inline-flex items-center justify-center w-10 h-10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-150 backdrop-blur-sm">
             <svg id="sun-icon" class="w-5 h-5 js-hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -250,8 +244,7 @@ EXPERTISE.???">
             if (themeToggle) {
                 themeToggle.addEventListener('click', toggleTheme);
             }
-            
-            // Initialize Lucide icons
+
             // Icons initialized via unified Icon Service
         });
     </script>

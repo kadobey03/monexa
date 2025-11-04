@@ -23,10 +23,8 @@ function initializeLeadsModule() {
     
     console.log('🚀 Lead Yönetim Sistemi başlatılıyor (Vanilla JS)...');
     
-    // Initialize Lucide icons if available
-    if (window.lucide) {
-        window.lucide.createIcons();
-    }
+    // Icons are handled by Heroicons component - no JS initialization needed
+    console.log('✅ Using Heroicons - No icon initialization required');
     
     // Initialize the main data manager
     const dataManager = window.initializeLeadsDataManager();

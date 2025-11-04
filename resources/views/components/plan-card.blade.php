@@ -236,11 +236,9 @@
 {{-- Plan Card Script --}}
 @push('scripts')
 <script>
-// Initialize Lucide icons for plan cards
+
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof lucide !== 'undefined') {
-        
-    }
+    
 });
 </script>
 @endpush

@@ -23,7 +23,7 @@
     <!-- Tailwind CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
-    <!-- Lucide Icons - Loaded via unified Icon Service -->
+    <!-- Heroicons - Loaded via unified Icon Service -->
     
     @stack('head-scripts')
     @stack('head-styles')
@@ -107,8 +107,7 @@
                 detail: { theme: newTheme } 
             }));
         }
-        
-        // Initialize Lucide icons after DOM is ready
+
         document.addEventListener('DOMContentLoaded', function() {
             // Icons initialized via unified Icon Service
         });

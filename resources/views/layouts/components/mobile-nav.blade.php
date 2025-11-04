@@ -8,11 +8,11 @@
                         {{ request()->routeIs('dashboard') 
                            ? 'bg-blue-500/10 dark:bg-blue-400/10 scale-110' 
                            : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-                <i data-lucide="home" class="w-6 h-6
+                <x-heroicon name="home" class="w-6 h-6
                     {{ request()->routeIs('dashboard')
                        ? 'text-blue-600 dark:text-blue-400'
                        : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-                    transition-colors duration-300"></i>
+                    transition-colors duration-300" />
             </div>
             <span class="text-xs font-medium mt-1
                    {{ request()->routeIs('dashboard')
@@ -27,11 +27,11 @@
                         {{ request()->routeIs('deposits')
                            ? 'bg-blue-500/10 dark:bg-blue-400/10 scale-110'
                            : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-                <i data-lucide="plus-circle" class="w-6 h-6
+                <x-heroicon name="plus-circle" class="w-6 h-6
                     {{ request()->routeIs('deposits')
                        ? 'text-blue-600 dark:text-blue-400'
                        : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-                    transition-colors duration-300"></i>
+                    transition-colors duration-300" />
             </div>
             <span class="text-xs font-medium mt-1
                    {{ request()->routeIs('deposits')
@@ -46,11 +46,11 @@
                         {{ request()->routeIs('trade.index')
                            ? 'bg-blue-500/10 dark:bg-blue-400/10 scale-110'
                            : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-                <i data-lucide="zap" class="w-6 h-6
+                <x-heroicon name="bolt" class="w-6 h-6
                     {{ request()->routeIs('trade.index')
                        ? 'text-blue-600 dark:text-blue-400'
                        : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-                    transition-colors duration-300"></i>
+                    transition-colors duration-300" />
             </div>
             <span class="text-xs font-medium mt-1
                    {{ request()->routeIs('trade.index')
@@ -65,11 +65,11 @@
                         {{ request()->routeIs('profile')
                            ? 'bg-blue-500/10 dark:bg-blue-400/10 scale-110'
                            : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}">
-                <i data-lucide="user" class="w-6 h-6
+                <x-heroicon name="user" class="w-6 h-6
                     {{ request()->routeIs('profile')
                        ? 'text-blue-600 dark:text-blue-400'
                        : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-                    transition-colors duration-300"></i>
+                    transition-colors duration-300" />
             </div>
             <span class="text-xs font-medium mt-1
                    {{ request()->routeIs('profile')

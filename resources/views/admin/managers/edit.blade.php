@@ -51,9 +51,7 @@
                 <button @click="toggleStatus()" 
                         class="p-2 rounded-lg transition-colors"
                         :class="isActive ? 'bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50' : 'bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50'">
-                    <i :data-lucide="isActive ? 'user-x' : 'user-check'" 
-                       :class="isActive ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'"
-                       class="w-4 h-4"></i>
+                    <x-heroicon name="question-mark-circle" class="isActive ? " />
                 </button>
             </div>
         </div>
@@ -564,8 +562,7 @@
                         <button type="button" 
                                 @click="togglePasswordVisibility('password')"
                                 class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <i :data-lucide="showPassword ? 'eye-off' : 'eye'" 
-                               class="w-4 h-4 text-admin-400 hover:text-admin-600"></i>
+                            <x-heroicon name="question-mark-circle" class="w-4 h-4 text-admin-400 hover:text-admin-600" />
                         </button>
                     </div>
                     
@@ -613,8 +610,7 @@
                         <button type="button" 
                                 @click="togglePasswordVisibility('passwordConfirmation')"
                                 class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <i :data-lucide="showPasswordConfirmation ? 'eye-off' : 'eye'" 
-                               class="w-4 h-4 text-admin-400 hover:text-admin-600"></i>
+                            <x-heroicon name="question-mark-circle" class="w-4 h-4 text-admin-400 hover:text-admin-600" />
                         </button>
                     </div>
                     
@@ -622,7 +618,7 @@
                     <div x-show="passwordMatchStatus" class="mt-1">
                         <p class="text-sm" 
                            :class="passwordsMatch ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">
-                            <i :data-lucide="passwordsMatch ? 'check-circle' : 'x-circle'" class="w-3 h-3 inline mr-1"></i>
+                            <x-heroicon name="question-mark-circle" class="w-3 h-3 inline mr-1" />
                             <span x-text="passwordsMatch ? 'Şifreler eşleşiyor' : 'Şifreler eşleşmiyor'"></span>
                         </p>
                     </div>
@@ -869,9 +865,7 @@ function editManagerForm() {
                 this.showPasswordConfirmation = !this.showPasswordConfirmation;
                 this.$refs.passwordConfirmation.type = this.showPasswordConfirmation ? 'text' : 'password';
             }
-            
-            // Re-init lucide icons
-            
+
         },
         
         checkPasswordStrength() {
@@ -920,8 +914,7 @@ function editManagerForm() {
             
             this.passwordMatchStatus = true;
             this.passwordsMatch = password === confirmation;
-            
-            
+
         }
     }
 }

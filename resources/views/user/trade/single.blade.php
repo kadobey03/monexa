@@ -27,7 +27,6 @@
     <!--    </div>-->
     <!--</div>-->
 
-
     <x-notify-alert />
     <x-danger-alert />
     <x-success-alert />
@@ -167,9 +166,6 @@
 
             <!-- Trade History Section -->
             <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-
-
-
 
                 <!-- Trade History Tabs -->
                 <div class="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1 mb-6">
@@ -524,7 +520,6 @@
                     <input type="hidden" name="leverage" value="100">
                     <input type="hidden" name="expire" value="7 Days">
 
-
                     <!-- Price Input (for limit/stop orders) -->
                     <div >
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fiyat ($)</label>
@@ -788,11 +783,6 @@ const TradingSingle = {
         return false;
     },
 
-    initializeLucideIcons() {
-        if (typeof lucide !== 'undefined') {
-            
-        }
-    }
 };
 
 // Global functions

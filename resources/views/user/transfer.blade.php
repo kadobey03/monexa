@@ -118,10 +118,6 @@
     @parent
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                
-            }
 
             // Form submission handler with improved UX
             document.getElementById('transferform').addEventListener('submit', function(e) {

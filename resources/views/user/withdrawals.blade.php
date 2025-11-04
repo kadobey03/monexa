@@ -237,7 +237,7 @@
                                         </td>
                                         <td class="px-3 sm:px-6 py-4 sm:py-5 whitespace-nowrap hidden sm:table-cell">
                                             <div class="inline-flex items-center px-2 sm:px-3 py-1 sm:py-2 rounded-lg text-xs sm:text-sm font-medium bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                                                <x-heroicon name="{{ $withdrawal->payment_mode == 'Bitcoin' ? 'bitcoin' : ($withdrawal->payment_mode == 'Ethereum' ? 'zap' : ($withdrawal->payment_mode == 'USDT' ? 'circle-dollar-sign' : 'building-bank')) }}" class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                                                <x-heroicon name="question-mark-circle" class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                                                 {{ $withdrawal->payment_mode }}
                                             </div>
                                         </td>
@@ -298,11 +298,7 @@
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                
-            }
-            
+
             console.log('Withdrawals page initialized');
         });
 
@@ -324,7 +320,7 @@
                 
                 // Update text and icon
                 toggleText.textContent = 'Güvenlik ayrıntılarını gizle';
-                toggleIcon.setAttribute('data-lucide', 'chevron-up');
+                // Heroicon: toggleIcon icon changed to chevron-up;
             } else {
                 // Hide content
                 content.classList.remove('opacity-100', 'translate-y-0');
@@ -335,13 +331,9 @@
                 
                 // Update text and icon
                 toggleText.textContent = 'Çekim güvenliği hakkında bilgi edinin';
-                toggleIcon.setAttribute('data-lucide', 'chevron-down');
+                // Heroicon: toggleIcon icon changed to chevron-down;
             }
-            
-            // Reinitialize Lucide icons for the updated icon
-            if (typeof lucide !== 'undefined') {
-                
-            }
+
         }
 
         // Handle payment method selection
@@ -388,7 +380,7 @@
                 }
                 
                 // Update icon
-                methodIcon.setAttribute('data-lucide', iconName);
+                methodIcon// Heroicon reference
                 methodIcon.className = `w-5 h-5 sm:w-6 sm:h-6 ${iconColor}`;
                 
                 // Update container background
@@ -400,11 +392,7 @@
                     detailsCard.classList.remove('opacity-0', 'scale-95');
                     detailsCard.classList.add('opacity-100', 'scale-100');
                 }, 10);
-                
-                // Reinitialize Lucide icons
-                if (typeof lucide !== 'undefined') {
-                    
-                }
+
             } else {
                 // Hide details card
                 detailsCard.classList.remove('opacity-100', 'scale-100');

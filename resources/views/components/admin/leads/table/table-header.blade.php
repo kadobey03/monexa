@@ -305,9 +305,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (activeHeader) {
             activeHeader.setAttribute('data-sorted', sortDirection);
             
-            const icon = activeHeader.querySelector(sortDirection === 'asc' ? 
-                'i[data-lucide="chevron-up"]' : 
-                'i[data-lucide="chevron-down"]'
+            const icon = activeHeader.querySelector(sortDirection === 'asc' ?
+                'svg[data-icon="chevron-up"]' :
+                'svg[data-icon="chevron-down"]'
             );
             
             if (icon) {

@@ -268,12 +268,11 @@
 
 @section('scripts')
     @parent
-    
-    
+
     <script x-cloak>
-        // Initialize Lucide icons when page loads
+        
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing Lucide icons...');
+            console.log('DOM loaded, initializing Heroicons...');
             
             console.log('SweetAlert2 available:', typeof Swal !== 'undefined');
 

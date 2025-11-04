@@ -474,11 +474,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Initialize Lucide icons after content is loaded
-    if (typeof lucide !== 'undefined') {
-        
-    }
-
     // Auto-dismiss alerts
     setTimeout(function() {
         document.querySelectorAll('.alert').forEach(function(alert) {

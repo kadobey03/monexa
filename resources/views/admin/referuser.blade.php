@@ -208,16 +208,12 @@ function togglePassword(fieldId) {
     
     if (field.type === 'password') {
         field.type = 'text';
-        eye.setAttribute('data-lucide', 'eye-off');
+        // Heroicon: eye icon changed to eye-slash;
     } else {
         field.type = 'password';
-        eye.setAttribute('data-lucide', 'eye');
+        // Heroicon: eye icon changed to eye;
     }
-    
-    // Refresh Lucide icons
-    if (typeof lucide !== 'undefined') {
-        
-    }
+
 }
 </script>
 @endsection

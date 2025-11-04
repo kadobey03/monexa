@@ -263,11 +263,10 @@
                             <tr class="bg-admin-100 dark:bg-admin-700/30">
                                 <td colspan="{{ count($roles) + 1 }}" class="px-6 py-3 text-sm font-medium text-admin-900 dark:text-white">
                                     <div class="flex items-center">
-                                        <x-heroicon name="{{ $categoryIcons[$category] ?? 'folder' }}" class="w-4 h-4 mr-2" />
+                                        <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-2" />
                                         {{ ucfirst($category) }} ({{ count($permissions) }})
                                         <button @click="toggleCategory('{{ $category }}')" class="ml-2">
-                                            <i :data-lucide="expandedCategories.includes('{{ $category }}') ? 'chevron-down' : 'chevron-right'" 
-                                               class="w-4 h-4 text-admin-500"></i>
+                                            <x-heroicon name="expandedCategories.includes(" class="w-4 h-4 text-admin-500" />
                                         </button>
                                     </div>
                                 </td>
@@ -282,7 +281,7 @@
                                         <td class="sticky left-0 bg-white dark:bg-admin-800 px-6 py-4 text-sm text-admin-900 dark:text-white border-r border-admin-200 dark:border-admin-600">
                                             <div class="flex items-center">
                                                 <div class="w-8 h-8 bg-{{ $permission->getColorClass() }}-100 dark:bg-{{ $permission->getColorClass() }}-900/20 rounded-lg flex items-center justify-center mr-3">
-                                                    <i data-lucide="{{ $permission->getIcon() }}" class="w-4 h-4 text-{{ $permission->getColorClass() }}-600 dark:text-{{ $permission->getColorClass() }}-400"></i>
+                                                    <x-heroicon name="{{ $permission->getIcon() }}" class="w-4 h-4 text-{{ $permission->getColorClass() }}-600 dark:text-{{ $permission->getColorClass() }}-400" />
                                                 </div>
                                                 <div>
                                                     <p class="font-medium">{{ $permission->display_name }}</p>
@@ -375,7 +374,7 @@
                             @if($categoryPermissions->count() > 0)
                                 <div class="border border-admin-200 dark:border-admin-600 rounded-xl p-4">
                                     <h4 class="font-medium text-admin-900 dark:text-white mb-3 flex items-center">
-                                        <x-heroicon name="{{ $categoryIcons[$category] ?? 'folder' }}" class="w-4 h-4 mr-2" />
+                                        <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-2" />
                                         {{ ucfirst($category) }}
                                         <span class="ml-auto text-xs text-admin-500">{{ $categoryPermissions->count() }}/{{ $permissions->count() }}</span>
                                     </h4>

@@ -349,10 +349,6 @@ function transactionHistory() {
         sortDirection: 'desc',
 
         init() {
-            // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                
-            }
 
             // Listen for window resize to adjust view mode
             window.addEventListener('resize', () => {

@@ -203,7 +203,11 @@
                                 <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 rounded-2xl">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-8 h-8 {{ $trade->profit_loss >= 0 ? 'bg-green-100 dark:bg-green-900/20' : 'bg-red-100 dark:bg-red-900/20' }} rounded-lg flex items-center justify-center">
-                                            <i data-lucide="{{ $trade->profit_loss >= 0 ? 'trending-up' : 'trending-down' }}" class="w-4 h-4 {{ $trade->profit_loss >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}"></i>
+                                            @if($trade->profit_loss >= 0)
+                                                <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-green-600 dark:text-green-400" />
+                                            @else
+                                                <x-heroicon name="arrow-trending-down" class="w-4 h-4 text-red-600 dark:text-red-400" />
+                                            @endif
                                         </div>
                                         <div>
                                             <div class="text-sm font-medium text-gray-900 dark:text-white">{{ $trade->userBotInvestment->bot->name ?? 'Bot Trade' }}</div>
@@ -264,8 +268,7 @@
 
 @push('scripts')
 <script>
-    // Initialize Lucide icons
-    
+
 </script>
 @endpush
 @endsection

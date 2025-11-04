@@ -43,7 +43,11 @@
                     <span class="mr-1 font-medium">Date:</span> {{ $notification->created_at->format('F d, Y h:i A') }}
                 </div>
                 <div class="flex items-center text-gray-600 dark:text-gray-400 sm:justify-end">
-                    <i data-lucide="{{ $notification->is_read ? 'check-circle' : 'circle' }}" class="w-4 h-4 mr-2 {{ $notification->is_read ? 'text-green-500 dark:text-green-400' : 'text-gray-500 dark:text-gray-400' }}"></i>
+                    @if($notification->is_read)
+                        <x-heroicon name="check-circle" class="w-4 h-4 mr-2 text-green-500 dark:text-green-400" />
+                    @else
+                        <x-heroicon name="circle" class="w-4 h-4 mr-2 text-gray-500 dark:text-gray-400" />
+                    @endif
                     <span class="mr-1 font-medium">Status:</span>
                     <span class="{{ $notification->is_read ? 'text-green-500 dark:text-green-400' : 'text-gray-500 dark:text-gray-400' }}">
                         {{ $notification->is_read ? 'Read' : 'Unread' }}
@@ -59,8 +63,8 @@
                             Related Information
                         </h3>
                         <button class="text-gray-500 dark:text-gray-400 focus:outline-none">
-                            <i id="chevron-down-icon" data-lucide="chevron-down" class="w-5 h-5 hidden"></i>
-                            <i id="chevron-up-icon" data-lucide="chevron-up" class="w-5 h-5"></i>
+                            <x-heroicon name="chevron-down" class="w-5 h-5 hidden" id="chevron-down-icon" />
+                            <x-heroicon name="chevron-up" class="w-5 h-5" id="chevron-up-icon" />
                         </button>
                     </div>
 
@@ -268,11 +272,7 @@
     
     // Initialize animations and icons on DOM load
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Lucide icons
-        if (typeof lucide !== 'undefined') {
-            
-        }
-        
+
         // Add fade-in animation to notification card
         const notificationCard = document.querySelector('.animate-fade-in');
         if (notificationCard) {

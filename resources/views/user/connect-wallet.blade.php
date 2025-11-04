@@ -277,7 +277,7 @@
                                 <!-- Phrase Validation Feedback -->
                                 <div class="mt-2 sm:mt-3 space-y-1.5 sm:space-y-2">
                                     <div class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
-                                        <i :data-lucide="wordCount >= 12 && wordCount <= 24 ? 'check-circle' : 'circle'"
+                                        <i <!-- Heroicon: Alpine expression wordCount >= 12 && wordCount <= 24 ?  needs manual conversion -->check-circle' : 'circle'"
                                            :class="wordCount >= 12 && wordCount <= 24 ? 'text-green-500' : 'text-gray-400'"
                                            class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0"></i>
                                         <span :class="wordCount >= 12 && wordCount <= 24 ? 'text-green-600 dark:text-green-400' : 'text-gray-500'" class="leading-tight">
@@ -285,9 +285,7 @@
                                         </span>
                                     </div>
                                     <div class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
-                                        <i :data-lucide="!hasInvalidChars ? 'check-circle' : 'circle'"
-                                           :class="!hasInvalidChars ? 'text-green-500' : 'text-gray-400'"
-                                           class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0"></i>
+                                        <x-heroicon name="question-mark-circle" class="!hasInvalidChars ? " />
                                         <span :class="!hasInvalidChars ? 'text-green-600 dark:text-green-400' : 'text-gray-500'" class="leading-tight">
                                             Contains only valid characters
                                         </span>
@@ -422,7 +420,7 @@ function walletConnectManager() {
         hasError: false,
 
         init() {
-            // Initialize Lucide icons immediately
+            
             this.refreshIcons();
 
             // Also refresh icons after a short delay to ensure DOM is ready
@@ -437,16 +435,7 @@ function walletConnectManager() {
         },
 
         refreshIcons() {
-            if (typeof lucide !== 'undefined') {
-                try {
-                    lucide.createIcons({
-                        nameAttr: 'data-lucide',
-                        attrs: (name, props) => {
-                            // Ensure no null/undefined values for width/height
-                            const safeAttrs = {
-                                class: 'lucide-icon',
-                                'stroke-width': '1.5'
-                            };
+            ;
                             
                             // Only add width/height if they have valid values
                             if (props.width && props.width !== 'null' && props.width !== null) {
@@ -460,7 +449,7 @@ function walletConnectManager() {
                         }
                     });
                 } catch (e) {
-                    console.log('Lucide icons initialization:', e);
+                    console.log('Heroicons initialization:', e);
                 }
             }
         },
@@ -502,20 +491,10 @@ function walletConnectManager() {
     }
 }
 
-// Initialize Lucide icons when DOM loads
 document.addEventListener('DOMContentLoaded', function() {
     // Multiple initialization attempts to ensure icons load
     function initIcons() {
-        if (typeof lucide !== 'undefined') {
-            try {
-                lucide.createIcons({
-                    nameAttr: 'data-lucide',
-                    attrs: (name, props) => {
-                        // Ensure no null/undefined values for width/height
-                        const safeAttrs = {
-                            class: 'lucide-icon',
-                            'stroke-width': '1.5'
-                        };
+        ;
                         
                         // Only add width/height if they have valid values
                         if (props.width && props.width !== 'null' && props.width !== null) {
@@ -528,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         return safeAttrs;
                     }
                 });
-                console.log('Lucide icons initialized successfully');
+                console.log('Heroicons initialized successfully');
             } catch (e) {
                 console.log('Lucide error:', e);
             }
@@ -548,16 +527,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Reinitialize icons when page becomes visible (for PWA/tab switching)
 document.addEventListener('visibilitychange', function() {
-    if (!document.hidden && typeof lucide !== 'undefined') {
-        setTimeout(() => {
-            lucide.createIcons({
-                nameAttr: 'data-lucide',
-                attrs: (name, props) => {
-                    // Ensure no null/undefined values for width/height
-                    const safeAttrs = {
-                        class: 'lucide-icon',
-                        'stroke-width': '1.5'
-                    };
+    // Heroicon reference
                     
                     // Only add width/height if they have valid values
                     if (props.width && props.width !== 'null' && props.width !== null) {

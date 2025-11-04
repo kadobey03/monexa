@@ -205,10 +205,7 @@
                   'bg-gray-100 text-gray-800 border border-gray-200' => !$lead->leadSource || !in_array($lead->leadSource->name, ['Website', 'Social Media', 'Email Campaign', 'Cold Call', 'Referral'])
               ])>
             @if($lead->leadSource)
-                <x-heroicon name="{{ $lead->leadSource->name === 'Website' ? 'globe' : 
-                                 ($lead->leadSource->name === 'Social Media' ? 'users' :
-                                 ($lead->leadSource->name === 'Email Campaign' ? 'mail' :
-                                 ($lead->leadSource->name === 'Cold Call' ? 'phone' : 'user-plus'))) }}" class="w-4 h-4 mr-2" />
+                <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-2" />
                 {{ $lead->leadSource->name }}
             @else
                 <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-2" />
@@ -872,9 +869,7 @@ function showNotification(message, type = 'info', duration = 3000) {
     
     notification.innerHTML = `
         <div class="flex items-center">
-            <x-heroicon name="${type === 'success' ? 'check-circle' :
-                             type === 'error' ? 'x-circle' :
-                             type === 'warning' ? 'alert-triangle' : 'info'}" class="w-5 h-5 mr-2" />
+            <x-heroicon name="question-mark-circle" class="w-5 h-5 mr-2" />
             <span>${message}</span>
             <button onclick="removeNotification('${notificationKey}')" class="ml-4 text-white hover:text-gray-200">
                 <x-heroicon name="x-mark" class="w-4 h-4" />
@@ -886,12 +881,7 @@ function showNotification(message, type = 'info', duration = 3000) {
     activeNotifications.set(notificationKey, notification);
     
     document.body.appendChild(notification);
-    
-    // Initialize Lucide icons for the notification
-    if (window.lucide) {
-        window.
-    }
-    
+
     // Animate in
     setTimeout(() => {
         notification.classList.remove('translate-x-full');

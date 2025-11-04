@@ -267,11 +267,10 @@
     </div>
 </div>
 
-<!-- Add Lucide Icons Script -->
+<!-- Add Heroicons Script -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
 
         // Token input formatting
         const tokenInput = document.getElementById('token');
@@ -312,13 +311,12 @@
 
         if (field.type === 'password') {
             field.type = 'text';
-            eye.setAttribute('data-lucide', 'eye-off');
+            // Heroicon: eye icon changed to eye-slash;
         } else {
             field.type = 'password';
-            eye.setAttribute('data-lucide', 'eye');
+            // Heroicon: eye icon changed to eye;
         }
 
-        
     }
 </script>
 

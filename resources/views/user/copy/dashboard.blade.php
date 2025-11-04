@@ -100,8 +100,8 @@
                         </p>
                     </div>
                     <div class="p-2 sm:p-3 bg-gradient-to-br {{ $stats['total_profit'] >= 0 ? 'from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30' : 'from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30' }} rounded-xl flex-shrink-0">
-                        <i data-lucide="{{ $stats['total_profit'] >= 0 ? 'trending-up' : 'trending-down' }}"
-                           class="w-5 h-5 sm:w-6 sm:h-6 {{ $stats['total_profit'] >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}"></i>
+                        <x-heroicon name="{{ $stats['total_profit'] >= 0 ? 'arrow-trending-up' : 'arrow-trending-down' }}"
+                           class="w-5 h-5 sm:w-6 sm:h-6 {{ $stats['total_profit'] >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}" />
                     </div>
                 </div>
             </div>
@@ -757,11 +757,7 @@
             window.location.reload();
         }
 
-        // Initialize Lucide icons and add event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof lucide !== 'undefined') {
-                
-            }
 
             // Add event listeners for the details buttons
             document.querySelectorAll('.view-details-btn').forEach(button => {

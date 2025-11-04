@@ -256,10 +256,8 @@
             `;
             
             document.body.appendChild(notification);
-            
-            // Initialize lucide icons in the notification
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons({ nameAttr: 'data-lucide' });
+
+            );
             }
             
             // Auto remove after 5 seconds

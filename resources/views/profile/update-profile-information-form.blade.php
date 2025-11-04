@@ -435,10 +435,6 @@ function hideLoadingState() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Lucide icons if available
-    if (typeof lucide !== 'undefined') {
-        
-    }
 
     document.getElementById('updateprofileform').addEventListener('submit', function(e) {
         e.preventDefault();

@@ -43,7 +43,7 @@
                         </div>
                     @endif
                     <div class="absolute -bottom-2 -right-2 w-8 h-8 {{ $manager->is_active ? 'bg-green-500' : 'bg-red-500' }} rounded-full border-4 border-white flex items-center justify-center">
-                        <x-heroicon name="{{ $manager->is_active ? 'check' : 'x' }}" class="w-4 h-4 text-white" />
+                        <x-heroicon name="question-mark-circle" class="w-4 h-4 text-white" />
                     </div>
                 </div>
                 
@@ -87,7 +87,7 @@
                 <button @click="toggleStatus()" 
                         class="inline-flex items-center px-4 py-2 rounded-xl transition-all duration-200"
                         :class="isActive ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'">
-                    <i :data-lucide="isActive ? 'user-x' : 'user-check'" class="w-4 h-4 mr-2"></i>
+                    <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-2" />
                     <span x-text="isActive ? 'Deaktive Et' : 'Aktive Et'"></span>
                 </button>
                 
@@ -627,8 +627,8 @@
                                      'bg-blue-100 dark:bg-blue-900/30': '{{ $activity->type }}' === 'lead',
                                      'bg-purple-100 dark:bg-purple-900/30': '{{ $activity->type }}' === 'system'
                                  }">
-                                <i :data-lucide="{
-                                       'login': 'log-in',
+                                <i <!-- Heroicon: Alpine expression {
+                                        needs manual conversion -->login': 'log-in',
                                        'lead': 'user-plus',
                                        'system': 'settings'
                                    }['{{ $activity->type }}'] || 'activity'" 

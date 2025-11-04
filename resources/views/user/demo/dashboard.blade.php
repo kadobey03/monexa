@@ -160,7 +160,7 @@
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Total P&L</p>
                 </div>
                 <div class="p-3 bg-{{ $totalProfit >= 0 ? 'green' : 'red' }}-100 dark:bg-{{ $totalProfit >= 0 ? 'green' : 'red' }}-900/30 rounded-lg">
-                    <i data-lucide="dollar-sign" class="w-6 h-6 text-{{ $totalProfit >= 0 ? 'green' : 'red' }}-600 dark:text-{{ $totalProfit >= 0 ? 'green' : 'red' }}-400"></i>
+                    <x-heroicon name="currency-dollar" class="w-6 h-6 text-{{ $totalProfit >= 0 ? 'green' : 'red' }}-600 dark:text-{{ $totalProfit >= 0 ? 'green' : 'red' }}-400" />
                 </div>
             </div>
         </div>
@@ -222,12 +222,11 @@
             </div>
         </div>
 
-       
     </div>
 </div>
 
 <script>
-    // Initialize Lucide icons
+    
     document.addEventListener('DOMContentLoaded', function() {
         
     });

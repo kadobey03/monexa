@@ -18,7 +18,6 @@ export class DependencyManager {
      */
     initializeFallbacks() {
         this.fallbacks.set('sweetalert2', 'https://cdn.jsdelivr.net/npm/sweetalert2@11');
-        this.fallbacks.set('lucide', 'https://unpkg.com/lucide@latest/dist/umd/lucide.js');
         this.fallbacks.set('chart.js', 'https://cdn.jsdelivr.net/npm/chart.js');
         this.fallbacks.set('qrcode', 'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js');
         this.fallbacks.set('vue', 'https://unpkg.com/vue@3/dist/vue.global.js');
@@ -66,70 +65,6 @@ export class DependencyManager {
         }
     }
 
-    /**
-     * Load Lucide icons with NPM package priority
-     * @returns {Promise<Object>} Lucide instance
-     */
-    async loadLucide() {
-        const key = 'lucide';
-        
-        if (this.loadedDependencies.has(key)) {
-            return this.loadedDependencies.get(key);
-        }
-
-        if (this.loadingPromises.has(key)) {
-            return this.loadingPromises.get(key);
-        }
-
-        const loadingPromise = this._loadWithFallback(key, async () => {
-            const lucide = await import('lucide');
-            
-            // Initialize icons after loading with safe configuration
-            if (lucide.createIcons) {
-                lucide.createIcons({
-                    nameAttr: 'data-lucide',
-                    attrs: (name, props) => {
-                        // Ensure no null/undefined values for width/height
-                        const safeAttrs = {
-                            class: 'lucide-icon',
-                            'stroke-width': '1.5'
-                        };
-                        
-                        // Only add width/height if they have valid values
-                        if (props.width && props.width !== 'null' && props.width !== null) {
-                            safeAttrs.width = props.width;
-                        }
-                        if (props.height && props.height !== 'null' && props.height !== null) {
-                            safeAttrs.height = props.height;
-                        }
-                        
-                        return safeAttrs;
-                    }
-                });
-            }
-            
-            return lucide;
-        });
-
-        this.loadingPromises.set(key, loadingPromise);
-
-        try {
-            const lucide = await loadingPromise;
-            this.loadedDependencies.set(key, lucide);
-            
-            // Make globally available for backward compatibility
-            if (!window.lucide) {
-                window.lucide = lucide;
-            }
-            
-            return lucide;
-        } catch (error) {
-            this.loadingPromises.delete(key);
-            throw error;
-        } finally {
-            this.loadingPromises.delete(key);
-        }
-    }
 
     /**
      * Load Chart.js with NPM package priority
@@ -272,9 +207,6 @@ export class DependencyManager {
                     case 'sweetalert2':
                         resolve(window.Swal);
                         break;
-                    case 'lucide':
-                        resolve(window.lucide);
-                        break;
                     case 'chart.js':
                         resolve(window.Chart);
                         break;
@@ -310,8 +242,6 @@ export class DependencyManager {
             switch (dep) {
                 case 'sweetalert2':
                     return this.loadSweetAlert2().catch(() => {});
-                case 'lucide':
-                    return this.loadLucide().catch(() => {});
                 case 'chart.js':
                     return this.loadChartJS().catch(() => {});
                 case 'qrcode':
@@ -368,7 +298,6 @@ export const dependencyManager = new DependencyManager();
 
 // Helper functions for common dependencies
 export const loadSwal = () => dependencyManager.loadSweetAlert2();
-export const loadLucide = () => dependencyManager.loadLucide();
 export const loadChart = () => dependencyManager.loadChartJS();
 export const loadQR = () => dependencyManager.loadQRCode();
 

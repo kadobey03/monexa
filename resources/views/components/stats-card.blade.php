@@ -76,7 +76,7 @@
             {{-- Trend --}}
             @if($trend && $trendValue)
                 <div class="flex items-center mt-2">
-                    <x-heroicon name="{{ array_key_exists($trend, $trendIcons) ? $trendIcons[$trend] : 'minus' }}" class="w-4 h-4 mr-1" />
+                    <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-1" />
                     <span class="text-sm font-medium {{ 
                         $trend === 'up' ? 'text-green-600 dark:text-green-400' : 
                         ($trend === 'down' ? 'text-red-600 dark:text-red-400' : 'text-gray-500') 
@@ -108,11 +108,9 @@
 {{-- Stats Card Script --}}
 @push('scripts')
 <script>
-// Initialize Lucide icons for stats cards
+
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof lucide !== 'undefined') {
-        
-    }
+    
 });
 </script>
 @endpush

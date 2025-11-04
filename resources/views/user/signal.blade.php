@@ -245,10 +245,7 @@ class SignalManager {
     }
 
     init() {
-        // Initialize Lucide icons when page loads
-        if (typeof lucide !== 'undefined') {
-            
-        }
+
     }
 
     openSubscriptionModal(id, name, price) {

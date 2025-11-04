@@ -270,13 +270,8 @@ $(document).ready(function() {
         bindEvents();
         initializeLucideIcons();
     }
-    
-    // Initialize Lucide Icons
-    function initializeLucideIcons() {
-        if (typeof lucide !== 'undefined') {
-            
-        }
-    }
+
+    function 
     
     // Load initial data (statuses, sources, admins)
     function loadInitialData() {
@@ -431,8 +426,7 @@ $(document).ready(function() {
             const row = createLeadRow(lead);
             tbody.append(row);
         });
-        
-        // Reinitialize Lucide icons for new content
+
         initializeLucideIcons();
     }
     

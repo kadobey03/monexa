@@ -205,11 +205,10 @@
     </div>
 </div>
 
-<!-- Add Lucide Icons Script -->
+<!-- Add Heroicons Script -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
 
         // Auto-focus email input
         const emailInput = document.getElementById('email');

@@ -238,11 +238,8 @@
             });
         }
 
-        // Initialize Lucide icons
         document.addEventListener('DOMContentLoaded', function() {
-            if (typeof lucide !== 'undefined') {
-                
-            }
+            
         });
     </script>
 @endsection

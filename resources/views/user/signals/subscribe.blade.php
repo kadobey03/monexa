@@ -303,7 +303,7 @@
     @endif
 </div>
 
-<!-- Add Lucide Icons Script -->
+<!-- Add Heroicons Script -->
 
 <script>
 // Signals Subscription Manager - Vanilla JavaScript
@@ -400,11 +400,6 @@ class SignalSubscriptionManager {
         }
     }
 
-    initializeLucideIcons() {
-        if (typeof lucide !== 'undefined') {
-            
-        }
-    }
 }
 
 // Global functions for onclick handlers
@@ -413,11 +408,7 @@ window.signalApp = null;
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     window.signalApp = new SignalSubscriptionManager();
-    
-    // Initialize Lucide icons
-    if (typeof lucide !== 'undefined') {
-        
-    }
+
 });
 </script>
 

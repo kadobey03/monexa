@@ -209,16 +209,12 @@ function togglePassword(fieldId) {
 
     if (field.type === 'password') {
         field.type = 'text';
-        eyeIcon.setAttribute('data-lucide', 'eye-off');
+        // Heroicon: eyeIcon icon changed to eye-slash;
     } else {
         field.type = 'password';
-        eyeIcon.setAttribute('data-lucide', 'eye');
+        // Heroicon: eyeIcon icon changed to eye;
     }
 
-    // Reinitialize Lucide icons
-    if (typeof lucide !== 'undefined') {
-        
-    }
 }
 </script>
 @endsection

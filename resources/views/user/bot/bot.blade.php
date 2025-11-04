@@ -193,8 +193,7 @@
 
 @push('scripts')
 <script>
-    // Initialize Lucide icons
-    
+
 </script>
 @endpush
 

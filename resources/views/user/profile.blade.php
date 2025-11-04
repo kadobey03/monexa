@@ -232,11 +232,7 @@
                 }
             },
 
-            initializeLucideIcons() {
-                if (typeof lucide !== 'undefined') {
-                    
-                }
-            },
+            ,
 
             addBackgroundPattern() {
                 const style = document.createElement('style');

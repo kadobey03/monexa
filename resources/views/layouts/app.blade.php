@@ -113,22 +113,17 @@
             }
         </script>
         
-        <!-- FontAwesome REMOVED - Using unified Lucide icons instead -->
+        <!-- FontAwesome REMOVED - Using unified Heroicons instead -->
         <!-- Unified Icon Service loaded via Vite assets -->
         
         <!-- Console Error Fixes - Ultimate System -->
-        
-        
-        
+
         <!-- jQuery - Local -->
-        
-        
+
         <!-- Console Error Fixes - Full -->
-        
-        
+
         <!-- Sweet Alert for notifications -->
-        
-        
+
         <!-- Vite Assets -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         
@@ -480,14 +475,8 @@
     
     @section('scripts')
         <!-- Chart.js for charts - Local -->
-        
 
         <!-- Core functionality scripts -->
-        
-        
-        
-        
-        
 
         <!-- Google Translate -->
         

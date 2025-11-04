@@ -388,11 +388,8 @@ function tradeMonitor() {
                 }, 60000); // Update every minute
             }
 
-            // Initialize Lucide icons
             this.$nextTick(() => {
-                if (typeof lucide !== 'undefined') {
-                    
-                }
+                
             });
         },
 
@@ -431,9 +428,7 @@ function tradeMonitor() {
 
 // Re-initialize icons after Alpine updates
 document.addEventListener('alpine:updated', () => {
-    if (typeof lucide !== 'undefined') {
-        
-    }
+    
 });
 </script>
 

@@ -889,10 +889,6 @@
         updateBuyForm();
         updateSellForm();
 
-        // Initialize Lucide icons
-        if (typeof lucide !== 'undefined') {
-            
-        }
     });
 </script>
 

@@ -425,10 +425,6 @@
     @parent
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                
-            }
 
             // Calculate and display progress if needed
             const startDate = new Date('{{ $plan->created_at }}');

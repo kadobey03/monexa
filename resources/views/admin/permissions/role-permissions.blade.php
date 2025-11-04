@@ -255,7 +255,7 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-3">
                                 <div class="w-10 h-10 bg-{{ $categoryColors[$category] ?? 'blue' }}-100 dark:bg-{{ $categoryColors[$category] ?? 'blue' }}-900/30 rounded-lg flex items-center justify-center">
-                                    <x-heroicon name="{{ $categoryIcons[$category] ?? 'folder' }}" class="w-5 h-5 text-{{ $categoryColors[$category] ?? 'blue' }}-600 dark:text-{{ $categoryColors[$category] ?? 'blue' }}-400" />
+                                    <x-heroicon name="question-mark-circle" class="w-5 h-5 text-{{ $categoryColors[$category] ?? 'blue' }}-600 dark:text-{{ $categoryColors[$category] ?? 'blue' }}-400" />
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-admin-900 dark:text-white">{{ ucfirst($category) }}</h3>
@@ -316,7 +316,7 @@
                                         </label>
                                         
                                         <div class="w-8 h-8 bg-{{ $permission->getColorClass() }}-100 dark:bg-{{ $permission->getColorClass() }}-900/30 rounded-lg flex items-center justify-center">
-                                            <i data-lucide="{{ $permission->getIcon() }}" class="w-4 h-4 text-{{ $permission->getColorClass() }}-600 dark:text-{{ $permission->getColorClass() }}-400"></i>
+                                            <x-heroicon name="{{ $permission->getIcon() }}" class="w-4 h-4 text-{{ $permission->getColorClass() }}-600 dark:text-{{ $permission->getColorClass() }}-400" />
                                         </div>
                                         
                                         <div class="flex-1">
@@ -630,7 +630,7 @@
             @forelse($auditLog as $log)
                 <div class="flex items-start space-x-4 p-4 border border-admin-200 dark:border-admin-600 rounded-lg">
                     <div class="w-8 h-8 rounded-full flex items-center justify-center {{ $log->getTypeColorClass() }}">
-                        <i data-lucide="{{ $log->getTypeIcon() }}" class="w-4 h-4 {{ $log->getTypeTextColorClass() }}"></i>
+                        <x-heroicon name="{{ $log->getTypeIcon() }}" class="w-4 h-4 {{ $log->getTypeTextColorClass() }}" />
                     </div>
                     
                     <div class="flex-1">

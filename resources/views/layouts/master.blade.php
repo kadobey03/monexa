@@ -35,8 +35,19 @@
     <!-- jQuery with Fallback -->
     
     <script>
+        // Load jQuery from CDN with local fallback
         if (!window.jQuery) {
-            document.write('<script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"><\/script>');
+            const jqueryScript = document.createElement('script');
+            jqueryScript.src = 'https://code.jquery.com/jquery-3.7.1.min.js';
+            jqueryScript.integrity = 'sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs';
+            jqueryScript.crossOrigin = 'anonymous';
+            jqueryScript.onerror = function() {
+                // Fallback to local jQuery if CDN fails
+                const fallbackScript = document.createElement('script');
+                fallbackScript.src = '{{ asset("vendor/jquery/jquery-3.7.1.min.js") }}';
+                document.head.appendChild(fallbackScript);
+            };
+            document.head.appendChild(jqueryScript);
         }
     </script>
     
@@ -871,7 +882,7 @@
             // Configure Livewire if available
             if (typeof Livewire !== 'undefined') {
                 // Configure Livewire for better UX
-                Livewire.onPageExpired((response, message) => {
+                Livewire.hook('request:failed', (response) => {
                     if (typeof Swal !== 'undefined') {
                         Swal.fire({
                             title: 'Oturum Süresi Doldu',
@@ -889,11 +900,11 @@
                 });
                 
                 // Loading states
-                Livewire.onLoading(() => {
+                Livewire.hook('morph.updating', () => {
                     document.body.classList.add('loading');
                 });
                 
-                Livewire.onLoadingDone(() => {
+                Livewire.hook('morph.updated', () => {
                     document.body.classList.remove('loading');
                 });
                 
@@ -906,7 +917,7 @@
         // Theme integration with Livewire
         document.addEventListener('theme-changed', (e) => {
             if (typeof Livewire !== 'undefined') {
-                Livewire.emit('theme-changed', e.detail.theme);
+                Livewire.dispatch('theme-changed', { theme: e.detail.theme });
             }
         });
     </script>

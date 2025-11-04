@@ -50,10 +50,6 @@
                 </a>
             </div>
 
-           
-
-         
-
         <!-- Contact Form Section -->
         <div class="bg-white dark:bg-gray-900 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-sm">
             <div class="text-center mb-8">
@@ -173,9 +169,7 @@ let supportState = {
 
 // Initialize support form
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Lucide icons
-    
-    
+
     // Initialize message input listener
     const messageInput = document.getElementById('message');
     if (messageInput) {

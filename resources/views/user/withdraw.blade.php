@@ -49,7 +49,7 @@
                         @elseif($payment_mode == 'Bank Transfer') bg-green-100 dark:bg-green-900/30
                         @elseif($payment_mode == 'USDT') bg-purple-100 dark:bg-purple-900/30
                         @endif">
-                        <x-heroicon name="{{ $payment_mode == 'Bitcoin' ? 'bitcoin' : ($payment_mode == 'Ethereum' ? 'zap' : ($payment_mode == 'USDT' ? 'circle-dollar-sign' : 'building-bank')) }}" class="w-6 h-6
+                        <x-heroicon name="question-mark-circle" class="w-6 h-6
                            @if($payment_mode == 'Bitcoin' || $payment_mode == 'Ethereum') text-blue-600 dark:text-blue-400
                            @elseif($payment_mode == 'Bank Transfer') text-green-600 dark:text-green-400
                            @elseif($payment_mode == 'USDT') text-purple-600 dark:text-purple-400
@@ -257,10 +257,6 @@
     @parent
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                
-            }
 
             // Withdrawal Manager
             class WithdrawalManager {
@@ -394,7 +390,7 @@
                         const confirmButton = document.getElementById('confirmButton');
                         if (confirmButton) {
                             confirmButton.disabled = true;
-                            confirmButton.innerHTML = '<i class="animate-spin w-4 h-4 mr-2" data-lucide="loader"></i>İşleniyor...';
+                            confirmButton.innerHTML = '<x-heroicon name="arrow-path" class="animate-spin w-4 h-4 mr-2" />İşleniyor...';
                             
                         }
 
