@@ -1,4 +1,4 @@
-@extends('layouts.dasht')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', 'Plana Yatırım Yap')
 
 @section('styles')

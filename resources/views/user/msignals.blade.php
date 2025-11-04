@@ -1,4 +1,4 @@
-@extends('layouts.dasht')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
 <!-- Alpine.js Component for Signal Management -->

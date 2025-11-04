@@ -1,4 +1,4 @@
-@extends('layouts.dasht')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', 'Bildirimler')
 
 @section('content')

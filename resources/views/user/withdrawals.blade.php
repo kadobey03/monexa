@@ -1,4 +1,4 @@
-@extends('layouts.dasht')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
 
@@ -380,7 +380,6 @@
                 }
                 
                 // Update icon
-                methodIcon// Heroicon reference
                 methodIcon.className = `w-5 h-5 sm:w-6 sm:h-6 ${iconColor}`;
                 
                 // Update container background

@@ -4,7 +4,7 @@
     $array = \App\Models\User::all();
     $usr = Auth::user()->id;
 @endphp
-@extends('layouts.dasht')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
 <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8" id="referralApp">
@@ -512,4 +512,127 @@ class ReferralManager {
             if (overviewTab) {
                 overviewTab.className = 'px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors duration-200 text-gray-400 hover:text-white hover:bg-gray-800';
             }
-            if (referralsContent) referralsContent.style.display =
+            if (referralsContent) referralsContent.style.display = 'block';
+        }
+    }
+
+    showShareModal() {
+        const modal = document.getElementById('shareModal');
+        if (modal) {
+            modal.style.display = 'flex';
+            modal.style.opacity = '1';
+        }
+    }
+
+    closeShareModal() {
+        const modal = document.getElementById('shareModal');
+        if (modal) {
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+    }
+
+    shareToSocial(platform) {
+        const referralLink = '{{ Auth::user()->ref_link }}';
+        const message = `Join me on {{ $settings->site_name }}! Register using my referral link: ${referralLink}`;
+        
+        let shareUrl = '';
+        
+        switch(platform) {
+            case 'twitter':
+                shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+                break;
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}`;
+                break;
+            case 'linkedin':
+                shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralLink)}`;
+                break;
+            case 'whatsapp':
+                shareUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                break;
+        }
+        
+        if (shareUrl) {
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+            this.showToast('Successfully shared to ' + platform.charAt(0).toUpperCase() + platform.slice(1));
+        }
+    }
+
+    showToast(message) {
+        const toast = document.getElementById('toastNotification');
+        const toastMessage = document.getElementById('toastMessage');
+        
+        if (toast && toastMessage) {
+            toastMessage.textContent = message;
+            toast.style.display = 'block';
+            toast.style.opacity = '1';
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 300);
+            }, 3000);
+        }
+    }
+
+    generateQRCode() {
+        const qrContainer = document.getElementById('qrcode');
+        if (qrContainer && window.QRCode) {
+            qrContainer.innerHTML = '';
+            new QRCode(qrContainer, {
+                text: '{{ Auth::user()->ref_link }}',
+                width: 128,
+                height: 128,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    }
+
+    bindSearchEvents() {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.searchQuery = e.target.value.toLowerCase();
+                this.filterReferrals();
+            });
+        }
+    }
+
+    filterReferrals() {
+        const referralCards = document.querySelectorAll('.referral-card');
+        const query = this.searchQuery;
+        
+        referralCards.forEach(card => {
+            const name = card.getAttribute('data-name') || '';
+            const email = card.getAttribute('data-email') || '';
+            
+            if (name.includes(query) || email.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+}
+
+// Initialize the referral manager when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof QRCode === 'undefined') {
+        // Load QRCode library if not available
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js';
+        script.onload = function() {
+            window.referralManager = new ReferralManager();
+        };
+        document.head.appendChild(script);
+    } else {
+        window.referralManager = new ReferralManager();
+    }
+});
+</script>

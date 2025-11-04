@@ -43,6 +43,13 @@
                         Hesap Özeti
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('tradinghistory') }}"
+                       class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('tradinghistory') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <x-heroicon name="clock" class="w-5 h-5 mr-3" />
+                        İşlem Geçmişi
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -89,6 +96,47 @@
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('profile') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="user" class="w-5 h-5 mr-3" />
                         Profil Ayarları
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('account.verify') }}"
+                       class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('account.verify') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <x-heroicon name="identification" class="w-5 h-5 mr-3" />
+                        Kimlik Doğrulama
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Growth & Rewards Section -->
+        <div class="space-y-2">
+            <div class="flex items-center gap-2 px-2 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
+                <x-heroicon name="trophy" class="w-4 h-4" />
+                <span>Büyüme ve Ödüller</span>
+            </div>
+            <ul class="space-y-1">
+                <li>
+                    <a href="{{ route('referuser') }}"
+                       class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('referuser') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <x-heroicon name="user-plus" class="w-5 h-5 mr-3" />
+                        Tavsiye Programı 5%
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Support Section -->
+        <div class="space-y-2">
+            <div class="flex items-center gap-2 px-2 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
+                <x-heroicon name="question-mark-circle" class="w-4 h-4" />
+                <span>Destek ve Yardım</span>
+            </div>
+            <ul class="space-y-1">
+                <li>
+                    <a href="{{ route('support') }}"
+                       class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('support') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
+                        <x-heroicon name="chat-bubble-left-right" class="w-5 h-5 mr-3" />
+                        Destek Merkezi
                     </a>
                 </li>
             </ul>

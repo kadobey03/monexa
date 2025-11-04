@@ -14,19 +14,15 @@
     <link href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" media="none" onload="if(!window.Swal)this.media='all'">
     
     <!-- jQuery with CDN fallback -->
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
     <script>
-        if (!window.jQuery) {
-            document.write('<script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"><\/script>');
-        }
+        window.jQuery || document.write('<script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"><\/script>');
     </script>
     
     <!-- SweetAlert2 with fallback -->
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js" crossorigin="anonymous"></script>
     <script>
-        if (!window.Swal) {
-            document.write('<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
-        }
+        window.Swal || document.write('<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
     </script>
     
     <!-- Bootstrap Bundle for modal support -->
@@ -555,7 +551,7 @@
                                 <x-heroicon name="shield-alert" class="w-5 h-5 mr-3" />
                                 <span class="flex-1 text-left">Kimlik Doğrulama</span>
                                 <x-heroicon name="chevron-down" id="kyc-chevron"
-                                   class="w-4 h-4 transition-transform duration-200"></i>
+                                   class="w-4 h-4 transition-transform duration-200" />
                             </button>
 
                             <!-- Dropdown Content -->
@@ -667,7 +663,7 @@
 
 <div class="fixed bottom-0 w-full z-30 md:hidden" id="mobile-nav">
   <!-- Bottom Navigation Bar with Enhanced Glassmorphism -->
-  <div class="flex justify-between items-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl px-6 py-4 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] relative border-t border-gray-200/30 dark:border-gray-700/30"
+  <div class="flex justify-between items-center bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl px-6 py-4 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] relative border-t border-gray-200/30 dark:border-gray-700/30">
     <!-- Language Selector (Mobile) -->
 
     <a href="{{ route('deposits') }}"
@@ -680,7 +676,7 @@
            {{ request()->routeIs('deposits')
               ? 'text-blue-600 dark:text-blue-400'
               : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-           transition-colors duration-300"></i>
+           transition-colors duration-300" />
       </div>
       <span class="text-xs font-medium mt-1
              {{ request()->routeIs('deposits')
@@ -699,7 +695,7 @@
            {{ request()->routeIs('profile')
               ? 'text-blue-600 dark:text-blue-400'
               : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-           transition-colors duration-300"></i>
+           transition-colors duration-300" />
       </div>
       <span class="text-xs font-medium mt-1
              {{ request()->routeIs('profile')
@@ -718,7 +714,7 @@
            {{ request()->routeIs('trade.index')
               ? 'text-blue-600 dark:text-blue-400'
               : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-           transition-colors duration-300"></i>
+           transition-colors duration-300" />
       </div>
       <span class="text-xs font-medium mt-1
              {{ request()->routeIs('trade.index')
@@ -764,7 +760,7 @@
                           hover:bg-gray-800
                           transition-colors duration-200 group">
           <x-heroicon name="repeat" class="w-5 h-5 mr-3 text-indigo-400
-                                        group-hover:scale-110 transition-transform duration-300"></i>
+                                        group-hover:scale-110 transition-transform duration-300" />
           <span class="font-medium">Currency Exchange</span>
           <span class="ml-auto text-xs font-bold text-indigo-400">Swap</span>
         </a> --}}
@@ -773,7 +769,7 @@
                           hover:bg-gray-800
                           transition-colors duration-200 group">
           <x-heroicon name="users" class="w-5 h-5 mr-3 text-orange-400
-                                      group-hover:scale-110 transition-transform duration-300"></i>
+                                      group-hover:scale-110 transition-transform duration-300" />
           <span class="font-medium">Arkadaş Tavsiye Et</span>
           <span class="ml-auto text-xs font-bold text-orange-400">+{{$settings->referral_commission}}%</span>
         </a>
@@ -782,7 +778,7 @@
                                                hover:bg-gray-800
                                                transition-colors duration-200 group">
           <x-heroicon name="life-buoy" class="w-5 h-5 mr-3 text-cyan-400
-                                           group-hover:scale-110 transition-transform duration-300"></i>
+                                           group-hover:scale-110 transition-transform duration-300" />
           <span class="font-medium">Destek</span>
         </a>
 
@@ -1159,37 +1155,40 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('DOMContentLoaded', function() {
         // Configure Livewire if available
         if (typeof Livewire !== 'undefined') {
-            // Configure Livewire for better UX
-            Livewire.onPageExpired((response, message) => {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        title: 'Oturum Süresi Doldu',
-                        text: 'Sayfayı yeniden yüklemek için tamam\'a tıklayın.',
-                        icon: 'warning',
-                        confirmButtonText: 'Tamam'
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                } else {
-                    if (confirm('Oturum süresi doldu. Sayfayı yeniden yüklemek istiyor musunuz?')) {
-                        window.location.reload();
+            // Configure Livewire 3 hooks for better UX
+            Livewire.hook('request.error', ({ detail }) => {
+                const { response } = detail;
+                if (response && response.status === 419) {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Oturum Süresi Doldu',
+                            text: 'Sayfayı yeniden yüklemek için tamam\'a tıklayın.',
+                            icon: 'warning',
+                            confirmButtonText: 'Tamam'
+                        }).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        if (confirm('Oturum süresi doldu. Sayfayı yeniden yüklemek istiyor musunuz?')) {
+                            window.location.reload();
+                        }
                     }
                 }
             });
             
-            // Loading states
-            Livewire.onLoading(() => {
+            // Loading states using Livewire 3 hooks
+            Livewire.hook('request', () => {
                 document.body.classList.add('loading');
             });
             
-            Livewire.onLoadingDone(() => {
+            Livewire.hook('request.finished', () => {
                 document.body.classList.remove('loading');
                 
                 // Heroicons - No re-initialization needed (pure SVG)
                 console.log('Livewire update complete - Heroicons ready');
             });
             
-            console.log('Livewire configured successfully in dasht layout');
+            console.log('Livewire 3 configured successfully in dasht layout');
         } else {
             console.warn('Livewire not loaded in dasht layout');
         }

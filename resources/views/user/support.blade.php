@@ -1,5 +1,5 @@
 
-@extends('layouts.dasht')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-6" id="supportContainer">
