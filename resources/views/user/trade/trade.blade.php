@@ -253,7 +253,6 @@ const TradingMarkets = {
     init() {
         this.setupEventListeners();
         this.updateDisplay();
-        this.initializeLucideIcons();
     },
 
     setupEventListeners() {
@@ -360,7 +359,6 @@ const TradingMarkets = {
         });
 
         container.innerHTML = html;
-        this.initializeLucideIcons();
     },
 
     renderTypeSection(type, instruments) {
@@ -385,7 +383,9 @@ const TradingMarkets = {
             <div class="space-y-4">
                 <div class="flex items-center gap-3 px-2">
                     <div class="flex items-center gap-2">
-                        <x-heroicon name="${iconMap[type] || 'circle'}" class="w-5 h-5 text-${type === 'crypto' ? 'orange' : type === 'stock' ? 'green' : type === 'forex' ? 'blue' : type === 'commodity' ? 'yellow' : 'purple'}-500" />
+                        <svg class="w-5 h-5 text-${type === 'crypto' ? 'orange' : type === 'stock' ? 'green' : type === 'forex' ? 'blue' : type === 'commodity' ? 'yellow' : 'purple'}-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            ${this.getIconPath(iconMap[type] || 'circle')}
+                        </svg>
                         <h2 class="text-xl font-bold text-gray-900 dark:text-white capitalize">${displayName}</h2>
                         <span class="text-sm text-gray-500 dark:text-gray-400">(${instruments.length} enstrüman)</span>
                     </div>
@@ -496,6 +496,18 @@ const TradingMarkets = {
             return '$' + (num / 1e3).toFixed(1) + 'K';
         }
         return '$' + num.toLocaleString();
+    },
+
+    getIconPath(iconName) {
+        const iconPaths = {
+            'bitcoin': '<path stroke-linecap="round" stroke-linejoin="round" d="M12 1.5c-5.79 0-10.5 4.71-10.5 10.5s4.71 10.5 10.5 10.5 10.5-4.71 10.5-10.5-4.71-10.5-10.5-10.5zM8.5 8.5h2c.55 0 1 .45 1 1s-.45 1-1 1h-2v-2zm0 4h2.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-2.5v-3z"/>',
+            'trending-up': '<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.94"/>',
+            'globe': '<path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3s-4.5 4.03-4.5 9 2.015 9 4.5 9zm0 0V9m0 12l-8.716-6.747M3.284 14.253L12 9m8.716 5.253L12 9"/>',
+            'zap': '<path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>',
+            'landmark': '<path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21h-7.5M3 9l9-6 9 6m-1 10V10a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1h1m0-10V9a1 1 0 011-1h2a1 1 0 011 1v1m-4 0h4m0 0v1m0-1h4m-4 3v.01"/>',
+            'circle': '<circle cx="12" cy="12" r="10"/>'
+        };
+        return iconPaths[iconName] || iconPaths['circle'];
     },
 
 };

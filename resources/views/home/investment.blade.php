@@ -881,7 +881,7 @@ var percent 	= [0.033];
 
     <div id="button-up">
         <i class="fa fa-chevron-up"></i>
-    </div>    <link rel="stylesheet" href="https:/cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </div>    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
 	    #button-up{
 display: none;

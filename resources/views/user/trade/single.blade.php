@@ -599,7 +599,6 @@ const TradingSingle = {
     init() {
         this.setupEventListeners();
         this.updateSummary();
-        this.initializeLucideIcons();
     },
 
     setupEventListeners() {

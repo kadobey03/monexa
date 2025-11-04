@@ -1,6 +1,6 @@
 <!-- Main nav -->
-<nav class="navbar navbar-main navbar-expand-lg navbar-dark bg-primary navbar-border" id="navbar-main">
-    <div class="container-fluid">
+<nav class="flex items-center main-navigation lg:flex navbar-dark bg-primary navbar-border" id="navbar-main">
+    <div class="w-full px-4">
         <!-- Brand + Toggler (for mobile devices) -->
         <div class="pl-4 d-block d-md-none">
             <a class="navbar-brand" href="{{ route('dashboard') }}">
@@ -17,7 +17,7 @@
                 </li>
 
                 @if ($settings->enable_kyc == 'yes')
-                    <li class="nav-item dropdown dropdown-animate">
+                    <li class="nav-item relative dropdown-animate">
                         @if (Auth::user()->account_verify == 'Verified')
                             <a class="nav-link nav-link-icon" href="#">
                                 <i class="fas fa-user-check"></i>
@@ -29,7 +29,7 @@
                                 <i class="fas fa-layer-group"></i>
                                 <strong style="font-size:8px;">KYC</strong>
                             </a>
-                            <div class="p-0 dropdown-menu dropdown-menu-right dropdown-menu-lg dropdown-menu-arrow">
+                            <div class="p-0 absolute bg-white shadow-lg rounded dropdown-menu-right dropdown-menu-lg dropdown-menu-arrow">
                                 <div class="p-2">
                                     <h5 class="mb-0 heading h6">KYC Doğrulama</h5>
                                 </div>
@@ -39,7 +39,7 @@
                                     @else
                                         <div class="">
                                             <a href="{{ route('account.verify') }}"
-                                                class="btn btn-primary btn-sm">Hesabı
+                                                class="px-3 py-1.5 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded">Hesabı
                                                 Doğrula </a>
                                         </div>
                                     @endif
@@ -49,22 +49,22 @@
                     </li>
                 @endif
 
-                <li class="nav-item dropdown dropdown-animate">
+                <li class="nav-item relative dropdown-animate">
                     <a class="nav-link pr-lg-0" href="#" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="avatar avatar-sm rounded-circle">
                             <i class="fas fa-user-circle fa-2x"></i>
                         </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow">
+                    <div class="absolute bg-white shadow-lg rounded dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow">
                         <h6 class="px-0 dropdown-header">Merhaba, {{ Auth::user()->name }}!</h6>
-                        <a href="{{ route('profile') }}" class="dropdown-item">
+                        <a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-gray-100">
                             <i class="far fa-user"></i>
                             <span>Profilim</span>
                         </a>
                         <div class="dropdown-divider"></div>
 
-                        <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                        <a class="block px-4 py-2 hover:bg-gray-100 text-red-600" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             <i class="far fa-sign-out-alt"></i>
@@ -88,7 +88,7 @@
                 </li>
 
                 <!-- Notifications -->
-                <li class="nav-item dropdown dropdown-animate">
+                <li class="nav-item relative dropdown-animate">
                     <a class="nav-link nav-link-icon" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bell"></i>
                         @php
@@ -102,7 +102,7 @@
                             </span>
                         @endif
                     </a>
-                    <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right dropdown-menu-arrow">
+                    <div class="absolute bg-white shadow-lg rounded dropdown-menu-xl dropdown-menu-right dropdown-menu-arrow">
                         <div class="px-3 py-2 border-bottom">
                             <h6 class="mb-0 d-flex justify-content-between align-items-center">
                                 Bildirimler
@@ -153,7 +153,7 @@
                 </li>
 
                 @if ($settings->enable_kyc == 'yes')
-                    <li class="nav-item dropdown dropdown-animate">
+                    <li class="nav-item relative dropdown-animate">
                         @if (Auth::user()->account_verify == 'Verified')
                             <a class="nav-link nav-link-icon" href="#">
                                 <i class="fas fa-user-check"></i>
@@ -165,7 +165,7 @@
                                 <i class="fas fa-layer-group"></i>
                                 <strong style="font-size:8px;">KYC</strong>
                             </a>
-                            <div class="p-0 dropdown-menu dropdown-menu-right dropdown-menu-lg dropdown-menu-arrow">
+                            <div class="p-0 absolute bg-white shadow-lg rounded dropdown-menu-right dropdown-menu-lg dropdown-menu-arrow">
                                 <div class="p-2">
                                     <h5 class="mb-0 heading h6">KYC Doğrulama</h5>
                                 </div>
@@ -175,7 +175,7 @@
                                     @else
                                         <div class="">
                                             <a href="{{ route('account.verify') }}"
-                                                class="btn btn-primary btn-sm">Hesabı
+                                                class="px-3 py-1.5 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded">Hesabı
                                                 Doğrula </a>
                                         </div>
                                     @endif
@@ -185,7 +185,7 @@
                     </li>
                 @endif
 
-                <li class="nav-item dropdown dropdown-animate">
+                <li class="nav-item relative dropdown-animate">
                     <a class="nav-link pr-lg-0" href="#" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <div class="media media-pill align-items-center">
@@ -197,15 +197,15 @@
                             </div>
                         </div>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow">
+                    <div class="absolute bg-white shadow-lg rounded dropdown-menu-sm dropdown-menu-right dropdown-menu-arrow">
                         <h6 class="px-0 dropdown-header">Merhaba, {{ Auth::user()->name }}!</h6>
-                        <a href="{{ route('profile') }}" class="dropdown-item">
+                        <a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-gray-100">
                             <i class="far fa-user"></i>
                             <span>Profilim</span>
                         </a>
                         <div class="dropdown-divider"></div>
 
-                        <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                        <a class="block px-4 py-2 hover:bg-gray-100 text-red-600" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             <i class="far fa-sign-out-alt"></i>
