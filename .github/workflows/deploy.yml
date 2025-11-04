@@ -41,7 +41,7 @@ jobs:
             docker-compose down --remove-orphans || true
             
             if [ "$DOCKER_HUB_OK" = true ]; then
-              # If Docker Hub is working, try to build
+              # If Docker Hub is working, try to build  
               echo "🔨 Building containers..."
               for i in {1..2}; do
                 echo "Build attempt $i/2..."
