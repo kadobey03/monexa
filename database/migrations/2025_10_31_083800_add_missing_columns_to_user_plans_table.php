@@ -14,9 +14,20 @@ class AddMissingColumnsToUserPlansTable extends Migration
     public function up()
     {
         Schema::table('user_plans', function (Blueprint $table) {
-            $table->string('active')->default('yes')->after('amount');
-            $table->string('assets')->nullable()->after('active');
-            $table->string('leverage')->nullable()->after('assets');
+            // Add 'active' column only if it doesn't exist
+            if (!Schema::hasColumn('user_plans', 'active')) {
+                $table->string('active')->default('yes')->after('amount');
+            }
+            
+            // Add 'assets' column only if it doesn't exist
+            if (!Schema::hasColumn('user_plans', 'assets')) {
+                $table->string('assets')->nullable()->after('active');
+            }
+            
+            // Add 'leverage' column only if it doesn't exist
+            if (!Schema::hasColumn('user_plans', 'leverage')) {
+                $table->string('leverage')->nullable()->after('assets');
+            }
         });
     }
 
