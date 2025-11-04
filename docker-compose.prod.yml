@@ -1,0 +1,82 @@
+services:
+  # PHP Application Service
+  app-monexa:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - BUILDKIT_INLINE_CACHE=1
+    container_name: app-monexa
+    restart: unless-stopped
+    command: php-fpm
+    env_file:
+      - .env.docker.prod
+    depends_on:
+      - mysql-monexa
+    volumes:
+      - ./:/var/www/html
+
+  # Nginx Service
+  nginx-monexa:
+    image: nginx:alpine
+    container_name: nginx-monexa
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app-monexa
+
+  # MySQL Service
+  mysql-monexa:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: monexa
+      MYSQL_ROOT_PASSWORD: si6echoYuc98asti
+      MYSQL_USER: monexa_user
+      MYSQL_PASSWORD: sPl2ltlt1emaV5t9
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - mysql_data_monexa:/var/lib/mysql
+
+  # Redis Service (optional but useful for Laravel)
+  redis-monexa:
+    image: redis:alpine
+    restart: unless-stopped
+
+  # PhpMyAdmin Service (optional for database management)
+  phpmyadmin-monexa:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma-monexa
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql-monexa
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      APACHE_HTTP_PORT_NUMBER: 80
+      APACHE_HTTPS_PORT_NUMBER: 443
+      PMA_CONTROLUSER: monexa_user
+      PMA_CONTROLPASS: sPl2ltlt1emaV5t9
+      UPLOAD_LIMIT: 100M
+      MEMORY_LIMIT: 512M
+      MAX_EXECUTION_TIME: 300
+    depends_on:
+      - mysql-monexa
+
+# Docker Networks
+networks:
+  default:
+    external: true
+    name: proxy-network
+
+
+# Volumes
+volumes:
+  mysql_data_monexa:
+    driver: local

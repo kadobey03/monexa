@@ -38,14 +38,14 @@ jobs:
             
             # Stop containers gracefully
             echo "⏹️ Stopping containers..."
-            docker-compose down --remove-orphans || true
+            docker-compose -f docker-compose.prod.yml down --remove-orphans || true
             
             if [ "$DOCKER_HUB_OK" = true ]; then
               # If Docker Hub is working, try to build  
               echo "🔨 Building containers..."
               for i in {1..2}; do
                 echo "Build attempt $i/2..."
-                if docker-compose build; then
+                if docker-compose -f docker-compose.prod.yml build; then
                   echo "✅ Build successful!"
                   break
                 else
@@ -67,26 +67,26 @@ jobs:
               
               # Start containers without building
               echo "🚀 Starting existing containers..."
-              docker-compose up -d --remove-orphans --no-build || {
+              docker-compose -f docker-compose.prod.yml up -d --remove-orphans --no-build || {
                 echo "❌ No-build start failed, will try to build anyway"
-                docker-compose up -d --remove-orphans --build || { echo "❌ Container start failed"; exit 1; }
+                docker-compose -f docker-compose.prod.yml up -d --remove-orphans --build || { echo "❌ Container start failed"; exit 1; }
               }
             else
               # Start newly built containers
               echo "🚀 Starting newly built containers..."
-              docker-compose up -d --remove-orphans || { echo "❌ Container start failed"; exit 1; }
+              docker-compose -f docker-compose.prod.yml up -d --remove-orphans || { echo "❌ Container start failed"; exit 1; }
             fi
             
             # Wait for app container to be ready
             echo "⏳ Waiting for app container..."
             for i in {1..30}; do
-              if docker-compose exec -T app-monexa php --version >/dev/null 2>&1; then
+              if docker-compose -f docker-compose.prod.yml exec -T app-monexa php --version >/dev/null 2>&1; then
                 echo "✅ App container is ready!"
                 break
               fi
               if [ $i -eq 30 ]; then
                 echo "❌ App container failed to start"
-                docker-compose logs app-monexa
+                docker-compose -f docker-compose.prod.yml logs app-monexa
                 exit 1
               fi
               sleep 2
@@ -94,21 +94,21 @@ jobs:
             
             # Run post-deployment commands
             echo "🔧 Running post-deployment commands..."
-            docker-compose exec -T app-monexa composer install --no-interaction --no-dev --optimize-autoloader || true
-            docker-compose exec -T app-monexa php artisan config:clear || true
-            docker-compose exec -T app-monexa php artisan cache:clear || true
-            docker-compose exec -T app-monexa php artisan route:clear || true
-            docker-compose exec -T app-monexa php artisan view:clear || true
-            docker-compose exec -T app-monexa php artisan optimize || true
+            docker-compose -f docker-compose.prod.yml exec -T app-monexa composer install --no-interaction --no-dev --optimize-autoloader || true
+            docker-compose -f docker-compose.prod.yml exec -T app-monexa php artisan config:clear || true
+            docker-compose -f docker-compose.prod.yml exec -T app-monexa php artisan cache:clear || true
+            docker-compose -f docker-compose.prod.yml exec -T app-monexa php artisan route:clear || true
+            docker-compose -f docker-compose.prod.yml exec -T app-monexa php artisan view:clear || true
+            docker-compose -f docker-compose.prod.yml exec -T app-monexa php artisan optimize || true
             
             # Check if containers are running
             echo "🔍 Checking deployment status..."
-            if docker-compose ps | grep -q "Up"; then
+            if docker-compose -f docker-compose.prod.yml ps | grep -q "Up"; then
               echo "🎉 Deployment completed successfully!"
-              docker-compose ps
+              docker-compose -f docker-compose.prod.yml ps
             else
               echo "❌ Some containers are not running!"
-              docker-compose ps
-              docker-compose logs --tail=20
+              docker-compose -f docker-compose.prod.yml ps
+              docker-compose -f docker-compose.prod.yml logs --tail=20
               exit 1
             fi
