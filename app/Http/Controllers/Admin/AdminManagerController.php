@@ -995,4 +995,95 @@ class AdminManagerController extends Controller
         // Shuffle the password to randomize character positions
         return str_shuffle($password);
     }
+
+    /**
+     * Admin'i aktifleştir
+     */
+    public function activate(Admin $admin)
+    {
+        $currentAdmin = Auth::guard('admin')->user();
+
+        // Check permissions
+        if (!$currentAdmin->canManageAdmin($admin)) {
+            abort(403, 'Bu yöneticiyi aktifleştirme yetkiniz yok.');
+        }
+
+        DB::beginTransaction();
+        try {
+            $admin->update([
+                'status' => Admin::STATUS_ACTIVE,
+                'is_available' => true
+            ]);
+
+            // Log activity
+            AdminAuditLog::logAction([
+                'admin_id' => $currentAdmin->id,
+                'action' => 'admin_activated',
+                'target_admin_id' => $admin->id,
+                'description' => "Yönetici aktifleştirildi: {$admin->getFullName()}",
+                'metadata' => [
+                    'previous_status' => $admin->getOriginal('status'),
+                    'new_status' => Admin::STATUS_ACTIVE,
+                ],
+            ]);
+
+            DB::commit();
+
+            return redirect()->back()->with('success', "{$admin->getFullName()} başarıyla aktifleştirildi.");
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Admin activation failed: ' . $e->getMessage());
+            
+            return redirect()->back()->with('error', 'Aktifleştirme sırasında bir hata oluştu.');
+        }
+    }
+
+    /**
+     * Admin'i devre dışı bırak
+     */
+    public function deactivate(Admin $admin)
+    {
+        $currentAdmin = Auth::guard('admin')->user();
+
+        // Check permissions
+        if (!$currentAdmin->canManageAdmin($admin)) {
+            abort(403, 'Bu yöneticiyi devre dışı bırakma yetkiniz yok.');
+        }
+
+        // Prevent self-deactivation
+        if ($currentAdmin->id === $admin->id) {
+            return redirect()->back()->with('error', 'Kendi hesabınızı devre dışı bırakamazsınız!');
+        }
+
+        DB::beginTransaction();
+        try {
+            $admin->update([
+                'status' => Admin::STATUS_INACTIVE,
+                'is_available' => false
+            ]);
+
+            // Log activity
+            AdminAuditLog::logAction([
+                'admin_id' => $currentAdmin->id,
+                'action' => 'admin_deactivated',
+                'target_admin_id' => $admin->id,
+                'description' => "Yönetici devre dışı bırakıldı: {$admin->getFullName()}",
+                'metadata' => [
+                    'previous_status' => $admin->getOriginal('status'),
+                    'new_status' => Admin::STATUS_INACTIVE,
+                ],
+            ]);
+
+            DB::commit();
+
+            return redirect()->back()->with('success', "{$admin->getFullName()} başarıyla devre dışı bırakıldı.");
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Admin deactivation failed: ' . $e->getMessage());
+            
+            return redirect()->back()->with('error', 'Devre dışı bırakma sırasında bir hata oluştu.');
+        }
+    }
 }

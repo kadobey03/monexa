@@ -584,6 +584,13 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
             Route::put('/{admin}', 'update')->name('update');
             Route::delete('/{admin}', 'destroy')->name('destroy');
             
+            // AJAX veri endpoint'i
+            Route::get('/edit-data/{admin}', 'editData')->name('edit-data');
+            
+            // Aktivasyon işlemleri
+            Route::get('/{admin}/activate', 'activate')->name('activate');
+            Route::get('/{admin}/deactivate', 'deactivate')->name('deactivate');
+            
             // Toplu işlemler
             Route::post('/bulk-action', 'bulkAction')->name('bulk-action');
             
