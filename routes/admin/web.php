@@ -573,8 +573,9 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
     // Advanced Admin Management System Routes
     Route::prefix('dashboard')->group(function () {
         
-        // Admin Managers Management (Yöneticiler Yönetimi)
+        // Admin Managers Management - Temiz ve Basit Yapı
         Route::controller(AdminManagerController::class)->prefix('managers')->name('admin.managers.')->group(function () {
+            // Temel CRUD işlemleri
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
@@ -582,22 +583,12 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
             Route::get('/{admin}/edit', 'edit')->name('edit');
             Route::put('/{admin}', 'update')->name('update');
             Route::delete('/{admin}', 'destroy')->name('destroy');
-            Route::get('/edit-data/{admin}', 'editData')->name('edit-data');
-            Route::post('/{admin}/update-data', 'updateAjax')->name('update-data');
+            
+            // Toplu işlemler
             Route::post('/bulk-action', 'bulkAction')->name('bulk-action');
-            Route::get('/{admin}/performance', 'performance')->name('performance');
-            Route::post('/{admin}/toggle-status', 'toggleStatus')->name('toggle-status');
-            Route::post('/{admin}/activate', 'activate')->name('activate');
-            Route::post('/{admin}/deactivate', 'deactivate')->name('deactivate');
-            Route::get('/{admin}/reset-password', 'resetPassword')->name('reset-password');
+            
+            // Şifre sıfırlama
             Route::post('/{admin}/reset-password', 'resetPasswordPost')->name('reset-password.post');
-            Route::get('/export/csv', 'exportCsv')->name('export.csv');
-            Route::get('/export/excel', 'exportExcel')->name('export.excel');
-            Route::post('/import', 'import')->name('import');
-            Route::post('/{admin}/assign-subordinates', 'assignSubordinates')->name('assign-subordinates');
-            Route::get('/hierarchy/tree', 'hierarchyTree')->name('hierarchy.tree');
-            Route::post('/save-draft', 'saveDraft')->name('save-draft');
-            Route::get('/drafts', 'getDrafts')->name('drafts');
         });
 
         // Role Management (Rol Yönetimi)
@@ -714,12 +705,3 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin/dashboard')->group(function
 
 // Include demo management routes
 require __DIR__ . '/demo-routes.php';
-
-// GEÇICI TEST ROUTE - MIDDLEWARE BYPASS
-Route::post('admin/test-managers/{admin}/update-data', [AdminManagerController::class, 'updateAjax'])->name('admin.test.managers.update-data');
-
-// EN BASİT TEST ROUTE - MODEL BINDING OLMADAN
-Route::post('admin/simple-test', function() {
-    error_log('🚀 SIMPLE TEST ROUTE CALLED!');
-    return response()->json(['success' => true, 'message' => 'Simple test çalışıyor!']);
-})->name('admin.simple.test');
