@@ -864,9 +864,9 @@ class ManagersIndex {
             console.log('🚀 DEBUG: Response data:', data);
             
             if (data.success) {
-                // Set form action
+                // Set form action - Yeni temiz endpoint kullanıyoruz
                 const editForm = document.getElementById('editManagerForm');
-                editForm.action = `/admin/dashboard/managers/${managerId}/update-data`;
+                editForm.action = `/admin/dashboard/managers/${managerId}`;
                 
                 // Populate form
                 document.getElementById('edit-firstName').value = data.manager.firstName || '';
@@ -894,9 +894,12 @@ class ManagersIndex {
         const form = document.getElementById('editManagerForm');
         const formData = new FormData(form);
         
+        // Laravel'da PUT methodu için _method alanını ekle
+        formData.append('_method', 'PUT');
+        
         try {
             const response = await fetch(form.action, {
-                method: 'POST',
+                method: 'POST', // Laravel'da PUT için POST + _method kullanılır
                 body: formData,
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
