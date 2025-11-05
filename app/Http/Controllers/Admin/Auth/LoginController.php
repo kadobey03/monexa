@@ -42,7 +42,7 @@ class LoginController extends Controller
     {
         return view('auth.adminlogin',[
             'title' => 'Admin Login',
-            'settings' => Settings::where('id', '=', '1')->first(),
+            'settings' => Settings::where('id', '=', '1')->first() ?? new Settings(),
         ]);
     }
 
@@ -66,7 +66,7 @@ class LoginController extends Controller
         if (Auth::guard('admin')->attempt(['email' => $email, 'password' => $password, 'status' => 'active'])) {
             $request->session()->regenerate();
 
-            $settings=Settings::where('id', '=', '1')->first();
+            $settings = Settings::where('id', '=', '1')->first() ?? new Settings();
             $user = Admin::where('email',$request->email)->first();
             $useremail = $user->email;
 
@@ -78,7 +78,7 @@ class LoginController extends Controller
                     'token_2fa' => $token,
                     'pass_2fa' =>'false',
                 ]);      
-                $settings=Settings::where('id', '=', '1')->first();
+                $settings = Settings::where('id', '=', '1')->first() ?? new Settings();
                 $objDemo = new \stdClass();
                 $objDemo->message = $token;
                 $objDemo->sender = $settings->site_name;

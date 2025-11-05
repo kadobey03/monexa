@@ -188,25 +188,26 @@
                         </ul>
                     </li>
 
-                    <!-- Leads & Marketing (Potansiyel Müşteriler) -->
+                    <!-- Lead Management (Lead Yönetimi) -->
                     <li class="nav-section" @click="activeSection = activeSection === 'leads' ? null : 'leads'">
                         <div class="nav-section-header">
                             <div class="nav-icon">
-                                <i class="fas fa-user-plus"></i>
+                                <i class="fas fa-target"></i>
                             </div>
-                            <span class="nav-text">Potansiyel Müşteriler</span>
+                            <span class="nav-text">Lead Yönetimi</span>
                             <div class="nav-arrow" :class="{ 'rotated': activeSection === 'leads' }">
                                 <i class="fas fa-chevron-right"></i>
                             </div>
                         </div>
                         <ul class="nav-section-items" x-show="activeSection === 'leads'" x-collapse>
-                            <li class="nav-item">
+                            <li class="nav-item {{ request()->routeIs('admin.leads.index') ? 'active' : '' }}">
                                 <a href="{{ route('admin.leads.index') }}" class="nav-link">
-                                    <span class="nav-text">Müşteri Adayları</span>
+                                    <span class="nav-text">Tüm Leads</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
+
                 @endif
 
                 @if (Auth('admin')->user()->type == 'Super Admin')
@@ -635,3 +636,4 @@
 /* Alpine.js Transitions */
 [x-cloak] { display: none !important; }
 </style>
+

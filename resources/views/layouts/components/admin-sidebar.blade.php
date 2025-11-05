@@ -63,11 +63,6 @@
                 <span class="font-medium">KYC Başvuruları</span>
             </a>
 
-            <a href="{{ route('admin.leads.index') }}"
-               class="flex items-center px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-600 dark:hover:text-amber-400 transition-colors {{ request()->routeIs('admin.leads.index') ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300' : '' }}">
-                <x-heroicon name="users" class="w-5 h-5 mr-3" />
-                <span class="font-medium">Müşteri Adayları</span>
-            </a>
         </div>
 
         @endif

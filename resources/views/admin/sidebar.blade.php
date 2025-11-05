@@ -25,6 +25,14 @@
                     </a>
                 </li>
                 
+                <!-- Lead Yönetimi -->
+                <li class="{{ request()->routeIs('admin.leads.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.leads.index') }}">
+                        <i class="ti-target"></i>
+                        <p>Lead Yönetimi</p>
+                    </a>
+                </li>
+                
                 <!-- Finans Yönetimi -->
                 <li class="{{ request()->routeIs('mdeposits') ? 'active' : '' }}">
                     <a href="{{ url('admin/dashboard/mdeposits') }}">
@@ -62,12 +70,6 @@
                     </a>
                 </li>
                 
-                <li class="{{ request()->routeIs('admin.leads.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.leads.index') }}">
-                        <i class="ti-user"></i>
-                        <p>Müşteri Adayları</p>
-                    </a>
-                </li>
                 
                 <!-- İçerik Yönetimi -->
                 <li class="{{ request()->routeIs('admin.phrases') ? 'active' : '' }}">

@@ -13,7 +13,7 @@
             <div class="text-center mb-8">
                 <a href="/" class="inline-block group">
                     <div class="relative">
-                        @if(isset($settings) && $settings && $settings->logo)
+                        @if(isset($settings) && $settings && !empty($settings->logo))
                             <img src="{{ asset('storage/' . $settings->logo) }}"
                                  alt="{{ $settings->site_name ?? 'Logo' }}"
                                  class="h-16 w-auto mx-auto transition-transform duration-300 group-hover:scale-105">

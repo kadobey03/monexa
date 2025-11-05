@@ -36,7 +36,7 @@ class LeadAssignmentController extends Controller
 
             $authAdmin = Auth::guard('admin')->user();
             if (!$authAdmin) {
-                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+                return $this->errorResponse('Yetkilendirme hatası', 401);
             }
 
             DB::beginTransaction();
@@ -52,13 +52,13 @@ class LeadAssignmentController extends Controller
 
             if (!$lead) {
                 DB::rollBack();
-                return $this->errorResponse('Lead bulunamadı veya müşteriye dönüştürülmüş', 'LEAD_NOT_FOUND', 404);
+                return $this->errorResponse('Lead bulunamadı veya müşteriye dönüştürülmüş', 404);
             }
 
             // Check permission to assign this lead
             if (!$this->canAssignLead($authAdmin, $lead)) {
                 DB::rollBack();
-                return $this->errorResponse('Bu lead\'i atama yetkiniz yok', 'INSUFFICIENT_PERMISSIONS', 403);
+                return $this->errorResponse('Bu lead\'i atama yetkiniz yok', 403);
             }
 
             $previousAdminId = $lead->assign_to;
@@ -96,12 +96,12 @@ class LeadAssignmentController extends Controller
             
             if (!$targetAdmin) {
                 DB::rollBack();
-                return $this->errorResponse('Hedef admin bulunamadı', 'ADMIN_NOT_FOUND', 404);
+                return $this->errorResponse('Hedef admin bulunamadı', 404);
             }
 
             if (!$targetAdmin->isAvailableForAssignment()) {
                 DB::rollBack();
-                return $this->errorResponse('Seçilen admin şu anda atama için müsait değil', 'ADMIN_NOT_AVAILABLE', 422);
+                return $this->errorResponse('Seçilen admin şu anda atama için müsait değil', 422);
             }
 
             // Check if it's the same admin (no change needed)
@@ -176,9 +176,8 @@ class LeadAssignmentController extends Controller
         } catch (ValidationException $e) {
             DB::rollBack();
             return $this->errorResponse(
-                'Validation hatası', 
-                'VALIDATION_ERROR', 
-                422, 
+                'Validation hatası',
+                422,
                 $e->errors()
             );
         } catch (\Exception $e) {
@@ -192,10 +191,9 @@ class LeadAssignmentController extends Controller
             ]);
 
             return $this->errorResponse(
-                'Lead atama işlemi başarısız', 
-                'ASSIGNMENT_FAILED', 
+                'Lead atama işlemi başarısız',
                 500,
-                config('app.debug') ? ['message' => $e->getMessage()] : null
+                config('app.debug') ? ['message' => $e->getMessage()] : []
             );
         }
     }
@@ -212,7 +210,7 @@ class LeadAssignmentController extends Controller
             
             $authAdmin = Auth::guard('admin')->user();
             if (!$authAdmin) {
-                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+                return $this->errorResponse('Yetkilendirme hatası', 401);
             }
 
             $newAdminId = $validated['admin_id'];
@@ -237,7 +235,7 @@ class LeadAssignmentController extends Controller
 
             if ($leads->isEmpty()) {
                 DB::rollBack();
-                return $this->errorResponse('Geçerli lead bulunamadı', 'NO_VALID_LEADS', 404);
+                return $this->errorResponse('Geçerli lead bulunamadı', 404);
             }
 
             // Check permissions for all leads
@@ -268,12 +266,12 @@ class LeadAssignmentController extends Controller
                 
                 if (!$targetAdmin) {
                     DB::rollBack();
-                    return $this->errorResponse('Hedef admin bulunamadı', 'ADMIN_NOT_FOUND', 404);
+                    return $this->errorResponse('Hedef admin bulunamadı', 404);
                 }
 
                 if (!$targetAdmin->isAvailableForAssignment()) {
                     DB::rollBack();
-                    return $this->errorResponse('Seçilen admin şu anda atama için müsait değil', 'ADMIN_NOT_AVAILABLE', 422);
+                    return $this->errorResponse('Seçilen admin şu anda atama için müsait değil', 422);
                 }
             }
 
@@ -414,9 +412,8 @@ class LeadAssignmentController extends Controller
         } catch (ValidationException $e) {
             DB::rollBack();
             return $this->errorResponse(
-                'Validation hatası', 
-                'VALIDATION_ERROR', 
-                422, 
+                'Validation hatası',
+                422,
                 $e->errors()
             );
         } catch (\Exception $e) {
@@ -429,10 +426,9 @@ class LeadAssignmentController extends Controller
             ]);
 
             return $this->errorResponse(
-                'Toplu atama işlemi başarısız', 
-                'BULK_ASSIGNMENT_FAILED', 
+                'Toplu atama işlemi başarısız',
                 500,
-                config('app.debug') ? ['message' => $e->getMessage()] : null
+                config('app.debug') ? ['message' => $e->getMessage()] : []
             );
         }
     }
@@ -446,7 +442,7 @@ class LeadAssignmentController extends Controller
         try {
             $authAdmin = Auth::guard('admin')->user();
             if (!$authAdmin) {
-                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+                return $this->errorResponse('Yetkilendirme hatası', 401);
             }
 
             $lead = User::where('id', $leadId)
@@ -456,12 +452,12 @@ class LeadAssignmentController extends Controller
                        ->first();
 
             if (!$lead) {
-                return $this->errorResponse('Lead bulunamadı', 'LEAD_NOT_FOUND', 404);
+                return $this->errorResponse('Lead bulunamadı', 404);
             }
 
             // Check permission
             if (!$this->canViewLead($authAdmin, $lead)) {
-                return $this->errorResponse('Bu lead\'in geçmişini görme yetkiniz yok', 'INSUFFICIENT_PERMISSIONS', 403);
+                return $this->errorResponse('Bu lead\'in geçmişini görme yetkiniz yok', 403);
             }
 
             $history = LeadAssignmentHistory::where('user_id', $leadId)
@@ -524,8 +520,7 @@ class LeadAssignmentController extends Controller
             ]);
 
             return $this->errorResponse(
-                'Assignment geçmişi getirilemedi', 
-                'FETCH_HISTORY_FAILED', 
+                'Assignment geçmişi getirilemedi',
                 500
             );
         }
@@ -540,7 +535,7 @@ class LeadAssignmentController extends Controller
         try {
             $authAdmin = Auth::guard('admin')->user();
             if (!$authAdmin) {
-                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+                return $this->errorResponse('Yetkilendirme hatası', 401);
             }
 
             $cacheKey = "available_admins_{$authAdmin->id}_" . ($authAdmin->hasBypassPrivileges() ? 'bypass' : 'regular');
@@ -597,7 +592,6 @@ class LeadAssignmentController extends Controller
 
             return $this->errorResponse(
                 'Müsait adminler getirilemedi',
-                'FETCH_AVAILABLE_ADMINS_FAILED',
                 500
             );
         }
@@ -617,7 +611,7 @@ class LeadAssignmentController extends Controller
 
             $authAdmin = Auth::guard('admin')->user();
             if (!$authAdmin) {
-                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+                return $this->errorResponse('Yetkilendirme hatası', 401);
             }
 
             $lead = User::find($request->lead_id);
@@ -678,7 +672,6 @@ class LeadAssignmentController extends Controller
 
             return $this->errorResponse(
                 'Atama validasyonu başarısız',
-                'VALIDATION_FAILED',
                 500
             );
         }
@@ -693,7 +686,7 @@ class LeadAssignmentController extends Controller
         try {
             $authAdmin = Auth::guard('admin')->user();
             if (!$authAdmin) {
-                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+                return $this->errorResponse('Yetkilendirme hatası', 401);
             }
 
             $cacheKey = "admin_assignment_stats_{$authAdmin->id}";
@@ -788,7 +781,6 @@ class LeadAssignmentController extends Controller
 
             return $this->errorResponse(
                 'Assignment istatistikleri getirilemedi',
-                'FETCH_STATS_FAILED',
                 500
             );
         }
@@ -886,22 +878,4 @@ class LeadAssignmentController extends Controller
         ]);
     }
 
-    /**
-     * Standard error response format
-     */
-    protected function errorResponse(string $message, string $errorCode = 'GENERIC_ERROR', int $statusCode = 500, array $errors = []): JsonResponse
-    {
-        $response = [
-            'success' => false,
-            'message' => $message,
-            'error_code' => $errorCode,
-            'errors' => $errors,
-            'meta' => [
-                'timestamp' => now()->toISOString(),
-                'version' => '2.0'
-            ]
-        ];
-        
-        return response()->json($response, $statusCode);
-    }
 }
