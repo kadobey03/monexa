@@ -17,6 +17,7 @@ use App\Models\User_signal;
 use App\Models\User_copytradings;
 use App\Models\UserBotInvestment;
 use App\Models\BotTradingHistory;
+use App\Models\Admin;
 use App\Traits\PingServer;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +54,12 @@ class ManageUsers extends Component
     public $topcolumn = "Bonus";
     public $userTypes = "All";
     public $success = '';
+    
+    // DEBUG: Filter properties ekliyorum
+    public $statusFilter = '';
+    public $adminFilter = '';
+    public $dateFromFilter = '';
+    public $dateToFilter = '';
 
     protected $rules = [
         'fullname' => 'required|max:255',
@@ -66,15 +73,96 @@ class ManageUsers extends Component
 
     public function getUsersProperty()
     {
-        return User::search($this->searchvalue)
-            ->with('leadStatus')
-            ->orderBy($this->orderby, $this->orderdirection)
-            ->paginate($this->pagenum);
+        // DEBUG: Log filter values
+        \Log::debug('ManageUsers Filter Debug', [
+            'searchvalue' => $this->searchvalue,
+            'statusFilter' => $this->statusFilter,
+            'adminFilter' => $this->adminFilter,
+            'dateFromFilter' => $this->dateFromFilter,
+            'dateToFilter' => $this->dateToFilter,
+        ]);
+        
+        $query = User::search($this->searchvalue)
+            ->with('leadStatus', 'assignedAdmin');
+            
+        // STATUS Filter
+        if (!empty($this->statusFilter)) {
+            \Log::debug('Applying status filter', ['status' => $this->statusFilter]);
+            $query->where('lead_status', $this->statusFilter);
+        }
+        
+        // ADMIN Filter
+        if (!empty($this->adminFilter)) {
+            \Log::debug('Applying admin filter', ['admin_id' => $this->adminFilter]);
+            $query->where('assign_to', $this->adminFilter);
+        }
+        
+        // DATE Filter
+        if (!empty($this->dateFromFilter)) {
+            \Log::debug('Applying date from filter', ['date_from' => $this->dateFromFilter]);
+            $query->whereDate('created_at', '>=', $this->dateFromFilter);
+        }
+        
+        if (!empty($this->dateToFilter)) {
+            \Log::debug('Applying date to filter', ['date_to' => $this->dateToFilter]);
+            $query->whereDate('created_at', '<=', $this->dateToFilter);
+        }
+        
+        return $query->orderBy($this->orderby, $this->orderdirection)
+                    ->paginate($this->pagenum);
     }
 
     public function getLeadStatusesProperty()
     {
         return LeadStatus::active()->get();
+    }
+    
+    // DEBUG: Admin property ekleyelim
+    public function getAdminsProperty()
+    {
+        return Admin::active()
+                   ->where('status', 'Active')
+                   ->orderBy('firstName')
+                   ->get();
+    }
+    
+    // DEBUG: Clear filters method
+    public function clearFilters()
+    {
+        \Log::debug('Clearing all filters');
+        $this->statusFilter = '';
+        $this->adminFilter = '';
+        $this->dateFromFilter = '';
+        $this->dateToFilter = '';
+        $this->searchvalue = '';
+        
+        // Reset pagination
+        $this->resetPage();
+    }
+
+    // Filter değiştiğinde pagination resetle
+    public function updatedStatusFilter()
+    {
+        \Log::debug('Status filter updated', ['statusFilter' => $this->statusFilter]);
+        $this->resetPage();
+    }
+
+    public function updatedAdminFilter()
+    {
+        \Log::debug('Admin filter updated', ['adminFilter' => $this->adminFilter]);
+        $this->resetPage();
+    }
+
+    public function updatedDateFromFilter()
+    {
+        \Log::debug('Date from filter updated', ['dateFromFilter' => $this->dateFromFilter]);
+        $this->resetPage();
+    }
+
+    public function updatedDateToFilter()
+    {
+        \Log::debug('Date to filter updated', ['dateToFilter' => $this->dateToFilter]);
+        $this->resetPage();
     }
 
     public function updateLeadStatus($userId, $statusName)

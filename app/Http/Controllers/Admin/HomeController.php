@@ -357,35 +357,140 @@ class HomeController extends Controller
 
     //ennd signals
     //Return manage users route
-    public function manageusers()
+    public function manageusers(Request $request)
     {
-        // Kullanıcı listesi (sayfalı) - leadStatus ve assignedAdmin relationship'leri ile eager loading
-        $users = User::with(['leadStatus', 'assignedAdmin'])
-                    ->orderBy('id', 'desc')
-                    ->paginate(15);
-        
-        // İstatistikler
-        $user_count = User::count();
-        $active_users = User::where('status', 'active')->count();
-        $blocked_users = User::where('status', 'blocked')->count();
-        $pending_verification = User::where('account_verify', '!=', 'yes')->count();
+        try {
+            // Input validation - FIX: status should validate against name field, not id
+            $validated = $request->validate([
+                'status' => 'nullable|string|exists:lead_statuses,name',
+                'admin' => 'nullable|exists:admins,id',
+                'date_from' => 'nullable|date|before_or_equal:today',
+                'date_to' => 'nullable|date|after_or_equal:date_from|before_or_equal:today',
+                'per_page' => 'nullable|in:25,50,75,100,all',
+                'page' => 'nullable|integer|min:1'
+            ]);
 
-        // Lead statuses'ları dropdown için getir
-        $leadStatuses = \App\Models\LeadStatus::active()->get();
-        
-        // Aktif admin listesini getir
-        $admins = Admin::where('status', 'Active')->orderBy('firstName')->get();
+            // Session management for filter persistence
+            $this->manageFilterSession($request, $validated);
 
-        return view('admin.users-management', [
-            'title' => 'All users',
-            'users' => $users,
-            'user_count' => $user_count,
-            'active_users' => $active_users,
-            'blocked_users' => $blocked_users,
-            'pending_verification' => $pending_verification,
-            'leadStatuses' => $leadStatuses,
-            'admins' => $admins,
+            // Build dynamic query with eager loading
+            $query = User::with(['leadStatus', 'assignedAdmin']);
+            
+            // Apply status filter - FIXED: Now correctly filters by lead_status field
+            if ($request->filled('status')) {
+                $query->where('lead_status', $request->status);
+            }
+            
+            // Apply admin assignment filter
+            if ($request->filled('admin')) {
+                $query->where('assign_to', $request->admin);
+            }
+            
+            // Apply date from filter
+            if ($request->filled('date_from')) {
+                $query->whereDate('created_at', '>=', $request->date_from);
+            }
+            
+            // Apply date to filter
+            if ($request->filled('date_to')) {
+                $query->whereDate('created_at', '<=', $request->date_to);
+            }
+
+            // Default ordering
+            $query->orderBy('id', 'desc');
+
+            // Handle pagination with session persistence
+            $perPage = $validated['per_page'] ?? session('user_management_per_page', 25);
+            
+            if ($perPage === 'all') {
+                $users = $query->get();
+                $users->appends = collect($request->query())->toArray(); // For URL consistency
+            } else {
+                $users = $query->paginate($perPage)->appends($request->query());
+            }
+
+            // İstatistikler - filtrelenmiş veriye göre
+            $filteredQuery = clone $query;
+            $user_count = User::count(); // Toplam kullanıcı sayısı
+            $filtered_count = $filteredQuery->count(); // Filtrelenmiş kullanıcı sayısı
+            $active_users = User::where('status', 'active')->count();
+            $blocked_users = User::where('status', 'blocked')->count();
+            $pending_verification = User::where('account_verify', '!=', 'yes')->count();
+
+            // Dropdown data
+            $leadStatuses = \App\Models\LeadStatus::active()->get();
+            $admins = Admin::where('status', 'Active')->orderBy('firstName')->get();
+
+            // Current filter values for form persistence
+            $currentFilters = [
+                'status' => $request->get('status'),
+                'admin' => $request->get('admin'),
+                'date_from' => $request->get('date_from'),
+                'date_to' => $request->get('date_to'),
+                'per_page' => $perPage,
+            ];
+
+            return view('admin.users-management', [
+                'title' => 'All users',
+                'users' => $users,
+                'user_count' => $user_count,
+                'filtered_count' => $filtered_count,
+                'active_users' => $active_users,
+                'blocked_users' => $blocked_users,
+                'pending_verification' => $pending_verification,
+                'leadStatuses' => $leadStatuses,
+                'admins' => $admins,
+                'currentFilters' => $currentFilters,
+                'hasFilters' => $request->hasAny(['status', 'admin', 'date_from', 'date_to']),
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->errors())->withInput()
+                ->with('error', 'Geçersiz filtre parametreleri.');
+
+        } catch (\Exception $e) {
+            \Log::error('User management filter error: ' . $e->getMessage(), [
+                'request' => $request->all(),
+                'user' => auth('admin')->user()?->id,
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return back()->with('error', 'Kullanıcı listesi yüklenirken bir hata oluştu.')
+                ->withInput();
+        }
+    }
+
+    /**
+     * Manage filter session for user management
+     */
+    private function manageFilterSession(Request $request, array $validated): void
+    {
+        // Store filter preferences if any filters are applied
+        $filters = array_filter([
+            'status' => $validated['status'] ?? null,
+            'admin' => $validated['admin'] ?? null,
+            'date_from' => $validated['date_from'] ?? null,
+            'date_to' => $validated['date_to'] ?? null,
         ]);
+        
+        if (!empty($filters)) {
+            session(['user_management_filters' => $filters]);
+        }
+        
+        // Store pagination preference
+        if ($request->filled('per_page')) {
+            session(['user_management_per_page' => $validated['per_page']]);
+        }
+    }
+
+    /**
+     * Clear all user management filters
+     */
+    public function clearUserFilters()
+    {
+        session()->forget(['user_management_filters', 'user_management_per_page']);
+        
+        return redirect()->route('manageusers')->with('success', 'Filtreler temizlendi.');
     }
 
     public function activeInvestments()

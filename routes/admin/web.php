@@ -87,6 +87,7 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('dashboard/edit-signal/{id}', 'editsignal')->name('editsignal');
         Route::get('/dashboard/activesignals', 'activesignals')->name('activesignals');
         Route::get('dashboard/manageusers', 'manageusers')->name('manageusers');
+        Route::post('dashboard/manageusers/clear-filters', 'clearUserFilters')->name('admin.manageusers.clear-filters');
 
         //copytradingaddcopytrading
 	Route::get('dashboard/copytrading', [Copytradingcontroller::class , 'copytrading'])->name('copytrading');

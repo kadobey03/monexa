@@ -137,6 +137,69 @@
                         @endif
                     </div>
                 </div>
+                
+                <!-- Gelişmiş Filtreleme Bölümü -->
+                <div class="mt-4 bg-white bg-opacity-10 backdrop-blur rounded-lg p-4 border border-white border-opacity-20">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Lead Status Filter -->
+                        <div>
+                            <label class="block text-sm font-medium text-white mb-2">
+                                <i class="fas fa-tags mr-2"></i>LEAD STATUS
+                            </label>
+                            <select wire:model="statusFilter"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900">
+                                <option value="">Tüm Durumlar</option>
+                                @foreach ($this->leadStatuses as $status)
+                                    <option value="{{ $status->name }}">{{ $status->display_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <!-- Assigned Admin Filter -->
+                        <div>
+                            <label class="block text-sm font-medium text-white mb-2">
+                                <i class="fas fa-user-tie mr-2"></i>ASSIGNED ADMIN
+                            </label>
+                            <select wire:model="adminFilter"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900">
+                                <option value="">Tüm Adminler</option>
+                                @foreach ($this->admins as $admin)
+                                    <option value="{{ $admin->id }}">{{ $admin->firstName }} {{ $admin->lastName }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <!-- Date From Filter -->
+                        <div>
+                            <label class="block text-sm font-medium text-white mb-2">
+                                <i class="fas fa-calendar-alt mr-2"></i>BAŞLANGIÇ TARİHİ
+                            </label>
+                            <input type="date"
+                                   wire:model="dateFromFilter"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                                   placeholder="gg.aa.yyyy">
+                        </div>
+                        
+                        <!-- Date To Filter -->
+                        <div>
+                            <label class="block text-sm font-medium text-white mb-2">
+                                <i class="fas fa-calendar-check mr-2"></i>BİTİŞ TARİHİ
+                            </label>
+                            <input type="date"
+                                   wire:model="dateToFilter"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                                   placeholder="gg.aa.yyyy">
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Actions -->
+                    <div class="mt-4 flex justify-end space-x-2">
+                        <button wire:click="clearFilters"
+                                class="inline-flex items-center px-4 py-2 border border-white border-opacity-30 rounded-md shadow-sm text-sm font-medium text-white bg-white bg-opacity-10 hover:bg-opacity-20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white">
+                            <i class="fas fa-eraser mr-2"></i>Filtreleri Temizle
+                        </button>
+                    </div>
+                </div>
             </div>
             <!-- Table Section -->
             <div class="overflow-hidden">

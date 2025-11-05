@@ -8,7 +8,7 @@
 <div class="min-h-screen bg-admin-50 {{ $isDark ? 'dark:bg-admin-900' : '' }}">
     <!-- Header Section -->
     <div class="bg-admin-100 {{ $isDark ? 'dark:bg-admin-800' : '' }} border-b border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }}">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="max-w-none mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
                 <div class="flex-1">
                     <h1 class="text-3xl font-bold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} flex items-center">
@@ -32,7 +32,7 @@
     </div>
 
     <!-- Stats Overview -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="max-w-none mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <!-- Total Users -->
             <div class="bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-xl shadow-sm border border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }} p-6 hover:shadow-md transition-shadow duration-200">
@@ -95,11 +95,182 @@
             </div>
         </div>
 
+        <!-- Advanced Filter Section -->
+        <div class="bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-lg shadow-sm border border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }} mb-6 p-6">
+            <form method="GET" action="{{ route('manageusers') }}" class="space-y-4">
+                
+                <!-- Filter Header -->
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-admin-500 to-admin-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-filter text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                Gelişmiş Filtreleme
+                            </h3>
+                            <p class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
+                                Kullanıcıları status, admin, tarih aralığı ile filtreleyin
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Active Filters Count -->
+                    @php
+                        $activeFilters = collect([request('status'), request('admin'), request('date_from'), request('date_to')])->filter()->count();
+                    @endphp
+                    @if($activeFilters > 0)
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-admin-100 text-admin-800 {{ $isDark ? 'dark:bg-admin-700 dark:text-admin-200' : '' }}">
+                            <i class="fas fa-filter mr-1"></i>
+                            {{ $activeFilters }} Aktif Filtre
+                        </span>
+                    @endif
+                </div>
+
+                <!-- Filter Controls Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                    
+                    <!-- STATUS Filter -->
+                    <div class="lg:col-span-1">
+                        <label class="block text-xs font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
+                            <i class="fas fa-flag text-admin-500 mr-1"></i>
+                            LEAD STATUS
+                        </label>
+                        <select name="status" class="w-full text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                            <option value="">Tüm Durumlar</option>
+                            @if(isset($leadStatuses) && $leadStatuses->count() > 0)
+                                @foreach($leadStatuses as $status)
+                                    <option value="{{ $status->name }}" {{ request('status') == $status->name ? 'selected' : '' }}>
+                                        {{ $status->display_name ?: $status->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option value="new" {{ request('status') == 'new' ? 'selected' : '' }}>Yeni</option>
+                                <option value="contacted" {{ request('status') == 'contacted' ? 'selected' : '' }}>İletişimde</option>
+                                <option value="qualified" {{ request('status') == 'qualified' ? 'selected' : '' }}>Nitelikli</option>
+                                <option value="converted" {{ request('status') == 'converted' ? 'selected' : '' }}>Dönüştürülmüş</option>
+                                <option value="lost" {{ request('status') == 'lost' ? 'selected' : '' }}>Kayıp</option>
+                            @endif
+                        </select>
+                    </div>
+
+                    <!-- ADMIN Filter -->
+                    <div class="lg:col-span-1">
+                        <label class="block text-xs font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
+                            <i class="fas fa-user-tie text-admin-500 mr-1"></i>
+                            ASSIGNED ADMIN
+                        </label>
+                        <select name="admin" class="w-full text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                            <option value="">Tüm Adminler</option>
+                            @if(isset($admins) && $admins->count() > 0)
+                                @foreach($admins as $admin)
+                                    <option value="{{ $admin->id }}" {{ request('admin') == $admin->id ? 'selected' : '' }}>
+                                        {{ $admin->getDisplayName() }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+
+                    <!-- DATE FROM Filter -->
+                    <div class="lg:col-span-1">
+                        <label class="block text-xs font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
+                            <i class="fas fa-calendar text-admin-500 mr-1"></i>
+                            BAŞLANGIÇ TARİHİ
+                        </label>
+                        <input type="date" name="date_from" value="{{ request('date_from') }}"
+                               class="w-full text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                    </div>
+
+                    <!-- DATE TO Filter -->
+                    <div class="lg:col-span-1">
+                        <label class="block text-xs font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
+                            <i class="fas fa-calendar text-admin-500 mr-1"></i>
+                            BİTİŞ TARİHİ
+                        </label>
+                        <input type="date" name="date_to" value="{{ request('date_to') }}"
+                               class="w-full text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="lg:col-span-2 flex items-end space-x-3">
+                        <button type="submit"
+                                class="inline-flex items-center px-4 py-2.5 bg-admin-600 hover:bg-admin-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
+                            <i class="fas fa-search mr-2"></i>
+                            Filtrele
+                        </button>
+                        
+                        <a href="{{ route('manageusers') }}"
+                           class="inline-flex items-center px-4 py-2.5 bg-admin-100 hover:bg-admin-200 {{ $isDark ? 'dark:bg-admin-700 dark:hover:bg-admin-600' : '' }} text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} font-medium rounded-lg shadow-sm transition-colors duration-200">
+                            <i class="fas fa-times mr-2"></i>
+                            Temizle
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- Filter Summary -->
+                @if(request()->hasAny(['status', 'admin', 'date_from', 'date_to']))
+                    <div class="mt-4 pt-4 border-t border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }}">
+                        <div class="flex items-center space-x-4 flex-wrap">
+                            <span class="text-xs font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
+                                Aktif Filtreler:
+                            </span>
+                            
+                            @if(request('status'))
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 {{ $isDark ? 'dark:bg-blue-800 dark:text-blue-100' : '' }}">
+                                    Status: {{ ucfirst(request('status')) }}
+                                </span>
+                            @endif
+                            
+                            @if(request('admin'))
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }}">
+                                    Admin: {{ isset($admins) ? ($admins->find(request('admin'))->getDisplayName() ?? 'ID ' . request('admin')) : 'ID ' . request('admin') }}
+                                </span>
+                            @endif
+                            
+                            @if(request('date_from'))
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 {{ $isDark ? 'dark:bg-yellow-800 dark:text-yellow-100' : '' }}">
+                                    Başlangıç: {{ \Carbon\Carbon::parse(request('date_from'))->format('d.m.Y') }}
+                                </span>
+                            @endif
+                            
+                            @if(request('date_to'))
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 {{ $isDark ? 'dark:bg-purple-800 dark:text-purple-100' : '' }}">
+                                    Bitiş: {{ \Carbon\Carbon::parse(request('date_to'))->format('d.m.Y') }}
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+
+            </form>
+        </div>
+
         <!-- Main Table Container -->
         <div class="bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-xl shadow-lg border border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }} overflow-hidden">
             
-            <!-- Table Header with Search and Actions -->
+            <!-- Enhanced Table Header with Results Display -->
             <div class="bg-gradient-to-r from-admin-600 to-admin-700 px-6 py-5">
+                <!-- Users Table Header Enhancement -->
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h3 class="text-lg font-medium text-white">Kullanıcı Listesi</h3>
+                        <div class="text-sm text-admin-200">
+                            @if(isset($users) && $users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                {{ $users->total() }} kullanıcı bulundu
+                                @if(request()->hasAny(['status', 'admin', 'date_from', 'date_to']))
+                                    <span class="text-admin-300">
+                                        <i class="fas fa-filter ml-1 mr-1"></i>(filtrelenmiş)
+                                    </span>
+                                @endif
+                            @else
+                                {{ isset($users) ? $users->count() : 0 }} kullanıcı gösteriliyor
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
                     <!-- Search Section -->
                     <div class="flex-1 lg:max-w-md">
@@ -118,11 +289,11 @@
 
                     <!-- Action Buttons -->
                     <div class="flex items-center space-x-3">
-                        <button onclick="exportUsers()" 
+                        <button onclick="exportUsers()"
                                 class="inline-flex items-center px-4 py-2 bg-admin-500 hover:bg-admin-600 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
                             <i class="fas fa-download mr-2"></i>Dışa Aktar
                         </button>
-                        <button onclick="openAddUserModal()" 
+                        <button onclick="openAddUserModal()"
                                 class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
                             <i class="fas fa-user-plus mr-2"></i>Yeni Kullanıcı
                         </button>
@@ -132,61 +303,61 @@
 
             <!-- Enhanced Table Design -->
             <div class="overflow-x-auto">
-                <table class="min-w-full" id="users-table">
+                <table class="min-w-full table-fixed" id="users-table">
                     <!-- Professional Table Header -->
                     <thead class="bg-admin-100 {{ $isDark ? 'dark:bg-admin-700' : '' }} border-b-2 border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }}">
                         <tr>
-                            <th scope="col" class="px-6 py-4 text-left">
-                                <input type="checkbox" id="select-all" 
+                            <th scope="col" class="w-8 px-2 py-2 text-left">
+                                <input type="checkbox" id="select-all"
                                        class="rounded border-admin-300 text-admin-600 shadow-sm focus:border-admin-500 focus:ring-admin-500"
                                        onchange="toggleAllUsers(this)">
                             </th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fas fa-user text-admin-500"></i>
-                                    <span>Kullanıcı Bilgileri</span>
+                            <th scope="col" class="w-40 px-2 py-2 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fas fa-user text-admin-500 text-xs"></i>
+                                    <span>Kullanıcı</span>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fas fa-envelope text-admin-500"></i>
-                                    <span>İletişim</span>
+                            <th scope="col" class="w-32 px-2 py-2 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fas fa-envelope text-admin-500 text-xs"></i>
+                                    <span>Email</span>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fas fa-phone text-admin-500"></i>
+                            <th scope="col" class="w-24 px-2 py-2 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fas fa-phone text-admin-500 text-xs"></i>
                                     <span>Telefon</span>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
-                                <div class="flex items-center space-x-2">
-                                    <i class="fas fa-calendar text-admin-500"></i>
-                                    <span>Kayıt Tarihi</span>
+                            <th scope="col" class="w-24 px-2 py-2 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fas fa-calendar text-admin-500 text-xs"></i>
+                                    <span>Tarih</span>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <i class="fas fa-flag text-admin-500"></i>
+                            <th scope="col" class="w-32 px-2 py-2 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
+                                <div class="flex items-center justify-center space-x-1">
+                                    <i class="fas fa-flag text-admin-500 text-xs"></i>
                                     <span>Lead Status</span>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <i class="fas fa-user-tie text-admin-500"></i>
-                                    <span>Assigned Admin</span>
+                            <th scope="col" class="w-32 px-2 py-2 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
+                                <div class="flex items-center justify-center space-x-1">
+                                    <i class="fas fa-user-tie text-admin-500 text-xs"></i>
+                                    <span>Admin</span>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <i class="fas fa-toggle-on text-admin-500"></i>
+                            <th scope="col" class="w-20 px-2 py-2 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
+                                <div class="flex items-center justify-center space-x-1">
+                                    <i class="fas fa-toggle-on text-admin-500 text-xs"></i>
                                     <span>Durum</span>
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <i class="fas fa-cogs text-admin-500"></i>
-                                    <span>İşlemler</span>
+                            <th scope="col" class="w-20 px-2 py-2 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
+                                <div class="flex items-center justify-center space-x-1">
+                                    <i class="fas fa-cogs text-admin-500 text-xs"></i>
+                                    <span>İşlem</span>
                                 </div>
                             </th>
                         </tr>
@@ -197,69 +368,69 @@
                         @forelse ($users ?? [] as $user)
                             <tr class="hover:bg-admin-50 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} transition-colors duration-150 group">
                                 <!-- Selection Checkbox -->
-                                <td class="px-6 py-5 whitespace-nowrap">
-                                    <input type="checkbox" name="user_ids[]" value="{{ $user->id }}" 
+                                <td class="px-2 py-1 whitespace-nowrap">
+                                    <input type="checkbox" name="user_ids[]" value="{{ $user->id }}"
                                            class="user-checkbox rounded border-admin-300 text-admin-600 shadow-sm focus:border-admin-500 focus:ring-admin-500"
                                            onchange="updateBulkActions()">
                                 </td>
 
                                 <!-- User Info with Professional Avatar -->
-                                <td class="px-6 py-5 whitespace-nowrap">
+                                <td class="px-2 py-1 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-12 w-12">
-                                            <div class="h-12 w-12 rounded-full bg-gradient-to-br from-admin-500 to-admin-600 {{ $isDark ? 'dark:from-admin-400 dark:to-admin-500' : '' }} flex items-center justify-center shadow-lg">
-                                                <span class="text-lg font-bold text-white">
+                                        <div class="flex-shrink-0 h-8 w-8">
+                                            <div class="h-8 w-8 rounded-full bg-gradient-to-br from-admin-500 to-admin-600 {{ $isDark ? 'dark:from-admin-400 dark:to-admin-500' : '' }} flex items-center justify-center shadow-md">
+                                                <span class="text-xs font-bold text-white">
                                                     {{ substr($user->name ?? '', 0, 1) }}
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
-                                                {{ $user->name ?? 'Ad Soyad Yok' }}
+                                        <div class="ml-2">
+                                            <div class="text-xs font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} truncate max-w-0" title="{{ $user->name ?? 'Ad Soyad Yok' }}">
+                                                {{ Str::limit($user->name ?? 'Ad Soyad Yok', 20) }}
                                             </div>
-                                            <div class="text-xs text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }}">
-                                                ID: {{ $user->id }} | @{{ $user->username ?? 'N/A' }}
+                                            <div class="text-xs text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} leading-tight">
+                                                ID: {{ $user->id }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
 
                                 <!-- Contact Information -->
-                                <td class="px-6 py-5 whitespace-nowrap">
-                                    <div class="text-sm text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
-                                        {{ $user->email ?? '-' }}
+                                <td class="px-2 py-1 whitespace-nowrap">
+                                    <div class="text-xs text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} truncate max-w-0" title="{{ $user->email ?? '-' }}">
+                                        {{ Str::limit($user->email ?? '-', 25) }}
                                     </div>
                                     @if($user->email_verified_at)
-                                        <div class="text-xs text-green-600">
-                                            <i class="fas fa-check-circle mr-1"></i>Doğrulanmış
+                                        <div class="text-xs text-green-600 leading-tight">
+                                            <i class="fas fa-check-circle mr-1"></i>Doğrulandı
                                         </div>
                                     @else
-                                        <div class="text-xs text-amber-600">
-                                            <i class="fas fa-exclamation-triangle mr-1"></i>Doğrulanmamış
+                                        <div class="text-xs text-amber-600 leading-tight">
+                                            <i class="fas fa-exclamation-triangle mr-1"></i>Bekliyor
                                         </div>
                                     @endif
                                 </td>
 
                                 <!-- Phone -->
-                                <td class="px-6 py-5 whitespace-nowrap text-sm text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                <td class="px-2 py-1 whitespace-nowrap text-xs text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
                                     {{ $user->phone ?? '-' }}
                                 </td>
 
                                 <!-- Registration Date -->
-                                <td class="px-6 py-5 whitespace-nowrap">
-                                    <div class="text-sm text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                <td class="px-2 py-1 whitespace-nowrap">
+                                    <div class="text-xs text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} leading-tight">
                                         {{ $user->created_at ? $user->created_at->format('d.m.Y') : '-' }}
                                     </div>
-                                    <div class="text-xs text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }}">
+                                    <div class="text-xs text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} leading-tight">
                                         {{ $user->created_at ? $user->created_at->diffForHumans() : '-' }}
                                     </div>
                                 </td>
 
                                 <!-- Lead Status Dropdown -->
-                                <td class="px-6 py-5 whitespace-nowrap text-center">
+                                <td class="px-2 py-1 whitespace-nowrap text-center">
                                     <div class="flex items-center justify-center">
                                         <select onchange="updateLeadStatus({{ $user->id }}, this.value)"
-                                                class="px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-xs font-medium focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent"
+                                                class="px-2 py-1 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-xs font-medium focus:outline-none focus:ring-1 focus:ring-admin-500 focus:border-transparent"
                                                 style="background-color: {{ $user->leadStatus->color ?? '#6B7280' }}; color: white;">
                                             @if(isset($leadStatuses) && $leadStatuses->count() > 0)
                                                 @foreach($leadStatuses as $status)
@@ -281,16 +452,16 @@
                                 </td>
 
                                 <!-- Assigned Admin Dropdown -->
-                                <td class="px-6 py-5 whitespace-nowrap text-center">
+                                <td class="px-2 py-1 whitespace-nowrap text-center">
                                     <div class="flex items-center justify-center">
                                         <select onchange="updateAssignedAdmin({{ $user->id }}, this.value)"
-                                                class="px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-xs font-medium focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                                class="px-2 py-1 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-xs font-medium focus:outline-none focus:ring-1 focus:ring-admin-500 focus:border-transparent text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
                                             @if(isset($admins) && $admins->count() > 0)
                                                 <option value="" {{ !$user->assign_to ? 'selected' : '' }}>Atanmamış</option>
                                                 @foreach($admins as $admin)
                                                     <option value="{{ $admin->id }}"
                                                             {{ ($user->assign_to == $admin->id) ? 'selected' : '' }}>
-                                                        {{ $admin->getDisplayName() }}
+                                                        {{ Str::limit($admin->getDisplayName(), 15) }}
                                                     </option>
                                                 @endforeach
                                             @else
@@ -301,28 +472,28 @@
                                 </td>
 
                                 <!-- Enhanced Status Badge -->
-                                <td class="px-6 py-5 whitespace-nowrap text-center">
+                                <td class="px-2 py-1 whitespace-nowrap text-center">
                                     @switch($user->status ?? 'active')
                                         @case('active')
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }}">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }} leading-tight">
                                                 <i class="fas fa-check-circle mr-1"></i>
                                                 Aktif
                                             </span>
                                             @break
                                         @case('blocked')
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 {{ $isDark ? 'dark:bg-red-800 dark:text-red-100' : '' }}">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 {{ $isDark ? 'dark:bg-red-800 dark:text-red-100' : '' }} leading-tight">
                                                 <i class="fas fa-times-circle mr-1"></i>
                                                 Engelli
                                             </span>
                                             @break
                                         @case('pending')
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 {{ $isDark ? 'dark:bg-yellow-800 dark:text-yellow-100' : '' }}">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 {{ $isDark ? 'dark:bg-yellow-800 dark:text-yellow-100' : '' }} leading-tight">
                                                 <i class="fas fa-clock mr-1"></i>
                                                 Bekliyor
                                             </span>
                                             @break
                                         @default
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 {{ $isDark ? 'dark:bg-gray-700 dark:text-gray-200' : '' }}">
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 {{ $isDark ? 'dark:bg-gray-700 dark:text-gray-200' : '' }} leading-tight">
                                                 <i class="fas fa-question-circle mr-1"></i>
                                                 Belirsiz
                                             </span>
@@ -330,29 +501,29 @@
                                 </td>
 
                                 <!-- Modern Action Buttons -->
-                                <td class="px-6 py-5 whitespace-nowrap text-center">
-                                    <div class="flex items-center justify-center space-x-2">
+                                <td class="px-2 py-1 whitespace-nowrap text-center">
+                                    <div class="flex items-center justify-center space-x-1">
                                         <button onclick="viewUser({{ $user->id }})"
-                                                class="p-2 rounded-lg text-admin-600 hover:bg-admin-100 {{ $isDark ? 'dark:text-admin-400 dark:hover:bg-admin-700' : '' }} transition-colors duration-200"
+                                                class="p-1 rounded-lg text-admin-600 hover:bg-admin-100 {{ $isDark ? 'dark:text-admin-400 dark:hover:bg-admin-700' : '' }} transition-colors duration-200"
                                                 title="Görüntüle">
-                                            <i class="fas fa-eye text-sm"></i>
+                                            <i class="fas fa-eye text-xs"></i>
                                         </button>
                                         <button onclick="editUser({{ $user->id }})"
-                                                class="p-2 rounded-lg text-blue-600 hover:bg-blue-100 {{ $isDark ? 'dark:text-blue-400 dark:hover:bg-blue-800' : '' }} transition-colors duration-200"
+                                                class="p-1 rounded-lg text-blue-600 hover:bg-blue-100 {{ $isDark ? 'dark:text-blue-400 dark:hover:bg-blue-800' : '' }} transition-colors duration-200"
                                                 title="Düzenle">
-                                            <i class="fas fa-edit text-sm"></i>
+                                            <i class="fas fa-edit text-xs"></i>
                                         </button>
                                         @if($user->status == 'active')
                                             <button onclick="blockUser({{ $user->id }})"
-                                                    class="p-2 rounded-lg text-red-600 hover:bg-red-100 {{ $isDark ? 'dark:text-red-400 dark:hover:bg-red-800' : '' }} transition-colors duration-200"
+                                                    class="p-1 rounded-lg text-red-600 hover:bg-red-100 {{ $isDark ? 'dark:text-red-400 dark:hover:bg-red-800' : '' }} transition-colors duration-200"
                                                     title="Engelle">
-                                                <i class="fas fa-ban text-sm"></i>
+                                                <i class="fas fa-ban text-xs"></i>
                                             </button>
                                         @else
                                             <button onclick="unblockUser({{ $user->id }})"
-                                                    class="p-2 rounded-lg text-green-600 hover:bg-green-100 {{ $isDark ? 'dark:text-green-400 dark:hover:bg-green-800' : '' }} transition-colors duration-200"
+                                                    class="p-1 rounded-lg text-green-600 hover:bg-green-100 {{ $isDark ? 'dark:text-green-400 dark:hover:bg-green-800' : '' }} transition-colors duration-200"
                                                     title="Aktifleştir">
-                                                <i class="fas fa-check text-sm"></i>
+                                                <i class="fas fa-check text-xs"></i>
                                             </button>
                                         @endif
                                     </div>
@@ -360,7 +531,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="px-6 py-12 text-center">
+                                <td colspan="9" class="px-2 py-12 text-center">
                                     <div class="flex flex-col items-center">
                                         <i class="fas fa-users text-6xl text-admin-400 {{ $isDark ? 'dark:text-admin-500' : '' }} mb-4"></i>
                                         <h3 class="text-lg font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-2">
@@ -377,23 +548,45 @@
                 </table>
             </div>
 
-            <!-- Enhanced Pagination Footer -->
+            <!-- Enhanced Pagination Footer with Per-Page Selector -->
             <div class="bg-admin-50 {{ $isDark ? 'dark:bg-admin-750' : '' }} px-6 py-4 border-t border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }}">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
-                    <div class="flex items-center space-x-4">
+                <div class="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                    
+                    <!-- Results Info ve Per-Page Selector -->
+                    <div class="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
+                        <!-- Results Counter -->
                         <div class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
-                            @if(isset($users) && method_exists($users, 'total'))
-                                {{ $users->firstItem() ?? 0 }}-{{ $users->lastItem() ?? 0 }} arası,
-                                toplam <span class="font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->total() }}</span> kullanıcı
+                            @if(isset($users) && $users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                <p>
+                                    Gösterilen: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->firstItem() ?? 0 }}</span>
+                                    - <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->lastItem() ?? 0 }}</span>
+                                    / Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->total() }}</span> kayıt
+                                </p>
+                            @else
+                                <p>Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ isset($users) ? $users->count() : 0 }}</span> kayıt gösteriliyor</p>
                             @endif
                         </div>
+
+                        <!-- Per Page Selector -->
+                        <div class="flex items-center space-x-2">
+                            <label for="per_page" class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">Sayfa başı:</label>
+                            <select name="per_page" id="per_page" onchange="changePerPage(this.value)"
+                                    class="text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                <option value="25" {{ request('per_page', 25) == 25 ? 'selected' : '' }}>25</option>
+                                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                                <option value="75" {{ request('per_page') == 75 ? 'selected' : '' }}>75</option>
+                                <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                                <option value="all" {{ request('per_page') == 'all' ? 'selected' : '' }}>Hepsini Göster</option>
+                            </select>
+                        </div>
                     </div>
-                    
-                    <div class="flex items-center">
-                        @if(isset($users) && method_exists($users, 'links'))
+
+                    <!-- Pagination Links (sadece paginate edilmiş sonuçlar için) -->
+                    @if(isset($users) && $users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                        <div class="flex justify-center sm:justify-end">
                             <x-admin-pagination :paginator="$users" />
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -738,5 +931,15 @@ document.addEventListener('change', function(e) {
         updateBulkActions();
     }
 });
+// Per-Page Change Function
+function changePerPage(perPageValue) {
+    // Mevcut URL'yi al ve per_page parametresini güncelle
+    const url = new URL(window.location.href);
+    url.searchParams.set('per_page', perPageValue);
+    url.searchParams.set('page', '1'); // Yeni per_page seçildiğinde 1. sayfaya git
+    
+    // Sayfayı yenile
+    window.location.href = url.toString();
+}
 </script>
 @endsection
