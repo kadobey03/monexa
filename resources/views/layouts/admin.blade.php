@@ -210,12 +210,6 @@
                         <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">İş Yönetimi</span>
                     </div>
 
-                    <a href="{{ route('admin.leads.index') }}"
-                       class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-700 dark:hover:text-indigo-300 transition-all duration-200 group {{ request()->routeIs('admin.leads.*') ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300' : '' }}"
-                       title="Lead Yönetimi">
-                        <x-heroicon name="user-group" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-indigo-500" />
-                        <span class="font-medium">Lead Yönetimi</span>
-                    </a>
 
                     <a href="{{ route('emailservices') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 group {{ request()->routeIs('emailservices') ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : '' }}"
