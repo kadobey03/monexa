@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6" x-data="managersIndex()">
+<div class="space-y-6" id="managersIndex">
     
     <!-- Page Header -->
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
@@ -27,7 +27,7 @@
                 </a>
                 
                 <!-- Export Button -->
-                <button type="button"
+                <button type="button" id="exportButton"
                         class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 font-medium rounded-xl transition-all duration-200">
                     <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
                     Dışa Aktar
@@ -81,7 +81,7 @@
 
     <!-- Filters and Search -->
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
-        <form method="GET" class="space-y-4" x-ref="filtersForm">
+        <form method="GET" class="space-y-4" id="filtersForm">
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                 <!-- Search -->
                 <div class="md:col-span-2">
@@ -91,10 +91,10 @@
                     </label>
                     <input type="text" 
                            name="search" 
+                           id="searchInput"
                            value="{{ request('search') }}"
                            placeholder="Ad, email, çalışan ID..."
-                           class="admin-input w-full"
-                           x-on:input.debounce.500ms="$refs.filtersForm.submit()">
+                           class="admin-input w-full">
                 </div>
                 
                 <!-- Role Filter -->
@@ -104,8 +104,8 @@
                         Rol
                     </label>
                     <select name="role_id" 
-                            class="admin-input w-full"
-                            x-on:change="$refs.filtersForm.submit()">
+                            id="roleFilter"
+                            class="admin-input w-full">
                         <option value="">Tüm Roller</option>
                         @foreach($roles as $role)
                             <option value="{{ $role->id }}" {{ request('role_id') == $role->id ? 'selected' : '' }}>
@@ -122,8 +122,8 @@
                         Departman
                     </label>
                     <select name="department" 
-                            class="admin-input w-full"
-                            x-on:change="$refs.filtersForm.submit()">
+                            id="departmentFilter"
+                            class="admin-input w-full">
                         <option value="">Tüm Departmanlar</option>
                         @foreach($departments as $dept)
                             <option value="{{ $dept }}" {{ request('department') == $dept ? 'selected' : '' }}>
@@ -140,8 +140,8 @@
                         Durum
                     </label>
                     <select name="status" 
-                            class="admin-input w-full"
-                            x-on:change="$refs.filtersForm.submit()">
+                            id="statusFilter"
+                            class="admin-input w-full">
                         <option value="">Tüm Durumlar</option>
                         <option value="{{ \App\Models\Admin::STATUS_ACTIVE }}" {{ request('status') == \App\Models\Admin::STATUS_ACTIVE ? 'selected' : '' }}>Aktif</option>
                         <option value="{{ \App\Models\Admin::STATUS_INACTIVE }}" {{ request('status') == \App\Models\Admin::STATUS_INACTIVE ? 'selected' : '' }}>Pasif</option>
@@ -165,28 +165,28 @@
                 </div>
                 
                 <!-- Bulk Actions -->
-                <div class="flex items-center space-x-3" x-show="selectedAdmins.length > 0" x-transition>
-                    <span class="text-sm text-admin-600 dark:text-admin-400" x-text="`${selectedAdmins.length} seçili`"></span>
+                <div class="flex items-center space-x-3 hidden" id="bulkActionsContainer">
+                    <span class="text-sm text-admin-600 dark:text-admin-400" id="selectedCount">0 seçili</span>
                     
-                    <div class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" 
+                    <div class="relative">
+                        <button type="button" id="bulkActionsButton"
                                 class="inline-flex items-center px-3 py-1.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium rounded-lg hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors">
                             <x-heroicon name="cog-6-tooth" class="w-4 h-4 mr-1" />
                             Toplu İşlem
                             <x-heroicon name="chevron-down" class="w-3 h-3 ml-1" />
                         </button>
                         
-                        <div x-show="open" @click.away="open = false" x-transition
-                             class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-elegant border border-admin-200 dark:border-admin-700 py-2 z-10">
-                            <button @click="bulkAction('activate')" class="w-full px-4 py-2 text-left text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
+                        <div id="bulkActionsDropdown" 
+                             class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-elegant border border-admin-200 dark:border-admin-700 py-2 z-10 hidden">
+                            <button type="button" data-action="activate" class="bulk-action-btn w-full px-4 py-2 text-left text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                                 <x-heroicon name="play" class="w-4 h-4 inline mr-2 text-green-500" />
                                 Aktifleştir
                             </button>
-                            <button @click="bulkAction('deactivate')" class="w-full px-4 py-2 text-left text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
+                            <button type="button" data-action="deactivate" class="bulk-action-btn w-full px-4 py-2 text-left text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                                 <x-heroicon name="pause" class="w-4 h-4 inline mr-2 text-amber-500" />
                                 Devre Dışı Bırak
                             </button>
-                            <button @click="bulkAction('delete')" class="w-full px-4 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                            <button type="button" data-action="delete" class="bulk-action-btn w-full px-4 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
                                 <x-heroicon name="trash-2" class="w-4 h-4 inline mr-2" />
                                 Sil
                             </button>
@@ -206,8 +206,7 @@
                         <th class="px-6 py-4 text-left">
                             <input type="checkbox" 
                                    class="admin-checkbox"
-                                   x-model="selectAll"
-                                   @change="toggleSelectAll()">
+                                   id="selectAllCheckbox">
                         </th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-admin-500 uppercase tracking-wider">
                             <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'firstName', 'sort_direction' => request('sort_direction') === 'asc' ? 'desc' : 'asc']) }}" 
@@ -246,9 +245,8 @@
                     <tr class="hover:bg-admin-50 dark:hover:bg-admin-700/50 transition-colors">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <input type="checkbox" 
-                                   class="admin-checkbox"
-                                   value="{{ $admin->id }}"
-                                   x-model="selectedAdmins">
+                                   class="admin-checkbox row-checkbox"
+                                   value="{{ $admin->id }}">
                         </td>
                         
                         <!-- Admin Info -->
@@ -364,22 +362,20 @@
                             <div class="flex items-center justify-end space-x-2">
                                 <!-- Edit Modal -->
                                 @if($currentAdmin->canManageAdmin($admin))
-                                    <button @click="openEditModal({{ $admin->id }})"
-                                            class="text-admin-400 hover:text-amber-500 transition-colors"
+                                    <button class="text-admin-400 hover:text-amber-500 transition-colors edit-admin-btn"
+                                            data-admin-id="{{ $admin->id }}"
                                             title="Düzenle">
                                         <x-heroicon name="edit" class="w-4 h-4" />
                                     </button>
                                 @endif
                                 
                                 <!-- More Actions -->
-                                <div class="relative" x-data="{ open: false }">
-                                    <button @click="open = !open" 
-                                            class="text-admin-400 hover:text-admin-600 dark:hover:text-admin-300 transition-colors">
+                                <div class="relative action-dropdown">
+                                    <button class="text-admin-400 hover:text-admin-600 dark:hover:text-admin-300 transition-colors action-dropdown-button">
                                         <x-heroicon name="more-vertical" class="w-4 h-4" />
                                     </button>
                                     
-                                    <div x-show="open" @click.away="open = false" x-transition
-                                         class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-elegant border border-admin-200 dark:border-admin-700 py-2 z-10">
+                                    <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-elegant border border-admin-200 dark:border-admin-700 py-2 z-10 hidden action-dropdown-menu">
                                         @if($admin->status === 'Active')
                                             <a href="{{ route('admin.managers.deactivate', $admin) }}" 
                                                class="block px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
@@ -395,16 +391,18 @@
                                         @endif
                                         
                                         @if($currentAdmin->canManageAdmin($admin))
-                                            <button @click="openResetPasswordModal({{ $admin->id }}, '{{ $admin->getFullName() }}')"
-                                                    class="w-full text-left px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
+                                            <button class="w-full text-left px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors reset-password-btn"
+                                                    data-admin-id="{{ $admin->id }}"
+                                                    data-admin-name="{{ $admin->getFullName() }}">
                                                 <x-heroicon name="key" class="w-4 h-4 inline mr-2 text-purple-500" />
                                                 Şifre Sıfırla
                                             </button>
                                         @endif
                                         
                                         @if($currentAdmin->canManageAdmin($admin) && $currentAdmin->id !== $admin->id)
-                                            <button @click="deleteAdmin({{ $admin->id }}, '{{ $admin->getFullName() }}')"
-                                                    class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                                            <button class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors delete-admin-btn"
+                                                    data-admin-id="{{ $admin->id }}"
+                                                    data-admin-name="{{ $admin->getFullName() }}">
                                                 <x-heroicon name="trash-2" class="w-4 h-4 inline mr-2" />
                                                 Sil
                                             </button>
@@ -438,16 +436,9 @@
     </div>
 
     <!-- Edit Manager Modal -->
-    <div id="editManagerModal" x-data="{ open: false, manager: { firstName: '', lastName: '', email: '', phone: '', role_id: '', supervisor_id: '', department: '', status: '' } }" x-show="open" @open-edit-manager-modal.window="open = true; manager = $event.detail.manager; console.log('🚀 Modal received data:', manager);"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+    <div id="editManagerModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity" @click="open = false">
+            <div class="fixed inset-0 transition-opacity modal-backdrop">
                 <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
             </div>
             <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
@@ -455,12 +446,12 @@
                     <h4 class="text-lg font-semibold text-white flex items-center">
                         <x-heroicon name="user-pen" class="h-5 w-5 mr-2" />Yönetici Düzenle
                     </h4>
-                    <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                    <button class="absolute top-4 right-4 text-white hover:text-gray-200 modal-close-btn">
                         <x-heroicon name="x-mark" class="h-5 w-5" />
                     </button>
                 </div>
                 <div class="p-6">
-                    <form id="editManagerForm" method="POST" x-ref="editForm" @submit.prevent="submitEditForm">
+                    <form id="editManagerForm" method="POST">
                         @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- First Name -->
@@ -469,7 +460,7 @@
                                     <x-heroicon name="user" class="h-4 w-4 inline mr-2 text-amber-600" />Ad *
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
-                                       type="text" name="firstName" x-model="manager.firstName" required>
+                                       type="text" name="firstName" id="edit-firstName" required>
                             </div>
                             
                             <!-- Last Name -->
@@ -478,7 +469,7 @@
                                     <x-heroicon name="user-circle" class="h-4 w-4 inline mr-2 text-amber-600" />Soyad *
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
-                                       type="text" name="lastName" x-model="manager.lastName" required>
+                                       type="text" name="lastName" id="edit-lastName" required>
                             </div>
                             
                             <!-- Email -->
@@ -487,7 +478,7 @@
                                     <x-heroicon name="envelope" class="h-4 w-4 inline mr-2 text-amber-600" />E-posta *
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
-                                       type="email" name="email" x-model="manager.email" required>
+                                       type="email" name="email" id="edit-email" required>
                             </div>
                             
                             <!-- Phone -->
@@ -496,7 +487,7 @@
                                     <x-heroicon name="phone" class="h-4 w-4 inline mr-2 text-amber-600" />Telefon
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
-                                       type="tel" name="phone" x-model="manager.phone">
+                                       type="tel" name="phone" id="edit-phone">
                             </div>
                             
                             <!-- Role -->
@@ -505,7 +496,7 @@
                                     <x-heroicon name="shield-check" class="h-4 w-4 inline mr-2 text-amber-600" />Rol
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
-                                        name="role_id" x-model="manager.role_id">
+                                        name="role_id" id="edit-role_id">
                                     <option value="">Rol Seçin</option>
                                     @foreach($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->display_name }}</option>
@@ -519,7 +510,7 @@
                                     <x-heroicon name="user-check" class="h-4 w-4 inline mr-2 text-amber-600" />Süpervizör
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
-                                        name="supervisor_id" x-model="manager.supervisor_id">
+                                        name="supervisor_id" id="edit-supervisor_id">
                                     <option value="">Süpervizör Seçin</option>
                                     @foreach($supervisors as $supervisor)
                                         <option value="{{ $supervisor->id }}">{{ $supervisor->getFullName() }}</option>
@@ -533,7 +524,7 @@
                                     <x-heroicon name="building" class="h-4 w-4 inline mr-2 text-amber-600" />Departman
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
-                                        name="department" x-model="manager.department">
+                                        name="department" id="edit-department">
                                     <option value="">Departman Seçin</option>
                                     @foreach($departments as $dept)
                                         <option value="{{ $dept }}">{{ ucfirst($dept) }}</option>
@@ -547,7 +538,7 @@
                                     <x-heroicon name="activity" class="h-4 w-4 inline mr-2 text-amber-600" />Durum
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
-                                        name="status" x-model="manager.status">
+                                        name="status" id="edit-status">
                                     <option value="{{ \App\Models\Admin::STATUS_ACTIVE }}">Aktif</option>
                                     <option value="{{ \App\Models\Admin::STATUS_INACTIVE }}">Pasif</option>
                                     <option value="{{ \App\Models\Admin::STATUS_SUSPENDED }}">Askıya Alınmış</option>
@@ -567,18 +558,9 @@
     </div>
 
     <!-- Reset Password Modal -->
-    <div id="resetPasswordModal" x-data="{ open: false, admin: { id: '', fullName: '', newPassword: '' } }"
-         x-show="open"
-         @open-reset-password-modal.window="open = true; admin = $event.detail.admin;"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-cloak>
+    <div id="resetPasswordModal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity" @click="open = false">
+            <div class="fixed inset-0 transition-opacity modal-backdrop">
                 <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
             </div>
             <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -586,7 +568,7 @@
                     <h4 class="text-lg font-semibold text-white flex items-center">
                         <x-heroicon name="key" class="h-5 w-5 mr-2" />Şifre Sıfırla
                     </h4>
-                    <button @click="open = false" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                    <button class="absolute top-4 right-4 text-white hover:text-gray-200 modal-close-btn">
                         <x-heroicon name="x-mark" class="h-5 w-5" />
                     </button>
                 </div>
@@ -597,7 +579,7 @@
                                 <x-heroicon name="user" class="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <p class="text-lg font-medium text-admin-900 dark:text-white" x-text="admin.fullName"></p>
+                                <p class="text-lg font-medium text-admin-900 dark:text-white" id="reset-admin-name"></p>
                                 <p class="text-sm text-admin-500">için yeni şifre oluşturuluyor</p>
                             </div>
                         </div>
@@ -615,7 +597,7 @@
                         </div>
                         
                         <!-- Generated Password Display -->
-                        <div x-show="admin.newPassword" x-transition class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-4">
+                        <div id="passwordDisplay" class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-4 hidden">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
                                     <x-heroicon name="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -627,8 +609,8 @@
                             </div>
                             <div class="mt-3 p-3 bg-white dark:bg-admin-700 rounded border">
                                 <div class="flex items-center justify-between">
-                                    <code class="text-sm font-mono text-admin-900 dark:text-white" x-text="admin.newPassword"></code>
-                                    <button @click="copyPassword()" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
+                                    <code class="text-sm font-mono text-admin-900 dark:text-white" id="newPassword"></code>
+                                    <button id="copyPasswordBtn" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
                                         <x-heroicon name="copy" class="w-4 h-4 inline mr-1" />Kopyala
                                     </button>
                                 </div>
@@ -637,16 +619,13 @@
                     </div>
                     
                     <div class="flex items-center space-x-3">
-                        <button @click="generateNewPassword()"
-                                x-show="!admin.newPassword"
+                        <button id="generatePasswordBtn"
                                 class="flex-1 flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                             <x-heroicon name="arrow-path" class="h-4 w-4 mr-2" />Yeni Şifre Oluştur
                         </button>
                         
-                        <button @click="open = false"
-                                class="px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-admin-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600">
-                            <span x-show="!admin.newPassword">İptal</span>
-                            <span x-show="admin.newPassword">Kapat</span>
+                        <button class="px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-admin-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 modal-close-btn">
+                            İptal
                         </button>
                     </div>
                 </div>
@@ -658,85 +637,437 @@
 
 @push('scripts')
 <script>
-function managersIndex() {
-    return {
-        selectedAdmins: [],
-        selectAll: false,
+class ManagersIndex {
+    constructor() {
+        this.selectedAdmins = [];
+        this.searchTimeout = null;
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+    }
+    
+    bindEvents() {
+        // Search input with debounce
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(() => {
+                    document.getElementById('filtersForm').submit();
+                }, 500);
+            });
+        }
         
-        toggleSelectAll() {
-            if (this.selectAll) {
-                this.selectedAdmins = Array.from(document.querySelectorAll('input[type="checkbox"][value]')).map(cb => cb.value);
-            } else {
-                this.selectedAdmins = [];
-            }
-        },
-        
-        openEditModal(managerId) {
-            console.log('🚀 DEBUG: openEditModal called with managerId:', managerId);
-            console.log('🚀 DEBUG: Attempting to fetch:', `/admin/dashboard/managers/edit-data/${managerId}`);
-            
-            // Fetch manager data via AJAX
-            fetch(`/admin/dashboard/managers/edit-data/${managerId}`)
-                .then(response => {
-                    console.log('🚀 DEBUG: Response status:', response.status);
-                    console.log('🚀 DEBUG: Response headers:', response.headers);
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('🚀 DEBUG: Response data:', data);
-                    
-                    if (data.success) {
-                        // Set form action to AJAX endpoint to avoid nginx 404
-                        document.getElementById('editManagerForm').action = `/admin/dashboard/managers/${managerId}/update-data`;
-                        console.log('🚀 DEBUG: Form action set to:', `/admin/dashboard/managers/${managerId}/update-data`);
-                        
-                        // Open modal and set data via custom event
-                        console.log('🚀 DEBUG: Dispatching modal event with data:', data.manager);
-                        window.dispatchEvent(new CustomEvent('open-edit-manager-modal', {
-                            detail: {
-                                manager: data.manager
-                            }
-                        }));
-                    } else {
-                        console.error('🚨 DEBUG: Request failed with message:', data.message);
-                        Swal.fire('Hata!', data.message || 'Yönetici bilgileri alınamadı.', 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('🚨 DEBUG: Fetch error:', error);
-                    console.error('🚨 DEBUG: Error details:', error.message, error.stack);
-                    Swal.fire('Hata!', 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+        // Filter selects
+        const filters = ['roleFilter', 'departmentFilter', 'statusFilter'];
+        filters.forEach(filterId => {
+            const element = document.getElementById(filterId);
+            if (element) {
+                element.addEventListener('change', () => {
+                    document.getElementById('filtersForm').submit();
                 });
-        },
-        
-        bulkAction(action) {
-            if (this.selectedAdmins.length === 0) {
-                return;
             }
+        });
+        
+        // Select all checkbox
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.addEventListener('change', () => {
+                this.toggleSelectAll();
+            });
+        }
+        
+        // Row checkboxes
+        const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+        rowCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                this.updateSelection();
+            });
+        });
+        
+        // Bulk actions
+        const bulkActionsButton = document.getElementById('bulkActionsButton');
+        if (bulkActionsButton) {
+            bulkActionsButton.addEventListener('click', () => {
+                this.toggleBulkActionsDropdown();
+            });
+        }
+        
+        // Bulk action buttons
+        const bulkActionBtns = document.querySelectorAll('.bulk-action-btn');
+        bulkActionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.bulkAction(btn.dataset.action);
+            });
+        });
+        
+        // Edit admin buttons
+        const editBtns = document.querySelectorAll('.edit-admin-btn');
+        editBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.openEditModal(btn.dataset.adminId);
+            });
+        });
+        
+        // Reset password buttons
+        const resetPasswordBtns = document.querySelectorAll('.reset-password-btn');
+        resetPasswordBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.openResetPasswordModal(btn.dataset.adminId, btn.dataset.adminName);
+            });
+        });
+        
+        // Delete admin buttons
+        const deleteBtns = document.querySelectorAll('.delete-admin-btn');
+        deleteBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.deleteAdmin(btn.dataset.adminId, btn.dataset.adminName);
+            });
+        });
+        
+        // Action dropdowns
+        const actionDropdowns = document.querySelectorAll('.action-dropdown');
+        actionDropdowns.forEach(dropdown => {
+            const button = dropdown.querySelector('.action-dropdown-button');
+            const menu = dropdown.querySelector('.action-dropdown-menu');
             
-            const actionMessages = {
-                'activate': 'aktifleştirmek',
-                'deactivate': 'devre dışı bırakmak', 
-                'delete': 'silmek'
-            };
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleActionDropdown(dropdown);
+            });
+        });
+        
+        // Close dropdowns on click outside
+        document.addEventListener('click', () => {
+            this.closeAllDropdowns();
+        });
+        
+        // Modal events
+        const modalCloseBtns = document.querySelectorAll('.modal-close-btn');
+        modalCloseBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.closeModals();
+            });
+        });
+        
+        const modalBackdrops = document.querySelectorAll('.modal-backdrop');
+        modalBackdrops.forEach(backdrop => {
+            backdrop.addEventListener('click', () => {
+                this.closeModals();
+            });
+        });
+        
+        // Edit form submission
+        const editForm = document.getElementById('editManagerForm');
+        if (editForm) {
+            editForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.submitEditForm();
+            });
+        }
+        
+        // Password generation
+        const generatePasswordBtn = document.getElementById('generatePasswordBtn');
+        if (generatePasswordBtn) {
+            generatePasswordBtn.addEventListener('click', () => {
+                this.generateNewPassword();
+            });
+        }
+        
+        // Copy password
+        const copyPasswordBtn = document.getElementById('copyPasswordBtn');
+        if (copyPasswordBtn) {
+            copyPasswordBtn.addEventListener('click', () => {
+                this.copyPassword();
+            });
+        }
+    }
+    
+    toggleSelectAll() {
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+        const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+        
+        if (selectAllCheckbox.checked) {
+            this.selectedAdmins = Array.from(rowCheckboxes).map(cb => cb.value);
+            rowCheckboxes.forEach(cb => cb.checked = true);
+        } else {
+            this.selectedAdmins = [];
+            rowCheckboxes.forEach(cb => cb.checked = false);
+        }
+        
+        this.updateBulkActionsVisibility();
+    }
+    
+    updateSelection() {
+        const rowCheckboxes = document.querySelectorAll('.row-checkbox:checked');
+        this.selectedAdmins = Array.from(rowCheckboxes).map(cb => cb.value);
+        
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+        const totalCheckboxes = document.querySelectorAll('.row-checkbox').length;
+        
+        selectAllCheckbox.checked = this.selectedAdmins.length === totalCheckboxes;
+        selectAllCheckbox.indeterminate = this.selectedAdmins.length > 0 && this.selectedAdmins.length < totalCheckboxes;
+        
+        this.updateBulkActionsVisibility();
+    }
+    
+    updateBulkActionsVisibility() {
+        const bulkActionsContainer = document.getElementById('bulkActionsContainer');
+        const selectedCount = document.getElementById('selectedCount');
+        
+        if (this.selectedAdmins.length > 0) {
+            bulkActionsContainer.classList.remove('hidden');
+            selectedCount.textContent = `${this.selectedAdmins.length} seçili`;
+        } else {
+            bulkActionsContainer.classList.add('hidden');
+        }
+    }
+    
+    toggleBulkActionsDropdown() {
+        const dropdown = document.getElementById('bulkActionsDropdown');
+        dropdown.classList.toggle('hidden');
+    }
+    
+    toggleActionDropdown(dropdown) {
+        const menu = dropdown.querySelector('.action-dropdown-menu');
+        
+        // Close other dropdowns
+        document.querySelectorAll('.action-dropdown-menu').forEach(otherMenu => {
+            if (otherMenu !== menu) {
+                otherMenu.classList.add('hidden');
+            }
+        });
+        
+        menu.classList.toggle('hidden');
+    }
+    
+    closeAllDropdowns() {
+        document.querySelectorAll('.action-dropdown-menu').forEach(menu => {
+            menu.classList.add('hidden');
+        });
+        
+        const bulkDropdown = document.getElementById('bulkActionsDropdown');
+        if (bulkDropdown) {
+            bulkDropdown.classList.add('hidden');
+        }
+    }
+    
+    async openEditModal(managerId) {
+        try {
+            console.log('🚀 DEBUG: openEditModal called with managerId:', managerId);
             
-            Swal.fire({
-                title: 'Emin misiniz?',
-                text: `Seçilen ${this.selectedAdmins.length} yöneticiyi ${actionMessages[action]} istiyorsunuz?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: action === 'delete' ? '#dc2626' : '#3b82f6',
-                cancelButtonColor: '#6b7280',
-                confirmButtonText: 'Evet, devam et',
-                cancelButtonText: 'İptal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.performBulkAction(action);
+            const response = await fetch(`/admin/dashboard/managers/edit-data/${managerId}`);
+            const data = await response.json();
+            
+            console.log('🚀 DEBUG: Response data:', data);
+            
+            if (data.success) {
+                // Set form action
+                const editForm = document.getElementById('editManagerForm');
+                editForm.action = `/admin/dashboard/managers/${managerId}/update-data`;
+                
+                // Populate form
+                document.getElementById('edit-firstName').value = data.manager.firstName || '';
+                document.getElementById('edit-lastName').value = data.manager.lastName || '';
+                document.getElementById('edit-email').value = data.manager.email || '';
+                document.getElementById('edit-phone').value = data.manager.phone || '';
+                document.getElementById('edit-role_id').value = data.manager.role_id || '';
+                document.getElementById('edit-supervisor_id').value = data.manager.supervisor_id || '';
+                document.getElementById('edit-department').value = data.manager.department || '';
+                document.getElementById('edit-status').value = data.manager.status || '';
+                
+                // Show modal
+                document.getElementById('editManagerModal').classList.remove('hidden');
+            } else {
+                console.error('🚨 DEBUG: Request failed with message:', data.message);
+                Swal.fire('Hata!', data.message || 'Yönetici bilgileri alınamadı.', 'error');
+            }
+        } catch (error) {
+            console.error('🚨 DEBUG: Fetch error:', error);
+            Swal.fire('Hata!', 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+        }
+    }
+    
+    async submitEditForm() {
+        const form = document.getElementById('editManagerForm');
+        const formData = new FormData(form);
+        
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
                 }
             });
-        },
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                Swal.fire('Başarılı!', data.message, 'success').then(() => {
+                    window.location.reload();
+                });
+            } else {
+                if (data.errors) {
+                    let errorMsg = 'Doğrulama hataları:\n\n';
+                    Object.keys(data.errors).forEach(field => {
+                        const fieldNames = {
+                            'email': 'E-posta',
+                            'firstName': 'Ad',
+                            'lastName': 'Soyad',
+                            'employee_id': 'Çalışan ID'
+                        };
+                        const fieldName = fieldNames[field] || field;
+                        errorMsg += `• ${fieldName}: ${data.errors[field].join(', ')}\n`;
+                    });
+                    Swal.fire('Doğrulama Hatası!', errorMsg, 'error');
+                } else {
+                    Swal.fire('Hata!', data.message || 'Güncelleme sırasında bir hata oluştu.', 'error');
+                }
+            }
+        } catch (error) {
+            console.error('🚨 DEBUG: Submit error:', error);
+            Swal.fire('Hata!', 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+        }
+    }
+    
+    openResetPasswordModal(adminId, fullName) {
+        document.getElementById('reset-admin-name').textContent = fullName;
+        document.getElementById('resetPasswordModal').classList.remove('hidden');
         
-        performBulkAction(action) {
+        // Reset modal state
+        document.getElementById('passwordDisplay').classList.add('hidden');
+        document.getElementById('newPassword').textContent = '';
+        
+        // Store admin id for password generation
+        this.currentResetAdminId = adminId;
+    }
+    
+    async generateNewPassword() {
+        if (!this.currentResetAdminId) {
+            Swal.fire('Hata!', 'Admin ID bulunamadı.', 'error');
+            return;
+        }
+        
+        // Show loading
+        Swal.fire({
+            title: 'Şifre Oluşturuluyor...',
+            text: 'Yeni şifre oluşturuluyor ve e-posta gönderiliyor.',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
+            }
+        });
+        
+        try {
+            const formData = new FormData();
+            formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            
+            const response = await fetch(`/admin/dashboard/managers/${this.currentResetAdminId}/reset-password`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // Show new password
+                document.getElementById('newPassword').textContent = data.newPassword || 'Şifre oluşturuldu ve e-posta gönderildi';
+                document.getElementById('passwordDisplay').classList.remove('hidden');
+                document.getElementById('generatePasswordBtn').classList.add('hidden');
+                
+                Swal.fire({
+                    title: 'Başarılı!',
+                    text: data.message || 'Yeni şifre oluşturuldu ve kullanıcıya e-posta ile gönderildi.',
+                    icon: 'success',
+                    confirmButtonText: 'Tamam'
+                });
+            } else {
+                Swal.fire('Hata!', data.message || 'Şifre sıfırlanırken bir hata oluştu.', 'error');
+            }
+        } catch (error) {
+            console.error('🚨 DEBUG: Reset password error:', error);
+            Swal.fire('Hata!', 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
+        }
+    }
+    
+    copyPassword() {
+        const passwordText = document.getElementById('newPassword').textContent;
+        
+        if (passwordText && navigator.clipboard) {
+            navigator.clipboard.writeText(passwordText).then(() => {
+                Swal.fire({
+                    title: 'Kopyalandı!',
+                    text: 'Şifre panoya kopyalandı.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            });
+        }
+    }
+    
+    deleteAdmin(id, name) {
+        Swal.fire({
+            title: 'Yönetici Sil',
+            text: `${name} adlı yöneticiyi kalıcı olarak silmek istediğinizden emin misiniz?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Evet, Sil',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/admin/dashboard/managers/${id}`;
+                form.innerHTML = `
+                    @csrf
+                    @method('DELETE')
+                `;
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+    
+    bulkAction(action) {
+        if (this.selectedAdmins.length === 0) {
+            return;
+        }
+        
+        const actionMessages = {
+            'activate': 'aktifleştirmek',
+            'deactivate': 'devre dışı bırakmak', 
+            'delete': 'silmek'
+        };
+        
+        Swal.fire({
+            title: 'Emin misiniz?',
+            text: `Seçilen ${this.selectedAdmins.length} yöneticiyi ${actionMessages[action]} istiyorsunuz?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: action === 'delete' ? '#dc2626' : '#3b82f6',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Evet, devam et',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.performBulkAction(action);
+            }
+        });
+    }
+    
+    async performBulkAction(action) {
+        try {
             const formData = new FormData();
             formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
             formData.append('action', action);
@@ -744,198 +1075,38 @@ function managersIndex() {
                 formData.append('admin_ids[]', id);
             });
             
-            fetch('{{ route("admin.managers.bulk-action") }}', {
+            const response = await fetch('{{ route("admin.managers.bulk-action") }}', {
                 method: 'POST',
                 body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire('Başarılı!', data.message, 'success')
-                        .then(() => window.location.reload());
-                } else {
-                    Swal.fire('Hata!', data.message, 'error');
-                }
-            })
-            .catch(error => {
-                Swal.fire('Hata!', 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
-            });
-        },
-        
-        deleteAdmin(id, name) {
-            Swal.fire({
-                title: 'Yönetici Sil',
-                text: `${name} adlı yöneticiyi kalıcı olarak silmek istediğinizden emin misiniz?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc2626',
-                cancelButtonColor: '#6b7280',
-                confirmButtonText: 'Evet, Sil',
-                cancelButtonText: 'İptal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = `/admin/dashboard/managers/${id}`;
-                    form.innerHTML = `
-                        @csrf
-                        @method('DELETE')
-                    `;
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            });
-        },
-        
-        submitEditForm() {
-            console.log('🚀 DEBUG: submitEditForm called');
-            const form = this.$refs.editForm;
-            const formData = new FormData(form);
-            
-            console.log('🚀 DEBUG: Form action:', form.action);
-            console.log('🚀 DEBUG: Form data entries:');
-            for (let [key, value] of formData.entries()) {
-                console.log(`  ${key}: ${value}`);
-            }
-            
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => {
-                console.log('🚀 DEBUG: Submit response status:', response.status);
-                return response.json();
-            })
-            .then(data => {
-                console.log('🚀 DEBUG: Submit response data:', data);
-                if (data.success) {
-                    Swal.fire('Başarılı!', data.message, 'success')
-                        .then(() => {
-                            // Reload page to show changes
-                            window.location.reload();
-                        });
-                } else {
-                    // Handle validation errors
-                    if (data.errors) {
-                        console.log('🚨 DEBUG: Validation errors:', data.errors);
-                        let errorMsg = 'Doğrulama hataları:\n\n';
-                        Object.keys(data.errors).forEach(field => {
-                            const fieldNames = {
-                                'email': 'E-posta',
-                                'firstName': 'Ad',
-                                'lastName': 'Soyad',
-                                'employee_id': 'Çalışan ID'
-                            };
-                            const fieldName = fieldNames[field] || field;
-                            errorMsg += `• ${fieldName}: ${data.errors[field].join(', ')}\n`;
-                        });
-                        Swal.fire('Doğrulama Hatası!', errorMsg, 'error');
-                    } else {
-                        Swal.fire('Hata!', data.message || 'Güncelleme sırasında bir hata oluştu.', 'error');
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('🚨 DEBUG: Submit error:', error);
-                Swal.fire('Hata!', 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
-            });
-        },
-        
-        openResetPasswordModal(adminId, fullName) {
-            console.log('🚀 DEBUG: openResetPasswordModal called with:', { adminId, fullName });
-            
-            // Dispatch modal event
-            window.dispatchEvent(new CustomEvent('open-reset-password-modal', {
-                detail: {
-                    admin: {
-                        id: adminId,
-                        fullName: fullName,
-                        newPassword: ''
-                    }
-                }
-            }));
-        },
-        
-        generateNewPassword() {
-            console.log('🚀 DEBUG: generateNewPassword called');
-            const modal = document.querySelector('#resetPasswordModal');
-            const adminData = Alpine.evaluate(modal, 'admin');
-            
-            if (!adminData.id) {
-                Swal.fire('Hata!', 'Admin ID bulunamadı.', 'error');
-                return;
-            }
-            
-            // Show loading
-            Swal.fire({
-                title: 'Şifre Oluşturuluyor...',
-                text: 'Yeni şifre oluşturuluyor ve e-posta gönderiliyor.',
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                willOpen: () => {
-                    Swal.showLoading();
-                }
             });
             
-            const formData = new FormData();
-            formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            const data = await response.json();
             
-            fetch(`{{ secure_url('/admin/dashboard/managers') }}/${adminData.id}/reset-password`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('🚀 DEBUG: Reset password response:', data);
-                
-                if (data.success) {
-                    // Update modal data with new password
-                    adminData.newPassword = data.newPassword || 'Şifre oluşturuldu ve e-posta gönderildi';
-                    
-                    Swal.fire({
-                        title: 'Başarılı!',
-                        text: data.message || 'Yeni şifre oluşturuldu ve kullanıcıya e-posta ile gönderildi.',
-                        icon: 'success',
-                        confirmButtonText: 'Tamam'
-                    });
-                } else {
-                    Swal.fire('Hata!', data.message || 'Şifre sıfırlanırken bir hata oluştu.', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('🚨 DEBUG: Reset password error:', error);
-                Swal.fire('Hata!', 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
-            });
-        },
-        
-        copyPassword() {
-            const modal = document.querySelector('#resetPasswordModal');
-            const adminData = Alpine.evaluate(modal, 'admin');
-            
-            if (adminData.newPassword && navigator.clipboard) {
-                navigator.clipboard.writeText(adminData.newPassword).then(() => {
-                    Swal.fire({
-                        title: 'Kopyalandı!',
-                        text: 'Şifre panoya kopyalandı.',
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
+            if (data.success) {
+                Swal.fire('Başarılı!', data.message, 'success').then(() => {
+                    window.location.reload();
                 });
+            } else {
+                Swal.fire('Hata!', data.message, 'error');
             }
+        } catch (error) {
+            Swal.fire('Hata!', 'Bir hata oluştu. Lütfen tekrar deneyin.', 'error');
         }
+    }
+    
+    closeModals() {
+        document.getElementById('editManagerModal').classList.add('hidden');
+        document.getElementById('resetPasswordModal').classList.add('hidden');
+        
+        // Reset password modal state
+        document.getElementById('generatePasswordBtn').classList.remove('hidden');
+        this.currentResetAdminId = null;
     }
 }
 
+// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    
+    new ManagersIndex();
 });
 </script>
 @endpush

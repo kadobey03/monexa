@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6" x-data="editManagerForm()">
+<div class="space-y-6" data-edit-manager-form>
     
     <!-- Page Header -->
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
@@ -48,10 +48,9 @@
                    class="p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors">
                     <x-heroicon name="eye" class="w-4 h-4 text-admin-600 dark:text-admin-400" />
                 </a>
-                <button @click="toggleStatus()" 
-                        class="p-2 rounded-lg transition-colors"
-                        :class="isActive ? 'bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50' : 'bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50'">
-                    <x-heroicon name="question-mark-circle" class="isActive ? " />
+                <button data-toggle-status
+                        class="p-2 rounded-lg transition-colors bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50">
+                    <x-heroicon name="power" class="w-4 h-4 text-green-600 dark:text-green-400" />
                 </button>
             </div>
         </div>
@@ -61,27 +60,23 @@
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700">
         <div class="border-b border-admin-200 dark:border-admin-700">
             <nav class="flex space-x-8 px-6">
-                <button @click="activeTab = 'personal'" 
-                        :class="activeTab === 'personal' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
-                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                <button data-tab="personal"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors border-blue-500 text-blue-600">
                     <x-heroicon name="user" class="w-4 h-4 inline mr-2" />
                     Kişisel Bilgiler
                 </button>
-                <button @click="activeTab = 'role'" 
-                        :class="activeTab === 'role' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
-                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                <button data-tab="role"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300">
                     <x-heroicon name="shield-check" class="w-4 h-4 inline mr-2" />
                     Rol & Hiyerarşi
                 </button>
-                <button @click="activeTab = 'performance'" 
-                        :class="activeTab === 'performance' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
-                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                <button data-tab="performance"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300">
                     <x-heroicon name="view-finder" class="w-4 h-4 inline mr-2" />
                     Performans
                 </button>
-                <button @click="activeTab = 'security'" 
-                        :class="activeTab === 'security' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
-                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                <button data-tab="security"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300">
                     <x-heroicon name="lock-closed" class="w-4 h-4 inline mr-2" />
                     Güvenlik
                 </button>
@@ -90,12 +85,12 @@
     </div>
 
     <!-- Form -->
-    <form method="POST" action="{{ route('admin.managers.update', $manager) }}" enctype="multipart/form-data" x-ref="editForm">
+    <form method="POST" action="{{ route('admin.managers.update', $manager) }}" enctype="multipart/form-data" data-edit-form>
         @csrf
         @method('PUT')
         
         <!-- Personal Information Tab -->
-        <div x-show="activeTab === 'personal'" x-transition class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
+        <div data-tab-content="personal" class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- First Name -->
                 <div>
@@ -223,16 +218,16 @@
                         @if($manager->getProfileImage())
                             <img src="{{ $manager->getProfileImage() }}" 
                                  alt="{{ $manager->getFullName() }}"
-                                 x-show="!avatarPreview"
+                                 data-current-avatar
                                  class="w-20 h-20 rounded-full object-cover border-2 border-admin-200 dark:border-admin-700">
                         @else
                             <div class="w-20 h-20 bg-admin-200 dark:bg-admin-700 rounded-full flex items-center justify-center" 
-                                 x-show="!avatarPreview">
+                                 data-current-avatar>
                                 <x-heroicon name="user" class="w-8 h-8 text-admin-400" />
                             </div>
                         @endif
-                        <img x-show="avatarPreview" 
-                             :src="avatarPreview" 
+                        <img data-avatar-preview
+                             style="display: none;"
                              class="w-20 h-20 rounded-full object-cover border-2 border-admin-200 dark:border-admin-700">
                     </div>
                     <div class="flex-1">
@@ -240,20 +235,20 @@
                                name="avatar" 
                                accept="image/*"
                                class="admin-input w-full @error('avatar') border-red-500 @enderror"
-                               @change="previewAvatar($event)">
+                               data-avatar-input>
                         <p class="text-xs text-admin-500 mt-1">JPG, PNG, GIF formatında maksimum 2MB</p>
                         <div class="flex items-center space-x-2 mt-2">
                             @if($manager->getProfileImage())
                                 <button type="button" 
-                                        @click="removeCurrentAvatar()"
+                                        data-remove-current-avatar
                                         class="text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
                                     <x-heroicon name="trash-2" class="w-3 h-3 inline mr-1" />
                                     Mevcut fotoğrafı kaldır
                                 </button>
                             @endif
                             <button type="button" 
-                                    x-show="avatarPreview"
-                                    @click="cancelAvatarPreview()"
+                                    data-cancel-avatar-preview
+                                    style="display: none;"
                                     class="text-xs text-admin-600 hover:text-admin-700 dark:text-admin-400 dark:hover:text-admin-300">
                                 <x-heroicon name="x-mark" class="w-3 h-3 inline mr-1" />
                                 İptal
@@ -268,7 +263,7 @@
         </div>
 
         <!-- Role & Hierarchy Tab -->
-        <div x-show="activeTab === 'role'" x-transition class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
+        <div data-tab-content="role" style="display: none;" class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Role -->
                 <div>
@@ -278,8 +273,7 @@
                     </label>
                     <select name="role_id" 
                             required
-                            x-model="selectedRole"
-                            @change="updateRoleInfo()"
+                            data-role-select
                             class="admin-input w-full @error('role_id') border-red-500 @enderror">
                         <option value="">Rol seçin</option>
                         @foreach($roles as $role)
@@ -297,7 +291,7 @@
                     
                     <!-- Role Change Warning -->
                     @if($manager->role_id != old('role_id'))
-                        <div x-show="roleChanged" x-transition class="mt-2 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
+                        <div data-role-changed-warning style="display: none;" class="mt-2 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
                             <p class="text-sm text-amber-800 dark:text-amber-300">
                                 <x-heroicon name="exclamation-triangle" class="w-4 h-4 inline mr-1" />
                                 Rol değiştirme işlemi yetkileri de etkileyecektir.
@@ -413,7 +407,7 @@
         </div>
 
         <!-- Performance Tab -->
-        <div x-show="activeTab === 'performance'" x-transition class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
+        <div data-tab-content="performance" style="display: none;" class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <!-- Current Performance Stats -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 <div class="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-4 rounded-xl border border-green-200 dark:border-green-800">
@@ -543,7 +537,7 @@
         </div>
 
         <!-- Security Tab -->
-        <div x-show="activeTab === 'security'" x-transition class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
+        <div data-tab-content="security" style="display: none;" class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <!-- Password Change -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- New Password -->
@@ -555,37 +549,23 @@
                     <div class="relative">
                         <input type="password" 
                                name="password" 
-                               x-ref="password"
-                               @input="checkPasswordStrength()"
+                               data-password-input
                                class="admin-input w-full pr-10 @error('password') border-red-500 @enderror"
                                placeholder="Boş bırakın değiştirmek istemiyorsanız">
                         <button type="button" 
-                                @click="togglePasswordVisibility('password')"
+                                data-toggle-password="password"
                                 class="absolute inset-y-0 right-0 pr-3 flex items-center">
                             <x-heroicon name="question-mark-circle" class="w-4 h-4 text-admin-400 hover:text-admin-600" />
                         </button>
                     </div>
                     
                     <!-- Password Strength Indicator -->
-                    <div class="mt-2" x-show="passwordStrength">
+                    <div class="mt-2" data-password-strength style="display: none;">
                         <div class="flex items-center space-x-2">
                             <div class="flex-1 bg-admin-200 dark:bg-admin-700 rounded-full h-1">
-                                <div class="h-1 rounded-full transition-all duration-300"
-                                     :class="{
-                                         'bg-red-500 w-1/4': passwordStrength === 'weak',
-                                         'bg-amber-500 w-2/4': passwordStrength === 'medium',
-                                         'bg-green-500 w-3/4': passwordStrength === 'strong',
-                                         'bg-emerald-500 w-full': passwordStrength === 'very-strong'
-                                     }"></div>
+                                <div class="h-1 rounded-full transition-all duration-300 bg-red-500 w-1/4" data-strength-bar></div>
                             </div>
-                            <span class="text-xs font-medium"
-                                  :class="{
-                                      'text-red-600 dark:text-red-400': passwordStrength === 'weak',
-                                      'text-amber-600 dark:text-amber-400': passwordStrength === 'medium',
-                                      'text-green-600 dark:text-green-400': passwordStrength === 'strong',
-                                      'text-emerald-600 dark:text-emerald-400': passwordStrength === 'very-strong'
-                                  }"
-                                  x-text="passwordStrengthText"></span>
+                            <span class="text-xs font-medium text-red-600 dark:text-red-400" data-strength-text>Zayıf</span>
                         </div>
                     </div>
                     
@@ -603,23 +583,21 @@
                     <div class="relative">
                         <input type="password" 
                                name="password_confirmation" 
-                               x-ref="passwordConfirmation"
-                               @input="checkPasswordMatch()"
+                               data-password-confirmation
                                class="admin-input w-full pr-10 @error('password_confirmation') border-red-500 @enderror"
                                placeholder="Yeni şifrenizi tekrar girin">
                         <button type="button" 
-                                @click="togglePasswordVisibility('passwordConfirmation')"
+                                data-toggle-password="confirmation"
                                 class="absolute inset-y-0 right-0 pr-3 flex items-center">
                             <x-heroicon name="question-mark-circle" class="w-4 h-4 text-admin-400 hover:text-admin-600" />
                         </button>
                     </div>
                     
                     <!-- Password Match Indicator -->
-                    <div x-show="passwordMatchStatus" class="mt-1">
-                        <p class="text-sm" 
-                           :class="passwordsMatch ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">
-                            <x-heroicon name="question-mark-circle" class="w-3 h-3 inline mr-1" />
-                            <span x-text="passwordsMatch ? 'Şifreler eşleşiyor' : 'Şifreler eşleşmiyor'"></span>
+                    <div data-password-match style="display: none;" class="mt-1">
+                        <p class="text-sm text-red-600 dark:text-red-400">
+                            <x-heroicon name="x-circle" class="w-3 h-3 inline mr-1" />
+                            <span data-match-text>Şifreler eşleşmiyor</span>
                         </p>
                     </div>
                     
@@ -636,8 +614,9 @@
                         <h3 class="text-sm font-medium text-admin-900 dark:text-white">Hesap Durumu</h3>
                         <p class="text-sm text-admin-600 dark:text-admin-400">
                             Hesap şu anda 
-                            <span :class="isActive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'" 
-                                  x-text="isActive ? 'aktif' : 'pasif'"></span>
+                            <span class="{{ $manager->is_active ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
+                                {{ $manager->is_active ? 'aktif' : 'pasif' }}
+                            </span>
                         </p>
                     </div>
                     <label class="flex items-center">
@@ -645,14 +624,14 @@
                         <input type="checkbox" 
                                name="is_active" 
                                value="1"
-                               x-model="isActive"
+                               data-is-active
                                {{ old('is_active', $manager->is_active) ? 'checked' : '' }}
                                class="sr-only">
                         <div class="relative">
-                            <div class="block bg-admin-300 dark:bg-admin-600 w-14 h-8 rounded-full cursor-pointer" 
-                                 :class="isActive ? 'bg-green-500 dark:bg-green-600' : ''"></div>
-                            <div class="absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition" 
-                                 :class="isActive ? 'transform translate-x-6' : ''"></div>
+                            <div class="block {{ $manager->is_active ? 'bg-green-500 dark:bg-green-600' : 'bg-admin-300 dark:bg-admin-600' }} w-14 h-8 rounded-full cursor-pointer"
+                                 data-toggle-bg></div>
+                            <div class="absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition {{ $manager->is_active ? 'transform translate-x-6' : '' }}"
+                                 data-toggle-dot></div>
                         </div>
                     </label>
                 </div>
@@ -690,8 +669,7 @@
                 
                 <!-- Save Changes -->
                 <button type="submit" 
-                        :disabled="!hasChanges"
-                        :class="hasChanges ? 'opacity-100' : 'opacity-50 cursor-not-allowed'"
+                        data-save-button
                         class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
                     <x-heroicon name="save" class="w-4 h-4 mr-2" />
                     Değişiklikleri Kaydet
@@ -702,8 +680,8 @@
 </div>
 
 <!-- Remove Avatar Modal -->
-<div x-show="showRemoveAvatarModal" 
-     x-transition.opacity 
+<div data-remove-avatar-modal
+     style="display: none;"
      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white dark:bg-admin-800 rounded-2xl p-6 max-w-md w-full mx-4">
         <h3 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">
@@ -713,11 +691,11 @@
             Bu yöneticinin profil fotoğrafını kalıcı olarak kaldırmak istediğinizden emin misiniz?
         </p>
         <div class="flex items-center justify-end space-x-3">
-            <button @click="showRemoveAvatarModal = false"
+            <button data-cancel-remove-avatar
                     class="px-4 py-2 text-admin-600 dark:text-admin-400 hover:text-admin-800 dark:hover:text-admin-200">
                 İptal
             </button>
-            <button @click="confirmRemoveAvatar()"
+            <button data-confirm-remove-avatar
                     class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg">
                 Kaldır
             </button>
@@ -728,122 +706,337 @@
 
 @push('scripts')
 <script>
-function editManagerForm() {
-    return {
-        activeTab: 'personal',
-        selectedRole: '{{ old("role_id", $manager->role_id) }}',
-        isActive: {{ old('is_active', $manager->is_active) ? 'true' : 'false' }},
-        roleInfo: '',
-        avatarPreview: null,
-        showRemoveAvatarModal: false,
-        passwordStrength: '',
-        passwordStrengthText: '',
-        showPassword: false,
-        showPasswordConfirmation: false,
-        passwordsMatch: false,
-        passwordMatchStatus: false,
-        originalFormData: {},
+class EditManagerForm {
+    constructor() {
+        this.activeTab = 'personal';
+        this.selectedRole = '{{ old("role_id", $manager->role_id) }}';
+        this.isActive = {{ old('is_active', $manager->is_active) ? 'true' : 'false' }};
+        this.roleInfo = '';
+        this.avatarPreview = null;
+        this.showRemoveAvatarModal = false;
+        this.passwordStrength = '';
+        this.passwordStrengthText = '';
+        this.showPassword = false;
+        this.showPasswordConfirmation = false;
+        this.passwordsMatch = false;
+        this.passwordMatchStatus = false;
+        this.originalFormData = {};
         
-        init() {
-            // Store original form data for change detection
-            this.storeOriginalFormData();
-            this.updateRoleInfo();
-        },
+        this.init();
+    }
+    
+    init() {
+        this.setupEventListeners();
+        this.storeOriginalFormData();
+        this.updateRoleInfo();
+    }
+    
+    setupEventListeners() {
+        // Tab switching
+        document.querySelectorAll('[data-tab]').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                const tabName = e.target.getAttribute('data-tab');
+                this.switchTab(tabName);
+            });
+        });
         
-        get hasChanges() {
-            const currentData = this.getCurrentFormData();
-            return JSON.stringify(currentData) !== JSON.stringify(this.originalFormData);
-        },
+        // Toggle status
+        const toggleButton = document.querySelector('[data-toggle-status]');
+        if (toggleButton) {
+            toggleButton.addEventListener('click', () => this.toggleStatus());
+        }
         
-        get roleChanged() {
-            return this.selectedRole != '{{ $manager->role_id }}';
-        },
+        // Avatar handling
+        const avatarInput = document.querySelector('[data-avatar-input]');
+        if (avatarInput) {
+            avatarInput.addEventListener('change', (e) => this.previewAvatar(e));
+        }
         
-        storeOriginalFormData() {
-            const form = this.$refs.editForm;
-            const formData = new FormData(form);
-            const data = {};
-            
-            for (let [key, value] of formData.entries()) {
-                if (key !== '_token' && key !== '_method') {
-                    data[key] = value;
-                }
+        const removeCurrentAvatar = document.querySelector('[data-remove-current-avatar]');
+        if (removeCurrentAvatar) {
+            removeCurrentAvatar.addEventListener('click', () => this.removeCurrentAvatar());
+        }
+        
+        const cancelAvatarPreview = document.querySelector('[data-cancel-avatar-preview]');
+        if (cancelAvatarPreview) {
+            cancelAvatarPreview.addEventListener('click', () => this.cancelAvatarPreview());
+        }
+        
+        // Role select
+        const roleSelect = document.querySelector('[data-role-select]');
+        if (roleSelect) {
+            roleSelect.addEventListener('change', () => this.updateRoleInfo());
+        }
+        
+        // Password handling
+        const passwordInput = document.querySelector('[data-password-input]');
+        if (passwordInput) {
+            passwordInput.addEventListener('input', () => this.checkPasswordStrength());
+        }
+        
+        const passwordConfirmation = document.querySelector('[data-password-confirmation]');
+        if (passwordConfirmation) {
+            passwordConfirmation.addEventListener('input', () => this.checkPasswordMatch());
+        }
+        
+        // Password visibility toggles
+        document.querySelectorAll('[data-toggle-password]').forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                const field = e.target.getAttribute('data-toggle-password');
+                this.togglePasswordVisibility(field);
+            });
+        });
+        
+        // Modal handling
+        const cancelRemoveAvatar = document.querySelector('[data-cancel-remove-avatar]');
+        if (cancelRemoveAvatar) {
+            cancelRemoveAvatar.addEventListener('click', () => this.closeRemoveAvatarModal());
+        }
+        
+        const confirmRemoveAvatar = document.querySelector('[data-confirm-remove-avatar]');
+        if (confirmRemoveAvatar) {
+            confirmRemoveAvatar.addEventListener('click', () => this.confirmRemoveAvatar());
+        }
+        
+        // Active status toggle
+        const isActiveCheckbox = document.querySelector('[data-is-active]');
+        if (isActiveCheckbox) {
+            isActiveCheckbox.addEventListener('change', (e) => {
+                this.isActive = e.target.checked;
+                this.updateToggleVisuals();
+            });
+        }
+        
+        // Form change detection
+        const form = document.querySelector('[data-edit-form]');
+        if (form) {
+            form.addEventListener('input', () => this.checkFormChanges());
+        }
+    }
+    
+    switchTab(tabName) {
+        // Remove active class from all tabs
+        document.querySelectorAll('[data-tab]').forEach(tab => {
+            tab.classList.remove('border-blue-500', 'text-blue-600');
+            tab.classList.add('border-transparent', 'text-admin-500');
+        });
+        
+        // Hide all tab contents
+        document.querySelectorAll('[data-tab-content]').forEach(content => {
+            content.style.display = 'none';
+        });
+        
+        // Show active tab
+        const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
+        if (activeTab) {
+            activeTab.classList.remove('border-transparent', 'text-admin-500');
+            activeTab.classList.add('border-blue-500', 'text-blue-600');
+        }
+        
+        const activeContent = document.querySelector(`[data-tab-content="${tabName}"]`);
+        if (activeContent) {
+            activeContent.style.display = 'block';
+        }
+        
+        this.activeTab = tabName;
+    }
+    
+    get hasChanges() {
+        const currentData = this.getCurrentFormData();
+        return JSON.stringify(currentData) !== JSON.stringify(this.originalFormData);
+    }
+    
+    get roleChanged() {
+        const roleSelect = document.querySelector('[data-role-select]');
+        return roleSelect && roleSelect.value != '{{ $manager->role_id }}';
+    }
+    
+    storeOriginalFormData() {
+        const form = document.querySelector('[data-edit-form]');
+        if (!form) return;
+        
+        const formData = new FormData(form);
+        const data = {};
+        
+        for (let [key, value] of formData.entries()) {
+            if (key !== '_token' && key !== '_method') {
+                data[key] = value;
             }
-            
-            this.originalFormData = data;
-        },
+        }
         
-        getCurrentFormData() {
-            const form = this.$refs.editForm;
-            const formData = new FormData(form);
-            const data = {};
-            
-            for (let [key, value] of formData.entries()) {
-                if (key !== '_token' && key !== '_method') {
-                    data[key] = value;
-                }
+        this.originalFormData = data;
+    }
+    
+    getCurrentFormData() {
+        const form = document.querySelector('[data-edit-form]');
+        if (!form) return {};
+        
+        const formData = new FormData(form);
+        const data = {};
+        
+        for (let [key, value] of formData.entries()) {
+            if (key !== '_token' && key !== '_method') {
+                data[key] = value;
             }
-            
-            return data;
-        },
+        }
         
-        updateRoleInfo() {
-            const select = document.querySelector('select[name="role_id"]');
-            if (!select) return;
-            
-            const option = select.options[select.selectedIndex];
-            
-            if (option.value) {
-                const hierarchy = option.getAttribute('data-hierarchy');
-                const department = option.getAttribute('data-department');
-                
-                this.roleInfo = `Hiyerarşi Seviyesi: ${hierarchy}`;
-                if (department) {
-                    this.roleInfo += ` • Departman: ${department}`;
-                }
+        return data;
+    }
+    
+    checkFormChanges() {
+        const saveButton = document.querySelector('[data-save-button]');
+        if (saveButton) {
+            if (this.hasChanges) {
+                saveButton.disabled = false;
+                saveButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                saveButton.classList.add('opacity-100');
             } else {
-                this.roleInfo = '';
+                saveButton.disabled = true;
+                saveButton.classList.add('opacity-50', 'cursor-not-allowed');
+                saveButton.classList.remove('opacity-100');
             }
-        },
+        }
+    }
+    
+    updateRoleInfo() {
+        const select = document.querySelector('[data-role-select]');
+        if (!select) return;
         
-        toggleStatus() {
-            this.isActive = !this.isActive;
-        },
+        const option = select.options[select.selectedIndex];
         
-        previewAvatar(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    this.avatarPreview = e.target.result;
-                };
-                reader.readAsDataURL(file);
+        if (option.value) {
+            const hierarchy = option.getAttribute('data-hierarchy');
+            const department = option.getAttribute('data-department');
+            
+            this.roleInfo = `Hiyerarşi Seviyesi: ${hierarchy}`;
+            if (department) {
+                this.roleInfo += ` • Departman: ${department}`;
+            }
+        } else {
+            this.roleInfo = '';
+        }
+        
+        // Show/hide role change warning
+        const warning = document.querySelector('[data-role-changed-warning]');
+        if (warning) {
+            if (this.roleChanged) {
+                warning.style.display = 'block';
             } else {
-                this.avatarPreview = null;
+                warning.style.display = 'none';
             }
-        },
+        }
+    }
+    
+    toggleStatus() {
+        this.isActive = !this.isActive;
+        const checkbox = document.querySelector('[data-is-active]');
+        if (checkbox) {
+            checkbox.checked = this.isActive;
+        }
+        this.updateToggleVisuals();
+    }
+    
+    updateToggleVisuals() {
+        const toggleBg = document.querySelector('[data-toggle-bg]');
+        const toggleDot = document.querySelector('[data-toggle-dot]');
         
-        cancelAvatarPreview() {
-            this.avatarPreview = null;
-            document.querySelector('input[name="avatar"]').value = '';
-        },
+        if (toggleBg) {
+            if (this.isActive) {
+                toggleBg.classList.remove('bg-admin-300', 'dark:bg-admin-600');
+                toggleBg.classList.add('bg-green-500', 'dark:bg-green-600');
+            } else {
+                toggleBg.classList.add('bg-admin-300', 'dark:bg-admin-600');
+                toggleBg.classList.remove('bg-green-500', 'dark:bg-green-600');
+            }
+        }
         
-        removeCurrentAvatar() {
+        if (toggleDot) {
+            if (this.isActive) {
+                toggleDot.classList.add('transform', 'translate-x-6');
+            } else {
+                toggleDot.classList.remove('transform', 'translate-x-6');
+            }
+        }
+    }
+    
+    previewAvatar(event) {
+        const file = event.target.files[0];
+        const preview = document.querySelector('[data-avatar-preview]');
+        const currentAvatars = document.querySelectorAll('[data-current-avatar]');
+        const cancelButton = document.querySelector('[data-cancel-avatar-preview]');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.avatarPreview = e.target.result;
+                if (preview) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                currentAvatars.forEach(avatar => {
+                    avatar.style.display = 'none';
+                });
+                if (cancelButton) {
+                    cancelButton.style.display = 'inline-block';
+                }
+            };
+            reader.readAsDataURL(file);
+        } else {
+            this.cancelAvatarPreview();
+        }
+    }
+    
+    cancelAvatarPreview() {
+        this.avatarPreview = null;
+        const preview = document.querySelector('[data-avatar-preview]');
+        const currentAvatars = document.querySelectorAll('[data-current-avatar]');
+        const cancelButton = document.querySelector('[data-cancel-avatar-preview]');
+        const avatarInput = document.querySelector('[data-avatar-input]');
+        
+        if (preview) {
+            preview.style.display = 'none';
+        }
+        currentAvatars.forEach(avatar => {
+            avatar.style.display = 'block';
+        });
+        if (cancelButton) {
+            cancelButton.style.display = 'none';
+        }
+        if (avatarInput) {
+            avatarInput.value = '';
+        }
+    }
+    
+    removeCurrentAvatar() {
+        const modal = document.querySelector('[data-remove-avatar-modal]');
+        if (modal) {
+            modal.style.display = 'flex';
             this.showRemoveAvatarModal = true;
-        },
-        
-        confirmRemoveAvatar() {
-            // Add hidden field to remove current avatar
-            const form = this.$refs.editForm;
+        }
+    }
+    
+    closeRemoveAvatarModal() {
+        const modal = document.querySelector('[data-remove-avatar-modal]');
+        if (modal) {
+            modal.style.display = 'none';
+            this.showRemoveAvatarModal = false;
+        }
+    }
+    
+    confirmRemoveAvatar() {
+        const form = document.querySelector('[data-edit-form]');
+        if (form) {
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'remove_avatar';
             input.value = '1';
             form.appendChild(input);
-            
-            this.showRemoveAvatarModal = false;
-            
-            // Show success message
+        }
+        
+        this.closeRemoveAvatarModal();
+        
+        // Show success message
+        if (typeof Swal !== 'undefined') {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -855,73 +1048,129 @@ function editManagerForm() {
                 icon: 'success',
                 title: 'Profil fotoğrafı kaldırılacak'
             });
-        },
+        }
+    }
+    
+    togglePasswordVisibility(field) {
+        if (field === 'password') {
+            this.showPassword = !this.showPassword;
+            const passwordInput = document.querySelector('[data-password-input]');
+            if (passwordInput) {
+                passwordInput.type = this.showPassword ? 'text' : 'password';
+            }
+        } else if (field === 'confirmation') {
+            this.showPasswordConfirmation = !this.showPasswordConfirmation;
+            const confirmationInput = document.querySelector('[data-password-confirmation]');
+            if (confirmationInput) {
+                confirmationInput.type = this.showPasswordConfirmation ? 'text' : 'password';
+            }
+        }
+    }
+    
+    checkPasswordStrength() {
+        const passwordInput = document.querySelector('[data-password-input]');
+        const strengthContainer = document.querySelector('[data-password-strength]');
+        const strengthBar = document.querySelector('[data-strength-bar]');
+        const strengthText = document.querySelector('[data-strength-text]');
         
-        togglePasswordVisibility(field) {
-            if (field === 'password') {
-                this.showPassword = !this.showPassword;
-                this.$refs.password.type = this.showPassword ? 'text' : 'password';
-            } else {
-                this.showPasswordConfirmation = !this.showPasswordConfirmation;
-                this.$refs.passwordConfirmation.type = this.showPasswordConfirmation ? 'text' : 'password';
-            }
-
-        },
+        if (!passwordInput || !strengthContainer || !strengthBar || !strengthText) return;
         
-        checkPasswordStrength() {
-            const password = this.$refs.password.value;
-            
-            if (password.length === 0) {
-                this.passwordStrength = '';
-                return;
-            }
-            
-            let score = 0;
-            
-            // Length
-            if (password.length >= 8) score++;
-            if (password.length >= 12) score++;
-            
-            // Character types
-            if (/[a-z]/.test(password)) score++;
-            if (/[A-Z]/.test(password)) score++;
-            if (/[0-9]/.test(password)) score++;
-            if (/[^A-Za-z0-9]/.test(password)) score++;
-            
-            if (score <= 2) {
-                this.passwordStrength = 'weak';
-                this.passwordStrengthText = 'Zayıf';
-            } else if (score <= 4) {
-                this.passwordStrength = 'medium';
-                this.passwordStrengthText = 'Orta';
-            } else if (score <= 5) {
-                this.passwordStrength = 'strong';
-                this.passwordStrengthText = 'Güçlü';
-            } else {
-                this.passwordStrength = 'very-strong';
-                this.passwordStrengthText = 'Çok Güçlü';
-            }
-        },
+        const password = passwordInput.value;
         
-        checkPasswordMatch() {
-            const password = this.$refs.password.value;
-            const confirmation = this.$refs.passwordConfirmation.value;
-            
-            if (confirmation.length === 0 && password.length === 0) {
-                this.passwordMatchStatus = false;
-                return;
+        if (password.length === 0) {
+            strengthContainer.style.display = 'none';
+            this.passwordStrength = '';
+            return;
+        }
+        
+        strengthContainer.style.display = 'block';
+        let score = 0;
+        
+        // Length
+        if (password.length >= 8) score++;
+        if (password.length >= 12) score++;
+        
+        // Character types
+        if (/[a-z]/.test(password)) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[0-9]/.test(password)) score++;
+        if (/[^A-Za-z0-9]/.test(password)) score++;
+        
+        // Reset classes
+        strengthBar.className = 'h-1 rounded-full transition-all duration-300';
+        strengthText.className = 'text-xs font-medium';
+        
+        if (score <= 2) {
+            this.passwordStrength = 'weak';
+            this.passwordStrengthText = 'Zayıf';
+            strengthBar.classList.add('bg-red-500', 'w-1/4');
+            strengthText.classList.add('text-red-600', 'dark:text-red-400');
+        } else if (score <= 4) {
+            this.passwordStrength = 'medium';
+            this.passwordStrengthText = 'Orta';
+            strengthBar.classList.add('bg-amber-500', 'w-2/4');
+            strengthText.classList.add('text-amber-600', 'dark:text-amber-400');
+        } else if (score <= 5) {
+            this.passwordStrength = 'strong';
+            this.passwordStrengthText = 'Güçlü';
+            strengthBar.classList.add('bg-green-500', 'w-3/4');
+            strengthText.classList.add('text-green-600', 'dark:text-green-400');
+        } else {
+            this.passwordStrength = 'very-strong';
+            this.passwordStrengthText = 'Çok Güçlü';
+            strengthBar.classList.add('bg-emerald-500', 'w-full');
+            strengthText.classList.add('text-emerald-600', 'dark:text-emerald-400');
+        }
+        
+        strengthText.textContent = this.passwordStrengthText;
+    }
+    
+    checkPasswordMatch() {
+        const passwordInput = document.querySelector('[data-password-input]');
+        const confirmationInput = document.querySelector('[data-password-confirmation]');
+        const matchContainer = document.querySelector('[data-password-match]');
+        const matchText = document.querySelector('[data-match-text]');
+        
+        if (!passwordInput || !confirmationInput || !matchContainer || !matchText) return;
+        
+        const password = passwordInput.value;
+        const confirmation = confirmationInput.value;
+        
+        if (confirmation.length === 0 && password.length === 0) {
+            matchContainer.style.display = 'none';
+            this.passwordMatchStatus = false;
+            return;
+        }
+        
+        if (confirmation.length === 0) {
+            matchContainer.style.display = 'none';
+            return;
+        }
+        
+        this.passwordMatchStatus = true;
+        this.passwordsMatch = password === confirmation;
+        matchContainer.style.display = 'block';
+        
+        const p = matchContainer.querySelector('p');
+        if (this.passwordsMatch) {
+            p.className = 'text-sm text-green-600 dark:text-green-400';
+            matchText.textContent = 'Şifreler eşleşiyor';
+            // Update icon to check
+            const icon = p.querySelector('svg');
+            if (icon) {
+                icon.className = 'w-3 h-3 inline mr-1';
+                // You might want to update the icon here
             }
-            
-            this.passwordMatchStatus = true;
-            this.passwordsMatch = password === confirmation;
-
+        } else {
+            p.className = 'text-sm text-red-600 dark:text-red-400';
+            matchText.textContent = 'Şifreler eşleşmiyor';
         }
     }
 }
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    
+    new EditManagerForm();
 });
 </script>
 @endpush

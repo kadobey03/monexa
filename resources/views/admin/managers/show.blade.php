@@ -20,7 +20,7 @@
         </div>
     </div>
 @else
-<div class="space-y-6" x-data="managerProfileData()">
+<div class="space-y-6" data-manager-profile>
     
     <!-- Profile Header -->
     <div class="bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 rounded-2xl shadow-elegant p-8 text-white">
@@ -84,11 +84,10 @@
                     Düzenle
                 </a>
                 
-                <button @click="toggleStatus()" 
-                        class="inline-flex items-center px-4 py-2 rounded-xl transition-all duration-200"
-                        :class="isActive ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'">
-                    <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-2" />
-                    <span x-text="isActive ? 'Deaktive Et' : 'Aktive Et'"></span>
+                <button data-toggle-status
+                        class="inline-flex items-center px-4 py-2 rounded-xl transition-all duration-200 {{ $manager->is_active ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600' }}">
+                    <x-heroicon name="{{ $manager->is_active ? 'x-circle' : 'check-circle' }}" class="w-4 h-4 mr-2" />
+                    <span>{{ $manager->is_active ? 'Deaktive Et' : 'Aktive Et' }}</span>
                 </button>
                 
                 <div class="relative" x-data="{ open: false }">
@@ -99,7 +98,7 @@
                     
                     <div x-show="open" 
                          x-transition 
-                         @click.away="open = false"
+                         data-dropdown-away
                          class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-elegant border border-admin-200 dark:border-admin-700 py-1 z-10">
                         <a href="#" class="flex items-center px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700">
                             <x-heroicon name="envelope" class="w-4 h-4 mr-3" />
@@ -214,32 +213,36 @@
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700">
         <div class="border-b border-admin-200 dark:border-admin-700">
             <nav class="flex space-x-8 px-6" role="tablist">
-                <button @click="activeTab = 'overview'" 
-                        :class="activeTab === 'overview' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
+                <button data-profile-tab="overview"
+                        class="border-blue-500 text-blue-600"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
                     <x-heroicon name="user" class="w-4 h-4 inline mr-2" />
                     Genel Bakış
                 </button>
                 <button @click="activeTab = 'hierarchy'" 
-                        :class="activeTab === 'hierarchy' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
+                        class="border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300"
+                        data-profile-tab="hierarchy"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
                     <x-heroicon name="git-branch" class="w-4 h-4 inline mr-2" />
                     Hiyerarşi
                 </button>
                 <button @click="activeTab = 'performance'" 
-                        :class="activeTab === 'performance' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
+                        class="border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300"
+                        data-profile-tab="performance"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
                     <x-heroicon name="bar-chart" class="w-4 h-4 inline mr-2" />
                     Performans
                 </button>
                 <button @click="activeTab = 'activity'" 
-                        :class="activeTab === 'activity' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
+                        class="border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300"
+                        data-profile-tab="activity"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
                     <x-heroicon name="activity" class="w-4 h-4 inline mr-2" />
                     Aktivite
                 </button>
                 <button @click="activeTab = 'settings'" 
-                        :class="activeTab === 'settings' ? 'border-blue-500 text-blue-600' : 'border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300'"
+                        class="border-transparent text-admin-500 hover:text-admin-700 hover:border-admin-300"
+                        data-profile-tab="settings"
                         class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
                     <x-heroicon name="cog-6-tooth" class="w-4 h-4 inline mr-2" />
                     Ayarlar
@@ -248,7 +251,7 @@
         </div>
         
         <!-- Overview Tab -->
-        <div x-show="activeTab === 'overview'" x-transition class="p-6">
+        <div data-tab-content="overview" class="p-6">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Personal Information -->
                 <div class="lg:col-span-2 space-y-6">
@@ -395,7 +398,7 @@
         </div>
         
         <!-- Hierarchy Tab -->
-        <div x-show="activeTab === 'hierarchy'" x-transition class="p-6">
+        <div data-tab-content="hierarchy" style="display: none;" class="p-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Supervisor -->
                 <div class="bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4">
@@ -481,7 +484,7 @@
             <!-- Hierarchy Tree -->
             <div class="mt-6 bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4">
                 <h3 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">Hiyerarşi Ağacı</h3>
-                <div class="hierarchy-tree" x-data="hierarchyTree()">
+                <div class="hierarchy-tree" data-hierarchy-tree>
                     <!-- Tree visualization will be implemented with JavaScript -->
                     <div id="hierarchy-chart" class="min-h-96"></div>
                 </div>
@@ -489,23 +492,23 @@
         </div>
         
         <!-- Performance Tab -->
-        <div x-show="activeTab === 'performance'" x-transition class="p-6">
+        <div data-tab-content="performance" style="display: none;" class="p-6">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Charts -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Revenue Chart -->
                     <div class="bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4">
                         <h3 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">Aylık Gelir Trendi</h3>
-                        <div class="h-64" x-data="revenueChart()">
-                            <canvas x-ref="revenueCanvas"></canvas>
+                        <div class="h-64" data-revenue-chart>
+                            <canvas data-revenue-canvas></canvas>
                         </div>
                     </div>
                     
                     <!-- Lead Performance -->
                     <div class="bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4">
                         <h3 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">Lead Performansı</h3>
-                        <div class="h-64" x-data="leadChart()">
-                            <canvas x-ref="leadCanvas"></canvas>
+                        <div class="h-64" data-lead-chart>
+                            <canvas data-lead-canvas></canvas>
                         </div>
                     </div>
                 </div>
@@ -606,11 +609,11 @@
         </div>
         
         <!-- Activity Tab -->
-        <div x-show="activeTab === 'activity'" x-transition class="p-6">
+        <div data-tab-content="activity" style="display: none;" class="p-6">
             <div class="bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-admin-900 dark:text-white">Aktivite Geçmişi</h3>
-                    <select class="admin-input text-sm" x-model="activityFilter" @change="filterActivities()">
+                    <select class="admin-input text-sm" data-activity-filter>
                         <option value="all">Tümü</option>
                         <option value="login">Giriş/Çıkış</option>
                         <option value="lead">Lead İşlemleri</option>
@@ -621,23 +624,17 @@
                 <div class="space-y-4 max-h-96 overflow-y-auto">
                     @forelse($manager->activities()->latest()->take(50)->get() as $activity)
                         <div class="flex items-start space-x-3 p-3 bg-white dark:bg-admin-800 rounded-lg border border-admin-200 dark:border-admin-600">
-                            <div class="w-8 h-8 rounded-full flex items-center justify-center mt-1"
-                                 :class="{
-                                     'bg-green-100 dark:bg-green-900/30': '{{ $activity->type }}' === 'login',
-                                     'bg-blue-100 dark:bg-blue-900/30': '{{ $activity->type }}' === 'lead',
-                                     'bg-purple-100 dark:bg-purple-900/30': '{{ $activity->type }}' === 'system'
-                                 }">
-                                <i <!-- Heroicon: Alpine expression {
-                                        needs manual conversion -->login': 'log-in',
-                                       'lead': 'user-plus',
-                                       'system': 'settings'
-                                   }['{{ $activity->type }}'] || 'activity'" 
-                                   class="w-4 h-4"
-                                   :class="{
-                                       'text-green-600 dark:text-green-400': '{{ $activity->type }}' === 'login',
-                                       'text-blue-600 dark:text-blue-400': '{{ $activity->type }}' === 'lead',
-                                       'text-purple-600 dark:text-purple-400': '{{ $activity->type }}' === 'system'
-                                   }"></i>
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center mt-1
+                                        @if($activity->type === 'login') bg-green-100 dark:bg-green-900/30
+                                        @elseif($activity->type === 'lead') bg-blue-100 dark:bg-blue-900/30
+                                        @else bg-purple-100 dark:bg-purple-900/30 @endif">
+                                @if($activity->type === 'login')
+                                    <x-heroicon name="arrow-right-on-rectangle" class="w-4 h-4 text-green-600 dark:text-green-400" />
+                                @elseif($activity->type === 'lead')
+                                    <x-heroicon name="user-plus" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                @else
+                                    <x-heroicon name="cog-6-tooth" class="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                                @endif
                             </div>
                             <div class="flex-1">
                                 <p class="text-sm text-admin-900 dark:text-white">{{ $activity->description }}</p>
@@ -658,7 +655,7 @@
         </div>
         
         <!-- Settings Tab -->
-        <div x-show="activeTab === 'settings'" x-transition class="p-6">
+        <div data-tab-content="settings" style="display: none;" class="p-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Account Settings -->
                 <div class="bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4">
@@ -733,19 +730,19 @@
                 <div class="bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4">
                     <h3 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">Hızlı İşlemler</h3>
                     <div class="space-y-3">
-                        <button @click="resetPassword()" 
+                        <button data-reset-password
                                 class="w-full flex items-center px-4 py-3 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-lg transition-colors">
                             <x-heroicon name="key" class="w-4 h-4 mr-3" />
                             Şifre Sıfırla
                         </button>
                         
-                        <button @click="sendEmail()" 
+                        <button data-send-email
                                 class="w-full flex items-center px-4 py-3 bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50 text-green-700 dark:text-green-300 rounded-lg transition-colors">
                             <x-heroicon name="envelope" class="w-4 h-4 mr-3" />
                             E-posta Gönder
                         </button>
                         
-                        <button @click="generateReport()" 
+                        <button data-generate-report
                                 class="w-full flex items-center px-4 py-3 bg-purple-100 dark:bg-purple-900/30 hover:bg-purple-200 dark:hover:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-lg transition-colors">
                             <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-3" />
                             Rapor İndir
@@ -762,27 +759,118 @@
 @push('scripts')
 
 <script>
-function managerProfileData() {
-    return {
-        activeTab: 'overview',
-        isActive: {{ $manager->is_active ? 'true' : 'false' }},
-        activityFilter: 'all',
+class ManagerProfile {
+    constructor() {
+        this.activeTab = 'overview';
+        this.isActive = {{ $manager->is_active ? 'true' : 'false' }};
+        this.activityFilter = 'all';
         
-        toggleStatus() {
-            // AJAX call to toggle manager status
-            fetch(`{{ route('admin.managers.toggle-status', $manager) }}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ is_active: !this.isActive })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    this.isActive = data.is_active;
-                    
+        this.init();
+    }
+    
+    init() {
+        this.setupEventListeners();
+        this.initializeCharts();
+    }
+    
+    setupEventListeners() {
+        // Profile tab switching
+        document.querySelectorAll('[data-profile-tab]').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                const tabName = e.target.getAttribute('data-profile-tab');
+                this.switchProfileTab(tabName);
+            });
+        });
+        
+        // Toggle status
+        const toggleButton = document.querySelector('[data-toggle-status]');
+        if (toggleButton) {
+            toggleButton.addEventListener('click', () => this.toggleStatus());
+        }
+        
+        // Activity filter
+        const activityFilter = document.querySelector('[data-activity-filter]');
+        if (activityFilter) {
+            activityFilter.addEventListener('change', (e) => {
+                this.activityFilter = e.target.value;
+                this.filterActivities();
+            });
+        }
+        
+        // Quick actions
+        const resetPasswordBtn = document.querySelector('[data-reset-password]');
+        if (resetPasswordBtn) {
+            resetPasswordBtn.addEventListener('click', () => this.resetPassword());
+        }
+        
+        const sendEmailBtn = document.querySelector('[data-send-email]');
+        if (sendEmailBtn) {
+            sendEmailBtn.addEventListener('click', () => this.sendEmail());
+        }
+        
+        const generateReportBtn = document.querySelector('[data-generate-report]');
+        if (generateReportBtn) {
+            generateReportBtn.addEventListener('click', () => this.generateReport());
+        }
+        
+        // Dropdown handling
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('[data-dropdown-away]')) {
+                document.querySelectorAll('[data-dropdown-away]').forEach(dropdown => {
+                    dropdown.style.display = 'none';
+                });
+            }
+        });
+    }
+    
+    switchProfileTab(tabName) {
+        // Remove active class from all tabs
+        document.querySelectorAll('[data-profile-tab]').forEach(tab => {
+            tab.classList.remove('border-blue-500', 'text-blue-600');
+            tab.classList.add('border-transparent', 'text-admin-500');
+        });
+        
+        // Hide all tab contents
+        document.querySelectorAll('[data-tab-content]').forEach(content => {
+            content.style.display = 'none';
+        });
+        
+        // Show active tab
+        const activeTab = document.querySelector(`[data-profile-tab="${tabName}"]`);
+        if (activeTab) {
+            activeTab.classList.remove('border-transparent', 'text-admin-500');
+            activeTab.classList.add('border-blue-500', 'text-blue-600');
+        }
+        
+        const activeContent = document.querySelector(`[data-tab-content="${tabName}"]`);
+        if (activeContent) {
+            activeContent.style.display = 'block';
+        }
+        
+        this.activeTab = tabName;
+        
+        // Initialize charts if performance tab is selected
+        if (tabName === 'performance') {
+            setTimeout(() => this.initializeCharts(), 100);
+        }
+    }
+    
+    toggleStatus() {
+        // AJAX call to toggle manager status
+        fetch(`{{ route('admin.managers.toggle-status', $manager) }}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ is_active: !this.isActive })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                this.isActive = data.is_active;
+                
+                if (typeof Swal !== 'undefined') {
                     const Toast = Swal.mixin({
                         toast: true,
                         position: 'top-end',
@@ -800,173 +888,172 @@ function managerProfileData() {
                         window.location.reload();
                     }, 1500);
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            if (typeof Swal !== 'undefined') {
                 Swal.fire('Hata!', 'Bir hata oluştu.', 'error');
-            });
-        },
+            }
+        });
+    }
+    
+    filterActivities() {
+        // Filter activities based on selected type
+        const activities = document.querySelectorAll('[data-activity-type]');
+        activities.forEach(activity => {
+            const type = activity.getAttribute('data-activity-type');
+            if (this.activityFilter === 'all' || type === this.activityFilter) {
+                activity.style.display = 'block';
+            } else {
+                activity.style.display = 'none';
+            }
+        });
+    }
+    
+    resetPassword() {
+        if (typeof Swal === 'undefined') return;
         
-        filterActivities() {
-            // Filter activities based on selected type
-            const activities = document.querySelectorAll('[data-activity-type]');
-            activities.forEach(activity => {
-                const type = activity.getAttribute('data-activity-type');
-                if (this.activityFilter === 'all' || type === this.activityFilter) {
-                    activity.style.display = 'block';
-                } else {
-                    activity.style.display = 'none';
-                }
-            });
-        },
-        
-        resetPassword() {
-            Swal.fire({
-                title: 'Şifre Sıfırla',
-                text: '{{ $manager->getFullName() }} kullanıcısının şifresini sıfırlamak istediğinizden emin misiniz?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Evet, Sıfırla',
-                cancelButtonText: 'İptal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // AJAX call to reset password
-                    fetch(`{{ route('admin.managers.reset-password', $manager) }}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire('Başarılı!', data.message, 'success');
-                        } else {
-                            Swal.fire('Hata!', data.message, 'error');
-                        }
-                    });
-                }
-            });
-        },
-        
-        sendEmail() {
-            Swal.fire({
-                title: 'E-posta Gönder',
-                html: `
-                    <textarea id="emailMessage" class="swal2-textarea" placeholder="Mesajınızı yazın..."></textarea>
-                `,
-                showCancelButton: true,
-                confirmButtonText: 'Gönder',
-                cancelButtonText: 'İptal',
-                preConfirm: () => {
-                    const message = document.getElementById('emailMessage').value;
-                    if (!message) {
-                        Swal.showValidationMessage('Lütfen bir mesaj yazın');
+        Swal.fire({
+            title: 'Şifre Sıfırla',
+            text: '{{ $manager->getFullName() }} kullanıcısının şifresini sıfırlamak istediğinizden emin misiniz?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Evet, Sıfırla',
+            cancelButtonText: 'İptal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // AJAX call to reset password
+                fetch(`{{ route('admin.managers.reset-password', $manager) }}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                     }
-                    return { message: message };
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // AJAX call to send email
-                    Swal.fire('Başarılı!', 'E-posta gönderildi.', 'success');
-                }
-            });
-        },
-        
-        generateReport() {
-            // Generate and download performance report
-            window.open(`{{ route('admin.managers.report', $manager) }}`, '_blank');
-        }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire('Başarılı!', data.message, 'success');
+                    } else {
+                        Swal.fire('Hata!', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Hata!', 'Bir hata oluştu.', 'error');
+                });
+            }
+        });
     }
-}
-
-function hierarchyTree() {
-    return {
-        init() {
-            // Initialize hierarchy tree visualization
-            // This would integrate with a library like D3.js or similar
-            console.log('Hierarchy tree initialized');
-        }
-    }
-}
-
-function revenueChart() {
-    return {
-        chart: null,
+    
+    sendEmail() {
+        if (typeof Swal === 'undefined') return;
         
-        init() {
-            const ctx = this.$refs.revenueCanvas.getContext('2d');
-            
-            this.chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran'],
-                    datasets: [{
-                        label: 'Gelir',
-                        data: @json($manager->getMonthlyRevenueData()),
-                        borderColor: 'rgb(59, 130, 246)',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.1
-                    }]
+        Swal.fire({
+            title: 'E-posta Gönder',
+            html: `
+                <textarea id="emailMessage" class="swal2-textarea" placeholder="Mesajınızı yazın..."></textarea>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Gönder',
+            cancelButtonText: 'İptal',
+            preConfirm: () => {
+                const message = document.getElementById('emailMessage').value;
+                if (!message) {
+                    Swal.showValidationMessage('Lütfen bir mesaj yazın');
+                }
+                return { message: message };
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // AJAX call to send email
+                Swal.fire('Başarılı!', 'E-posta gönderildi.', 'success');
+            }
+        });
+    }
+    
+    generateReport() {
+        // Generate and download performance report
+        window.open(`{{ route('admin.managers.report', $manager) }}`, '_blank');
+    }
+    
+    initializeCharts() {
+        this.initRevenueChart();
+        this.initLeadChart();
+    }
+    
+    initRevenueChart() {
+        const canvas = document.querySelector('[data-revenue-canvas]');
+        if (!canvas || typeof Chart === 'undefined') return;
+        
+        const ctx = canvas.getContext('2d');
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran'],
+                datasets: [{
+                    label: 'Gelir',
+                    data: @json($manager->getMonthlyRevenueData ?? [0,0,0,0,0,0]),
+                    borderColor: 'rgb(59, 130, 246)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
-            });
-        }
+            }
+        });
     }
-}
-
-function leadChart() {
-    return {
-        chart: null,
+    
+    initLeadChart() {
+        const canvas = document.querySelector('[data-lead-canvas]');
+        if (!canvas || typeof Chart === 'undefined') return;
         
-        init() {
-            const ctx = this.$refs.leadCanvas.getContext('2d');
-            
-            this.chart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'],
-                    datasets: [{
-                        label: 'Lead Sayısı',
-                        data: @json($manager->getWeeklyLeadData()),
-                        backgroundColor: 'rgba(34, 197, 94, 0.8)'
-                    }]
+        const ctx = canvas.getContext('2d');
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'],
+                datasets: [{
+                    label: 'Lead Sayısı',
+                    data: @json($manager->getWeeklyLeadData ?? [0,0,0,0,0,0,0]),
+                    backgroundColor: 'rgba(34, 197, 94, 0.8)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
-            });
-        }
+            }
+        });
     }
 }
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    
+    new ManagerProfile();
 });
 </script>
 @endpush

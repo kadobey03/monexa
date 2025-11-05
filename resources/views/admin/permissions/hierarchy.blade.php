@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6" x-data="hierarchyManager()">
+<div class="space-y-6" id="hierarchyContainer">
     
     <!-- Page Header -->
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
@@ -9,11 +9,15 @@
             <div class="flex items-center space-x-4">
                 <a href="{{ route('admin.permissions.index') }}" 
                    class="p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors">
-                    <x-heroicon name="arrow-left" class="w-5 h-5 text-admin-600 dark:text-admin-400" />
+                    <svg class="w-5 h-5 text-admin-600 dark:text-admin-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
                 </a>
                 <div class="flex items-center space-x-3">
                     <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
-                        <x-heroicon name="git-branch" class="w-6 h-6 text-white" />
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                        </svg>
                     </div>
                     <div>
                         <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Hiyerarşi Görünümü</h1>
@@ -23,36 +27,38 @@
             </div>
             
             <div class="flex items-center space-x-3">
-                <div class="flex items-center bg-admin-100 dark:bg-admin-700 rounded-xl p-1">
-                    <button @click="viewMode = 'tree'" 
-                            :class="viewMode === 'tree' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
-                            class="px-3 py-2 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                        <x-heroicon name="git-branch" class="w-4 h-4 mr-1" />
+                <div class="flex items-center bg-admin-100 dark:bg-admin-700 rounded-xl p-1" id="viewModeContainer">
+                    <button data-view="tree" class="view-mode-btn px-3 py-2 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all active">
+                        <svg class="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+                        </svg>
                         Ağaç
                     </button>
-                    <button @click="viewMode = 'org'" 
-                            :class="viewMode === 'org' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
-                            class="px-3 py-2 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                        <x-heroicon name="users" class="w-4 h-4 mr-1" />
+                    <button data-view="org" class="view-mode-btn px-3 py-2 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
+                        <svg class="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
                         Organizasyon
                     </button>
-                    <button @click="viewMode = 'matrix'" 
-                            :class="viewMode === 'matrix' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
-                            class="px-3 py-2 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
-                        <x-heroicon name="grid" class="w-4 h-4 mr-1" />
+                    <button data-view="matrix" class="view-mode-btn px-3 py-2 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
+                        <svg class="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2z"></path>
+                        </svg>
                         Matrix
                     </button>
                 </div>
                 
-                <button @click="exportHierarchy()" 
-                        class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
-                    <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
+                <button id="exportBtn" class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
                     Dışa Aktar
                 </button>
                 
-                <button @click="showRestructure()" 
-                        class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
-                    <x-heroicon name="shuffle" class="w-4 h-4 mr-2" />
+                <button id="restructureBtn" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
                     Yeniden Yapılandır
                 </button>
             </div>
@@ -68,7 +74,9 @@
                     <p class="text-2xl font-bold text-blue-700 dark:text-blue-300">{{ $totalLevels ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-                    <x-heroicon name="layers" class="w-6 h-6 text-white" />
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -80,7 +88,9 @@
                     <p class="text-2xl font-bold text-green-700 dark:text-green-300">{{ $activeRoles ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
-                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -92,7 +102,9 @@
                     <p class="text-2xl font-bold text-purple-700 dark:text-purple-300">{{ $totalDepartments ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
-                    <x-heroicon name="building" class="w-6 h-6 text-white" />
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -104,7 +116,9 @@
                     <p class="text-2xl font-bold text-amber-700 dark:text-amber-300">{{ $totalUsers ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center">
-                    <x-heroicon name="users" class="w-6 h-6 text-white" />
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -116,14 +130,16 @@
                     <p class="text-2xl font-bold text-red-700 dark:text-red-300">{{ $hierarchyConflicts ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center">
-                    <x-heroicon name="exclamation-triangle" class="w-6 h-6 text-white" />
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    </svg>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Tree View -->
-    <div x-show="viewMode === 'tree'" x-transition class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700">
+    <div id="treeView" class="view-panel bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700">
         <div class="p-6 border-b border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold text-admin-900 dark:text-white">Hiyerarşi Ağacı</h2>
@@ -158,32 +174,33 @@
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             @foreach($roles as $role)
-                                <div class="role-node relative bg-gradient-to-br from-{{ $role->getColorClass() }}-50 to-{{ $role->getColorClass() }}-100 dark:from-{{ $role->getColorClass() }}-900/20 dark:to-{{ $role->getColorClass() }}-800/20 border border-{{ $role->getColorClass() }}-200 dark:border-{{ $role->getColorClass() }}-800 rounded-xl p-4 transition-all duration-200 hover:shadow-lg cursor-pointer"
-                                     data-role-id="{{ $role->id }}"
-                                     @click="selectRole({{ $role->id }})">
+                                <div class="role-node relative bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 transition-all duration-200 hover:shadow-lg cursor-pointer"
+                                     data-role-id="{{ $role->id }}">
                                     
                                     <!-- Role Header -->
                                     <div class="flex items-center justify-between mb-3">
-                                        <div class="w-10 h-10 bg-gradient-to-br from-{{ $role->getColorClass() }}-500 to-{{ $role->getColorClass() }}-600 rounded-lg flex items-center justify-center">
-                                            <x-heroicon name="shield-check" class="w-5 h-5 text-white" />
+                                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                            </svg>
                                         </div>
                                         <div class="text-right">
-                                            <span class="px-2 py-1 bg-{{ $role->getColorClass() }}-200 dark:bg-{{ $role->getColorClass() }}-700 text-{{ $role->getColorClass() }}-800 dark:text-{{ $role->getColorClass() }}-200 text-xs font-medium rounded-lg">
-                                                L{{ $role->hierarchy_level }}
+                                            <span class="px-2 py-1 bg-blue-200 dark:bg-blue-700 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-lg">
+                                                L{{ $role->hierarchy_level ?? 0 }}
                                             </span>
                                         </div>
                                     </div>
                                     
                                     <!-- Role Info -->
                                     <div>
-                                        <h3 class="font-semibold text-{{ $role->getColorClass() }}-900 dark:text-{{ $role->getColorClass() }}-100 mb-1">
-                                            {{ $role->display_name }}
+                                        <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-1">
+                                            {{ $role->display_name ?? $role->name }}
                                         </h3>
-                                        <p class="text-sm text-{{ $role->getColorClass() }}-700 dark:text-{{ $role->getColorClass() }}-300 mb-2">
-                                            {{ $role->users_count }} kullanıcı • {{ $role->permissions->count() }} izin
+                                        <p class="text-sm text-blue-700 dark:text-blue-300 mb-2">
+                                            {{ $role->users_count ?? 0 }} kullanıcı • {{ isset($role->permissions) ? $role->permissions->count() : 0 }} izin
                                         </p>
-                                        @if($role->description)
-                                            <p class="text-xs text-{{ $role->getColorClass() }}-600 dark:text-{{ $role->getColorClass() }}-400 line-clamp-2">
+                                        @if($role->description ?? false)
+                                            <p class="text-xs text-blue-600 dark:text-blue-400 line-clamp-2">
                                                 {{ $role->description }}
                                             </p>
                                         @endif
@@ -191,25 +208,17 @@
                                     
                                     <!-- Role Status -->
                                     <div class="absolute top-2 right-2">
-                                        <div class="w-3 h-3 {{ $role->is_active ? 'bg-green-500' : 'bg-red-500' }} rounded-full"></div>
+                                        <div class="w-3 h-3 {{ ($role->is_active ?? true) ? 'bg-green-500' : 'bg-red-500' }} rounded-full"></div>
                                     </div>
-                                    
-                                    <!-- Connection Lines -->
-                                    @if($role->parent_roles->count() > 0)
-                                        <div class="absolute -top-4 left-1/2 w-0.5 h-4 bg-admin-300 dark:bg-admin-600"></div>
-                                    @endif
-                                    
-                                    @if($role->child_roles->count() > 0)
-                                        <div class="absolute -bottom-4 left-1/2 w-0.5 h-4 bg-admin-300 dark:bg-admin-600"></div>
-                                        <div class="absolute -bottom-4 left-1/4 right-1/4 h-0.5 bg-admin-300 dark:bg-admin-600"></div>
-                                    @endif
                                 </div>
                             @endforeach
                         </div>
                         
                         @if(!$loop->last)
                             <div class="flex justify-center mt-6">
-                                <x-heroicon name="chevron-down" class="w-6 h-6 text-admin-400" />
+                                <svg class="w-6 h-6 text-admin-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                </svg>
                             </div>
                         @endif
                     </div>
@@ -219,7 +228,7 @@
     </div>
 
     <!-- Organization Chart View -->
-    <div x-show="viewMode === 'org'" x-transition class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700">
+    <div id="orgView" class="view-panel bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700 hidden">
         <div class="p-6 border-b border-admin-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-admin-900 dark:text-white">Organizasyon Şeması</h2>
         </div>
@@ -231,17 +240,19 @@
                     <div class="department-section">
                         <div class="flex items-center mb-6">
                             <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                                <x-heroicon name="building" class="w-6 h-6 text-white" />
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
                             </div>
                             <div class="ml-4">
                                 <h3 class="text-xl font-bold text-admin-900 dark:text-white">{{ ucfirst($department) }}</h3>
-                                <p class="text-admin-600 dark:text-admin-400">{{ $structure['total_users'] }} kullanıcı, {{ $structure['total_roles'] }} rol</p>
+                                <p class="text-admin-600 dark:text-admin-400">{{ $structure['total_users'] ?? 0 }} kullanıcı, {{ $structure['total_roles'] ?? 0 }} rol</p>
                             </div>
                         </div>
                         
                         <!-- Department Hierarchy -->
                         <div class="ml-8 space-y-6">
-                            @foreach($structure['levels'] as $level => $roles)
+                            @foreach($structure['levels'] ?? [] as $level => $roles)
                                 <div class="level-section">
                                     <div class="flex items-center mb-4">
                                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
@@ -254,16 +265,20 @@
                                     <div class="ml-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         @foreach($roles as $role)
                                             <div class="flex items-center space-x-3 p-4 bg-admin-50 dark:bg-admin-700/50 rounded-xl border border-admin-200 dark:border-admin-600">
-                                                <div class="w-10 h-10 bg-gradient-to-br from-{{ $role->getColorClass() }}-500 to-{{ $role->getColorClass() }}-600 rounded-lg flex items-center justify-center">
-                                                    <x-heroicon name="shield-check" class="w-5 h-5 text-white" />
+                                                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                                    </svg>
                                                 </div>
                                                 <div class="flex-1">
-                                                    <h4 class="font-medium text-admin-900 dark:text-white">{{ $role->display_name }}</h4>
-                                                    <p class="text-sm text-admin-600 dark:text-admin-400">{{ $role->users_count }} kullanıcı</p>
+                                                    <h4 class="font-medium text-admin-900 dark:text-white">{{ $role->display_name ?? $role->name }}</h4>
+                                                    <p class="text-sm text-admin-600 dark:text-admin-400">{{ $role->users_count ?? 0 }} kullanıcı</p>
                                                 </div>
                                                 <a href="{{ route('admin.permissions.role-permissions', $role) }}"
                                                    class="p-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-                                                    <x-heroicon name="external-link" class="w-4 h-4" />
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                                    </svg>
                                                 </a>
                                             </div>
                                         @endforeach
@@ -278,7 +293,7 @@
     </div>
 
     <!-- Matrix View -->
-    <div x-show="viewMode === 'matrix'" x-transition class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700">
+    <div id="matrixView" class="view-panel bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700 hidden">
         <div class="p-6 border-b border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold text-admin-900 dark:text-white">Hiyerarşi Matrix</h2>
@@ -310,8 +325,8 @@
                             @foreach($allRoles ?? [] as $role)
                                 <th class="px-3 py-3 text-center text-xs font-medium text-admin-500 dark:text-admin-400 uppercase tracking-wider border-r border-admin-200 dark:border-admin-600 min-w-16">
                                     <div class="transform -rotate-45 origin-center">
-                                        <span class="block">{{ Str::limit($role->display_name, 8) }}</span>
-                                        <span class="block text-xs">L{{ $role->hierarchy_level }}</span>
+                                        <span class="block">{{ Str::limit($role->display_name ?? $role->name, 8) }}</span>
+                                        <span class="block text-xs">L{{ $role->hierarchy_level ?? 0 }}</span>
                                     </div>
                                 </th>
                             @endforeach
@@ -322,19 +337,24 @@
                             <tr class="hover:bg-admin-50 dark:hover:bg-admin-700/20 transition-colors">
                                 <td class="sticky left-0 bg-white dark:bg-admin-800 px-6 py-4 text-sm font-medium text-admin-900 dark:text-white border-r border-admin-200 dark:border-admin-600">
                                     <div class="flex items-center">
-                                        <div class="w-8 h-8 bg-gradient-to-br from-{{ $rowRole->getColorClass() }}-500 to-{{ $rowRole->getColorClass() }}-600 rounded-lg flex items-center justify-center mr-3">
-                                            <x-heroicon name="shield-check" class="w-4 h-4 text-white" />
+                                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+                                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                            </svg>
                                         </div>
                                         <div>
-                                            <p class="font-medium">{{ $rowRole->display_name }}</p>
-                                            <p class="text-xs text-admin-500">Seviye {{ $rowRole->hierarchy_level }}</p>
+                                            <p class="font-medium">{{ $rowRole->display_name ?? $rowRole->name }}</p>
+                                            <p class="text-xs text-admin-500">Seviye {{ $rowRole->hierarchy_level ?? 0 }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 @foreach($allRoles ?? [] as $colRole)
                                     <td class="px-3 py-4 text-center border-r border-admin-200 dark:border-admin-600">
                                         @php
-                                            $relationship = $rowRole->getRelationshipWith($colRole);
+                                            $relationship = 'none';
+                                            if(method_exists($rowRole, 'getRelationshipWith')) {
+                                                $relationship = $rowRole->getRelationshipWith($colRole);
+                                            }
                                         @endphp
                                         
                                         <div class="w-8 h-8 rounded-full mx-auto flex items-center justify-center">
@@ -342,15 +362,21 @@
                                                 <div class="w-6 h-6 bg-admin-300 dark:bg-admin-600 rounded-full"></div>
                                             @elseif($relationship === 'parent')
                                                 <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                                                    <x-heroicon name="arrow-up" class="w-3 h-3 text-white" />
+                                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                                    </svg>
                                                 </div>
                                             @elseif($relationship === 'child')
                                                 <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                                                    <x-heroicon name="arrow-down" class="w-3 h-3 text-white" />
+                                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                                    </svg>
                                                 </div>
                                             @elseif($relationship === 'sibling')
                                                 <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
-                                                    <x-heroicon name="arrow-right" class="w-3 h-3 text-white" />
+                                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                                    </svg>
                                                 </div>
                                             @else
                                                 <div class="w-4 h-4 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
@@ -367,121 +393,42 @@
     </div>
 
     <!-- Role Detail Panel -->
-    <div x-show="selectedRole" x-transition class="fixed inset-y-0 right-0 w-96 bg-white dark:bg-admin-800 shadow-2xl border-l border-admin-200 dark:border-admin-700 z-50">
+    <div id="roleDetailPanel" class="fixed inset-y-0 right-0 w-96 bg-white dark:bg-admin-800 shadow-2xl border-l border-admin-200 dark:border-admin-700 z-50 transform translate-x-full transition-transform duration-300">
         <div class="h-full flex flex-col">
             <!-- Header -->
             <div class="p-6 border-b border-admin-200 dark:border-admin-700 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg font-semibold text-admin-900 dark:text-white">Rol Detayları</h3>
-                    <button @click="selectedRole = null" class="p-2 text-admin-400 hover:text-admin-600 dark:hover:text-admin-300">
-                        <x-heroicon name="x-mark" class="w-5 h-5" />
+                    <button id="closeRolePanel" class="p-2 text-admin-400 hover:text-admin-600 dark:hover:text-admin-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
                     </button>
                 </div>
             </div>
             
             <!-- Content -->
-            <div class="flex-1 overflow-y-auto p-6 space-y-6">
-                <template x-if="selectedRoleData">
-                    <div>
-                        <!-- Role Info -->
-                        <div class="bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4 mb-6">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                                    <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-admin-900 dark:text-white" x-text="selectedRoleData.display_name"></h4>
-                                    <p class="text-sm text-admin-600 dark:text-admin-400">
-                                        Seviye <span x-text="selectedRoleData.hierarchy_level"></span>
-                                    </p>
-                                </div>
-                            </div>
-                            <p class="text-sm text-admin-700 dark:text-admin-300 mt-3" x-text="selectedRoleData.description"></p>
-                        </div>
-                        
-                        <!-- Statistics -->
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800">
-                                <p class="text-2xl font-bold text-green-700 dark:text-green-300" x-text="selectedRoleData.users_count"></p>
-                                <p class="text-sm text-green-600 dark:text-green-400">Kullanıcı</p>
-                            </div>
-                            <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
-                                <p class="text-2xl font-bold text-blue-700 dark:text-blue-300" x-text="selectedRoleData.permissions_count"></p>
-                                <p class="text-sm text-blue-600 dark:text-blue-400">İzin</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Hierarchy Relationships -->
-                        <div class="space-y-4">
-                            <div x-show="selectedRoleData.parent_roles && selectedRoleData.parent_roles.length > 0">
-                                <h5 class="font-medium text-admin-900 dark:text-white mb-2">Üst Roller</h5>
-                                <div class="space-y-2">
-                                    <template x-for="parent in selectedRoleData.parent_roles" :key="parent.id">
-                                        <div class="flex items-center space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-                                            <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                                                <x-heroicon name="arrow-up" class="w-4 h-4 text-white" />
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-green-900 dark:text-green-100" x-text="parent.display_name"></p>
-                                                <p class="text-sm text-green-700 dark:text-green-300">Seviye <span x-text="parent.hierarchy_level"></span></p>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </div>
-                            </div>
-                            
-                            <div x-show="selectedRoleData.child_roles && selectedRoleData.child_roles.length > 0">
-                                <h5 class="font-medium text-admin-900 dark:text-white mb-2">Alt Roller</h5>
-                                <div class="space-y-2">
-                                    <template x-for="child in selectedRoleData.child_roles" :key="child.id">
-                                        <div class="flex items-center space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                                            <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                                                <x-heroicon name="arrow-down" class="w-4 h-4 text-white" />
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-blue-900 dark:text-blue-100" x-text="child.display_name"></p>
-                                                <p class="text-sm text-blue-700 dark:text-blue-300">Seviye <span x-text="child.hierarchy_level"></span></p>
-                                            </div>
-                                        </div>
-                                    </template>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Actions -->
-                        <div class="space-y-3 pt-4 border-t border-admin-200 dark:border-admin-600">
-                            <button @click="viewRolePermissions(selectedRoleData.id)" 
-                                    class="w-full flex items-center justify-center px-4 py-3 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-xl hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors">
-                                <x-heroicon name="key" class="w-4 h-4 mr-2" />
-                                İzinleri Görüntüle
-                            </button>
-                            
-                            <button @click="editRole(selectedRoleData.id)" 
-                                    class="w-full flex items-center justify-center px-4 py-3 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-xl hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors">
-                                <x-heroicon name="edit-3" class="w-4 h-4 mr-2" />
-                                Rolü Düzenle
-                            </button>
-                            
-                            <button @click="manageUsers(selectedRoleData.id)" 
-                                    class="w-full flex items-center justify-center px-4 py-3 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-xl hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors">
-                                <x-heroicon name="users" class="w-4 h-4 mr-2" />
-                                Kullanıcıları Yönet
-                            </button>
-                        </div>
-                    </div>
-                </template>
+            <div class="flex-1 overflow-y-auto p-6 space-y-6" id="roleDetailContent">
+                <div class="text-center text-admin-500 dark:text-admin-400 mt-8">
+                    <svg class="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                    <p>Bir rol seçin</p>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Restructure Modal -->
-    <div x-show="showRestructureModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div id="restructureModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-2xl max-w-4xl w-full m-4 max-h-[90vh] overflow-hidden">
             <div class="p-6 border-b border-admin-200 dark:border-admin-700">
                 <div class="flex items-center justify-between">
                     <h3 class="text-xl font-semibold text-admin-900 dark:text-white">Hiyerarşi Yeniden Yapılandırma</h3>
-                    <button @click="showRestructureModal = false" class="text-admin-400 hover:text-admin-600">
-                        <x-heroicon name="x-mark" class="w-6 h-6" />
+                    <button id="closeRestructureModal" class="text-admin-400 hover:text-admin-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -493,12 +440,13 @@
                         <h4 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">Yapılandırma Seçenekleri</h4>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 border border-admin-200 dark:border-admin-600 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/20 cursor-pointer transition-colors"
-                                 @click="restructureType = 'department'">
+                            <div class="restructure-option p-4 border border-admin-200 dark:border-admin-600 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/20 cursor-pointer transition-colors" data-type="department">
                                 <div class="flex items-center space-x-3">
-                                    <input type="radio" x-model="restructureType" value="department" class="text-blue-600">
+                                    <input type="radio" name="restructureType" value="department" class="text-blue-600">
                                     <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                                        <x-heroicon name="building" class="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                        </svg>
                                     </div>
                                     <div>
                                         <h5 class="font-medium text-admin-900 dark:text-white">Departman Bazlı</h5>
@@ -507,12 +455,13 @@
                                 </div>
                             </div>
                             
-                            <div class="p-4 border border-admin-200 dark:border-admin-600 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/20 cursor-pointer transition-colors"
-                                 @click="restructureType = 'function'">
+                            <div class="restructure-option p-4 border border-admin-200 dark:border-admin-600 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/20 cursor-pointer transition-colors" data-type="function">
                                 <div class="flex items-center space-x-3">
-                                    <input type="radio" x-model="restructureType" value="function" class="text-green-600">
+                                    <input type="radio" name="restructureType" value="function" class="text-green-600">
                                     <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
-                                        <x-heroicon name="layers" class="w-5 h-5 text-green-600 dark:text-green-400" />
+                                        <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                        </svg>
                                     </div>
                                     <div>
                                         <h5 class="font-medium text-admin-900 dark:text-white">Fonksiyon Bazlı</h5>
@@ -521,12 +470,13 @@
                                 </div>
                             </div>
                             
-                            <div class="p-4 border border-admin-200 dark:border-admin-600 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/20 cursor-pointer transition-colors"
-                                 @click="restructureType = 'permission'">
+                            <div class="restructure-option p-4 border border-admin-200 dark:border-admin-600 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/20 cursor-pointer transition-colors" data-type="permission">
                                 <div class="flex items-center space-x-3">
-                                    <input type="radio" x-model="restructureType" value="permission" class="text-purple-600">
+                                    <input type="radio" name="restructureType" value="permission" class="text-purple-600">
                                     <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
-                                        <x-heroicon name="key" class="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                                        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m0 0a2 2 0 01-2 2m2-2h3m-3 0h-3m-2-5a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2v2zM7 21h10a2 2 0 002-2v-2a2 2 0 00-2-2H7a2 2 0 00-2 2v2a2 2 0 002 2z"></path>
+                                        </svg>
                                     </div>
                                     <div>
                                         <h5 class="font-medium text-admin-900 dark:text-white">İzin Bazlı</h5>
@@ -535,12 +485,14 @@
                                 </div>
                             </div>
                             
-                            <div class="p-4 border border-admin-200 dark:border-admin-600 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/20 cursor-pointer transition-colors"
-                                 @click="restructureType = 'custom'">
+                            <div class="restructure-option p-4 border border-admin-200 dark:border-admin-600 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/20 cursor-pointer transition-colors" data-type="custom">
                                 <div class="flex items-center space-x-3">
-                                    <input type="radio" x-model="restructureType" value="custom" class="text-amber-600">
+                                    <input type="radio" name="restructureType" value="custom" class="text-amber-600">
                                     <div class="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center">
-                                        <x-heroicon name="cog-6-tooth" class="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                                        <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
                                     </div>
                                     <div>
                                         <h5 class="font-medium text-admin-900 dark:text-white">Özel Yapılandırma</h5>
@@ -552,11 +504,13 @@
                     </div>
                     
                     <!-- Preview -->
-                    <div x-show="restructureType" x-transition>
+                    <div id="restructurePreview" class="hidden">
                         <h4 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">Değişiklik Önizlemesi</h4>
                         <div class="p-4 bg-admin-50 dark:bg-admin-700/50 rounded-xl border border-admin-200 dark:border-admin-600">
                             <p class="text-admin-700 dark:text-admin-300">
-                                <x-heroicon name="information-circle" class="w-4 h-4 inline mr-2" />
+                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
                                 Seçilen yapılandırma tipine göre hiyerarşi değişiklikleri burada gösterilecek.
                             </p>
                         </div>
@@ -566,13 +520,10 @@
             
             <div class="p-6 border-t border-admin-200 dark:border-admin-700">
                 <div class="flex items-center justify-end space-x-3">
-                    <button @click="showRestructureModal = false" 
-                            class="px-6 py-2 border border-admin-300 dark:border-admin-600 text-admin-700 dark:text-admin-300 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/50">
+                    <button id="cancelRestructure" class="px-6 py-2 border border-admin-300 dark:border-admin-600 text-admin-700 dark:text-admin-300 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/50">
                         İptal
                     </button>
-                    <button @click="applyRestructure()" 
-                            :disabled="!restructureType"
-                            class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button id="applyRestructure" disabled class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed">
                         Uygula
                     </button>
                 </div>
@@ -583,65 +534,276 @@
 @endsection
 
 @push('scripts')
-
 <script>
-function hierarchyManager() {
-    return {
-        viewMode: 'tree',
-        selectedRole: null,
-        selectedRoleData: null,
-        showRestructureModal: false,
-        restructureType: '',
+class HierarchyManager {
+    constructor() {
+        this.currentViewMode = 'tree';
+        this.selectedRole = null;
+        this.selectedRoleData = null;
+        this.restructureType = '';
         
-        init() {
-            this.$nextTick(() => {
-                
-                this.initializeD3Tree();
-            });
-        },
+        this.initializeEventListeners();
+        this.initializeD3Tree();
+    }
+    
+    initializeEventListeners() {
+        // View mode buttons
+        document.querySelectorAll('.view-mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => this.switchView(btn.dataset.view));
+        });
         
-        selectRole(roleId) {
-            this.selectedRole = roleId;
-            
-            // Fetch role data
-            fetch(`/admin/dashboard/roles/${roleId}/data`)
-                .then(response => response.json())
-                .then(data => {
-                    this.selectedRoleData = data;
-                })
-                .catch(error => {
-                    console.error('Error fetching role data:', error);
+        // Role nodes
+        document.querySelectorAll('.role-node').forEach(node => {
+            node.addEventListener('click', () => this.selectRole(node.dataset.roleId));
+        });
+        
+        // Export button
+        document.getElementById('exportBtn').addEventListener('click', () => this.exportHierarchy());
+        
+        // Restructure button
+        document.getElementById('restructureBtn').addEventListener('click', () => this.showRestructureModal());
+        
+        // Modal controls
+        document.getElementById('closeRolePanel').addEventListener('click', () => this.closeRolePanel());
+        document.getElementById('closeRestructureModal').addEventListener('click', () => this.closeRestructureModal());
+        document.getElementById('cancelRestructure').addEventListener('click', () => this.closeRestructureModal());
+        document.getElementById('applyRestructure').addEventListener('click', () => this.applyRestructure());
+        
+        // Restructure options
+        document.querySelectorAll('.restructure-option').forEach(option => {
+            option.addEventListener('click', () => this.selectRestructureOption(option.dataset.type));
+        });
+        
+        // Close modals on outside click
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('fixed') && e.target.classList.contains('inset-0')) {
+                this.closeRestructureModal();
+            }
+        });
+    }
+    
+    switchView(mode) {
+        this.currentViewMode = mode;
+        
+        // Update button states
+        document.querySelectorAll('.view-mode-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.view === mode);
+            if (btn.dataset.view === mode) {
+                btn.classList.add('bg-white', 'dark:bg-admin-600', 'shadow-sm');
+            } else {
+                btn.classList.remove('bg-white', 'dark:bg-admin-600', 'shadow-sm');
+            }
+        });
+        
+        // Show/hide view panels
+        document.querySelectorAll('.view-panel').forEach(panel => {
+            if (panel.id === `${mode}View`) {
+                panel.classList.remove('hidden');
+                // Add fade in animation
+                panel.style.opacity = '0';
+                requestAnimationFrame(() => {
+                    panel.style.transition = 'opacity 0.3s ease-in-out';
+                    panel.style.opacity = '1';
                 });
-        },
+            } else {
+                panel.classList.add('hidden');
+            }
+        });
+    }
+    
+    selectRole(roleId) {
+        this.selectedRole = roleId;
         
-        initializeD3Tree() {
-            // Initialize D3.js tree visualization for complex hierarchy
-            const hierarchyData = @json($d3HierarchyData ?? []);
+        // Show loading state
+        const panel = document.getElementById('roleDetailPanel');
+        const content = document.getElementById('roleDetailContent');
+        
+        content.innerHTML = `
+            <div class="flex items-center justify-center py-8">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <span class="ml-3 text-admin-600 dark:text-admin-400">Yükleniyor...</span>
+            </div>
+        `;
+        
+        // Show panel
+        panel.classList.remove('translate-x-full');
+        
+        // Fetch role data
+        fetch(`/admin/dashboard/roles/${roleId}/data`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                this.selectedRoleData = data;
+                this.renderRoleDetails();
+            })
+            .catch(error => {
+                console.error('Error fetching role data:', error);
+                content.innerHTML = `
+                    <div class="text-center text-red-500 mt-8">
+                        <svg class="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p>Rol bilgileri yüklenemedi</p>
+                    </div>
+                `;
+            });
+    }
+    
+    renderRoleDetails() {
+        const content = document.getElementById('roleDetailContent');
+        const role = this.selectedRoleData;
+        
+        content.innerHTML = `
+            <!-- Role Info -->
+            <div class="bg-admin-50 dark:bg-admin-700/50 rounded-xl p-4 mb-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-admin-900 dark:text-white">${role.display_name || role.name}</h4>
+                        <p class="text-sm text-admin-600 dark:text-admin-400">
+                            Seviye ${role.hierarchy_level || 0}
+                        </p>
+                    </div>
+                </div>
+                <p class="text-sm text-admin-700 dark:text-admin-300 mt-3">${role.description || 'Açıklama yok'}</p>
+            </div>
             
-            // D3 tree implementation would go here
-            console.log('D3 Tree initialized with data:', hierarchyData);
-        },
-        
-        viewRolePermissions(roleId) {
-            window.location.href = `/admin/dashboard/permissions/role/${roleId}`;
-        },
-        
-        editRole(roleId) {
-            window.location.href = `/admin/dashboard/roles/${roleId}/edit`;
-        },
-        
-        manageUsers(roleId) {
-            window.location.href = `{{ route('admin.managers.index') }}?role=${roleId}`;
-        },
-        
-        showRestructure() {
-            this.showRestructureModal = true;
-            this.restructureType = '';
-        },
-        
-        applyRestructure() {
-            if (!this.restructureType) return;
+            <!-- Statistics -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-800">
+                    <p class="text-2xl font-bold text-green-700 dark:text-green-300">${role.users_count || 0}</p>
+                    <p class="text-sm text-green-600 dark:text-green-400">Kullanıcı</p>
+                </div>
+                <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                    <p class="text-2xl font-bold text-blue-700 dark:text-blue-300">${role.permissions_count || 0}</p>
+                    <p class="text-sm text-blue-600 dark:text-blue-400">İzin</p>
+                </div>
+            </div>
             
+            <!-- Hierarchy Relationships -->
+            <div class="space-y-4">
+                ${role.parent_roles && role.parent_roles.length > 0 ? `
+                    <div>
+                        <h5 class="font-medium text-admin-900 dark:text-white mb-2">Üst Roller</h5>
+                        <div class="space-y-2">
+                            ${role.parent_roles.map(parent => `
+                                <div class="flex items-center space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                    <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-green-900 dark:text-green-100">${parent.display_name}</p>
+                                        <p class="text-sm text-green-700 dark:text-green-300">Seviye ${parent.hierarchy_level}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+                
+                ${role.child_roles && role.child_roles.length > 0 ? `
+                    <div>
+                        <h5 class="font-medium text-admin-900 dark:text-white mb-2">Alt Roller</h5>
+                        <div class="space-y-2">
+                            ${role.child_roles.map(child => `
+                                <div class="flex items-center space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-blue-900 dark:text-blue-100">${child.display_name}</p>
+                                        <p class="text-sm text-blue-700 dark:text-blue-300">Seviye ${child.hierarchy_level}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+            
+            <!-- Actions -->
+            <div class="space-y-3 pt-4 border-t border-admin-200 dark:border-admin-600">
+                <button onclick="window.location.href='/admin/dashboard/permissions/role/${role.id}'" 
+                        class="w-full flex items-center justify-center px-4 py-3 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-xl hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m0 0a2 2 0 01-2 2m2-2h3m-3 0h-3m-2-5a2 2 0 01-2 2H9a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2v2zM7 21h10a2 2 0 002-2v-2a2 2 0 00-2-2H7a2 2 0 00-2 2v2a2 2 0 002 2z"></path>
+                    </svg>
+                    İzinleri Görüntüle
+                </button>
+                
+                <button onclick="window.location.href='/admin/dashboard/roles/${role.id}/edit'" 
+                        class="w-full flex items-center justify-center px-4 py-3 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-xl hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
+                    Rolü Düzenle
+                </button>
+                
+                <button onclick="window.location.href='{{ route('admin.managers.index') }}?role=${role.id}'" 
+                        class="w-full flex items-center justify-center px-4 py-3 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-xl hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                    Kullanıcıları Yönet
+                </button>
+            </div>
+        `;
+    }
+    
+    closeRolePanel() {
+        const panel = document.getElementById('roleDetailPanel');
+        panel.classList.add('translate-x-full');
+        this.selectedRole = null;
+        this.selectedRoleData = null;
+    }
+    
+    showRestructureModal() {
+        const modal = document.getElementById('restructureModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        this.restructureType = '';
+        
+        // Reset form
+        document.querySelectorAll('input[name="restructureType"]').forEach(input => {
+            input.checked = false;
+        });
+        document.getElementById('restructurePreview').classList.add('hidden');
+        document.getElementById('applyRestructure').disabled = true;
+    }
+    
+    closeRestructureModal() {
+        const modal = document.getElementById('restructureModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+    
+    selectRestructureOption(type) {
+        this.restructureType = type;
+        
+        // Update radio button
+        document.querySelector(`input[value="${type}"]`).checked = true;
+        
+        // Show preview
+        document.getElementById('restructurePreview').classList.remove('hidden');
+        document.getElementById('applyRestructure').disabled = false;
+    }
+    
+    applyRestructure() {
+        if (!this.restructureType) return;
+        
+        if (typeof Swal !== 'undefined') {
             Swal.fire({
                 title: 'Hiyerarşiyi Yeniden Yapılandır',
                 text: 'Bu işlem mevcut hiyerarşiyi değiştirecek. Emin misiniz?',
@@ -651,39 +813,61 @@ function hierarchyManager() {
                 cancelButtonText: 'İptal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // AJAX call to restructure hierarchy
-                    fetch('{{ route("admin.permissions.restructure") }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            type: this.restructureType
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            this.showRestructureModal = false;
-                            Swal.fire('Başarılı!', 'Hiyerarşi yeniden yapılandırıldı.', 'success').then(() => {
-                                window.location.reload();
-                            });
-                        } else {
-                            Swal.fire('Hata!', data.message || 'Bir hata oluştu.', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        Swal.fire('Hata!', 'Bir hata oluştu.', 'error');
-                    });
+                    this.performRestructure();
                 }
             });
-        },
+        } else {
+            if (confirm('Bu işlem mevcut hiyerarşiyi değiştirecek. Emin misiniz?')) {
+                this.performRestructure();
+            }
+        }
+    }
+    
+    performRestructure() {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
         
-        exportHierarchy() {
-            const format = 'json'; // Could be made selectable
-            
+        fetch('{{ route("admin.permissions.restructure") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken || ''
+            },
+            body: JSON.stringify({
+                type: this.restructureType
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                this.closeRestructureModal();
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire('Başarılı!', 'Hiyerarşi yeniden yapılandırıldı.', 'success').then(() => {
+                        window.location.reload();
+                    });
+                } else {
+                    alert('Hiyerarşi yeniden yapılandırıldı.');
+                    window.location.reload();
+                }
+            } else {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire('Hata!', data.message || 'Bir hata oluştu.', 'error');
+                } else {
+                    alert('Hata: ' + (data.message || 'Bir hata oluştu.'));
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            if (typeof Swal !== 'undefined') {
+                Swal.fire('Hata!', 'Bir hata oluştu.', 'error');
+            } else {
+                alert('Bir hata oluştu.');
+            }
+        });
+    }
+    
+    exportHierarchy() {
+        if (typeof Swal !== 'undefined') {
             Swal.fire({
                 title: 'Hiyerarşiyi Dışa Aktar',
                 html: `
@@ -698,7 +882,7 @@ function hierarchyManager() {
                 confirmButtonText: 'Dışa Aktar',
                 cancelButtonText: 'İptal',
                 preConfirm: () => {
-                    const format = document.getElementById('exportFormat').value;
+                    const format = document.getElementById('exportFormat')?.value || 'json';
                     return { format: format };
                 }
             }).then((result) => {
@@ -706,13 +890,26 @@ function hierarchyManager() {
                     window.open(`{{ route('admin.permissions.hierarchy.export') }}?format=${result.value.format}`, '_blank');
                 }
             });
+        } else {
+            const format = prompt('Export format (json, xlsx, pdf, png):', 'json');
+            if (format) {
+                window.open(`{{ route('admin.permissions.hierarchy.export') }}?format=${format}`, '_blank');
+            }
         }
+    }
+    
+    initializeD3Tree() {
+        // Initialize D3.js tree visualization for complex hierarchy
+        const hierarchyData = @json($d3HierarchyData ?? []);
+        
+        // D3 tree implementation would go here
+        console.log('D3 Tree initialized with data:', hierarchyData);
     }
 }
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    
+    window.hierarchyManager = new HierarchyManager();
 });
 </script>
 @endpush

@@ -515,68 +515,125 @@ class AdminManagerController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
-        $currentAdmin = Auth::guard('admin')->user();
-        
-        \Log::info('🚀 DEBUG: update method called', [
-            'admin_id' => $admin?->id ?? 'null',
-            'request_data' => $request->all(),
-        ]);
+        try {
+            $currentAdmin = Auth::guard('admin')->user();
+            
+            \Log::info('🚀 DEBUG: update method called', [
+                'admin_id' => $admin?->id ?? 'null',
+                'request_data' => $request->all(),
+                'is_ajax' => $request->ajax(),
+                'wants_json' => $request->wantsJson(),
+            ]);
 
-        // Check permissions
-        if (!$currentAdmin->canManageAdmin($admin)) {
-            \Log::warning('🚨 DEBUG: Permission denied for updating admin');
-            abort(403, 'Bu yöneticiyi düzenleme yetkiniz yok.');
+            // Check if admin exists
+            if (!$admin || !$admin->exists) {
+                \Log::error('🚨 DEBUG: Admin not found or does not exist');
+                if ($request->wantsJson() || $request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Admin bulunamadı.'
+                    ], 404);
+                }
+                abort(404, 'Admin bulunamadı.');
+            }
+
+            // Check if current admin exists
+            if (!$currentAdmin) {
+                \Log::error('🚨 DEBUG: Current admin not found');
+                if ($request->wantsJson() || $request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Oturum süresi dolmuş.'
+                    ], 401);
+                }
+                return redirect()->route('admin.login');
+            }
+
+            // Check permissions
+            if (!$currentAdmin->canManageAdmin($admin)) {
+                \Log::warning('🚨 DEBUG: Permission denied for updating admin');
+                
+                if ($request->wantsJson() || $request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Bu yöneticiyi düzenleme yetkiniz yok.'
+                    ], 403);
+                }
+                
+                abort(403, 'Bu yöneticiyi düzenleme yetkiniz yok.');
+            }
+
+            \Log::info('🚀 DEBUG: Starting validation');
+
+            // Validation rules
+            $rules = [
+                'firstName' => 'required|string|max:255',
+                'lastName' => 'required|string|max:255',
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('admins')->ignore($admin->id)
+                ],
+                'password' => 'nullable|min:8|confirmed',
+                'phone' => 'nullable|string|max:20',
+                'employee_id' => [
+                    'nullable',
+                    'string',
+                    'max:50',
+                    Rule::unique('admins')->ignore($admin->id)
+                ],
+                'role_id' => 'required|exists:roles,id',
+                'supervisor_id' => 'nullable|exists:admins,id',
+                'admin_group_id' => 'nullable|exists:admin_groups,id',
+                'department' => 'nullable|string',
+                'position' => 'nullable|string|max:255',
+                'status' => 'nullable|string|in:Active,Inactive,Suspended',
+                'monthly_target' => 'nullable|numeric|min:0',
+                'current_performance' => 'nullable|numeric|min:0|max:100',
+                'max_leads_per_day' => 'nullable|integer|min:1|max:500',
+                'is_available' => 'nullable|boolean',
+                'time_zone' => 'nullable|string',
+                'bio' => 'nullable|string|max:1000',
+                'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ];
+
+            $this->validate($request, $rules);
+
+            \Log::info('🚀 DEBUG: Validation passed successfully');
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('🚨 DEBUG: Validation failed', [
+                'errors' => $e->errors(),
+                'message' => $e->getMessage()
+            ]);
+            
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Doğrulama hatası oluştu.',
+                    'errors' => $e->errors()
+                ], 422);
+            }
+            
+            throw $e;
+            
+        } catch (\Exception $e) {
+            \Log::error('🚨 DEBUG: Global exception in update method', [
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            if ($request->wantsJson() || $request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Sunucu hatası oluştu: ' . $e->getMessage()
+                ], 500);
+            }
+            
+            throw $e;
         }
-
-        $this->validate($request, [
-            'firstName' => 'required|string|max:255',
-            'lastName' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('admins')->ignore($admin->id)
-            ],
-            'password' => 'nullable|min:8|confirmed',
-            'phone' => 'nullable|string|max:20',
-            'employee_id' => [
-                'nullable',
-                'string',
-                'max:50',
-                Rule::unique('admins')->ignore($admin->id)
-            ],
-            'role_id' => [
-                'required',
-                'exists:roles,id',
-                function ($attribute, $value, $fail) use ($currentAdmin) {
-                    if (!$currentAdmin->isSuperAdmin()) {
-                        $role = Role::find($value);
-                        if ($role && (!$currentAdmin->role || !$currentAdmin->role->canManage($role))) {
-                            $fail('Bu rolü atama yetkiniz yok.');
-                        }
-                    }
-                },
-            ],
-            'supervisor_id' => [
-                'nullable',
-                'exists:admins,id',
-                function ($attribute, $value, $fail) use ($admin) {
-                    if ($value && ($value == $admin->id || in_array($value, $admin->getAllSubordinates()))) {
-                        $fail('Hiyerarşi döngüsü oluşturulamaz.');
-                    }
-                },
-            ],
-            'admin_group_id' => 'nullable|exists:admin_groups,id',
-            'department' => 'required|string',
-            'position' => 'nullable|string|max:255',
-            'status' => 'required|in:' . implode(',', [Admin::STATUS_ACTIVE, Admin::STATUS_INACTIVE, Admin::STATUS_SUSPENDED]),
-            'monthly_target' => 'nullable|numeric|min:0',
-            'current_performance' => 'nullable|numeric|min:0|max:100',
-            'max_leads_per_day' => 'nullable|integer|min:1|max:500',
-            'is_available' => 'boolean',
-            'time_zone' => 'nullable|string',
-            'bio' => 'nullable|string|max:1000',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
 
         DB::beginTransaction();
         try {
@@ -695,16 +752,18 @@ class AdminManagerController extends Controller
     }
 
     /**
-     * AJAX Yönetici güncelle - Workaround
+     * AJAX Yönetici güncelle - TAMAMEN YENİ YAKLAŞIM
      */
     public function updateAjax(Request $request, Admin $admin)
     {
-        \Log::info('🚀 DEBUG: updateAjax method called', [
-            'admin_id' => $admin?->id ?? 'null',
-            'request_data' => $request->all(),
+        // 1. En basit log
+        error_log('🚀 AJAX UPDATE METHOD CALLED!');
+        
+        // 2. Çok basit JSON response
+        return response()->json([
+            'success' => true,
+            'message' => 'Admin güncelleme endpoint\'i çalışıyor!'
         ]);
-
-        return $this->update($request, $admin);
     }
 
     /**

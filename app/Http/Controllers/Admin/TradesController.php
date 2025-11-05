@@ -108,6 +108,18 @@ class TradesController extends Controller
     private function fixInvalidUserIdsSilently()
     {
         try {
+            // Önce geçerli user ID'leri olan kayıtların user_name/user_email alanlarını güncelle
+            $tradesWithValidUsers = User_plans::with('user')->whereNotNull('user')->where('user', '!=', 0)->get();
+            
+            foreach ($tradesWithValidUsers as $trade) {
+                if ($trade->user && (empty($trade->user_name) || empty($trade->user_email))) {
+                    $trade->update([
+                        'user_name' => $trade->user->name,
+                        'user_email' => $trade->user->email
+                    ]);
+                }
+            }
+
             // Geçersiz user ID'lerini tespit et
             $allUserIdsInTrades = User_plans::whereNotNull('user')
                 ->where('user', '!=', 0)

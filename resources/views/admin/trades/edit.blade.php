@@ -1,294 +1,401 @@
-@extends('layouts.app')
-@section('title', 'Edit Trade')
+@extends('layouts.admin')
+
 @section('content')
 
-@include('admin.topmenu')
-@include('admin.sidebar')
+<!-- Page Header -->
+<div class="mb-8">
+    <div class="flex items-center justify-between bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-600 rounded-2xl p-6 text-white shadow-lg">
+        <div class="flex items-center space-x-4">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                <x-heroicon name="pencil-square" class="w-8 h-8 text-white" />
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold mb-1">İşlem Düzenle #{{ $trade->id }}</h1>
+                <p class="text-blue-100 text-lg">İşlem bilgilerini güncelleyin</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <div class="hidden md:flex items-center space-x-2 text-white/80">
+                <x-heroicon name="home" class="w-4 h-4" />
+                <span>Dashboard</span>
+                <x-heroicon name="chevron-right" class="w-4 h-4" />
+                <a href="{{ route('admin.trades.index') }}" class="hover:text-white transition-colors">İşlemler</a>
+                <x-heroicon name="chevron-right" class="w-4 h-4" />
+                <span class="text-white font-semibold">Düzenle</span>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="main-panel">
-    <div class="content">
-        <div class="page-inner">
-            <div class="page-header">
-                <h4 class="page-title">Edit Trade</h4>
-                <ul class="breadcrumbs">
-                    <li class="nav-home">
-                        <a href="{{ route('admin.dashboard') }}">
-                            <i class="flaticon-home"></i>
-                        </a>
-                    </li>
-                    <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.trades.index') }}">Trades</a>
-                    </li>
-                    <li class="separator">
-                        <i class="flaticon-right-arrow"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Edit</a>
-                    </li>
+<!-- Alert Messages -->
+<x-success-alert />
+<x-danger-alert />
+
+<!-- Validation Errors -->
+@if ($errors->any())
+    <div class="mb-8 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-2xl p-6 shadow-lg">
+        <div class="flex items-start space-x-3">
+            <x-heroicon name="exclamation-triangle" class="w-6 h-6 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+            <div>
+                <h3 class="text-lg font-semibold text-red-800 dark:text-red-200 mb-2">Lütfen aşağıdaki hataları düzeltin:</h3>
+                <ul class="list-disc list-inside space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li class="text-red-700 dark:text-red-300">{{ $error }}</li>
+                    @endforeach
                 </ul>
             </div>
+        </div>
+    </div>
+@endif
 
-            <!-- Success/Error Messages -->
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<!-- User Information Card -->
+<div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg border border-admin-200 dark:border-admin-700 mb-8">
+    <div class="p-6 border-b border-admin-200 dark:border-admin-700">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <x-heroicon name="user" class="w-5 h-5 text-white" />
+            </div>
+            <div>
+                <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">İşlem Sahibi Bilgileri</h2>
+                <p class="text-admin-500 dark:text-admin-400 text-sm">Bu işlem aşağıdaki kullanıcıya ait</p>
+            </div>
+        </div>
+    </div>
+    <div class="p-6 bg-blue-50 dark:bg-blue-900/30">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-800 rounded-lg flex items-center justify-center">
+                    <x-heroicon name="identification" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
-            @endif
-
-            @if(session('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>{{ session('error') }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-
-            @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <h6><i class="fas fa-exclamation-triangle mr-2"></i>Please fix the following errors:</h6>
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
-
-            <!-- Edit Trade Form -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex align-items-center">
-                                <h4 class="card-title">
-                                    <i class="fas fa-edit mr-2"></i>Edit Trade #{{ $trade->id }}
-                                </h4>
-                                <div class="ml-auto">
-                                    <a href="{{ route('admin.trades.index') }}" class="btn btn-secondary btn-sm">
-                                        <i class="fas fa-arrow-left mr-1"></i>Back to Trades
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <!-- Trade User Info -->
-                            <div class="row mb-4">
-                                <div class="col-md-12">
-                                    <div class="alert alert-info">
-                                        <h6><i class="fas fa-user mr-2"></i>Trade Owner Information</h6>
-                                        <strong>Name:</strong> {{ $trade->user->name ?? 'N/A' }}<br>
-                                        <strong>Email:</strong> {{ $trade->user->email ?? 'N/A' }}<br>
-                                        <strong>Created:</strong> {{ $trade->created_at->format('M d, Y H:i') }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <form method="POST" action="{{ route('admin.trades.update', $trade->id) }}">
-                                @csrf
-                                @method('PUT')
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="assets">Asset <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control @error('assets') is-invalid @enderror"
-                                                   id="assets" name="assets" value="{{ old('assets', $trade->assets) }}" required>
-                                            @error('assets')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="symbol">Symbol</label>
-                                            <input type="text" class="form-control @error('symbol') is-invalid @enderror"
-                                                   id="symbol" name="symbol" value="{{ old('symbol', $trade->symbol) }}"
-                                                   placeholder="e.g., BTC/USD">
-                                            @error('symbol')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="type">Trade Type <span class="text-danger">*</span></label>
-                                            <select class="form-control @error('type') is-invalid @enderror" id="type" name="type" required>
-                                                <option value="">Select Type</option>
-                                                <option value="Buy" {{ old('type', $trade->type) == 'Buy' ? 'selected' : '' }}>Buy</option>
-                                                <option value="Sell" {{ old('type', $trade->type) == 'Sell' ? 'selected' : '' }}>Sell</option>
-                                            </select>
-                                            @error('type')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="amount">Amount ($) <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control @error('amount') is-invalid @enderror"
-                                                   id="amount" name="amount" value="{{ old('amount', $trade->amount) }}"
-                                                   step="0.01" min="0" required>
-                                            @error('amount')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="leverage">Leverage</label>
-                                            <input type="number" class="form-control @error('leverage') is-invalid @enderror"
-                                                   id="leverage" name="leverage" value="{{ old('leverage', $trade->leverage) }}"
-                                                   min="1" max="1000">
-                                            <small class="form-text text-muted">Leave empty for no leverage</small>
-                                            @error('leverage')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="profit_earned">Profit/Loss ($)</label>
-                                            <input type="number" class="form-control @error('profit_earned') is-invalid @enderror"
-                                                   id="profit_earned" name="profit_earned" value="{{ old('profit_earned', $trade->profit_earned) }}"
-                                                   step="0.01">
-                                            <small class="form-text text-muted">Positive for profit, negative for loss</small>
-                                            @error('profit_earned')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="active">Status <span class="text-danger">*</span></label>
-                                            <select class="form-control @error('active') is-invalid @enderror" id="active" name="active" required>
-                                                <option value="yes" {{ old('active', $trade->active) == 'yes' ? 'selected' : '' }}>Active</option>
-                                                <option value="expired" {{ old('active', $trade->active) == 'expired' ? 'selected' : '' }}>Expired</option>
-                                            </select>
-                                            @error('active')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="expire_date">Expiry Date</label>
-                                            <input type="datetime-local" class="form-control @error('expire_date') is-invalid @enderror"
-                                                   id="expire_date" name="expire_date"
-                                                   value="{{ old('expire_date', $trade->expire_date ? \Carbon\Carbon::parse($trade->expire_date)->format('Y-m-d\TH:i') : '') }}">
-                                            @error('expire_date')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <hr>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group text-right">
-                                            <a href="{{ route('admin.trades.index') }}" class="btn btn-secondary mr-2">
-                                                <i class="fas fa-times mr-1"></i>Cancel
-                                            </a>
-                                            <button type="submit" class="btn btn-primary">
-                                                <i class="fas fa-save mr-1"></i>Update Trade
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                <div>
+                    <p class="text-sm text-admin-500 dark:text-admin-400">Ad Soyad</p>
+                    <p class="font-semibold text-admin-900 dark:text-admin-100">
+                        {{ $trade->user_name ?? 'Kullanıcı Bulunamadı' }}
+                    </p>
                 </div>
             </div>
-
-            <!-- Quick Actions Card -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">
-                                <i class="fas fa-bolt mr-2"></i>Quick Actions
-                            </h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-success btn-block"
-                                            onclick="showAddProfitForm({{ $trade->id }})">
-                                        <i class="fas fa-plus mr-2"></i>Add Profit to User ROI
-                                    </button>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="button" class="btn btn-danger btn-block"
-                                            onclick="deleteTrade({{ $trade->id }})">
-                                        <i class="fas fa-trash mr-2"></i>Delete This Trade
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-800 rounded-lg flex items-center justify-center">
+                    <x-heroicon name="envelope" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                    <p class="text-sm text-admin-500 dark:text-admin-400">E-posta</p>
+                    <p class="font-semibold text-admin-900 dark:text-admin-100">{{ $trade->user_email ?? 'Belirtilmemiş' }}</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-800 rounded-lg flex items-center justify-center">
+                    <x-heroicon name="calendar" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                    <p class="text-sm text-admin-500 dark:text-admin-400">Oluşturulma</p>
+                    <p class="font-semibold text-admin-900 dark:text-admin-100">{{ $trade->created_at->format('d.m.Y H:i') }}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Add Profit Modal -->
-<div class="modal fade" id="addProfitModal" tabindex="-1" role="dialog" aria-labelledby="addProfitModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addProfitModalLabel">
-                    <i class="fas fa-plus-circle mr-2"></i>Add Profit to User ROI
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<!-- Edit Trade Form -->
+<div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg border border-admin-200 dark:border-admin-700 mb-8">
+    <div class="p-6 border-b border-admin-200 dark:border-admin-700">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <x-heroicon name="cog-6-tooth" class="w-5 h-5 text-white" />
+                </div>
+                <div>
+                    <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">İşlem Bilgilerini Düzenle</h2>
+                    <p class="text-admin-500 dark:text-admin-400 text-sm">Aşağıdaki alanları güncelleyebilirsiniz</p>
+                </div>
             </div>
-            <form id="addProfitForm" method="POST" action="">
+            <a href="{{ route('admin.trades.index') }}" 
+               class="flex items-center px-4 py-2 bg-admin-500 hover:bg-admin-600 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
+                <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
+                Geri Dön
+            </a>
+        </div>
+    </div>
+    
+    <form method="POST" action="{{ route('admin.trades.update', $trade->id) }}" class="p-6">
+        @csrf
+        @method('PUT')
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Asset Field -->
+            <div>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                    <x-heroicon name="squares-2x2" class="w-4 h-4 mr-1" />
+                    Varlık <span class="text-red-500">*</span>
+                </label>
+                <input type="text" 
+                       name="assets" 
+                       id="assets"
+                       value="{{ old('assets', $trade->assets) }}" 
+                       required
+                       class="w-full px-4 py-3 bg-white dark:bg-admin-700 border {{ $errors->has('assets') ? 'border-red-500 dark:border-red-400' : 'border-admin-300 dark:border-admin-600' }} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors"
+                       placeholder="Örn: BTC, ETH, USD">
+                @error('assets')
+                    <p class="text-red-600 dark:text-red-400 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Symbol Field -->
+            <div>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                    <x-heroicon name="hashtag" class="w-4 h-4 mr-1" />
+                    Sembol
+                </label>
+                <input type="text" 
+                       name="symbol" 
+                       id="symbol"
+                       value="{{ old('symbol', $trade->symbol) }}" 
+                       class="w-full px-4 py-3 bg-white dark:bg-admin-700 border {{ $errors->has('symbol') ? 'border-red-500 dark:border-red-400' : 'border-admin-300 dark:border-admin-600' }} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors"
+                       placeholder="Örn: BTC/USD, ETH/EUR">
+                @error('symbol')
+                    <p class="text-red-600 dark:text-red-400 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Trade Type -->
+            <div>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                    <x-heroicon name="arrows-up-down" class="w-4 h-4 mr-1" />
+                    İşlem Türü <span class="text-red-500">*</span>
+                </label>
+                <select name="type" 
+                        id="type"
+                        required
+                        class="w-full px-4 py-3 bg-white dark:bg-admin-700 border {{ $errors->has('type') ? 'border-red-500 dark:border-red-400' : 'border-admin-300 dark:border-admin-600' }} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors">
+                    <option value="">Tür Seçin</option>
+                    <option value="Buy" {{ old('type', $trade->type) == 'Buy' ? 'selected' : '' }}>Alış (Buy)</option>
+                    <option value="Sell" {{ old('type', $trade->type) == 'Sell' ? 'selected' : '' }}>Satış (Sell)</option>
+                </select>
+                @error('type')
+                    <p class="text-red-600 dark:text-red-400 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Amount -->
+            <div>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                    <x-heroicon name="currency-dollar" class="w-4 h-4 mr-1" />
+                    Miktar ($) <span class="text-red-500">*</span>
+                </label>
+                <input type="number" 
+                       name="amount" 
+                       id="amount"
+                       value="{{ old('amount', $trade->amount) }}" 
+                       step="0.01" 
+                       min="0" 
+                       required
+                       class="w-full px-4 py-3 bg-white dark:bg-admin-700 border {{ $errors->has('amount') ? 'border-red-500 dark:border-red-400' : 'border-admin-300 dark:border-admin-600' }} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors"
+                       placeholder="0.00">
+                @error('amount')
+                    <p class="text-red-600 dark:text-red-400 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Leverage -->
+            <div>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                    <x-heroicon name="scale" class="w-4 h-4 mr-1" />
+                    Kaldıraç
+                </label>
+                <input type="number" 
+                       name="leverage" 
+                       id="leverage"
+                       value="{{ old('leverage', $trade->leverage) }}" 
+                       min="1" 
+                       max="1000"
+                       class="w-full px-4 py-3 bg-white dark:bg-admin-700 border {{ $errors->has('leverage') ? 'border-red-500 dark:border-red-400' : 'border-admin-300 dark:border-admin-600' }} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors"
+                       placeholder="Örn: 10">
+                <p class="text-xs text-admin-500 dark:text-admin-400 mt-2">Kaldıraç kullanmıyorsanız boş bırakın</p>
+                @error('leverage')
+                    <p class="text-red-600 dark:text-red-400 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Profit/Loss -->
+            <div>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                    <x-heroicon name="chart-pie" class="w-4 h-4 mr-1" />
+                    Kar/Zarar ($)
+                </label>
+                <input type="number" 
+                       name="profit_earned" 
+                       id="profit_earned"
+                       value="{{ old('profit_earned', $trade->profit_earned) }}" 
+                       step="0.01"
+                       class="w-full px-4 py-3 bg-white dark:bg-admin-700 border {{ $errors->has('profit_earned') ? 'border-red-500 dark:border-red-400' : 'border-admin-300 dark:border-admin-600' }} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors"
+                       placeholder="0.00">
+                <p class="text-xs text-admin-500 dark:text-admin-400 mt-2">Kar için pozitif, zarar için negatif değer girin</p>
+                @error('profit_earned')
+                    <p class="text-red-600 dark:text-red-400 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Status -->
+            <div>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                    <x-heroicon name="flag" class="w-4 h-4 mr-1" />
+                    Durum <span class="text-red-500">*</span>
+                </label>
+                <select name="active" 
+                        id="active"
+                        required
+                        class="w-full px-4 py-3 bg-white dark:bg-admin-700 border {{ $errors->has('active') ? 'border-red-500 dark:border-red-400' : 'border-admin-300 dark:border-admin-600' }} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors">
+                    <option value="yes" {{ old('active', $trade->active) == 'yes' ? 'selected' : '' }}>Aktif</option>
+                    <option value="expired" {{ old('active', $trade->active) == 'expired' ? 'selected' : '' }}>Tamamlandı</option>
+                </select>
+                @error('active')
+                    <p class="text-red-600 dark:text-red-400 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Expiry Date -->
+            <div>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                    <x-heroicon name="clock" class="w-4 h-4 mr-1" />
+                    Bitiş Tarihi
+                </label>
+                <input type="datetime-local" 
+                       name="expire_date" 
+                       id="expire_date"
+                       value="{{ old('expire_date', $trade->expire_date ? \Carbon\Carbon::parse($trade->expire_date)->format('Y-m-d\TH:i') : '') }}" 
+                       class="w-full px-4 py-3 bg-white dark:bg-admin-700 border {{ $errors->has('expire_date') ? 'border-red-500 dark:border-red-400' : 'border-admin-300 dark:border-admin-600' }} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors">
+                @error('expire_date')
+                    <p class="text-red-600 dark:text-red-400 text-sm mt-2">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex justify-end space-x-4 mt-8 pt-6 border-t border-admin-200 dark:border-admin-700">
+            <a href="{{ route('admin.trades.index') }}" 
+               class="flex items-center px-6 py-3 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200 font-medium">
+                <x-heroicon name="x-mark" class="w-4 h-4 mr-2" />
+                İptal
+            </a>
+            <button type="submit" 
+                    class="flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
+                <x-heroicon name="check" class="w-4 h-4 mr-2" />
+                Güncelle
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Quick Actions Card -->
+<div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg border border-admin-200 dark:border-admin-700">
+    <div class="p-6 border-b border-admin-200 dark:border-admin-700">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                <x-heroicon name="bolt" class="w-5 h-5 text-white" />
+            </div>
+            <div>
+                <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">Hızlı İşlemler</h2>
+                <p class="text-admin-500 dark:text-admin-400 text-sm">İşlem için ek eylemler gerçekleştirin</p>
+            </div>
+        </div>
+    </div>
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <button type="button" 
+                    onclick="showAddProfitForm({{ $trade->id }})"
+                    class="flex items-center justify-center px-6 py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
+                <x-heroicon name="plus-circle" class="w-5 h-5 mr-2" />
+                Kullanıcı ROI'sine Kar/Zarar Ekle
+            </button>
+            <button type="button" 
+                    onclick="deleteTrade({{ $trade->id }})"
+                    class="flex items-center justify-center px-6 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
+                <x-heroicon name="trash" class="w-5 h-5 mr-2" />
+                Bu İşlemi Sil
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Profit Modal -->
+<div id="addProfitModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white dark:bg-admin-800 rounded-2xl max-w-md w-full shadow-2xl border border-admin-200 dark:border-admin-700">
+            <div class="p-6 border-b border-admin-200 dark:border-admin-700">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                            <x-heroicon name="plus-circle" class="w-5 h-5 text-white" />
+                        </div>
+                        <h3 class="text-xl font-semibold text-admin-900 dark:text-admin-100">
+                            Kar/Zarar Ekle
+                        </h3>
+                    </div>
+                    <button onclick="closeModal('addProfitModal')" 
+                            class="p-2 text-admin-400 hover:text-admin-600 dark:text-admin-500 dark:hover:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
+                        <x-heroicon name="x-mark" class="w-5 h-5" />
+                    </button>
+                </div>
+            </div>
+            
+            <form id="addProfitForm" method="POST" action="" class="space-y-6">
                 @csrf
-                <div class="modal-body">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle mr-2"></i>
-                        This will add the specified amount to both the trade's profit_earned and the user's ROI.
+                <div class="p-6">
+                    <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-xl border border-blue-200 dark:border-blue-800">
+                        <div class="flex items-start space-x-3">
+                            <x-heroicon name="information-circle" class="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                            <div class="text-sm text-blue-800 dark:text-blue-200">
+                                <p class="font-medium mb-1">Bilgilendirme:</p>
+                                <p>Bu miktar hem işlemin kar/zarar bilgisine hem de kullanıcının ROI'sine eklenecektir.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="profit_amount">Profit Amount ($)</label>
-                        <input type="number" class="form-control" id="profit_amount" name="profit_amount"
-                               step="0.01" required placeholder="Enter amount to add">
-                        <small class="form-text text-muted">Use positive numbers for profit, negative for loss</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="profit_note">Note (Optional)</label>
-                        <textarea class="form-control" id="profit_note" name="note" rows="3"
-                                  placeholder="Add a note about this profit adjustment..."></textarea>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                                <x-heroicon name="currency-dollar" class="w-4 h-4 mr-1" />
+                                Kar/Zarar Miktarı ($)
+                            </label>
+                            <input type="number" 
+                                   id="profit_amount" 
+                                   name="profit_amount" 
+                                   step="0.01" 
+                                   required
+                                   class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors"
+                                   placeholder="Eklenecek miktarı girin">
+                            <p class="text-xs text-admin-500 dark:text-admin-400 mt-2">
+                                Kar için pozitif, zarar için negatif sayı kullanın
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
+                                <x-heroicon name="document-text" class="w-4 h-4 mr-1" />
+                                Not (İsteğe bağlı)
+                            </label>
+                            <textarea id="profit_note" 
+                                      name="note" 
+                                      rows="3"
+                                      class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors resize-none"
+                                      placeholder="Bu kar/zarar düzenlemesi hakkında not ekleyin..."></textarea>
+                        </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-plus mr-1"></i>Add Profit
-                    </button>
+                
+                <div class="px-6 py-4 border-t border-admin-200 dark:border-admin-700 bg-admin-50 dark:bg-admin-900/50 rounded-b-2xl">
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" 
+                                onclick="closeModal('addProfitModal')" 
+                                class="px-4 py-2 text-admin-700 dark:text-admin-300 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 rounded-xl transition-colors font-medium">
+                            İptal
+                        </button>
+                        <button type="submit" 
+                                class="flex items-center px-6 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
+                            <x-heroicon name="plus-circle" class="w-4 h-4 mr-2" />
+                            Kar/Zarar Ekle
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -297,215 +404,133 @@
 
 @endsection
 
-@section('scripts')
-<style>
-/* Sidebar Toggle Styles */
-.sidebar {
-    transition: all 0.3s ease;
-}
-
-.main-panel {
-    transition: all 0.3s ease;
-}
-
-/* When sidebar is hidden */
-body.sidebar-hide .sidebar {
-    transform: translateX(-100%);
-}
-
-body.sidebar-hide .main-panel {
-    margin-left: 0 !important;
-    width: 100% !important;
-}
-
-/* Mobile sidebar overlay */
-.sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1040;
-}
-
-/* Responsive behavior */
-@media (max-width: 768px) {
-    .sidebar {
-        position: fixed;
-        left: -270px;
-        z-index: 1050;
-    }
-
-    .sidebar.sidebar-show {
-        left: 0;
-    }
-
-    .main-panel {
-        margin-left: 0 !important;
-    }
-}
-</style>
-
+@push('scripts')
 <script>
-$(document).ready(function() {
-    // Auto-dismiss alerts after 5 seconds
+document.addEventListener('DOMContentLoaded', function() {
+    // Modal Management
+    window.closeModal = function(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    };
+
+    // Close modal on backdrop click
+    const addProfitModal = document.getElementById('addProfitModal');
+    if (addProfitModal) {
+        addProfitModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal('addProfitModal');
+            }
+        });
+    }
+
+    // Add Profit Form Handler
+    window.showAddProfitForm = function(tradeId) {
+        console.log('Opening add profit form for trade ID:', tradeId);
+        
+        const form = document.getElementById('addProfitForm');
+        const profitUrl = '{{ url("/admin/trades") }}/' + tradeId + '/add-profit';
+        form.setAttribute('action', profitUrl);
+        
+        // Clear form fields
+        document.getElementById('profit_amount').value = '';
+        document.getElementById('profit_note').value = '';
+        
+        // Show modal with animation
+        const modal = document.getElementById('addProfitModal');
+        modal.classList.remove('hidden');
+        
+        // Focus on amount input
+        setTimeout(() => {
+            document.getElementById('profit_amount').focus();
+        }, 100);
+    };
+
+    // Delete Trade Handler
+    window.deleteTrade = function(tradeId) {
+        const deleteUrl = '{{ url("/admin/trades") }}/' + tradeId;
+        
+        // Create custom confirmation modal
+        const confirmModal = document.createElement('div');
+        confirmModal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+        confirmModal.innerHTML = `
+            <div class="bg-white dark:bg-admin-800 rounded-2xl max-w-md w-full shadow-2xl border border-admin-200 dark:border-admin-700">
+                <div class="p-6">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-admin-900 dark:text-admin-100">İşlemi Sil</h3>
+                            <p class="text-admin-500 dark:text-admin-400 text-sm">Bu işlem geri alınamaz</p>
+                        </div>
+                    </div>
+                    <p class="text-admin-600 dark:text-admin-300 mb-6">
+                        Bu işlemi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz ve tüm veriler kalıcı olarak silinecektir.
+                    </p>
+                    <div class="flex justify-end space-x-3">
+                        <button onclick="this.closest('.fixed').remove()" class="px-4 py-2 text-admin-700 dark:text-admin-300 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 rounded-xl transition-colors font-medium">
+                            İptal
+                        </button>
+                        <button onclick="confirmDelete('${deleteUrl}', this)" class="flex items-center px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                            Evet, Sil
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(confirmModal);
+    };
+
+    // Confirm Delete Function
+    window.confirmDelete = function(deleteUrl, button) {
+        // Show loading state
+        button.disabled = true;
+        button.innerHTML = `
+            <svg class="w-4 h-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Siliniyor...
+        `;
+        
+        // Create and submit form
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = deleteUrl;
+        
+        const csrfToken = document.createElement('input');
+        csrfToken.type = 'hidden';
+        csrfToken.name = '_token';
+        csrfToken.value = '{{ csrf_token() }}';
+        
+        const methodField = document.createElement('input');
+        methodField.type = 'hidden';
+        methodField.name = '_method';
+        methodField.value = 'DELETE';
+        
+        form.appendChild(csrfToken);
+        form.appendChild(methodField);
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+    // Auto-dismiss alerts
     setTimeout(function() {
-        $('.alert').fadeOut('slow');
+        document.querySelectorAll('.alert').forEach(function(alert) {
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        });
     }, 5000);
 
-    // Atlantis Theme Sidebar Toggle Functionality
-    $('.toggle-sidebar').on('click', function(e) {
-        e.preventDefault();
-        console.log('Sidebar toggle clicked');
-
-        // Toggle sidebar classes
-        $('body').toggleClass('sidebar-hide');
-        $('.sidebar').toggleClass('sidebar-show');
-        $('.main-panel').toggleClass('full-height');
-
-        // Check if sidebar is now hidden/shown
-        if ($('body').hasClass('sidebar-hide')) {
-            console.log('Sidebar hidden');
-        } else {
-            console.log('Sidebar shown');
-        }
-    });
-
-    // Mobile sidebar toggle (sidenav-toggler)
-    $('.sidenav-toggler').on('click', function(e) {
-        e.preventDefault();
-        console.log('Mobile sidebar toggle clicked');
-
-        // For mobile, use different classes
-        $('.sidebar').toggleClass('sidebar-show');
-        $('body').toggleClass('sidebar-show');
-
-        // Add overlay for mobile
-        if ($('.sidebar').hasClass('sidebar-show')) {
-            if (!$('.sidebar-overlay').length) {
-                $('<div class="sidebar-overlay"></div>').appendTo('body');
-            }
-        } else {
-            $('.sidebar-overlay').remove();
-        }
-    });
-
-    // Close sidebar when clicking overlay (mobile)
-    $(document).on('click', '.sidebar-overlay', function() {
-        $('.sidebar').removeClass('sidebar-show');
-        $('body').removeClass('sidebar-show');
-        $(this).remove();
-    });
-
-    // Make functions globally available
-    window.showAddProfitForm = showAddProfitForm;
-    window.deleteTrade = deleteTrade;
-
-    console.log('Functions assigned to window:', {
-        showAddProfitForm: typeof window.showAddProfitForm,
-        deleteTrade: typeof window.deleteTrade
-    });
-});// Simple function to show add profit modal
-function showAddProfitForm(tradeId) {
-    console.log('Opening add profit form for trade ID:', tradeId);
-
-    // Set form action
-    var profitUrl = '{{ url("/admin/trades") }}/' + tradeId + '/add-profit';
-    $('#addProfitForm').attr('action', profitUrl);
-
-    // Clear form
-    $('#profit_amount').val('');
-    $('#profit_note').val('');
-
-    // Show the modal
-    $('#addProfitModal').modal('show');
-}
-
-// Delete Trade Function
-function deleteTrade(tradeId) {
-    console.log('Delete Trade ID:', tradeId);
-
-    var deleteUrl = '{{ url("/admin/trades") }}/' + tradeId;
-    console.log('Delete URL:', deleteUrl);
-
-    swal({
-        title: "Delete Trade?",
-        text: "This action cannot be undone. The trade record will be permanently deleted.",
-        type: "warning",
-        buttons: {
-            cancel: {
-                visible: true,
-                text: "Cancel",
-                className: "btn btn-secondary"
-            },
-            confirm: {
-                text: "Yes, delete it!",
-                className: "btn btn-danger"
-            }
-        }
-    }).then((willDelete) => {
-        if (willDelete) {
-            console.log('Deleting trade with URL:', deleteUrl);
-
-            // Create and submit form with proper Laravel URL
-            var form = $('<form method="POST" action="' + deleteUrl + '">' +
-                        '<input type="hidden" name="_token" value="{{ csrf_token() }}">' +
-                        '<input type="hidden" name="_method" value="DELETE">' +
-                        '</form>');
-            $('body').append(form);
-            form.submit();
-        }
-    });
-}
+    console.log('🚀 Admin Trade Edit sayfası başarıyla yüklendi!');
+});
 </script>
-
-<style>
-/* Sidebar Toggle Styles */
-.sidebar {
-    transition: all 0.3s ease;
-}
-
-.main-panel {
-    transition: all 0.3s ease;
-}
-
-/* When sidebar is hidden */
-body.sidebar-hide .sidebar {
-    transform: translateX(-100%);
-}
-
-body.sidebar-hide .main-panel {
-    margin-left: 0 !important;
-    width: 100% !important;
-}
-
-/* Mobile sidebar overlay */
-.sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1040;
-}
-
-/* Responsive behavior */
-@media (max-width: 768px) {
-    .sidebar {
-        position: fixed;
-        left: -270px;
-        z-index: 1050;
-    }
-
-    .sidebar.sidebar-show {
-        left: 0;
-    }
-
-    .main-panel {
-        margin-left: 0 !important;
-    }
-}
-</style>
-@endsection
+@endpush

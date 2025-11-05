@@ -127,7 +127,7 @@ class AppSettingsController extends Controller
     // Update email preference
     public function updateemail(Request $request)
     {
-        Settings::where('id', ' 1')
+        Settings::where('id', '1')
             ->update([
                 'mail_server' => $request['server'],
                 'emailfrom' => $request['emailfrom'],

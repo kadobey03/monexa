@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6" x-data="createManagerForm()">
+<div class="space-y-6" id="createManagerContainer">
     
     <!-- Page Header -->
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Form -->
-    <form method="POST" action="{{ route('admin.managers.store') }}" enctype="multipart/form-data" x-ref="createForm">
+    <form method="POST" action="{{ route('admin.managers.store') }}" enctype="multipart/form-data" id="createManagerForm">
         @csrf
         
         <!-- Personal Information -->
@@ -160,19 +160,18 @@
                 <div class="flex items-center space-x-6">
                     <div class="flex-shrink-0">
                         <div class="w-20 h-20 bg-admin-200 dark:bg-admin-700 rounded-full flex items-center justify-center" 
-                             x-show="!avatarPreview">
+                             id="defaultAvatar">
                             <x-heroicon name="user" class="w-8 h-8 text-admin-400" />
                         </div>
-                        <img x-show="avatarPreview" 
-                             :src="avatarPreview" 
-                             class="w-20 h-20 rounded-full object-cover">
+                        <img id="avatarPreview" 
+                             class="w-20 h-20 rounded-full object-cover hidden">
                     </div>
                     <div class="flex-1">
                         <input type="file" 
                                name="avatar" 
+                               id="avatarInput"
                                accept="image/*"
-                               class="admin-input w-full @error('avatar') border-red-500 @enderror"
-                               @change="previewAvatar($event)">
+                               class="admin-input w-full @error('avatar') border-red-500 @enderror">
                         <p class="text-xs text-admin-500 mt-1">JPG, PNG, GIF formatında maksimum 2MB</p>
                         @error('avatar')
                             <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -199,9 +198,8 @@
                         Rol *
                     </label>
                     <select name="role_id" 
+                            id="roleSelect"
                             required
-                            x-model="selectedRole"
-                            @change="updateRoleInfo()"
                             class="admin-input w-full @error('role_id') border-red-500 @enderror">
                         <option value="">Rol seçin</option>
                         @foreach($roles as $role)
@@ -218,8 +216,8 @@
                     @enderror
                     
                     <!-- Role Info -->
-                    <div x-show="roleInfo" x-transition class="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                        <p class="text-sm text-blue-800 dark:text-blue-300" x-text="roleInfo"></p>
+                    <div id="roleInfo" class="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800 hidden">
+                        <p class="text-sm text-blue-800 dark:text-blue-300" id="roleInfoText"></p>
                     </div>
                 </div>
                 
@@ -386,38 +384,24 @@
                     <div class="relative">
                         <input type="password" 
                                name="password" 
+                               id="passwordInput"
                                required
-                               x-ref="password"
-                               @input="checkPasswordStrength()"
                                class="admin-input w-full pr-10 @error('password') border-red-500 @enderror"
                                placeholder="En az 8 karakter">
                         <button type="button" 
-                                @click="togglePasswordVisibility('password')"
+                                id="togglePassword"
                                 class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <x-heroicon name="question-mark-circle" class="w-4 h-4 text-admin-400 hover:text-admin-600" />
+                            <x-heroicon name="eye" class="w-4 h-4 text-admin-400 hover:text-admin-600" />
                         </button>
                     </div>
                     
                     <!-- Password Strength Indicator -->
-                    <div class="mt-2" x-show="passwordStrength">
+                    <div class="mt-2 hidden" id="passwordStrengthContainer">
                         <div class="flex items-center space-x-2">
                             <div class="flex-1 bg-admin-200 dark:bg-admin-700 rounded-full h-1">
-                                <div class="h-1 rounded-full transition-all duration-300"
-                                     :class="{
-                                         'bg-red-500 w-1/4': passwordStrength === 'weak',
-                                         'bg-amber-500 w-2/4': passwordStrength === 'medium',
-                                         'bg-green-500 w-3/4': passwordStrength === 'strong',
-                                         'bg-emerald-500 w-full': passwordStrength === 'very-strong'
-                                     }"></div>
+                                <div class="h-1 rounded-full transition-all duration-300" id="passwordStrengthBar"></div>
                             </div>
-                            <span class="text-xs font-medium"
-                                  :class="{
-                                      'text-red-600 dark:text-red-400': passwordStrength === 'weak',
-                                      'text-amber-600 dark:text-amber-400': passwordStrength === 'medium',
-                                      'text-green-600 dark:text-green-400': passwordStrength === 'strong',
-                                      'text-emerald-600 dark:text-emerald-400': passwordStrength === 'very-strong'
-                                  }"
-                                  x-text="passwordStrengthText"></span>
+                            <span class="text-xs font-medium" id="passwordStrengthText"></span>
                         </div>
                     </div>
                     
@@ -435,24 +419,22 @@
                     <div class="relative">
                         <input type="password" 
                                name="password_confirmation" 
+                               id="passwordConfirmationInput"
                                required
-                               x-ref="passwordConfirmation"
-                               @input="checkPasswordMatch()"
                                class="admin-input w-full pr-10 @error('password_confirmation') border-red-500 @enderror"
                                placeholder="Şifrenizi tekrar girin">
                         <button type="button" 
-                                @click="togglePasswordVisibility('passwordConfirmation')"
+                                id="togglePasswordConfirmation"
                                 class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <x-heroicon name="question-mark-circle" class="w-4 h-4 text-admin-400 hover:text-admin-600" />
+                            <x-heroicon name="eye" class="w-4 h-4 text-admin-400 hover:text-admin-600" />
                         </button>
                     </div>
                     
                     <!-- Password Match Indicator -->
-                    <div x-show="passwordMatchStatus" class="mt-1">
-                        <p class="text-sm" 
-                           :class="passwordsMatch ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">
-                            <x-heroicon name="question-mark-circle" class="w-3 h-3 inline mr-1" />
-                            <span x-text="passwordsMatch ? 'Şifreler eşleşiyor' : 'Şifreler eşleşmiyor'"></span>
+                    <div class="mt-1 hidden" id="passwordMatchContainer">
+                        <p class="text-sm flex items-center" id="passwordMatchText">
+                            <x-heroicon name="check-circle" class="w-3 h-3 inline mr-1" />
+                            <span id="passwordMatchStatus"></span>
                         </p>
                     </div>
                     
@@ -474,16 +456,15 @@
             <div class="flex items-center space-x-3">
                 <!-- Save as Draft -->
                 <button type="button" 
-                        @click="saveDraft()"
+                        id="saveDraftBtn"
                         class="inline-flex items-center px-6 py-3 border border-admin-300 dark:border-admin-600 shadow-sm text-sm font-medium rounded-xl text-admin-700 dark:text-admin-300 bg-white dark:bg-admin-800 hover:bg-admin-50 dark:hover:bg-admin-700 transition-all duration-200">
-                    <x-heroicon name="save" class="w-4 h-4 mr-2" />
+                    <x-heroicon name="document" class="w-4 h-4 mr-2" />
                     Taslak Kaydet
                 </button>
                 
                 <!-- Submit -->
                 <button type="submit" 
-                        :disabled="!formValid"
-                        :class="formValid ? 'opacity-100' : 'opacity-50 cursor-not-allowed'"
+                        id="submitBtn"
                         class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-200">
                     <x-heroicon name="user-plus" class="w-4 h-4 mr-2" />
                     Yönetici Oluştur
@@ -496,175 +477,285 @@
 
 @push('scripts')
 <script>
-function createManagerForm() {
-    return {
-        selectedRole: '{{ old("role_id") }}',
-        roleInfo: '',
-        avatarPreview: null,
-        passwordStrength: '',
-        passwordStrengthText: '',
-        showPassword: false,
-        showPasswordConfirmation: false,
-        passwordsMatch: false,
-        passwordMatchStatus: false,
+class CreateManagerForm {
+    constructor() {
+        this.form = document.getElementById('createManagerForm');
+        this.selectedRole = '{{ old("role_id") }}';
+        this.avatarPreview = null;
+        this.passwordStrength = '';
+        this.showPassword = false;
+        this.showPasswordConfirmation = false;
+        this.passwordsMatch = false;
+        this.passwordMatchStatus = false;
         
-        get formValid() {
-            // Basic validation - can be expanded
-            return this.$refs.createForm.checkValidity() && this.passwordsMatch;
-        },
+        this.init();
+        this.bindEvents();
+        this.loadDraft();
+    }
+    
+    init() {
+        // Initialize elements
+        this.elements = {
+            roleSelect: document.getElementById('roleSelect'),
+            roleInfo: document.getElementById('roleInfo'),
+            roleInfoText: document.getElementById('roleInfoText'),
+            avatarInput: document.getElementById('avatarInput'),
+            avatarPreview: document.getElementById('avatarPreview'),
+            defaultAvatar: document.getElementById('defaultAvatar'),
+            passwordInput: document.getElementById('passwordInput'),
+            passwordConfirmationInput: document.getElementById('passwordConfirmationInput'),
+            passwordStrengthContainer: document.getElementById('passwordStrengthContainer'),
+            passwordStrengthBar: document.getElementById('passwordStrengthBar'),
+            passwordStrengthText: document.getElementById('passwordStrengthText'),
+            passwordMatchContainer: document.getElementById('passwordMatchContainer'),
+            passwordMatchText: document.getElementById('passwordMatchText'),
+            passwordMatchStatus: document.getElementById('passwordMatchStatus'),
+            togglePassword: document.getElementById('togglePassword'),
+            togglePasswordConfirmation: document.getElementById('togglePasswordConfirmation'),
+            saveDraftBtn: document.getElementById('saveDraftBtn'),
+            submitBtn: document.getElementById('submitBtn')
+        };
+    }
+    
+    bindEvents() {
+        // Role selection
+        this.elements.roleSelect.addEventListener('change', () => this.updateRoleInfo());
         
-        updateRoleInfo() {
-            const select = document.querySelector('select[name="role_id"]');
-            const option = select.options[select.selectedIndex];
-            
-            if (option.value) {
-                const hierarchy = option.getAttribute('data-hierarchy');
-                const department = option.getAttribute('data-department');
-                
-                this.roleInfo = `Hiyerarşi Seviyesi: ${hierarchy}`;
-                if (department) {
-                    this.roleInfo += ` • Departman: ${department}`;
-                }
-            } else {
-                this.roleInfo = '';
-            }
-        },
+        // Avatar preview
+        this.elements.avatarInput.addEventListener('change', (e) => this.previewAvatar(e));
         
-        previewAvatar(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    this.avatarPreview = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                this.avatarPreview = null;
-            }
-        },
+        // Password functionality
+        this.elements.passwordInput.addEventListener('input', () => this.checkPasswordStrength());
+        this.elements.passwordConfirmationInput.addEventListener('input', () => this.checkPasswordMatch());
         
-        togglePasswordVisibility(field) {
-            if (field === 'password') {
-                this.showPassword = !this.showPassword;
-                this.$refs.password.type = this.showPassword ? 'text' : 'password';
-            } else {
-                this.showPasswordConfirmation = !this.showPasswordConfirmation;
-                this.$refs.passwordConfirmation.type = this.showPasswordConfirmation ? 'text' : 'password';
-            }
-
-        },
+        // Toggle password visibility
+        this.elements.togglePassword.addEventListener('click', () => this.togglePasswordVisibility('password'));
+        this.elements.togglePasswordConfirmation.addEventListener('click', () => this.togglePasswordVisibility('passwordConfirmation'));
         
-        checkPasswordStrength() {
-            const password = this.$refs.password.value;
-            
-            if (password.length === 0) {
-                this.passwordStrength = '';
-                return;
-            }
-            
-            let score = 0;
-            
-            // Length
-            if (password.length >= 8) score++;
-            if (password.length >= 12) score++;
-            
-            // Character types
-            if (/[a-z]/.test(password)) score++;
-            if (/[A-Z]/.test(password)) score++;
-            if (/[0-9]/.test(password)) score++;
-            if (/[^A-Za-z0-9]/.test(password)) score++;
-            
-            if (score <= 2) {
-                this.passwordStrength = 'weak';
-                this.passwordStrengthText = 'Zayıf';
-            } else if (score <= 4) {
-                this.passwordStrength = 'medium';
-                this.passwordStrengthText = 'Orta';
-            } else if (score <= 5) {
-                this.passwordStrength = 'strong';
-                this.passwordStrengthText = 'Güçlü';
-            } else {
-                this.passwordStrength = 'very-strong';
-                this.passwordStrengthText = 'Çok Güçlü';
-            }
-        },
+        // Save draft
+        this.elements.saveDraftBtn.addEventListener('click', () => this.saveDraft());
         
-        checkPasswordMatch() {
-            const password = this.$refs.password.value;
-            const confirmation = this.$refs.passwordConfirmation.value;
+        // Form submission validation
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        
+        // Real-time form validation
+        this.form.addEventListener('input', () => this.updateSubmitButton());
+        this.form.addEventListener('change', () => this.updateSubmitButton());
+    }
+    
+    updateRoleInfo() {
+        const select = this.elements.roleSelect;
+        const option = select.options[select.selectedIndex];
+        
+        if (option.value) {
+            const hierarchy = option.getAttribute('data-hierarchy');
+            const department = option.getAttribute('data-department');
             
-            if (confirmation.length === 0) {
-                this.passwordMatchStatus = false;
-                return;
+            let roleInfoText = `Hiyerarşi Seviyesi: ${hierarchy}`;
+            if (department) {
+                roleInfoText += ` • Departman: ${department}`;
             }
             
-            this.passwordMatchStatus = true;
-            this.passwordsMatch = password === confirmation;
-
-        },
+            this.elements.roleInfoText.textContent = roleInfoText;
+            this.elements.roleInfo.classList.remove('hidden');
+        } else {
+            this.elements.roleInfo.classList.add('hidden');
+        }
+    }
+    
+    previewAvatar(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.elements.avatarPreview.src = e.target.result;
+                this.elements.avatarPreview.classList.remove('hidden');
+                this.elements.defaultAvatar.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        } else {
+            this.elements.avatarPreview.classList.add('hidden');
+            this.elements.defaultAvatar.classList.remove('hidden');
+        }
+    }
+    
+    togglePasswordVisibility(field) {
+        if (field === 'password') {
+            this.showPassword = !this.showPassword;
+            this.elements.passwordInput.type = this.showPassword ? 'text' : 'password';
+            this.elements.togglePassword.innerHTML = this.showPassword ? 
+                '<x-heroicon name="eye-slash" class="w-4 h-4 text-admin-400 hover:text-admin-600" />' :
+                '<x-heroicon name="eye" class="w-4 h-4 text-admin-400 hover:text-admin-600" />';
+        } else {
+            this.showPasswordConfirmation = !this.showPasswordConfirmation;
+            this.elements.passwordConfirmationInput.type = this.showPasswordConfirmation ? 'text' : 'password';
+            this.elements.togglePasswordConfirmation.innerHTML = this.showPasswordConfirmation ? 
+                '<x-heroicon name="eye-slash" class="w-4 h-4 text-admin-400 hover:text-admin-600" />' :
+                '<x-heroicon name="eye" class="w-4 h-4 text-admin-400 hover:text-admin-600" />';
+        }
+    }
+    
+    checkPasswordStrength() {
+        const password = this.elements.passwordInput.value;
         
-        saveDraft() {
-            // Save form data to localStorage
-            const formData = new FormData(this.$refs.createForm);
-            const data = {};
+        if (password.length === 0) {
+            this.elements.passwordStrengthContainer.classList.add('hidden');
+            return;
+        }
+        
+        let score = 0;
+        
+        // Length
+        if (password.length >= 8) score++;
+        if (password.length >= 12) score++;
+        
+        // Character types
+        if (/[a-z]/.test(password)) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[0-9]/.test(password)) score++;
+        if (/[^A-Za-z0-9]/.test(password)) score++;
+        
+        let strengthClass, strengthText;
+        
+        if (score <= 2) {
+            strengthClass = 'bg-red-500 w-1/4';
+            strengthText = 'Zayıf';
+            this.elements.passwordStrengthText.className = 'text-xs font-medium text-red-600 dark:text-red-400';
+        } else if (score <= 4) {
+            strengthClass = 'bg-amber-500 w-2/4';
+            strengthText = 'Orta';
+            this.elements.passwordStrengthText.className = 'text-xs font-medium text-amber-600 dark:text-amber-400';
+        } else if (score <= 5) {
+            strengthClass = 'bg-green-500 w-3/4';
+            strengthText = 'Güçlü';
+            this.elements.passwordStrengthText.className = 'text-xs font-medium text-green-600 dark:text-green-400';
+        } else {
+            strengthClass = 'bg-emerald-500 w-full';
+            strengthText = 'Çok Güçlü';
+            this.elements.passwordStrengthText.className = 'text-xs font-medium text-emerald-600 dark:text-emerald-400';
+        }
+        
+        this.elements.passwordStrengthBar.className = `h-1 rounded-full transition-all duration-300 ${strengthClass}`;
+        this.elements.passwordStrengthText.textContent = strengthText;
+        this.elements.passwordStrengthContainer.classList.remove('hidden');
+    }
+    
+    checkPasswordMatch() {
+        const password = this.elements.passwordInput.value;
+        const confirmation = this.elements.passwordConfirmationInput.value;
+        
+        if (confirmation.length === 0) {
+            this.elements.passwordMatchContainer.classList.add('hidden');
+            this.passwordMatchStatus = false;
+            return;
+        }
+        
+        this.passwordMatchStatus = true;
+        this.passwordsMatch = password === confirmation;
+        
+        if (this.passwordsMatch) {
+            this.elements.passwordMatchText.className = 'text-sm flex items-center text-green-600 dark:text-green-400';
+            this.elements.passwordMatchStatus.textContent = 'Şifreler eşleşiyor';
+            this.elements.passwordMatchText.innerHTML = '<svg class="w-3 h-3 inline mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg><span>Şifreler eşleşiyor</span>';
+        } else {
+            this.elements.passwordMatchText.className = 'text-sm flex items-center text-red-600 dark:text-red-400';
+            this.elements.passwordMatchStatus.textContent = 'Şifreler eşleşmiyor';
+            this.elements.passwordMatchText.innerHTML = '<svg class="w-3 h-3 inline mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg><span>Şifreler eşleşmiyor</span>';
+        }
+        
+        this.elements.passwordMatchContainer.classList.remove('hidden');
+        this.updateSubmitButton();
+    }
+    
+    updateSubmitButton() {
+        const formValid = this.form.checkValidity() && this.passwordsMatch;
+        
+        if (formValid) {
+            this.elements.submitBtn.disabled = false;
+            this.elements.submitBtn.className = 'inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-200';
+        } else {
+            this.elements.submitBtn.disabled = true;
+            this.elements.submitBtn.className = 'inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium rounded-xl shadow-lg hover:shadow-green-500/25 transition-all duration-200 opacity-50 cursor-not-allowed';
+        }
+    }
+    
+    handleSubmit(event) {
+        if (!this.passwordsMatch && this.passwordMatchStatus) {
+            event.preventDefault();
             
-            for (let [key, value] of formData.entries()) {
-                if (key !== 'password' && key !== 'password_confirmation' && key !== '_token') {
-                    data[key] = value;
-                }
-            }
-            
-            localStorage.setItem('admin_manager_draft', JSON.stringify(data));
-            
-            // Show success message
             Swal.fire({
-                title: 'Taslak Kaydedildi!',
-                text: 'Form verileriniz taslak olarak kaydedildi.',
-                icon: 'success',
-                timer: 2000,
-                showConfirmButton: false
+                title: 'Şifreler Eşleşmiyor!',
+                text: 'Lütfen şifre ve şifre onayının aynı olduğundan emin olun.',
+                icon: 'error',
+                confirmButtonText: 'Tamam'
+            });
+        }
+    }
+    
+    saveDraft() {
+        // Save form data to localStorage
+        const formData = new FormData(this.form);
+        const data = {};
+        
+        for (let [key, value] of formData.entries()) {
+            if (key !== 'password' && key !== 'password_confirmation' && key !== '_token') {
+                data[key] = value;
+            }
+        }
+        
+        localStorage.setItem('admin_manager_draft', JSON.stringify(data));
+        
+        // Show success message
+        Swal.fire({
+            title: 'Taslak Kaydedildi!',
+            text: 'Form verileriniz taslak olarak kaydedildi.',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+        });
+    }
+    
+    loadDraft() {
+        const draft = localStorage.getItem('admin_manager_draft');
+        if (draft) {
+            const data = JSON.parse(draft);
+            
+            // Fill form fields
+            for (let [key, value] of Object.entries(data)) {
+                const field = document.querySelector(`[name="${key}"]`);
+                if (field) {
+                    field.value = value;
+                    // Trigger change event for selects
+                    if (field.tagName === 'SELECT') {
+                        field.dispatchEvent(new Event('change'));
+                    }
+                }
+            }
+            
+            // Show draft notification
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+            
+            Toast.fire({
+                icon: 'info',
+                title: 'Taslak veriler yüklendi'
             });
         }
     }
 }
 
-// Load draft on page load
+// Initialize the form when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    const draft = localStorage.getItem('admin_manager_draft');
-    if (draft) {
-        const data = JSON.parse(draft);
-        
-        // Fill form fields
-        for (let [key, value] of Object.entries(data)) {
-            const field = document.querySelector(`[name="${key}"]`);
-            if (field) {
-                field.value = value;
-                // Trigger change event for selects
-                if (field.tagName === 'SELECT') {
-                    field.dispatchEvent(new Event('change'));
-                }
-            }
-        }
-        
-        // Show draft notification
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        });
-        
-        Toast.fire({
-            icon: 'info',
-            title: 'Taslak veriler yüklendi'
-        });
-    }
-
+    new CreateManagerForm();
 });
 </script>
 @endpush

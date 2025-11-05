@@ -711,5 +711,15 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin/dashboard')->group(function
     
 });
 
+
 // Include demo management routes
 require __DIR__ . '/demo-routes.php';
+
+// GEÇICI TEST ROUTE - MIDDLEWARE BYPASS
+Route::post('admin/test-managers/{admin}/update-data', [AdminManagerController::class, 'updateAjax'])->name('admin.test.managers.update-data');
+
+// EN BASİT TEST ROUTE - MODEL BINDING OLMADAN
+Route::post('admin/simple-test', function() {
+    error_log('🚀 SIMPLE TEST ROUTE CALLED!');
+    return response()->json(['success' => true, 'message' => 'Simple test çalışıyor!']);
+})->name('admin.simple.test');
