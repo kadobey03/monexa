@@ -1,5 +1,5 @@
 <aside id="dashboard-sidebar"
-       class="fixed z-50 md:z-40 top-0 left-0 w-64 h-full bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:w-72 overflow-y-auto -translate-x-full">
+       class="fixed z-50 md:relative md:z-auto top-0 left-0 w-64 h-full md:h-screen bg-white dark:bg-gray-900 shadow-xl transform transition-transform duration-300 ease-in-out md:translate-x-0 md:w-72 overflow-y-auto -translate-x-full">
     
     <!-- User Profile Section -->
     <div class="relative p-4 border-b border-gray-200 dark:border-gray-700">

@@ -667,9 +667,10 @@
             <div class="min-h-screen bg-gray-900">
                 <!-- Main Content Area with proper sidebar spacing -->
                 <main class="transition-all duration-300 ease-in-out pt-16
-                           md:ml-0 md:pl-0
-                           lg:ml-64 lg:pl-4
-                           xl:ml-72 xl:pl-6"
+                           ml-0 pl-0
+                           md:ml-72 md:pl-0
+                           lg:ml-72 lg:pl-0
+                           xl:ml-72 xl:pl-0"
                       id="dashboard-main-content">
                     @yield('content')
                 </main>
