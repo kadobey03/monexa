@@ -152,7 +152,7 @@
                                            aria-label="Tüm kullanıcıları seç">
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
-                                    <i class="fas fa-user mr-2 text-blue-600"></i>Müşteri Adı
+                                    <i class="fas fa-user mr-2 text-blue-600"></i>Müşteri Adı var
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
                                     <i class="fas fa-at mr-2 text-blue-600"></i>Kullanıcı Adı
@@ -165,6 +165,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
                                     <i class="fas fa-toggle-on mr-2 text-blue-600"></i>Durum
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <i class="fas fa-tags mr-2 text-blue-600"></i>Lead Status
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
                                     <i class="fas fa-calendar mr-2 text-blue-600"></i>Kayıt Tarihi
@@ -222,6 +225,20 @@
                                             </span>
                                         @endif
                                     </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <select wire:change="updateLeadStatus({{ $user->id }}, $event.target.value)"
+                                                class="text-xs rounded-md border-0 py-1.5 px-3 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset {{ $isDark ? 'dark:bg-gray-700 dark:text-white dark:ring-gray-600' : 'bg-white text-gray-900 ring-gray-300' }}"
+                                                style="background-color: {{ $user->leadStatus?->color ?? '#6c757d' }}; color: white; min-width: 120px;">
+                                            <option value="" style="background-color: #6c757d; color: white;">Status Seç</option>
+                                            @foreach ($this->leadStatuses as $status)
+                                                <option value="{{ $status->name }}"
+                                                        style="background-color: {{ $status->color }}; color: white;"
+                                                        @if($user->lead_status === $status->name) selected @endif>
+                                                    {{ $status->display_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }}">
                                         <div class="text-sm">{{ $user->created_at->format('d M Y') }}</div>
                                         <div class="text-xs text-gray-400">{{ $user->created_at->diffForHumans() }}</div>
@@ -235,7 +252,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="px-6 py-12 text-center">
+                                    <td colspan="9" class="px-6 py-12 text-center">
                                         <div class="text-gray-400">
                                             <i class="fas fa-users text-6xl mb-4"></i>
                                             <h3 class="text-lg font-medium text-gray-900 {{ $isDark ? 'dark:text-white' : '' }} mb-2">Kullanıcı Bulunamadı</h3>
@@ -288,6 +305,21 @@
                                     </div>
                                     <div>
                                         <span class="font-medium">Telefon:</span> {{ $user->phone ?? '-' }}
+                                    </div>
+                                    <div class="col-span-2">
+                                        <span class="font-medium">Lead Status:</span>
+                                        <select wire:change="updateLeadStatus({{ $user->id }}, $event.target.value)"
+                                                class="ml-2 text-xs rounded border-0 py-1 px-2 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset {{ $isDark ? 'dark:bg-gray-600 dark:text-white dark:ring-gray-500' : 'bg-white text-gray-900 ring-gray-300' }}"
+                                                style="background-color: {{ $user->leadStatus?->color ?? '#6c757d' }}; color: white; min-width: 100px; font-size: 10px;">
+                                            <option value="" style="background-color: #6c757d; color: white;">Status Seç</option>
+                                            @foreach ($this->leadStatuses as $status)
+                                                <option value="{{ $status->name }}"
+                                                        style="background-color: {{ $status->color }}; color: white;"
+                                                        @if($user->lead_status === $status->name) selected @endif>
+                                                    {{ $status->display_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="col-span-2">
                                         <span class="font-medium">Kayıt:</span> {{ $user->created_at->format('d M Y') }} ({{ $user->created_at->diffForHumans() }})

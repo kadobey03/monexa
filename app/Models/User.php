@@ -85,6 +85,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'assign_to' => 1,
+    ];
+
 
     /**
      * Optimized financial relationships

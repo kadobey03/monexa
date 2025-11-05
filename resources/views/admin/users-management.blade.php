@@ -167,6 +167,18 @@
                             </th>
                             <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
                                 <div class="flex items-center justify-center space-x-2">
+                                    <i class="fas fa-flag text-admin-500"></i>
+                                    <span>Lead Status</span>
+                                </div>
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <i class="fas fa-user-tie text-admin-500"></i>
+                                    <span>Assigned Admin</span>
+                                </div>
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider">
+                                <div class="flex items-center justify-center space-x-2">
                                     <i class="fas fa-toggle-on text-admin-500"></i>
                                     <span>Durum</span>
                                 </div>
@@ -243,6 +255,51 @@
                                     </div>
                                 </td>
 
+                                <!-- Lead Status Dropdown -->
+                                <td class="px-6 py-5 whitespace-nowrap text-center">
+                                    <div class="flex items-center justify-center">
+                                        <select onchange="updateLeadStatus({{ $user->id }}, this.value)"
+                                                class="px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-xs font-medium focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent"
+                                                style="background-color: {{ $user->leadStatus->color ?? '#6B7280' }}; color: white;">
+                                            @if(isset($leadStatuses) && $leadStatuses->count() > 0)
+                                                @foreach($leadStatuses as $status)
+                                                    <option value="{{ $status->name }}"
+                                                            style="background-color: {{ $status->color }}; color: white;"
+                                                            {{ ($user->lead_status == $status->name) ? 'selected' : '' }}>
+                                                        {{ $status->display_name ?: $status->name }}
+                                                    </option>
+                                                @endforeach
+                                            @else
+                                                <option value="new" {{ ($user->lead_status == 'new' || !$user->lead_status) ? 'selected' : '' }}>Yeni</option>
+                                                <option value="contacted" {{ ($user->lead_status == 'contacted') ? 'selected' : '' }}>İletişimde</option>
+                                                <option value="qualified" {{ ($user->lead_status == 'qualified') ? 'selected' : '' }}>Nitelikli</option>
+                                                <option value="converted" {{ ($user->lead_status == 'converted') ? 'selected' : '' }}>Dönüştürülmüş</option>
+                                                <option value="lost" {{ ($user->lead_status == 'lost') ? 'selected' : '' }}>Kayıp</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </td>
+
+                                <!-- Assigned Admin Dropdown -->
+                                <td class="px-6 py-5 whitespace-nowrap text-center">
+                                    <div class="flex items-center justify-center">
+                                        <select onchange="updateAssignedAdmin({{ $user->id }}, this.value)"
+                                                class="px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-xs font-medium focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                            @if(isset($admins) && $admins->count() > 0)
+                                                <option value="" {{ !$user->assign_to ? 'selected' : '' }}>Atanmamış</option>
+                                                @foreach($admins as $admin)
+                                                    <option value="{{ $admin->id }}"
+                                                            {{ ($user->assign_to == $admin->id) ? 'selected' : '' }}>
+                                                        {{ $admin->getDisplayName() }}
+                                                    </option>
+                                                @endforeach
+                                            @else
+                                                <option value="" selected>Atanmamış</option>
+                                            @endif
+                                        </select>
+                                    </div>
+                                </td>
+
                                 <!-- Enhanced Status Badge -->
                                 <td class="px-6 py-5 whitespace-nowrap text-center">
                                     @switch($user->status ?? 'active')
@@ -303,7 +360,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="px-6 py-12 text-center">
+                                <td colspan="9" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center">
                                         <i class="fas fa-users text-6xl text-admin-400 {{ $isDark ? 'dark:text-admin-500' : '' }} mb-4"></i>
                                         <h3 class="text-lg font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-2">
@@ -593,6 +650,86 @@ function submitAddUser(event) {
     
     // Form'u submit et
     form.submit();
+}
+
+// Status Update Function
+function updateLeadStatus(userId, newStatus) {
+    // CSRF token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    
+    fetch(`/admin/dashboard/users/${userId}/update-lead-status`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+            lead_status: newStatus
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show success message
+            showNotification('Lead status başarıyla güncellendi.', 'success');
+        } else {
+            showNotification(data.message || 'Bir hata oluştu.', 'error');
+            location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Bir hata oluştu.', 'error');
+        location.reload();
+    });
+}
+
+// Assigned Admin Update Function
+function updateAssignedAdmin(userId, adminId) {
+    // CSRF token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    
+    fetch(`/admin/dashboard/users/${userId}/update-assigned-admin`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+            admin_id: adminId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show success message
+            showNotification('Admin ataması başarıyla güncellendi!', 'success');
+        } else {
+            showNotification(data.message || 'Bir hata oluştu.', 'error');
+            location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Bir hata oluştu.', 'error');
+        location.reload();
+    });
+}
+
+// Simple notification function
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 ${
+        type === 'success' ? 'bg-green-600 text-white' :
+        type === 'error' ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'
+    }`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
 }
 
 // Listen for checkbox changes

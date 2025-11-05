@@ -359,14 +359,22 @@ class HomeController extends Controller
     //Return manage users route
     public function manageusers()
     {
-        // Kullanıcı listesi (sayfalı)
-        $users = User::orderBy('id', 'desc')->paginate(15);
+        // Kullanıcı listesi (sayfalı) - leadStatus ve assignedAdmin relationship'leri ile eager loading
+        $users = User::with(['leadStatus', 'assignedAdmin'])
+                    ->orderBy('id', 'desc')
+                    ->paginate(15);
         
         // İstatistikler
         $user_count = User::count();
         $active_users = User::where('status', 'active')->count();
         $blocked_users = User::where('status', 'blocked')->count();
         $pending_verification = User::where('account_verify', '!=', 'yes')->count();
+
+        // Lead statuses'ları dropdown için getir
+        $leadStatuses = \App\Models\LeadStatus::active()->get();
+        
+        // Aktif admin listesini getir
+        $admins = Admin::where('status', 'Active')->orderBy('firstName')->get();
 
         return view('admin.users-management', [
             'title' => 'All users',
@@ -375,6 +383,8 @@ class HomeController extends Controller
             'active_users' => $active_users,
             'blocked_users' => $blocked_users,
             'pending_verification' => $pending_verification,
+            'leadStatuses' => $leadStatuses,
+            'admins' => $admins,
         ]);
     }
 
@@ -1111,5 +1121,147 @@ class HomeController extends Controller
                 'message' => 'Upload failed'
             ]
         ]);
+    }
+
+    /**
+     * Kullanıcının lead status'unu güncelle (AJAX)
+     */
+    public function updateLeadStatus(\Illuminate\Http\Request $request, $id)
+    {
+        try {
+            // Validation
+            $request->validate([
+                'lead_status' => 'required|string|max:50'
+            ]);
+
+            // Kullanıcıyı bul
+            $user = User::findOrFail($id);
+            
+            // Lead status'u güncelle
+            $oldStatus = $user->lead_status;
+            $user->lead_status = $request->lead_status;
+            $user->save();
+
+            // Log işlem
+            \Log::info('Lead Status Updated', [
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+                'old_status' => $oldStatus,
+                'new_status' => $request->lead_status,
+                'updated_by' => auth('admin')->user()->id ?? null,
+                'updated_by_name' => auth('admin')->user()->firstName ?? 'System'
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Lead status başarıyla güncellendi.',
+                'data' => [
+                    'user_id' => $user->id,
+                    'old_status' => $oldStatus,
+                    'new_status' => $request->lead_status
+                ]
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Geçersiz veri gönderildi.',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kullanıcı bulunamadı.'
+            ], 404);
+
+        } catch (\Exception $e) {
+            \Log::error('Lead Status Update Error', [
+                'user_id' => $id,
+                'lead_status' => $request->lead_status ?? null,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Lead status güncellenirken bir hata oluştu.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Kullanıcının atanan admin'ini güncelle (AJAX)
+     */
+    public function updateAssignedAdmin(\Illuminate\Http\Request $request, $userId)
+    {
+        try {
+            // Validation
+            $request->validate([
+                'admin_id' => 'required|exists:admins,id'
+            ]);
+
+            // Kullanıcıyı bul
+            $user = User::findOrFail($userId);
+            
+            // Admin'i bul
+            $admin = Admin::findOrFail($request->admin_id);
+            
+            // Eski admin ID'si
+            $oldAdminId = $user->assign_to;
+            
+            // Yeni admin ataması
+            $user->assign_to = $request->admin_id;
+            $user->save();
+
+            // Log işlem
+            \Log::info('Admin Assignment Updated', [
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+                'old_admin_id' => $oldAdminId,
+                'old_admin_name' => $oldAdminId ? Admin::find($oldAdminId)?->getDisplayName() : null,
+                'new_admin_id' => $request->admin_id,
+                'new_admin_name' => $admin->getDisplayName(),
+                'updated_by' => auth('admin')->user()->id ?? null,
+                'updated_by_name' => auth('admin')->user()->firstName ?? 'System'
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Admin ataması başarıyla güncellendi!',
+                'data' => [
+                    'user_id' => $user->id,
+                    'old_admin_id' => $oldAdminId,
+                    'new_admin_id' => $request->admin_id,
+                    'new_admin_name' => $admin->getDisplayName()
+                ]
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Geçersiz admin seçimi.',
+                'errors' => $e->errors()
+            ], 422);
+
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kullanıcı veya admin bulunamadı.'
+            ], 404);
+
+        } catch (\Exception $e) {
+            \Log::error('Admin Assignment Update Error', [
+                'user_id' => $userId,
+                'admin_id' => $request->admin_id ?? null,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Admin ataması güncellenirken bir hata oluştu.'
+            ], 500);
+        }
     }
 }

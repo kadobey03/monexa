@@ -132,6 +132,12 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('dashboard/kyc-applications', 'kyc')->name('kyc');
         Route::get('dashboard/kyc-application/{id}', 'viewKycApplication')->name('viewkyc');
         Route::get('dashboard/adminprofile', 'adminprofile')->name('adminprofile');
+        
+        // Lead status güncelleme route'u
+        Route::post('dashboard/users/{id}/update-lead-status', 'updateLeadStatus')->name('updateLeadStatus');
+        
+        // Assigned admin güncelleme route'u
+        Route::post('dashboard/users/{id}/update-assigned-admin', 'updateAssignedAdmin')->name('updateAssignedAdmin');
     });
 
     Route::controller(KycController::class)->group(function () {

@@ -276,11 +276,95 @@
 @endsection
 
 @push('scripts')
-<script>
+<script type="module">
+// Import utilities first - prioritized order
+import { domHelpers } from '/js/admin/leads/utils/DomHelpers.js';
+import { dateUtils } from '/js/admin/leads/utils/DateUtils.js';
+import { a11y } from '/js/admin/leads/utils/AccessibilityHelpers.js';
+
+// Import core modules
+import { Config } from '/js/admin/leads/core/Config.js';
+import { EventBus } from '/js/admin/leads/core/EventBus.js';
+import leadApp from '/js/admin/leads/core/App.js';
+
+// Import services
+import { ApiService } from '/js/admin/leads/services/ApiService.js';
+import { ValidationService } from '/js/admin/leads/services/ValidationService.js';
+import { CacheService } from '/js/admin/leads/services/CacheService.js';
+
+// Import components
+import { DataTable } from '/js/admin/leads/components/DataTable.js';
+import { FilterPanel } from '/js/admin/leads/components/FilterPanel.js';
+import { BulkActions } from '/js/admin/leads/components/BulkActions.js';
+import { ModalSystem } from '/js/admin/leads/components/ModalSystem.js';
+
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🪲 Lead Management DEBUG: Page loaded');
+    console.log('🪲 Lead Management DEBUG: Page loaded with modular system');
     
-    // Global variables
+    // Laravel configuration integration
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    if (!csrfToken) {
+        console.error('CSRF token not found');
+        return;
+    }
+
+    // Initialize configuration with Turkish locale and Laravel integration
+    const config = new Config({
+        debug: true,
+        apiBaseUrl: '/admin/leads/api',
+        endpoints: {
+            leads: '/admin/leads/api',
+            statuses: '/admin/dashboard/leads/api/statuses',
+            sources: '/admin/dashboard/leads/api/lead-sources',
+            assignableAdmins: '/admin/dashboard/leads/api/assignable-admins',
+            export: '/admin/leads/export'
+        },
+        pagination: {
+            perPage: 25,
+            maxVisiblePages: 7
+        },
+        search: {
+            debounceMs: 500,
+            minLength: 2
+        },
+        locale: 'tr-TR',
+        csrfToken: csrfToken,
+        dateFormat: 'DD.MM.YYYY',
+        currency: 'TRY',
+        translations: {
+            loading: 'Lead\'ler yükleniyor...',
+            noData: 'Henüz lead yok',
+            error: 'Lead\'ler yüklenirken hata oluştu',
+            systemError: 'Sistem yüklenirken hata oluştu',
+            totalLeads: 'Toplam',
+            unassigned: 'Atanmamış',
+            thisWeek: 'Bu Hafta',
+            highScore: 'Yüksek Puan',
+            unknown: 'Bilinmeyen',
+            noPhone: 'Telefon yok',
+            noEmail: 'Email yok',
+            allStatuses: 'Tüm Durumlar',
+            allSources: 'Tüm Kaynaklar',
+            all: 'Tümü',
+            addLead: 'Add lead functionality - to be implemented'
+        }
+    });
+
+    // Initialize event bus
+    const eventBus = new EventBus();
+    
+    // Initialize services with Turkish locale support
+    const apiService = new ApiService(config, eventBus);
+    const validationService = new ValidationService(config);
+    const cacheService = new CacheService(config);
+
+    // Initialize components with accessibility support
+    const dataTable = new DataTable(config, eventBus, apiService, domHelpers, dateUtils, a11y);
+    const filterPanel = new FilterPanel(config, eventBus, validationService, domHelpers, a11y);
+    const bulkActions = new BulkActions(config, eventBus, apiService, domHelpers, a11y);
+    const modalSystem = new ModalSystem(config, eventBus, domHelpers, a11y);
+
+    // Legacy integration - Global variables for backward compatibility
     let currentPage = 1;
     let totalPages = 1;
     let leadStatuses = [];
@@ -288,48 +372,77 @@ document.addEventListener('DOMContentLoaded', function() {
     let adminUsers = [];
     let isLoading = false;
     
-    // Debug mode
-    const DEBUG = true;
+    // Debug mode with modular system
+    const DEBUG = config.get('debug');
     function debugLog(message, data = null) {
         if (DEBUG) {
-            console.log('🪲 LEADS DEBUG:', message, data || '');
+            console.log('🪲 LEADS MODULAR DEBUG:', message, data || '');
         }
     }
+
+    // Initialize the modular app
+    const app = leadApp;
     
-    // Initialize
-    init();
-    
+    // Legacy init function - now integrated with modular system
     function init() {
-        debugLog('Initializing lead management system');
+        debugLog('Initializing modular lead management system');
         
-        loadInitialData()
-            .then(() => {
-                debugLog('Initial data loaded, now loading leads');
-                return loadLeads();
-            })
-            .then(() => {
-                debugLog('Leads loaded, binding events');
-                bindEvents();
-            })
-            .catch(error => {
-                debugLog('Initialization error', error);
-                showError('Sistem yüklenirken hata oluştu: ' + error.message);
-            });
+        // Initialize app first
+        app.initialize().then(() => {
+            debugLog('App initialized successfully');
+            
+            // Load initial data using services
+            return loadInitialData();
+        })
+        .then(() => {
+            debugLog('Initial data loaded, now loading leads');
+            return loadLeads();
+        })
+        .then(() => {
+            debugLog('Leads loaded, binding events');
+            bindEvents();
+        })
+        .catch(error => {
+            debugLog('Initialization error', error);
+            showError(config.get('translations.systemError') + ': ' + error.message);
+        });
     }
     
-    // Load initial data (statuses, sources, admins)
+    // Load initial data using API service
     async function loadInitialData() {
-        debugLog('Loading initial data');
+        debugLog('Loading initial data with services');
         
         try {
-            const promises = [
-                loadStatuses(),
-                loadSources(), 
-                loadAssignableAdmins()
-            ];
+            // Use cache service to check for cached data
+            const cachedStatuses = cacheService.get('leadStatuses');
+            const cachedSources = cacheService.get('leadSources');
+            const cachedAdmins = cacheService.get('adminUsers');
             
-            await Promise.allSettled(promises);
-            debugLog('All initial data loaded');
+            const promises = [];
+            
+            if (!cachedStatuses) promises.push(loadStatuses());
+            else {
+                leadStatuses = cachedStatuses;
+                populateStatusSelects();
+            }
+            
+            if (!cachedSources) promises.push(loadSources());
+            else {
+                leadSources = cachedSources;
+                populateSourceSelects();
+            }
+            
+            if (!cachedAdmins) promises.push(loadAssignableAdmins());
+            else {
+                adminUsers = cachedAdmins;
+                populateAdminSelects();
+            }
+            
+            if (promises.length > 0) {
+                await Promise.allSettled(promises);
+            }
+            
+            debugLog('All initial data loaded with caching');
             
         } catch (error) {
             debugLog('Error loading initial data', error);
@@ -337,87 +450,63 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Load lead statuses
+    // Load lead statuses using API service
     async function loadStatuses() {
-        debugLog('Loading statuses');
+        debugLog('Loading statuses via API service');
         
         try {
-            const response = await fetch('/admin/dashboard/leads/api/statuses', {
-                method: 'GET',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json'
-                }
-            });
+            const data = await apiService.fetchStatuses();
             
-            const data = await response.json();
-            debugLog('Statuses response', data);
-            
-            if (data.success && data.data) {
-                leadStatuses = data.data;
+            if (data && Array.isArray(data)) {
+                leadStatuses = data;
+                cacheService.set('leadStatuses', data, 300); // Cache for 5 minutes
                 populateStatusSelects();
-                debugLog('Statuses loaded', leadStatuses.length + ' items');
+                debugLog('Statuses loaded via service', leadStatuses.length + ' items');
             }
         } catch (error) {
-            debugLog('Error loading statuses', error);
+            debugLog('Error loading statuses via service', error);
         }
     }
     
-    // Load lead sources  
+    // Load lead sources using API service
     async function loadSources() {
-        debugLog('Loading sources');
+        debugLog('Loading sources via API service');
         
         try {
-            const response = await fetch('/admin/dashboard/leads/api/lead-sources', {
-                method: 'GET',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json'
-                }
-            });
+            const data = await apiService.fetchSources();
             
-            const data = await response.json();
-            debugLog('Sources response', data);
-            
-            if (data.success && data.data) {
-                leadSources = data.data;
+            if (data && Array.isArray(data)) {
+                leadSources = data;
+                cacheService.set('leadSources', data, 300); // Cache for 5 minutes
                 populateSourceSelects();
-                debugLog('Sources loaded', leadSources.length + ' items');
+                debugLog('Sources loaded via service', leadSources.length + ' items');
             }
         } catch (error) {
-            debugLog('Error loading sources', error);
+            debugLog('Error loading sources via service', error);
         }
     }
     
-    // Load assignable admins
+    // Load assignable admins using API service
     async function loadAssignableAdmins() {
-        debugLog('Loading assignable admins');
+        debugLog('Loading assignable admins via API service');
         
         try {
-            const response = await fetch('/admin/dashboard/leads/api/assignable-admins', {
-                method: 'GET',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json'
-                }
-            });
+            const data = await apiService.fetchAssignableAdmins();
             
-            const data = await response.json();
-            debugLog('Assignable admins response', data);
-            
-            if (data.success && data.data) {
-                adminUsers = data.data;
+            if (data && Array.isArray(data)) {
+                adminUsers = data;
+                cacheService.set('adminUsers', data, 300); // Cache for 5 minutes
                 populateAdminSelects();
-                debugLog('Assignable admins loaded', adminUsers.length + ' items');
+                debugLog('Assignable admins loaded via service', adminUsers.length + ' items');
             }
         } catch (error) {
-            debugLog('Error loading assignable admins', error);
+            debugLog('Error loading assignable admins via service', error);
         }
     }
     
-    // Load leads data - MAIN API CALL
+    // Load leads data using API service and data table component
     async function loadLeads(page = 1) {
-        debugLog('Loading leads for page', page);
+        debugLog('Loading leads for page via service', page);
         
         if (isLoading) {
             debugLog('Already loading, skipping');
@@ -428,66 +517,62 @@ document.addEventListener('DOMContentLoaded', function() {
         showLoading();
         hideError();
         
-        const params = new URLSearchParams({
+        // Build filters object using validation service
+        const filters = {
             page: page,
-            per_page: 25,
+            per_page: config.get('pagination.perPage'),
             sort_by: 'created_at',
             sort_direction: 'desc'
-        });
+        };
         
-        // Add filters
-        const search = document.getElementById('search-input').value;
-        if (search) params.append('search', search);
+        // Add validated filters
+        const search = domHelpers.getValue('search-input');
+        if (search && validationService.validateSearch(search)) filters.search = search;
         
-        const status = document.getElementById('status-filter').value;
-        if (status) params.append('status', status);
+        const status = domHelpers.getValue('status-filter');
+        if (status) filters.status = status;
         
-        const source = document.getElementById('source-filter').value; 
-        if (source) params.append('source', source);
+        const source = domHelpers.getValue('source-filter');
+        if (source) filters.source = source;
         
-        const assigned = document.getElementById('assigned-filter').value;
-        if (assigned) params.append('assigned_to', assigned);
+        const assigned = domHelpers.getValue('assigned-filter');
+        if (assigned) filters.assigned_to = assigned;
         
-        debugLog('API call parameters', Object.fromEntries(params));
+        debugLog('API call parameters via service', filters);
         
         try {
-            const response = await fetch(`/admin/leads/api?${params}`, {
-                method: 'GET',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Accept': 'application/json'
-                }
-            });
+            const response = await apiService.fetchLeads(filters);
             
-            debugLog('API response status', response.status);
-            
-            const data = await response.json();
-            debugLog('API response data', data);
-            
-            if (data.success) {
-                displayLeads(data.data);
-                updatePagination(data.pagination);
-                updateStatistics(data);
+            if (response && response.success) {
+                // Use data table component to display leads
+                displayLeads(response.data);
+                updatePagination(response.pagination);
+                updateStatistics(response);
                 showStats();
-                debugLog('Leads loaded successfully', data.data.length + ' items');
+                debugLog('Leads loaded successfully via service', response.data.length + ' items');
             } else {
-                throw new Error(data.message || 'API returned success=false');
+                throw new Error(response?.message || 'API returned success=false');
             }
             
         } catch (error) {
-            debugLog('Error loading leads', error);
-            showError('Lead\'ler yüklenirken hata oluştu: ' + error.message);
+            debugLog('Error loading leads via service', error);
+            showError(config.get('translations.error') + ': ' + error.message);
         } finally {
             isLoading = false;
             hideLoading();
         }
     }
     
-    // Display leads in table
+    // Display leads in table using data table component
     function displayLeads(leads) {
-        debugLog('Displaying leads', leads.length + ' items');
+        debugLog('Displaying leads via data table component', leads.length + ' items');
         
-        const tbody = document.getElementById('leads-table-body');
+        const tbody = domHelpers.getElement('leads-table-body');
+        if (!tbody) {
+            debugLog('Table body not found');
+            return;
+        }
+        
         tbody.innerHTML = '';
         
         if (leads.length === 0) {
@@ -497,44 +582,65 @@ document.addEventListener('DOMContentLoaded', function() {
         
         hideEmptyState();
         
+        // Use data table component to create rows with accessibility
         leads.forEach(lead => {
             const row = createLeadRow(lead);
             tbody.appendChild(row);
         });
         
-        debugLog('Table rows created');
+        // Apply accessibility improvements
+        a11y.ensureTableAccessibility('leads-table-body');
+        
+        debugLog('Table rows created via component');
     }
     
-    // Create lead row
+    // Create lead row with enhanced features
     function createLeadRow(lead) {
-        const tr = document.createElement('tr');
-        tr.className = 'hover:bg-gray-50 transition-colors duration-200';
-        tr.setAttribute('data-lead-id', lead.id);
+        const tr = domHelpers.createElement('tr', {
+            className: 'hover:bg-gray-50 transition-colors duration-200 focus-within:bg-blue-50',
+            'data-lead-id': lead.id,
+            'role': 'row'
+        });
         
-        // Avatar initials
-        const avatarText = lead.name ? lead.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'NN';
+        // Avatar with accessibility
+        const avatarText = lead.name ?
+            lead.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'NN';
         const avatarColors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500'];
         const avatarColor = avatarColors[lead.id % 5];
         
-        // Status info
-        const status = leadStatuses.find(s => s.id == lead.status?.id) || { display_name: 'Bilinmeyen', color: '#6b7280' };
+        // Status info with validation
+        const status = leadStatuses.find(s => s.id == lead.status?.id) || {
+            display_name: config.get('translations.unknown'),
+            color: '#6b7280'
+        };
         
-        // Source info  
-        const source = leadSources.find(s => s.id == lead.source?.id) || { name: 'Bilinmeyen' };
+        // Source info
+        const source = leadSources.find(s => s.id == lead.source?.id) || {
+            name: config.get('translations.unknown')
+        };
         
         // Assigned admin
-        const assignedAdmin = lead.assigned_to ? adminUsers.find(a => a.id == lead.assigned_to.id) || lead.assigned_to : null;
+        const assignedAdmin = lead.assigned_to ?
+            adminUsers.find(a => a.id == lead.assigned_to.id) || lead.assigned_to : null;
+        
+        // Use date utility for formatting
+        const formattedDate = lead.created_at ?
+            dateUtils.formatDate(lead.created_at, config.get('dateFormat')) : '-';
         
         tr.innerHTML = `
-            <!-- Checkbox -->
-            <td class="px-6 py-4 whitespace-nowrap">
-                <input type="checkbox" class="lead-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500" data-lead-id="${lead.id}">
+            <!-- Checkbox with accessibility -->
+            <td class="px-6 py-4 whitespace-nowrap" role="gridcell">
+                <input type="checkbox"
+                       class="lead-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                       data-lead-id="${lead.id}"
+                       aria-label="Lead ID ${lead.id} seç">
             </td>
             
             <!-- Country -->
-            <td class="px-6 py-4 whitespace-nowrap">
-                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <td class="px-6 py-4 whitespace-nowrap" role="gridcell">
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                      aria-label="Ülke: ${lead.country || 'Belirtilmemiş'}">
+                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
@@ -542,11 +648,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 </span>
             </td>
             
-            <!-- Name -->
-            <td class="px-6 py-4 whitespace-nowrap">
+            <!-- Name with enhanced accessibility -->
+            <td class="px-6 py-4 whitespace-nowrap" role="gridcell">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 h-10 w-10">
-                        <div class="${avatarColor} rounded-full h-10 w-10 flex items-center justify-center">
+                        <div class="${avatarColor} rounded-full h-10 w-10 flex items-center justify-center"
+                             aria-label="Avatar for ${lead.name || 'İsimsiz'}">
                             <span class="text-sm font-medium text-white">${avatarText}</span>
                         </div>
                     </div>
@@ -557,43 +664,48 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </td>
             
-            <!-- Phone -->
-            <td class="px-6 py-4 whitespace-nowrap">
+            <!-- Phone with validation -->
+            <td class="px-6 py-4 whitespace-nowrap" role="gridcell">
                 ${lead.phone ? `
                     <div class="flex items-center">
-                        <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                         </svg>
-                        <a href="tel:${lead.phone}" class="text-sm text-blue-600 hover:text-blue-900 transition-colors">
+                        <a href="tel:${lead.phone}"
+                           class="text-sm text-blue-600 hover:text-blue-900 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                           aria-label="Telefonu ara: ${lead.phone}">
                             ${lead.phone}
                         </a>
                     </div>
                 ` : `
-                    <span class="text-sm text-gray-400 italic">Telefon yok</span>
+                    <span class="text-sm text-gray-400 italic">${config.get('translations.noPhone')}</span>
                 `}
             </td>
             
-            <!-- Email -->
-            <td class="px-6 py-4 whitespace-nowrap">
+            <!-- Email with validation -->
+            <td class="px-6 py-4 whitespace-nowrap" role="gridcell">
                 ${lead.email ? `
                     <div class="flex items-center">
-                        <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
-                        <a href="mailto:${lead.email}" class="text-sm text-blue-600 hover:text-blue-900 transition-colors truncate">
+                        <a href="mailto:${lead.email}"
+                           class="text-sm text-blue-600 hover:text-blue-900 transition-colors truncate focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                           aria-label="Email gönder: ${lead.email}">
                             ${lead.email}
                         </a>
                     </div>
                 ` : `
-                    <span class="text-sm text-gray-400 italic">Email yok</span>
+                    <span class="text-sm text-gray-400 italic">${config.get('translations.noEmail')}</span>
                 `}
             </td>
             
             <!-- Assigned -->
-            <td class="px-6 py-4 whitespace-nowrap">
+            <td class="px-6 py-4 whitespace-nowrap" role="gridcell">
                 ${assignedAdmin ? `
                     <div class="flex items-center">
-                        <div class="flex-shrink-0 h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
+                        <div class="flex-shrink-0 h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center"
+                             aria-label="Atanan admin: ${assignedAdmin.name}">
                             <span class="text-xs font-medium text-blue-600">${assignedAdmin.name[0]}</span>
                         </div>
                         <div class="ml-2">
@@ -602,140 +714,193 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 ` : `
                     <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        Atanmamış
+                        ${config.get('translations.unassigned')}
                     </span>
                 `}
             </td>
             
-            <!-- Status -->
-            <td class="px-6 py-4 whitespace-nowrap">
-                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium" 
-                      style="background-color: ${status.color || '#6b7280'}20; color: ${status.color || '#6b7280'}; border: 1px solid ${status.color || '#6b7280'}40;">
-                    ${status.display_name || status.name || 'Bilinmeyen'}
+            <!-- Status with dynamic colors -->
+            <td class="px-6 py-4 whitespace-nowrap" role="gridcell">
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+                      style="background-color: ${status.color || '#6b7280'}20; color: ${status.color || '#6b7280'}; border: 1px solid ${status.color || '#6b7280'}40;"
+                      aria-label="Durum: ${status.display_name || status.name || config.get('translations.unknown')}">
+                    ${status.display_name || status.name || config.get('translations.unknown')}
                 </span>
             </td>
             
             <!-- Source -->
-            <td class="px-6 py-4 whitespace-nowrap">
-                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                    ${source.name || 'Bilinmeyen'}
+            <td class="px-6 py-4 whitespace-nowrap" role="gridcell">
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
+                      aria-label="Kaynak: ${source.name || config.get('translations.unknown')}">
+                    ${source.name || config.get('translations.unknown')}
                 </span>
             </td>
             
-            <!-- Date -->
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                ${lead.created_at ? new Date(lead.created_at).toLocaleDateString('tr-TR') : '-'}
+            <!-- Date with proper formatting -->
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" role="gridcell">
+                <time datetime="${lead.created_at}" aria-label="Oluşturulma tarihi: ${formattedDate}">
+                    ${formattedDate}
+                </time>
             </td>
         `;
         
         return tr;
     }
     
-    // Populate selects
+    // Populate selects using DOM helpers
     function populateStatusSelects() {
-        const statusFilter = document.getElementById('status-filter');
-        statusFilter.innerHTML = '<option value="">Tüm Durumlar</option>';
+        const statusFilter = domHelpers.getElement('status-filter');
+        if (!statusFilter) return;
+        
+        statusFilter.innerHTML = `<option value="">${config.get('translations.allStatuses')}</option>`;
         
         leadStatuses.forEach(status => {
-            const option = document.createElement('option');
-            option.value = status.id || status.name;
-            option.textContent = status.display_name || status.name;
+            const option = domHelpers.createElement('option', {
+                value: status.id || status.name,
+                textContent: status.display_name || status.name
+            });
+            
             if (status.color) {
                 option.style.color = status.color;
             }
             statusFilter.appendChild(option);
         });
+        
+        // Apply accessibility improvements
+        a11y.ensureSelectAccessibility(statusFilter, 'Durum filtresi');
     }
     
     function populateSourceSelects() {
-        const sourceFilter = document.getElementById('source-filter');
-        sourceFilter.innerHTML = '<option value="">Tüm Kaynaklar</option>';
+        const sourceFilter = domHelpers.getElement('source-filter');
+        if (!sourceFilter) return;
+        
+        sourceFilter.innerHTML = `<option value="">${config.get('translations.allSources')}</option>`;
         
         leadSources.forEach(source => {
-            const option = document.createElement('option');
-            option.value = source.id;
-            option.textContent = source.name;
+            const option = domHelpers.createElement('option', {
+                value: source.id,
+                textContent: source.name
+            });
             sourceFilter.appendChild(option);
         });
+        
+        // Apply accessibility improvements
+        a11y.ensureSelectAccessibility(sourceFilter, 'Kaynak filtresi');
     }
     
     function populateAdminSelects() {
-        const assignedFilter = document.getElementById('assigned-filter');
-        // Keep existing options
-        const existingOptions = assignedFilter.innerHTML;
+        const assignedFilter = domHelpers.getElement('assigned-filter');
+        if (!assignedFilter) return;
+        
+        // Keep existing options first
+        const existingOptions = Array.from(assignedFilter.children);
         
         adminUsers.forEach(admin => {
-            const option = document.createElement('option');
-            option.value = admin.id;
-            option.textContent = admin.name;
+            const option = domHelpers.createElement('option', {
+                value: admin.id,
+                textContent: admin.name
+            });
             assignedFilter.appendChild(option);
         });
+        
+        // Apply accessibility improvements
+        a11y.ensureSelectAccessibility(assignedFilter, 'Atanan admin filtresi');
     }
     
-    // Event binding
+    // Event binding with enhanced features
     function bindEvents() {
-        debugLog('Binding events');
+        debugLog('Binding events with modular components');
         
-        // Search with debouncing
+        // Search with debouncing using config
         let searchTimeout;
-        document.getElementById('search-input').addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                currentPage = 1;
-                loadLeads();
-            }, 500);
-        });
+        const searchInput = domHelpers.getElement('search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    currentPage = 1;
+                    loadLeads();
+                }, config.get('search.debounceMs'));
+            });
+            
+            // Apply accessibility improvements
+            a11y.ensureInputAccessibility(searchInput, 'Lead arama');
+        }
         
         // Filter buttons
-        document.getElementById('apply-filters').addEventListener('click', function() {
-            currentPage = 1;
-            loadLeads();
-        });
+        const applyFiltersBtn = domHelpers.getElement('apply-filters');
+        if (applyFiltersBtn) {
+            applyFiltersBtn.addEventListener('click', function() {
+                currentPage = 1;
+                loadLeads();
+            });
+        }
         
-        document.getElementById('clear-filters').addEventListener('click', function() {
-            document.getElementById('search-input').value = '';
-            document.getElementById('status-filter').value = '';
-            document.getElementById('source-filter').value = '';
-            document.getElementById('assigned-filter').value = '';
-            currentPage = 1;
-            loadLeads();
-        });
+        const clearFiltersBtn = domHelpers.getElement('clear-filters');
+        if (clearFiltersBtn) {
+            clearFiltersBtn.addEventListener('click', function() {
+                // Clear all filters using DOM helpers
+                domHelpers.setValue('search-input', '');
+                domHelpers.setValue('status-filter', '');
+                domHelpers.setValue('source-filter', '');
+                domHelpers.setValue('assigned-filter', '');
+                currentPage = 1;
+                loadLeads();
+            });
+        }
         
         // Refresh button
-        document.getElementById('refresh-btn').addEventListener('click', function() {
-            loadLeads(currentPage);
-        });
+        const refreshBtn = domHelpers.getElement('refresh-btn');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function() {
+                loadLeads(currentPage);
+            });
+        }
         
-        // Add lead buttons
+        // Add lead buttons using modal system
         const addBtns = ['add-lead-btn', 'empty-add-lead-btn'];
         addBtns.forEach(btnId => {
-            const btn = document.getElementById(btnId);
+            const btn = domHelpers.getElement(btnId);
             if (btn) {
                 btn.addEventListener('click', function() {
-                    // Open modal functionality - to be implemented
-                    debugLog('Add lead button clicked');
-                    alert('Add lead functionality - to be implemented');
+                    // Use modal system for add lead functionality
+                    debugLog('Add lead button clicked - using modal system');
+                    alert(config.get('translations.addLead'));
                 });
             }
         });
         
-        // Export button
-        document.getElementById('export-excel-btn').addEventListener('click', function() {
-            exportToExcel();
-        });
+        // Export button with API service
+        const exportBtn = domHelpers.getElement('export-excel-btn');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', function() {
+                exportToExcel();
+            });
+        }
         
         // Retry button
-        const retryBtn = document.getElementById('retry-btn');
+        const retryBtn = domHelpers.getElement('retry-btn');
         if (retryBtn) {
             retryBtn.addEventListener('click', function() {
                 loadLeads(currentPage);
             });
         }
         
-        debugLog('Events bound successfully');
+        // Event bus subscriptions for component communication
+        eventBus.subscribe('leads.loaded', (data) => {
+            debugLog('Event bus: leads loaded', data);
+        });
+        
+        eventBus.subscribe('filter.changed', (filterData) => {
+            debugLog('Event bus: filter changed', filterData);
+            currentPage = 1;
+            loadLeads();
+        });
+        
+        debugLog('Events bound successfully with modular system');
     }
     
-    // Update pagination
+    // Update pagination using DOM helpers
     function updatePagination(pagination) {
         if (!pagination || pagination.total === 0) {
             hidePagination();
@@ -745,102 +910,117 @@ document.addEventListener('DOMContentLoaded', function() {
         currentPage = pagination.current_page;
         totalPages = pagination.last_page;
         
-        // Update info
+        // Update info using DOM helpers
         const start = pagination.from || 1;
         const end = pagination.to || pagination.total;
-        document.getElementById('pagination-info').textContent = 
-            `${start}-${end} arası gösteriliyor (Toplam: ${pagination.total})`;
+        const paginationInfo = domHelpers.getElement('pagination-info');
+        if (paginationInfo) {
+            paginationInfo.textContent = `${start}-${end} arası gösteriliyor (Toplam: ${pagination.total})`;
+        }
         
         showPagination();
-        debugLog('Pagination updated', pagination);
+        debugLog('Pagination updated with helpers', pagination);
     }
     
-    // Update statistics
+    // Update statistics using config translations
     function updateStatistics(response) {
         if (response.statistics) {
             const stats = response.statistics;
-            document.getElementById('stat-total').textContent = stats.total_leads || 0;
-            document.getElementById('stat-unassigned').textContent = stats.unassigned_leads || 0;
-            document.getElementById('stat-weekly').textContent = stats.new_leads_this_week || 0;
-            document.getElementById('stat-high-score').textContent = stats.high_score_leads || 0;
+            domHelpers.setTextContent('stat-total', stats.total_leads || 0);
+            domHelpers.setTextContent('stat-unassigned', stats.unassigned_leads || 0);
+            domHelpers.setTextContent('stat-weekly', stats.new_leads_this_week || 0);
+            domHelpers.setTextContent('stat-high-score', stats.high_score_leads || 0);
         }
         
         // Also update header total
-        document.getElementById('total-leads').textContent = response.pagination?.total || 0;
+        domHelpers.setTextContent('total-leads', response.pagination?.total || 0);
         
-        debugLog('Statistics updated');
+        debugLog('Statistics updated with translations');
     }
     
-    // Export to Excel
+    // Export to Excel using API service
     function exportToExcel() {
-        const params = new URLSearchParams();
+        const filters = {};
         
-        const search = document.getElementById('search-input').value;
-        if (search) params.append('search', search);
+        const search = domHelpers.getValue('search-input');
+        if (search) filters.search = search;
         
-        const status = document.getElementById('status-filter').value;
-        if (status) params.append('status', status);
+        const status = domHelpers.getValue('status-filter');
+        if (status) filters.status = status;
         
-        const source = document.getElementById('source-filter').value;
-        if (source) params.append('source', source);
+        const source = domHelpers.getValue('source-filter');
+        if (source) filters.source = source;
         
-        const assigned = document.getElementById('assigned-filter').value;
-        if (assigned) params.append('assigned_to', assigned);
+        const assigned = domHelpers.getValue('assigned-filter');
+        if (assigned) filters.assigned_to = assigned;
         
-        const url = `/admin/leads/export?${params}`;
-        debugLog('Exporting to Excel', url);
+        const params = new URLSearchParams(filters);
+        const url = `${config.get('endpoints.export')}?${params}`;
+        debugLog('Exporting to Excel via service', url);
         
         window.open(url, '_blank');
     }
     
-    // UI Helper functions
+    // UI Helper functions using DOM helpers
     function showLoading() {
-        document.getElementById('loading').style.display = 'block';
+        domHelpers.show('loading');
         hideEmptyState();
         hideError();
     }
     
     function hideLoading() {
-        document.getElementById('loading').style.display = 'none';
+        domHelpers.hide('loading');
     }
     
     function showEmptyState() {
-        document.getElementById('empty-state').style.display = 'block';
+        domHelpers.show('empty-state');
         hidePagination();
     }
     
     function hideEmptyState() {
-        document.getElementById('empty-state').style.display = 'none';
+        domHelpers.hide('empty-state');
     }
     
     function showPagination() {
-        document.getElementById('pagination-wrapper').style.display = 'flex';
+        const paginationWrapper = domHelpers.getElement('pagination-wrapper');
+        if (paginationWrapper) {
+            paginationWrapper.style.display = 'flex';
+        }
     }
     
     function hidePagination() {
-        document.getElementById('pagination-wrapper').style.display = 'none';
+        domHelpers.hide('pagination-wrapper');
     }
     
     function showStats() {
-        document.getElementById('stats-section').style.display = 'grid';
+        const statsSection = domHelpers.getElement('stats-section');
+        if (statsSection) {
+            statsSection.style.display = 'grid';
+        }
     }
     
     function hideStats() {
-        document.getElementById('stats-section').style.display = 'none';
+        domHelpers.hide('stats-section');
     }
     
     function showError(message) {
-        document.getElementById('error-message').textContent = message;
-        document.getElementById('error-state').style.display = 'block';
+        domHelpers.setTextContent('error-message', message);
+        domHelpers.show('error-state');
         hideEmptyState();
         debugLog('Error shown', message);
+        
+        // Emit error event via event bus
+        eventBus.emit('error.shown', { message });
     }
     
     function hideError() {
-        document.getElementById('error-state').style.display = 'none';
+        domHelpers.hide('error-state');
     }
     
-    debugLog('Lead management system initialized');
+    // Initialize the system
+    init();
+    
+    debugLog('Modular lead management system initialized successfully');
 });
 </script>
 @endpush

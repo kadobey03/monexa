@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use App\Models\Deposit;
 use App\Models\Kyc;
+use App\Models\LeadStatus;
 use App\Models\Mt4Details;
 use App\Models\Plans;
 use App\Models\Settings;
@@ -65,10 +66,26 @@ class ManageUsers extends Component
 
     public function getUsersProperty()
     {
-
         return User::search($this->searchvalue)
+            ->with('leadStatus')
             ->orderBy($this->orderby, $this->orderdirection)
             ->paginate($this->pagenum);
+    }
+
+    public function getLeadStatusesProperty()
+    {
+        return LeadStatus::active()->get();
+    }
+
+    public function updateLeadStatus($userId, $statusName)
+    {
+        try {
+            User::findOrFail($userId)->update(['lead_status' => $statusName]);
+            session()->flash('success', 'Lead status başarıyla güncellendi!');
+            $this->dispatch('status-updated');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Status güncellenirken hata oluştu.');
+        }
     }
 
     public function render()
