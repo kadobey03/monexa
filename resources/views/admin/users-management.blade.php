@@ -304,133 +304,135 @@
             <!-- Enhanced Table Design -->
             <div class="overflow-x-auto">
                 <table class="min-w-full table-fixed" id="users-table">
-                    <!-- Professional Table Header -->
-                    <thead class="bg-admin-100 {{ $isDark ? 'dark:bg-admin-700' : '' }} border-b-2 border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }}">
+                    <!-- Enhanced Table Header -->
+                    <thead class="bg-gradient-to-r from-admin-100 to-admin-50 {{ $isDark ? 'dark:from-admin-700 dark:to-admin-750' : '' }} border-b-2 border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }}">
                         <tr>
-                            <th scope="col" class="w-8 px-2 py-2 text-left">
+                            <th scope="col" class="w-10 px-4 py-4 text-left">
                                 <input type="checkbox" id="select-all"
-                                       class="rounded border-admin-300 text-admin-600 shadow-sm focus:border-admin-500 focus:ring-admin-500"
+                                       class="w-4 h-4 rounded border-admin-300 text-admin-600 shadow-sm focus:border-admin-500 focus:ring-admin-500 focus:ring-2"
                                        onchange="toggleAllUsers(this)">
                             </th>
-                            <th scope="col" class="w-40 px-2 py-2 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
-                                <div class="flex items-center space-x-1">
-                                    <i class="fas fa-user text-admin-500 text-xs"></i>
-                                    <span>Kullanıcı</span>
+                            <th scope="col" class="w-44 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-user text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
+                                    <span class="font-bold">Kullanıcı</span>
                                 </div>
                             </th>
-                            <th scope="col" class="w-32 px-2 py-2 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
-                                <div class="flex items-center space-x-1">
-                                    <i class="fas fa-envelope text-admin-500 text-xs"></i>
-                                    <span>Email</span>
+                            <th scope="col" class="w-36 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-envelope text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
+                                    <span class="font-bold">Email</span>
                                 </div>
                             </th>
-                            <th scope="col" class="w-24 px-2 py-2 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
-                                <div class="flex items-center space-x-1">
-                                    <i class="fas fa-phone text-admin-500 text-xs"></i>
-                                    <span>Telefon</span>
+                            <th scope="col" class="w-28 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-phone text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
+                                    <span class="font-bold">Telefon</span>
                                 </div>
                             </th>
-                            <th scope="col" class="w-24 px-2 py-2 text-left text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
-                                <div class="flex items-center space-x-1">
-                                    <i class="fas fa-calendar text-admin-500 text-xs"></i>
-                                    <span>Tarih</span>
+                            <th scope="col" class="w-28 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-calendar text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
+                                    <span class="font-bold">Tarih</span>
                                 </div>
                             </th>
-                            <th scope="col" class="w-32 px-2 py-2 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
-                                <div class="flex items-center justify-center space-x-1">
-                                    <i class="fas fa-flag text-admin-500 text-xs"></i>
-                                    <span>Lead Status</span>
+                            <th scope="col" class="w-36 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <i class="fas fa-flag text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
+                                    <span class="font-bold">Lead Status</span>
                                 </div>
                             </th>
-                            <th scope="col" class="w-32 px-2 py-2 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
-                                <div class="flex items-center justify-center space-x-1">
-                                    <i class="fas fa-user-tie text-admin-500 text-xs"></i>
-                                    <span>Admin</span>
+                            <th scope="col" class="w-36 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <i class="fas fa-user-tie text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
+                                    <span class="font-bold">Admin</span>
                                 </div>
                             </th>
-                            <th scope="col" class="w-20 px-2 py-2 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
-                                <div class="flex items-center justify-center space-x-1">
-                                    <i class="fas fa-toggle-on text-admin-500 text-xs"></i>
-                                    <span>Durum</span>
+                            <th scope="col" class="w-24 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <i class="fas fa-toggle-on text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
+                                    <span class="font-bold">Durum</span>
                                 </div>
                             </th>
-                            <th scope="col" class="w-20 px-2 py-2 text-center text-xs font-bold text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} uppercase tracking-wider leading-tight">
-                                <div class="flex items-center justify-center space-x-1">
-                                    <i class="fas fa-cogs text-admin-500 text-xs"></i>
-                                    <span>İşlem</span>
+                            <th scope="col" class="w-28 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
+                                <div class="flex items-center justify-center space-x-2">
+                                    <i class="fas fa-cogs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
+                                    <span class="font-bold">İşlemler</span>
                                 </div>
                             </th>
                         </tr>
                     </thead>
 
-                    <!-- Professional Table Body -->
+                    <!-- Enhanced Table Body -->
                     <tbody class="bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} divide-y divide-admin-200 {{ $isDark ? 'dark:divide-admin-700' : '' }}">
                         @forelse ($users ?? [] as $user)
-                            <tr class="hover:bg-admin-50 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} transition-colors duration-150 group">
-                                <!-- Selection Checkbox -->
-                                <td class="px-2 py-1 whitespace-nowrap">
+                            <tr class="hover:bg-gradient-to-r hover:from-admin-50 hover:to-white {{ $isDark ? 'dark:hover:from-admin-700 dark:hover:to-admin-750' : '' }} transition-all duration-200 group border-l-4 border-transparent hover:border-admin-400">
+                                <!-- Enhanced Selection Checkbox -->
+                                <td class="px-4 py-4 whitespace-nowrap">
                                     <input type="checkbox" name="user_ids[]" value="{{ $user->id }}"
-                                           class="user-checkbox rounded border-admin-300 text-admin-600 shadow-sm focus:border-admin-500 focus:ring-admin-500"
+                                           class="user-checkbox w-4 h-4 rounded border-admin-300 text-admin-600 shadow-sm focus:border-admin-500 focus:ring-admin-500 focus:ring-2"
                                            onchange="updateBulkActions()">
                                 </td>
 
-                                <!-- User Info with Professional Avatar -->
-                                <td class="px-2 py-1 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-8 w-8">
-                                            <div class="h-8 w-8 rounded-full bg-gradient-to-br from-admin-500 to-admin-600 {{ $isDark ? 'dark:from-admin-400 dark:to-admin-500' : '' }} flex items-center justify-center shadow-md">
-                                                <span class="text-xs font-bold text-white">
+                                <!-- Enhanced User Info with Larger Avatar -->
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <div class="h-10 w-10 rounded-full bg-gradient-to-br from-admin-500 to-admin-600 {{ $isDark ? 'dark:from-admin-400 dark:to-admin-500' : '' }} flex items-center justify-center shadow-lg border-2 border-white {{ $isDark ? 'dark:border-admin-600' : '' }}">
+                                                <span class="text-sm font-bold text-white uppercase">
                                                     {{ substr($user->name ?? '', 0, 1) }}
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="ml-2">
-                                            <div class="text-xs font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} truncate max-w-0" title="{{ $user->name ?? 'Ad Soyad Yok' }}">
-                                                {{ Str::limit($user->name ?? 'Ad Soyad Yok', 20) }}
+                                        <div class="min-w-0 flex-1">
+                                            <div class="text-sm font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} truncate" title="{{ $user->name ?? 'Ad Soyad Yok' }}">
+                                                {{ Str::limit($user->name ?? 'Ad Soyad Yok', 25) }}
                                             </div>
-                                            <div class="text-xs text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} leading-tight">
-                                                ID: {{ $user->id }}
+                                            <div class="text-xs text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} font-medium">
+                                                <i class="fas fa-hashtag mr-1"></i>{{ $user->id }}
                                             </div>
                                         </div>
                                     </div>
                                 </td>
 
-                                <!-- Contact Information -->
-                                <td class="px-2 py-1 whitespace-nowrap">
-                                    <div class="text-xs text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} truncate max-w-0" title="{{ $user->email ?? '-' }}">
-                                        {{ Str::limit($user->email ?? '-', 25) }}
+                                <!-- Enhanced Contact Information -->
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} font-medium truncate" title="{{ $user->email ?? '-' }}">
+                                        {{ Str::limit($user->email ?? '-', 30) }}
                                     </div>
                                     @if($user->email_verified_at)
-                                        <div class="text-xs text-green-600 leading-tight">
+                                        <div class="text-xs text-green-600 font-medium mt-1">
                                             <i class="fas fa-check-circle mr-1"></i>Doğrulandı
                                         </div>
                                     @else
-                                        <div class="text-xs text-amber-600 leading-tight">
+                                        <div class="text-xs text-amber-600 font-medium mt-1">
                                             <i class="fas fa-exclamation-triangle mr-1"></i>Bekliyor
                                         </div>
                                     @endif
                                 </td>
 
-                                <!-- Phone -->
-                                <td class="px-2 py-1 whitespace-nowrap text-xs text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
-                                    {{ $user->phone ?? '-' }}
+                                <!-- Enhanced Phone -->
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} font-medium">
+                                        {{ $user->phone ?? '-' }}
+                                    </div>
                                 </td>
 
-                                <!-- Registration Date -->
-                                <td class="px-2 py-1 whitespace-nowrap">
-                                    <div class="text-xs text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} leading-tight">
+                                <!-- Enhanced Registration Date -->
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} font-medium">
                                         {{ $user->created_at ? $user->created_at->format('d.m.Y') : '-' }}
                                     </div>
-                                    <div class="text-xs text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} leading-tight">
+                                    <div class="text-xs text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">
                                         {{ $user->created_at ? $user->created_at->diffForHumans() : '-' }}
                                     </div>
                                 </td>
 
-                                <!-- Lead Status Dropdown -->
-                                <td class="px-2 py-1 whitespace-nowrap text-center">
+                                <!-- Enhanced Lead Status Dropdown -->
+                                <td class="px-4 py-4 whitespace-nowrap text-center">
                                     <div class="flex items-center justify-center">
                                         <select onchange="updateLeadStatus({{ $user->id }}, this.value)"
-                                                class="px-2 py-1 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-xs font-medium focus:outline-none focus:ring-1 focus:ring-admin-500 focus:border-transparent"
+                                                class="px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-sm font-medium focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent shadow-sm transition-all duration-200"
                                                 style="background-color: {{ $user->leadStatus->color ?? '#6B7280' }}; color: white;">
                                             @if(isset($leadStatuses) && $leadStatuses->count() > 0)
                                                 @foreach($leadStatuses as $status)
@@ -451,17 +453,17 @@
                                     </div>
                                 </td>
 
-                                <!-- Assigned Admin Dropdown -->
-                                <td class="px-2 py-1 whitespace-nowrap text-center">
+                                <!-- Enhanced Assigned Admin Dropdown -->
+                                <td class="px-4 py-4 whitespace-nowrap text-center">
                                     <div class="flex items-center justify-center">
                                         <select onchange="updateAssignedAdmin({{ $user->id }}, this.value)"
-                                                class="px-2 py-1 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-xs font-medium focus:outline-none focus:ring-1 focus:ring-admin-500 focus:border-transparent text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                                class="px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-sm font-medium focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} shadow-sm transition-all duration-200">
                                             @if(isset($admins) && $admins->count() > 0)
                                                 <option value="" {{ !$user->assign_to ? 'selected' : '' }}>Atanmamış</option>
                                                 @foreach($admins as $admin)
                                                     <option value="{{ $admin->id }}"
                                                             {{ ($user->assign_to == $admin->id) ? 'selected' : '' }}>
-                                                        {{ Str::limit($admin->getDisplayName(), 15) }}
+                                                        {{ Str::limit($admin->getDisplayName(), 18) }}
                                                     </option>
                                                 @endforeach
                                             @else
@@ -472,58 +474,58 @@
                                 </td>
 
                                 <!-- Enhanced Status Badge -->
-                                <td class="px-2 py-1 whitespace-nowrap text-center">
+                                <td class="px-4 py-4 whitespace-nowrap text-center">
                                     @switch($user->status ?? 'active')
                                         @case('active')
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }} leading-tight">
-                                                <i class="fas fa-check-circle mr-1"></i>
+                                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }} shadow-sm border border-green-200 {{ $isDark ? 'dark:border-green-700' : '' }}">
+                                                <i class="fas fa-check-circle mr-2"></i>
                                                 Aktif
                                             </span>
                                             @break
                                         @case('blocked')
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 {{ $isDark ? 'dark:bg-red-800 dark:text-red-100' : '' }} leading-tight">
-                                                <i class="fas fa-times-circle mr-1"></i>
+                                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-red-100 text-red-800 {{ $isDark ? 'dark:bg-red-800 dark:text-red-100' : '' }} shadow-sm border border-red-200 {{ $isDark ? 'dark:border-red-700' : '' }}">
+                                                <i class="fas fa-times-circle mr-2"></i>
                                                 Engelli
                                             </span>
                                             @break
                                         @case('pending')
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 {{ $isDark ? 'dark:bg-yellow-800 dark:text-yellow-100' : '' }} leading-tight">
-                                                <i class="fas fa-clock mr-1"></i>
+                                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800 {{ $isDark ? 'dark:bg-yellow-800 dark:text-yellow-100' : '' }} shadow-sm border border-yellow-200 {{ $isDark ? 'dark:border-yellow-700' : '' }}">
+                                                <i class="fas fa-clock mr-2"></i>
                                                 Bekliyor
                                             </span>
                                             @break
                                         @default
-                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 {{ $isDark ? 'dark:bg-gray-700 dark:text-gray-200' : '' }} leading-tight">
-                                                <i class="fas fa-question-circle mr-1"></i>
+                                            <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-gray-100 text-gray-800 {{ $isDark ? 'dark:bg-gray-700 dark:text-gray-200' : '' }} shadow-sm border border-gray-200 {{ $isDark ? 'dark:border-gray-600' : '' }}">
+                                                <i class="fas fa-question-circle mr-2"></i>
                                                 Belirsiz
                                             </span>
                                     @endswitch
                                 </td>
 
-                                <!-- Modern Action Buttons -->
-                                <td class="px-2 py-1 whitespace-nowrap text-center">
-                                    <div class="flex items-center justify-center space-x-1">
+                                <!-- Enhanced Action Buttons -->
+                                <td class="px-4 py-4 whitespace-nowrap text-center">
+                                    <div class="flex items-center justify-center space-x-2">
                                         <button onclick="viewUser({{ $user->id }})"
-                                                class="p-1 rounded-lg text-admin-600 hover:bg-admin-100 {{ $isDark ? 'dark:text-admin-400 dark:hover:bg-admin-700' : '' }} transition-colors duration-200"
+                                                class="p-2 rounded-lg text-admin-600 hover:bg-admin-100 {{ $isDark ? 'dark:text-admin-400 dark:hover:bg-admin-700' : '' }} transition-all duration-200 hover:shadow-md hover:scale-110"
                                                 title="Görüntüle">
-                                            <i class="fas fa-eye text-xs"></i>
+                                            <i class="fas fa-eye text-sm"></i>
                                         </button>
                                         <button onclick="editUser({{ $user->id }})"
-                                                class="p-1 rounded-lg text-blue-600 hover:bg-blue-100 {{ $isDark ? 'dark:text-blue-400 dark:hover:bg-blue-800' : '' }} transition-colors duration-200"
+                                                class="p-2 rounded-lg text-blue-600 hover:bg-blue-100 {{ $isDark ? 'dark:text-blue-400 dark:hover:bg-blue-800' : '' }} transition-all duration-200 hover:shadow-md hover:scale-110"
                                                 title="Düzenle">
-                                            <i class="fas fa-edit text-xs"></i>
+                                            <i class="fas fa-edit text-sm"></i>
                                         </button>
                                         @if($user->status == 'active')
                                             <button onclick="blockUser({{ $user->id }})"
-                                                    class="p-1 rounded-lg text-red-600 hover:bg-red-100 {{ $isDark ? 'dark:text-red-400 dark:hover:bg-red-800' : '' }} transition-colors duration-200"
+                                                    class="p-2 rounded-lg text-red-600 hover:bg-red-100 {{ $isDark ? 'dark:text-red-400 dark:hover:bg-red-800' : '' }} transition-all duration-200 hover:shadow-md hover:scale-110"
                                                     title="Engelle">
-                                                <i class="fas fa-ban text-xs"></i>
+                                                <i class="fas fa-ban text-sm"></i>
                                             </button>
                                         @else
                                             <button onclick="unblockUser({{ $user->id }})"
-                                                    class="p-1 rounded-lg text-green-600 hover:bg-green-100 {{ $isDark ? 'dark:text-green-400 dark:hover:bg-green-800' : '' }} transition-colors duration-200"
+                                                    class="p-2 rounded-lg text-green-600 hover:bg-green-100 {{ $isDark ? 'dark:text-green-400 dark:hover:bg-green-800' : '' }} transition-all duration-200 hover:shadow-md hover:scale-110"
                                                     title="Aktifleştir">
-                                                <i class="fas fa-check text-xs"></i>
+                                                <i class="fas fa-check text-sm"></i>
                                             </button>
                                         @endif
                                     </div>
@@ -531,15 +533,31 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="px-2 py-12 text-center">
-                                    <div class="flex flex-col items-center">
-                                        <i class="fas fa-users text-6xl text-admin-400 {{ $isDark ? 'dark:text-admin-500' : '' }} mb-4"></i>
-                                        <h3 class="text-lg font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-2">
-                                            Kullanıcı Bulunamadı
-                                        </h3>
-                                        <p class="text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} text-center">
-                                            Henüz hiç kullanıcı eklenmemiş veya arama kriterlerinize uygun kullanıcı bulunamadı.
-                                        </p>
+                                <td colspan="9" class="px-4 py-16 text-center">
+                                    <div class="flex flex-col items-center justify-center space-y-4 max-w-md mx-auto">
+                                        <div class="w-24 h-24 bg-gradient-to-br from-admin-400 to-admin-500 {{ $isDark ? 'dark:from-admin-500 dark:to-admin-600' : '' }} rounded-full flex items-center justify-center shadow-lg">
+                                            <i class="fas fa-users text-white text-3xl"></i>
+                                        </div>
+                                        <div class="text-center space-y-2">
+                                            <h3 class="text-xl font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                                Kullanıcı Bulunamadı
+                                            </h3>
+                                            <p class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} leading-relaxed">
+                                                Henüz hiç kullanıcı eklenmemiş veya arama kriterlerinize uygun kullanıcı bulunamadı.
+                                            </p>
+                                        </div>
+                                        <div class="flex items-center space-x-3 mt-6">
+                                            <button onclick="openAddUserModal()"
+                                                    class="inline-flex items-center px-4 py-2 bg-admin-600 hover:bg-admin-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-200">
+                                                <i class="fas fa-user-plus mr-2"></i>
+                                                Yeni Kullanıcı Ekle
+                                            </button>
+                                            <a href="{{ route('manageusers') }}"
+                                               class="inline-flex items-center px-4 py-2 text-admin-600 hover:text-admin-700 text-sm font-medium transition-colors duration-200">
+                                                <i class="fas fa-refresh mr-2"></i>
+                                                Filtreleri Temizle
+                                            </a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
