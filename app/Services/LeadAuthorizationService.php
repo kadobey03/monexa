@@ -18,6 +18,17 @@ class LeadAuthorizationService
      */
     public function getAuthorizedLeadsQuery(Admin $admin): Builder
     {
+        Log::info('🪲 DEBUG: Starting getAuthorizedLeadsQuery', [
+            'admin_id' => $admin->id,
+            'admin_firstName' => $admin->firstName,
+            'admin_lastName' => $admin->lastName,
+            'admin_type' => $admin->type,
+            'admin_status' => $admin->status,
+            'admin_role_id' => $admin->role_id,
+            'has_role_relationship' => $admin->role !== null,
+            'role_name' => $admin->role?->name ?? 'NO_ROLE',
+        ]);
+
         // DÜZELTME: Daha gevşek lead criteria - cstatus Customer olmayanları lead say
         $query = User::query()
             ->where(function($q) {
@@ -26,23 +37,58 @@ class LeadAuthorizationService
                   ->orWhereNull('cstatus');
             });
 
-        // Super admin ve head of office tüm leads'i görebilir
-        if ($admin->isSuperAdmin() || $admin->role?->name === 'head_of_office') {
-            Log::info('Full lead access granted', [
+        $totalPotentialLeads = $query->count();
+        Log::info('🪲 DEBUG: Total potential leads in system', [
+            'total_potential_leads' => $totalPotentialLeads
+        ]);
+
+        // Role-based privilege testing
+        $isSuperAdmin = $admin->isSuperAdmin();
+        $isHeadOfOffice = $admin->isHeadOfOffice();
+        $hasBypassPrivileges = $admin->hasBypassPrivileges();
+
+        Log::info('🪲 DEBUG: Admin privilege analysis', [
+            'admin_id' => $admin->id,
+            'admin_role' => $admin->getRoleName(),
+            'is_super_admin' => $isSuperAdmin,
+            'is_head_of_office' => $isHeadOfOffice,
+            'has_bypass_privileges' => $hasBypassPrivileges,
+            'role_object_exists' => $admin->role !== null,
+            'role_object_data' => $admin->role ? [
+                'id' => $admin->role->id,
+                'name' => $admin->role->name,
+                'display_name' => $admin->role->display_name ?? 'N/A'
+            ] : null
+        ]);
+
+        // Super admin ve head of office tüm leads'i görebilir (bypass privileges)
+        if ($admin->hasBypassPrivileges()) {
+            Log::info('🪲 DEBUG: Full lead access granted (bypass privileges)', [
                 'admin_id' => $admin->id,
-                'admin_role' => $admin->role?->name,
-                'total_leads' => $query->count()
+                'admin_role' => $admin->getRoleName(),
+                'is_super_admin' => $isSuperAdmin,
+                'is_head_of_office' => $isHeadOfOffice,
+                'total_leads' => $totalPotentialLeads
             ]);
             return $query;
         }
 
         // Diğer roller için role-based filtering uygula
+        Log::info('🪲 DEBUG: Applying role-based filtering', [
+            'admin_id' => $admin->id,
+            'admin_role' => $admin->getRoleName(),
+            'before_filtering_count' => $totalPotentialLeads
+        ]);
+
         $roleBasedQuery = $this->applyRoleBasedFiltering($query, $admin);
+        $filteredCount = $roleBasedQuery->count();
         
-        Log::info('Lead authorization applied', [
+        Log::info('🪲 DEBUG: Lead authorization completed', [
             'admin_id' => $admin->id,
             'admin_role' => $admin->role?->name,
-            'query_count' => $roleBasedQuery->count()
+            'before_filter_count' => $totalPotentialLeads,
+            'after_filter_count' => $filteredCount,
+            'filter_ratio' => $totalPotentialLeads > 0 ? round(($filteredCount / $totalPotentialLeads) * 100, 2) . '%' : '0%'
         ]);
 
         return $roleBasedQuery;
@@ -53,13 +99,19 @@ class LeadAuthorizationService
      */
     protected function applyRoleBasedFiltering(Builder $query, Admin $admin): Builder
     {
-        $roleName = $admin->role?->name;
+        $roleName = $admin->getRoleName();
 
+        // Sales representatives (agents) sadece kendi assign_to=admin_id olan lead'leri görebilir
+        if ($admin->isSalesRepresentative()) {
+            Log::info('Sales representative filtering applied', [
+                'admin_id' => $admin->id,
+                'admin_role' => $roleName
+            ]);
+            return $this->getOwnLeads($query, $admin);
+        }
+
+        // Role-based filtering for other roles
         switch ($roleName) {
-            case 'head_of_office':
-                // Head of office sees all leads in their office
-                return $this->getOfficeLeads($query, $admin);
-
             case 'sales_head':
             case 'retention_head':
                 // Department heads see all leads in their department
@@ -70,10 +122,12 @@ class LeadAuthorizationService
                 // Team leaders see their own leads + their team members' leads
                 return $this->getTeamLeads($query, $admin);
 
-            case 'sales_agent':
-            case 'retention_agent':
             default:
-                // Sales agents see only their own leads
+                // Fallback: only own leads
+                Log::warning('Unknown role applying own leads filter', [
+                    'admin_id' => $admin->id,
+                    'admin_role' => $roleName
+                ]);
                 return $this->getOwnLeads($query, $admin);
         }
     }
@@ -179,15 +233,8 @@ class LeadAuthorizationService
      */
     public function canViewLead(Admin $admin, User $lead): bool
     {
-        // DÜZELTME: Admin kullanıcılar (admin=1) için bypass
-        if (isset($admin->admin) && $admin->admin == 1) {
-            return true;
-        }
-        if (isset($admin->role) && $admin->role === 'admin') {
-            return true;
-        }
-        
-        if ($admin->isSuperAdmin()) {
+        // Bypass privileges: super admin ve head of office tüm lead'leri görebilir
+        if ($admin->hasBypassPrivileges()) {
             return true;
         }
 
@@ -202,11 +249,8 @@ class LeadAuthorizationService
      */
     public function canEditLead(Admin $admin, User $lead): bool
     {
-        // DÜZELTME: Admin kullanıcılar (admin=1) için bypass
-        if (isset($admin->admin) && $admin->admin == 1) {
-            return true;
-        }
-        if (isset($admin->role) && $admin->role === 'admin') {
+        // Bypass privileges: super admin ve head of office tüm lead'leri düzenleyebilir
+        if ($admin->hasBypassPrivileges()) {
             return true;
         }
         
@@ -219,22 +263,19 @@ class LeadAuthorizationService
      */
     public function canAssignLead(Admin $admin, User $lead): bool
     {
-        // DÜZELTME: Admin kullanıcılar (admin=1) için bypass
-        if (isset($admin->admin) && $admin->admin == 1) {
-            return true;
-        }
-        if (isset($admin->role) && $admin->role === 'admin') {
+        // Bypass privileges: super admin ve head of office tüm lead'leri assign edebilir
+        if ($admin->hasBypassPrivileges()) {
             return true;
         }
         
-        $roleName = $admin->role?->name;
+        // Sales representatives (agents) lead'leri reassign edemez
+        if ($admin->isSalesRepresentative()) {
+            return false;
+        }
+
+        $roleName = $admin->getRoleName();
 
         switch ($roleName) {
-            case 'sales_agent':
-            case 'retention_agent':
-                // Agents cannot reassign leads
-                return false;
-
             case 'team_leader':
             case 'retention_team_leader':
                 // Team leaders can assign leads within their team
@@ -242,11 +283,11 @@ class LeadAuthorizationService
 
             case 'sales_head':
             case 'retention_head':
-            case 'head_of_office':
-                // Management can assign leads they can view
+                // Department heads can assign leads they can view
                 return $this->canViewLead($admin, $lead);
 
             default:
+                // Diğer roller için sadece super admin yetkisi
                 return $admin->isSuperAdmin();
         }
     }
@@ -256,34 +297,31 @@ class LeadAuthorizationService
      */
     public function canDeleteLead(Admin $admin, User $lead): bool
     {
-        // DÜZELTME: Admin kullanıcılar (admin=1) için bypass
-        if (isset($admin->admin) && $admin->admin == 1) {
-            return true;
-        }
-        if (isset($admin->role) && $admin->role === 'admin') {
+        // Bypass privileges: super admin ve head of office tüm lead'leri silebilir
+        if ($admin->hasBypassPrivileges()) {
             return true;
         }
         
-        $roleName = $admin->role?->name;
+        // Sales representatives ve team leader'lar lead'leri silemez
+        if ($admin->isSalesRepresentative()) {
+            return false;
+        }
+
+        $roleName = $admin->getRoleName();
 
         switch ($roleName) {
-            case 'sales_agent':
-            case 'retention_agent':
             case 'team_leader':
             case 'retention_team_leader':
-                // Lower level roles cannot delete leads
+                // Team leader'lar lead'leri silemez
                 return false;
 
             case 'sales_head':
             case 'retention_head':
-                // Heads can delete leads in their department
+                // Department heads can delete leads in their department
                 return $this->canViewLead($admin, $lead);
 
-            case 'head_of_office':
-                // Head of office can delete any lead
-                return true;
-
             default:
+                // Diğer roller için sadece super admin yetkisi
                 return $admin->isSuperAdmin();
         }
     }
@@ -296,8 +334,8 @@ class LeadAuthorizationService
         $cacheKey = $this->cachePrefix . 'assignable_' . $currentAdmin->id;
         
         return Cache::remember($cacheKey, $this->cacheExpiry, function() use ($currentAdmin) {
-            if ($currentAdmin->isSuperAdmin()) {
-                // Super admin can assign to anyone
+            // Bypass privileges: super admin ve head of office herkesi assign edebilir
+            if ($currentAdmin->hasBypassPrivileges()) {
                 return Admin::active()
                     ->with('role')
                     ->orderBy('firstName')
@@ -314,14 +352,10 @@ class LeadAuthorizationService
                     ->toArray();
             }
 
-            $roleName = $currentAdmin->role?->name;
+            $roleName = $currentAdmin->getRoleName();
             $query = Admin::active()->with('role');
 
             switch ($roleName) {
-                case 'head_of_office':
-                    // Can assign to anyone in office
-                    break;
-
                 case 'sales_head':
                 case 'retention_head':
                     // Can assign within department

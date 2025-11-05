@@ -829,7 +829,7 @@
 
 <!-- Live Crypto Prices Script -->
 <script>
-// Vanilla JavaScript functionality
+// Vanilla JavaScript functionality with Mobile Touch Support
 
 let sidebarOpen = false;
 let quickActionsOpen = false;
@@ -846,28 +846,69 @@ let cryptoData = {
     ethChange: 0
 };
 
+// Mobile detection
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+const isIOSSafari = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
 // Theme functions already defined above
 
-// Sidebar functions
-function toggleSidebar() {
-    sidebarOpen = !sidebarOpen;
+// Enhanced Dashboard Sidebar functions with mobile support
+function toggleDashboardSidebar() {
+    const body = document.getElementById('main-body');
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
     const menuIcon = document.getElementById('menu-icon');
     const closeIcon = document.getElementById('close-icon');
     
+    // Update state
+    sidebarOpen = !sidebarOpen;
+    
+    // Update data attribute for state tracking
+    if (body) {
+        body.setAttribute('data-sidebar-open', sidebarOpen.toString());
+    }
+    
+    // Apply changes with error handling
+    try {
+        if (sidebar && overlay && menuIcon && closeIcon) {
+            if (sidebarOpen) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                overlay.classList.remove('js-hidden');
+                menuIcon.classList.add('js-hidden');
+                closeIcon.classList.remove('js-hidden');
+                
+                // Prevent body scroll on mobile when sidebar is open
+                if (isMobile) {
+                    document.body.style.overflow = 'hidden';
+                }
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-0');
+                overlay.classList.add('js-hidden');
+                menuIcon.classList.remove('js-hidden');
+                closeIcon.classList.add('js-hidden');
+                
+                // Restore body scroll
+                if (isMobile) {
+                    document.body.style.overflow = '';
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error toggling sidebar:', error);
+        // Reset state on error
+        sidebarOpen = false;
+        if (body) {
+            body.setAttribute('data-sidebar-open', 'false');
+        }
+    }
+}
+
+// Enhanced sidebar close function
+function closeDashboardSidebar() {
     if (sidebarOpen) {
-        sidebar.classList.remove('-translate-x-full');
-        sidebar.classList.add('translate-x-0');
-        overlay.classList.remove('js-hidden');
-        menuIcon.classList.add('js-hidden');
-        closeIcon.classList.remove('js-hidden');
-    } else {
-        sidebar.classList.add('-translate-x-full');
-        sidebar.classList.remove('translate-x-0');
-        overlay.classList.add('js-hidden');
-        menuIcon.classList.remove('js-hidden');
-        closeIcon.classList.add('js-hidden');
+        toggleDashboardSidebar();
     }
 }
 
@@ -988,73 +1029,165 @@ function updateCryptoPrices() {
     }
 }
 
-// Close dropdowns when clicking outside
+// Enhanced close dropdowns when clicking outside with mobile support
 function handleOutsideClick(event) {
-    // Quick actions
-    const quickActionsDropdown = document.getElementById('quick-actions-dropdown');
-    if (quickActionsDropdown && !quickActionsDropdown.contains(event.target) && quickActionsOpen) {
-        toggleQuickActions();
+    // Don't handle if touch event is in progress
+    if (event.type === 'touchstart' && isMobile) {
+        return;
     }
     
-    // Notifications
-    const notificationsDropdown = document.getElementById('notifications-dropdown');
-    if (notificationsDropdown && !notificationsDropdown.contains(event.target) && notificationsOpen) {
-        toggleNotifications();
-    }
-    
-    // User dropdown
-    const userDropdown = document.getElementById('user-dropdown');
-    if (userDropdown && !userDropdown.contains(event.target) && userDropdownOpen) {
-        toggleUserDropdown();
-    }
-    
-    // FAB overlay
-    const fabOverlay = document.getElementById('fab-overlay');
-    if (fabOverlay && event.target === fabOverlay && fabOpen) {
-        toggleFab();
+    try {
+        // Quick actions
+        const quickActionsDropdown = document.getElementById('quick-actions-dropdown');
+        if (quickActionsDropdown && !quickActionsDropdown.contains(event.target) && quickActionsOpen) {
+            toggleQuickActions();
+        }
+        
+        // Notifications
+        const notificationsDropdown = document.getElementById('notifications-dropdown');
+        if (notificationsDropdown && !notificationsDropdown.contains(event.target) && notificationsOpen) {
+            toggleNotifications();
+        }
+        
+        // User dropdown
+        const userDropdown = document.getElementById('user-dropdown');
+        if (userDropdown && !userDropdown.contains(event.target) && userDropdownOpen) {
+            toggleUserDropdown();
+        }
+        
+        // FAB overlay
+        const fabOverlay = document.getElementById('fab-overlay');
+        if (fabOverlay && event.target === fabOverlay && fabOpen) {
+            toggleFab();
+        }
+        
+        // Sidebar - only close on outside click for mobile
+        if (isMobile && sidebarOpen) {
+            const sidebar = document.getElementById('sidebar');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            
+            if (sidebar && !sidebar.contains(event.target) &&
+                mobileMenuBtn && !mobileMenuBtn.contains(event.target) &&
+                sidebarOverlay && !sidebarOverlay.contains(event.target)) {
+                // Don't auto-close immediately, let user interact
+                return;
+            }
+        }
+    } catch (error) {
+        console.error('Error in handleOutsideClick:', error);
     }
 }
 
-// Initialize everything
+// Initialize everything with enhanced mobile support
 document.addEventListener('DOMContentLoaded', () => {
     // Show body
     const body = document.getElementById('main-body');
     if (body) {
         body.classList.remove('js-hidden');
+        // Initialize sidebar state from data attribute
+        const savedState = body.getAttribute('data-sidebar-open');
+        sidebarOpen = savedState === 'true';
     }
     
     // Initialize theme
     updateTheme();
     
-    // Event listeners
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            toggleTheme();
-            // Update icons
-            const sunIcon = document.getElementById('sun-icon');
-            const moonIcon = document.getElementById('moon-icon');
-            if (isDarkMode) {
-                sunIcon.classList.add('js-hidden');
-                moonIcon.classList.remove('js-hidden');
-            } else {
-                sunIcon.classList.remove('js-hidden');
-                moonIcon.classList.add('js-hidden');
+    // Enhanced event listeners with timing fixes
+    setTimeout(() => {
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleTheme();
+                // Update icons
+                const sunIcon = document.getElementById('sun-icon');
+                const moonIcon = document.getElementById('moon-icon');
+                if (isDarkMode) {
+                    sunIcon?.classList.add('js-hidden');
+                    moonIcon?.classList.remove('js-hidden');
+                } else {
+                    sunIcon?.classList.remove('js-hidden');
+                    moonIcon?.classList.add('js-hidden');
+                }
+            });
+        }
+        
+        // Enhanced mobile menu with touch support
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        if (mobileMenuBtn) {
+            // Click event
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleDashboardSidebar();
+            });
+            
+            // Touch events for mobile
+            if (isMobile) {
+                let touchStarted = false;
+                
+                mobileMenuBtn.addEventListener('touchstart', (e) => {
+                    touchStarted = true;
+                    e.preventDefault();
+                }, { passive: false });
+                
+                mobileMenuBtn.addEventListener('touchend', (e) => {
+                    if (touchStarted) {
+                        touchStarted = false;
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleDashboardSidebar();
+                    }
+                }, { passive: false });
+                
+                mobileMenuBtn.addEventListener('touchcancel', () => {
+                    touchStarted = false;
+                });
             }
-        });
-    }
-    
-    // Mobile menu
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', toggleSidebar);
-    }
-    
-    // Sidebar overlay
-    const sidebarOverlay = document.getElementById('sidebar-overlay');
-    if (sidebarOverlay) {
-        sidebarOverlay.addEventListener('click', toggleSidebar);
-    }
+        }
+        
+        // Enhanced sidebar overlay with better event handling
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        if (sidebarOverlay) {
+            // Click event
+            sidebarOverlay.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (sidebarOpen) {
+                    toggleDashboardSidebar();
+                }
+            });
+            
+            // Touch events for mobile overlay
+            if (isMobile) {
+                let overlayTouchStarted = false;
+                
+                sidebarOverlay.addEventListener('touchstart', (e) => {
+                    overlayTouchStarted = true;
+                    if (e.target === sidebarOverlay) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+                
+                sidebarOverlay.addEventListener('touchend', (e) => {
+                    if (overlayTouchStarted && e.target === sidebarOverlay && sidebarOpen) {
+                        overlayTouchStarted = false;
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleDashboardSidebar();
+                    }
+                    overlayTouchStarted = false;
+                }, { passive: false });
+                
+                sidebarOverlay.addEventListener('touchcancel', () => {
+                    overlayTouchStarted = false;
+                });
+            }
+        }
+    }, 100); // Small delay to ensure DOM elements are ready
     
     // Quick actions
     const quickActionsBtn = document.getElementById('quick-actions-btn');
@@ -1086,8 +1219,46 @@ document.addEventListener('DOMContentLoaded', () => {
         fabClose.addEventListener('click', toggleFab);
     }
     
-    // Outside click handler
+    // Enhanced outside click handler with mobile support
     document.addEventListener('click', handleOutsideClick);
+    
+    // Keyboard support for accessibility
+    document.addEventListener('keydown', (e) => {
+        // ESC key closes sidebar on mobile
+        if (e.key === 'Escape' && sidebarOpen && isMobile) {
+            e.preventDefault();
+            toggleDashboardSidebar();
+        }
+    });
+    
+    // Window resize handler for responsive behavior
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Auto-close sidebar on desktop resize
+            if (window.innerWidth >= 768 && sidebarOpen) {
+                closeDashboardSidebar();
+            }
+        }, 150);
+    });
+    
+    // Handle orientation change on mobile devices
+    if (isMobile) {
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                if (sidebarOpen) {
+                    // Recalculate sidebar position after orientation change
+                    const sidebar = document.getElementById('sidebar');
+                    if (sidebar) {
+                        sidebar.style.transform = '';
+                        // Force reflow
+                        sidebar.offsetHeight;
+                    }
+                }
+            }, 200);
+        });
+    }
     
     // Initialize crypto prices
     fetchCryptoPrices();

@@ -20,10 +20,18 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Admin\AssignableAdminRequest;
 use App\Services\AdminCacheService;
+use App\Services\LeadAuthorizationService;
 use Illuminate\Support\Facades\Cache;
 
 class LeadsController extends Controller
 {
+    protected $leadAuthService;
+
+    public function __construct(LeadAuthorizationService $leadAuthService)
+    {
+        $this->leadAuthService = $leadAuthService;
+    }
+
     /**
      * Display leads dashboard
      */
@@ -42,22 +50,9 @@ class LeadsController extends Controller
     {
         try {
             $adminUser = Auth::guard('admin')->user();
-            $isSuperAdmin = $adminUser->type === 'Super Admin';
             
-            // Base query for leads (users who are not customers yet)
-            $query = User::with(['leadStatus', 'assignedAdmin', 'leadSource'])
-                        ->where(function($q) {
-                            $q->whereNull('cstatus')
-                              ->orWhere('cstatus', '!=', 'Customer');
-                        });
-
-            // Admin level filtering
-            if (!$isSuperAdmin) {
-                $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-                $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
-                
-                $query->whereIn('assign_to', $allowedAdminIds);
-            }
+            // Use LeadAuthorizationService to get authorized leads query
+            $query = $this->leadAuthService->getAuthorizedLeadsQuery($adminUser);
 
             // Apply filters
             $this->applyFilters($query, $request);
@@ -114,13 +109,13 @@ class LeadsController extends Controller
             });
 
             // Get statistics
-            $stats = $this->getLeadsStatistics($isSuperAdmin, $adminUser);
+            $stats = $this->getLeadsStatistics($adminUser);
 
             // Get filter options
             $leadStatuses = LeadStatus::active()->get(['id', 'name', 'display_name', 'color']);
             $leadSources = LeadSource::active()->get(['id', 'name']);
-            $admins = $isSuperAdmin ? 
-                Admin::where('status', 'Active')->orderBy('firstName')->get(['id', 'firstName', 'lastName', 'email']) : 
+            $admins = $adminUser->hasBypassPrivileges() ?
+                Admin::where('status', 'Active')->orderBy('firstName')->get(['id', 'firstName', 'lastName', 'email']) :
                 Admin::where(function($q) use ($adminUser) {
                     $q->where('id', $adminUser->id)
                       ->orWhere('parent_id', $adminUser->id);
@@ -298,7 +293,6 @@ class LeadsController extends Controller
             ]);
 
             $adminUser = Auth::guard('admin')->user();
-            $isSuperAdmin = $adminUser->type === 'Super Admin';
 
             $lead = User::where('id', $id)
                        ->where(function($q) {
@@ -306,17 +300,12 @@ class LeadsController extends Controller
                              ->orWhere('cstatus', '!=', 'Customer');
                        })->firstOrFail();
 
-            // Check permissions
-            if (!$isSuperAdmin) {
-                $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-                $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
-                
-                if ($lead->assign_to && !in_array($lead->assign_to, $allowedAdminIds)) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Bu lead\'i düzenleme yetkiniz yok'
-                    ], 403);
-                }
+            // Check permissions using LeadAuthorizationService
+            if (!$this->leadAuthService->canEditLead($adminUser, $lead)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bu lead\'i düzenleme yetkiniz yok'
+                ], 403);
             }
 
             DB::beginTransaction();
@@ -412,7 +401,6 @@ class LeadsController extends Controller
     {
         try {
             $adminUser = Auth::guard('admin')->user();
-            $isSuperAdmin = $adminUser->type === 'Super Admin';
 
             $lead = User::where('id', $id)
                        ->where(function($q) {
@@ -420,8 +408,8 @@ class LeadsController extends Controller
                              ->orWhere('cstatus', '!=', 'Customer');
                        })->firstOrFail();
 
-            // Check permissions
-            if (!$isSuperAdmin) {
+            // Check permissions using LeadAuthorizationService
+            if (!$this->leadAuthService->canDeleteLead($adminUser, $lead)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Lead silme yetkiniz yok'
@@ -569,15 +557,12 @@ class LeadsController extends Controller
             ]);
 
             $adminUser = Auth::guard('admin')->user();
-            $isSuperAdmin = $adminUser->type === 'Super Admin';
             $assigned = 0;
 
-            // Check assignment permission
-            if ($request->admin_id && !$isSuperAdmin) {
-                $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-                $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
-                
-                if (!in_array($request->admin_id, $allowedAdminIds)) {
+            // Check assignment permission using LeadAuthorizationService
+            if ($request->admin_id) {
+                $targetAdmin = Admin::find($request->admin_id);
+                if (!$targetAdmin || !$this->leadAuthService->canAssignToAdmin($adminUser, $targetAdmin)) {
                     return response()->json([
                         'success' => false,
                         'message' => 'Bu admin\'e atama yapma yetkiniz yok'
@@ -753,12 +738,12 @@ class LeadsController extends Controller
             ]);
 
             $adminUser = Auth::guard('admin')->user();
-            $isSuperAdmin = $adminUser->type === 'Super Admin';
 
-            if (!$isSuperAdmin) {
+            // Check bulk delete permission using LeadAuthorizationService
+            if (!$adminUser->hasBypassPrivileges()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Toplu silme işlemi için süper admin yetkisi gerekli'
+                    'message' => 'Toplu silme işlemi için üst düzey yetki gerekli'
                 ], 403);
             }
 
@@ -893,21 +878,17 @@ class LeadsController extends Controller
     {
         try {
             $adminUser = Auth::guard('admin')->user();
-            $isSuperAdmin = $adminUser->type === 'Super Admin';
 
-            if (!$isSuperAdmin) {
+            // Check export permission using LeadAuthorizationService
+            if (!$adminUser->hasBypassPrivileges()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Export işlemi için süper admin yetkisi gerekli'
+                    'message' => 'Export işlemi için üst düzey yetki gerekli'
                 ], 403);
             }
 
-            // Build query with same filters as API
-            $query = User::with(['leadStatus', 'assignedAdmin', 'leadSource'])
-                        ->where(function($q) {
-                            $q->whereNull('cstatus')
-                              ->orWhere('cstatus', '!=', 'Customer');
-                        });
+            // Build query with same filters as API using LeadAuthorizationService
+            $query = $this->leadAuthService->getAuthorizedLeadsQuery($adminUser);
 
             // Apply filters if provided
             $this->applyFilters($query, $request);
@@ -1045,18 +1026,10 @@ class LeadsController extends Controller
     /**
      * Get leads statistics
      */
-    private function getLeadsStatistics($isSuperAdmin, $adminUser)
+    private function getLeadsStatistics($adminUser)
     {
-        $baseQuery = User::where(function($q) {
-            $q->whereNull('cstatus')
-              ->orWhere('cstatus', '!=', 'Customer');
-        });
-
-        if (!$isSuperAdmin) {
-            $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-            $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
-            $baseQuery->whereIn('assign_to', $allowedAdminIds);
-        }
+        // Use LeadAuthorizationService to get authorized base query
+        $baseQuery = $this->leadAuthService->getAuthorizedLeadsQuery($adminUser);
 
         return [
             'total_leads' => (clone $baseQuery)->count(),
@@ -1077,27 +1050,18 @@ class LeadsController extends Controller
     public function show($id)
     {
         $adminUser = Auth::guard('admin')->user();
-        $isSuperAdmin = $adminUser->type === 'Super Admin';
         
-        $query = User::with(['leadStatus', 'assignedAdmin'])
-                    ->where('id', $id)
-                    ->where(function($q) {
-                        $q->whereNull('cstatus')
-                          ->orWhere('cstatus', '!=', 'Customer');
-                    });
+        $lead = User::with(['leadStatus', 'assignedAdmin'])
+                   ->where('id', $id)
+                   ->where(function($q) {
+                       $q->whereNull('cstatus')
+                         ->orWhere('cstatus', '!=', 'Customer');
+                   })->firstOrFail();
 
-        // Admin level access control
-        if (!$isSuperAdmin) {
-            $subordinateIds = Admin::where('parent_id', $adminUser->id)->pluck('id')->toArray();
-            $allowedAdminIds = array_merge([$adminUser->id], $subordinateIds);
-            
-            $query->where(function($q) use ($allowedAdminIds) {
-                $q->whereIn('assign_to', $allowedAdminIds)
-                  ->orWhereNull('assign_to');
-            });
+        // Check view permission using LeadAuthorizationService
+        if (!$this->leadAuthService->canViewLead($adminUser, $lead)) {
+            abort(403, 'Bu lead\'i görüntüleme yetkiniz yok');
         }
-
-        $lead = $query->firstOrFail();
 
         // Get lead activities
         $activities = LeadActivity::where('user_id', $lead->id)
@@ -1107,7 +1071,7 @@ class LeadsController extends Controller
                                 ->get();
 
         $leadStatuses = LeadStatus::active()->get();
-        $admins = $isSuperAdmin ? Admin::orderBy('firstName')->get() : 
+        $admins = $adminUser->hasBypassPrivileges() ? Admin::orderBy('firstName')->get() :
                  Admin::where('id', $adminUser->id)
                       ->orWhere('parent_id', $adminUser->id)
                       ->orderBy('firstName')->get();
@@ -1197,7 +1161,7 @@ class LeadsController extends Controller
             $adminUser = Auth::guard('admin')->user();
             
             if (!$adminUser) {
-                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+                return $this->errorResponse('Yetkilendirme hatası', 401);
             }
 
             // Get validated request data
@@ -1230,7 +1194,10 @@ class LeadsController extends Controller
                 'timestamp' => now()->toISOString()
             ];
 
-            return $this->successResponse($formattedAdmins, 'Atanabilir adminler başarıyla getirildi', $metadata);
+            return $this->successResponse([
+                'admins' => $formattedAdmins,
+                'metadata' => $metadata
+            ], 'Atanabilir adminler başarıyla getirildi', 200);
             
         } catch (\Exception $e) {
             Log::error('Failed to fetch assignable admins', [
@@ -1242,13 +1209,12 @@ class LeadsController extends Controller
 
             return $this->errorResponse(
                 'Atanabilir adminler getirilemedi',
-                'FETCH_ADMINS_FAILED',
                 500,
                 config('app.debug') ? [
                     'message' => $e->getMessage(),
                     'file' => $e->getFile(),
                     'line' => $e->getLine()
-                ] : null
+                ] : []
             );
         }
     }
@@ -1262,8 +1228,8 @@ class LeadsController extends Controller
         try {
             $adminUser = Auth::guard('admin')->user();
             
-            if (!$adminUser || !($adminUser->isSuperAdmin() || $adminUser->type === 'Super Admin')) {
-                return $this->errorResponse('Bu işlem için yetkiniz bulunmamaktadır', 'INSUFFICIENT_PERMISSIONS', 403);
+            if (!$adminUser || !$adminUser->hasBypassPrivileges()) {
+                return $this->errorResponse('Bu işlem için yetkiniz bulunmamaktadır', 403);
             }
 
             $adminCacheService = new AdminCacheService();
@@ -1295,7 +1261,7 @@ class LeadsController extends Controller
                 'error' => $e->getMessage()
             ]);
 
-            return $this->errorResponse('Cache temizleme işlemi başarısız', 'CACHE_CLEAR_FAILED', 500);
+            return $this->errorResponse('Cache temizleme işlemi başarısız', 500);
         }
     }
 
@@ -1309,7 +1275,7 @@ class LeadsController extends Controller
             $adminUser = Auth::guard('admin')->user();
             
             if (!$adminUser) {
-                return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
+                return $this->errorResponse('Yetkilendirme hatası', 401);
             }
 
             $cacheKey = "admin_assignment_stats_{$adminUser->id}";
@@ -1362,7 +1328,7 @@ class LeadsController extends Controller
                 'error' => $e->getMessage()
             ]);
 
-            return $this->errorResponse('Admin istatistikleri getirilemedi', 'FETCH_STATS_FAILED', 500);
+            return $this->errorResponse('Admin istatistikleri getirilemedi', 500);
         }
     }
 
@@ -1462,14 +1428,25 @@ class LeadsController extends Controller
      */
     protected function successResponse(mixed $data = null, string $message = 'İşlem başarılı', int $statusCode = 200): JsonResponse
     {
+        // Debug logging to identify the actual parameter types
+        Log::debug('LeadsController::successResponse called', [
+            'data_type' => gettype($data),
+            'message_type' => gettype($message),
+            'statusCode_type' => gettype($statusCode),
+            'data_value' => $data,
+            'message_value' => $message,
+            'statusCode_value' => $statusCode
+        ]);
+        
         return parent::successResponse($data, $message, $statusCode);
     }
 
     /**
-     * Standard error response format.
+     * Standard error response format with error code support.
      */
     protected function errorResponse(string $message, int $statusCode = 400, array $errors = []): JsonResponse
     {
+        // Use parent's errorResponse with compatible signature
         return parent::errorResponse($message, $statusCode, $errors);
     }
 
@@ -1526,5 +1503,55 @@ class LeadsController extends Controller
                 'message' => 'Lead statusleri getirilemedi'
             ], 500);
         }
+
+    }
+
+    /**
+     * Get options for dropdown fields
+     * GET /admin/dashboard/leads/api/options
+     */
+    public function getOptions(Request $request): JsonResponse
+    {
+        try {
+            $field = $request->get('field');
+            
+            switch ($field) {
+                case 'lead_source':
+                    return $this->getLeadSources();
+                    
+                case 'assigned_admin':
+                    return $this->getAssignableAdmins($request);
+                    
+                case 'lead_status':
+                    return $this->getStatuses();
+                    
+                default:
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Geçersiz field parametresi',
+                        'available_fields' => ['lead_source', 'assigned_admin', 'lead_status']
+                    ], 400);
+            }
+        } catch (\Exception $e) {
+            Log::error('Failed to fetch options', [
+                'admin_id' => Auth::guard('admin')->id(),
+                'field' => $request->get('field'),
+                'error' => $e->getMessage()
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Dropdown seçenekleri getirilemedi'
+            ], 500);
+        }
+    }
+
+    /**
+     * Get active lead statuses (alias for getStatuses for frontend compatibility)
+     * GET /admin/dashboard/leads/lead-statuses/active
+     */
+    public function getActiveLeadStatuses(): JsonResponse
+    {
+        return $this->getStatuses();
     }
 }

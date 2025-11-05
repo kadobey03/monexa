@@ -133,7 +133,7 @@
     <div class="min-h-screen flex">
         
         <!-- Sidebar -->
-        <aside class="sidebar-transition fixed inset-y-0 left-0 z-50 bg-white dark:bg-admin-800 shadow-elegant dark:shadow-glass-dark border-r border-admin-200 dark:border-admin-700 w-64 translate-x-0"
+        <aside class="sidebar-transition fixed inset-y-0 left-0 z-50 bg-white dark:bg-admin-800 shadow-elegant dark:shadow-glass-dark border-r border-admin-200 dark:border-admin-700 w-64 -translate-x-full lg:translate-x-0"
                id="sidebar">
             
             <!-- Sidebar Header -->
@@ -460,7 +460,7 @@
                 <!-- Left Side -->
                 <div class="flex items-center space-x-4">
                     <!-- Mobile Menu Button -->
-                    <button onclick="toggleMobileSidebar()"
+                    <button id="mobile-menu-button" onclick="toggleMobileSidebar()"
                             class="lg:hidden p-2 rounded-lg text-admin-500 hover:text-admin-700 dark:hover:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                         <x-heroicon name="menu" class="w-6 h-6" />
                     </button>
@@ -994,6 +994,78 @@
                 }
             }
         });
+
+        // Handle ESC key for closing mobile sidebar
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && adminState.sidebarOpen && window.innerWidth < 1024) {
+                event.preventDefault();
+                closeMobileSidebar();
+            }
+        });
+
+        // Enhanced touch support for mobile devices
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        // Touch events for swipe gestures on mobile
+        if (window.innerWidth < 1024) {
+            document.addEventListener('touchstart', (event) => {
+                touchStartX = event.changedTouches[0].screenX;
+                touchStartY = event.changedTouches[0].screenY;
+            }, { passive: true });
+
+            document.addEventListener('touchend', (event) => {
+                touchEndX = event.changedTouches[0].screenX;
+                touchEndY = event.changedTouches[0].screenY;
+                handleSwipeGesture();
+            }, { passive: true });
+        }
+
+        // Handle swipe gestures
+        function handleSwipeGesture() {
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            const minSwipeDistance = 50;
+
+            // Only process horizontal swipes that are longer than vertical ones
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0 && touchStartX < 50 && !adminState.sidebarOpen) {
+                    // Swipe right from left edge - open sidebar
+                    adminState.sidebarOpen = true;
+                    toggleMobileSidebar();
+                } else if (deltaX < 0 && adminState.sidebarOpen && touchStartX > 200) {
+                    // Swipe left while sidebar is open - close sidebar
+                    adminState.sidebarOpen = false;
+                    toggleMobileSidebar();
+                }
+            }
+        }
+
+        // Enhanced mobile menu button with touch support
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        if (mobileMenuButton && window.innerWidth < 1024) {
+            let touchStarted = false;
+
+            mobileMenuButton.addEventListener('touchstart', (event) => {
+                touchStarted = true;
+                event.preventDefault();
+            }, { passive: false });
+
+            mobileMenuButton.addEventListener('touchend', (event) => {
+                if (touchStarted) {
+                    touchStarted = false;
+                    event.preventDefault();
+                    event.stopPropagation();
+                    toggleMobileSidebar();
+                }
+            }, { passive: false });
+
+            mobileMenuButton.addEventListener('touchcancel', () => {
+                touchStarted = false;
+            });
+        }
     </script>
 
     <!-- Page Specific Scripts -->

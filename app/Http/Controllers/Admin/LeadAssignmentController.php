@@ -19,6 +19,12 @@ use Carbon\Carbon;
 
 class LeadAssignmentController extends Controller
 {
+    protected $authService;
+
+    public function __construct(\App\Services\LeadAuthorizationService $authService)
+    {
+        $this->authService = $authService;
+    }
     /**
      * Assign single lead to admin
      * PUT /admin/dashboard/leads/api/{leadId}/assignment
@@ -537,14 +543,14 @@ class LeadAssignmentController extends Controller
                 return $this->errorResponse('Yetkilendirme hatası', 'UNAUTHORIZED', 401);
             }
 
-            $cacheKey = "available_admins_{$authAdmin->id}_" . ($authAdmin->type === 'Super Admin' ? 'super' : 'regular');
+            $cacheKey = "available_admins_{$authAdmin->id}_" . ($authAdmin->hasBypassPrivileges() ? 'bypass' : 'regular');
             
             $availableAdmins = Cache::remember($cacheKey, 300, function () use ($authAdmin) {
                 $query = Admin::where('status', 'active')
                             ->where('is_available_for_assignment', true);
 
-                // If not super admin, limit to own scope
-                if ($authAdmin->type !== 'Super Admin') {
+                // If not bypass privileges, limit to own scope
+                if (!$authAdmin->hasBypassPrivileges()) {
                     $subordinateIds = Admin::where('supervisor_id', $authAdmin->id)->pluck('id')->toArray();
                     $query->whereIn('id', array_merge([$authAdmin->id], $subordinateIds));
                 }
@@ -703,7 +709,7 @@ class LeadAssignmentController extends Controller
                     $q->whereNull('cstatus')->orWhere('cstatus', '!=', 'Customer');
                 });
 
-                if ($authAdmin->type !== 'Super Admin') {
+                if (!$authAdmin->hasBypassPrivileges()) {
                     $subordinateIds = Admin::where('supervisor_id', $authAdmin->id)->pluck('id')->toArray();
                     $scopedAdminIds = array_merge([$authAdmin->id], $subordinateIds);
                     $baseLeadQuery->whereIn('assign_to', $scopedAdminIds);
@@ -716,7 +722,7 @@ class LeadAssignmentController extends Controller
 
                 // Assignment activity stats
                 $assignmentBaseQuery = LeadAssignmentHistory::query();
-                if ($authAdmin->type !== 'Super Admin') {
+                if (!$authAdmin->hasBypassPrivileges()) {
                     $assignmentBaseQuery->where('assigned_by_admin_id', $authAdmin->id);
                 }
 
@@ -726,7 +732,7 @@ class LeadAssignmentController extends Controller
 
                 // Admin utilization stats
                 $adminScope = Admin::where('status', 'active');
-                if ($authAdmin->type !== 'Super Admin') {
+                if (!$authAdmin->hasBypassPrivileges()) {
                     $subordinateIds = Admin::where('supervisor_id', $authAdmin->id)->pluck('id')->toArray();
                     $adminScope->whereIn('id', array_merge([$authAdmin->id], $subordinateIds));
                 }
@@ -793,23 +799,8 @@ class LeadAssignmentController extends Controller
      */
     protected function canAssignLead(Admin $admin, User $lead): bool
     {
-        // Super admin can assign any lead
-        if ($admin->type === 'Super Admin') {
-            return true;
-        }
-
-        // Check if lead is within admin's scope
-        if ($lead->assign_to) {
-            $currentAssignedAdmin = Admin::find($lead->assign_to);
-            if ($currentAssignedAdmin) {
-                // Can reassign if current admin is subordinate
-                $subordinateIds = Admin::where('supervisor_id', $admin->id)->pluck('id')->toArray();
-                return in_array($lead->assign_to, array_merge([$admin->id], $subordinateIds));
-            }
-        }
-
-        // Can assign unassigned leads if has permission
-        return $admin->hasPermission('lead_assign') ?? true;
+        // Use LeadAuthorizationService for consistent permission checking
+        return $this->authService->canAssignLead($admin, $lead);
     }
 
     /**
@@ -817,19 +808,8 @@ class LeadAssignmentController extends Controller
      */
     protected function canViewLead(Admin $admin, User $lead): bool
     {
-        // Super admin can view any lead
-        if ($admin->type === 'Super Admin') {
-            return true;
-        }
-
-        // Can view own assigned leads
-        if ($lead->assign_to === $admin->id) {
-            return true;
-        }
-
-        // Can view subordinates' leads
-        $subordinateIds = Admin::where('supervisor_id', $admin->id)->pluck('id')->toArray();
-        return in_array($lead->assign_to, $subordinateIds);
+        // Use LeadAuthorizationService for consistent permission checking
+        return $this->authService->canViewLead($admin, $lead);
     }
 
     /**
@@ -909,11 +889,12 @@ class LeadAssignmentController extends Controller
     /**
      * Standard error response format
      */
-    protected function errorResponse(string $message, int $statusCode = 500, array $errors = []): JsonResponse
+    protected function errorResponse(string $message, string $errorCode = 'GENERIC_ERROR', int $statusCode = 500, array $errors = []): JsonResponse
     {
         $response = [
             'success' => false,
             'message' => $message,
+            'error_code' => $errorCode,
             'errors' => $errors,
             'meta' => [
                 'timestamp' => now()->toISOString(),

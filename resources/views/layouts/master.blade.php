@@ -804,9 +804,8 @@
             }, duration);
         };
         
-        // Enhanced utility functions
+        // Enhanced utility functions - FIXED: Consistent naming convention
         window.toggleTheme = () => LayoutManager.toggleTheme();
-        window.toggleSidebar = () => LayoutManager.toggleSidebar();
         window.toggleDashboardSidebar = () => LayoutManager.toggleDashboardSidebar();
         window.toggleSidebarCollapse = () => LayoutManager.toggleSidebarCollapse();
         window.toggleMobileMenu = () => LayoutManager.toggleMobileMenu();
@@ -814,6 +813,9 @@
         window.toggleProfileDropdown = () => LayoutManager.toggleProfileDropdown();
         window.toggleQuickActions = () => LayoutManager.toggleQuickActions();
         window.toggleSubMenu = (menuId) => LayoutManager.toggleSubMenu(menuId);
+        
+        // Legacy alias for backward compatibility
+        window.toggleSidebar = () => LayoutManager.toggleDashboardSidebar();
         
         // SweetAlert2 integration
         window.showAlert = (title, text, icon = 'success') => {

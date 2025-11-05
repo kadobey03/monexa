@@ -9,24 +9,99 @@
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                     <div class="mb-4 sm:mb-0">
                         <h1 class="text-3xl font-bold text-gray-900 flex items-center">
-                            <x-heroicon name="users" class="w-8 h-8 text-blue-600 mr-3" />
-                            Modern Lead Yönetimi
+                            <svg class="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
+                            </svg>
+                            Lead Yönetimi
                         </h1>
-                        <p class="text-gray-600 mt-1">Toplam: <span id="total-leads" class="font-semibold text-blue-600">0</span> lead</p>
+                        <p class="text-gray-600 mt-1">Toplam: <span id="total-leads" class="font-semibold text-blue-600">-</span> lead</p>
                     </div>
                     <div class="flex space-x-3">
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="refresh-btn">
-                            <x-heroicon name="arrow-path" class="w-4 h-4 mr-2" />
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
                             Yenile
                         </button>
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="export-excel-btn">
-                            <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                            </svg>
                             Excel
                         </button>
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm" id="add-lead-btn">
-                            <x-heroicon name="plus" class="w-4 h-4 mr-2" />
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
                             Yeni Lead Ekle
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div id="stats-section" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" style="display: none;">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-sm font-medium text-gray-500">Toplam Lead</div>
+                        <div class="text-lg font-semibold text-gray-900" id="stat-total">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-sm font-medium text-gray-500">Atanmamış</div>
+                        <div class="text-lg font-semibold text-gray-900" id="stat-unassigned">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-sm font-medium text-gray-500">Bu Hafta</div>
+                        <div class="text-lg font-semibold text-gray-900" id="stat-weekly">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-sm font-medium text-gray-500">Yüksek Puan</div>
+                        <div class="text-lg font-semibold text-gray-900" id="stat-high-score">-</div>
                     </div>
                 </div>
             </div>
@@ -39,8 +114,10 @@
                     <div class="lg:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-2">Arama</label>
                         <div class="relative">
-                            <input type="text" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400" id="search-input" placeholder="İsim, email, telefon, şirket...">
-                            <x-heroicon name="magnifying-glass" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                            <input type="text" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-400" id="search-input" placeholder="İsim, email, telefon...">
+                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
                         </div>
                     </div>
                     <div>
@@ -65,45 +142,17 @@
                 </div>
                 <div class="flex space-x-3 mt-4">
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="apply-filters">
-                        <x-heroicon name="funnel" class="w-4 h-4 mr-2" />
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                        </svg>
                         Filtrele
                     </button>
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="clear-filters">
-                        <x-heroicon name="x-mark" class="w-4 h-4 mr-2" />
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
                         Temizle
                     </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bulk Actions Bar (Hidden by default) -->
-        <div id="bulk-actions" class="bg-blue-50 border border-blue-200 rounded-xl shadow-sm mb-6 hidden">
-            <div class="px-6 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <x-heroicon name="check-circle" class="w-5 h-5 text-blue-600 mr-2" />
-                        <span class="text-sm font-medium text-blue-700">
-                            <span id="selected-count">0</span> lead seçildi
-                        </span>
-                    </div>
-                    <div class="flex space-x-3">
-                        <button type="button" class="inline-flex items-center px-3 py-2 bg-blue-100 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-200 transition-colors" id="bulk-assign-btn">
-                            <x-heroicon name="user-plus" class="w-4 h-4 mr-2" />
-                            Ata
-                        </button>
-                        <button type="button" class="inline-flex items-center px-3 py-2 bg-green-100 text-green-700 rounded-lg text-sm font-medium hover:bg-green-200 transition-colors" id="bulk-status-btn">
-                            <x-heroicon name="edit" class="w-4 h-4 mr-2" />
-                            Durum
-                        </button>
-                        <button type="button" class="inline-flex items-center px-3 py-2 bg-red-100 text-red-700 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors" id="bulk-delete-btn">
-                            <x-heroicon name="trash-2" class="w-4 h-4 mr-2" />
-                            Sil
-                        </button>
-                        <button type="button" class="inline-flex items-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors" id="clear-selection-btn">
-                            <x-heroicon name="x-mark" class="w-4 h-4 mr-2" />
-                            Temizle
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -114,15 +163,62 @@
             <p class="mt-4 text-gray-600">Lead'ler yükleniyor...</p>
         </div>
 
-        <!-- Modern 9-Column Leads Table -->
+        <!-- Error State -->
+        <div id="error-state" class="bg-red-50 border border-red-200 rounded-xl p-6 mb-6" style="display: none;">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.99-.833-2.76 0L4.054 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-800">Hata Oluştu</h3>
+                    <p class="mt-1 text-sm text-red-700" id="error-message">Veriler yüklenirken bir hata oluştu.</p>
+                    <div class="mt-3">
+                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-red-800 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" id="retry-btn">
+                            Tekrar Dene
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leads Table -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200">
             <div class="overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <!-- Table Header Component -->
-                        @include('components.admin.leads.table.table-header')
-
-                        <!-- Table Body -->
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" id="select-all">
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Ülke
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Ad Soyad
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Telefon
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Email
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Atanan
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Durum
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Kaynak
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Tarih
+                                </th>
+                            </tr>
+                        </thead>
                         <tbody id="leads-table-body" class="bg-white divide-y divide-gray-200">
                             <!-- Data will be loaded here via JavaScript -->
                         </tbody>
@@ -132,13 +228,17 @@
                 <!-- Empty State -->
                 <div id="empty-state" class="text-center py-16" style="display: none;">
                     <div class="mx-auto h-16 w-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                        <x-heroicon name="users" class="w-8 h-8 text-gray-400" />
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
                     </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Lead bulunamadı</h3>
-                    <p class="text-gray-500 mb-6 max-w-md mx-auto">Henüz hiç lead eklenmemiş veya filtrelenmiş sonuç bulunamadı.</p>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Henüz lead yok</h3>
+                    <p class="text-gray-500 mb-6 max-w-md mx-auto">Lead'ler bulunamadı. İlk lead'inizi eklemek için butona tıklayın.</p>
                     <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="empty-add-lead-btn">
-                        <x-heroicon name="plus" class="w-4 h-4 mr-2" />
-                        İlk Lead'inizi Ekleyin
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        İlk Lead'i Ekle
                     </button>
                 </div>
 
@@ -146,19 +246,21 @@
                 <div id="pagination-wrapper" class="bg-gray-50 px-6 py-4 flex items-center justify-between border-t border-gray-200" style="display: none;">
                     <div class="flex-1 flex justify-between sm:hidden">
                         <button id="prev-btn-mobile" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
-                            <x-heroicon name="chevron-left" class="w-4 h-4 mr-2" />
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
                             Önceki
                         </button>
                         <button id="next-btn-mobile" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
                             Sonraki
-                            <x-heroicon name="chevron-right" class="w-4 h-4 ml-2" />
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
                         </button>
                     </div>
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div>
-                            <p class="text-sm text-gray-700">
-                                <span id="pagination-info"></span>
-                            </p>
+                            <p class="text-sm text-gray-700" id="pagination-info">-</p>
                         </div>
                         <div>
                             <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" id="pagination">
@@ -171,453 +273,412 @@
         </div>
     </div>
 </div>
-
-<!-- Add/Edit Lead Modal -->
-<div id="addLeadModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50" style="display: none;">
-    <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-xl bg-white">
-        <div class="mt-3">
-            <!-- Header -->
-            <div class="flex items-center justify-between pb-4 border-b border-gray-200">
-                <h3 class="text-lg font-semibold text-gray-900" id="addLeadModalLabel">Yeni Lead Ekle</h3>
-                <button type="button" class="text-gray-400 hover:text-gray-600 focus:outline-none" id="close-modal">
-                    <x-heroicon name="x-mark" class="w-6 h-6" />
-                </button>
-            </div>
-            
-            <!-- Form -->
-            <form id="lead-form" class="mt-6">
-                <input type="hidden" id="lead-id">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label for="lead-name" class="block text-sm font-medium text-gray-700 mb-2">İsim *</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="lead-name" required>
-                    </div>
-                    <div>
-                        <label for="lead-email" class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
-                        <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="lead-email" required>
-                    </div>
-                    <div>
-                        <label for="lead-phone" class="block text-sm font-medium text-gray-700 mb-2">Telefon</label>
-                        <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="lead-phone">
-                    </div>
-                    <div>
-                        <label for="lead-country" class="block text-sm font-medium text-gray-700 mb-2">Ülke</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="lead-country">
-                    </div>
-                    <div>
-                        <label for="lead-company" class="block text-sm font-medium text-gray-700 mb-2">Şirket</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="lead-company">
-                    </div>
-                    <div>
-                        <label for="lead-organization" class="block text-sm font-medium text-gray-700 mb-2">Varonka</label>
-                        <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="lead-organization">
-                    </div>
-                    <div>
-                        <label for="lead-status" class="block text-sm font-medium text-gray-700 mb-2">Durum</label>
-                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="lead-status">
-                            <!-- Options loaded dynamically -->
-                        </select>
-                    </div>
-                    <div>
-                        <label for="lead-source" class="block text-sm font-medium text-gray-700 mb-2">Kaynak</label>
-                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="lead-source">
-                            <!-- Options loaded dynamically -->
-                        </select>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label for="lead-assigned" class="block text-sm font-medium text-gray-700 mb-2">Atanan Admin</label>
-                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="lead-assigned">
-                            <option value="">Atanmamış</option>
-                            <!-- Options loaded dynamically -->
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- Actions -->
-                <div class="flex items-center justify-end pt-6 border-t border-gray-200 mt-6 space-x-3">
-                    <button type="button" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="cancel-lead">İptal</button>
-                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200">
-                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" id="save-spinner" style="display: none;"></div>
-                        Kaydet
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
-
-@push('styles')
-<link rel="stylesheet" href="{{ asset('resources/css/admin/leads-table.css') }}">
-@endpush
 
 @push('scripts')
 <script>
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🪲 Lead Management DEBUG: Page loaded');
+    
     // Global variables
     let currentPage = 1;
     let totalPages = 1;
     let leadStatuses = [];
     let leadSources = [];
     let adminUsers = [];
+    let isLoading = false;
+    
+    // Debug mode
+    const DEBUG = true;
+    function debugLog(message, data = null) {
+        if (DEBUG) {
+            console.log('🪲 LEADS DEBUG:', message, data || '');
+        }
+    }
     
     // Initialize
     init();
     
     function init() {
-        loadInitialData();
-        loadLeads();
-        bindEvents();
-        initializeLucideIcons();
+        debugLog('Initializing lead management system');
+        
+        loadInitialData()
+            .then(() => {
+                debugLog('Initial data loaded, now loading leads');
+                return loadLeads();
+            })
+            .then(() => {
+                debugLog('Leads loaded, binding events');
+                bindEvents();
+            })
+            .catch(error => {
+                debugLog('Initialization error', error);
+                showError('Sistem yüklenirken hata oluştu: ' + error.message);
+            });
     }
-
-    function 
     
     // Load initial data (statuses, sources, admins)
-    function loadInitialData() {
-        // Load statuses
-        loadStatuses();
-        // Load sources
-        loadSources();
-        // Load assignable admins
-        loadAssignableAdmins();
+    async function loadInitialData() {
+        debugLog('Loading initial data');
+        
+        try {
+            const promises = [
+                loadStatuses(),
+                loadSources(), 
+                loadAssignableAdmins()
+            ];
+            
+            await Promise.allSettled(promises);
+            debugLog('All initial data loaded');
+            
+        } catch (error) {
+            debugLog('Error loading initial data', error);
+            throw error;
+        }
     }
     
     // Load lead statuses
-    function loadStatuses() {
-        $.ajax({
-            url: '/admin/dashboard/lead-statuses/active',
-            method: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                'Accept': 'application/json'
+    async function loadStatuses() {
+        debugLog('Loading statuses');
+        
+        try {
+            const response = await fetch('/admin/dashboard/leads/api/statuses', {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            debugLog('Statuses response', data);
+            
+            if (data.success && data.data) {
+                leadStatuses = data.data;
+                populateStatusSelects();
+                debugLog('Statuses loaded', leadStatuses.length + ' items');
             }
-        })
-        .done(function(response) {
-            if (Array.isArray(response) && response.length > 0) {
-                leadStatuses = response;
-                const statusFilter = $('#status-filter');
-                const leadStatus = $('#lead-status');
-                response.forEach(function(status) {
-                    // Validate status object
-                    if (status && status.name && (status.display_name || status.name)) {
-                        const displayName = status.display_name || status.name;
-                        const colorStyle = status.color ? `style="color: ${status.color}; font-weight: 600;"` : '';
-                        const option = `<option value="${status.name}" ${colorStyle}>${displayName}</option>`;
-                        statusFilter.append(option);
-                        leadStatus.append(option);
-                    }
-                });
-            }
-        })
-        .fail(function(xhr) {
-            console.error('Failed to load statuses:', xhr);
-        });
+        } catch (error) {
+            debugLog('Error loading statuses', error);
+        }
     }
     
-    // Load lead sources
-    function loadSources() {
-        $.ajax({
-            url: '/api/admin/leads/options?field=lead_source',
-            method: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                'Accept': 'application/json'
+    // Load lead sources  
+    async function loadSources() {
+        debugLog('Loading sources');
+        
+        try {
+            const response = await fetch('/admin/dashboard/leads/api/lead-sources', {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            debugLog('Sources response', data);
+            
+            if (data.success && data.data) {
+                leadSources = data.data;
+                populateSourceSelects();
+                debugLog('Sources loaded', leadSources.length + ' items');
             }
-        })
-        .done(function(response) {
-            if (response.success && response.data) {
-                leadSources = response.data;
-                const sourceFilter = $('#source-filter');
-                const leadSource = $('#lead-source');
-                response.data.forEach(function(source) {
-                    const option = `<option value="${source.id || source.value}">${source.display_name || source.label || source.name}</option>`;
-                    sourceFilter.append(option);
-                    leadSource.append(option);
-                });
-            }
-        })
-        .fail(function(xhr) {
-            console.error('Failed to load sources:', xhr);
-        });
+        } catch (error) {
+            debugLog('Error loading sources', error);
+        }
     }
     
     // Load assignable admins
-    function loadAssignableAdmins() {
-        $.ajax({
-            url: '/api/admin/leads/options?field=assigned_admin',
-            method: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                'Accept': 'application/json'
-            }
-        })
-        .done(function(response) {
-            if (response.success && response.data) {
-                adminUsers = response.data;
+    async function loadAssignableAdmins() {
+        debugLog('Loading assignable admins');
+        
+        try {
+            const response = await fetch('/admin/dashboard/leads/api/assignable-admins', {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
+                }
+            });
+            
+            const data = await response.json();
+            debugLog('Assignable admins response', data);
+            
+            if (data.success && data.data) {
+                adminUsers = data.data;
                 populateAdminSelects();
+                debugLog('Assignable admins loaded', adminUsers.length + ' items');
             }
-        })
-        .fail(function(xhr) {
-            console.error('Failed to load assignable admins:', xhr);
-        });
+        } catch (error) {
+            debugLog('Error loading assignable admins', error);
+        }
     }
     
-    // Load leads data
-    function loadLeads(page = 1) {
-        $('#loading').show();
-        $('#leads-table-body').empty();
-        $('#pagination-wrapper').hide();
-        $('#empty-state').hide();
+    // Load leads data - MAIN API CALL
+    async function loadLeads(page = 1) {
+        debugLog('Loading leads for page', page);
         
-        const params = {
-            page: page,
-            per_page: 25,
-            search: $('#search-input').val(),
-            filters: {
-                status: $('#status-filter').val(),
-                source: $('#source-filter').val(),
-                assigned_to: $('#assigned-filter').val()
-            },
-            sort_column: 'created_at',
-            sort_direction: 'desc'
-        };
-        
-        $.ajax({
-            url: '/api/admin/leads',
-            method: 'GET',
-            data: params,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                'Accept': 'application/json'
-            }
-        })
-        .done(function(response) {
-            if (response.success) {
-                displayLeads(response.data);
-                updatePagination(response.pagination);
-                updateStatistics(response);
-            } else {
-                showError('Lead\'ler yüklenirken hata oluştu');
-            }
-        })
-        .fail(function(xhr) {
-            console.error('API Error:', xhr);
-            showError('Lead\'ler yüklenirken hata oluştu: ' + (xhr.responseJSON?.message || 'Bilinmeyen hata'));
-        })
-        .always(function() {
-            $('#loading').hide();
-        });
-    }
-    
-    // Display leads using Laravel Blade components
-    function displayLeads(leads) {
-        const tbody = $('#leads-table-body');
-        tbody.empty();
-        
-        if (leads.length === 0) {
-            $('#empty-state').show();
+        if (isLoading) {
+            debugLog('Already loading, skipping');
             return;
         }
         
-        // For each lead, we'll need to render the Blade component on the server
-        // This is a simplified version - in a real app, you'd use server-side rendering
-        leads.forEach(function(lead) {
-            const row = createLeadRow(lead);
-            tbody.append(row);
+        isLoading = true;
+        showLoading();
+        hideError();
+        
+        const params = new URLSearchParams({
+            page: page,
+            per_page: 25,
+            sort_by: 'created_at',
+            sort_direction: 'desc'
         });
-
-        initializeLucideIcons();
-    }
-    
-    // Create lead row with proper 10-column structure (with checkbox)
-    function createLeadRow(lead) {
-        // Get status info with validation - using name field
-        const statusObj = (leadStatuses && Array.isArray(leadStatuses)) ?
-            leadStatuses.find(s => s && s.name === lead.lead_status) || { name: lead.lead_status || 'new', display_name: 'Bilinmeyen', color: '#6b7280' } :
-            { name: lead.lead_status || 'new', display_name: 'Bilinmeyen', color: '#6b7280' };
-            
-        const sourceObj = (leadSources && Array.isArray(leadSources)) ?
-            leadSources.find(s => s && s.id == lead.lead_source_id) || { name: 'Bilinmeyen', display_name: 'Bilinmeyen', color_class: 'gray' } :
-            { name: 'Bilinmeyen', display_name: 'Bilinmeyen', color_class: 'gray' };
-            
-        const assignedObj = (adminUsers && Array.isArray(adminUsers)) ?
-            adminUsers.find(a => a && a.id == lead.assign_to) || null : null;
         
-        // Avatar initials
-        const avatarText = lead.name ? lead.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'NN';
-        const avatarColor = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500'][lead.id % 5];
+        // Add filters
+        const search = document.getElementById('search-input').value;
+        if (search) params.append('search', search);
         
-        return `
-            <tr class="leads-table-row hover:bg-gray-50 transition-colors duration-200" data-lead-id="${lead.id}">
-                <!-- Checkbox Column -->
-                <td class="px-6 py-4 w-12">
-                    <input
-                        type="checkbox"
-                        class="lead-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                        data-lead-id="${lead.id}"
-                    >
-                </td>
-                
-                <!-- ÜLKE Column -->
-                <td class="column-ulke px-4 py-3 text-sm">
-                    <div class="flex items-center">
-                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                            <x-heroicon name="globe" class="w-3 h-3 mr-1" />
-                            ${lead.country || 'Belirtilmemiş'}
-                        </span>
-                    </div>
-                </td>
-
-                <!-- AD SOYAD Column -->
-                <td class="column-name px-4 py-3">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0 h-8 w-8">
-                            <div class="${avatarColor} rounded-full h-8 w-8 flex items-center justify-center">
-                                <span class="text-xs font-medium text-white">${avatarText}</span>
-                            </div>
-                        </div>
-                        <div class="ml-3">
-                            <div class="text-sm font-medium text-gray-900">${lead.name || 'İsimsiz'}</div>
-                            <div class="text-xs text-gray-500">ID: #${lead.id}</div>
-                        </div>
-                    </div>
-                </td>
-
-                <!-- TELEFON Column -->
-                <td class="column-phone px-4 py-3 text-sm text-gray-900">
-                    ${lead.phone ? `
-                        <div class="flex items-center">
-                            <x-heroicon name="phone" class="w-4 h-4 text-gray-400 mr-2" />
-                            <a href="tel:${lead.phone}" class="text-blue-600 hover:text-blue-900 transition-colors">
-                                ${lead.phone}
-                            </a>
-                        </div>
-                    ` : `
-                        <span class="text-gray-400 italic">Telefon yok</span>
-                    `}
-                </td>
-
-                <!-- EMAIL Column -->
-                <td class="column-email px-4 py-3 text-sm">
-                    ${lead.email ? `
-                        <div class="flex items-center">
-                            <x-heroicon name="envelope" class="w-4 h-4 text-gray-400 mr-2" />
-                            <a href="mailto:${lead.email}" class="text-blue-600 hover:text-blue-900 transition-colors truncate max-w-xs">
-                                ${lead.email}
-                            </a>
-                        </div>
-                    ` : `
-                        <span class="text-gray-400 italic">Email yok</span>
-                    `}
-                </td>
-
-                <!-- ASSIGNED Column -->
-                <td class="column-assigned px-4 py-3">
-                    <div class="inline-edit-dropdown" data-field="assigned_to" data-lead-id="${lead.id}">
-                        <button class="assigned-display flex items-center px-3 py-2 text-sm rounded-lg border border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 w-full justify-between">
-                            <span class="flex items-center">
-                                ${assignedObj ? `
-                                    <div class="flex items-center">
-                                        <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-2">
-                                            <span class="text-xs font-medium text-blue-600">${assignedObj.name[0]}</span>
-                                        </div>
-                                        <span class="text-gray-900">${assignedObj.name}</span>
-                                    </div>
-                                ` : `
-                                    <span class="text-gray-500 italic">Atanmamış</span>
-                                `}
-                            </span>
-                            <x-heroicon name="chevron-down" class="w-4 h-4 text-gray-400" />
-                        </button>
-                        <select class="assigned-select hidden w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <option value="">Atanmamış</option>
-                            ${(adminUsers && Array.isArray(adminUsers)) ? adminUsers.filter(admin => admin && admin.id && admin.name).map(admin => `
-                                <option value="${admin.id}" ${admin.id == lead.assigned_to ? 'selected' : ''}>
-                                    ${admin.name}
-                                </option>
-                            `).join('') : ''}
-                        </select>
-                    </div>
-                </td>
-
-                <!-- STATUS Column -->
-                <td class="column-status px-4 py-3">
-                    <div class="inline-edit-dropdown" data-field="lead_status" data-lead-id="${lead.id}">
-                        <button class="status-display flex items-center px-3 py-2 text-sm rounded-lg border border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 w-full justify-between">
-                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium" style="background-color: ${statusObj.color || '#6b7280'}20; color: ${statusObj.color || '#6b7280'}; border: 1px solid ${statusObj.color || '#6b7280'}40;">
-                                ${statusObj.display_name || statusObj.name || 'Bilinmeyen'}
-                            </span>
-                            <x-heroicon name="chevron-down" class="w-4 h-4 text-gray-400" />
-                        </button>
-                        <select class="status-select hidden w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            ${(leadStatuses && Array.isArray(leadStatuses)) ? leadStatuses.filter(status => status && status.name).map(status => `
-                                 <option value="${status.name}" ${status.name === lead.lead_status ? 'selected' : ''}>
-                                     ${status.display_name || status.name}
-                                 </option>
-                             `).join('') : ''}
-                        </select>
-                    </div>
-                </td>
-
-                <!-- VARONKA Column -->
-                <td class="column-organization px-4 py-3 text-sm text-gray-900">
-                    ${lead.organization ? `
-                        <div class="flex items-center">
-                            <x-heroicon name="building" class="w-4 h-4 text-gray-400 mr-2" />
-                            <span>${lead.organization}</span>
-                        </div>
-                    ` : `
-                        <span class="text-gray-400 italic">Varonka yok</span>
-                    `}
-                </td>
-
-                <!-- KAYNAK Column -->
-                <td class="column-source px-4 py-3">
-                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium source-badge-${sourceObj.color_class || 'gray'}">
-                        ${sourceObj.display_name || sourceObj.name || 'Bilinmeyen'}
-                    </span>
-                </td>
-
-                <!-- ŞİRKET Column -->
-                <td class="column-company px-4 py-3 text-sm text-gray-900">
-                    ${lead.company_name ? `
-                        <div class="flex items-center">
-                            <x-heroicon name="briefcase" class="w-4 h-4 text-gray-400 mr-2" />
-                            <span>${lead.company_name}</span>
-                        </div>
-                    ` : `
-                        <span class="text-gray-400 italic">Şirket yok</span>
-                    `}
-                </td>
-            </tr>
-        `;
-    }
-    
-    function populateAdminSelects() {
-        const assignedFilter = $('#assigned-filter');
-        const leadAssigned = $('#lead-assigned');
+        const status = document.getElementById('status-filter').value;
+        if (status) params.append('status', status);
         
-        // Clear existing options except default ones
-        assignedFilter.find('option:not([value=""], [value="unassigned"])').remove();
-        leadAssigned.find('option:not([value=""])').remove();
+        const source = document.getElementById('source-filter').value; 
+        if (source) params.append('source', source);
         
-        // Add admin options with validation
-        if (adminUsers && Array.isArray(adminUsers)) {
-            adminUsers.forEach(function(admin) {
-                if (admin && admin.id && admin.name) {
-                    const option = `<option value="${admin.id}">${admin.name}</option>`;
-                    assignedFilter.append(option);
-                    leadAssigned.append(option);
+        const assigned = document.getElementById('assigned-filter').value;
+        if (assigned) params.append('assigned_to', assigned);
+        
+        debugLog('API call parameters', Object.fromEntries(params));
+        
+        try {
+            const response = await fetch(`/admin/leads/api?${params}`, {
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json'
                 }
             });
+            
+            debugLog('API response status', response.status);
+            
+            const data = await response.json();
+            debugLog('API response data', data);
+            
+            if (data.success) {
+                displayLeads(data.data);
+                updatePagination(data.pagination);
+                updateStatistics(data);
+                showStats();
+                debugLog('Leads loaded successfully', data.data.length + ' items');
+            } else {
+                throw new Error(data.message || 'API returned success=false');
+            }
+            
+        } catch (error) {
+            debugLog('Error loading leads', error);
+            showError('Lead\'ler yüklenirken hata oluştu: ' + error.message);
+        } finally {
+            isLoading = false;
+            hideLoading();
         }
     }
     
+    // Display leads in table
+    function displayLeads(leads) {
+        debugLog('Displaying leads', leads.length + ' items');
+        
+        const tbody = document.getElementById('leads-table-body');
+        tbody.innerHTML = '';
+        
+        if (leads.length === 0) {
+            showEmptyState();
+            return;
+        }
+        
+        hideEmptyState();
+        
+        leads.forEach(lead => {
+            const row = createLeadRow(lead);
+            tbody.appendChild(row);
+        });
+        
+        debugLog('Table rows created');
+    }
+    
+    // Create lead row
+    function createLeadRow(lead) {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-gray-50 transition-colors duration-200';
+        tr.setAttribute('data-lead-id', lead.id);
+        
+        // Avatar initials
+        const avatarText = lead.name ? lead.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'NN';
+        const avatarColors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-pink-500', 'bg-indigo-500'];
+        const avatarColor = avatarColors[lead.id % 5];
+        
+        // Status info
+        const status = leadStatuses.find(s => s.id == lead.status?.id) || { display_name: 'Bilinmeyen', color: '#6b7280' };
+        
+        // Source info  
+        const source = leadSources.find(s => s.id == lead.source?.id) || { name: 'Bilinmeyen' };
+        
+        // Assigned admin
+        const assignedAdmin = lead.assigned_to ? adminUsers.find(a => a.id == lead.assigned_to.id) || lead.assigned_to : null;
+        
+        tr.innerHTML = `
+            <!-- Checkbox -->
+            <td class="px-6 py-4 whitespace-nowrap">
+                <input type="checkbox" class="lead-checkbox rounded border-gray-300 text-blue-600 focus:ring-blue-500" data-lead-id="${lead.id}">
+            </td>
+            
+            <!-- Country -->
+            <td class="px-6 py-4 whitespace-nowrap">
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    ${lead.country || 'Belirtilmemiş'}
+                </span>
+            </td>
+            
+            <!-- Name -->
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                        <div class="${avatarColor} rounded-full h-10 w-10 flex items-center justify-center">
+                            <span class="text-sm font-medium text-white">${avatarText}</span>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-sm font-medium text-gray-900">${lead.name || 'İsimsiz'}</div>
+                        <div class="text-sm text-gray-500">ID: #${lead.id}</div>
+                    </div>
+                </div>
+            </td>
+            
+            <!-- Phone -->
+            <td class="px-6 py-4 whitespace-nowrap">
+                ${lead.phone ? `
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                        <a href="tel:${lead.phone}" class="text-sm text-blue-600 hover:text-blue-900 transition-colors">
+                            ${lead.phone}
+                        </a>
+                    </div>
+                ` : `
+                    <span class="text-sm text-gray-400 italic">Telefon yok</span>
+                `}
+            </td>
+            
+            <!-- Email -->
+            <td class="px-6 py-4 whitespace-nowrap">
+                ${lead.email ? `
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        <a href="mailto:${lead.email}" class="text-sm text-blue-600 hover:text-blue-900 transition-colors truncate">
+                            ${lead.email}
+                        </a>
+                    </div>
+                ` : `
+                    <span class="text-sm text-gray-400 italic">Email yok</span>
+                `}
+            </td>
+            
+            <!-- Assigned -->
+            <td class="px-6 py-4 whitespace-nowrap">
+                ${assignedAdmin ? `
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span class="text-xs font-medium text-blue-600">${assignedAdmin.name[0]}</span>
+                        </div>
+                        <div class="ml-2">
+                            <div class="text-sm text-gray-900">${assignedAdmin.name}</div>
+                        </div>
+                    </div>
+                ` : `
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        Atanmamış
+                    </span>
+                `}
+            </td>
+            
+            <!-- Status -->
+            <td class="px-6 py-4 whitespace-nowrap">
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium" 
+                      style="background-color: ${status.color || '#6b7280'}20; color: ${status.color || '#6b7280'}; border: 1px solid ${status.color || '#6b7280'}40;">
+                    ${status.display_name || status.name || 'Bilinmeyen'}
+                </span>
+            </td>
+            
+            <!-- Source -->
+            <td class="px-6 py-4 whitespace-nowrap">
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                    ${source.name || 'Bilinmeyen'}
+                </span>
+            </td>
+            
+            <!-- Date -->
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                ${lead.created_at ? new Date(lead.created_at).toLocaleDateString('tr-TR') : '-'}
+            </td>
+        `;
+        
+        return tr;
+    }
+    
+    // Populate selects
+    function populateStatusSelects() {
+        const statusFilter = document.getElementById('status-filter');
+        statusFilter.innerHTML = '<option value="">Tüm Durumlar</option>';
+        
+        leadStatuses.forEach(status => {
+            const option = document.createElement('option');
+            option.value = status.id || status.name;
+            option.textContent = status.display_name || status.name;
+            if (status.color) {
+                option.style.color = status.color;
+            }
+            statusFilter.appendChild(option);
+        });
+    }
+    
+    function populateSourceSelects() {
+        const sourceFilter = document.getElementById('source-filter');
+        sourceFilter.innerHTML = '<option value="">Tüm Kaynaklar</option>';
+        
+        leadSources.forEach(source => {
+            const option = document.createElement('option');
+            option.value = source.id;
+            option.textContent = source.name;
+            sourceFilter.appendChild(option);
+        });
+    }
+    
+    function populateAdminSelects() {
+        const assignedFilter = document.getElementById('assigned-filter');
+        // Keep existing options
+        const existingOptions = assignedFilter.innerHTML;
+        
+        adminUsers.forEach(admin => {
+            const option = document.createElement('option');
+            option.value = admin.id;
+            option.textContent = admin.name;
+            assignedFilter.appendChild(option);
+        });
+    }
+    
+    // Event binding
     function bindEvents() {
+        debugLog('Binding events');
+        
         // Search with debouncing
         let searchTimeout;
-        $('#search-input').on('input', function() {
+        document.getElementById('search-input').addEventListener('input', function() {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 currentPage = 1;
@@ -626,327 +687,160 @@ $(document).ready(function() {
         });
         
         // Filter buttons
-        $('#apply-filters').on('click', function() {
+        document.getElementById('apply-filters').addEventListener('click', function() {
             currentPage = 1;
             loadLeads();
         });
         
-        $('#clear-filters').on('click', function() {
-            $('#search-input').val('');
-            $('#status-filter').val('');
-            $('#source-filter').val('');
-            $('#assigned-filter').val('');
+        document.getElementById('clear-filters').addEventListener('click', function() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('status-filter').value = '';
+            document.getElementById('source-filter').value = '';
+            document.getElementById('assigned-filter').value = '';
             currentPage = 1;
             loadLeads();
         });
         
         // Refresh button
-        $('#refresh-btn').on('click', function() {
+        document.getElementById('refresh-btn').addEventListener('click', function() {
             loadLeads(currentPage);
         });
         
-        // Add lead button
-        $('#add-lead-btn, #empty-add-lead-btn').on('click', function() {
-            openLeadModal();
+        // Add lead buttons
+        const addBtns = ['add-lead-btn', 'empty-add-lead-btn'];
+        addBtns.forEach(btnId => {
+            const btn = document.getElementById(btnId);
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    // Open modal functionality - to be implemented
+                    debugLog('Add lead button clicked');
+                    alert('Add lead functionality - to be implemented');
+                });
+            }
         });
         
         // Export button
-        $('#export-excel-btn').on('click', function() {
+        document.getElementById('export-excel-btn').addEventListener('click', function() {
             exportToExcel();
         });
         
-        // Modal controls
-        $('#close-modal, #cancel-lead').on('click', function() {
-            closeLeadModal();
-        });
-        
-        // Form submission
-        $('#lead-form').on('submit', function(e) {
-            e.preventDefault();
-            saveLeadData();
-        });
-    }
-    
-    // Modal functions
-    function openLeadModal(lead = null) {
-        $('#addLeadModal').show();
-        if (lead) {
-            // Edit mode
-            $('#addLeadModalLabel').text('Lead Düzenle');
-            populateLeadForm(lead);
-        } else {
-            // Add mode
-            $('#addLeadModalLabel').text('Yeni Lead Ekle');
-            resetLeadForm();
+        // Retry button
+        const retryBtn = document.getElementById('retry-btn');
+        if (retryBtn) {
+            retryBtn.addEventListener('click', function() {
+                loadLeads(currentPage);
+            });
         }
-    }
-    
-    function closeLeadModal() {
-        $('#addLeadModal').hide();
-        resetLeadForm();
-    }
-    
-    function resetLeadForm() {
-        $('#lead-form')[0].reset();
-        $('#lead-id').val('');
-    }
-    
-    function populateLeadForm(lead) {
-        $('#lead-id').val(lead.id);
-        $('#lead-name').val(lead.name);
-        $('#lead-email').val(lead.email);
-        $('#lead-phone').val(lead.phone);
-        $('#lead-country').val(lead.country);
-        $('#lead-company').val(lead.company_name);
-        $('#lead-organization').val(lead.organization);
-        $('#lead-status').val(lead.lead_status);
-        $('#lead-source').val(lead.lead_source_id);
-        $('#lead-assigned').val(lead.assigned_to);
-    }
-    
-    // Inline editing functionality
-    $(document).on('click', '.assigned-display, .status-display', function() {
-        const dropdown = $(this).closest('.inline-edit-dropdown');
-        const display = dropdown.find('[class*="-display"]');
-        const select = dropdown.find('[class*="-select"]');
         
-        display.addClass('hidden');
-        select.removeClass('hidden').focus();
-    });
-    
-    $(document).on('blur change', '.assigned-select, .status-select', function() {
-        const dropdown = $(this).closest('.inline-edit-dropdown');
-        const display = dropdown.find('[class*="-display"]');
-        const select = $(this);
-        const leadId = dropdown.data('lead-id');
-        const field = dropdown.data('field');
-        const newValue = select.val();
-        
-        // Update via API
-        updateLeadField(leadId, field, newValue, dropdown);
-        
-        // Hide select, show display
-        select.addClass('hidden');
-        display.removeClass('hidden');
-    });
-    
-    // Update lead field via API
-    function updateLeadField(leadId, field, value, dropdown) {
-        $.ajax({
-            url: `/api/admin/leads/${leadId}`,
-            method: 'PATCH',
-            data: { [field]: value },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                'Accept': 'application/json'
-            }
-        })
-        .done(function(response) {
-            if (response.success) {
-                // Update display text
-                updateDisplayText(dropdown, field, value, response.data);
-                showSuccess(`${field === 'assigned_to' ? 'Atama' : 'Durum'} güncellendi`);
-            } else {
-                showError(response.message || 'Güncelleme başarısız oldu');
-            }
-        })
-        .fail(function(xhr) {
-            console.error('Update failed:', xhr);
-            showError('Güncelleme sırasında hata oluştu');
-        });
+        debugLog('Events bound successfully');
     }
     
-    // Update display text after successful API call
-    function updateDisplayText(dropdown, field, value, responseData) {
-        const display = dropdown.find('[class*="-display"] span:first');
-        
-        if (field === 'assigned_to') {
-            if (value) {
-                const admin = adminUsers.find(a => a.id == value);
-                if (admin) {
-                    display.html(`
-                        <div class="flex items-center">
-                            <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-2">
-                                <span class="text-xs font-medium text-blue-600">${admin.name[0]}</span>
-                            </div>
-                            <span class="text-gray-900">${admin.name}</span>
-                        </div>
-                    `);
-                }
-            } else {
-                display.html('<span class="text-gray-500 italic">Atanmamış</span>');
-            }
-        } else if (field === 'lead_status') {
-            const status = leadStatuses.find(s => s && s.name === value);
-            if (status) {
-                display.html(`
-                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium" style="background-color: ${status.color || '#6b7280'}20; color: ${status.color || '#6b7280'}; border: 1px solid ${status.color || '#6b7280'}40;">
-                        ${status.display_name || status.name}
-                    </span>
-                `);
-            } else {
-                display.html(`
-                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium" style="background-color: #6b728020; color: #6b7280; border: 1px solid #6b728040;">
-                        ${value || 'Bilinmeyen'}
-                    </span>
-                `);
-            }
-        }
-    }
-    
-    // Pagination functions
+    // Update pagination
     function updatePagination(pagination) {
         if (!pagination || pagination.total === 0) {
-            $('#pagination-wrapper').hide();
+            hidePagination();
             return;
         }
         
         currentPage = pagination.current_page;
         totalPages = pagination.last_page;
         
-        // Update pagination info
-        const start = ((currentPage - 1) * pagination.per_page) + 1;
-        const end = Math.min(currentPage * pagination.per_page, pagination.total);
-        $('#pagination-info').text(`${start}-${end} arası gösteriliyor (Toplam: ${pagination.total})`);
+        // Update info
+        const start = pagination.from || 1;
+        const end = pagination.to || pagination.total;
+        document.getElementById('pagination-info').textContent = 
+            `${start}-${end} arası gösteriliyor (Toplam: ${pagination.total})`;
         
-        // Generate pagination buttons
-        generatePaginationButtons(pagination);
-        $('#pagination-wrapper').show();
-    }
-    
-    function generatePaginationButtons(pagination) {
-        const paginationContainer = $('#pagination');
-        paginationContainer.empty();
-        
-        const currentPage = pagination.current_page;
-        const totalPages = pagination.last_page;
-        
-        // Previous button
-        const prevDisabled = currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50';
-        paginationContainer.append(`
-            <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 ${prevDisabled}"
-                    data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>
-                <x-heroicon name="chevron-left" class="w-4 h-4" />
-            </button>
-        `);
-        
-        // Page numbers
-        const startPage = Math.max(1, currentPage - 2);
-        const endPage = Math.min(totalPages, currentPage + 2);
-        
-        for (let page = startPage; page <= endPage; page++) {
-            const isActive = page === currentPage;
-            const activeClass = isActive ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50';
-            
-            paginationContainer.append(`
-                <button class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ${activeClass}"
-                        data-page="${page}">${page}</button>
-            `);
-        }
-        
-        // Next button
-        const nextDisabled = currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50';
-        paginationContainer.append(`
-            <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 ${nextDisabled}"
-                    data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>
-                <x-heroicon name="chevron-right" class="w-4 h-4" />
-            </button>
-        `);
-        
-        // Bind pagination clicks
-        paginationContainer.find('button[data-page]').on('click', function() {
-            if (!$(this).is(':disabled')) {
-                loadLeads($(this).data('page'));
-            }
-        });
-        
-        // Reinitialize icons
-        initializeLucideIcons();
+        showPagination();
+        debugLog('Pagination updated', pagination);
     }
     
     // Update statistics
     function updateStatistics(response) {
-        if (response.pagination) {
-            $('#total-leads').text(response.pagination.total);
+        if (response.statistics) {
+            const stats = response.statistics;
+            document.getElementById('stat-total').textContent = stats.total_leads || 0;
+            document.getElementById('stat-unassigned').textContent = stats.unassigned_leads || 0;
+            document.getElementById('stat-weekly').textContent = stats.new_leads_this_week || 0;
+            document.getElementById('stat-high-score').textContent = stats.high_score_leads || 0;
         }
-    }
-    
-    // Save lead data (for modal form)
-    function saveLeadData() {
-        const leadId = $('#lead-id').val();
-        const isEdit = leadId !== '';
-        const url = isEdit ? `/api/admin/leads/${leadId}` : '/api/admin/leads';
-        const method = isEdit ? 'PATCH' : 'POST';
         
-        const formData = {
-            name: $('#lead-name').val(),
-            email: $('#lead-email').val(),
-            phone: $('#lead-phone').val(),
-            country: $('#lead-country').val(),
-            company_name: $('#lead-company').val(),
-            organization: $('#lead-organization').val(),
-            lead_status: $('#lead-status').val() || 'new',
-            lead_source_id: $('#lead-source').val() || null,
-            assigned_to: $('#lead-assigned').val() || null
-        };
+        // Also update header total
+        document.getElementById('total-leads').textContent = response.pagination?.total || 0;
         
-        // Show loading
-        $('#save-spinner').show();
-        
-        $.ajax({
-            url: url,
-            method: method,
-            data: formData,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                'Accept': 'application/json'
-            }
-        })
-        .done(function(response) {
-            if (response.success) {
-                closeLeadModal();
-                loadLeads(currentPage);
-                showSuccess(isEdit ? 'Lead başarıyla güncellendi' : 'Yeni lead başarıyla eklendi');
-            } else {
-                showError(response.message || 'Kaydetme işlemi başarısız oldu');
-            }
-        })
-        .fail(function(xhr) {
-            console.error('Save failed:', xhr);
-            showError('Kaydetme sırasında hata oluştu: ' + (xhr.responseJSON?.message || 'Bilinmeyen hata'));
-        })
-        .always(function() {
-            $('#save-spinner').hide();
-        });
+        debugLog('Statistics updated');
     }
     
     // Export to Excel
     function exportToExcel() {
-        const params = {
-            search: $('#search-input').val(),
-            filters: {
-                status: $('#status-filter').val(),
-                source: $('#source-filter').val(),
-                assigned_to: $('#assigned-filter').val()
-            }
-        };
+        const params = new URLSearchParams();
         
-        const queryString = $.param(params);
-        window.open(`/admin/leads/export?${queryString}`, '_blank');
+        const search = document.getElementById('search-input').value;
+        if (search) params.append('search', search);
+        
+        const status = document.getElementById('status-filter').value;
+        if (status) params.append('status', status);
+        
+        const source = document.getElementById('source-filter').value;
+        if (source) params.append('source', source);
+        
+        const assigned = document.getElementById('assigned-filter').value;
+        if (assigned) params.append('assigned_to', assigned);
+        
+        const url = `/admin/leads/export?${params}`;
+        debugLog('Exporting to Excel', url);
+        
+        window.open(url, '_blank');
     }
     
-    // Utility functions
-    function showSuccess(message) {
-        // You can integrate with your notification system here
-        console.log('Success:', message);
-        alert(message); // Temporary - replace with your preferred notification
+    // UI Helper functions
+    function showLoading() {
+        document.getElementById('loading').style.display = 'block';
+        hideEmptyState();
+        hideError();
+    }
+    
+    function hideLoading() {
+        document.getElementById('loading').style.display = 'none';
+    }
+    
+    function showEmptyState() {
+        document.getElementById('empty-state').style.display = 'block';
+        hidePagination();
+    }
+    
+    function hideEmptyState() {
+        document.getElementById('empty-state').style.display = 'none';
+    }
+    
+    function showPagination() {
+        document.getElementById('pagination-wrapper').style.display = 'flex';
+    }
+    
+    function hidePagination() {
+        document.getElementById('pagination-wrapper').style.display = 'none';
+    }
+    
+    function showStats() {
+        document.getElementById('stats-section').style.display = 'grid';
+    }
+    
+    function hideStats() {
+        document.getElementById('stats-section').style.display = 'none';
     }
     
     function showError(message) {
-        // You can integrate with your notification system here
-        console.error('Error:', message);
-        alert('Hata: ' + message); // Temporary - replace with your preferred notification
+        document.getElementById('error-message').textContent = message;
+        document.getElementById('error-state').style.display = 'block';
+        hideEmptyState();
+        debugLog('Error shown', message);
     }
+    
+    function hideError() {
+        document.getElementById('error-state').style.display = 'none';
+    }
+    
+    debugLog('Lead management system initialized');
 });
 </script>
 @endpush

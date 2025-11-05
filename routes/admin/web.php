@@ -379,6 +379,10 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('/api/assignable-admins', 'getAssignableAdmins')->name('api.assignable-admins'); // Get assignable admins
         Route::get('/api/lead-sources', 'getLeadSources')->name('api.lead-sources'); // Get lead sources
         Route::get('/api/tags', 'getTags')->name('api.tags'); // Get available tags
+        Route::get('/api/options', 'getOptions')->name('api.options'); // Get dropdown options (field-based)
+        
+        // Lead Statuses Route (for frontend compatibility)
+        Route::get('/lead-statuses/active', 'getActiveLeadStatuses')->name('lead-statuses.active'); // Get active lead statuses
         
         // Admin Management & Cache Routes
         Route::delete('/api/cache/admins', 'clearAdminCache')->name('api.clear-admin-cache'); // Clear admin dropdown cache

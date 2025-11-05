@@ -160,8 +160,7 @@
 
 <!-- Mobile Overlay -->
 <div id="dashboard-sidebar-overlay"
-     class="fixed inset-0 z-40 bg-black bg-opacity-50 hidden transition-opacity duration-300 md:hidden"
-     onclick="toggleDashboardSidebar()">
+     class="fixed inset-0 z-40 bg-black bg-opacity-50 hidden transition-opacity duration-300 md:hidden">
 </div>
 
 <script>
@@ -180,8 +179,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 sidebar.classList.add('translate-x-0');
                 overlay.classList.remove('hidden');
                 overlay.classList.add('bg-opacity-50');
-                // Prevent body scroll
-                document.body.style.overflow = 'hidden';
+                // Prevent body scroll on mobile
+                if (window.innerWidth < 768) {
+                    document.body.style.overflow = 'hidden';
+                }
             } else {
                 // Hide sidebar
                 sidebar.classList.add('-translate-x-full');
@@ -193,6 +194,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     };
+
+    // CRITICAL FIX: Proper overlay click event with bubble prevention
+    const overlay = document.getElementById('dashboard-sidebar-overlay');
+    const sidebar = document.getElementById('dashboard-sidebar');
+    
+    if (overlay && sidebar) {
+        // Click on overlay (but not on sidebar) should close
+        overlay.addEventListener('click', function(e) {
+            // Only close if clicking on the overlay itself, not on sidebar content
+            if (e.target === overlay) {
+                toggleDashboardSidebar();
+            }
+        });
+
+        // Prevent sidebar clicks from closing the sidebar
+        sidebar.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
 
     // Handle responsive behavior
     function handleResize() {
@@ -230,43 +250,54 @@ document.addEventListener('DOMContentLoaded', function() {
     handleResize();
     window.addEventListener('resize', handleResize);
     
-    // Handle escape key to close sidebar on mobile
+    // ESC Key Support - Close sidebar on mobile when ESC is pressed
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && window.innerWidth < 768) {
             const sidebar = document.getElementById('dashboard-sidebar');
             
             if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
+                e.preventDefault();
                 toggleDashboardSidebar();
             }
         }
     });
     
-    // Handle swipe gestures on mobile
+    // Enhanced Touch Gesture Support for swipe to open/close
     let touchStartX = 0;
     let touchEndX = 0;
+    let touchStartTime = 0;
+    let touchElement = null;
     
     document.addEventListener('touchstart', function(e) {
         touchStartX = e.changedTouches[0].screenX;
-    });
+        touchStartTime = Date.now();
+        touchElement = e.target;
+    }, { passive: true });
     
     document.addEventListener('touchend', function(e) {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
-    });
+    }, { passive: true });
     
     function handleSwipe() {
         const sidebar = document.getElementById('dashboard-sidebar');
         if (!sidebar || window.innerWidth >= 768) return;
         
         const swipeDistance = touchEndX - touchStartX;
+        const swipeTime = Date.now() - touchStartTime;
         const isOpen = !sidebar.classList.contains('-translate-x-full');
+        const minSwipeDistance = 50;
+        const maxSwipeTime = 500; // Maximum time for swipe gesture
         
-        // Swipe right to open (from left edge)
-        if (swipeDistance > 50 && touchStartX < 50 && !isOpen) {
+        // Only process quick swipes
+        if (swipeTime > maxSwipeTime) return;
+        
+        // Swipe right to open (from left edge of screen)
+        if (swipeDistance > minSwipeDistance && touchStartX < 50 && !isOpen) {
             toggleDashboardSidebar();
         }
-        // Swipe left to close
-        else if (swipeDistance < -50 && isOpen) {
+        // Swipe left to close (when sidebar is open)
+        else if (swipeDistance < -minSwipeDistance && isOpen) {
             toggleDashboardSidebar();
         }
     }

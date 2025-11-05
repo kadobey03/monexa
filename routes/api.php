@@ -77,8 +77,8 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::get('dashboard/stats', [AdminApiController::class, 'dashboardStats']);
 });
 
-// Admin API Routes - Web authentication for admin dashboard
-Route::middleware(['web'])->prefix('admin')->name('api.admin.')->group(function () {
+// Admin API Routes - Session authentication for admin dashboard
+Route::middleware(['web', 'auth:admin'])->prefix('admin')->name('api.admin.')->group(function () {
     
     // Leads Management API Routes
     Route::prefix('leads')->name('leads.')->group(function () {

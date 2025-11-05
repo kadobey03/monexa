@@ -896,6 +896,30 @@ class LeadController extends Controller
     {
         try {
             $admin = Auth::guard('admin')->user();
+            
+            // Fallback: if no admin guard user, check if current user is admin
+            if (!$admin && Auth::check()) {
+                $user = Auth::user();
+                if ($user && ($user->admin == 1 || $user->role === 'admin')) {
+                    // Create temporary admin object for compatibility
+                    $admin = (object) [
+                        'id' => $user->id,
+                        'firstName' => $user->firstName ?? $user->name,
+                        'lastName' => $user->lastName ?? '',
+                        'email' => $user->email,
+                        'role' => 'admin',
+                        'admin' => 1  // DÜZELTME: admin property eklendi
+                    ];
+                }
+            }
+            
+            if (!$admin) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Admin authentication required.'
+                ], 401);
+            }
+            
             $period = $request->get('period', '30_days');
 
             // Get basic statistics

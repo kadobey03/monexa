@@ -761,6 +761,7 @@ class Admin extends Authenticatable
 
     /**
      * Check if admin is a super admin.
+     * Bu method role relationship'i kullanarak consistent bir yaklaşım sağlar.
      */
     public function isSuperAdmin(): bool
     {
@@ -773,6 +774,45 @@ class Admin extends Authenticatable
     public function isManager(): bool
     {
         return $this->role && $this->role->isManagementRole();
+    }
+
+    /**
+     * Check if admin is head of office.
+     * Lead authorization için özel method.
+     */
+    public function isHeadOfOffice(): bool
+    {
+        return $this->role && $this->role->name === 'head_of_office';
+    }
+
+    /**
+     * Check if admin is sales representative (agent level).
+     * Bu role'ler sadece kendi assign_to=admin_id olan lead'leri görebilir.
+     */
+    public function isSalesRepresentative(): bool
+    {
+        return $this->role && in_array($this->role->name, [
+            'sales_agent',
+            'retention_agent'
+        ]);
+    }
+
+    /**
+     * Get standardized role name.
+     * Consistent role detection için kullanılır.
+     */
+    public function getRoleName(): ?string
+    {
+        return $this->role?->name;
+    }
+
+    /**
+     * Check if admin has bypass privileges for lead filtering.
+     * Super admin ve head of office tüm lead'leri görebilir.
+     */
+    public function hasBypassPrivileges(): bool
+    {
+        return $this->isSuperAdmin() || $this->isHeadOfOffice();
     }
 
     /**
