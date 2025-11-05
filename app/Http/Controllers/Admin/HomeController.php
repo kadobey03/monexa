@@ -32,6 +32,8 @@ use App\Models\OrdersP2p;
 use App\Models\Task;
 use App\Models\Wallets;
 use Illuminate\Support\Facades\Cache;
+use App\Services\UserExportService;
+use App\Models\AdminAuditLog;
 
 class HomeController extends Controller
 {
@@ -1366,6 +1368,443 @@ class HomeController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Admin ataması güncellenirken bir hata oluştu.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Export users to Excel
+     */
+    public function exportUsers(Request $request)
+    {
+        $startTime = microtime(true);
+        $startMemory = memory_get_usage(true);
+        
+        try {
+            // Get current admin
+            $admin = auth('admin')->user();
+            
+            // Validate export parameters (same as manageusers filters)
+            $validated = $request->validate([
+                'status' => 'nullable|string|exists:lead_statuses,name',
+                'admin' => 'nullable|exists:admins,id',
+                'date_from' => 'nullable|date|before_or_equal:today',
+                'date_to' => 'nullable|date|after_or_equal:date_from|before_or_equal:today',
+                'export_type' => 'nullable|string|in:selected,all',
+                'selected_users' => 'nullable|array|max:1000',
+                'selected_users.*' => 'integer|exists:users,id',
+            ]);
+
+            // Debug export request için log
+            if ($request->input('export_type') === 'selected') {
+                \Log::info('Export Selected Users Request', [
+                    'export_type' => $request->input('export_type'),
+                    'selected_users_count' => $request->has('selected_users') ? count($request->input('selected_users', [])) : 0,
+                    'selected_users' => $request->input('selected_users', []),
+                    'admin_id' => auth('admin')->id(),
+                    'validation_data' => $validated
+                ]);
+            }
+
+            // Initialize UserExportService
+            $exportService = new UserExportService();
+            
+            // Check if this is a selected users export
+            if ($request->input('export_type') === 'selected' && $request->has('selected_users')) {
+                // Export only selected users
+                $result = $exportService->exportSelectedUsers($admin, $validated['selected_users']);
+            } else {
+                // Export users with current filters
+                $result = $exportService->exportUsers($admin, $validated);
+            }
+            
+            if (!$result['success']) {
+                // Log failed export
+                AdminAuditLog::logAction([
+                    'admin_id' => $admin->id,
+                    'admin_name' => $admin->firstName . ' ' . $admin->lastName,
+                    'admin_email' => $admin->email,
+                    'action' => 'export',
+                    'entity_type' => 'User',
+                    'category' => AdminAuditLog::CATEGORIES['data_export'],
+                    'description' => 'User export failed',
+                    'status' => AdminAuditLog::STATUS_FAILED,
+                    'severity' => AdminAuditLog::SEVERITY_WARNING,
+                    'is_sensitive' => true,
+                    'metadata' => [
+                        'filters' => $validated,
+                        'error' => $result['error']
+                    ],
+                    'ip_address' => request()->ip(),
+                    'user_agent' => request()->userAgent(),
+                    'session_id' => session()->getId(),
+                ]);
+                
+                return back()->with('error', $result['error']);
+            }
+            
+            // Calculate performance metrics
+            $executionTime = intval((microtime(true) - $startTime) * 1000);
+            $memoryUsage = intval((memory_get_usage(true) - $startMemory) / 1024 / 1024);
+            
+            // Log successful export
+            AdminAuditLog::logAction([
+                'admin_id' => $admin->id,
+                'admin_name' => $admin->firstName . ' ' . $admin->lastName,
+                'admin_email' => $admin->email,
+                'action' => 'export',
+                'entity_type' => 'User',
+                'category' => AdminAuditLog::CATEGORIES['data_export'],
+                'description' => 'User data exported successfully',
+                'status' => AdminAuditLog::STATUS_SUCCESS,
+                'severity' => AdminAuditLog::SEVERITY_INFO,
+                'is_sensitive' => true,
+                'affected_count' => $result['total_records'] ?? 0,
+                'execution_time_ms' => $executionTime,
+                'memory_usage_mb' => $memoryUsage,
+                'performance_metrics' => [
+                    'file_size_mb' => isset($result['file_path']) ? round(filesize($result['file_path']) / 1024 / 1024, 2) : 0,
+                    'records_exported' => $result['total_records'] ?? 0,
+                ],
+                'metadata' => [
+                    'filters' => $validated,
+                    'filename' => basename($result['filename'] ?? ''),
+                    'file_format' => 'xlsx'
+                ],
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'session_id' => session()->getId(),
+            ]);
+            
+            // Return file download response
+            return response()->download(
+                $result['file_path'],
+                basename($result['filename']),
+                [
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'Content-Disposition' => 'attachment; filename="' . basename($result['filename']) . '"'
+                ]
+            )->deleteFileAfterSend(true);
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Log validation error
+            AdminAuditLog::logAction([
+                'admin_id' => auth('admin')->id(),
+                'admin_name' => auth('admin')->user()?->firstName . ' ' . auth('admin')->user()?->lastName,
+                'admin_email' => auth('admin')->user()?->email,
+                'action' => 'export',
+                'entity_type' => 'User',
+                'category' => AdminAuditLog::CATEGORIES['data_export'],
+                'description' => 'User export failed - validation error',
+                'status' => AdminAuditLog::STATUS_FAILED,
+                'severity' => AdminAuditLog::SEVERITY_WARNING,
+                'is_sensitive' => true,
+                'metadata' => [
+                    'validation_errors' => $e->errors(),
+                    'request_data' => $request->all()
+                ],
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'session_id' => session()->getId(),
+            ]);
+            
+            return back()->withErrors($e->errors())->withInput()
+                ->with('error', 'Geçersiz export parametreleri.');
+                
+        } catch (\Exception $e) {
+            // Log general error
+            AdminAuditLog::logAction([
+                'admin_id' => auth('admin')->id(),
+                'admin_name' => auth('admin')->user()?->firstName . ' ' . auth('admin')->user()?->lastName,
+                'admin_email' => auth('admin')->user()?->email,
+                'action' => 'export',
+                'entity_type' => 'User',
+                'category' => AdminAuditLog::CATEGORIES['data_export'],
+                'description' => 'User export failed - system error',
+                'status' => AdminAuditLog::STATUS_FAILED,
+                'severity' => AdminAuditLog::SEVERITY_ERROR,
+                'is_sensitive' => true,
+                'metadata' => [
+                    'error_message' => $e->getMessage(),
+                    'request_data' => $request->all()
+                ],
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'session_id' => session()->getId(),
+            ]);
+            
+            \Log::error('User Export Error', [
+                'admin_id' => auth('admin')->id(),
+                'request_data' => $request->all(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return back()->with('error', 'Export işlemi sırasında bir hata oluştu: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Bulk update user lead status
+     */
+    public function bulkUpdateStatus(Request $request)
+    {
+        try {
+            // Validation
+            $validated = $request->validate([
+                'user_ids' => 'required|array|min:1|max:100',
+                'user_ids.*' => 'required|exists:users,id',
+                'new_status' => 'required|string|exists:lead_statuses,name'
+            ]);
+            
+            $admin = auth('admin')->user();
+            $userIds = $validated['user_ids'];
+            $newStatus = $validated['new_status'];
+            
+            // Start database transaction
+            DB::beginTransaction();
+            
+            // Get users before update for audit log
+            $users = User::whereIn('id', $userIds)->get();
+            
+            // Bulk update status
+            $updatedCount = User::whereIn('id', $userIds)
+                ->update(['lead_status' => $newStatus]);
+            
+            // Log bulk operation
+            \Log::info('Bulk Status Update', [
+                'admin_id' => $admin->id,
+                'admin_name' => $admin->getDisplayName(),
+                'user_ids' => $userIds,
+                'new_status' => $newStatus,
+                'updated_count' => $updatedCount,
+                'old_statuses' => $users->pluck('lead_status', 'id')->toArray()
+            ]);
+            
+            DB::commit();
+            
+            return response()->json([
+                'success' => true,
+                'message' => "{$updatedCount} kullanıcının lead status'u '{$newStatus}' olarak güncellendi.",
+                'updated_count' => $updatedCount
+            ]);
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Geçersiz veri gönderildi.',
+                'errors' => $e->errors()
+            ], 422);
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            \Log::error('Bulk Status Update Error', [
+                'admin_id' => auth('admin')->id(),
+                'request_data' => $request->all(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Toplu durum güncelleme sırasında bir hata oluştu.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Bulk assign admin to users
+     */
+    public function bulkAssignAdmin(Request $request)
+    {
+        $startTime = microtime(true);
+        $operationId = uniqid('bulk_assign_');
+        
+        try {
+            // Validation
+            $validated = $request->validate([
+                'user_ids' => 'required|array|min:1|max:100',
+                'user_ids.*' => 'required|exists:users,id',
+                'admin_id' => 'nullable|exists:admins,id'
+            ]);
+            
+            $currentAdmin = auth('admin')->user();
+            $userIds = $validated['user_ids'];
+            $newAdminId = $validated['admin_id'];
+            $newAdmin = null;
+            
+            // Validate new admin is active if provided
+            if ($newAdminId) {
+                $newAdmin = Admin::where('id', $newAdminId)
+                    ->where('status', 'Active')
+                    ->first();
+                    
+                if (!$newAdmin) {
+                    // Log validation error
+                    AdminAuditLog::logAction([
+                        'admin_id' => $currentAdmin->id,
+                        'admin_name' => $currentAdmin->firstName . ' ' . $currentAdmin->lastName,
+                        'admin_email' => $currentAdmin->email,
+                        'action' => 'bulk_assign',
+                        'entity_type' => 'User',
+                        'category' => AdminAuditLog::CATEGORIES['user_management'],
+                        'description' => 'Bulk admin assignment failed - invalid target admin',
+                        'status' => AdminAuditLog::STATUS_FAILED,
+                        'severity' => AdminAuditLog::SEVERITY_WARNING,
+                        'is_bulk_operation' => true,
+                        'operation_id' => $operationId,
+                        'metadata' => [
+                            'target_admin_id' => $newAdminId,
+                            'error' => 'Admin not found or inactive'
+                        ],
+                        'ip_address' => request()->ip(),
+                        'user_agent' => request()->userAgent(),
+                        'session_id' => session()->getId(),
+                    ]);
+                    
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Seçilen admin bulunamadı veya aktif değil.'
+                    ], 422);
+                }
+            }
+            
+            // Start database transaction
+            DB::beginTransaction();
+            
+            // Get users before update for audit log
+            $users = User::whereIn('id', $userIds)->get();
+            
+            // Bulk assign admin
+            $updatedCount = User::whereIn('id', $userIds)
+                ->update(['assign_to' => $newAdminId]);
+            
+            // Calculate execution time
+            $executionTime = intval((microtime(true) - $startTime) * 1000);
+            
+            // Log successful bulk operation
+            AdminAuditLog::logAction([
+                'admin_id' => $currentAdmin->id,
+                'admin_name' => $currentAdmin->firstName . ' ' . $currentAdmin->lastName,
+                'admin_email' => $currentAdmin->email,
+                'action' => 'bulk_assign',
+                'entity_type' => 'User',
+                'category' => AdminAuditLog::CATEGORIES['user_management'],
+                'description' => $newAdminId ?
+                    "Bulk admin assignment to {$newAdmin->firstName} {$newAdmin->lastName}" :
+                    "Bulk admin unassignment",
+                'status' => AdminAuditLog::STATUS_SUCCESS,
+                'severity' => AdminAuditLog::SEVERITY_INFO,
+                'is_bulk_operation' => true,
+                'operation_id' => $operationId,
+                'affected_count' => $updatedCount,
+                'affected_entities' => $userIds,
+                'execution_time_ms' => $executionTime,
+                'old_values' => $users->pluck('assign_to', 'id')->toArray(),
+                'new_values' => array_fill_keys($userIds, $newAdminId),
+                'metadata' => [
+                    'operation_type' => 'admin_assignment',
+                    'target_admin_id' => $newAdminId,
+                    'target_admin_name' => $newAdminId ? ($newAdmin->getDisplayName() ?? 'Unknown') : 'Unassigned',
+                    'affected_user_count' => count($userIds)
+                ],
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'session_id' => session()->getId(),
+            ]);
+            
+            // Log bulk operation (backward compatibility)
+            \Log::info('Bulk Admin Assignment', [
+                'current_admin_id' => $currentAdmin->id,
+                'current_admin_name' => $currentAdmin->getDisplayName(),
+                'user_ids' => $userIds,
+                'new_admin_id' => $newAdminId,
+                'new_admin_name' => $newAdminId ? ($newAdmin->getDisplayName() ?? 'Unknown') : 'Unassigned',
+                'updated_count' => $updatedCount,
+                'old_assignments' => $users->pluck('assign_to', 'id')->toArray(),
+                'operation_id' => $operationId
+            ]);
+            
+            DB::commit();
+            
+            $adminName = $newAdminId ? ($newAdmin->getDisplayName() ?? 'Admin') : 'Atanmamış';
+            
+            return response()->json([
+                'success' => true,
+                'message' => "{$updatedCount} kullanıcı '{$adminName}' adminına atandı.",
+                'updated_count' => $updatedCount,
+                'admin_name' => $adminName
+            ]);
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            
+            // Log validation error
+            AdminAuditLog::logAction([
+                'admin_id' => auth('admin')->id(),
+                'admin_name' => auth('admin')->user()?->firstName . ' ' . auth('admin')->user()?->lastName,
+                'admin_email' => auth('admin')->user()?->email,
+                'action' => 'bulk_assign',
+                'entity_type' => 'User',
+                'category' => AdminAuditLog::CATEGORIES['user_management'],
+                'description' => 'Bulk admin assignment failed - validation error',
+                'status' => AdminAuditLog::STATUS_FAILED,
+                'severity' => AdminAuditLog::SEVERITY_WARNING,
+                'is_bulk_operation' => true,
+                'operation_id' => $operationId,
+                'metadata' => [
+                    'validation_errors' => $e->errors(),
+                    'request_data' => $request->all()
+                ],
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'session_id' => session()->getId(),
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Geçersiz veri gönderildi.',
+                'errors' => $e->errors()
+            ], 422);
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            // Log general error
+            AdminAuditLog::logAction([
+                'admin_id' => auth('admin')->id(),
+                'admin_name' => auth('admin')->user()?->firstName . ' ' . auth('admin')->user()?->lastName,
+                'admin_email' => auth('admin')->user()?->email,
+                'action' => 'bulk_assign',
+                'entity_type' => 'User',
+                'category' => AdminAuditLog::CATEGORIES['user_management'],
+                'description' => 'Bulk admin assignment failed - system error',
+                'status' => AdminAuditLog::STATUS_FAILED,
+                'severity' => AdminAuditLog::SEVERITY_ERROR,
+                'is_bulk_operation' => true,
+                'operation_id' => $operationId,
+                'metadata' => [
+                    'error_message' => $e->getMessage(),
+                    'request_data' => $request->all()
+                ],
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+                'session_id' => session()->getId(),
+            ]);
+            
+            \Log::error('Bulk Admin Assignment Error', [
+                'admin_id' => auth('admin')->id(),
+                'request_data' => $request->all(),
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'operation_id' => $operationId
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Toplu admin ataması sırasında bir hata oluştu.'
             ], 500);
         }
     }

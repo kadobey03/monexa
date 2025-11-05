@@ -88,6 +88,11 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('/dashboard/activesignals', 'activesignals')->name('activesignals');
         Route::get('dashboard/manageusers', 'manageusers')->name('manageusers');
         Route::post('dashboard/manageusers/clear-filters', 'clearUserFilters')->name('admin.manageusers.clear-filters');
+        
+        // User Export & Bulk Operations Routes
+        Route::match(['GET', 'POST'], 'dashboard/manageusers/export', 'exportUsers')->name('admin.manageusers.export');
+        Route::post('dashboard/manageusers/bulk-status', 'bulkUpdateStatus')->name('admin.manageusers.bulk-status');
+        Route::post('dashboard/manageusers/bulk-assign', 'bulkAssignAdmin')->name('admin.manageusers.bulk-assign');
 
         //copytradingaddcopytrading
 	Route::get('dashboard/copytrading', [Copytradingcontroller::class , 'copytrading'])->name('copytrading');

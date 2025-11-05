@@ -591,26 +591,106 @@
             </div>
         </div>
 
-        <!-- Bulk Actions Bar (Hidden by default) -->
-        <div id="bulk-actions-bar" class="hidden mt-6 bg-admin-600 {{ $isDark ? 'dark:bg-admin-700' : '' }} rounded-xl shadow-lg p-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <span class="text-white font-medium">
-                        <span id="selected-count">0</span> kullanıcı seçildi
-                    </span>
-                </div>
-                <div class="flex items-center space-x-3">
-                    <button onclick="bulkActivate()" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
-                        <i class="fas fa-check mr-2"></i>Aktifleştir
-                    </button>
-                    <button onclick="bulkBlock()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors">
-                        <i class="fas fa-ban mr-2"></i>Engelle
-                    </button>
-                    <button onclick="exportSelected()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                        <i class="fas fa-download mr-2"></i>Seçilenleri Dışa Aktar
+        <!-- Sticky Floating Bulk Actions Bubble (Hidden by default) -->
+        <div id="bulk-actions-bar" class="hidden fixed bottom-6 right-6 z-50 bg-admin-600 {{ $isDark ? 'dark:bg-admin-700' : '' }} rounded-2xl shadow-2xl border border-admin-500 {{ $isDark ? 'dark:border-admin-600' : '' }} max-w-sm">
+            <!-- Compact Header with Selected Count -->
+            <div class="px-4 py-3 bg-admin-700 {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-white text-sm"></i>
+                        </div>
+                        <span class="text-white font-medium text-sm">
+                            <span id="selected-count" class="text-yellow-300 font-bold">0</span> seçildi
+                        </span>
+                    </div>
+                    <button onclick="updateBulkActions()"
+                            class="text-white hover:text-red-300 transition-colors p-1 rounded"
+                            title="Kapat">
+                        <i class="fas fa-times text-sm"></i>
                     </button>
                 </div>
             </div>
+            
+            <!-- Compact Action Buttons Grid -->
+            <div class="p-4">
+                <div class="grid grid-cols-2 gap-2 mb-3">
+                    <button onclick="bulkActivate()"
+                            class="flex items-center justify-center px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
+                        <i class="fas fa-check mr-1"></i>
+                        <span class="hidden sm:inline">Aktifleştir</span>
+                        <span class="sm:hidden">Aktif</span>
+                    </button>
+                    <button onclick="bulkBlock()"
+                            class="flex items-center justify-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
+                        <i class="fas fa-ban mr-1"></i>
+                        <span class="hidden sm:inline">Engelle</span>
+                        <span class="sm:hidden">Engel</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <button onclick="bulkUpdateLeadStatus()"
+                            class="flex items-center justify-center px-3 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
+                        <i class="fas fa-flag mr-1"></i>
+                        <span class="hidden sm:inline">Status</span>
+                        <span class="sm:hidden">St.</span>
+                    </button>
+                    <button onclick="bulkAssignAdmin()"
+                            class="flex items-center justify-center px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
+                        <i class="fas fa-user-tie mr-1"></i>
+                        <span class="hidden sm:inline">Admin</span>
+                        <span class="sm:hidden">Ad.</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 gap-2">
+                    <button onclick="exportSelected()"
+                            class="flex items-center justify-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
+                        <i class="fas fa-download mr-2"></i>Dışa Aktar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Responsive Adjustments -->
+            <style>
+                @media (max-width: 640px) {
+                    #bulk-actions-bar {
+                        bottom: 1rem;
+                        right: 1rem;
+                        left: 1rem;
+                        max-width: none;
+                    }
+                }
+                
+                /* Floating animation */
+                #bulk-actions-bar:not(.hidden) {
+                    animation: slideInUp 0.3s ease-out;
+                }
+                
+                @keyframes slideInUp {
+                    from {
+                        transform: translateY(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                }
+                
+                /* Pulse effect for selected count */
+                #selected-count {
+                    animation: pulse 2s infinite;
+                }
+                
+                @keyframes pulse {
+                    0%, 100% {
+                        opacity: 1;
+                    }
+                    50% {
+                        opacity: 0.7;
+                    }
+                }
+            </style>
         </div>
     </div>
 </div>
@@ -696,6 +776,203 @@
     </div>
 </div>
 
+<!-- Admin Assignment Modal -->
+<div id="admin-assignment-modal" class="fixed inset-0 z-50 hidden">
+    <div class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
+    
+    <div class="fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="modal-content bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-xl shadow-xl w-full max-w-md transform transition-all duration-300 opacity-0 scale-95">
+                
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between px-6 py-4 border-b border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }}">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-user-tie text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                Admin Ataması
+                            </h3>
+                            <p class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
+                                <span id="modal-selected-count" class="font-medium text-purple-600">0</span> kullanıcı seçildi
+                            </p>
+                        </div>
+                    </div>
+                    <button onclick="closeAdminAssignModal()"
+                            class="p-2 hover:bg-admin-100 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} rounded-lg transition-colors">
+                        <i class="fas fa-times text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }}"></i>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="px-6 py-6">
+                    <div class="space-y-4">
+                        <!-- Admin Selection -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
+                                <i class="fas fa-user-tie text-purple-500 mr-2"></i>
+                                Admin Seçimi
+                            </label>
+                            <select id="admin-select"
+                                    class="block w-full px-4 py-3 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                                <option value="">Atamayı kaldır (Atanmamış)</option>
+                                @if(isset($admins) && $admins->count() > 0)
+                                    @foreach($admins as $admin)
+                                        <option value="{{ $admin->id }}">
+                                            {{ $admin->getDisplayName() }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+                        <!-- Selected Users Preview -->
+                        <div class="bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }} rounded-lg p-4">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <i class="fas fa-users text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }}"></i>
+                                <span class="text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
+                                    Seçili Kullanıcılar
+                                </span>
+                            </div>
+                            <div id="selected-users-preview" class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} max-h-20 overflow-y-auto">
+                                <!-- Bu alan JavaScript ile doldurulacak -->
+                            </div>
+                        </div>
+
+                        <!-- Warning Message -->
+                        <div class="bg-yellow-50 {{ $isDark ? 'dark:bg-yellow-900/20' : '' }} border border-yellow-200 {{ $isDark ? 'dark:border-yellow-700' : '' }} rounded-lg p-3">
+                            <div class="flex items-start space-x-2">
+                                <i class="fas fa-exclamation-triangle text-yellow-600 mt-0.5"></i>
+                                <div class="text-sm text-yellow-800 {{ $isDark ? 'dark:text-yellow-200' : '' }}">
+                                    <strong>Dikkat:</strong> Bu işlem seçili tüm kullanıcıların admin atamasını değiştirecek ve geçmişe dönük kayıt oluşturacaktır.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="flex items-center justify-end space-x-3 px-6 py-4 border-t border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }}">
+                    <button type="button"
+                            onclick="closeAdminAssignModal()"
+                            class="px-4 py-2 text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} hover:bg-admin-100 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} rounded-lg transition-colors font-medium">
+                        İptal
+                    </button>
+                    <button type="button"
+                            onclick="submitAdminAssignment()"
+                            class="inline-flex items-center px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
+                        <i class="fas fa-user-tie mr-2"></i>
+                        Admin Ata
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lead Status Change Modal -->
+<div id="status-change-modal" class="fixed inset-0 z-50 hidden">
+    <div class="modal-backdrop fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
+    
+    <div class="fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="modal-content bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-xl shadow-xl w-full max-w-md transform transition-all duration-300 opacity-0 scale-95">
+                
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between px-6 py-4 border-b border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }}">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-flag text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
+                                Toplu Status Değişimi
+                            </h3>
+                            <p class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
+                                <span id="status-modal-selected-count" class="font-medium text-orange-600">0</span> kullanıcı seçildi
+                            </p>
+                        </div>
+                    </div>
+                    <button onclick="closeStatusChangeModal()"
+                            class="p-2 hover:bg-admin-100 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} rounded-lg transition-colors">
+                        <i class="fas fa-times text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }}"></i>
+                    </button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="px-6 py-6">
+                    <div class="space-y-4">
+                        <!-- Lead Status Selection -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
+                                <i class="fas fa-flag text-orange-500 mr-2"></i>
+                                Yeni Lead Status
+                            </label>
+                            <select id="status-select"
+                                    class="block w-full px-4 py-3 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                                <option value="">Lütfen status seçin</option>
+                                @if(isset($leadStatuses) && $leadStatuses->count() > 0)
+                                    @foreach($leadStatuses as $status)
+                                        <option value="{{ $status->name }}"
+                                                style="background-color: {{ $status->color ?? '#6B7280' }}; color: white;">
+                                            {{ $status->display_name ?: $status->name }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option value="new">Yeni</option>
+                                    <option value="contacted">İletişimde</option>
+                                    <option value="qualified">Nitelikli</option>
+                                    <option value="converted">Dönüştürülmüş</option>
+                                    <option value="lost">Kayıp</option>
+                                @endif
+                            </select>
+                        </div>
+
+                        <!-- Selected Users Preview -->
+                        <div class="bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }} rounded-lg p-4">
+                            <div class="flex items-center space-x-2 mb-2">
+                                <i class="fas fa-users text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }}"></i>
+                                <span class="text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
+                                    Seçili Kullanıcılar
+                                </span>
+                            </div>
+                            <div id="status-selected-users-preview" class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} max-h-20 overflow-y-auto">
+                                <!-- Bu alan JavaScript ile doldurulacak -->
+                            </div>
+                        </div>
+
+                        <!-- Warning Message -->
+                        <div class="bg-orange-50 {{ $isDark ? 'dark:bg-orange-900/20' : '' }} border border-orange-200 {{ $isDark ? 'dark:border-orange-700' : '' }} rounded-lg p-3">
+                            <div class="flex items-start space-x-2">
+                                <i class="fas fa-exclamation-triangle text-orange-600 mt-0.5"></i>
+                                <div class="text-sm text-orange-800 {{ $isDark ? 'dark:text-orange-200' : '' }}">
+                                    <strong>Dikkat:</strong> Bu işlem seçili tüm kullanıcıların lead status'unu değiştirecek ve sistem kayıt tutacaktır.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="flex items-center justify-end space-x-3 px-6 py-4 border-t border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }}">
+                    <button type="button"
+                            onclick="closeStatusChangeModal()"
+                            class="px-4 py-2 text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} hover:bg-admin-100 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} rounded-lg transition-colors font-medium">
+                        İptal
+                    </button>
+                    <button type="button"
+                            onclick="submitStatusChange()"
+                            class="inline-flex items-center px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
+                        <i class="fas fa-flag mr-2"></i>
+                        Status Değiştir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 // Modern Table Functionality - No Alpine.js, No Livewire
 document.addEventListener('DOMContentLoaded', function() {
@@ -764,40 +1041,422 @@ function unblockUser(userId) {
 function bulkActivate() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        alert('Lütfen en az bir kullanıcı seçin.');
+        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
         return;
     }
     
     if (confirm(`${selectedUsers.length} kullanıcıyı aktifleştirmek istediğinizden emin misiniz?`)) {
-        // Implement bulk activation logic
-        console.log('Bulk activate:', selectedUsers);
+        bulkUpdateUserStatus(selectedUsers, 'active', 'aktifleştir');
     }
 }
 
 function bulkBlock() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        alert('Lütfen en az bir kullanıcı seçin.');
+        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
         return;
     }
     
     if (confirm(`${selectedUsers.length} kullanıcıyı engellemek istediğinizden emin misiniz?`)) {
-        // Implement bulk block logic
-        console.log('Bulk block:', selectedUsers);
+        bulkUpdateUserStatus(selectedUsers, 'blocked', 'engelle');
     }
 }
 
+// Generic bulk status update function
+function bulkUpdateUserStatus(userIds, status, actionName) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    
+    // Loading göster
+    showNotification(`${userIds.length} kullanıcı ${actionName} işlemi başlatılıyor...`, 'info');
+    
+    fetch('{{ route("admin.manageusers.bulk-status") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            user_ids: userIds,
+            new_status: status
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            showNotification(data.message, 'success');
+            // Sayfayı yenile
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            showNotification(data.message || `${actionName} işlemi başarısız oldu.`, 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Bulk operation error:', error);
+        showNotification(`${actionName} işlemi sırasında bir hata oluştu: ${error.message}`, 'error');
+    });
+}
+
 function exportUsers() {
-    alert('Dışa aktarma özelliği yakında eklenecek.');
+    // Mevcut filtreleri al
+    const currentUrl = new URL(window.location.href);
+    const filters = {
+        status: currentUrl.searchParams.get('status') || '',
+        admin: currentUrl.searchParams.get('admin') || '',
+        date_from: currentUrl.searchParams.get('date_from') || '',
+        date_to: currentUrl.searchParams.get('date_to') || ''
+    };
+    
+    // Export URL'sini oluştur
+    const exportUrl = new URL('{{ route("admin.manageusers.export") }}', window.location.origin);
+    
+    // Filtreleri export URL'sine ekle
+    Object.keys(filters).forEach(key => {
+        if (filters[key]) {
+            exportUrl.searchParams.set(key, filters[key]);
+        }
+    });
+    
+    // Loading göster
+    showNotification('Excel dosyası hazırlanıyor... Lütfen bekleyin.', 'info');
+    
+    // Export işlemini başlat
+    window.location.href = exportUrl.toString();
+    
+    // Success message (dosya indirilmeye başladığında)
+    setTimeout(() => {
+        showNotification('Excel dosyası başarıyla oluşturuldu ve indirilmeye başlandı.', 'success');
+    }, 1000);
 }
 
 function exportSelected() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        alert('Lütfen en az bir kullanıcı seçin.');
+        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
         return;
     }
-    alert(`${selectedUsers.length} kullanıcı dışa aktarılacak.`);
+    
+    // Form oluştur ve POST ile gönder
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '{{ route("admin.manageusers.export") }}';
+    form.style.display = 'none';
+    
+    // CSRF token ekle
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    if (csrfToken) {
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = '_token';
+        tokenInput.value = csrfToken;
+        form.appendChild(tokenInput);
+    }
+    
+    // Mevcut filtreleri ekle
+    const currentUrl = new URL(window.location.href);
+    const filters = {
+        status: currentUrl.searchParams.get('status') || '',
+        admin: currentUrl.searchParams.get('admin') || '',
+        date_from: currentUrl.searchParams.get('date_from') || '',
+        date_to: currentUrl.searchParams.get('date_to') || ''
+    };
+    
+    // Filtreleri form'a ekle
+    Object.keys(filters).forEach(key => {
+        if (filters[key]) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = filters[key];
+            form.appendChild(input);
+        }
+    });
+    
+    // Seçili kullanıcı ID'lerini ekle
+    selectedUsers.forEach(userId => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'selected_users[]';
+        input.value = userId;
+        form.appendChild(input);
+    });
+    
+    // Export type belirt
+    const typeInput = document.createElement('input');
+    typeInput.type = 'hidden';
+    typeInput.name = 'export_type';
+    typeInput.value = 'selected';
+    form.appendChild(typeInput);
+    
+    showNotification(`${selectedUsers.length} seçili kullanıcı için Excel dosyası hazırlanıyor...`, 'info');
+    
+    // Form'u DOM'a ekle ve submit et
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+    
+    setTimeout(() => {
+        showNotification('Seçili kullanıcılar için Excel dosyası başarıyla oluşturuldu.', 'success');
+    }, 1000);
+}
+
+// Bulk Admin Assignment Function - Şimdi Modal Açıyor
+function bulkAssignAdmin() {
+    const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
+    if (selectedUsers.length === 0) {
+        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        return;
+    }
+    
+    // Modal'ı aç
+    openAdminAssignModal(selectedUsers);
+}
+
+// Admin Assignment Modal Functions
+function openAdminAssignModal(selectedUsers) {
+    const modal = document.getElementById('admin-assignment-modal');
+    const selectedCount = document.getElementById('modal-selected-count');
+    const userPreview = document.getElementById('selected-users-preview');
+    
+    // Seçili kullanıcı sayısını güncelle
+    selectedCount.textContent = selectedUsers.length;
+    
+    // Seçili kullanıcıları preview kısmında göster
+    updateSelectedUsersPreview(selectedUsers);
+    
+    // Modal'ı göster
+    modal.classList.remove('hidden');
+    modal.querySelector('.modal-backdrop').classList.remove('opacity-0');
+    modal.querySelector('.modal-content').classList.remove('opacity-0', 'scale-95');
+    modal.querySelector('.modal-backdrop').classList.add('opacity-100');
+    modal.querySelector('.modal-content').classList.add('opacity-100', 'scale-100');
+}
+
+function closeAdminAssignModal() {
+    const modal = document.getElementById('admin-assignment-modal');
+    modal.querySelector('.modal-backdrop').classList.remove('opacity-100');
+    modal.querySelector('.modal-content').classList.remove('opacity-100', 'scale-100');
+    modal.querySelector('.modal-backdrop').classList.add('opacity-0');
+    modal.querySelector('.modal-content').classList.add('opacity-0', 'scale-95');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        // Modal'ı sıfırla
+        document.getElementById('admin-select').value = '';
+    }, 300);
+}
+
+function updateSelectedUsersPreview(selectedUserIds) {
+    const userPreview = document.getElementById('selected-users-preview');
+    const userNames = [];
+    
+    // Her seçili kullanıcının adını bul
+    selectedUserIds.forEach(userId => {
+        const userRow = document.querySelector(`input[value="${userId}"]`).closest('tr');
+        const userName = userRow.querySelector('td:nth-child(2) .text-admin-900').textContent.trim();
+        userNames.push(userName);
+    });
+    
+    if (userNames.length <= 3) {
+        userPreview.innerHTML = userNames.join(', ');
+    } else {
+        const displayNames = userNames.slice(0, 2).join(', ');
+        userPreview.innerHTML = `${displayNames} ve ${userNames.length - 2} kişi daha...`;
+    }
+}
+
+function submitAdminAssignment() {
+    const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
+    const selectedAdmin = document.getElementById('admin-select').value;
+    
+    if (selectedUsers.length === 0) {
+        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        return;
+    }
+    
+    // Modal'ı kapat
+    closeAdminAssignModal();
+    
+    // Admin atama işlemini başlat
+    const adminIdValue = selectedAdmin.trim() === '' ? null : selectedAdmin.trim();
+    bulkAssignAdminToUsers(selectedUsers, adminIdValue);
+}
+
+// Generic bulk admin assignment function
+function bulkAssignAdminToUsers(userIds, adminId) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    
+    const actionText = adminId ? `admin (ID: ${adminId})` : 'atanmamış duruma';
+    
+    showNotification(`${userIds.length} kullanıcı ${actionText} atanıyor...`, 'info');
+    
+    fetch('{{ route("admin.manageusers.bulk-assign") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            user_ids: userIds,
+            admin_id: adminId
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            showNotification(data.message, 'success');
+            // Sayfayı yenile
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            showNotification(data.message || 'Admin atama işlemi başarısız oldu.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Bulk admin assignment error:', error);
+        showNotification(`Admin atama işlemi sırasında bir hata oluştu: ${error.message}`, 'error');
+    });
+}
+
+// Bulk Lead Status Update Function - Modal Açıyor
+function bulkUpdateLeadStatus() {
+    const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
+    if (selectedUsers.length === 0) {
+        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        return;
+    }
+    
+    // Modal'ı aç
+    openStatusChangeModal(selectedUsers);
+}
+
+// Lead Status Change Modal Functions
+function openStatusChangeModal(selectedUsers) {
+    const modal = document.getElementById('status-change-modal');
+    const selectedCount = document.getElementById('status-modal-selected-count');
+    const userPreview = document.getElementById('status-selected-users-preview');
+    
+    // Seçili kullanıcı sayısını güncelle
+    selectedCount.textContent = selectedUsers.length;
+    
+    // Seçili kullanıcıları preview kısmında göster
+    updateStatusSelectedUsersPreview(selectedUsers);
+    
+    // Modal'ı göster
+    modal.classList.remove('hidden');
+    modal.querySelector('.modal-backdrop').classList.remove('opacity-0');
+    modal.querySelector('.modal-content').classList.remove('opacity-0', 'scale-95');
+    modal.querySelector('.modal-backdrop').classList.add('opacity-100');
+    modal.querySelector('.modal-content').classList.add('opacity-100', 'scale-100');
+}
+
+function closeStatusChangeModal() {
+    const modal = document.getElementById('status-change-modal');
+    modal.querySelector('.modal-backdrop').classList.remove('opacity-100');
+    modal.querySelector('.modal-content').classList.remove('opacity-100', 'scale-100');
+    modal.querySelector('.modal-backdrop').classList.add('opacity-0');
+    modal.querySelector('.modal-content').classList.add('opacity-0', 'scale-95');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        // Modal'ı sıfırla
+        document.getElementById('status-select').value = '';
+    }, 300);
+}
+
+function updateStatusSelectedUsersPreview(selectedUserIds) {
+    const userPreview = document.getElementById('status-selected-users-preview');
+    const userNames = [];
+    
+    // Her seçili kullanıcının adını bul
+    selectedUserIds.forEach(userId => {
+        const userRow = document.querySelector(`input[value="${userId}"]`).closest('tr');
+        const userName = userRow.querySelector('td:nth-child(2) .text-admin-900').textContent.trim();
+        userNames.push(userName);
+    });
+    
+    if (userNames.length <= 3) {
+        userPreview.innerHTML = userNames.join(', ');
+    } else {
+        const displayNames = userNames.slice(0, 2).join(', ');
+        userPreview.innerHTML = `${displayNames} ve ${userNames.length - 2} kişi daha...`;
+    }
+}
+
+function submitStatusChange() {
+    const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
+    const selectedStatus = document.getElementById('status-select').value;
+    
+    if (selectedUsers.length === 0) {
+        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        return;
+    }
+    
+    if (!selectedStatus.trim()) {
+        showNotification('Lütfen bir lead status seçin.', 'error');
+        return;
+    }
+    
+    // Modal'ı kapat
+    closeStatusChangeModal();
+    
+    // Status değişim işlemini başlat
+    bulkChangeLeadStatus(selectedUsers, selectedStatus.trim());
+}
+
+// Generic bulk lead status change function
+function bulkChangeLeadStatus(userIds, newStatus) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    
+    showNotification(`${userIds.length} kullanıcının lead status'u "${newStatus}" olarak değiştiriliyor...`, 'info');
+    
+    fetch('{{ route("admin.manageusers.bulk-status") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            user_ids: userIds,
+            new_status: newStatus
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            showNotification(data.message, 'success');
+            // Sayfayı yenile
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            showNotification(data.message || 'Lead status değişimi başarısız oldu.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Bulk status change error:', error);
+        showNotification(`Lead status değişimi sırasında bir hata oluştu: ${error.message}`, 'error');
+    });
 }
 
 function openAddUserModal() {
