@@ -58,25 +58,18 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
             
             <!-- Main Settings Content -->
             <div class="px-4 py-6 sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-xl border border-gray-200 dark:border-admin-700 overflow-hidden">
+            <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-xl border border-gray-200 dark:border-admin-700 overflow-hidden" id="tabContainer">
                 <!-- Tab Navigation -->
                 <div class="border-b border-gray-200 dark:border-admin-600 bg-gradient-to-r from-gray-50 to-white dark:from-admin-700 dark:to-admin-800">
-                        <nav class="flex flex-wrap" x-data="{ activeTab: 'info' }">
-                        <button @click="activeTab = 'module'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900': activeTab === 'module', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300': activeTab !== 'module' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
-                            <div class="flex items-center justify-center space-x-2">
-                                <x-heroicon name="squares-plus" class="w-5 h-5" />
-                                <span>Modül</span>
-                            </div>
-                        </button>
-                            
-                        <button @click="activeTab = 'info'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900': activeTab === 'info', 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300': activeTab !== 'info' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                        <nav class="flex flex-wrap -mb-px overflow-x-auto scrollbar-hide">
+                        <button onclick="switchTab('info')" data-tab="info" class="tab-button active-tab flex-1 min-w-0 py-4 px-6 lg:px-8 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600 whitespace-nowrap border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900/20">
                             <div class="flex items-center justify-center space-x-2">
                                 <x-heroicon name="information-circle" class="w-5 h-5" />
                                 <span>Site Bilgileri</span>
                             </div>
                         </button>
                             
-                            <button @click="activeTab = 'pref'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'pref', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'pref' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                            <button onclick="switchTab('pref')" data-tab="pref" class="tab-button flex-1 min-w-0 py-4 px-6 lg:px-8 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600 whitespace-nowrap border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-admin-500">
                                 <div class="flex items-center justify-center space-x-2">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -85,7 +78,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                 </div>
                             </button>
                             
-                            <button @click="activeTab = 'email'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'email', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'email' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
+                            <button onclick="switchTab('email')" data-tab="email" class="tab-button flex-1 min-w-0 py-4 px-6 lg:px-8 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600 whitespace-nowrap border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-admin-500">
                                 <div class="flex items-center justify-center space-x-2">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
@@ -94,47 +87,26 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                     <span>E-posta/Google</span>
                                 </div>
                             </button>
-                            
-                            <button @click="activeTab = 'display'" :class="{ 'border-blue-500 text-blue-600 bg-blue-50': activeTab === 'display', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'display' }" class="flex-1 min-w-0 py-4 px-6 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600">
-                                <div class="flex items-center justify-center space-x-2">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2H4zm12 12H4v-5h12v5z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span>Tema/Görünüm</span>
-                                </div>
-                            </button>
                         </nav>
                     </div>
                     
                     <!-- Tab Content -->
-                    <div class="p-6 sm:p-8 lg:p-10" x-data="{ activeTab: 'info' }">
-                        <!-- Module Tab -->
-                        <div x-show="activeTab === 'module'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
-                            {{-- <livewire:admin.software-module /> --}}
-                            <div class="p-4 bg-yellow-100 border border-yellow-300 rounded-lg">
-                                <p class="text-yellow-800">Modül bileşeni geçici olarak devre dışı bırakıldı.</p>
-                            </div>
-                        </div>
-                        
+                    <div class="p-4 sm:p-6 lg:p-8 xl:p-10">
                         <!-- Website Information Tab -->
-                        <div x-show="activeTab === 'info'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                        <div id="tab-info" class="tab-content space-y-6">
                             @include('admin.Settings.AppSettings.webinfo')
                         </div>
                         
                         <!-- Preferences Tab -->
-                        <div x-show="activeTab === 'pref'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                        <div id="tab-pref" class="tab-content hidden space-y-6">
                             @include('admin.Settings.AppSettings.webpreference')
                         </div>
                         
                         <!-- Email/Google Tab -->
-                        <div x-show="activeTab === 'email'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
+                        <div id="tab-email" class="tab-content hidden space-y-6">
                             @include('admin.Settings.AppSettings.email')
                         </div>
                         
-                        <!-- Theme/Display Tab -->
-                        <div x-show="activeTab === 'display'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform translate-y-4" x-transition:enter-end="opacity-100 transform translate-y-0" class="space-y-6">
-                            @include('admin.Settings.AppSettings.theme')
-                        </div>
                     </div>
                 </div>
         </div>
@@ -142,6 +114,41 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
 
     <!-- Scripts -->
     <script>
+        // Tab switching functionality - Vanilla JavaScript (No Alpine)
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active state from all tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active-tab', 'border-blue-500', 'text-blue-600', 'bg-blue-50', 'dark:bg-blue-900/20');
+                button.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400', 'hover:text-gray-700', 'dark:hover:text-gray-300', 'hover:border-gray-300', 'dark:hover:border-admin-500');
+            });
+            
+            // Show selected tab content
+            const selectedContent = document.getElementById('tab-' + tabName);
+            if (selectedContent) {
+                selectedContent.classList.remove('hidden');
+            }
+            
+            // Add active state to selected tab button
+            const selectedButton = document.querySelector(`[data-tab="${tabName}"]`);
+            if (selectedButton) {
+                selectedButton.classList.add('active-tab', 'border-blue-500', 'text-blue-600', 'bg-blue-50', 'dark:bg-blue-900/20');
+                selectedButton.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400', 'hover:text-gray-700', 'dark:hover:text-gray-300', 'hover:border-gray-300', 'dark:hover:border-admin-500');
+            }
+        }
+        
+        // Initialize tabs on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default active tab to 'info'
+            switchTab('info');
+        });
+        
         // Select2 initialization if needed
         if (typeof $ !== 'undefined' && $.fn.select2) {
             $('.select2').select2();

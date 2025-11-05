@@ -1,15 +1,15 @@
 <div class="space-y-8">
     <!-- Email Configuration Section -->
-    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
-        <div class="flex items-center space-x-3 mb-4">
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
+        <div class="flex items-center space-x-3 mb-6">
             <div class="p-2 bg-blue-500 rounded-lg">
                 <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                 </svg>
             </div>
-            <h2 class="text-xl font-bold text-gray-900">E-posta Yapılandırması</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">E-posta Yapılandırması</h2>
         </div>
-        <hr class="border-blue-200 mb-6">
         
         <form action="javascript:void(0)" method="POST" id="emailform" class="space-y-6">
             @csrf
@@ -17,62 +17,69 @@
             
             <!-- Mail Server Selection -->
             <div class="space-y-4">
-                <label class="text-sm font-semibold text-gray-700">Mail Sunucusu</label>
-                <div class="flex flex-wrap gap-3">
-                    <label class="inline-flex items-center">
-                        <input type="radio" name="server" id="sendmailserver" value="sendmail" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" checked="">
-                        <span class="ml-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">Sendmail</span>
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Mail Sunucusu Seçimi</label>
+                <div class="flex flex-wrap gap-4">
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="radio" name="server" id="sendmailserver" value="sendmail" class="w-4 h-4 text-blue-600 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:ring-2" checked="">
+                        <span class="ml-3 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">Sendmail</span>
                     </label>
-                    <label class="inline-flex items-center">
-                        <input type="radio" name="server" id="smtpserver" value="smtp" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                        <span class="ml-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">SMTP</span>
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="radio" name="server" id="smtpserver" value="smtp" class="w-4 h-4 text-blue-600 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:ring-2">
+                        <span class="ml-3 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">SMTP</span>
                     </label>
                 </div>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Sendmail sistem varsayılan mail sunucusunu kullanır, SMTP özel ayarlar gerektirir.</p>
             </div>
             
             <!-- Basic Email Settings -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">E-posta Kimden</label>
-                    <input type="email" name="emailfrom" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" value="{{ $settings->emailfrom }}" required>
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Gönderen E-posta Adresi</label>
+                    <input type="email" name="emailfrom" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->emailfrom }}" placeholder="noreply@example.com" required>
                 </div>
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">E-posta Kimden Adı</label>
-                    <input type="text" name="emailfromname" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" value="{{ $settings->emailfromname }}" required>
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Gönderen Adı</label>
+                    <input type="text" name="emailfromname" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->emailfromname }}" placeholder="Monexa Finans" required>
                 </div>
             </div>
             
             <!-- SMTP Settings -->
             <div class="smtp hidden space-y-6">
-                <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
                     <div class="flex items-center">
-                        <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                         </svg>
-                        <p class="ml-2 text-sm text-yellow-800 font-medium">SMTP Ayarları</p>
+                        <p class="ml-2 text-sm text-amber-800 dark:text-amber-200 font-medium">SMTP Sunucu Ayarları</p>
                     </div>
+                    <p class="mt-2 text-xs text-amber-700 dark:text-amber-300">Gmail, Outlook, Yahoo gibi SMTP sunucuları için gerekli bilgileri girin</p>
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="space-y-2">
-                        <label class="text-sm font-semibold text-gray-700">SMTP Host</label>
-                        <input type="text" name="smtp_host" class="smtp-input w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" value="{{ $settings->smtp_host }}">
+                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">SMTP Host</label>
+                        <input type="text" name="smtp_host" class="smtp-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->smtp_host }}" placeholder="smtp.gmail.com">
                     </div>
                     <div class="space-y-2">
-                        <label class="text-sm font-semibold text-gray-700">SMTP Port</label>
-                        <input type="text" name="smtp_port" class="smtp-input w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" value="{{ $settings->smtp_port }}">
+                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">SMTP Port</label>
+                        <input type="number" name="smtp_port" class="smtp-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->smtp_port }}" placeholder="587">
                     </div>
                     <div class="space-y-2">
-                        <label class="text-sm font-semibold text-gray-700">SMTP Şifreleme</label>
-                        <input type="text" name="smtp_encrypt" class="smtp-input w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" value="{{ $settings->smtp_encrypt }}">
+                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Şifreleme Türü</label>
+                        <select name="smtp_encrypt" class="smtp-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                            <option value="tls" {{ $settings->smtp_encrypt == 'tls' ? 'selected' : '' }}>TLS</option>
+                            <option value="ssl" {{ $settings->smtp_encrypt == 'ssl' ? 'selected' : '' }}>SSL</option>
+                            <option value="" {{ $settings->smtp_encrypt == '' ? 'selected' : '' }}>Yok</option>
+                        </select>
                     </div>
                     <div class="space-y-2">
-                        <label class="text-sm font-semibold text-gray-700">SMTP Kullanıcı Adı</label>
-                        <input type="text" name="smtp_user" class="smtp-input w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" value="{{ $settings->smtp_user }}">
+                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">SMTP Kullanıcı Adı</label>
+                        <input type="text" name="smtp_user" class="smtp-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->smtp_user }}" placeholder="your-email@gmail.com">
                     </div>
                     <div class="lg:col-span-2 space-y-2">
-                        <label class="text-sm font-semibold text-gray-700">SMTP Şifresi</label>
-                        <input type="password" name="smtp_password" class="smtp-input w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" value="{{ $settings->smtp_password }}">
+                        <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">SMTP Şifresi</label>
+                        <input type="password" name="smtp_password" class="smtp-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->smtp_password }}" placeholder="Uygulama şifrenizi girin">
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Gmail için uygulama şifresi, normal şifre değil</p>
                     </div>
                 </div>
             </div>
@@ -96,34 +103,36 @@
         
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div class="space-y-2">
-                <label class="text-sm font-semibold text-gray-700">Client ID</label>
-                <input type="text" name="google_id" form="emailform" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200" value="{{ $settings->google_id }}">
-                <p class="text-xs text-gray-500 flex items-center">
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Google Client ID</label>
+                <input type="text" name="google_id" form="emailform" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->google_id }}" placeholder="123456789-abc.apps.googleusercontent.com">
+                <p class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path>
                     </svg>
-                    console.cloud.google.com adresinden
+                    console.cloud.google.com adresinden alın
                 </p>
             </div>
             <div class="space-y-2">
-                <label class="text-sm font-semibold text-gray-700">Client Secret</label>
-                <input type="text" name="google_secret" form="emailform" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200" value="{{ $settings->google_secret }}">
-                <p class="text-xs text-gray-500 flex items-center">
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Google Client Secret</label>
+                <input type="password" name="google_secret" form="emailform" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->google_secret }}" placeholder="GOCSPX-abcdef...">
+                <p class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path>
                     </svg>
-                    console.cloud.google.com adresinden
+                    console.cloud.google.com adresinden alın
                 </p>
             </div>
             <div class="lg:col-span-2 space-y-2">
-                <label class="text-sm font-semibold text-gray-700">Yönlendirme URL'si</label>
-                <input type="text" name="google_redirect" form="emailform" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200" value="{{ $settings->google_redirect }}">
-                <p class="text-xs text-gray-500 flex items-start">
-                    <svg class="w-4 h-4 mr-1 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                    </svg>
-                    Bunu console.cloud.google.com'da Geçerli OAuth Yönlendirme URI'nize ayarlayın. 'yoursite.com'u web sitesi URL'niz ile değiştirdiğinizden emin olun
-                </p>
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">OAuth Yönlendirme URL'si</label>
+                <input type="url" name="google_redirect" form="emailform" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->google_redirect }}" placeholder="https://yourdomain.com/auth/google/callback">
+                <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
+                    <p class="text-xs text-blue-800 dark:text-blue-200 flex items-start">
+                        <svg class="w-4 h-4 mr-1 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                        </svg>
+                        Bu URL'yi Google Cloud Console'da OAuth Redirect URI'ları bölümüne eklemeyi unutmayın. Domain adını kendi sitenizle değiştirin.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -142,24 +151,40 @@
         
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <div class="space-y-2">
-                <label class="text-sm font-semibold text-gray-700">Captcha Secret</label>
-                <input type="text" name="capt_secret" form="emailform" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200" value="{{ $settings->capt_secret }}">
-                <p class="text-xs text-gray-500 flex items-center">
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">ReCaptcha Secret Key</label>
+                <input type="password" name="capt_secret" form="emailform" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->capt_secret }}" placeholder="6Ld...">
+                <p class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path>
                     </svg>
-                    https://www.google.com/recaptcha/admin/create adresinden
+                    Google ReCaptcha admin panelinden alın
                 </p>
             </div>
             <div class="space-y-2">
-                <label class="text-sm font-semibold text-gray-700">Captcha Site-Key</label>
-                <input type="text" name="capt_sitekey" form="emailform" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200" value="{{ $settings->capt_sitekey }}">
-                <p class="text-xs text-gray-500 flex items-center">
+                <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">ReCaptcha Site Key</label>
+                <input type="text" name="capt_sitekey" form="emailform" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->capt_sitekey }}" placeholder="6Le...">
+                <p class="text-xs text-gray-500 dark:text-gray-400 flex items-center">
                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path>
                     </svg>
-                    https://www.google.com/recaptcha/admin/create adresinden
+                    Google ReCaptcha admin panelinden alın
                 </p>
+            </div>
+        </div>
+        
+        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 mb-6">
+            <div class="flex items-start">
+                <svg class="w-5 h-5 text-blue-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                    <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200">ReCaptcha Kurulum Bilgisi</h4>
+                    <p class="text-xs text-blue-700 dark:text-blue-300 mt-1">
+                        <a href="https://www.google.com/recaptcha/admin/create" target="_blank" class="underline hover:text-blue-900 dark:hover:text-blue-100">
+                            Google ReCaptcha admin paneline
+                        </a> giderek yeni bir site kaydı oluşturun ve aldığınız anahtarları buraya girin.
+                    </p>
+                </div>
             </div>
         </div>
         
@@ -169,7 +194,7 @@
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
-                Kaydet
+                Ayarları Kaydet
             </button>
         </div>
     </div>

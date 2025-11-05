@@ -16,14 +16,15 @@
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">İletişim E-postası</label>
-                    <input type="text" name="contact_email" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" value="{{ $settings->contact_email }}" required>
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">İletişim E-postası</label>
+                    <input type="email" name="contact_email" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->contact_email }}" placeholder="destek@example.com" required>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Sistem e-postalarının gönderileceği ana iletişim adresi</p>
                 </div>
                 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Web Sitesi Para Birimi</label>
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Web Sitesi Para Birimi</label>
                     <input name="s_currency" value="{{ $settings->s_currency }}" id="s_c" type="hidden">
-                    <select name="currency" id="select_c" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" onchange="changecurr()">
+                    <select name="currency" id="select_c" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" onchange="changecurr()">
                         <option value="<?php echo htmlentities($settings->currency); ?>">{{ $settings->currency }}</option>
                         @foreach ($currencies as $key => $currency)
                             <option id="{{ $key }}" value="<?php echo html_entity_decode($currency); ?>">
@@ -31,13 +32,18 @@
                             </option>
                         @endforeach
                     </select>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Tüm finansal işlemlerde kullanılacak ana para birimi</p>
                 </div>
                 
                 <div class="lg:col-span-2 space-y-2">
-                    <label class="text-sm font-semibold text-gray-700">Ana Sayfa URL'si (Yönlendirme)</label>
-                    <input type="text" name="redirect_url" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" placeholder="ör: https://myhomepage.com" value="{{ $settings->redirect_url }}">
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Özel Ana Sayfa URL'si</label>
+                    <input type="url" name="redirect_url" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" placeholder="https://yourdomain.com/custom-home" value="{{ $settings->redirect_url }}">
                     <input type="hidden" value="{{ $settings->site_preference }}" name="site_preference">
-                    <p class="text-xs text-gray-500">Özel bir ana sayfa kullanıyorsanız ve tüm isteklerin o sayfaya yönlendirilmesini istiyorsanız, lütfen URL'yi buraya girin, boş bırakılırsa sistem varsayılan ana sayfamızı/web sayfalarımızı kullanacaktır</p>
+                    <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
+                        <p class="text-xs text-amber-800 dark:text-amber-200">
+                            <strong>İsteğe bağlı:</strong> Özel bir ana sayfa kullanıyorsanız URL'sini buraya girin. Boş bırakılırsa sistem varsayılan sayfayı kullanır.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,17 +62,18 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Announcement Setting -->
                 <div class="space-y-3">
-                    <label class="text-sm font-semibold text-gray-700">Duyuru</label>
+                    <label class="text-sm font-semibold text-gray-700 dark:text-gray-300">Site Duyuruları</label>
                     <div class="flex space-x-4">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="annouc" value="on" class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 focus:ring-purple-500 focus:ring-2" {{ $settings->enable_annoc == 'on' ? 'checked' : '' }}>
-                            <span class="ml-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg">Açık</span>
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="annouc" value="on" class="w-4 h-4 text-purple-600 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-purple-500 focus:ring-2" {{ $settings->enable_annoc == 'on' ? 'checked' : '' }}>
+                            <span class="ml-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Açık</span>
                         </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="annouc" value="off" class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 focus:ring-purple-500 focus:ring-2" {{ $settings->enable_annoc != 'on' ? 'checked' : '' }}>
-                            <span class="ml-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg">Kapalı</span>
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="radio" name="annouc" value="off" class="w-4 h-4 text-purple-600 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-purple-500 focus:ring-2" {{ $settings->enable_annoc != 'on' ? 'checked' : '' }}>
+                            <span class="ml-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Kapalı</span>
                         </label>
                     </div>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Ana sayfada duyuru banner'ının gösterilip gösterilmeyeceği</p>
                 </div>
                 
                 <!-- Weekend Trade Setting -->
