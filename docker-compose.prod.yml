@@ -18,8 +18,6 @@ services:
     container_name: app-monexa
     restart: unless-stopped
     command: php-fpm
-    env_file:
-      - .env.docker.prod
     depends_on:
       - mysql-monexa
     volumes:

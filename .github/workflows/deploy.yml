@@ -26,6 +26,10 @@ jobs:
             echo "🔄 Pulling latest changes..."
             git pull origin main || { echo "❌ Git pull failed"; exit 1; }
             
+            # Copy production environment file
+            echo "📋 Setting up environment configuration..."
+            cp .env.docker.prod .env || { echo "❌ Failed to copy .env.docker.prod to .env"; exit 1; }
+            
             # Check if Docker Hub is accessible
             echo "🔍 Checking Docker Hub connectivity..."
             DOCKER_HUB_OK=false
