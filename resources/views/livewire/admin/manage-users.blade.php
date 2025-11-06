@@ -233,6 +233,9 @@
                                     <i class="fas fa-tags mr-2 text-blue-600"></i>Lead Status
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
+                                    <i class="fas fa-bullseye mr-2 text-blue-600"></i>UTM Bilgileri
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
                                     <i class="fas fa-calendar mr-2 text-blue-600"></i>Kayıt Tarihi
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }} uppercase tracking-wider">
@@ -303,6 +306,25 @@
                                         </select>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }}">
+                                        <div class="space-y-1">
+                                            @if($user->utm_source)
+                                                <div class="flex items-center text-xs">
+                                                    <span class="text-gray-400 font-medium mr-1">Source:</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full">{{ $user->utm_source }}</span>
+                                                </div>
+                                            @endif
+                                            @if($user->utm_campaign)
+                                                <div class="flex items-center text-xs">
+                                                    <span class="text-gray-400 font-medium mr-1">Campaign:</span>
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full">{{ $user->utm_campaign }}</span>
+                                                </div>
+                                            @endif
+                                            @if(!$user->utm_source && !$user->utm_campaign)
+                                                <span class="text-xs text-gray-400 italic">Bilgi yok</span>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 {{ $isDark ? 'dark:text-gray-300' : '' }}">
                                         <div class="text-sm">{{ $user->created_at->format('d M Y') }}</div>
                                         <div class="text-xs text-gray-400">{{ $user->created_at->diffForHumans() }}</div>
                                     </td>
@@ -315,7 +337,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="9" class="px-6 py-12 text-center">
+                                    <td colspan="10" class="px-6 py-12 text-center">
                                         <div class="text-gray-400">
                                             <i class="fas fa-users text-6xl mb-4"></i>
                                             <h3 class="text-lg font-medium text-gray-900 {{ $isDark ? 'dark:text-white' : '' }} mb-2">Kullanıcı Bulunamadı</h3>
@@ -383,6 +405,26 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <span class="font-medium">UTM Bilgileri:</span>
+                                        <div class="mt-1 space-y-1">
+                                            @if($user->utm_source)
+                                                <div class="flex items-center text-xs">
+                                                    <span class="text-gray-400 font-medium mr-1">Source:</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full">{{ $user->utm_source }}</span>
+                                                </div>
+                                            @endif
+                                            @if($user->utm_campaign)
+                                                <div class="flex items-center text-xs">
+                                                    <span class="text-gray-400 font-medium mr-1">Campaign:</span>
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full">{{ $user->utm_campaign }}</span>
+                                                </div>
+                                            @endif
+                                            @if(!$user->utm_source && !$user->utm_campaign)
+                                                <span class="text-xs text-gray-400 italic">Bilgi yok</span>
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="col-span-2">
                                         <span class="font-medium">Kayıt:</span> {{ $user->created_at->format('d M Y') }} ({{ $user->created_at->diffForHumans() }})

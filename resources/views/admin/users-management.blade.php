@@ -348,6 +348,12 @@
                                     <span class="font-bold">Admin</span>
                                 </div>
                             </th>
+                            <th scope="col" class="w-32 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-external-link-alt text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
+                                    <span class="font-bold">UTM Kaynak</span>
+                                </div>
+                            </th>
                             <th scope="col" class="w-24 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center justify-center space-x-2">
                                     <i class="fas fa-toggle-on text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
@@ -473,6 +479,32 @@
                                     </div>
                                 </td>
 
+                                <!-- UTM Information -->
+                                <td class="px-4 py-4 whitespace-nowrap">
+                                    <div class="text-sm space-y-1">
+                                        @if($user->utm_source || $user->utm_campaign)
+                                            @if($user->utm_source)
+                                                <div class="text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} font-medium flex items-center">
+                                                    <i class="fas fa-external-link-alt text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} mr-2 text-xs"></i>
+                                                    <span class="text-xs">Kaynak:</span>
+                                                    <span class="ml-1 px-2 py-0.5 bg-blue-100 text-blue-800 {{ $isDark ? 'dark:bg-blue-800 dark:text-blue-100' : '' }} rounded text-xs font-semibold">{{ Str::limit($user->utm_source, 12) }}</span>
+                                                </div>
+                                            @endif
+                                            @if($user->utm_campaign)
+                                                <div class="text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} font-medium flex items-center">
+                                                    <i class="fas fa-bullhorn text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} mr-2 text-xs"></i>
+                                                    <span class="text-xs">Kampanya:</span>
+                                                    <span class="ml-1 px-2 py-0.5 bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }} rounded text-xs font-semibold">{{ Str::limit($user->utm_campaign, 10) }}</span>
+                                                </div>
+                                            @endif
+                                        @else
+                                            <div class="text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} text-xs italic">
+                                                UTM bilgisi yok
+                                            </div>
+                                        @endif
+                                    </div>
+                                </td>
+
                                 <!-- Enhanced Status Badge -->
                                 <td class="px-4 py-4 whitespace-nowrap text-center">
                                     @switch($user->status ?? 'active')
@@ -533,7 +565,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="px-4 py-16 text-center">
+                                <td colspan="10" class="px-4 py-16 text-center">
                                     <div class="flex flex-col items-center justify-center space-y-4 max-w-md mx-auto">
                                         <div class="w-24 h-24 bg-gradient-to-br from-admin-400 to-admin-500 {{ $isDark ? 'dark:from-admin-500 dark:to-admin-600' : '' }} rounded-full flex items-center justify-center shadow-lg">
                                             <i class="fas fa-users text-white text-3xl"></i>
