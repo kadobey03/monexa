@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\NewNotification;
 use App\Models\Kyc;
 use App\Models\Mt4Details;
+use App\Models\LeadNote;
 use App\Traits\PingServer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Mail;
@@ -136,6 +137,16 @@ class ManageUsersController extends Controller
         $plans = Plans::where('type','main')->get();
         $signals = Signal::where('type','main')->get();
         
+        // Load user's lead notes with admin information
+        $leadNotes = $user->leadNotes()->with('admin')->orderBy('is_pinned', 'desc')->orderBy('created_at', 'desc')->get();
+        
+        // Get dropdown options for lead management
+        $leadTableService = app(\App\Services\LeadTableService::class);
+        $currentAdmin = Auth::guard('admin')->user();
+        
+        $availableAdmins = $leadTableService->getDropdownOptions($currentAdmin, 'assigned_admin');
+        $leadStatuses = $leadTableService->getDropdownOptions($currentAdmin, 'lead_status');
+        
         // Include currencies from the correct path
         include app_path('Providers/currencies.php');
         
@@ -149,6 +160,9 @@ class ManageUsersController extends Controller
             'bg' => 'primary', // Background color class (without bg- prefix)
             'text' => 'white', // Text color class (without text- prefix)
             'settings' => Settings::first(), // Add settings if needed by view
+            'leadNotes' => $leadNotes, // Add lead notes data
+            'availableAdmins' => $availableAdmins, // Dropdown options for admin assignment
+            'leadStatuses' => $leadStatuses, // Dropdown options for lead status
         ]);
     }
     //ban/disable user
@@ -895,5 +909,318 @@ public function withdrawalcode(Request $request)
                 'ref_link' => $settings->site_address . '/ref/' . $user->username,
             ]);
         return redirect()->back()->with('success', 'User created Sucessfully!');
+    }
+
+    // Admin Notes CRUD Methods
+    
+    /**
+     * Store a new lead note for the user
+     */
+    public function storeLeadNote(Request $request, $userId)
+    {
+        $request->validate([
+            'note_title' => 'required|string|max:255',
+            'note_content' => 'required|string|max:2000',
+            'note_category' => 'nullable|string|max:100',
+            'note_color' => 'nullable|string|max:20',
+            'is_pinned' => 'boolean',
+            'reminder_date' => 'nullable|date|after:now',
+        ]);
+
+        $user = User::findOrFail($userId);
+        
+        try {
+            DB::beginTransaction();
+            
+            $note = LeadNote::create([
+                'user_id' => $user->id,
+                'admin_id' => Auth::guard('admin')->id(),
+                'note_title' => $request->note_title,
+                'note_content' => $request->note_content,
+                'note_category' => $request->note_category,
+                'note_color' => $request->note_color ?? 'blue',
+                'is_pinned' => $request->boolean('is_pinned'),
+                'is_private' => false, // Tüm adminler görebilir
+                'reminder_date' => $request->reminder_date,
+                'tags' => $request->tags ?? [],
+            ]);
+
+            // Update user's last contact date
+            $user->update(['last_contact_date' => now()]);
+            
+            DB::commit();
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Not başarıyla eklendi.',
+                    'note' => $note->load('admin')
+                ]);
+            }
+            
+            return redirect()->back()->with('success', 'Admin notu başarıyla eklendi.');
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            \Log::error('Lead note creation failed', [
+                'user_id' => $userId,
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Not eklenirken bir hata oluştu.'
+                ], 500);
+            }
+            
+            return redirect()->back()->with('error', 'Not eklenirken bir hata oluştu.');
+        }
+    }
+
+    /**
+     * Update an existing lead note
+     */
+    public function updateLeadNote(Request $request, $userId, $noteId)
+    {
+        $request->validate([
+            'note_title' => 'required|string|max:255',
+            'note_content' => 'required|string|max:2000',
+            'note_category' => 'nullable|string|max:100',
+            'note_color' => 'nullable|string|max:20',
+            'is_pinned' => 'boolean',
+            'reminder_date' => 'nullable|date|after:now',
+        ]);
+
+        $note = LeadNote::findOrFail($noteId);
+        
+        // Authorization: Only the admin who created the note can edit it
+        if ($note->admin_id !== Auth::guard('admin')->id()) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bu notu düzenleme yetkiniz bulunmamaktadır.'
+                ], 403);
+            }
+            return redirect()->back()->with('error', 'Bu notu düzenleme yetkiniz bulunmamaktadır.');
+        }
+        
+        try {
+            $note->update([
+                'note_title' => $request->note_title,
+                'note_content' => $request->note_content,
+                'note_category' => $request->note_category,
+                'note_color' => $request->note_color ?? $note->note_color,
+                'is_pinned' => $request->boolean('is_pinned'),
+                'reminder_date' => $request->reminder_date,
+                'tags' => $request->tags ?? $note->tags,
+            ]);
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Not başarıyla güncellendi.',
+                    'note' => $note->load('admin')
+                ]);
+            }
+            
+            return redirect()->back()->with('success', 'Admin notu başarıyla güncellendi.');
+            
+        } catch (\Exception $e) {
+            \Log::error('Lead note update failed', [
+                'note_id' => $noteId,
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Not güncellenirken bir hata oluştu.'
+                ], 500);
+            }
+            
+            return redirect()->back()->with('error', 'Not güncellenirken bir hata oluştu.');
+        }
+    }
+
+    /**
+     * Delete a lead note
+     */
+    public function destroyLeadNote(Request $request, $userId, $noteId)
+    {
+        $note = LeadNote::findOrFail($noteId);
+        
+        // Authorization: Only the admin who created the note can delete it
+        if ($note->admin_id !== Auth::guard('admin')->id()) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bu notu silme yetkiniz bulunmamaktadır.'
+                ], 403);
+            }
+            return redirect()->back()->with('error', 'Bu notu silme yetkiniz bulunmamaktadır.');
+        }
+        
+        try {
+            $note->delete();
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Not başarıyla silindi.'
+                ]);
+            }
+            
+            return redirect()->back()->with('success', 'Admin notu başarıyla silindi.');
+            
+        } catch (\Exception $e) {
+            \Log::error('Lead note deletion failed', [
+                'note_id' => $noteId,
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Not silinirken bir hata oluştu.'
+                ], 500);
+            }
+            
+            return redirect()->back()->with('error', 'Not silinirken bir hata oluştu.');
+        }
+    }
+
+    /**
+     * Assign a user to an admin
+     */
+    public function assignAdmin(Request $request, $userId)
+    {
+        $request->validate([
+            'admin_id' => 'required|exists:admins,id',
+        ]);
+
+        $user = User::findOrFail($userId);
+        $admin = \App\Models\Admin::findOrFail($request->admin_id);
+        
+        try {
+            DB::beginTransaction();
+            
+            // Update user assignment
+            $user->update([
+                'assign_to' => $request->admin_id,
+                'last_contact_date' => now()
+            ]);
+            
+            // Create assignment history record
+            \App\Models\LeadAssignmentHistory::create([
+                'user_id' => $user->id,
+                'assigned_by' => Auth::guard('admin')->id(),
+                'assigned_to' => $request->admin_id,
+                'assignment_date' => now(),
+                'notes' => "Kullanıcı {$admin->getFullName()} adminne atandı"
+            ]);
+            
+            DB::commit();
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Admin başarıyla atandı.',
+                    'assigned_admin' => $admin->getFullName()
+                ]);
+            }
+            
+            return redirect()->back()->with('success', 'Kullanıcı başarıyla admin\'e atandı.');
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            \Log::error('Admin assignment failed', [
+                'user_id' => $userId,
+                'admin_id' => $request->admin_id,
+                'assigning_admin' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Admin ataması yapılırken bir hata oluştu.'
+                ], 500);
+            }
+            
+            return redirect()->back()->with('error', 'Admin ataması yapılırken bir hata oluştu.');
+        }
+    }
+
+    /**
+     * Update user's lead status
+     */
+    public function updateLeadStatus(Request $request, $userId)
+    {
+        $request->validate([
+            'lead_status' => 'required|string|max:255',
+        ]);
+
+        $user = User::findOrFail($userId);
+        
+        try {
+            DB::beginTransaction();
+            
+            $oldStatus = $user->lead_status;
+            
+            // Update user lead status
+            $user->update([
+                'lead_status' => $request->lead_status,
+                'last_contact_date' => now()
+            ]);
+            
+            // Create a lead note for status change
+            \App\Models\LeadNote::create([
+                'user_id' => $user->id,
+                'admin_id' => Auth::guard('admin')->id(),
+                'note_title' => 'Lead Durumu Güncellendi',
+                'note_content' => "Lead durumu '{$oldStatus}' den '{$request->lead_status}' olarak değiştirildi.",
+                'note_category' => 'system',
+                'note_color' => 'gray',
+                'is_pinned' => false,
+                'is_private' => false,
+            ]);
+            
+            DB::commit();
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Lead durumu başarıyla güncellendi.',
+                    'lead_status' => $request->lead_status
+                ]);
+            }
+            
+            return redirect()->back()->with('success', 'Lead durumu başarıyla güncellendi.');
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            
+            \Log::error('Lead status update failed', [
+                'user_id' => $userId,
+                'lead_status' => $request->lead_status,
+                'admin_id' => Auth::guard('admin')->id(),
+                'error' => $e->getMessage()
+            ]);
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Lead durumu güncellenirken bir hata oluştu.'
+                ], 500);
+            }
+            
+            return redirect()->back()->with('error', 'Lead durumu güncellenirken bir hata oluştu.');
+        }
     }
 }

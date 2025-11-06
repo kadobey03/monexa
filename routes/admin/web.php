@@ -188,6 +188,15 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
         Route::get('dashboard/uublock/{id}', 'ublock');
         Route::get('dashboard/uunblock/{id}', 'unblock');
 
+        // Admin Notları CRUD Route'ları
+        Route::post('dashboard/users/{userId}/notes', 'storeLeadNote')->name('admin.users.notes.store');
+        Route::put('dashboard/users/{userId}/notes/{noteId}', 'updateLeadNote')->name('admin.users.notes.update');
+        Route::delete('dashboard/users/{userId}/notes/{noteId}', 'destroyLeadNote')->name('admin.users.notes.destroy');
+        
+        // Lead Management - Dropdown İşlemleri
+        Route::post('dashboard/users/{userId}/assign-admin', 'assignAdmin')->name('admin.users.assign-admin');
+        Route::post('dashboard/users/{userId}/update-lead-status', 'updateLeadStatus')->name('admin.users.update-lead-status');
+
         Route::get('dashboard/delsystemuser/{id}', 'delsystemuser');
         Route::get('dashboard/usertrademode/{id}/{action}', 'usertrademode');
         Route::post('dashboard/sendmailtoall', 'sendmailtoall')->name('sendmailtoall');

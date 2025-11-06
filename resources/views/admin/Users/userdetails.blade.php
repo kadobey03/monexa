@@ -361,7 +361,31 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Cep Telefonu</p>
-                            <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->phone ?? 'Belirtilmemiş' }}</p>
+                            <div class="flex items-center justify-between">
+                                <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->phone ?? 'Belirtilmemiş' }}</p>
+                                @if($user->phone)
+                                    <div class="flex items-center space-x-2 ml-3">
+                                        <!-- Arama Butonu -->
+                                        <a href="tel:{{ $user->phone }}"
+                                           class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+                                           title="Telefon ile ara">
+                                            <x-heroicon name="phone" class="w-4 h-4 mr-1" />
+                                            Ara
+                                        </a>
+                                        
+                                        <!-- WhatsApp Butonu -->
+                                        <a href="javascript:void(0)"
+                                           onclick="openWhatsApp('{{ $user->phone }}')"
+                                           class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
+                                           title="WhatsApp ile mesaj gönder">
+                                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                            </svg>
+                                            WhatsApp
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -394,6 +418,58 @@
                     </div>
                 </div>
                 
+                <div class="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-lg border border-indigo-200 dark:border-indigo-700">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 mr-4">
+                            <div class="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center">
+                                <x-heroicon name="user-group" class="w-6 h-6 text-white" />
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Atanan Admin</p>
+                            <div class="mt-1">
+                                <select onchange="updateAssignedAdmin(this.value)"
+                                        class="w-full text-sm font-semibold bg-transparent border-none text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 rounded-md">
+                                    <option value="">Admin Seç...</option>
+                                    @if(isset($availableAdmins))
+                                        @foreach($availableAdmins as $admin)
+                                            <option value="{{ $admin['id'] }}" {{ ($user->assign_to == $admin['id']) ? 'selected' : '' }}>
+                                                {{ $admin['name'] }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg border border-yellow-200 dark:border-yellow-700">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 mr-4">
+                            <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
+                                <x-heroicon name="flag" class="w-6 h-6 text-white" />
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Lead Durumu</p>
+                            <div class="mt-1">
+                                <select onchange="updateLeadStatus(this.value)"
+                                        class="w-full text-sm font-semibold bg-transparent border-none text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 rounded-md">
+                                    <option value="">Durum Seç...</option>
+                                    @if(isset($leadStatuses))
+                                        @foreach($leadStatuses as $status)
+                                            <option value="{{ $status['value'] }}" {{ ($user->lead_status == $status['value']) ? 'selected' : '' }}>
+                                                {{ $status['label'] }}
+                                            </option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="bg-gray-50 dark:bg-gray-900/20 p-4 rounded-lg border border-gray-200 dark:border-gray-600">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 mr-4">
@@ -408,6 +484,82 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <!-- Admin Notları Section -->
+    <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700 mt-6">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700 flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                <x-heroicon name="document-text" class="h-5 w-5 mr-2" />
+                Admin Notları
+            </h2>
+            <button onclick="openAddNoteModal()"
+                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
+                <x-heroicon name="plus" class="w-4 h-4 mr-2" />
+                Yeni Not Ekle
+            </button>
+        </div>
+        <div class="p-6">
+            @if($leadNotes && $leadNotes->count() > 0)
+                <div class="space-y-4" id="notesContainer">
+                    @foreach($leadNotes as $note)
+                        <div class="note-item bg-{{ $note->note_color ?? 'blue' }}-50 dark:bg-{{ $note->note_color ?? 'blue' }}-900/20 border border-{{ $note->note_color ?? 'blue' }}-200 dark:border-{{ $note->note_color ?? 'blue' }}-700 rounded-lg p-4" data-note-id="{{ $note->id }}">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center mb-2">
+                                        @if($note->is_pinned)
+                                            <x-heroicon name="paper-clip" class="w-4 h-4 text-{{ $note->note_color ?? 'blue' }}-600 mr-2" />
+                                        @endif
+                                        <h4 class="text-sm font-semibold text-gray-900 dark:text-white">{{ $note->note_title }}</h4>
+                                        @if($note->note_category)
+                                            <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{ $note->note_color ?? 'blue' }}-100 text-{{ $note->note_color ?? 'blue' }}-800 dark:bg-{{ $note->note_color ?? 'blue' }}-900 dark:text-{{ $note->note_color ?? 'blue' }}-300">
+                                                {{ $note->note_category }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">{{ $note->note_content }}</p>
+                                    <div class="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                                        <x-heroicon name="user" class="w-3 h-3 mr-1" />
+                                        <span class="mr-3">{{ $note->admin ? $note->admin->getFullName() : 'Bilinmeyen Admin' }}</span>
+                                        <x-heroicon name="clock" class="w-3 h-3 mr-1" />
+                                        <span class="mr-3">{{ $note->created_at->format('d/m/Y H:i') }}</span>
+                                        @if($note->reminder_date)
+                                            <x-heroicon name="bell" class="w-3 h-3 mr-1" />
+                                            <span>{{ \Carbon\Carbon::parse($note->reminder_date)->format('d/m/Y H:i') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2 ml-4">
+                                    @if($note->admin_id == Auth::guard('admin')->id())
+                                        <button onclick="openEditNoteModal({{ $note->id }})"
+                                                class="text-{{ $note->note_color ?? 'blue' }}-600 hover:text-{{ $note->note_color ?? 'blue' }}-800 dark:text-{{ $note->note_color ?? 'blue' }}-400 dark:hover:text-{{ $note->note_color ?? 'blue' }}-300"
+                                                title="Notu Düzenle">
+                                            <x-heroicon name="pencil" class="w-4 h-4" />
+                                        </button>
+                                        <button onclick="deleteNote({{ $note->id }})"
+                                                class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                                                title="Notu Sil">
+                                            <x-heroicon name="trash" class="w-4 h-4" />
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center py-12">
+                    <x-heroicon name="document-text" class="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                    <h3 class="text-gray-500 dark:text-gray-400 text-lg font-medium">Henüz Not Yok</h3>
+                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Bu kullanıcı için henüz hiç admin notu eklenmemiş</p>
+                    <button onclick="openAddNoteModal()"
+                            class="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
+                        <x-heroicon name="plus" class="w-4 h-4 mr-2" />
+                        İlk Notu Ekle
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 </div>
@@ -512,7 +664,7 @@ function closeAllModals() {
     const modals = [
         'topupModal', 'editModal', 'tradingModal', 'emailModal', 'deleteModal',
         'resetPasswordModal', 'taxModal', 'withdrawalCodeModal', 'notifyModal',
-        'tradesModal', 'signalModal', 'switchUserModal'
+        'tradesModal', 'signalModal', 'switchUserModal', 'addNoteModal', 'editNoteModal'
     ];
     
     modals.forEach(modalId => {
@@ -646,6 +798,420 @@ window.debugProblemModals = function() {
     console.log('openWithdrawalCodeModal exists:', typeof window.openWithdrawalCodeModal);
     console.log('openResetPasswordModal exists:', typeof window.openResetPasswordModal);
     console.log('openModal exists:', typeof window.openModal);
+};
+
+// Form validation fonksiyonları
+function validateNoteForm(formId) {
+    const form = document.getElementById(formId);
+    const title = form.querySelector('[name="note_title"]').value.trim();
+    const content = form.querySelector('[name="note_content"]').value.trim();
+    
+    let errors = [];
+    
+    // Başlık kontrolü
+    if (!title) {
+        errors.push('Not başlığı gereklidir');
+    } else if (title.length < 3) {
+        errors.push('Not başlığı en az 3 karakter olmalıdır');
+    } else if (title.length > 100) {
+        errors.push('Not başlığı en fazla 100 karakter olmalıdır');
+    }
+    
+    // İçerik kontrolü
+    if (!content) {
+        errors.push('Not içeriği gereklidir');
+    } else if (content.length < 10) {
+        errors.push('Not içeriği en az 10 karakter olmalıdır');
+    } else if (content.length > 1000) {
+        errors.push('Not içeriği en fazla 1000 karakter olmalıdır');
+    }
+    
+    // Hatırlatıcı tarihi kontrolü
+    const reminderDate = form.querySelector('[name="reminder_date"]').value;
+    if (reminderDate) {
+        const selectedDate = new Date(reminderDate);
+        const now = new Date();
+        if (selectedDate <= now) {
+            errors.push('Hatırlatıcı tarihi gelecekte bir tarih olmalıdır');
+        }
+    }
+    
+    if (errors.length > 0) {
+        alert('Lütfen aşağıdaki hataları düzeltin:\n\n• ' + errors.join('\n• '));
+        return false;
+    }
+    
+    return true;
+}
+
+// Real-time karakter sayacı
+function setupCharacterCounters() {
+    // Başlık sayacı
+    const titleInputs = document.querySelectorAll('[name="note_title"]');
+    titleInputs.forEach(input => {
+        const counter = document.createElement('div');
+        counter.className = 'text-xs text-gray-500 dark:text-gray-400 mt-1';
+        counter.textContent = '0/100 karakter';
+        input.parentNode.appendChild(counter);
+        
+        input.addEventListener('input', function() {
+            const length = this.value.length;
+            counter.textContent = `${length}/100 karakter`;
+            counter.className = length > 100 ? 'text-xs text-red-500 mt-1' : 'text-xs text-gray-500 dark:text-gray-400 mt-1';
+        });
+    });
+    
+    // İçerik sayacı
+    const contentInputs = document.querySelectorAll('[name="note_content"]');
+    contentInputs.forEach(input => {
+        const counter = document.createElement('div');
+        counter.className = 'text-xs text-gray-500 dark:text-gray-400 mt-1';
+        counter.textContent = '0/1000 karakter';
+        input.parentNode.appendChild(counter);
+        
+        input.addEventListener('input', function() {
+            const length = this.value.length;
+            counter.textContent = `${length}/1000 karakter`;
+            counter.className = length > 1000 ? 'text-xs text-red-500 mt-1' : 'text-xs text-gray-500 dark:text-gray-400 mt-1';
+        });
+    });
+}
+
+// Admin Notları fonksiyonları
+window.openAddNoteModal = function() {
+    // Form'u temizle
+    document.getElementById('addNoteForm').reset();
+    
+    // Karakter sayaçlarını kur
+    setTimeout(() => {
+        setupCharacterCounters();
+    }, 100);
+    
+    openModal('addNoteModal');
+};
+
+window.openEditNoteModal = function(noteId) {
+    // Note bilgilerini al ve form'u doldur
+    fetch(`/admin/dashboard/users/{{ $user->id }}/notes/${noteId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const note = data.note;
+                document.getElementById('edit_note_id').value = note.id;
+                document.getElementById('edit_note_title').value = note.note_title;
+                document.getElementById('edit_note_content').value = note.note_content;
+                document.getElementById('edit_note_category').value = note.note_category || '';
+                document.getElementById('edit_note_color').value = note.note_color || 'blue';
+                document.getElementById('edit_is_pinned').checked = note.is_pinned == 1;
+                document.getElementById('edit_reminder_date').value = note.reminder_date || '';
+                
+                // Karakter sayaçlarını kur
+                setTimeout(() => {
+                    setupCharacterCounters();
+                }, 100);
+                
+                openModal('editNoteModal');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Not bilgileri alınırken hata oluştu');
+        });
+};
+
+// Note silme fonksiyonu
+window.deleteNote = function(noteId) {
+    if (confirm('Bu notu silmek istediğinizden emin misiniz?')) {
+        fetch(`/admin/dashboard/users/{{ $user->id }}/notes/${noteId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Not elementini DOM'dan kaldır
+                const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
+                if (noteElement) {
+                    noteElement.remove();
+                }
+                
+                // Eğer hiç not kalmadıysa empty state göster
+                const notesContainer = document.getElementById('notesContainer');
+                if (notesContainer && notesContainer.children.length === 0) {
+                    location.reload(); // Sayfayı yenile empty state'i göstermek için
+                }
+                
+                alert('Not başarıyla silindi');
+            } else {
+                alert(data.message || 'Not silinirken hata oluştu');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Not silinirken hata oluştu');
+        });
+    }
+};
+
+// Note ekleme form submit
+window.submitAddNote = function() {
+    // Form validation kontrolü
+    if (!validateNoteForm('addNoteForm')) {
+        return; // Validation başarısızsa işlemi durdur
+    }
+    
+    const form = document.getElementById('addNoteForm');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    // Button'u disable et ve loading state göster
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Kaydediliyor...';
+    
+    const formData = new FormData(form);
+    
+    fetch(`/admin/dashboard/users/{{ $user->id }}/notes`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            closeModal('addNoteModal');
+            
+            // Success mesajı göster
+            const successMsg = document.createElement('div');
+            successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            successMsg.textContent = 'Not başarıyla eklendi!';
+            document.body.appendChild(successMsg);
+            
+            // 3 saniye sonra mesajı kaldır
+            setTimeout(() => {
+                successMsg.remove();
+            }, 3000);
+            
+            location.reload(); // Sayfayı yenile yeni notu göstermek için
+        } else {
+            alert(data.message || 'Not eklenirken hata oluştu');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Not eklenirken hata oluştu');
+    })
+    .finally(() => {
+        // Button'u tekrar enable et
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>Notu Kaydet';
+    });
+};
+
+// Note düzenleme form submit
+window.submitEditNote = function() {
+    // Form validation kontrolü
+    if (!validateNoteForm('editNoteForm')) {
+        return; // Validation başarısızsa işlemi durdur
+    }
+    
+    const form = document.getElementById('editNoteForm');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const noteId = document.getElementById('edit_note_id').value;
+    
+    // Button'u disable et ve loading state göster
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Güncelleniyor...';
+    
+    const formData = new FormData(form);
+    
+    fetch(`/admin/dashboard/users/{{ $user->id }}/notes/${noteId}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            closeModal('editNoteModal');
+            
+            // Success mesajı göster
+            const successMsg = document.createElement('div');
+            successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            successMsg.textContent = 'Not başarıyla güncellendi!';
+            document.body.appendChild(successMsg);
+            
+            // 3 saniye sonra mesajı kaldır
+            setTimeout(() => {
+                successMsg.remove();
+            }, 3000);
+            
+            location.reload(); // Sayfayı yenile güncellenen notu göstermek için
+        } else {
+            alert(data.message || 'Not güncellenirken hata oluştu');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Not güncellenirken hata oluştu');
+    })
+    .finally(() => {
+        // Button'u tekrar enable et
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"></path></svg>Değişiklikleri Kaydet';
+    });
+};
+
+// WhatsApp fonksiyonu
+window.openWhatsApp = function(phoneNumber) {
+    if (!phoneNumber) {
+        alert('Telefon numarası bulunamadı');
+        return;
+    }
+    
+    // Telefon numarasını temizle (sadece rakamları bırak)
+    let cleanPhone = phoneNumber.replace(/\D/g, '');
+    
+    // Türkiye için ülke kodu kontrolü
+    if (cleanPhone.startsWith('0')) {
+        cleanPhone = '90' + cleanPhone.substring(1); // 0'ı 90 ile değiştir
+    } else if (!cleanPhone.startsWith('90')) {
+        cleanPhone = '90' + cleanPhone; // Başında 90 yoksa ekle
+    }
+    
+    // WhatsApp URL'ini oluştur
+    const message = encodeURIComponent('Merhaba, Monexa Finance ekibinden size ulaşıyorum.');
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${message}`;
+    
+    // Yeni pencerede aç
+    window.open(whatsappUrl, '_blank');
+};
+
+// Dropdown güncelleme fonksiyonları
+window.updateAssignedAdmin = function(adminId) {
+    if (!adminId) {
+        return; // Boş seçim yapıldıysa işlem yapma
+    }
+    
+    if (!confirm('Bu kullanıcıyı seçilen admin\'e atamak istediğinizden emin misiniz?')) {
+        // Kullanıcı iptal ederse dropdown'ı eski değere döndür
+        const dropdown = document.querySelector('[onchange="updateAssignedAdmin(this.value)"]');
+        dropdown.value = '{{ $user->assign_to ?? "" }}';
+        return;
+    }
+    
+    // Loading state göster
+    const dropdown = document.querySelector('[onchange="updateAssignedAdmin(this.value)"]');
+    dropdown.disabled = true;
+    dropdown.style.opacity = '0.6';
+    
+    fetch(`/admin/dashboard/users/{{ $user->id }}/assign-admin`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+            admin_id: adminId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Success mesajı göster
+            const successMsg = document.createElement('div');
+            successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            successMsg.textContent = 'Admin başarıyla atandı!';
+            document.body.appendChild(successMsg);
+            
+            setTimeout(() => {
+                successMsg.remove();
+            }, 3000);
+        } else {
+            alert(data.message || 'Admin ataması yapılırken hata oluştu');
+            // Hata durumunda dropdown'ı eski değere döndür
+            dropdown.value = '{{ $user->assign_to ?? "" }}';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Admin ataması yapılırken hata oluştu');
+        // Hata durumunda dropdown'ı eski değere döndür
+        dropdown.value = '{{ $user->assign_to ?? "" }}';
+    })
+    .finally(() => {
+        // Loading state'i kaldır
+        dropdown.disabled = false;
+        dropdown.style.opacity = '1';
+    });
+};
+
+window.updateLeadStatus = function(statusValue) {
+    if (!statusValue) {
+        return; // Boş seçim yapıldıysa işlem yapma
+    }
+    
+    if (!confirm('Bu kullanıcının lead durumunu güncellemek istediğinizden emin misiniz?')) {
+        // Kullanıcı iptal ederse dropdown'ı eski değere döndür
+        const dropdown = document.querySelector('[onchange="updateLeadStatus(this.value)"]');
+        dropdown.value = '{{ $user->lead_status ?? "" }}';
+        return;
+    }
+    
+    // Loading state göster
+    const dropdown = document.querySelector('[onchange="updateLeadStatus(this.value)"]');
+    dropdown.disabled = true;
+    dropdown.style.opacity = '0.6';
+    
+    fetch(`/admin/dashboard/users/{{ $user->id }}/update-lead-status`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({
+            lead_status: statusValue
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Success mesajı göster
+            const successMsg = document.createElement('div');
+            successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            successMsg.textContent = 'Lead durumu başarıyla güncellendi!';
+            document.body.appendChild(successMsg);
+            
+            setTimeout(() => {
+                successMsg.remove();
+            }, 3000);
+        } else {
+            alert(data.message || 'Lead durumu güncellenirken hata oluştu');
+            // Hata durumunda dropdown'ı eski değere döndür
+            dropdown.value = '{{ $user->lead_status ?? "" }}';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Lead durumu güncellenirken hata oluştu');
+        // Hata durumunda dropdown'ı eski değere döndür
+        dropdown.value = '{{ $user->lead_status ?? "" }}';
+    })
+    .finally(() => {
+        // Loading state'i kaldır
+        dropdown.disabled = false;
+        dropdown.style.opacity = '1';
+    });
 };
 </script>
 

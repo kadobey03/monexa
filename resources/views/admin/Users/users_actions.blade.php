@@ -675,3 +675,183 @@
          </div>
      </div>
  </div>
+
+ <!-- Add Note Modal -->
+ <div id="addNoteModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('addNoteModal')">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+             <div class="bg-blue-600 dark:bg-blue-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <x-heroicon name="document-plus" class="h-5 w-5 mr-2" />{{ $user->name }} için Yeni Admin Notu Ekle
+                 </h4>
+                 <button onclick="closeModal('addNoteModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
+                 </button>
+             </div>
+             <div class="p-6">
+                 <form id="addNoteForm" onsubmit="event.preventDefault(); submitAddNote();">
+                     @csrf
+                     <div class="space-y-6">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <x-heroicon name="type" class="h-4 w-4 inline mr-2 text-blue-600" />Not Başlığı
+                             </label>
+                             <input type="text" name="note_title" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" placeholder="Not başlığı girin" maxlength="100" required>
+                         </div>
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <x-heroicon name="document-text" class="h-4 w-4 inline mr-2 text-blue-600" />Not İçeriği
+                             </label>
+                             <textarea name="note_content" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white" rows="6" placeholder="Not içeriğini buraya yazın..." maxlength="1000" required style="resize: vertical;"></textarea>
+                         </div>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                     <x-heroicon name="tag" class="h-4 w-4 inline mr-2 text-blue-600" />Kategori
+                                 </label>
+                                 <select name="note_category" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white">
+                                     <option value="">Kategori Seçin</option>
+                                     <option value="Görüşme">📞 Görüşme</option>
+                                     <option value="E-posta">📧 E-posta</option>
+                                     <option value="Yatırım">💰 Yatırım</option>
+                                     <option value="Şikayet">⚠️ Şikayet</option>
+                                     <option value="Takip">👥 Takip</option>
+                                     <option value="Diğer">📝 Diğer</option>
+                                 </select>
+                             </div>
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                     <x-heroicon name="paint-brush" class="h-4 w-4 inline mr-2 text-blue-600" />Renk
+                                 </label>
+                                 <select name="note_color" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white">
+                                     <option value="blue" selected>🔵 Mavi</option>
+                                     <option value="green">🟢 Yeşil</option>
+                                     <option value="yellow">🟡 Sarı</option>
+                                     <option value="red">🔴 Kırmızı</option>
+                                     <option value="purple">🟣 Mor</option>
+                                     <option value="gray">⚫ Gri</option>
+                                 </select>
+                             </div>
+                         </div>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <div>
+                                 <label class="flex items-center">
+                                     <input type="checkbox" name="is_pinned" value="1" class="rounded border-gray-300 dark:border-admin-600 text-blue-600 focus:ring-blue-500 focus:ring-2 dark:bg-admin-700">
+                                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                         <x-heroicon name="paper-clip" class="h-4 w-4 inline mr-1 text-blue-600" />Önemli Not (Sabitlenmiş)
+                                     </span>
+                                 </label>
+                             </div>
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                     <x-heroicon name="bell" class="h-4 w-4 inline mr-2 text-blue-600" />Hatırlatıcı Tarihi
+                                 </label>
+                                 <input type="datetime-local" name="reminder_date" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-admin-700 dark:text-white">
+                             </div>
+                         </div>
+                     </div>
+                     <div class="mt-6">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                             <x-heroicon name="plus" class="h-4 w-4 mr-2" />Notu Kaydet
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <!-- Edit Note Modal -->
+ <div id="editNoteModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 transition-opacity duration-300">
+     <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+         <div class="fixed inset-0 transition-opacity" onclick="closeModal('editNoteModal')">
+             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+         </div>
+         <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+             <div class="bg-green-600 dark:bg-green-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
+                 <h4 class="text-lg font-semibold text-white flex items-center">
+                     <x-heroicon name="document-pen" class="h-5 w-5 mr-2" />{{ $user->name }} için Admin Notunu Düzenle
+                 </h4>
+                 <button onclick="closeModal('editNoteModal')" class="absolute top-4 right-4 text-white hover:text-gray-200">
+                     <x-heroicon name="x-mark" class="h-5 w-5" />
+                 </button>
+             </div>
+             <div class="p-6">
+                 <form id="editNoteForm" onsubmit="event.preventDefault(); submitEditNote();">
+                     @csrf
+                     <div class="space-y-6">
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <x-heroicon name="type" class="h-4 w-4 inline mr-2 text-green-600" />Not Başlığı
+                             </label>
+                             <input type="text" id="edit_note_title" name="note_title" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" placeholder="Not başlığı girin" maxlength="100" required>
+                         </div>
+                         <div>
+                             <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                 <x-heroicon name="document-text" class="h-4 w-4 inline mr-2 text-green-600" />Not İçeriği
+                             </label>
+                             <textarea id="edit_note_content" name="note_content" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white" rows="6" placeholder="Not içeriğini buraya yazın..." maxlength="1000" required style="resize: vertical;"></textarea>
+                         </div>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                     <x-heroicon name="tag" class="h-4 w-4 inline mr-2 text-green-600" />Kategori
+                                 </label>
+                                 <select id="edit_note_category" name="note_category" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white">
+                                     <option value="">Kategori Seçin</option>
+                                     <option value="Görüşme">📞 Görüşme</option>
+                                     <option value="E-posta">📧 E-posta</option>
+                                     <option value="Yatırım">💰 Yatırım</option>
+                                     <option value="Şikayet">⚠️ Şikayet</option>
+                                     <option value="Takip">👥 Takip</option>
+                                     <option value="Diğer">📝 Diğer</option>
+                                 </select>
+                             </div>
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                     <x-heroicon name="paint-brush" class="h-4 w-4 inline mr-2 text-green-600" />Renk
+                                 </label>
+                                 <select id="edit_note_color" name="note_color" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white">
+                                     <option value="blue">🔵 Mavi</option>
+                                     <option value="green">🟢 Yeşil</option>
+                                     <option value="yellow">🟡 Sarı</option>
+                                     <option value="red">🔴 Kırmızı</option>
+                                     <option value="purple">🟣 Mor</option>
+                                     <option value="gray">⚫ Gri</option>
+                                 </select>
+                             </div>
+                         </div>
+                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <div>
+                                 <label class="flex items-center">
+                                     <input type="checkbox" id="edit_is_pinned" name="is_pinned" value="1" class="rounded border-gray-300 dark:border-admin-600 text-green-600 focus:ring-green-500 focus:ring-2 dark:bg-admin-700">
+                                     <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                         <x-heroicon name="paper-clip" class="h-4 w-4 inline mr-1 text-green-600" />Önemli Not (Sabitlenmiş)
+                                     </span>
+                                 </label>
+                             </div>
+                             <div>
+                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                     <x-heroicon name="bell" class="h-4 w-4 inline mr-2 text-green-600" />Hatırlatıcı Tarihi
+                                 </label>
+                                 <input type="datetime-local" id="edit_reminder_date" name="reminder_date" class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 dark:bg-admin-700 dark:text-white">
+                             </div>
+                         </div>
+                     </div>
+                     <div class="mt-6">
+                         <input type="hidden" id="edit_note_id" name="note_id" value="">
+                         <input type="hidden" name="user_id" value="{{ $user->id }}">
+                         <input type="hidden" name="_method" value="PUT">
+                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                             <x-heroicon name="save" class="h-4 w-4 mr-2" />Değişiklikleri Kaydet
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
