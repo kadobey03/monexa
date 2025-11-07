@@ -69,6 +69,13 @@ class Admin extends Authenticatable
         'avatar',
         'social_links',
         'emergency_contact',
+        // 2FA Security fields
+        'enable_2fa',
+        'token_2fa',
+        'token_2fa_expiry',
+        'pass_2fa',
+        'failed_login_attempts',
+        'locked_until',
     ];
 
     /**
@@ -111,6 +118,10 @@ class Admin extends Authenticatable
         'login_history' => 'array',
         'social_links' => 'array',
         'emergency_contact' => 'array',
+        // 2FA Security casts
+        'token_2fa_expiry' => 'datetime',
+        'failed_login_attempts' => 'integer',
+        'locked_until' => 'datetime',
     ];
 
     /**

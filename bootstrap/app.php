@@ -104,6 +104,11 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e, $request) {
+            // Local environment'ta Laravel'in built-in exception handler'ını kullan
+            if (app()->environment('local') && config('app.debug')) {
+                return null; // Laravel'in default exception handler'ına devam et
+            }
+            
             try {
                 // Handle view rendering errors
                 if ($request->expectsJson()) {
