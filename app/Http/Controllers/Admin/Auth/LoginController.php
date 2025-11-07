@@ -56,7 +56,7 @@ class LoginController extends Controller
     {
          //$this->validator($request);
         $data =  $this->validate($request, [
-            'email'    => 'required|email|exists:admins|min:5|max:191',
+            'email'    => 'required|email|min:5|max:191',
             'password' => 'required|string|min:4|max:255',
             ]);
 
