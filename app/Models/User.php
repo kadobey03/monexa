@@ -48,7 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name', 'l_name', 'username', 'email', 'phone', 'country', 'password', 'ref_by', 'status', 'taxtype ','taxamount ', 'currency', 'notify', 'email_verified_at', 'account_bal', 'demo_balance', 'demo_mode', 'roi', 'bonus', 'ref_bonus',
         'lead_status', 'lead_notes', 'last_contact_date', 'next_follow_up_date', 'lead_source', 'lead_source_id', 'lead_tags', 'estimated_value', 'lead_score', 'preferred_contact_method', 'contact_history', 'assign_to',
-        'company_name', 'organization'
+        'company_name', 'organization', 'utm_campaign', 'utm_source'
     ];
 
     /**

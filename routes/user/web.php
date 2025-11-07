@@ -46,10 +46,10 @@ Route::get('/ref/{id}', 'App\Http\Controllers\Controller@ref')->name('ref');
 
 /*    Dashboard and user features routes  */
 // Views routes
-Route::middleware(['auth:sanctum', 'verified', 'complete.kyc'])->get('/dashboard', [ViewsController::class, 'dashboard'])->name('dashboard');
-Route::middleware(['auth:sanctum', 'verified', 'complete.kyc'])->get('/dashboard/data', [ViewsController::class, 'getDashboardData'])->name('dashboard.data');
+Route::middleware(['auth:web', 'verified', 'complete.kyc'])->get('/dashboard', [ViewsController::class, 'dashboard'])->name('dashboard');
+Route::middleware(['auth:web', 'verified', 'complete.kyc'])->get('/dashboard/data', [ViewsController::class, 'getDashboardData'])->name('dashboard.data');
 
-Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(function () {
+Route::middleware(['auth:web', 'verified'])->prefix('dashboard')->group(function () {
 
     // Verify account route
     Route::post('verifyaccount', [VerifyController::class, 'verifyaccount'])->name('kycsubmit');
@@ -227,7 +227,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(func
 Route::post('sendcontact', 'App\Http\Controllers\User\UsersController@sendcontact')->name('enquiry');
 
 // Notification Routes
-Route::middleware(['auth:sanctum', 'verified'])->prefix('notifications')->group(function () {
+Route::middleware(['auth:web', 'verified'])->prefix('notifications')->group(function () {
     Route::get('/', [UserNotificationController::class, 'index'])->name('notifications');
     Route::get('/{id}', [UserNotificationController::class, 'show'])->name('notifications.show');
     Route::post('/mark-read', [UserNotificationController::class, 'webMarkAsRead'])->name('notifications.mark-read');
@@ -237,7 +237,7 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('notifications')->group(
 });
 
 // Crypto API Routes (for CORS bypass)
-Route::middleware(['auth:sanctum', 'verified'])->prefix('api/crypto')->group(function () {
+Route::middleware(['auth:web', 'verified'])->prefix('api/crypto')->group(function () {
     Route::get('/prices', [CryptoController::class, 'getPrices'])->name('api.crypto.prices');
 });
 
