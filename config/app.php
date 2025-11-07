@@ -180,6 +180,7 @@ return [
         App\Providers\NotificationServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\ServiceServiceProvider::class,
+        Sentry\Laravel\ServiceProvider::class,
 
     ],
 

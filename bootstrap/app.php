@@ -103,13 +103,29 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        // Sentry reporting - tüm environment'larda aktif
+        $exceptions->reportable(function (Throwable $e) {
+            try {
+                // Sentry'ye exception gönder
+                if (app()->bound('sentry')) {
+                    \Sentry\captureException($e);
+                }
+                
+                // Ek logging
+                error_log('Application Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+            } catch (\Exception $logException) {
+                // Silently fail if logging doesn't work
+            }
+        });
+
         // Local environment'ta Laravel'in native debug page'ini kullan
-        // Hiçbir custom exception handling yapma
+        // Ama Sentry reporting'i de çalışsın
         if (app()->environment('local') && config('app.debug')) {
-            return; // Laravel'in built-in Whoops debug page'ini kullan
+            // Sadece reporting yapıp render'i Laravel'a bırak
+            return;
         }
         
-        // Sadece production/staging environment'lar için custom handling
+        // Production/staging environment'lar için custom handling
         $exceptions->render(function (Throwable $e, $request) {
             try {
                 // API requests için JSON response
@@ -129,15 +145,6 @@ return Application::configure(basePath: dirname(__DIR__))
             } catch (\Exception $handlerException) {
                 // Fallback response
                 return response('Server Error', 500, ['Content-Type' => 'text/plain']);
-            }
-        });
-
-        // Production logging
-        $exceptions->reportable(function (Throwable $e) {
-            try {
-                error_log('Application Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
-            } catch (\Exception $logException) {
-                // Silently fail if logging doesn't work
             }
         });
     })->create();

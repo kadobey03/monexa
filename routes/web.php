@@ -27,6 +27,7 @@ require __DIR__ . '/user/web.php';
 require __DIR__ . '/user/plan-routes.php';
 require __DIR__ . '/botman.php';
 
+
 // Language Routes
 Route::post('/change-language', [LanguageController::class, 'changeLanguage'])->name('change.language');
 Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
