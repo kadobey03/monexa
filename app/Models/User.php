@@ -419,7 +419,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Assign user to an admin with enhanced safety and validation.
      */
-    public function assignToAdmin(Admin $admin, Admin $assignedBy = null, string $reason = null): bool
+    public function assignToAdmin(Admin $admin, ?Admin $assignedBy = null, ?string $reason = null): bool
     {
         if (!$admin->isAvailableForAssignment()) {
             \Log::warning('Assignment failed: Admin not available', [
@@ -519,7 +519,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Mark lead as converted.
      */
-    public function markAsConverted(float $conversionValue = null, Admin $convertedBy = null): bool
+    public function markAsConverted(?float $conversionValue = null, ?Admin $convertedBy = null): bool
     {
         $this->cstatus = 'Customer';
         $this->save();
