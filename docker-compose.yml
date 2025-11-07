@@ -12,7 +12,7 @@ services:
     depends_on:
       - mysql-monexa
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html:rw
 
   # Nginx Service
   nginx-monexa:

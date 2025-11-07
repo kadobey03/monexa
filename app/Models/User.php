@@ -48,7 +48,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name', 'l_name', 'username', 'email', 'phone', 'country', 'password', 'ref_by', 'status', 'taxtype ','taxamount ', 'currency', 'notify', 'email_verified_at', 'account_bal', 'demo_balance', 'demo_mode', 'roi', 'bonus', 'ref_bonus',
         'lead_status', 'lead_notes', 'last_contact_date', 'next_follow_up_date', 'lead_source', 'lead_source_id', 'lead_tags', 'estimated_value', 'lead_score', 'preferred_contact_method', 'contact_history', 'assign_to',
-        'company_name', 'organization'
+        'company_name', 'organization',
+        // 2FA ve güvenlik alanları
+        'enable_2fa', 'token_2fa', 'token_2fa_expiry', 'pass_2fa', 'failed_login_attempts', 'locked_until', 'last_login_at', 'last_login_ip', 'security_events', 'password_changed_at'
     ];
 
     /**
@@ -61,6 +63,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'token_2fa',
+        'security_events',
     ];
 
     /**
@@ -74,6 +78,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'next_follow_up_date' => 'datetime',
         'lead_tags' => 'array',
         'contact_history' => 'array',
+        // Güvenlik alanları için casting
+        'enable_2fa' => 'boolean',
+        'token_2fa_expiry' => 'datetime',
+        'pass_2fa' => 'boolean',
+        'failed_login_attempts' => 'integer',
+        'locked_until' => 'datetime',
+        'last_login_at' => 'datetime',
+        'security_events' => 'array',
+        'password_changed_at' => 'datetime',
     ];
 
     /**

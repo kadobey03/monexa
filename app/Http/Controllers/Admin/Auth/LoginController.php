@@ -89,7 +89,103 @@ class LoginController extends Controller
             $email = $request->input('email');
             $password = $request->input('password');
 
-            // Authentication attempt
+            // Admin hesabını kontrol et
+            $admin = Admin::where('email', $email)->first();
+            
+            if (!$admin) {
+                RateLimiter::hit($key, 60);
+                
+                Log::warning('Admin login attempt with non-existent email', [
+                    'email' => $email,
+                    'ip' => $request->ip(),
+                    'user_agent' => $request->userAgent()
+                ]);
+                
+                return back()->withErrors([
+                    'email' => 'Bu e-posta adresi ile kayıtlı bir admin hesabı bulunamadı.',
+                ])->onlyInput('email');
+            }
+
+            // Admin hesap durumunu kontrol et
+            if ($admin->status !== 'active') {
+                RateLimiter::hit($key, 60);
+                
+                Log::warning('Admin login attempt with inactive account', [
+                    'admin_id' => $admin->id,
+                    'email' => $email,
+                    'status' => $admin->status,
+                    'ip' => $request->ip()
+                ]);
+                
+                $statusMessages = [
+                    'inactive' => 'Hesabınız aktif değil. Lütfen sistem yöneticisi ile iletişime geçin.',
+                    'blocked' => 'Hesabınız engellenmiş durumda. Sistem yöneticisi ile iletişime geçin.',
+                    'suspended' => 'Hesabınız geçici olarak askıya alınmıştır.',
+                ];
+                
+                return back()->withErrors([
+                    'email' => $statusMessages[$admin->status] ?? 'Hesabınız kullanılamaz durumda.',
+                ])->onlyInput('email');
+            }
+
+            // Hesap kilidi kontrolü
+            if ($admin->locked_until && $admin->locked_until->isFuture()) {
+                $remainingMinutes = $admin->locked_until->diffInMinutes(now());
+                
+                Log::warning('Admin login attempt on locked account', [
+                    'admin_id' => $admin->id,
+                    'email' => $email,
+                    'locked_until' => $admin->locked_until,
+                    'ip' => $request->ip()
+                ]);
+                
+                return back()->withErrors([
+                    'email' => "Hesabınız güvenlik nedeniyle kilitlenmiştir. {$remainingMinutes} dakika sonra tekrar deneyin.",
+                ])->onlyInput('email');
+            }
+
+            // Şifre kontrolü
+            if (!password_verify($password, $admin->password)) {
+                RateLimiter::hit($key, 60);
+                
+                // Başarısız deneme sayısını artır
+                $failedAttempts = ($admin->failed_login_attempts ?? 0) + 1;
+                $updateData = ['failed_login_attempts' => $failedAttempts];
+                
+                // 5 başarısız denemeden sonra hesabı kilitle
+                if ($failedAttempts >= 5) {
+                    $updateData['locked_until'] = now()->addMinutes(30);
+                    
+                    Log::warning('Admin account auto-locked after failed attempts', [
+                        'admin_id' => $admin->id,
+                        'email' => $email,
+                        'failed_attempts' => $failedAttempts,
+                        'ip' => $request->ip()
+                    ]);
+                    
+                    $admin->update($updateData);
+                    
+                    return back()->withErrors([
+                        'email' => 'Çok fazla hatalı deneme. Hesabınız güvenlik nedeniyle 30 dakika kilitlenmiştir.',
+                    ])->onlyInput('email');
+                }
+                
+                $admin->update($updateData);
+                
+                Log::warning('Admin failed login - wrong password', [
+                    'admin_id' => $admin->id,
+                    'email' => $email,
+                    'failed_attempts' => $failedAttempts,
+                    'ip' => $request->ip()
+                ]);
+                
+                $remainingAttempts = 5 - $failedAttempts;
+                return back()->withErrors([
+                    'password' => "Şifreniz hatalı. Kalan deneme hakkınız: {$remainingAttempts}",
+                ])->onlyInput('email');
+            }
+
+            // Başarılı giriş - Laravel Auth kullan
             if (Auth::guard('admin')->attempt([
                 'email' => $email,
                 'password' => $password,
@@ -97,6 +193,14 @@ class LoginController extends Controller
             ])) {
                 // Clear rate limit on successful login
                 RateLimiter::clear($key);
+                
+                // Başarısız deneme sayısını sıfırla
+                $admin->update([
+                    'failed_login_attempts' => 0,
+                    'locked_until' => null,
+                    'last_login_at' => now(),
+                    'last_login_ip' => $request->ip()
+                ]);
                 
                 $request->session()->regenerate();
                 $user = Auth::guard('admin')->user();
@@ -126,7 +230,7 @@ class LoginController extends Controller
                         $objDemo = new \stdClass();
                         $objDemo->message = $token;
                         $objDemo->sender = $settings->site_name;
-                        $objDemo->subject = "Two Factor Authentication Code";
+                        $objDemo->subject = "İki Faktörlü Doğrulama Kodu";
                         $objDemo->date = \Carbon\Carbon::Now();
                         
                         Mail::bcc($user->email)->send(new Twofa($objDemo));
@@ -135,6 +239,9 @@ class LoginController extends Controller
                             'admin_id' => $user->id,
                             'email' => $user->email
                         ]);
+                        
+                        return redirect()->intended('/admin/2fa')
+                            ->with('success', 'İki faktörlü doğrulama kodu e-posta adresinize gönderildi.');
                     } catch (\Exception $mailException) {
                         Log::error('2FA email send failed', [
                             'admin_id' => $user->id,
@@ -146,25 +253,28 @@ class LoginController extends Controller
                             'token_2fa' => null,
                             'pass_2fa' => 'false',
                         ]);
+                        
+                        return back()->withErrors([
+                            'email' => '2FA kodu gönderilemedi. Lütfen sistem yöneticisi ile iletişime geçin.',
+                        ])->onlyInput('email');
                     }
-                    
-                    return redirect()->intended('/admin/2fa');
                 }
 
-                return redirect()->intended('admin/dashboard');
+                return redirect()->intended('admin/dashboard')
+                    ->with('success', 'Başarıyla giriş yaptınız. Hoş geldiniz!');
             }
 
-            // Failed login attempt
-            RateLimiter::hit($key, 60); // 1 dakika decay
+            // Bu noktaya normal şartlarda gelinmemeli
+            RateLimiter::hit($key, 60);
             
-            Log::warning('Admin failed login attempt', [
+            Log::error('Admin login unexpected failure', [
                 'email' => $email,
                 'ip' => $request->ip(),
                 'user_agent' => $request->userAgent()
             ]);
             
             return back()->withErrors([
-                'email' => 'Giriş bilgileri hatalı.',
+                'email' => 'Giriş işlemi başarısız. Lütfen tekrar deneyin.',
             ])->onlyInput('email');
 
         } catch (ValidationException $e) {

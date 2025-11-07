@@ -103,49 +103,39 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        // Local environment'ta Laravel'in native debug page'ini kullan
+        // Hiçbir custom exception handling yapma
+        if (app()->environment('local') && config('app.debug')) {
+            return; // Laravel'in built-in Whoops debug page'ini kullan
+        }
+        
+        // Sadece production/staging environment'lar için custom handling
         $exceptions->render(function (Throwable $e, $request) {
-            // Local environment'ta Laravel'in built-in exception handler'ını kullan
-            if (app()->environment('local') && config('app.debug')) {
-                return null; // Laravel'in default exception handler'ına devam et
-            }
-            
             try {
-                // Handle view rendering errors
-                if ($request->expectsJson()) {
+                // API requests için JSON response
+                if ($request->expectsJson() || $request->is('api/*')) {
                     return response()->json([
+                        'success' => false,
                         'error' => 'Server Error',
-                        'message' => $e->getMessage()
+                        'message' => 'An error occurred while processing your request.'
                     ], 500);
                 }
                 
-                // Safe logging that won't cause cascading errors
-                try {
-                    error_log('Application Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
-                } catch (\Exception $logException) {
-                    // If logging fails, just continue - don't cause another exception
-                }
+                // Web requests için custom error page
+                return response()->view('errors.500', [
+                    'message' => 'Server Error - Please try again later.'
+                ], 500);
                 
-                // Try to return a view, but fall back to plain text if it fails
-                try {
-                    return response()->view('errors.500', [
-                        'message' => app()->environment('local') ? $e->getMessage() : 'Server Error',
-                        'trace' => app()->environment('local') ? $e->getTraceAsString() : null
-                    ], 500);
-                } catch (\Exception $viewException) {
-                    // If view rendering fails, return plain text response
-                    return response('Server Error', 500, ['Content-Type' => 'text/plain']);
-                }
             } catch (\Exception $handlerException) {
-                // If everything fails, return a minimal response
-                return response('Internal Server Error', 500, ['Content-Type' => 'text/plain']);
+                // Fallback response
+                return response('Server Error', 500, ['Content-Type' => 'text/plain']);
             }
         });
 
-        // Handle specific exception types without causing cascading errors
+        // Production logging
         $exceptions->reportable(function (Throwable $e) {
             try {
-                // Use PHP's built-in error_log to avoid dependency issues
-                error_log('Reportable Exception: ' . $e->getMessage());
+                error_log('Application Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
             } catch (\Exception $logException) {
                 // Silently fail if logging doesn't work
             }
