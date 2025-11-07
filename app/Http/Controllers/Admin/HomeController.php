@@ -619,7 +619,8 @@ class HomeController extends Controller
             ]);
             
             // FALLBACK: If admins collection is empty and current admin is sales rep, include self
-            if ((!$admins || $admins->isEmpty()) && $currentAdmin->isSalesRepresentative()) {
+            $adminsCollection = collect($admins); // Ensure it's always a collection
+            if ((!$admins || $adminsCollection->isEmpty()) && $currentAdmin->isSalesRepresentative()) {
                 \Log::warning('HomeController - Fallback: Adding current sales admin to empty admins collection', [
                     'admin_id' => $currentAdmin->id,
                     'admin_name' => $currentAdmin->getDisplayName()
@@ -645,7 +646,7 @@ class HomeController extends Controller
                 'blocked_users' => $blocked_users,
                 'pending_verification' => $pending_verification,
                 'leadStatuses' => $leadStatuses,
-                'admins' => $admins,
+                'admins' => collect($admins), // Ensure it's always a collection
                 'currentFilters' => $currentFilters,
                 'hasFilters' => $request->hasAny(['status', 'admin', 'date_from', 'date_to']),
             ]);

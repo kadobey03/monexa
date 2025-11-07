@@ -164,8 +164,8 @@
                             <option value="">Tüm Adminler</option>
                             @if(isset($admins) && $admins->count() > 0)
                                 @foreach($admins as $admin)
-                                    <option value="{{ $admin->id }}" {{ request('admin') == $admin->id ? 'selected' : '' }}>
-                                        {{ $admin->getDisplayName() }}
+                                    <option value="{{ is_array($admin) ? $admin['id'] : $admin->id }}" {{ request('admin') == (is_array($admin) ? $admin['id'] : $admin->id) ? 'selected' : '' }}>
+                                        {{ is_array($admin) ? ($admin['name'] ?? $admin['label']) : $admin->getDisplayName() }}
                                     </option>
                                 @endforeach
                             @endif
@@ -225,7 +225,7 @@
                             
                             @if(request('admin'))
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }}">
-                                    Admin: {{ isset($admins) ? ($admins->find(request('admin'))->getDisplayName() ?? 'ID ' . request('admin')) : 'ID ' . request('admin') }}
+                                    Admin: {{ isset($admins) ? ($admins->first(function($admin) { return (is_array($admin) ? $admin['id'] : $admin->id) == request('admin'); })['name'] ?? $admins->first(function($admin) { return (is_array($admin) ? $admin['id'] : $admin->id) == request('admin'); })['label'] ?? 'ID ' . request('admin')) : 'ID ' . request('admin') }}
                                 </span>
                             @endif
                             
@@ -467,9 +467,9 @@
                                             @if(isset($admins) && $admins->count() > 0)
                                                 <option value="" {{ !$user->assign_to ? 'selected' : '' }}>Atanmamış</option>
                                                 @foreach($admins as $admin)
-                                                    <option value="{{ $admin->id }}"
-                                                            {{ ($user->assign_to == $admin->id) ? 'selected' : '' }}>
-                                                        {{ Str::limit($admin->getDisplayName(), 18) }}
+                                                    <option value="{{ is_array($admin) ? $admin['id'] : $admin->id }}"
+                                                            {{ ($user->assign_to == (is_array($admin) ? $admin['id'] : $admin->id)) ? 'selected' : '' }}>
+                                                        {{ Str::limit(is_array($admin) ? ($admin['name'] ?? $admin['label']) : $admin->getDisplayName(), 18) }}
                                                     </option>
                                                 @endforeach
                                             @else
@@ -869,8 +869,8 @@
                                 <option value="">Atamayı kaldır (Atanmamış)</option>
                                 @if(isset($admins) && $admins->count() > 0)
                                     @foreach($admins as $admin)
-                                        <option value="{{ $admin->id }}">
-                                            {{ $admin->getDisplayName() }}
+                                        <option value="{{ is_array($admin) ? $admin['id'] : $admin->id }}">
+                                            {{ is_array($admin) ? ($admin['name'] ?? $admin['label']) : $admin->getDisplayName() }}
                                         </option>
                                     @endforeach
                                 @endif
