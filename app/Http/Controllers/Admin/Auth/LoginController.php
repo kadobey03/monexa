@@ -77,15 +77,7 @@ class LoginController extends Controller
         }
 
         try {
-            // Güvenli validation - email enumeration'ı engellemek için exists kullanmıyoruz
-            $data = $this->validate($request, [
-                'email'    => 'required|string|email|min:5|max:191',
-                'password' => 'required|string|min:8|max:255|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
-            ], [
-                'password.regex' => 'Şifre en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.',
-                'password.min' => 'Şifre en az 8 karakter olmalıdır.',
-            ]);
-
+            // Login ekranında validasyon kaldırıldı - user talebi üzerine
             $email = $request->input('email');
             $password = $request->input('password');
 

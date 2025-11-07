@@ -45,6 +45,9 @@ RUN docker-php-ext-install opcache
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Create user with UID 1000 to match host user
+RUN groupadd -g 1000 appuser && \
+    useradd -u 1000 -g appuser -m -s /bin/bash appuser
 
 # Copy custom PHP configuration
 COPY docker/php/local.ini /usr/local/etc/php/conf.d/local.ini
@@ -52,6 +55,14 @@ COPY docker/php/local.ini /usr/local/etc/php/conf.d/local.ini
 # Copy entrypoint script
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Create necessary directories and set ownership
+RUN mkdir -p /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chown -R appuser:appuser /var/www/html && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Switch to non-root user
+USER appuser
 
 # Expose PHP-FPM port
 EXPOSE 9000
