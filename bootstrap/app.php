@@ -106,13 +106,20 @@ return Application::configure(basePath: dirname(__DIR__))
         // Sentry reporting - tüm environment'larda aktif
         $exceptions->reportable(function (Throwable $e) {
             try {
+                // Validation exception'ları için Sentry'ye gönderme (spam olmasın)
+                if ($e instanceof \Illuminate\Validation\ValidationException) {
+                    return false;
+                }
+                
                 // Sentry'ye exception gönder
                 if (app()->bound('sentry')) {
                     \Sentry\captureException($e);
                 }
                 
-                // Ek logging
-                error_log('Application Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+                // Ek logging (validation hariç)
+                if (!($e instanceof \Illuminate\Validation\ValidationException)) {
+                    error_log('Application Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+                }
             } catch (\Exception $logException) {
                 // Silently fail if logging doesn't work
             }
@@ -128,6 +135,35 @@ return Application::configure(basePath: dirname(__DIR__))
         // Production/staging environment'lar için custom handling
         $exceptions->render(function (Throwable $e, $request) {
             try {
+                // Validation Exception için özel handling
+                if ($e instanceof \Illuminate\Validation\ValidationException) {
+                    // API requests için JSON response
+                    if ($request->expectsJson() || $request->is('api/*')) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Validation failed',
+                            'errors' => $e->errors()
+                        ], 422);
+                    }
+                    
+                    // Web requests için - Laravel'in default validation handling'ini kullan
+                    return redirect()->back()
+                        ->withErrors($e->errors())
+                        ->withInput($request->except(['password', 'password_confirmation']));
+                }
+
+                // Authentication Exception için özel handling
+                if ($e instanceof \Illuminate\Auth\AuthenticationException) {
+                    if ($request->expectsJson() || $request->is('api/*')) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'Unauthenticated'
+                        ], 401);
+                    }
+                    
+                    return redirect()->route('login');
+                }
+                
                 // API requests için JSON response
                 if ($request->expectsJson() || $request->is('api/*')) {
                     return response()->json([
@@ -139,11 +175,17 @@ return Application::configure(basePath: dirname(__DIR__))
                 
                 // Web requests için custom error page
                 return response()->view('errors.500', [
-                    'message' => 'Server Error - Please try again later.'
+                    'message' => 'Bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.'
                 ], 500);
                 
             } catch (\Exception $handlerException) {
                 // Fallback response
+                if ($request->expectsJson() || $request->is('api/*')) {
+                    return response()->json([
+                        'success' => false,
+                        'error' => 'Server Error'
+                    ], 500);
+                }
                 return response('Server Error', 500, ['Content-Type' => 'text/plain']);
             }
         });

@@ -38,16 +38,36 @@
         </div>
 
         <!-- Error Messages -->
-        @error('email')
+        @if ($errors->any())
+            <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl">
+                <div class="flex items-start gap-3">
+                    <x-heroicon name="exclamation-circle" class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                    <div class="text-sm text-red-800 dark:text-red-200">
+                        @if ($errors->count() === 1)
+                            {{ $errors->first() }}
+                        @else
+                            <ul class="list-disc list-inside space-y-1">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <!-- Session Error Messages (fallback for production issues) -->
+        @if (session('error'))
             <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl">
                 <div class="flex items-center gap-3">
                     <x-heroicon name="exclamation-circle" class="h-5 w-5 text-red-600 dark:text-red-400" />
                     <div class="text-sm text-red-800 dark:text-red-200">
-                        {{ $message }}
+                        {{ session('error') }}
                     </div>
                 </div>
             </div>
-        @enderror
+        @endif
 
         <!-- Login Form -->
         <form action="{{ route('login') }}" method="post" class="space-y-6">
