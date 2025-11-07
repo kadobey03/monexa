@@ -71,7 +71,7 @@ class UserStatusController extends Controller
                 'created_at',
                 'updated_at'
             ])
-            ->with(['assignedAdmin:id,firstname,lastname'])
+            ->with(['assignedAdmin:id,firstName,lastName'])
             ->paginate($perPage);
 
             // Transform data for better readability
@@ -87,8 +87,8 @@ class UserStatusController extends Controller
                     'lead_status' => $user->lead_status,
                     'lead_status_display' => $user->getLeadStatusNameAttribute(),
                     'lead_score' => $user->lead_score,
-                    'assigned_to' => $user->assignedAdmin ? 
-                        $user->assignedAdmin->firstname . ' ' . $user->assignedAdmin->lastname : null,
+                    'assigned_to' => $user->assignedAdmin ?
+                        $user->assignedAdmin->firstName . ' ' . $user->assignedAdmin->lastName : null,
                     'last_contact_date' => $user->last_contact_date,
                     'next_follow_up_date' => $user->next_follow_up_date,
                     'days_since_last_contact' => $user->getDaysSinceLastContact(),
@@ -186,8 +186,8 @@ class UserStatusController extends Controller
                 'lead_status_display' => $user->getLeadStatusNameAttribute(),
                 'lead_score' => $user->lead_score,
                 'estimated_value' => $user->estimated_value,
-                'assigned_to' => $user->assignedAdmin ? 
-                    $user->assignedAdmin->firstname . ' ' . $user->assignedAdmin->lastname : null,
+                'assigned_to' => $user->assignedAdmin ?
+                    $user->assignedAdmin->firstName . ' ' . $user->assignedAdmin->lastName : null,
                 'last_contact_date' => $user->last_contact_date,
                 'next_follow_up_date' => $user->next_follow_up_date,
                 'days_since_last_contact' => $user->getDaysSinceLastContact(),

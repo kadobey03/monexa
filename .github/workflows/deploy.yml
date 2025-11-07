@@ -103,6 +103,13 @@ jobs:
             # Run post-deployment commands
             echo "🔧 Running post-deployment commands..."
             docker-compose -f docker-compose.prod.yml exec -T app-monexa composer install --no-interaction --no-dev --optimize-autoloader || true
+            
+            # Run database migrations
+            echo "🗄️ Running database migrations..."
+            docker-compose -f docker-compose.prod.yml exec -T app-monexa php artisan migrate --force || { echo "❌ Migration failed"; exit 1; }
+            
+            # Clear caches and optimize
+            echo "🧹 Clearing caches and optimizing..."
             docker-compose -f docker-compose.prod.yml exec -T app-monexa php artisan config:clear || true
             docker-compose -f docker-compose.prod.yml exec -T app-monexa php artisan cache:clear || true
             docker-compose -f docker-compose.prod.yml exec -T app-monexa php artisan route:clear || true

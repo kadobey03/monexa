@@ -26,6 +26,7 @@ use App\Models\Withdrawal;
 use App\Models\Cp_transaction;
 use App\Models\Tp_Transaction;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Http\Request;
 use App\Models\Kyc;
 use App\Models\OrdersP2p;
@@ -33,6 +34,7 @@ use App\Models\Task;
 use App\Models\Wallets;
 use Illuminate\Support\Facades\Cache;
 use App\Services\UserExportService;
+use App\Services\LeadAuthorizationService;
 use App\Models\AdminAuditLog;
 
 class HomeController extends Controller
@@ -44,23 +46,115 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //sum total deposited
-        $total_deposited = DB::table('deposits')->select(DB::raw("SUM(amount) as count"))->where('status', 'Processed')->get();
-        $pending_deposited = DB::table('deposits')->select(DB::raw("SUM(amount) as count"))->where('status', 'Pending')->get();
-        $total_withdrawn = DB::table('withdrawals')->select(DB::raw("SUM(amount) as count"))->where('status', 'Processed')->get();
-        $pending_withdrawn = DB::table('withdrawals')->select(DB::raw("SUM(amount) as count"))->where('status', 'Pending')->get();
+        // Get current admin and authorization service
+        $currentAdmin = auth('admin')->user();
+        $leadAuthService = app(LeadAuthorizationService::class);
+        
+        // Get authorized users query based on current admin's level
+        $authorizedUsersQuery = $leadAuthService->getAuthorizedLeadsQuery($currentAdmin);
+        
+        // ROLE-BASED STATISTICS: Only show data for authorized users
+        if ($currentAdmin->hasBypassPrivileges()) {
+            // Super admin and head of office see all statistics
+            $userIds = User::pluck('id')->toArray();
+        } else {
+            // Other admins see only their authorized users' statistics
+            $userIds = $authorizedUsersQuery->pluck('id')->toArray();
+        }
+        
+        // Calculate role-based financial statistics
+        if (empty($userIds)) {
+            // No authorized users - show zero statistics
+            $total_deposited = collect([['count' => 0]]);
+            $pending_deposited = collect([['count' => 0]]);
+            $total_withdrawn = collect([['count' => 0]]);
+            $pending_withdrawn = collect([['count' => 0]]);
+            $chart_pdepsoit = 0;
+            $chart_pendepsoit = 0;
+            $chart_pwithdraw = 0;
+            $chart_pendwithdraw = 0;
+        } else {
+            // Calculate statistics for authorized users only
+            $total_deposited = DB::table('deposits')
+                ->select(DB::raw("SUM(amount) as count"))
+                ->where('status', 'Processed')
+                ->whereIn('user', $userIds)
+                ->get();
+                
+            $pending_deposited = DB::table('deposits')
+                ->select(DB::raw("SUM(amount) as count"))
+                ->where('status', 'Pending')
+                ->whereIn('user', $userIds)
+                ->get();
+                
+            $total_withdrawn = DB::table('withdrawals')
+                ->select(DB::raw("SUM(amount) as count"))
+                ->where('status', 'Processed')
+                ->whereIn('user', $userIds)
+                ->get();
+                
+            $pending_withdrawn = DB::table('withdrawals')
+                ->select(DB::raw("SUM(amount) as count"))
+                ->where('status', 'Pending')
+                ->whereIn('user', $userIds)
+                ->get();
 
-        $userlist = User::count();
-        $activeusers = User::where('status', 'active')->count();
-        $blockeusers = User::where('status', 'blocked')->count();
+            $chart_pdepsoit = DB::table('deposits')
+                ->where('status', 'Processed')
+                ->whereIn('user', $userIds)
+                ->sum('amount');
+                
+            $chart_pendepsoit = DB::table('deposits')
+                ->where('status', 'Pending')
+                ->whereIn('user', $userIds)
+                ->sum('amount');
+                
+            $chart_pwithdraw = DB::table('withdrawals')
+                ->where('status', 'Processed')
+                ->whereIn('user', $userIds)
+                ->sum('amount');
+                
+            $chart_pendwithdraw = DB::table('withdrawals')
+                ->where('status', 'Pending')
+                ->whereIn('user', $userIds)
+                ->sum('amount');
+        }
+
+        // ROLE-BASED USER STATISTICS: Use authorized query
+        $userlist = $authorizedUsersQuery->count();
+        $activeusers = (clone $authorizedUsersQuery)->where('status', 'active')->count();
+        $blockeusers = (clone $authorizedUsersQuery)->where('status', 'blocked')->count();
+        $unverifiedusers = (clone $authorizedUsersQuery)->where('account_verify', '!=', 'yes')->count();
+
+        // Plans count remains global (not user-specific)
         $plans = Plans::count();
-        $unverifiedusers = User::where('account_verify', '!=', 'yes')->count();
-
-        $chart_pdepsoit = DB::table('deposits')->where('status', 'Processed')->sum('amount');
-        $chart_pendepsoit = DB::table('deposits')->where('status', 'Pending')->sum('amount');
-        $chart_pwithdraw = DB::table('withdrawals')->where('status', 'Processed')->sum('amount');
-        $chart_pendwithdraw = DB::table('withdrawals')->where('status', 'Pending')->sum('amount');
-        $chart_trans = Tp_Transaction::sum('amount');
+        
+        // Tp_Transaction calculation - role-based if possible
+        if ($currentAdmin->hasBypassPrivileges()) {
+            $chart_trans = Tp_Transaction::sum('amount');
+        } else {
+            // For non-bypass users, calculate based on their users if tp_transactions has user field
+            $chart_trans = empty($userIds) ? 0 :
+                (Schema::hasColumn('tp_transactions', 'user') ?
+                    Tp_Transaction::whereIn('user', $userIds)->sum('amount') :
+                    0);
+        }
+        
+        // Debug logging for dashboard statistics
+        \Log::info('Dashboard Statistics - Role-based filtering applied', [
+            'admin_id' => $currentAdmin->id,
+            'admin_name' => $currentAdmin->getDisplayName(),
+            'has_bypass' => $currentAdmin->hasBypassPrivileges(),
+            'authorized_users_count' => count($userIds),
+            'stats' => [
+                'userlist' => $userlist,
+                'activeusers' => $activeusers,
+                'blockeusers' => $blockeusers,
+                'unverifiedusers' => $unverifiedusers,
+                'total_deposited' => $total_deposited[0]->count ?? 0,
+                'total_withdrawn' => $total_withdrawn[0]->count ?? 0,
+            ]
+        ]);
 
         return view('admin.dashboard-modern', [
             'title' => 'Admin Dashboard',
@@ -91,6 +185,10 @@ class HomeController extends Controller
     public function getDashboardData(Request $request)
     {
         try {
+            // Get current admin and authorization service for AJAX role-based filtering
+            $currentAdmin = auth('admin')->user();
+            $leadAuthService = app(LeadAuthorizationService::class);
+            
             $range = $request->input('range', '30days');
             
             // Calculate date range
@@ -103,44 +201,63 @@ class HomeController extends Controller
             
             $startDate = $dateRanges[$range] ?? now()->subDays(30);
             
-            // Get basic statistics
+            // Get authorized users query based on current admin's level - ROLE-BASED AJAX
+            $authorizedUsersQuery = $leadAuthService->getAuthorizedLeadsQuery($currentAdmin);
+            
+            // ROLE-BASED STATISTICS for AJAX
+            if ($currentAdmin->hasBypassPrivileges()) {
+                // Super admin and head of office see all statistics
+                $userIds = User::pluck('id')->toArray();
+                $userQuery = User::query();
+                $leadsQuery = User::query()->where(function($q) {
+                    $q->whereNull('cstatus')->orWhere('cstatus', '!=', 'Customer');
+                });
+            } else {
+                // Other admins see only their authorized users' statistics
+                $userIds = $authorizedUsersQuery->pluck('id')->toArray();
+                $userQuery = clone $authorizedUsersQuery;
+                $leadsQuery = clone $authorizedUsersQuery;
+                $leadsQuery->where(function($q) {
+                    $q->whereNull('cstatus')->orWhere('cstatus', '!=', 'Customer');
+                });
+            }
+            
+            // Get role-based statistics
             $stats = [
                 'users' => [
-                    'value' => User::count(),
+                    'value' => $userQuery->count(),
                     'change' => $this->calculatePercentageChange(
-                        User::where('created_at', '>=', $startDate)->count(),
-                        User::where('created_at', '>=', $startDate->copy()->subDays($startDate->diffInDays(now())))->count()
+                        $userQuery->where('created_at', '>=', $startDate)->count(),
+                        $userQuery->where('created_at', '>=', $startDate->copy()->subDays($startDate->diffInDays(now())))->count()
                     )
                 ],
                 'revenue' => [
-                    'value' => DB::table('deposits')->where('status', 'Processed')->sum('amount'),
-                    'change' => $this->calculatePercentageChange(
-                        DB::table('deposits')->where('status', 'Processed')->where('created_at', '>=', $startDate)->sum('amount'),
-                        DB::table('deposits')->where('status', 'Processed')
+                    'value' => empty($userIds) ? 0 : DB::table('deposits')->where('status', 'Processed')->whereIn('user', $userIds)->sum('amount'),
+                    'change' => empty($userIds) ? 0 : $this->calculatePercentageChange(
+                        DB::table('deposits')->where('status', 'Processed')->whereIn('user', $userIds)->where('created_at', '>=', $startDate)->sum('amount'),
+                        DB::table('deposits')->where('status', 'Processed')->whereIn('user', $userIds)
                             ->whereBetween('created_at', [$startDate->copy()->subDays($startDate->diffInDays(now())), $startDate])
                             ->sum('amount')
                     )
                 ],
                 'leads' => [
-                    'value' => User::whereNull('cstatus')->orWhere('cstatus', '!=', 'Customer')->count(),
+                    'value' => $leadsQuery->count(),
                     'change' => $this->calculatePercentageChange(
-                        User::whereNull('cstatus')->where('created_at', '>=', $startDate)->count(),
-                        User::whereNull('cstatus')
-                            ->whereBetween('created_at', [$startDate->copy()->subDays($startDate->diffInDays(now())), $startDate])
-                            ->count()
+                        $leadsQuery->where('created_at', '>=', $startDate)->count(),
+                        $leadsQuery->whereBetween('created_at', [$startDate->copy()->subDays($startDate->diffInDays(now())), $startDate])->count()
                     )
                 ]
             ];
 
-            // Get chart data
+            // Get role-based chart data
             $charts = [
-                'revenue' => $this->getRevenueChartData($startDate),
-                'users' => $this->getUsersChartData(),
-                'activity' => $this->getActivityChartData($startDate)
+                'revenue' => $this->getRevenueChartData($startDate, $userIds),
+                'users' => $this->getUsersChartData($userIds),
+                'activity' => $this->getActivityChartData($startDate, $userIds)
             ];
 
-            // Get recent activities
-            $recentActivities = $this->getRecentActivities();
+            // Get role-based recent activities
+            $recentActivities = $this->getRecentActivities($userIds);
 
             return response()->json([
                 'success' => true,
@@ -175,17 +292,27 @@ class HomeController extends Controller
     }
 
     /**
-     * Get revenue chart data
+     * Get revenue chart data (role-based)
      */
-    private function getRevenueChartData($startDate)
+    private function getRevenueChartData($startDate, $userIds = null)
     {
-        $deposits = DB::table('deposits')
+        $query = DB::table('deposits')
             ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(amount) as total'))
             ->where('status', 'Processed')
-            ->where('created_at', '>=', $startDate)
-            ->groupBy('date')
-            ->orderBy('date')
-            ->get();
+            ->where('created_at', '>=', $startDate);
+            
+        // Apply role-based filtering
+        if ($userIds !== null && !empty($userIds)) {
+            $query->whereIn('user', $userIds);
+        } elseif ($userIds !== null && empty($userIds)) {
+            // No authorized users - return empty data
+            return [
+                'labels' => [],
+                'values' => []
+            ];
+        }
+        
+        $deposits = $query->groupBy('date')->orderBy('date')->get();
 
         return [
             'labels' => $deposits->pluck('date')->map(function($date) {
@@ -196,41 +323,70 @@ class HomeController extends Controller
     }
 
     /**
-     * Get users chart data (pie chart)
+     * Get users chart data (pie chart) (role-based)
      */
-    private function getUsersChartData()
+    private function getUsersChartData($userIds = null)
     {
+        if ($userIds !== null && empty($userIds)) {
+            // No authorized users - return empty data
+            return [
+                'labels' => ['Aktif', 'Engellenmiş', 'Doğrulanmamış', 'Müşteri'],
+                'values' => [0, 0, 0, 0]
+            ];
+        }
+        
+        $baseQuery = $userIds !== null ? User::whereIn('id', $userIds) : User::query();
+        
         return [
             'labels' => ['Aktif', 'Engellenmiş', 'Doğrulanmamış', 'Müşteri'],
             'values' => [
-                User::where('status', 'active')->count(),
-                User::where('status', 'blocked')->count(),
-                User::where('account_verify', '!=', 'yes')->count(),
-                User::where('cstatus', 'Customer')->count()
+                (clone $baseQuery)->where('status', 'active')->count(),
+                (clone $baseQuery)->where('status', 'blocked')->count(),
+                (clone $baseQuery)->where('account_verify', '!=', 'yes')->count(),
+                (clone $baseQuery)->where('cstatus', 'Customer')->count()
             ]
         ];
     }
 
     /**
-     * Get activity chart data
+     * Get activity chart data (role-based)
      */
-    private function getActivityChartData($startDate)
+    private function getActivityChartData($startDate, $userIds = null)
     {
+        if ($userIds !== null && empty($userIds)) {
+            // No authorized users - return empty data
+            $dates = collect();
+            for ($date = $startDate->copy(); $date <= now(); $date->addDay()) {
+                $dates->push([
+                    'date' => $date->format('d.m'),
+                    'count' => 0
+                ]);
+            }
+            
+            return [
+                'labels' => $dates->pluck('date')->toArray(),
+                'values' => $dates->pluck('count')->toArray()
+            ];
+        }
+        
         $activities = collect();
         
-        // Combine different activities
-        $userRegistrations = User::select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-            ->where('created_at', '>=', $startDate)
-            ->groupBy('date')
-            ->orderBy('date')
-            ->get();
-
-        $deposits = DB::table('deposits')
+        // Combine different activities with role-based filtering
+        $userQuery = User::select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
+            ->where('created_at', '>=', $startDate);
+            
+        $depositQuery = DB::table('deposits')
             ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-            ->where('created_at', '>=', $startDate)
-            ->groupBy('date')
-            ->orderBy('date')
-            ->get();
+            ->where('created_at', '>=', $startDate);
+            
+        // Apply role-based filtering if needed
+        if ($userIds !== null) {
+            $userQuery->whereIn('id', $userIds);
+            $depositQuery->whereIn('user', $userIds);
+        }
+        
+        $userRegistrations = $userQuery->groupBy('date')->orderBy('date')->get();
+        $deposits = $depositQuery->groupBy('date')->orderBy('date')->get();
 
         // Merge and process data
         $dates = collect();
@@ -252,14 +408,24 @@ class HomeController extends Controller
     }
 
     /**
-     * Get recent activities
+     * Get recent activities (role-based)
      */
-    private function getRecentActivities()
+    private function getRecentActivities($userIds = null)
     {
+        if ($userIds !== null && empty($userIds)) {
+            // No authorized users - return empty activities
+            return [];
+        }
+        
         $activities = collect();
 
-        // Recent user registrations
-        $recentUsers = User::latest()->take(5)->get()->map(function($user) {
+        // Recent user registrations with role-based filtering
+        $userQuery = User::latest()->take(5);
+        if ($userIds !== null) {
+            $userQuery->whereIn('id', $userIds);
+        }
+        
+        $recentUsers = $userQuery->get()->map(function($user) {
             return [
                 'message' => $user->name . ' sisteme kayıt oldu',
                 'created_at' => $user->created_at->toISOString(),
@@ -267,8 +433,13 @@ class HomeController extends Controller
             ];
         });
 
-        // Recent deposits
-        $recentDeposits = Deposit::with('duser')->latest()->take(5)->get()->map(function($deposit) {
+        // Recent deposits with role-based filtering
+        $depositQuery = Deposit::with('duser')->latest()->take(5);
+        if ($userIds !== null) {
+            $depositQuery->whereIn('user', $userIds);
+        }
+        
+        $recentDeposits = $depositQuery->get()->map(function($deposit) {
             return [
                 'message' => ($deposit->duser->name ?? 'Kullanıcı') . ' ' . number_format($deposit->amount, 2) . ' TL yatırdı',
                 'created_at' => $deposit->created_at->toISOString(),
@@ -375,8 +546,13 @@ class HomeController extends Controller
             // Session management for filter persistence
             $this->manageFilterSession($request, $validated);
 
-            // Build dynamic query with eager loading
-            $query = User::with(['leadStatus', 'assignedAdmin']);
+            // Get authorized users query based on current admin's level
+            $currentAdmin = auth('admin')->user();
+            $leadAuthService = app(LeadAuthorizationService::class);
+            $query = $leadAuthService->getAuthorizedLeadsQuery($currentAdmin);
+            
+            // Eager load relationships
+            $query->with(['leadStatus', 'assignedAdmin']);
             
             // Apply status filter - FIXED: Now correctly filters by lead_status field
             if ($request->filled('status')) {
@@ -411,17 +587,45 @@ class HomeController extends Controller
                 $users = $query->paginate($perPage)->appends($request->query());
             }
 
-            // İstatistikler - filtrelenmiş veriye göre
+            // İstatistikler - filtrelenmiş veriye göre (FIXED: Authorization-based statistics)
             $filteredQuery = clone $query;
-            $user_count = User::count(); // Toplam kullanıcı sayısı
             $filtered_count = $filteredQuery->count(); // Filtrelenmiş kullanıcı sayısı
-            $active_users = User::where('status', 'active')->count();
-            $blocked_users = User::where('status', 'blocked')->count();
-            $pending_verification = User::where('account_verify', '!=', 'yes')->count();
+            
+            // CRITICAL FIX: Use LeadAuthorizationService for all statistics
+            $baseQuery = $leadAuthService->getAuthorizedLeadsQuery($currentAdmin);
+            $user_count = $baseQuery->count(); // Yetkili kullanıcı sayısı
+            $active_users = (clone $baseQuery)->where('status', 'active')->count();
+            $blocked_users = (clone $baseQuery)->where('status', 'blocked')->count();
+            $pending_verification = (clone $baseQuery)->where('account_verify', '!=', 'yes')->count();
 
             // Dropdown data
             $leadStatuses = \App\Models\LeadStatus::active()->get();
-            $admins = Admin::where('status', 'Active')->orderBy('firstName')->get();
+            
+            // Get filtered admins based on current admin's authorization level
+            $currentAdmin = auth('admin')->user();
+            $leadAuthService = app(LeadAuthorizationService::class);
+            $admins = $leadAuthService->getAvailableAdminsForAssignment($currentAdmin);
+            
+            // TEMPORARY DEBUG: Log admin collection to understand the issue
+            \Log::info('HomeController manageusers() - Admin Collection Debug', [
+                'current_admin_id' => $currentAdmin->id,
+                'current_admin_name' => $currentAdmin->firstName . ' ' . $currentAdmin->lastName,
+                'current_admin_type' => $currentAdmin->type,
+                'admins_count' => $admins ? collect($admins)->count() : 0,
+                'admins_data' => $admins ? collect($admins)->toArray() : 'null/empty',
+                'is_super_admin' => $currentAdmin->isSuperAdmin(),
+                'is_sales_representative' => $currentAdmin->isSalesRepresentative(),
+                'has_bypass_privileges' => $currentAdmin->hasBypassPrivileges()
+            ]);
+            
+            // FALLBACK: If admins collection is empty and current admin is sales rep, include self
+            if ((!$admins || $admins->isEmpty()) && $currentAdmin->isSalesRepresentative()) {
+                \Log::warning('HomeController - Fallback: Adding current sales admin to empty admins collection', [
+                    'admin_id' => $currentAdmin->id,
+                    'admin_name' => $currentAdmin->getDisplayName()
+                ]);
+                $admins = collect([$currentAdmin]);
+            }
 
             // Current filter values for form persistence
             $currentFilters = [
@@ -560,21 +764,72 @@ class HomeController extends Controller
     //Return manage withdrawals route
     public function mwithdrawals()
     {
+        // Get current admin and authorization service for role-based withdrawal filtering
+        $currentAdmin = auth('admin')->user();
+        $leadAuthService = app(\App\Services\LeadAuthorizationService::class);
+        
+        // Get authorized users query based on current admin's level
+        $authorizedUsersQuery = $leadAuthService->getAuthorizedLeadsQuery($currentAdmin);
+        
+        // ROLE-BASED WITHDRAWAL FILTERING: Show only withdrawals from authorized users
+        if ($currentAdmin->hasBypassPrivileges()) {
+            // Super admin and head of office see all withdrawals
+            $withdrawalsQuery = Withdrawal::with('duser');
+        } else {
+            // Other admins see only withdrawals from their authorized users
+            $userIds = $authorizedUsersQuery->pluck('id')->toArray();
+            $withdrawalsQuery = Withdrawal::with('duser')->whereIn('user', $userIds);
+        }
+        
+        // Debug logging for withdrawal filtering
+        \Log::info('Manage Withdrawals - Role-based filtering applied', [
+            'admin_id' => $currentAdmin->id,
+            'admin_name' => $currentAdmin->getDisplayName(),
+            'has_bypass' => $currentAdmin->hasBypassPrivileges(),
+            'authorized_users_count' => $currentAdmin->hasBypassPrivileges() ? 'all' : count($userIds ?? []),
+            'withdrawals_query_applied' => !$currentAdmin->hasBypassPrivileges()
+        ]);
+
         return view('admin.Withdrawals.mwithdrawals')
             ->with(array(
                 'title' => 'Manage users withdrawals',
-                'withdrawals' => Withdrawal::with('duser')->orderBy('id', 'desc')->get(),
-
+                'withdrawals' => $withdrawalsQuery->orderBy('id', 'desc')->get(),
             ));
     }
 
     //Return manage deposits route
     public function mdeposits()
     {
+        // Get current admin and authorization service for role-based deposit filtering
+        $currentAdmin = auth('admin')->user();
+        $leadAuthService = app(\App\Services\LeadAuthorizationService::class);
+        
+        // Get authorized users query based on current admin's level
+        $authorizedUsersQuery = $leadAuthService->getAuthorizedLeadsQuery($currentAdmin);
+        
+        // ROLE-BASED DEPOSIT FILTERING: Show only deposits from authorized users
+        if ($currentAdmin->hasBypassPrivileges()) {
+            // Super admin and head of office see all deposits
+            $depositsQuery = Deposit::with('duser');
+        } else {
+            // Other admins see only deposits from their authorized users
+            $userIds = $authorizedUsersQuery->pluck('id')->toArray();
+            $depositsQuery = Deposit::with('duser')->whereIn('user', $userIds);
+        }
+        
+        // Debug logging for deposit filtering
+        \Log::info('Manage Deposits - Role-based filtering applied', [
+            'admin_id' => $currentAdmin->id,
+            'admin_name' => $currentAdmin->getDisplayName(),
+            'has_bypass' => $currentAdmin->hasBypassPrivileges(),
+            'authorized_users_count' => $currentAdmin->hasBypassPrivileges() ? 'all' : count($userIds ?? []),
+            'deposits_query_applied' => !$currentAdmin->hasBypassPrivileges()
+        ]);
+
         return view('admin.Deposits.mdeposits')
             ->with(array(
                 'title' => 'Manage users deposits',
-                'deposits' => Deposit::with('duser')->orderBy('id', 'desc')->paginate(15),
+                'deposits' => $depositsQuery->orderBy('id', 'desc')->paginate(15),
             ));
     }
 
@@ -770,10 +1025,36 @@ class HomeController extends Controller
     //Return KYC route
     public function kyc()
     {
+        // Get current admin and authorization service for role-based KYC filtering
+        $currentAdmin = auth('admin')->user();
+        $leadAuthService = app(\App\Services\LeadAuthorizationService::class);
+        
+        // Get authorized users query based on current admin's level
+        $authorizedUsersQuery = $leadAuthService->getAuthorizedLeadsQuery($currentAdmin);
+        
+        // ROLE-BASED KYC FILTERING: Show only KYC applications from authorized users
+        if ($currentAdmin->hasBypassPrivileges()) {
+            // Super admin and head of office see all KYC applications
+            $kycsQuery = Kyc::with(['user']);
+        } else {
+            // Other admins see only KYC applications from their authorized users
+            $userIds = $authorizedUsersQuery->pluck('id')->toArray();
+            $kycsQuery = Kyc::with(['user'])->whereIn('user_id', $userIds);
+        }
+        
+        // Debug logging for KYC filtering
+        \Log::info('KYC Applications - Role-based filtering applied', [
+            'admin_id' => $currentAdmin->id,
+            'admin_name' => $currentAdmin->getDisplayName(),
+            'has_bypass' => $currentAdmin->hasBypassPrivileges(),
+            'authorized_users_count' => $currentAdmin->hasBypassPrivileges() ? 'all' : count($userIds ?? []),
+            'kyc_query_applied' => !$currentAdmin->hasBypassPrivileges()
+        ]);
+
         return view('admin.kyc', [
             'title' => 'KYC Applications',
             'settings' => Settings::find(1),
-            'kycs' => Kyc::orderByDesc('id')->with(['user'])->get(),
+            'kycs' => $kycsQuery->orderByDesc('id')->get(),
         ]);
     }
 
@@ -1248,6 +1529,13 @@ class HomeController extends Controller
             $oldStatus = $user->lead_status;
             $user->lead_status = $request->lead_status;
             $user->save();
+            
+            // CRITICAL FIX: Refresh model and clear relationship cache
+            $user->refresh();
+            $user->unsetRelation('leadStatus');
+            
+            // Fresh load with relationship to ensure UI gets updated data
+            $user = $user->fresh(['leadStatus']);
 
             // Log işlem
             \Log::info('Lead Status Updated', [
@@ -1265,7 +1553,13 @@ class HomeController extends Controller
                 'data' => [
                     'user_id' => $user->id,
                     'old_status' => $oldStatus,
-                    'new_status' => $request->lead_status
+                    'new_status' => $request->lead_status,
+                    'current_status_display' => $user->leadStatus?->display_name ?? $user->lead_status,
+                    'leadStatus' => $user->leadStatus ? [
+                        'name' => $user->leadStatus->name,
+                        'display_name' => $user->leadStatus->display_name,
+                        'color' => $user->leadStatus->color,
+                    ] : null,
                 ]
             ]);
 

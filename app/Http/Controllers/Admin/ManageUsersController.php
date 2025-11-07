@@ -1104,7 +1104,40 @@ public function withdrawalcode(Request $request)
         ]);
 
         $user = User::findOrFail($userId);
-        $admin = \App\Models\Admin::findOrFail($request->admin_id);
+        $targetAdmin = \App\Models\Admin::findOrFail($request->admin_id);
+        $currentAdmin = Auth::guard('admin')->user();
+        
+        // ✅ CRITICAL SECURITY: Existing LeadAuthorizationService kullanarak yetki kontrolü
+        $authService = app(\App\Services\LeadAuthorizationService::class);
+        $availableAdmins = collect($authService->getAvailableAdminsForAssignment($currentAdmin));
+        
+        // Target admin'in mevcut admin'in atama yetkisinde olup olmadığını kontrol et
+        if (!$availableAdmins->contains('id', $targetAdmin->id)) {
+            $errorMessage = 'Bu admin\'e kullanıcı atama yetkiniz bulunmamaktadır. Lütfen sistem yöneticiniz ile iletişime geçiniz.';
+            
+            // Güvenlik logu
+            \Log::warning('Unauthorized admin assignment attempt', [
+                'attempting_admin_id' => $currentAdmin->id,
+                'attempting_admin_role' => $currentAdmin->getRoleName(),
+                'attempting_admin_level' => $currentAdmin->hierarchy_level,
+                'target_admin_id' => $targetAdmin->id,
+                'target_admin_role' => $targetAdmin->getRoleName(),
+                'target_admin_level' => $targetAdmin->hierarchy_level,
+                'user_id' => $userId,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'available_admin_ids' => $availableAdmins->pluck('id')->toArray()
+            ]);
+            
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $errorMessage
+                ], 403);
+            }
+            
+            return redirect()->back()->with('error', $errorMessage);
+        }
         
         try {
             DB::beginTransaction();
@@ -1121,16 +1154,24 @@ public function withdrawalcode(Request $request)
                 'assigned_by' => Auth::guard('admin')->id(),
                 'assigned_to' => $request->admin_id,
                 'assignment_date' => now(),
-                'notes' => "Kullanıcı {$admin->getFullName()} adminne atandı"
+                'notes' => "Kullanıcı {$targetAdmin->getFullName()} admin'e atandı (Atan: {$currentAdmin->getFullName()})"
             ]);
             
             DB::commit();
+            
+            // Başarı logu
+            \Log::info('Admin assignment successful', [
+                'assigning_admin_id' => $currentAdmin->id,
+                'target_admin_id' => $targetAdmin->id,
+                'user_id' => $userId,
+                'assignment_type' => 'manual'
+            ]);
             
             if ($request->ajax()) {
                 return response()->json([
                     'success' => true,
                     'message' => 'Admin başarıyla atandı.',
-                    'assigned_admin' => $admin->getFullName()
+                    'assigned_admin' => $targetAdmin->getFullName()
                 ]);
             }
             
@@ -1143,7 +1184,8 @@ public function withdrawalcode(Request $request)
                 'user_id' => $userId,
                 'admin_id' => $request->admin_id,
                 'assigning_admin' => Auth::guard('admin')->id(),
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
             ]);
             
             if ($request->ajax()) {

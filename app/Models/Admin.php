@@ -792,6 +792,7 @@ class Admin extends Authenticatable
     public function isSalesRepresentative(): bool
     {
         return $this->role && in_array($this->role->name, [
+            'sale',            // ✅ FIXED: DB'deki gerçek role name
             'sales_agent',
             'retention_agent'
         ]);

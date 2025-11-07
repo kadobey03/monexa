@@ -173,6 +173,12 @@ class LeadAuthorizationService
      */
     protected function getOwnLeads(Builder $query, Admin $admin): Builder
     {
+        Log::info('🪲 FILTERING: getOwnLeads called', [
+            'admin_id' => $admin->id,
+            'admin_name' => $admin->firstName . ' ' . $admin->lastName,
+            'admin_role' => $admin->getRoleName()
+        ]);
+        
         return $query->where('assign_to', $admin->id);
     }
 
@@ -331,25 +337,28 @@ class LeadAuthorizationService
      */
     public function getAvailableAdminsForAssignment(Admin $currentAdmin): array
     {
-        $cacheKey = $this->cachePrefix . 'assignable_' . $currentAdmin->id;
+        // Use new cache key to avoid old Collection cached values
+        $cacheKey = $this->cachePrefix . 'assignable_array_v2_' . $currentAdmin->id;
         
-        return Cache::remember($cacheKey, $this->cacheExpiry, function() use ($currentAdmin) {
+        $result = Cache::remember($cacheKey, $this->cacheExpiry, function() use ($currentAdmin) {
             // Bypass privileges: super admin ve head of office herkesi assign edebilir
             if ($currentAdmin->hasBypassPrivileges()) {
-                return Admin::active()
+                $admins = Admin::active()
                     ->with('role')
                     ->orderBy('firstName')
-                    ->get()
-                    ->map(function($admin) {
-                        return [
-                            'id' => $admin->id,
-                            'name' => $admin->getFullName(),
-                            'role' => $admin->role?->display_name ?? 'No Role',
-                            'department' => $admin->department,
-                            'capacity' => $admin->getAssignmentCapacity(),
-                        ];
-                    })
-                    ->toArray();
+                    ->get();
+                
+                $adminArray = [];
+                foreach ($admins as $admin) {
+                    $adminArray[] = [
+                        'id' => $admin->id,
+                        'value' => $admin->id,
+                        'label' => $admin->firstName . ' ' . $admin->lastName,
+                        'name' => $admin->firstName . ' ' . $admin->lastName,
+                        'role' => $admin->role?->display_name ?? $admin->role?->name ?? 'N/A',
+                    ];
+                }
+                return $adminArray;
             }
 
             $roleName = $currentAdmin->getRoleName();
@@ -371,23 +380,37 @@ class LeadAuthorizationService
                     break;
 
                 default:
-                    // Agents can't assign
+                    // Sales agents/representatives can only see themselves in dropdown
+                    // This allows them to see current assignment but not reassign to others
+                    if ($currentAdmin->isSalesRepresentative()) {
+                        return [[
+                            'id' => $currentAdmin->id,
+                            'value' => $currentAdmin->id,
+                            'label' => $currentAdmin->firstName . ' ' . $currentAdmin->lastName,
+                            'name' => $currentAdmin->firstName . ' ' . $currentAdmin->lastName,
+                            'role' => $currentAdmin->role?->display_name ?? $currentAdmin->role?->name ?? 'N/A',
+                        ]];
+                    }
+                    // Other unknown roles get empty array
                     return [];
             }
 
-            return $query->orderBy('firstName')
-                ->get()
-                ->map(function($admin) {
-                    return [
-                        'id' => $admin->id,
-                        'name' => $admin->getFullName(),
-                        'role' => $admin->role?->display_name ?? 'No Role',
-                        'department' => $admin->department,
-                        'capacity' => $admin->getAssignmentCapacity(),
-                    ];
-                })
-                ->toArray();
+            $admins = $query->orderBy('firstName')->get();
+            $adminArray = [];
+            foreach ($admins as $admin) {
+                $adminArray[] = [
+                    'id' => $admin->id,
+                    'value' => $admin->id,
+                    'label' => $admin->firstName . ' ' . $admin->lastName,
+                    'name' => $admin->firstName . ' ' . $admin->lastName,
+                    'role' => $admin->role?->display_name ?? $admin->role?->name ?? 'N/A',
+                ];
+            }
+            return $adminArray;
         });
+        
+        // Ensure we're definitely returning an array
+        return is_array($result) ? $result : [];
     }
 
     /**

@@ -332,7 +332,12 @@ class LeadController extends Controller
             // Update lead
             $lead->update($validatedData);
             
-            // Refresh lead with relationships - leadSource kaldırıldı
+            // CRITICAL FIX: Refresh model and clear relationship cache
+            $lead->refresh();
+            $lead->unsetRelation('leadStatus');
+            $lead->unsetRelation('assignedAdmin');
+            
+            // Fresh load with relationships to ensure UI gets updated data
             $lead = $lead->fresh(['assignedAdmin:id,firstName,lastName', 'leadStatus:id,name,display_name,color']);
 
             // Log changes
@@ -441,15 +446,27 @@ class LeadController extends Controller
 
             DB::beginTransaction();
 
+            // Store old status before update
+            $oldStatus = $lead->lead_status;
+            
             // Update lead status using the status name
             $lead->update(['lead_status' => $leadStatus->name]);
+            
+            // CRITICAL FIX: Refresh model and clear relationship cache
+            $lead->refresh();
+            $lead->unsetRelation('leadStatus');
+            
+            // Fresh load with relationship to ensure UI gets updated data
+            $lead = $lead->fresh(['leadStatus']);
 
             // Log the change
-            Log::info('Lead status updated via API', [
-                'admin_id' => $admin->id,
-                'lead_id' => $lead->id,
-                'old_status' => $lead->getOriginal('lead_status'),
+            Log::info('Lead Status Updated', [
+                'user_id' => $lead->id,
+                'user_name' => $lead->name,
+                'old_status' => $oldStatus,
                 'new_status' => $leadStatus->name,
+                'updated_by' => $admin->id,
+                'updated_by_name' => $admin->firstName ?? 'Admin'
             ]);
 
             DB::commit();
@@ -462,6 +479,12 @@ class LeadController extends Controller
                     'lead_status' => $leadStatus->name,
                     'status_display' => $leadStatus->display_name ?: $leadStatus->name,
                     'status_color' => $leadStatus->color,
+                    // Additional fields for frontend sync
+                    'leadStatus' => $lead->leadStatus ? [
+                        'name' => $lead->leadStatus->name,
+                        'display_name' => $lead->leadStatus->display_name,
+                        'color' => $lead->leadStatus->color,
+                    ] : null,
                 ]
             ]);
 

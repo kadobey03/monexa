@@ -91,7 +91,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $attributes = [
-        'assign_to' => 1,
+        // 'assign_to' => 1, // REMOVED: Problematic default assignment
     ];
 
 
