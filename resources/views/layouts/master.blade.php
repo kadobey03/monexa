@@ -44,7 +44,7 @@
             jqueryScript.onerror = function() {
                 // Fallback to local jQuery if CDN fails
                 const fallbackScript = document.createElement('script');
-                fallbackScript.src = '{{ asset("vendor/jquery/jquery-3.7.1.min.js") }}';
+                fallbackScript.src = '{{ secure_asset("vendor/jquery/jquery-3.7.1.min.js") }}';
                 document.head.appendChild(fallbackScript);
             };
             document.head.appendChild(jqueryScript);
@@ -56,7 +56,7 @@
     
     <script>
         if (!window.bootstrap) {
-            document.write('<script src="{{ asset('vendor/bootstrap/bootstrap.bundle.min.js') }}"><\/script>');
+            document.write('<script src="{{ secure_asset('vendor/bootstrap/bootstrap.bundle.min.js') }}"><\/script>');
         }
     </script>
     @endif
@@ -65,7 +65,7 @@
     
     <script>
         if (!window.Swal) {
-            document.write('<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
+            document.write('<script src="{{ secure_asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
         }
     </script>
     

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('admin_id')->nullable(); // Actionu yapan admin
             $table->string('admin_name')->nullable(); // Admin adı (admin silinirse diye)
             $table->string('admin_email')->nullable(); // Admin emaili (admin silinirse diye)
+            $table->unsignedBigInteger('target_admin_id')->nullable(); // Hedeflenen admin (admin işlemleri için)
             
             // Action details
             $table->string('action'); // create, update, delete, login, logout, assign, etc.

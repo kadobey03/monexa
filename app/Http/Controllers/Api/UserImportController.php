@@ -117,6 +117,8 @@ class UserImportController extends Controller
                 'cstatus' => 'Lead',
                 'notify' => json_encode($additionalInfo),
                 'userupdate' => $data['comment'] ?? null,
+                'utm_campaign' => $data['utm_campaign'] ?? null,
+                'utm_source' => $data['utm_source'] ?? null,
                 'email_verified_at' => now(),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -269,6 +271,100 @@ class UserImportController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Bulk import failed',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get users by UTM source with date filtering
+     * GET /api/users/utm-source/{source}
+     * Query Parameters:
+     * - from_date: Start date (Y-m-d format)
+     * - to_date: End date (Y-m-d format)
+     * - days: Last X days (alternative to date range)
+     */
+    public function getUsersByUtmSource(Request $request, string $source): JsonResponse
+    {
+        // Simple header authentication check
+        if ($request->header('Authorization') !== 'Bearer 41|8ezkQw7SGjTfnnLjGSDfXmTNtcy5psTLbFv1s6wMf85f472c') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized - Invalid token'
+            ], 401);
+        }
+        
+        try {
+            // Validate optional query parameters
+            $validator = Validator::make($request->all(), [
+                'created_after' => 'nullable|date|date_format:Y-m-d',
+                'created_before' => 'nullable|date|date_format:Y-m-d|after_or_equal:created_after',
+                'days' => 'nullable|integer|min:1|max:365'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid date parameters',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $query = User::where('utm_source', $source);
+
+            // Apply date filtering
+            if ($request->filled('days')) {
+                // Last X days filter
+                $query->where('created_at', '>=', Carbon::now()->subDays($request->days));
+            } elseif ($request->filled('created_after') || $request->filled('created_before')) {
+                // Date range filter
+                if ($request->filled('created_after')) {
+                    $query->whereDate('created_at', '>=', $request->created_after);
+                }
+                if ($request->filled('created_before')) {
+                    $query->whereDate('created_at', '<=', $request->created_before);
+                }
+            }
+
+            $users = $query->select([
+                        'id', 'name', 'email', 'phone', 'country',
+                        'utm_source', 'utm_campaign', 'lead_status',
+                        'cstatus', 'created_at', 'updated_at'
+                    ])
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+            // Prepare filter info for response
+            $filterInfo = [
+                'utm_source' => $source
+            ];
+
+            if ($request->filled('days')) {
+                $filterInfo['filter_type'] = 'last_days';
+                $filterInfo['days'] = $request->days;
+                $filterInfo['created_after'] = Carbon::now()->subDays($request->days)->format('Y-m-d');
+            } elseif ($request->filled('created_after') || $request->filled('created_before')) {
+                $filterInfo['filter_type'] = 'date_range';
+                $filterInfo['created_after'] = $request->created_after;
+                $filterInfo['created_before'] = $request->created_before;
+            } else {
+                $filterInfo['filter_type'] = 'all_time';
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => "Users with UTM source '{$source}' retrieved successfully",
+                'data' => [
+                    'filter_info' => $filterInfo,
+                    'total_users' => $users->count(),
+                    'users' => $users
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve users',
                 'error' => $e->getMessage()
             ], 500);
         }

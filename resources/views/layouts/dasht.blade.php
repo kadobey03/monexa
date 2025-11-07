@@ -8,21 +8,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="{{ $settings->favicon ? asset('storage/' . $settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
     <!-- Inter Font - Local -->
-    <link href="{{ asset('vendor/fonts/inter.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('vendor/fonts/inter.css') }}" rel="stylesheet">
     <!-- SweetAlert2 with CDN fallback -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    <link href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" media="none" onload="if(!window.Swal)this.media='all'">
+    <link href="{{ secure_asset('vendor/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" media="none" onload="if(!window.Swal)this.media='all'">
     
     <!-- jQuery with CDN fallback -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"></script>
     <script>
-        window.jQuery || document.write('<script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"><\/script>');
+        window.jQuery || document.write('<script src="{{ secure_asset('vendor/jquery/jquery-3.7.1.min.js') }}"><\/script>');
     </script>
     
     <!-- SweetAlert2 with fallback -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js" crossorigin="anonymous"></script>
     <script>
-        window.Swal || document.write('<script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
+        window.Swal || document.write('<script src="{{ secure_asset('vendor/sweetalert2/sweetalert2.min.js') }}"><\/script>');
     </script>
     
     <!-- Bootstrap Bundle for modal support -->

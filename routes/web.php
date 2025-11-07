@@ -140,3 +140,8 @@ Route::get('robots.txt', function() {
     $content = view('robots.robots', compact('environment'))->render();
     return response($content, 200, ['Content-Type' => 'text/plain']);
 })->name('robots');
+
+// Favicon route - prevent 404 errors
+Route::get('favicon.ico', function() {
+    return response('', 204);
+})->name('favicon');

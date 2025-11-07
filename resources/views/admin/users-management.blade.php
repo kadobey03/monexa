@@ -23,7 +23,7 @@
                     <div class="bg-admin-200 {{ $isDark ? 'dark:bg-admin-700' : '' }} px-4 py-2 rounded-full">
                         <span class="text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} font-semibold">
                             <i class="fas fa-user-check mr-2"></i>
-                            {{ isset($users) ? $users->total() : $user_count ?? 0 }} Toplam Kullanıcı
+                            {{ $user_count ?? 0 }} Toplam Kullanıcı
                         </span>
                     </div>
                 </div>
@@ -257,15 +257,24 @@
                     <div>
                         <h3 class="text-lg font-medium text-white">Kullanıcı Listesi</h3>
                         <div class="text-sm text-admin-200">
-                            @if(isset($users) && $users instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                                {{ $users->total() }} kullanıcı bulundu
-                                @if(request()->hasAny(['status', 'admin', 'date_from', 'date_to']))
-                                    <span class="text-admin-300">
-                                        <i class="fas fa-filter ml-1 mr-1"></i>(filtrelenmiş)
-                                    </span>
+                            @if(isset($users))
+                                @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                    {{ $users->total() }} kullanıcı bulundu
+                                    @if(request()->hasAny(['status', 'admin', 'date_from', 'date_to']))
+                                        <span class="text-admin-300">
+                                            <i class="fas fa-filter ml-1 mr-1"></i>(filtrelenmiş)
+                                        </span>
+                                    @endif
+                                @else
+                                    {{ $users->count() }} kullanıcı gösteriliyor
+                                    @if(request()->hasAny(['status', 'admin', 'date_from', 'date_to']))
+                                        <span class="text-admin-300">
+                                            <i class="fas fa-filter ml-1 mr-1"></i>(filtrelenmiş)
+                                        </span>
+                                    @endif
                                 @endif
                             @else
-                                {{ isset($users) ? $users->count() : 0 }} kullanıcı gösteriliyor
+                                0 kullanıcı gösteriliyor
                             @endif
                         </div>
                     </div>
@@ -606,14 +615,18 @@
                     <div class="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
                         <!-- Results Counter -->
                         <div class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
-                            @if(isset($users) && $users instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                                <p>
-                                    Gösterilen: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->firstItem() ?? 0 }}</span>
-                                    - <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->lastItem() ?? 0 }}</span>
-                                    / Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->total() }}</span> kayıt
-                                </p>
+                            @if(isset($users))
+                                @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                    <p>
+                                        Gösterilen: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->firstItem() ?? 0 }}</span>
+                                        - <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->lastItem() ?? 0 }}</span>
+                                        / Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->total() }}</span> kayıt
+                                    </p>
+                                @else
+                                    <p>Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->count() }}</span> kayıt gösteriliyor (Filtresiz Tümü)</p>
+                                @endif
                             @else
-                                <p>Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ isset($users) ? $users->count() : 0 }}</span> kayıt gösteriliyor</p>
+                                <p>Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">0</span> kayıt gösteriliyor</p>
                             @endif
                         </div>
 

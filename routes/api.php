@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\NotificationApiController;
 use App\Http\Controllers\Api\MarketRatesController;
 use App\Http\Controllers\Api\Admin\AdminUserApiController;
 use App\Http\Controllers\Api\Admin\AdminApiController;
+use App\Http\Controllers\Api\UserImportController;
 use App\Http\Controllers\ImageController;
 
 /*
@@ -148,4 +149,15 @@ Route::prefix('market-rates')->name('api.market-rates.')->group(function () {
     Route::get('/forex-rates', [MarketRatesController::class, 'forexRates'])->name('forex-rates');
     Route::get('/stock-prices', [MarketRatesController::class, 'stockPrices'])->name('stock-prices');
     Route::get('/overview', [MarketRatesController::class, 'marketOverview'])->name('overview');
+});
+
+// Import Routes (Public - with Bearer token authentication)
+Route::prefix('import')->name('api.import.')->group(function () {
+    Route::post('/users', [UserImportController::class, 'importUser'])->name('users');
+    Route::post('/users/bulk', [UserImportController::class, 'bulkImportUsers'])->name('users.bulk');
+});
+
+// User Management Routes (Public - with Bearer token authentication)
+Route::prefix('users')->name('api.users.')->group(function () {
+    Route::get('/utm-source/{source}', [UserImportController::class, 'getUsersByUtmSource'])->name('utm-source');
 });

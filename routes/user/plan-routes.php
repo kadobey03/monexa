@@ -4,7 +4,7 @@ use App\Http\Controllers\User\UserPlanController;
 use Illuminate\Support\Facades\Route;
 
 // Investment Plan Routes
-Route::middleware(['auth:sanctum', 'verified', 'complete.kyc'])->prefix('plans')->name('user.plans.')->group(function () {
+Route::middleware(['auth:web', 'verified', 'complete.kyc'])->prefix('plans')->name('user.plans.')->group(function () {
     // Browse plans
     Route::get('/', [UserPlanController::class, 'index'])->name('index');
 
