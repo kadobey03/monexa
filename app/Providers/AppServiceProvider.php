@@ -24,7 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Collision sadece development ortamında yüklensin
+        if ($this->app->environment('local', 'testing')) {
+            if (class_exists(\NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider::class)) {
+                $this->app->register(\NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider::class);
+            }
+        }
     }
 
     /**
