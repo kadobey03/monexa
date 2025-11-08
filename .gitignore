@@ -56,6 +56,9 @@ docker-compose.override.yml
 ehthumbs.db
 Thumbs.db
 
+# Core dump files (PHP segmentation faults)
+core.*
+
 # PHPStorm
 /.idea/
 *.iml
@@ -97,6 +100,7 @@ yarn-error.log*
 # Composer
 /vendor/
 composer.phar
+composer.lock
 
 # Laravel Mix
 /public/js
