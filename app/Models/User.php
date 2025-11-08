@@ -49,6 +49,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name', 'l_name', 'username', 'email', 'phone', 'country', 'password', 'ref_by', 'status', 'taxtype ','taxamount ', 'currency', 'notify', 'email_verified_at', 'account_bal', 'demo_balance', 'demo_mode', 'roi', 'bonus', 'ref_bonus',
         'lead_status', 'lead_notes', 'last_contact_date', 'next_follow_up_date', 'lead_source', 'lead_source_id', 'lead_tags', 'estimated_value', 'lead_score', 'preferred_contact_method', 'contact_history', 'assign_to',
         'company_name', 'organization',
+        // UTM tracking alanları
+        'utm_source', 'utm_campaign', 'utm_medium',
         // 2FA ve güvenlik alanları
         'enable_2fa', 'token_2fa', 'token_2fa_expiry', 'pass_2fa', 'failed_login_attempts', 'locked_until', 'last_login_at', 'last_login_ip', 'security_events', 'password_changed_at'
     ];
@@ -778,5 +780,100 @@ class User extends Authenticatable implements MustVerifyEmail
                   ->orWhere('lead_status', 'like', '%' . $search . '%')
                   ->orWhere('lead_source', 'like', '%' . $search . '%');
         });
+    }
+
+    /**
+     * User için notifications tablosundan UTM bilgilerini çek
+     */
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id');
+    }
+
+    /**
+     * UTM Source - önce users tablosuna bak, yoksa notifications'dan çek
+     */
+    public function getUtmSourceDisplayAttribute()
+    {
+        // Önce users tablosundaki utm_source alanına bak
+        if (!empty($this->utm_source)) {
+            return $this->utm_source;
+        }
+
+        // Eğer null ise Users tablosundaki notify alanından JSON çek
+        if (!empty($this->notify)) {
+            try {
+                $notifyData = json_decode($this->notify, true);
+                if (is_array($notifyData) && isset($notifyData['utm_source'])) {
+                    return $notifyData['utm_source'];
+                }
+            } catch (\Exception $e) {
+                \Log::warning('UTM Source JSON decode error from notify field', [
+                    'user_id' => $this->id,
+                    'notify_data' => $this->notify,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * UTM Campaign - önce users tablosuna bak, yoksa notifications'dan çek
+     */
+    public function getUtmCampaignDisplayAttribute()
+    {
+        // Önce users tablosundaki utm_campaign alanına bak
+        if (!empty($this->utm_campaign)) {
+            return $this->utm_campaign;
+        }
+
+        // Eğer null ise Users tablosundaki notify alanından JSON çek
+        if (!empty($this->notify)) {
+            try {
+                $notifyData = json_decode($this->notify, true);
+                if (is_array($notifyData) && isset($notifyData['utm_campaign'])) {
+                    return $notifyData['utm_campaign'];
+                }
+            } catch (\Exception $e) {
+                \Log::warning('UTM Campaign JSON decode error from notify field', [
+                    'user_id' => $this->id,
+                    'notify_data' => $this->notify,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * UTM Medium - önce users tablosuna bak, yoksa notifications'dan çek
+     */
+    public function getUtmMediumDisplayAttribute()
+    {
+        // Önce users tablosundaki utm_medium alanına bak
+        if (!empty($this->utm_medium)) {
+            return $this->utm_medium;
+        }
+
+        // Eğer null ise Users tablosundaki notify alanından JSON çek
+        if (!empty($this->notify)) {
+            try {
+                $notifyData = json_decode($this->notify, true);
+                if (is_array($notifyData) && isset($notifyData['utm_medium'])) {
+                    return $notifyData['utm_medium'];
+                }
+            } catch (\Exception $e) {
+                \Log::warning('UTM Medium JSON decode error from notify field', [
+                    'user_id' => $this->id,
+                    'notify_data' => $this->notify,
+                    'error' => $e->getMessage()
+                ]);
+            }
+        }
+
+        return null;
     }
 }

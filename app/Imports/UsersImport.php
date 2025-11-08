@@ -27,8 +27,9 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
         'total' => 0,
         'imported' => 0,
         'skipped' => 0,
+        'duplicates' => 0,
         'errors' => [],
-        'duplicates' => []
+        'duplicate_details' => []
     ];
     protected $duplicateRecords = [];
     protected $originalRowData = [];
@@ -163,7 +164,8 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
             }
             
             $this->duplicateRecords[] = $duplicateInfo;
-            $this->importStats['duplicates'][] = [
+            $this->importStats['duplicates']++;
+            $this->importStats['duplicate_details'][] = [
                 'row' => $rowIndex + 2,
                 'email' => $email,
                 'phone' => $phone,
@@ -185,6 +187,10 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
         // Generate username if not provided
         $username = $mappedData['username'] ?? $this->generateUsername($mappedData['name'], $email);
         
+        // UTM değerlerini belirle - önce Excel'den, sonra manuel değerler
+        $utmSource = $mappedData['utm_source'] ?? $this->importSettings['manualUtmSource'] ?? null;
+        $utmCampaign = $mappedData['utm_campaign'] ?? $this->importSettings['manualUtmCampaign'] ?? null;
+        
         $userData = [
             'name' => $this->cleanName($mappedData['name']),
             'email' => $email,
@@ -200,8 +206,8 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
             'lead_notes' => 'Excel dosyasından içe aktarıldı: ' . now()->format('d.m.Y H:i'),
             'lead_tags' => ['imported', 'excel'],
             'estimated_value' => is_numeric($mappedData['estimated_value'] ?? null) ? $mappedData['estimated_value'] : null,
-            'utm_source' => $mappedData['utm_source'] ?? null,
-            'utm_campaign' => $mappedData['utm_campaign'] ?? null,
+            'utm_source' => $utmSource,
+            'utm_campaign' => $utmCampaign,
             'preferred_contact_method' => $this->determinePreferredContact($mappedData),
             'contact_history' => [[
                 'type' => 'import',
@@ -244,9 +250,7 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
                     break;
                 case 'email':
                     $rules[$columnIndex] = 'required|email|max:255';
-                    if ($this->importSettings['skipDuplicates']) {
-                        $rules[$columnIndex] .= '|unique:users,email';
-                    }
+                    // Remove unique constraint to allow duplicate detection in createUser method
                     break;
                 case 'phone':
                     $rules[$columnIndex] = 'nullable|string|max:20';

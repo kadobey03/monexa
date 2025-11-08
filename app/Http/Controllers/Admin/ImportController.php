@@ -20,7 +20,25 @@ class ImportController extends Controller
      */
     public function showImportPage()
     {
-        return view('admin.Users.import');
+        // Get lead statuses from database (active statuses only)
+        $leadStatuses = \App\Models\LeadStatus::active()
+            ->get()
+            ->pluck('display_name', 'name')
+            ->toArray();
+
+        // Add fallback if no statuses found in database
+        if (empty($leadStatuses)) {
+            $leadStatuses = [
+                'new' => 'Yeni',
+                'contacted' => 'İletişimde',
+                'interested' => 'İlgileniyor',
+                'qualified' => 'Nitelikli',
+                'converted' => 'Dönüştürülmüş',
+                'lost' => 'Kayıp'
+            ];
+        }
+
+        return view('admin.Users.import', compact('leadStatuses'));
     }
 
     /**
@@ -159,9 +177,9 @@ class ImportController extends Controller
                 'imported' => $stats['imported'] ?? 0,
                 'skipped' => $stats['skipped'] ?? 0,
                 'errors' => count($failures),
-                'duplicates' => count($stats['duplicates'] ?? []),
+                'duplicates' => $stats['duplicates'] ?? 0,
                 'errorDetails' => [],
-                'duplicateDetails' => $stats['duplicates'] ?? [],
+                'duplicateDetails' => $stats['duplicate_details'] ?? [],
                 'duplicateFile' => $import->getDuplicateFile()
             ];
 

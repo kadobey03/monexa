@@ -249,6 +249,10 @@
                                             <span class="text-xs text-blue-600 font-semibold">İSTEĞE BAĞLI</span>
                                         </div>
                                         <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Trafik kaynağı</p>
+                                        <div class="mt-2">
+                                            <input type="text" id="manual-utm-source" placeholder="Elle girin (opsiyonel)"
+                                                   class="w-full px-2 py-1 text-xs border border-admin-300 {{ $isDark ? 'dark:border-admin-500' : '' }} rounded bg-white {{ $isDark ? 'dark:bg-admin-600' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                        </div>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="utm_campaign">
                                         <div class="flex items-center justify-between">
@@ -256,6 +260,10 @@
                                             <span class="text-xs text-blue-600 font-semibold">İSTEĞE BAĞLI</span>
                                         </div>
                                         <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Kampanya adı</p>
+                                        <div class="mt-2">
+                                            <input type="text" id="manual-utm-campaign" placeholder="Elle girin (opsiyonel)"
+                                                   class="w-full px-2 py-1 text-xs border border-admin-300 {{ $isDark ? 'dark:border-admin-500' : '' }} rounded bg-white {{ $isDark ? 'dark:bg-admin-600' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                        </div>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="first_name">
                                         <div class="flex items-center justify-between">
@@ -353,11 +361,11 @@
                                     <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
                                         Varsayılan Lead Status
                                     </label>
-                                    <select id="default-lead-status" 
+                                    <select id="default-lead-status"
                                             class="block w-full px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                                        <option value="new">Yeni</option>
-                                        <option value="imported">İçe Aktarılan</option>
-                                        <option value="contacted">İletişimde</option>
+                                        @foreach($leadStatuses as $value => $label)
+                                            <option value="{{ $value }}" {{ $value === 'new' ? 'selected' : '' }}>{{ $label }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div>
@@ -825,7 +833,12 @@ function updateImportSummary() {
     const totalRows = excelData.length - 1; // Exclude header
     const mappedFields = Object.keys(columnMappings).length;
     
-    summaryContainer.innerHTML = `
+    // Check for manual UTM values
+    const manualUtmSource = document.getElementById('manual-utm-source').value.trim();
+    const manualUtmCampaign = document.getElementById('manual-utm-campaign').value.trim();
+    const hasManualUtm = manualUtmSource || manualUtmCampaign;
+    
+    let summaryHTML = `
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="text-center">
                 <div class="text-2xl font-bold text-blue-600">${totalRows}</div>
@@ -841,6 +854,23 @@ function updateImportSummary() {
             </div>
         </div>
     `;
+    
+    if (hasManualUtm) {
+        summaryHTML += `
+            <div class="mt-4 p-3 bg-blue-50 ${isDarkMode ? 'dark:bg-blue-900/20' : ''} border border-blue-200 ${isDarkMode ? 'dark:border-blue-700' : ''} rounded-lg">
+                <h5 class="font-semibold text-blue-900 ${isDarkMode ? 'dark:text-blue-100' : ''} mb-2">
+                    <i class="fas fa-info-circle mr-2"></i>Manuel UTM Değerleri
+                </h5>
+                <div class="text-sm text-blue-800 ${isDarkMode ? 'dark:text-blue-200' : ''}">
+                    ${manualUtmSource ? `<div>UTM Source: <strong>${manualUtmSource}</strong></div>` : ''}
+                    ${manualUtmCampaign ? `<div>UTM Campaign: <strong>${manualUtmCampaign}</strong></div>` : ''}
+                    <div class="mt-1 text-xs">Bu değerler tüm kayıtlara uygulanacak</div>
+                </div>
+            </div>
+        `;
+    }
+    
+    summaryContainer.innerHTML = summaryHTML;
 }
 
 function startImport() {
@@ -866,6 +896,10 @@ function startImport() {
     document.getElementById('import-progress').classList.remove('hidden');
     document.getElementById('start-import').style.display = 'none';
     
+    // Get manual UTM values
+    const manualUtmSource = document.getElementById('manual-utm-source').value.trim();
+    const manualUtmCampaign = document.getElementById('manual-utm-campaign').value.trim();
+    
     // Prepare data for import
     const importData = {
         file: uploadedFile,
@@ -874,7 +908,9 @@ function startImport() {
             skipDuplicates: document.getElementById('skip-duplicates').checked,
             sendWelcomeEmail: document.getElementById('send-welcome-email').checked,
             defaultLeadStatus: document.getElementById('default-lead-status').value,
-            batchSize: parseInt(document.getElementById('batch-size').value)
+            batchSize: parseInt(document.getElementById('batch-size').value),
+            manualUtmSource: manualUtmSource || null,
+            manualUtmCampaign: manualUtmCampaign || null
         }
     };
     
@@ -941,18 +977,32 @@ function showImportResults(results) {
     
     if (results.duplicates > 0) {
         resultsHTML += `
-            <div class="bg-red-50 ${isDarkMode ? 'dark:bg-red-900/20' : ''} border border-red-200 ${isDarkMode ? 'dark:border-red-700' : ''} rounded-lg p-4">
+            <div class="bg-orange-50 ${isDarkMode ? 'dark:bg-orange-900/20' : ''} border border-orange-200 ${isDarkMode ? 'dark:border-orange-700' : ''} rounded-lg p-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <i class="fas fa-copy text-red-600 mr-3"></i>
+                        <i class="fas fa-copy text-orange-600 mr-3"></i>
                         <div>
-                            <h5 class="font-semibold text-red-900 ${isDarkMode ? 'dark:text-red-100' : ''}">${results.duplicates} duplicate kullanıcı tespit edildi</h5>
-                            <p class="text-sm text-red-800 ${isDarkMode ? 'dark:text-red-200' : ''}">E-posta veya telefon numarası sistemde zaten mevcut olan kayıtlar.</p>
+                            <h5 class="font-semibold text-orange-900 ${isDarkMode ? 'dark:text-orange-100' : ''}">${results.duplicates} duplicate kullanıcı tespit edildi</h5>
+                            <p class="text-sm text-orange-800 ${isDarkMode ? 'dark:text-orange-200' : ''}">E-posta veya telefon numarası sistemde zaten mevcut olan kayıtlar atlandı.</p>
+                            ${results.duplicateDetails && results.duplicateDetails.length > 0 ? `
+                                <div class="mt-2 max-h-24 overflow-y-auto">
+                                    ${results.duplicateDetails.slice(0, 3).map(dup => `
+                                        <div class="text-xs text-orange-700 ${isDarkMode ? 'dark:text-orange-300' : ''} mb-1">
+                                            Satır ${dup.row}: ${dup.email} (${dup.type})
+                                        </div>
+                                    `).join('')}
+                                    ${results.duplicateDetails.length > 3 ? `
+                                        <div class="text-xs text-orange-600 ${isDarkMode ? 'dark:text-orange-400' : ''} font-semibold">
+                                            ... ve ${results.duplicateDetails.length - 3} kayıt daha
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
                     ${results.duplicateFile ? `
                         <a href="${results.duplicateFile.url}"
-                           class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-200">
+                           class="inline-flex items-center px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-200">
                             <i class="fas fa-download mr-2"></i>
                             Duplicate Excel İndir
                         </a>

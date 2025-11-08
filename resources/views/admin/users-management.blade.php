@@ -495,19 +495,19 @@
                                 <!-- UTM Information -->
                                 <td class="px-4 py-4 whitespace-nowrap">
                                     <div class="text-sm space-y-1">
-                                        @if($user->utm_source || $user->utm_campaign)
-                                            @if($user->utm_source)
+                                        @if($user->utm_source_display || $user->utm_campaign_display)
+                                            @if($user->utm_source_display)
                                                 <div class="text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} font-medium flex items-center">
                                                     <i class="fas fa-external-link-alt text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} mr-2 text-xs"></i>
                                                     <span class="text-xs">Kaynak:</span>
-                                                    <span class="ml-1 px-2 py-0.5 bg-blue-100 text-blue-800 {{ $isDark ? 'dark:bg-blue-800 dark:text-blue-100' : '' }} rounded text-xs font-semibold">{{ Str::limit($user->utm_source, 12) }}</span>
+                                                    <span class="ml-1 px-2 py-0.5 bg-blue-100 text-blue-800 {{ $isDark ? 'dark:bg-blue-800 dark:text-blue-100' : '' }} rounded text-xs font-semibold">{{ Str::limit($user->utm_source_display, 12) }}</span>
                                                 </div>
                                             @endif
-                                            @if($user->utm_campaign)
+                                            @if($user->utm_campaign_display)
                                                 <div class="text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} font-medium flex items-center">
                                                     <i class="fas fa-bullhorn text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} mr-2 text-xs"></i>
                                                     <span class="text-xs">Kampanya:</span>
-                                                    <span class="ml-1 px-2 py-0.5 bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }} rounded text-xs font-semibold">{{ Str::limit($user->utm_campaign, 10) }}</span>
+                                                    <span class="ml-1 px-2 py-0.5 bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }} rounded text-xs font-semibold">{{ Str::limit($user->utm_campaign_display, 10) }}</span>
                                                 </div>
                                             @endif
                                         @else
