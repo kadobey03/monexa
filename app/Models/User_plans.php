@@ -70,28 +70,28 @@ class User_plans extends Model
     }
 
     public function getUserNameAttribute(){
-        // İlişki yüklenmiş ve geçerli mi kontrol et
-        if ($this->relationLoaded('user') && $this->user && is_object($this->user)) {
-            return $this->user->name;
+        // Önce cache alanını kontrol et (database'den gelen değer)
+        if (!empty($this->attributes['user_name'])) {
+            return $this->attributes['user_name'];
         }
 
-        // İlişki yüklenmemişse, user_name alanı varsa onu kullan
-        if (!empty($this->user_name)) {
-            return $this->user_name;
+        // Cache boşsa, ilişki yüklenmiş ve geçerli mi kontrol et
+        if ($this->relationLoaded('user') && $this->user && is_object($this->user)) {
+            return $this->user->name;
         }
 
         return 'Kullanıcı Bulunamadı';
     }
 
     public function getUserEmailAttribute(){
-        // İlişki yüklenmiş ve geçerli mi kontrol et
-        if ($this->relationLoaded('user') && $this->user && is_object($this->user)) {
-            return $this->user->email;
+        // Önce cache alanını kontrol et (database'den gelen değer)
+        if (!empty($this->attributes['user_email'])) {
+            return $this->attributes['user_email'];
         }
 
-        // İlişki yüklenmemişse, user_email alanı varsa onu kullan
-        if (!empty($this->user_email)) {
-            return $this->user_email;
+        // Cache boşsa, ilişki yüklenmiş ve geçerli mi kontrol et
+        if ($this->relationLoaded('user') && $this->user && is_object($this->user)) {
+            return $this->user->email;
         }
 
         return 'Belirtilmemiş';
