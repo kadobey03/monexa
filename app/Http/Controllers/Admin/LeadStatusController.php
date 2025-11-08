@@ -10,6 +10,19 @@ use Illuminate\Validation\Rule;
 class LeadStatusController extends Controller
 {
     /**
+     * Constructor - Only Super Admin can access this controller
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (auth('admin')->check() && auth('admin')->user()->type !== 'Super Admin') {
+                abort(403, 'Bu sayfaya erişim yetkiniz bulunmamaktadır.');
+            }
+            return $next($request);
+        });
+    }
+
+    /**
      * Display a listing of lead statuses.
      */
     public function index()

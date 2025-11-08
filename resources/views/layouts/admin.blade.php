@@ -246,6 +246,16 @@
                         <x-heroicon name="languages" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-pink-500" />
                         <span class="font-medium">Dil/Cümleler</span>
                     </a>
+
+                    @if ($adminUser && $adminUser->type == 'Super Admin')
+                    <!-- Status Management Menu - Super Admin Only -->
+                    <a href="{{ route('admin.lead-statuses.index') }}"
+                       class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 hover:text-cyan-700 dark:hover:text-cyan-300 transition-all duration-200 group {{ request()->routeIs('admin.lead-statuses.*') ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300' : '' }}"
+                       title="Status Yönetimi">
+                        <x-heroicon name="tag" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-cyan-500" />
+                        <span class="font-medium">Status Yönetimi</span>
+                    </a>
+                    @endif
                 </div>
 
                 @endif
