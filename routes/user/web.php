@@ -234,6 +234,10 @@ Route::middleware(['auth:web', 'verified'])->prefix('notifications')->group(func
     Route::post('/mark-all-read', [UserNotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
     Route::delete('/delete', [UserNotificationController::class, 'webDeleteNotification'])->name('notifications.delete');
     Route::get('/count', [UserNotificationController::class, 'getUnreadCount'])->name('notifications.count');
+    
+    // AJAX Routes for header notifications
+    Route::post('/ajax/mark-all-read', [UserNotificationController::class, 'markAllAsReadAjax'])->name('notifications.ajax.mark-all-read');
+    Route::post('/ajax/mark-read', [UserNotificationController::class, 'markAsReadAjax'])->name('notifications.ajax.mark-read');
 });
 
 // Crypto API Routes (for CORS bypass)

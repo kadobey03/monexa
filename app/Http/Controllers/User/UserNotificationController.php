@@ -159,6 +159,72 @@ class UserNotificationController extends Controller
     }
 
     /**
+     * Mark all notifications as read (AJAX version)
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function markAllAsReadAjax()
+    {
+        try {
+            $count = $this->notificationService->markAllAsReadForUser(Auth::id());
+            
+            return response()->json([
+                'success' => true,
+                'message' => "{$count} bildirim okundu olarak işaretlendi.",
+                'marked_count' => $count
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bildirimler işaretlenirken hata oluştu.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Mark single notification as read (AJAX version)
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function markAsReadAjax(Request $request)
+    {
+        try {
+            $request->validate([
+                'notification_id' => 'required|integer|exists:notifications,id'
+            ]);
+
+            $notification = Notification::find($request->notification_id);
+
+            if (!$notification || $notification->user_id !== Auth::id()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bildirim bulunamadı veya yetkisiz erişim.'
+                ], 403);
+            }
+
+            $success = $this->notificationService->markAsRead($request->notification_id);
+            
+            if ($success) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Bildirim okundu olarak işaretlendi.'
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bildirim işaretlenirken hata oluştu.'
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bildirim işaretlenirken hata oluştu.'
+            ], 500);
+        }
+    }
+
+    /**
      * Display the specified notification
      *
      * @param int $id
