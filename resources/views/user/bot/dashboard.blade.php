@@ -1,11 +1,12 @@
-@extends('layouts.dasht', ['title' => $title])
-
+@extends('layouts.master', ['layoutType' => 'dashboard'])
+@section('title', $title)
 @section('content')
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
     <!-- Hero Section -->
-    <div class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-600 to-indigo-800 text-white">
+    <div class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-600 to-indigo-800 text-white rounded-2xl">
         <div class="absolute inset-0 bg-black/20"></div>
-        <div class="relative max-w-7xl mx-auto px-6 py-16">
+        <div class="relative w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-8 sm:py-12 md:py-16">
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">Bot Trading Dashboard</h1>
@@ -27,7 +28,7 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 py-12 -mt-8 relative z-10">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-6 sm:py-8 md:py-12 -mt-8 relative z-10">
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
             <div class="bg-white dark:bg-gray-900 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-200/20 dark:border-gray-700/30 p-6">

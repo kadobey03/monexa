@@ -2,10 +2,10 @@
 @section('title', $title)
 @section('content')
 
-<div class="min-h-screen bg-white dark:bg-gray-900">
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
     <!-- Simple Header -->
     <div class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-6 py-8">
+        <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
             <div class="text-center">
                 <h1 class="text-2xl font-medium text-gray-900 dark:text-white">İşlem Geçmişi</h1>
                 <p class="mt-2 text-gray-600 dark:text-gray-400">İşlem aktivitelerinizi takip edin</p>
@@ -14,12 +14,12 @@
     </div>
 
     <!-- Alert Messages -->
-    <div class="max-w-7xl mx-auto px-6 py-4">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2">
         <x-danger-alert />
         <x-success-alert />
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 py-8">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
         <!-- Trading History Card -->
         <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800">
             <!-- Header -->

@@ -1,65 +1,145 @@
-<nav id="dashboard-nav" class="bg-white/98 dark:bg-gray-900/98 backdrop-blur-xl border-b border-gray-200/80 dark:border-gray-700/80 sticky top-0 z-50 shadow-sm">
+{{-- Modern Dashboard Header with Fintech Theme --}}
+<nav id="dashboard-nav" class="bg-gradient-to-r from-slate-900/95 via-slate-800/95 to-slate-900/95 dark:from-gray-900/95 dark:via-gray-800/95 dark:to-gray-900/95 backdrop-blur-xl border-b border-slate-700/50 dark:border-gray-700/50 sticky top-0 z-50 shadow-xl">
     
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="flex justify-between items-center h-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-14 lg:h-16">
             
             <!-- Left: Sidebar Toggle & Logo -->
             <div class="flex items-center space-x-4">
                 <!-- Sidebar Toggle Button -->
                 <button onclick="toggleDashboardSidebar()"
-                        class="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 md:hidden">
-                    <x-heroicon name="bars-3" class="w-6 h-6" />
+                        class="group p-2 text-slate-300 dark:text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 rounded-lg transition-all duration-200 md:hidden ring-1 ring-slate-700/50 hover:ring-blue-500/50">
+                    <x-heroicon name="bars-3" class="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
                 </button>
                 
-                <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 group">
-                    @isset($settings)
-                        <img src="{{ asset('storage/'.$settings->logo) }}" class="h-8 w-auto" alt="Logo" />
-                        <span class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                            {{ $settings->site_name }}
-                        </span>
-                    @else
-                        <div class="text-lg font-bold text-gray-900 dark:text-white">Monexa</div>
-                    @endisset
+                <!-- Logo & Brand -->
+                <a href="{{ route('dashboard') }}" class="flex items-center space-x-2 group">
+                    <div class="relative">
+                        @isset($settings)
+                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg ring-1 ring-blue-500/30 group-hover:ring-blue-400/50 transition-all duration-300">
+                                <img src="{{ asset('storage/'.$settings->logo) }}" class="h-4 w-auto" alt="Logo" />
+                            </div>
+                        @else
+                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg ring-1 ring-blue-500/30 group-hover:ring-blue-400/50 transition-all duration-300">
+                                <x-heroicon name="currency-dollar" class="w-4 h-4 text-white" />
+                            </div>
+                        @endisset
+                        <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-800 dark:border-gray-800 animate-pulse"></div>
+                    </div>
+                    <div class="block sm:hidden">
+                        <h1 class="text-base font-bold text-white group-hover:text-blue-300 transition-colors duration-200">
+                            @isset($settings)
+                                {{ $settings->site_name }}
+                            @else
+                                Monexa
+                            @endisset
+                        </h1>
+                    </div>
                 </a>
             </div>
 
-            <!-- Center: Account Balance -->
+            <!-- Center: Market Status & Balance -->
             @auth
-                <div class="hidden md:flex items-center space-x-6">
-                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 px-4 py-2 rounded-lg border border-blue-100 dark:border-blue-800">
-                        <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Hesap Bakiyesi</div>
-                        <div class="text-lg font-bold text-gray-900 dark:text-white">
-                            {{ auth()->user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
+                <div class="hidden lg:flex items-center space-x-4">
+                    <!-- Live Market Status -->
+                    <div class="flex items-center space-x-2 px-3 py-1.5 bg-gradient-to-r from-emerald-600/10 to-green-600/10 rounded-lg border border-emerald-500/20">
+                        <div class="flex items-center space-x-1.5">
+                            <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                            <span class="text-xs font-medium text-emerald-300">Piyasa Açık</span>
+                        </div>
+                        <div class="w-px h-3 bg-emerald-500/30"></div>
+                        <div class="text-xs text-slate-300">
+                            <span class="text-emerald-400">BTC</span> $67,234
+                        </div>
+                    </div>
+
+                    <!-- Account Balance Card -->
+                    <div class="bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-blue-600/10 px-4 py-2 rounded-lg border border-blue-500/20 backdrop-blur-sm">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center">
+                                <x-heroicon name="wallet" class="w-3 h-3 text-blue-400" />
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400 uppercase tracking-wider font-medium">Hesap Bakiyesi</div>
+                                <div class="text-sm font-bold text-white">
+                                    {{ auth()->user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             @endauth
 
             <!-- Right: Actions & User -->
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-2 lg:space-x-3">
                 
+                <!-- Notifications -->
+                @auth
+                    <div class="relative">
+                        <button onclick="toggleNotifications()"
+                                class="group p-2 text-slate-300 dark:text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-yellow-600/20 hover:to-orange-600/20 rounded-lg transition-all duration-200 ring-1 ring-slate-700/50 hover:ring-yellow-500/50">
+                            <x-heroicon name="bell" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                            <div class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center">
+                                <span class="text-xs font-bold text-white">3</span>
+                            </div>
+                        </button>
+
+                        <div id="notificationsDropdown" class="hidden absolute right-0 mt-2 w-80 bg-gradient-to-b from-slate-800 to-slate-900 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-2xl border border-slate-700/50 dark:border-gray-700/50 z-30 backdrop-blur-xl">
+                            <div class="p-4 border-b border-slate-700/50">
+                                <h3 class="text-sm font-semibold text-white">Bildirimler</h3>
+                            </div>
+                            <div class="max-h-64 overflow-y-auto">
+                                <div class="p-3 hover:bg-slate-700/30 transition-colors">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-white">Yeni yatırım planı aktif</p>
+                                            <p class="text-xs text-slate-400">2 dakika önce</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endauth
+
                 <!-- Quick Actions Dropdown -->
                 <div class="hidden md:block relative">
                     <button onclick="toggleQuickActions()"
-                            class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-                        <x-heroicon name="bolt" class="w-4 h-4" />
-                        <span>Hızlı İşlem</span>
-                        <x-heroicon name="chevron-down" class="w-4 h-4" />
+                            class="group flex items-center space-x-1.5 px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 rounded-lg transition-all duration-200 ring-1 ring-slate-700/50 hover:ring-blue-500/50">
+                        <x-heroicon name="bolt" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                        <span class="hidden lg:block">Hızlı İşlem</span>
+                        <x-heroicon name="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform duration-200" />
                     </button>
 
-                    <div id="quickActionsDropdown" class="hidden absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20">
+                    <div id="quickActionsDropdown" class="hidden absolute right-0 mt-2 w-64 bg-gradient-to-b from-slate-800 to-slate-900 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-2xl border border-slate-700/50 dark:border-gray-700/50 z-30 backdrop-blur-xl">
                         <div class="p-2">
-                            <a href="{{ route('deposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                <x-heroicon name="plus-circle" class="w-4 h-4 mr-3 text-green-500" />
-                                Para Yatırma
+                            <a href="{{ route('deposits') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-emerald-600/20 hover:to-green-600/20 rounded-lg transition-all duration-200">
+                                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500/20 to-green-600/20 flex items-center justify-center mr-3 group-hover:from-emerald-500/30 group-hover:to-green-600/30 transition-all duration-200">
+                                    <x-heroicon name="arrow-down-circle" class="w-4 h-4 text-emerald-400" />
+                                </div>
+                                <div>
+                                    <div class="font-medium">Para Yatırma</div>
+                                    <div class="text-xs text-slate-400">Hesabınıza para ekleyin</div>
+                                </div>
                             </a>
-                            <a href="{{ route('withdrawalsdeposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                <x-heroicon name="minus-circle" class="w-4 h-4 mr-3 text-red-500" />
-                                Para Çekme
+                            <a href="{{ route('withdrawalsdeposits') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-red-600/20 hover:to-pink-600/20 rounded-lg transition-all duration-200">
+                                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500/20 to-pink-600/20 flex items-center justify-center mr-3 group-hover:from-red-500/30 group-hover:to-pink-600/30 transition-all duration-200">
+                                    <x-heroicon name="arrow-up-circle" class="w-4 h-4 text-red-400" />
+                                </div>
+                                <div>
+                                    <div class="font-medium">Para Çekme</div>
+                                    <div class="text-xs text-slate-400">Kazançlarınızı çekin</div>
+                                </div>
                             </a>
-                            <a href="{{ route('trade.index') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                <x-heroicon name="arrow-trending-up" class="w-4 h-4 mr-3 text-blue-500" />
-                                Piyasa İşlemleri
+                            <a href="{{ route('trade.index') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-yellow-600/20 hover:to-orange-600/20 rounded-lg transition-all duration-200">
+                                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-500/20 to-orange-600/20 flex items-center justify-center mr-3 group-hover:from-yellow-500/30 group-hover:to-orange-600/30 transition-all duration-200">
+                                    <x-heroicon name="bolt" class="w-4 h-4 text-yellow-400" />
+                                </div>
+                                <div>
+                                    <div class="font-medium">Canlı İşlem</div>
+                                    <div class="text-xs text-slate-400">Piyasada işlem yapın</div>
+                                </div>
                             </a>
                         </div>
                     </div>
@@ -67,67 +147,91 @@
 
                 <!-- Dark Mode Toggle -->
                 <button onclick="toggleTheme()"
-                        class="p-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
-                    <x-heroicon name="sun" class="w-5 h-5" id="sunIcon" />
-                    <x-heroicon name="moon" class="w-5 h-5 hidden" id="moonIcon" />
+                        class="group p-2 text-slate-300 dark:text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-indigo-600/20 hover:to-purple-600/20 rounded-lg transition-all duration-200 ring-1 ring-slate-700/50 hover:ring-indigo-500/50">
+                    <x-heroicon name="sun" class="w-4 h-4 group-hover:scale-110 group-hover:rotate-180 transition-all duration-300" id="sunIcon" />
+                    <x-heroicon name="moon" class="w-4 h-4 hidden group-hover:scale-110 transition-all duration-300" id="moonIcon" />
                 </button>
 
                 <!-- User Profile -->
                 @auth
                     <div class="relative">
                         <button onclick="toggleProfileDropdown()"
-                                class="flex items-center space-x-3 px-2 py-2 text-sm rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-medium">
-                                {{ Str::upper(substr(auth()->user()->name, 0, 1)) }}
+                                class="group flex items-center space-x-2 px-2 py-1.5 text-sm rounded-lg hover:bg-gradient-to-r hover:from-purple-600/20 hover:to-pink-600/20 transition-all duration-200 ring-1 ring-slate-700/50 hover:ring-purple-500/50">
+                            <div class="relative">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center text-white text-xs font-bold shadow-lg ring-1 ring-purple-500/30 group-hover:ring-purple-400/50 transition-all duration-300">
+                                    {{ Str::upper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                                <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-800 dark:border-gray-800"></div>
                             </div>
-                            <div class="hidden sm:block text-left">
-                                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                            <div class="block sm:hidden text-left">
+                                <div class="text-sm font-medium text-white group-hover:text-purple-200 transition-colors">
                                     {{ auth()->user()->name }}
                                 </div>
-                                <div class="text-xs text-gray-500 dark:text-gray-400">
-                                    Ticaret Hesabı
+                                <div class="text-xs text-slate-400 dark:text-gray-400">
+                                    {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
                                 </div>
                             </div>
-                            <x-heroicon name="chevron-down" class="w-4 h-4 text-gray-400" />
+                            <x-heroicon name="chevron-down" class="w-3 h-3 text-slate-400 group-hover:text-white group-hover:rotate-180 transition-all duration-200" />
                         </button>
 
-                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20">
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-72 bg-gradient-to-b from-slate-800 to-slate-900 dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-2xl border border-slate-700/50 dark:border-gray-700/50 z-30 backdrop-blur-xl">
                             
-                            <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center text-white text-lg font-medium">
-                                        {{ Str::upper(substr(auth()->user()->name, 0, 1)) }}
+                            <!-- Profile Header -->
+                            <div class="p-6 border-b border-slate-700/50 dark:border-gray-700/50 bg-gradient-to-r from-purple-600/10 to-pink-600/10">
+                                <div class="flex items-center space-x-4">
+                                    <div class="relative">
+                                        <div class="w-14 h-14 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center text-white text-xl font-bold shadow-lg ring-2 ring-purple-500/30">
+                                            {{ Str::upper(substr(auth()->user()->name, 0, 1)) }}
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-slate-800 dark:border-gray-800"></div>
                                     </div>
-                                    <div>
-                                        <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                    <div class="flex-1">
+                                        <div class="text-sm font-semibold text-white">
                                             {{ auth()->user()->name }}
                                         </div>
-                                        <div class="text-xs text-gray-500 dark:text-gray-400">
-                                            {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
+                                        <div class="text-xs text-slate-400 mb-2">
+                                            {{ auth()->user()->email }}
+                                        </div>
+                                        <div class="flex items-center space-x-1 px-2 py-1 bg-emerald-600/20 rounded-lg">
+                                            <x-heroicon name="wallet" class="w-3 h-3 text-emerald-400" />
+                                            <span class="text-xs font-medium text-emerald-300">
+                                                {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- Menu Items -->
                             <div class="p-2">
-                                <a href="{{ route('profile') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                    <x-heroicon name="user" class="w-4 h-4 mr-3" />
+                                <a href="{{ route('profile') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-purple-600/20 hover:to-pink-600/20 rounded-lg transition-all duration-200">
+                                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center mr-3 group-hover:from-purple-500/30 group-hover:to-pink-600/30 transition-all duration-200">
+                                        <x-heroicon name="user-circle" class="w-4 h-4 text-purple-400" />
+                                    </div>
                                     Profil Ayarları
                                 </a>
-                                <a href="{{ route('accounthistory') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                    <x-heroicon name="receipt" class="w-4 h-4 mr-3" />
+                                <a href="{{ route('accounthistory') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-indigo-600/20 rounded-lg transition-all duration-200">
+                                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-600/20 flex items-center justify-center mr-3 group-hover:from-blue-500/30 group-hover:to-indigo-600/30 transition-all duration-200">
+                                        <x-heroicon name="document-chart-bar" class="w-4 h-4 text-blue-400" />
+                                    </div>
                                     Hesap Geçmişi
                                 </a>
-                                <a href="{{ route('support') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
-                                    <x-heroicon name="question-mark-circle" class="w-4 h-4 mr-3" />
+                                <a href="{{ route('support') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-cyan-600/20 hover:to-blue-600/20 rounded-lg transition-all duration-200">
+                                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center mr-3 group-hover:from-cyan-500/30 group-hover:to-blue-600/30 transition-all duration-200">
+                                        <x-heroicon name="chat-bubble-left-ellipsis" class="w-4 h-4 text-cyan-400" />
+                                    </div>
                                     Destek Merkezi
                                 </a>
-                                <div class="border-t border-gray-200 dark:border-gray-600 my-2"></div>
+                                
+                                <div class="border-t border-slate-700/50 dark:border-gray-600 my-2"></div>
+                                
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button type="submit" class="w-full flex items-center px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md">
-                                        <x-heroicon name="arrow-left-on-rectangle" class="w-4 h-4 mr-3" />
-                                        Çıkış Yap
+                                    <button type="submit" class="group w-full flex items-center px-4 py-3 text-sm text-red-400 hover:text-white hover:bg-gradient-to-r hover:from-red-600/20 hover:to-pink-600/20 rounded-lg transition-all duration-200">
+                                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500/20 to-pink-600/20 flex items-center justify-center mr-3 group-hover:from-red-500/30 group-hover:to-pink-600/30 transition-all duration-200">
+                                            <x-heroicon name="arrow-right-on-rectangle" class="w-4 h-4 text-red-400" />
+                                        </div>
+                                        Güvenli Çıkış
                                     </button>
                                 </form>
                             </div>
@@ -139,21 +243,52 @@
     </div>
 </nav>
 
+{{-- Enhanced Header JavaScript --}}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Quick Actions Dropdown
     window.toggleQuickActions = function() {
         const dropdown = document.getElementById('quickActionsDropdown');
+        const otherDropdowns = ['profileDropdown', 'notificationsDropdown'];
+        
+        // Close other dropdowns
+        otherDropdowns.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) element.classList.add('hidden');
+        });
+        
         dropdown.classList.toggle('hidden');
     };
 
     // Profile Dropdown
     window.toggleProfileDropdown = function() {
         const dropdown = document.getElementById('profileDropdown');
+        const otherDropdowns = ['quickActionsDropdown', 'notificationsDropdown'];
+        
+        // Close other dropdowns
+        otherDropdowns.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) element.classList.add('hidden');
+        });
+        
         dropdown.classList.toggle('hidden');
     };
 
-    // Theme Toggle
+    // Notifications Dropdown
+    window.toggleNotifications = function() {
+        const dropdown = document.getElementById('notificationsDropdown');
+        const otherDropdowns = ['quickActionsDropdown', 'profileDropdown'];
+        
+        // Close other dropdowns
+        otherDropdowns.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) element.classList.add('hidden');
+        });
+        
+        dropdown.classList.toggle('hidden');
+    };
+
+    // Enhanced Theme Toggle
     window.toggleTheme = function() {
         const html = document.documentElement;
         const sunIcon = document.getElementById('sunIcon');
@@ -172,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Dashboard Sidebar Toggle (Ensure it's available globally)
+    // Enhanced Dashboard Sidebar Toggle
     if (typeof window.toggleDashboardSidebar === 'undefined') {
         window.toggleDashboardSidebar = function() {
             const sidebar = document.getElementById('dashboard-sidebar');
@@ -182,19 +317,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 const isHidden = sidebar.classList.contains('-translate-x-full');
                 
                 if (isHidden) {
-                    // Show sidebar
+                    // Show sidebar with enhanced animation
                     sidebar.classList.remove('-translate-x-full');
                     sidebar.classList.add('translate-x-0');
                     overlay.classList.remove('hidden');
-                    overlay.classList.add('bg-opacity-50');
-                    // Prevent body scroll
-                    document.body.style.overflow = 'hidden';
+                    overlay.classList.add('bg-black/70');
+                    // Prevent body scroll on mobile
+                    if (window.innerWidth < 768) {
+                        document.body.style.overflow = 'hidden';
+                    }
                 } else {
-                    // Hide sidebar
+                    // Hide sidebar with enhanced animation
                     sidebar.classList.add('-translate-x-full');
                     sidebar.classList.remove('translate-x-0');
                     overlay.classList.add('hidden');
-                    overlay.classList.remove('bg-opacity-50');
+                    overlay.classList.remove('bg-black/70');
                     // Restore body scroll
                     document.body.style.overflow = '';
                 }
@@ -202,25 +339,27 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // Click away functionality
+    // Enhanced click away functionality
     document.addEventListener('click', function(event) {
-        const quickActionsDropdown = document.getElementById('quickActionsDropdown');
-        const profileDropdown = document.getElementById('profileDropdown');
+        const dropdowns = ['quickActionsDropdown', 'profileDropdown', 'notificationsDropdown'];
+        const toggleButtons = [
+            'button[onclick="toggleQuickActions()"]',
+            'button[onclick="toggleProfileDropdown()"]',
+            'button[onclick="toggleNotifications()"]'
+        ];
         
-        // Close quick actions dropdown if clicking outside
-        if (quickActionsDropdown && !quickActionsDropdown.contains(event.target) &&
-            !event.target.closest('button[onclick="toggleQuickActions()"]')) {
-            quickActionsDropdown.classList.add('hidden');
-        }
-        
-        // Close profile dropdown if clicking outside
-        if (profileDropdown && !profileDropdown.contains(event.target) &&
-            !event.target.closest('button[onclick="toggleProfileDropdown()"]')) {
-            profileDropdown.classList.add('hidden');
-        }
+        dropdowns.forEach((dropdownId, index) => {
+            const dropdown = document.getElementById(dropdownId);
+            const button = document.querySelector(toggleButtons[index]);
+            
+            if (dropdown && !dropdown.contains(event.target) && 
+                (!button || !button.contains(event.target))) {
+                dropdown.classList.add('hidden');
+            }
+        });
     });
 
-    // Initialize theme on page load
+    // Initialize theme on page load with enhanced animation
     const savedTheme = localStorage.getItem('theme') ||
         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     
@@ -237,5 +376,41 @@ document.addEventListener('DOMContentLoaded', function() {
         if (sunIcon) sunIcon.classList.remove('hidden');
         if (moonIcon) moonIcon.classList.add('hidden');
     }
+
+    // Enhanced responsive behavior
+    function handleResize() {
+        if (window.innerWidth >= 768) {
+            // Desktop: ensure body scroll is restored
+            document.body.style.overflow = '';
+            
+            // Close all dropdowns on resize
+            const dropdowns = ['quickActionsDropdown', 'profileDropdown', 'notificationsDropdown'];
+            dropdowns.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.classList.add('hidden');
+            });
+        }
+    }
+    
+    window.addEventListener('resize', handleResize);
+    
+    // ESC key support for closing dropdowns
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const dropdowns = ['quickActionsDropdown', 'profileDropdown', 'notificationsDropdown'];
+            dropdowns.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) element.classList.add('hidden');
+            });
+        }
+    });
+
+    // Add smooth scroll behavior to dropdowns
+    const dropdowns = document.querySelectorAll('[id$="Dropdown"]');
+    dropdowns.forEach(dropdown => {
+        if (dropdown) {
+            dropdown.style.scrollBehavior = 'smooth';
+        }
+    });
 });
 </script>

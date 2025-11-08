@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-3 sm:p-6">
-    <div class="max-w-7xl mx-auto">
+    <div class="w-full max-w-6xl mx-auto">
         <!-- Header Section -->
         <div class="mb-6 sm:mb-10">
             <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-6">

@@ -3,7 +3,7 @@
 @section('content')
 <!-- Signal Subscriptions Component -->
 <div id="signalsApp" class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
 
         <!-- Header Section -->
         <div class="mb-8">

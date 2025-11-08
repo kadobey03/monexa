@@ -2,7 +2,7 @@
 @extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
-<div class="min-h-screen bg-gray-900 p-4 md:p-6" x-data="transactionHistory()" x-init="init()">
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4 min-h-screen bg-gray-900" x-data="transactionHistory()" x-init="init()">
     <x-danger-alert />
     <x-success-alert />
 

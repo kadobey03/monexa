@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-4 md:py-8" x-data="{ showCancelModal: false }">
-    <div class="container mx-auto px-4 md:px-6">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 md:mb-8 gap-4">
             <div class="flex items-center gap-3 md:gap-4">

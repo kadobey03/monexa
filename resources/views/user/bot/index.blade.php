@@ -13,7 +13,7 @@
     </div>
 
     <!-- Hero Content -->
-    <div class="relative z-10 container mx-auto px-6 py-12">
+    <div class="relative z-10 w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-6 sm:py-8 md:py-12">
         <div class="text-center max-w-3xl mx-auto">
             <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full border border-blue-500/20 mb-4">
                 <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -59,7 +59,7 @@
 
 <!-- Main Content -->
 <div class="bg-gray-50 dark:bg-gray-900 min-h-screen">
-    <div class="container mx-auto px-6 py-12">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-6 sm:py-8 md:py-12">
 
         @if($userInvestments->count() > 0)
         <!-- Active Investments Overview -->

@@ -2,8 +2,8 @@
 @section('title', $title)
 @section('content')
 
-<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-4 sm:py-8" id="withdrawalsContainer">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-2 sm:py-3 md:py-4" id="withdrawalsContainer">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
             <div class="text-center sm:text-left">
@@ -122,7 +122,7 @@
 
 @else
         <!-- Withdrawal Method Selection -->
-        <div class="bg-gray-900 dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-700/50 max-w-4xl mx-auto mb-6 sm:mb-8 backdrop-blur-sm">
+        <div class="bg-gray-900 dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-700/50 w-full mb-4 sm:mb-6 backdrop-blur-sm">
             <div class="p-4 sm:p-6 lg:p-8 border-b border-gray-700/50">
                 <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                     <div class="p-3 sm:p-4 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-xl backdrop-blur-sm">
@@ -192,7 +192,7 @@
         </div>
 
         <!-- Enhanced Withdrawal History -->
-        <div class="bg-gray-900 dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-700/50 max-w-6xl mx-auto backdrop-blur-sm">
+        <div class="bg-gray-900 dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-700/50 w-full backdrop-blur-sm">
             <div class="p-4 sm:p-6 lg:p-8 border-b border-gray-700/50">
                 <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
                     <div class="p-3 sm:p-4 bg-gradient-to-br from-indigo-500/20 to-blue-500/20 rounded-xl backdrop-blur-sm">

@@ -8,7 +8,7 @@
 <!-- Main Payment Container -->
 <div class="min-h-screen bg-gray-900">
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
 <div class="space-y-4 mb-6">
 
     <x-danger-alert />

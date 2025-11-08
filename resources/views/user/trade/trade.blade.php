@@ -2,7 +2,7 @@
 @section('title', 'İşlem Pazarları')
 @section('content')
 
-<div class="container mx-auto px-4 py-8" id="tradingMarketsContainer">
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4" id="tradingMarketsContainer">
     <!-- TradingView Ticker Tape Widget -->
     <!--<div class="mb-6">-->
     <!--    <div class="tradingview-widget-container">-->

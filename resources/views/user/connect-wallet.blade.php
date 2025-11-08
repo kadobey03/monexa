@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900" x-data="walletConnectManager()">
-    <div class="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8 max-w-7xl">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
 
         <!-- Page Header -->
         <div class="mb-6 sm:mb-8">

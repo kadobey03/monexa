@@ -5,7 +5,7 @@
 <div class="min-h-screen bg-white dark:bg-gray-900" id="verifyApp">
     <!-- Simple Header -->
     <div class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
-        <div class="max-w-4xl mx-auto px-6 py-8">
+        <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
             <div class="text-center">
                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300 rounded-full text-sm font-medium mb-4">
                     <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
@@ -23,7 +23,7 @@
     <x-danger-alert/>
     <x-success-alert/>
 
-    <div class="max-w-4xl mx-auto px-6 py-8">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
         <!-- Main Verification Card -->
         <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 mb-6" id="verifyCard">
 

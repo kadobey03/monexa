@@ -65,7 +65,7 @@
 @endsection
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
     <!-- Header Section -->
     <div class="mb-8">
         <!-- Breadcrumb Navigation -->

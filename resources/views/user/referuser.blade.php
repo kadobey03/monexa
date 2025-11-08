@@ -7,7 +7,7 @@
 @extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
-<div class="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8" id="referralApp">
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4" id="referralApp">
 
     <x-danger-alert />
     <x-success-alert />

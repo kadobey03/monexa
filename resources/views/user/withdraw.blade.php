@@ -3,8 +3,7 @@
 @section('title', $title)
 @section('content')
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-    <div class="container mx-auto px-6">
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div>
@@ -219,7 +218,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Confirmation Modal -->
     <div id="confirmModal" class="fixed inset-0 z-50 overflow-y-auto hidden opacity-0 transition-all duration-300">
@@ -249,7 +247,6 @@
             </div>
         </div>
     </div>
-</div>
 
 @endsection
 

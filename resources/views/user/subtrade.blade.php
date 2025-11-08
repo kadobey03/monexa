@@ -2,14 +2,16 @@
     $sub_link = 'https://trade.mql5.com/trade';
 @endphp
 
-\@extends('layouts.dashly1')
+@extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
+
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
     <!-- Page Header -->
     <div class="flex items-center justify-between mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-white mb-2">Trading Accounts</h1>
-            <p class="text-gray-300">Manage your automated trading subscriptions</p>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Trading Accounts</h1>
+            <p class="text-gray-600 dark:text-gray-300">Manage your automated trading subscriptions</p>
         </div>
     </div>
     <x-danger-alert />
@@ -185,8 +187,9 @@
             </div>
         </div>
     </div>
+</div>
     
-    @include('user.modals')
+@include('user.modals')
     <script type="text/javascript">
         function deletemt4() {
             swal({

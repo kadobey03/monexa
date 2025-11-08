@@ -18,7 +18,7 @@
     </div>
 
     <!-- Hero Content -->
-    <div class="relative z-10 container mx-auto px-6 py-12">
+    <div class="relative z-10 w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
         <div class="text-center max-w-3xl mx-auto">
             <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full border border-blue-500/20 mb-4">
                 <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -69,7 +69,7 @@
 
 <!-- Main Content -->
 <div class="bg-slate-50 dark:bg-slate-900 min-h-screen">
-    <div class="container mx-auto px-6 py-12">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
 
         <!-- Stats Overview -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">

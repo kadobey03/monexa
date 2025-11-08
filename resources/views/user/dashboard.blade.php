@@ -1,14 +1,14 @@
 @extends('layouts.master', ['layoutType' => 'dashboard'])
 @section('title', $title)
 @section('content')
-<div class="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8" data-dashboard="true">
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4" data-dashboard="true">
 
     <x-danger-alert />
     <x-success-alert />
     <x-notify-alert />
 
     <!-- Dashboard Header -->
-    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 sm:mb-8 gap-4">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 sm:mb-6 gap-3">
         <div class="text-center lg:text-left">
            @php
     $userCreatedAt = \Carbon\Carbon::parse(Auth::user()->created_at);
@@ -16,16 +16,16 @@
 @endphp
 
 @if ($secondsSinceCreated <= 90)
-    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
+    <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">
         Merhaba, {{ Auth::user()->name }}!
     </h1>
 @else
-    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
+    <h1 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 dark:text-white">
         Tekrar hoş geldin, {{ Auth::user()->name }}!
     </h1>
 @endif
 
-            <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 mt-1">Yatırım kontrol paneli genel bakışınız</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Yatırım kontrol paneli genel bakışınız</p>
         </div>
         <div class="hidden sm:flex flex-col sm:flex-row gap-2 sm:gap-3">
             @if($settings->wallet_status == "on")
@@ -48,7 +48,7 @@
 
     <!-- Signal Strength -->
     @if(Auth::user()->progress > 2)
-    <div class="mb-6 sm:mb-8">
+    <div class="mb-4 sm:mb-6">
         @php
             $signalStrength = Auth::user()->progress;
             $signalColor = '';
@@ -70,7 +70,7 @@
             }
         @endphp
 
-        <div class="bg-white dark:bg-gray-900 rounded-xl p-4 sm:p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
+        <div class="bg-white dark:bg-gray-900 rounded-xl p-3 sm:p-4 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center gap-2">
                     <x-heroicon name="{{ $signalIcon }}" class="w-5 h-5 text-gray-600 dark:text-gray-300" />
@@ -116,9 +116,9 @@
 
 
  <!-- Investment Dashboard - Clean Modern Layout -->
-<div class="grid grid-cols-1 xl:grid-cols-5 gap-4 sm:gap-6 items-stretch mb-6 sm:mb-8">
+<div class="grid grid-cols-1 xl:grid-cols-5 gap-3 sm:gap-4 items-stretch mb-4 sm:mb-6">
     <!-- Account Balance -->
-    <div class="xl:col-span-2 h-full rounded-2xl bg-white dark:bg-gray-900 p-4 sm:p-5 lg:p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 transition-all group" id="balanceCard">
+    <div class="xl:col-span-2 h-full rounded-xl bg-white dark:bg-gray-900 p-3 sm:p-4 lg:p-5 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 transition-all group" id="balanceCard">
         <div class="flex justify-between items-start mb-4">
             <div class="text-center sm:text-left w-full sm:w-auto">
                 <h2 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-white flex items-center justify-center sm:justify-start">
@@ -199,7 +199,7 @@
     </div>
 
     <!-- Secondary Metrics -->
-    <div class="xl:col-span-3 grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 gap-3 sm:gap-4">
+    <div class="xl:col-span-3 grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 gap-2 sm:gap-3">
         @php
             $cards = [
                 ['label' => 'Toplam Kar', 'value' => Auth::user()->roi, 'icon' => 'dollar-sign'],
@@ -210,7 +210,7 @@
         @endphp
 
         @foreach($cards as $card)
-            <div class="rounded-2xl bg-white dark:bg-gray-900 p-3 sm:p-4 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 flex flex-col">
+            <div class="rounded-xl bg-white dark:bg-gray-900 p-2 sm:p-3 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 flex flex-col">
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{{ $card['label'] }}</span>
                     <div class="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">

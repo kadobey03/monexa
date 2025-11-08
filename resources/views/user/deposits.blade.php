@@ -4,7 +4,7 @@
 @section('content')
 <!-- Simple Header -->
 <div class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800" x-cloak>
-    <div class="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
         <div class="text-center">
             <h1 class="text-2xl font-medium text-gray-900 dark:text-white">
                 Hesabınızı Yatırın
@@ -17,7 +17,7 @@
 </div>
 
 <!-- Main Content -->
-<div class="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
+<div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
     <!-- Alerts -->
     <div class="space-y-4 mb-6">
         <x-danger-alert />

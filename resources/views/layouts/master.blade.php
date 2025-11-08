@@ -51,15 +51,7 @@
         }
     </script>
     
-    <!-- Bootstrap JavaScript with Fallback (Only for layouts that need it) -->
-    @if(!in_array($layoutType ?? 'default', ['guest', 'default']))
-    
-    <script>
-        if (!window.bootstrap) {
-            document.write('<script src="{{ secure_asset('vendor/bootstrap/bootstrap.bundle.min.js') }}"><\/script>');
-        }
-    </script>
-    @endif
+    <!-- No Bootstrap - Using Pure Tailwind CSS Only -->
     
     <!-- SweetAlert2 with Fallback -->
     
@@ -663,19 +655,15 @@
         <!-- Dashboard Layout -->
         @if(($layoutType ?? 'default') === 'dashboard')
             @include('layouts.components.dashboard-header')
-            @include('layouts.components.dashboard-sidebar')
-            <div class="min-h-screen bg-gray-900">
+            <div class="flex min-h-screen bg-gray-50 dark:bg-gray-900">
+                @include('layouts.components.dashboard-sidebar')
                 <!-- Main Content Area with proper sidebar spacing -->
-                <main class="transition-all duration-300 ease-in-out pt-16
-                           ml-0 pl-0
-                           md:ml-72 md:pl-0
-                           lg:ml-72 lg:pl-0
-                           xl:ml-72 xl:pl-0"
+                <main class="flex-1 transition-all duration-300 ease-in-out pt-14 px-4 md:px-6 md:ml-56"
                       id="dashboard-main-content">
                     @yield('content')
                 </main>
-                @include('layouts.components.mobile-nav')
             </div>
+            @include('layouts.components.mobile-nav')
         @endif
 -------
         
@@ -953,36 +941,12 @@
             setInterval(fetchCryptoPrices, 30000);
         }
         
-        // jQuery integration for legacy compatibility with Bootstrap
+        // Pure Tailwind CSS - No Bootstrap Dependencies
         if (typeof $ !== 'undefined') {
             $(document).ready(function() {
-                console.log('jQuery ready - legacy compatibility mode');
-                
-                // Initialize Bootstrap components (only if Bootstrap is loaded)
-                if (typeof bootstrap !== 'undefined') {
-                    // Initialize modals with Bootstrap 5
-                    const modalElements = document.querySelectorAll('.modal');
-                    modalElements.forEach(modalEl => {
-                        new bootstrap.Modal(modalEl);
-                    });
-                    
-                    // Initialize dropdowns
-                    const dropdownElements = document.querySelectorAll('.dropdown-toggle');
-                    dropdownElements.forEach(dropdownEl => {
-                        new bootstrap.Dropdown(dropdownEl);
-                    });
-                    
-                    // Initialize tooltips
-                    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-                    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-                    
-                    console.log('Bootstrap components initialized');
-                } else {
-                    console.log('Bootstrap not loaded - using pure Tailwind CSS layout');
-                }
-                
-                // Heroicons - No initialization needed (pure SVG components)
-                console.log('Heroicons: Pure SVG components loaded - no initialization required');
+                console.log('jQuery ready - Tailwind CSS only mode');
+                console.log('Pure Tailwind CSS layout - no framework dependencies');
+                console.log('Heroicons: Pure SVG components loaded');
             });
         }
     </script>

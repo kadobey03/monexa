@@ -3,7 +3,7 @@
 @section('title', $title)
 @section('content')
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 p-6" id="supportContainer">
-    <div class="max-w-4xl mx-auto">
+    <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
         <!-- Page Header -->
         <div class="mb-8">
             <div class="flex items-center space-x-4 mb-6">
