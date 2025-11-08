@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\App;
 use App\Models\Settings;
 use App\Models\SettingsCont;
 use App\Models\TermsPrivacy;
+use App\Models\User_plans;
+use App\Observers\UserPlansObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
@@ -39,6 +41,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Observer'ı kaydet
+        User_plans::observe(UserPlansObserver::class);
+
         FacadesStorage::extend('sftp', function ($app, $config) {
             return new Filesystem(new SftpAdapter($config));
         });

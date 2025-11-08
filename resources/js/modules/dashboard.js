@@ -91,7 +91,8 @@ class DashboardModule {
         } catch (error) {
             console.error('Error loading dashboard data:', error);
             this.setState({ loading: false });
-            NotificationManager.error('Dashboard verileri yüklenemedi');
+            // Sessiz hata yönetimi - kullanıcıya bildirim gösterme
+            console.warn('Dashboard verileri sessizce yüklenemedi, arkaplanda devam ediliyor');
         }
     }
 
@@ -406,7 +407,8 @@ class DashboardModule {
     async refreshData() {
         await this.loadInitialData();
         this.updateCharts();
-        NotificationManager.success('Dashboard verileri güncellendi');
+        // Sessiz güncelleme - kullanıcıya bildirim gösterme
+        console.log('Dashboard verileri sessizce güncellendi');
     }
 
     async changeDateRange(range) {
