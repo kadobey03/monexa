@@ -298,6 +298,10 @@
 
                     <!-- Action Buttons -->
                     <div class="flex items-center space-x-3">
+                        <a href="{{ route('admin.users.import') }}"
+                           class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
+                            <i class="fas fa-upload mr-2"></i>Kullanıcı İçe Aktar
+                        </a>
                         <button onclick="exportUsers()"
                                 class="inline-flex items-center px-4 py-2 bg-admin-500 hover:bg-admin-600 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
                             <i class="fas fa-download mr-2"></i>Dışa Aktar

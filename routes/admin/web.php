@@ -341,9 +341,16 @@ Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
     });
 
     Route::controller(ImportController::class)->group(function () {
+        // Legacy routes (backward compatibility)
         Route::get('download-doc', 'downloadDoc')->name('downlddoc');
-        // This route is to import data from excel
         Route::post('dashboard/fileImport', 'fileImport')->name('fileImport');
+        
+        // Advanced Import System Routes
+        Route::get('dashboard/users/import', 'showImportPage')->name('admin.users.import');
+        Route::post('dashboard/users/import/preview', 'previewFile')->name('admin.users.import.preview');
+        Route::post('dashboard/users/import/process', 'processImport')->name('admin.users.import.process');
+        Route::get('dashboard/users/import/template', 'downloadTemplate')->name('admin.users.import.template');
+        Route::get('dashboard/users/import/download-duplicates/{fileName}', 'downloadDuplicates')->name('admin.users.import.download-duplicates');
     });
 
     // Enhanced Leads Management Routes with Dynamic Table Support
