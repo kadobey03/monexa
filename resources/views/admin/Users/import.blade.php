@@ -602,6 +602,8 @@ function formatFileSize(bytes) {
 }
 
 // Excel parsing functions
+let hasHeaderRow = true; // Default assumption
+
 function parseExcelFile() {
     if (!uploadedFile) return;
     
@@ -621,8 +623,8 @@ function parseExcelFile() {
                 return;
             }
             
-            displayExcelPreview();
-            createColumnMapping();
+            // Show header detection dialog
+            showHeaderDetectionDialog();
             
         } catch (error) {
             console.error('Excel parsing error:', error);
@@ -631,6 +633,20 @@ function parseExcelFile() {
     };
     
     reader.readAsArrayBuffer(uploadedFile);
+}
+
+function showHeaderDetectionDialog() {
+    const firstRowData = excelData[0].map(cell => String(cell || '').substring(0, 15)).join(' | ');
+    const secondRowData = excelData[1] ? excelData[1].map(cell => String(cell || '').substring(0, 15)).join(' | ') : 'Yok';
+    
+    if (confirm(`Excel dosyasının ilk satırı başlık mı?\n\n1. Satır: ${firstRowData}\n2. Satır: ${secondRowData}\n\n"OK" = İlk satır başlık\n"Cancel" = İlk satır veri`)) {
+        hasHeaderRow = true;
+    } else {
+        hasHeaderRow = false;
+    }
+    
+    displayExcelPreview();
+    createColumnMapping();
 }
 
 function displayExcelPreview() {
@@ -644,26 +660,37 @@ function displayExcelPreview() {
     
     if (excelData.length === 0) return;
     
+    // Determine header and data rows based on hasHeaderRow
+    const headerData = hasHeaderRow ? excelData[0] : null;
+    const dataStartIndex = hasHeaderRow ? 1 : 0;
+    
     // Create header
     const headerRow = document.createElement('tr');
-    excelData[0].forEach((header, index) => {
+    const columnCount = excelData[0].length;
+    
+    for (let index = 0; index < columnCount; index++) {
         const th = document.createElement('th');
         th.className = `px-4 py-3 text-left text-xs font-medium text-admin-500 ${isDarkMode ? 'dark:text-admin-400' : ''} uppercase tracking-wider`;
-        th.textContent = header || `Sütun ${index + 1}`;
+        
+        if (hasHeaderRow && headerData[index]) {
+            th.textContent = headerData[index];
+        } else {
+            th.textContent = `Sütun ${index + 1}`;
+        }
         headerRow.appendChild(th);
-    });
+    }
     thead.appendChild(headerRow);
     
-    // Create preview rows (max 5)
-    const previewRows = excelData.slice(1, 6);
+    // Create preview rows (max 5 from actual data)
+    const previewRows = excelData.slice(dataStartIndex, dataStartIndex + 5);
     previewRows.forEach(row => {
         const tr = document.createElement('tr');
-        excelData[0].forEach((_, index) => {
+        for (let index = 0; index < columnCount; index++) {
             const td = document.createElement('td');
             td.className = `px-4 py-3 whitespace-nowrap text-sm text-admin-900 ${isDarkMode ? 'dark:text-admin-100' : ''}`;
             td.textContent = row[index] || '-';
             tr.appendChild(td);
-        });
+        }
         tbody.appendChild(tr);
     });
 }
@@ -674,21 +701,39 @@ function createColumnMapping() {
     
     if (excelData.length === 0) return;
     
+    // Determine column headers and sample data based on hasHeaderRow
+    const columnCount = excelData[0].length;
+    const dataStartIndex = hasHeaderRow ? 1 : 0;
+    
     // Create draggable excel columns
-    excelData[0].forEach((header, index) => {
+    for (let index = 0; index < columnCount; index++) {
         const div = document.createElement('div');
         div.className = `excel-column p-3 border border-admin-200 ${isDarkMode ? 'dark:border-admin-600' : ''} rounded-lg bg-white ${isDarkMode ? 'dark:bg-admin-800' : ''} cursor-move hover:shadow-md transition-shadow duration-200`;
         div.draggable = true;
         div.dataset.columnIndex = index;
-        div.dataset.columnName = header || `Sütun ${index + 1}`;
+        
+        // Set proper column name
+        let columnName;
+        if (hasHeaderRow && excelData[0][index]) {
+            columnName = excelData[0][index];
+        } else {
+            columnName = `Sütun ${index + 1}`;
+        }
+        div.dataset.columnName = columnName;
+        
+        // Get sample data from first data row
+        let sampleData = 'Veri yok';
+        if (excelData[dataStartIndex] && excelData[dataStartIndex][index]) {
+            sampleData = String(excelData[dataStartIndex][index]).substring(0, 20) + '...';
+        }
         
         div.innerHTML = `
             <div class="flex items-center justify-between">
-                <span class="font-medium text-admin-900 ${isDarkMode ? 'dark:text-admin-100' : ''}">${header || `Sütun ${index + 1}`}</span>
+                <span class="font-medium text-admin-900 ${isDarkMode ? 'dark:text-admin-100' : ''}">${columnName}</span>
                 <i class="fas fa-grip-vertical text-admin-400 ${isDarkMode ? 'dark:text-admin-500' : ''}"></i>
             </div>
             <p class="text-xs text-admin-600 ${isDarkMode ? 'dark:text-admin-400' : ''} mt-1">
-                Örnek: ${excelData[1] && excelData[1][index] ? String(excelData[1][index]).substring(0, 20) + '...' : 'Veri yok'}
+                Örnek: ${sampleData}
             </p>
         `;
         
@@ -697,7 +742,7 @@ function createColumnMapping() {
         div.addEventListener('dragend', handleDragEnd);
         
         excelColumnsContainer.appendChild(div);
-    });
+    }
     
     // Add drop event listeners to system fields
     document.querySelectorAll('.system-field').forEach(field => {

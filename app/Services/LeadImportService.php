@@ -79,10 +79,28 @@ class LeadImportService
      */
     public function startImport(Admin $admin, UploadedFile $file, array $options = []): array
     {
+        Log::info('🪲 IMPORT DEBUG: startImport called', [
+            'admin_id' => $admin->id,
+            'admin_name' => $admin->name,
+            'file_name' => $file->getClientOriginalName(),
+            'file_size' => $file->getSize(),
+            'file_size_mb' => round($file->getSize() / 1024 / 1024, 2),
+            'mime_type' => $file->getMimeType(),
+            'file_extension' => $file->getClientOriginalExtension(),
+            'options' => $options
+        ]);
+
         try {
             // Validate file
+            Log::info('🪲 IMPORT DEBUG: Starting file validation');
             $validation = $this->validateFile($file);
+            Log::info('🪲 IMPORT DEBUG: File validation result', [
+                'validation_valid' => $validation['valid'],
+                'validation_error' => $validation['error'] ?? null
+            ]);
+            
             if (!$validation['valid']) {
+                Log::warning('🪲 IMPORT DEBUG: File validation failed', $validation);
                 return [
                     'success' => false,
                     'error' => $validation['error'],
@@ -90,9 +108,15 @@ class LeadImportService
             }
 
             // Store file temporarily
+            Log::info('🪲 IMPORT DEBUG: Storing file temporarily');
             $filePath = $this->storeTemporaryFile($file);
+            Log::info('🪲 IMPORT DEBUG: File stored successfully', [
+                'file_path' => $filePath,
+                'full_storage_path' => Storage::path($filePath)
+            ]);
             
             // Create import log
+            Log::info('🪲 IMPORT DEBUG: Creating import log record');
             $importLog = LeadImportLog::create([
                 'admin_id' => $admin->id,
                 'filename' => $file->getClientOriginalName(),
@@ -107,10 +131,28 @@ class LeadImportService
                 'import_options' => $options,
                 'started_at' => now(),
             ]);
+            Log::info('🪲 IMPORT DEBUG: Import log created', [
+                'import_log_id' => $importLog->id,
+                'import_log_status' => $importLog->status
+            ]);
 
             // Analyze file structure
+            Log::info('🪲 IMPORT DEBUG: Starting file analysis');
             $analysis = $this->analyzeFile($filePath);
+            Log::info('🪲 IMPORT DEBUG: File analysis result', [
+                'analysis_success' => $analysis['success'],
+                'analysis_error' => $analysis['error'] ?? null,
+                'analysis_total_rows' => $analysis['total_rows'] ?? 0,
+                'analysis_headers' => $analysis['headers'] ?? [],
+                'analysis_suggested_mapping' => $analysis['suggested_mapping'] ?? []
+            ]);
+            
             if (!$analysis['success']) {
+                Log::error('🪲 IMPORT DEBUG: File analysis failed', [
+                    'analysis_error' => $analysis['error'],
+                    'import_log_id' => $importLog->id
+                ]);
+                
                 $importLog->update([
                     'status' => 'failed',
                     'error_message' => $analysis['error'],
@@ -124,10 +166,23 @@ class LeadImportService
             }
 
             // Update import log with analysis
+            Log::info('🪲 IMPORT DEBUG: Updating import log with analysis results');
             $importLog->update([
                 'total_rows' => $analysis['total_rows'],
                 'column_mapping' => $analysis['suggested_mapping'],
                 'file_structure' => $analysis['structure'],
+            ]);
+            Log::info('🪲 IMPORT DEBUG: Import log updated', [
+                'import_log_id' => $importLog->id,
+                'updated_total_rows' => $analysis['total_rows'],
+                'updated_status' => $importLog->fresh()->status
+            ]);
+
+            Log::info('🪲 IMPORT DEBUG: startImport completed successfully', [
+                'import_log_id' => $importLog->id,
+                'total_rows' => $analysis['total_rows'],
+                'suggested_mapping_count' => count($analysis['suggested_mapping'] ?? []),
+                'preview_data_count' => count($analysis['preview_data'] ?? [])
             ]);
 
             Log::info('Import started', [
@@ -146,6 +201,15 @@ class LeadImportService
             ];
 
         } catch (\Exception $e) {
+            Log::error('🪲 IMPORT DEBUG: startImport failed - Exception caught', [
+                'admin_id' => $admin->id,
+                'file_name' => $file->getClientOriginalName(),
+                'error_message' => $e->getMessage(),
+                'error_file' => $e->getFile(),
+                'error_line' => $e->getLine(),
+                'stack_trace' => $e->getTraceAsString()
+            ]);
+
             Log::error('Import initialization failed', [
                 'admin_id' => $admin->id,
                 'error' => $e->getMessage(),
@@ -466,13 +530,42 @@ class LeadImportService
         DB::beginTransaction();
 
         try {
+            Log::info('🪲 IMPORT DEBUG: Starting batch processing', [
+                'batch_index' => $batchIndex,
+                'batch_size' => count($batch),
+                'admin_id' => $adminId,
+                'options' => $options
+            ]);
+
             foreach ($batch as $rowIndex => $row) {
                 $actualRowIndex = ($batchIndex * $this->batchSize) + $rowIndex + 2; // +2 for header and 0-based index
                 
+                Log::info('🪲 IMPORT DEBUG: Processing row', [
+                    'row_index' => $actualRowIndex,
+                    'raw_row_data' => $row
+                ]);
+                
                 $leadData = $this->mapRowToLeadData($row, $columnMapping);
+                
+                Log::info('🪲 IMPORT DEBUG: Mapped lead data', [
+                    'row_index' => $actualRowIndex,
+                    'mapped_data' => $leadData
+                ]);
+                
                 $validation = $this->validateLeadData($leadData, $actualRowIndex);
                 
+                Log::info('🪲 IMPORT DEBUG: Validation result', [
+                    'row_index' => $actualRowIndex,
+                    'validation_valid' => $validation['valid'],
+                    'validation_errors' => $validation['errors'] ?? []
+                ]);
+                
                 if (!$validation['valid']) {
+                    Log::warning('🪲 IMPORT DEBUG: Row failed validation', [
+                        'row_index' => $actualRowIndex,
+                        'validation_errors' => $validation['errors'],
+                        'lead_data' => $leadData
+                    ]);
                     $errors[] = [
                         'row' => $actualRowIndex,
                         'errors' => $validation['errors'],
@@ -485,12 +578,30 @@ class LeadImportService
 
                 // Check for duplicates
                 $existingLead = $this->findExistingLead($leadData, $options);
+                
+                Log::info('🪲 IMPORT DEBUG: Duplicate check result', [
+                    'row_index' => $actualRowIndex,
+                    'existing_lead_found' => $existingLead ? true : false,
+                    'existing_lead_id' => $existingLead ? $existingLead->id : null,
+                    'duplicate_action' => $options['duplicate_action'] ?? 'skip',
+                    'duplicate_fields' => $options['duplicate_fields'] ?? ['email']
+                ]);
+                
                 if ($existingLead) {
                     if ($options['duplicate_action'] ?? 'skip' === 'skip') {
+                        Log::info('🪲 IMPORT DEBUG: Row skipped - duplicate found', [
+                            'row_index' => $actualRowIndex,
+                            'existing_lead_id' => $existingLead->id,
+                            'existing_email' => $existingLead->email
+                        ]);
                         $duplicates++;
                         $processed++;
                         continue;
                     } elseif ($options['duplicate_action'] === 'update') {
+                        Log::info('🪲 IMPORT DEBUG: Updating existing lead', [
+                            'row_index' => $actualRowIndex,
+                            'existing_lead_id' => $existingLead->id
+                        ]);
                         $this->updateExistingLead($existingLead, $leadData, $options);
                         $successful++;
                         $processed++;
@@ -516,10 +627,28 @@ class LeadImportService
                     $leadData['lead_source'] = $options['default_source'];
                 }
 
+                Log::info('🪲 IMPORT DEBUG: Creating new user', [
+                    'row_index' => $actualRowIndex,
+                    'final_lead_data' => $leadData
+                ]);
+
                 User::create($leadData);
+                
+                Log::info('🪲 IMPORT DEBUG: User created successfully', [
+                    'row_index' => $actualRowIndex
+                ]);
+                
                 $successful++;
                 $processed++;
             }
+
+            Log::info('🪲 IMPORT DEBUG: Batch processing completed', [
+                'batch_index' => $batchIndex,
+                'processed' => $processed,
+                'successful' => $successful,
+                'failed' => $failed,
+                'duplicates' => $duplicates
+            ]);
 
             DB::commit();
 
@@ -558,19 +687,65 @@ class LeadImportService
     {
         $leadData = [];
         
-        foreach ($columnMapping as $dbColumn => $fileColumn) {
-            if (!empty($fileColumn)) {
-                $columnIndex = array_search($fileColumn, array_keys($row));
-                $value = $columnIndex !== false ? trim($row[$fileColumn] ?? '') : '';
+        Log::info('🪲 MAPPING DEBUG: Starting row mapping', [
+            'row_data' => $row,
+            'column_mapping' => $columnMapping,
+            'row_count' => count($row)
+        ]);
+        
+        foreach ($columnMapping as $dbColumn => $mappingValue) {
+            if (!empty($mappingValue)) {
+                $value = '';
+                
+                // Handle frontend object format {index: 0, name: "Column"}
+                if (is_array($mappingValue) && isset($mappingValue['index'])) {
+                    $columnIndex = (int) $mappingValue['index'];
+                    $columnName = $mappingValue['name'] ?? "Column {$columnIndex}";
+                    $value = isset($row[$columnIndex]) ? trim($row[$columnIndex] ?? '') : '';
+                    
+                    Log::info('🪲 MAPPING DEBUG: Object mapping processed', [
+                        'db_column' => $dbColumn,
+                        'column_index' => $columnIndex,
+                        'column_name' => $columnName,
+                        'raw_value' => $row[$columnIndex] ?? 'NOT_SET',
+                        'trimmed_value' => $value
+                    ]);
+                } else {
+                    // Legacy string mapping (fallback)
+                    $columnIndex = array_search($mappingValue, array_keys($row));
+                    $value = $columnIndex !== false ? trim($row[$mappingValue] ?? '') : '';
+                    
+                    Log::info('🪲 MAPPING DEBUG: String mapping processed', [
+                        'db_column' => $dbColumn,
+                        'mapping_value' => $mappingValue,
+                        'column_index' => $columnIndex,
+                        'value' => $value
+                    ]);
+                }
                 
                 // Apply data transformations
-                $leadData[$dbColumn] = $this->transformColumnValue($dbColumn, $value);
+                $transformedValue = $this->transformColumnValue($dbColumn, $value);
+                $leadData[$dbColumn] = $transformedValue;
+                
+                Log::info('🪲 MAPPING DEBUG: Value transformation', [
+                    'db_column' => $dbColumn,
+                    'original_value' => $value,
+                    'transformed_value' => $transformedValue
+                ]);
             }
         }
 
-        return array_filter($leadData, function($value) {
+        $finalData = array_filter($leadData, function($value) {
             return $value !== null && $value !== '';
         });
+        
+        Log::info('🪲 MAPPING DEBUG: Row mapping completed', [
+            'raw_lead_data' => $leadData,
+            'filtered_lead_data' => $finalData,
+            'filtered_fields_count' => count($finalData)
+        ]);
+
+        return $finalData;
     }
 
     /**

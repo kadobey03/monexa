@@ -29,12 +29,12 @@ class LeadAuthorizationService
             'role_name' => $admin->role?->name ?? 'NO_ROLE',
         ]);
 
-        // DÜZELTME: Daha gevşek lead criteria - cstatus Customer olmayanları lead say
+        // DÜZELTME: Daha gevşek lead criteria - converted olmayanları lead say
         $query = User::query()
             ->where(function($q) {
-                // Sadece Customer olmayanları al - diğer tüm kullanıcılar lead
-                $q->where('cstatus', '!=', 'Customer')
-                  ->orWhereNull('cstatus');
+                // Sadece converted Customer olmayanları al - diğer tüm kullanıcılar lead
+                $q->where('lead_status', '!=', 'converted')
+                  ->orWhereNull('lead_status');
             });
 
         $totalPotentialLeads = $query->count();

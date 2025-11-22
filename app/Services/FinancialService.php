@@ -296,7 +296,7 @@ class FinancialService
         $user->update([
             'account_bal' => $user->account_bal + $amount + $bonus,
             'bonus' => $user->bonus + $bonus,
-            'cstatus' => 'Customer',
+            'lead_status' => 'converted', // Deposit sonrası lead converted olur
         ]);
     }
 

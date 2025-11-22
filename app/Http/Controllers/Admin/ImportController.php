@@ -84,6 +84,13 @@ class ImportController extends Controller
      */
     public function previewFile(Request $request)
     {
+        Log::info('🪲 IMPORT DEBUG: Preview file started', [
+            'file_received' => $request->hasFile('file'),
+            'file_name' => $request->file('file')?->getClientOriginalName(),
+            'file_size' => $request->file('file')?->getSize(),
+            'file_mime' => $request->file('file')?->getMimeType()
+        ]);
+        
         $request->validate([
             'file' => 'required|mimes:csv,xlsx,xls|max:10240',
         ]);
@@ -93,12 +100,24 @@ class ImportController extends Controller
             $fileName = 'temp_import_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
             $filePath = $file->storeAs('temp_imports', $fileName, 'local');
             
+            Log::info('🪲 IMPORT DEBUG: File stored successfully', [
+                'temp_path' => $filePath,
+                'full_path' => storage_path('app/' . $filePath),
+                'file_exists' => file_exists(storage_path('app/' . $filePath))
+            ]);
+            
             // Read Excel file
             $spreadsheet = IOFactory::load(storage_path('app/' . $filePath));
             $worksheet = $spreadsheet->getActiveSheet();
             $data = $worksheet->toArray();
             
+            Log::info('🪲 IMPORT DEBUG: Excel file read successfully', [
+                'data_rows' => count($data),
+                'first_row' => $data[0] ?? 'empty'
+            ]);
+            
             if (empty($data)) {
+                Log::warning('🪲 IMPORT DEBUG: Excel file is empty');
                 return response()->json([
                     'success' => false,
                     'message' => 'Excel dosyası boş görünüyor.'
@@ -108,6 +127,12 @@ class ImportController extends Controller
             // Get headers and sample data
             $headers = array_shift($data); // First row as headers
             $sampleData = array_slice($data, 0, 5); // First 5 rows as sample
+            
+            Log::info('🪲 IMPORT DEBUG: Headers and sample extracted', [
+                'headers' => $headers,
+                'sample_count' => count($sampleData),
+                'total_data_rows' => count($data)
+            ]);
             
             // Clean up temp file
             Storage::disk('local')->delete($filePath);
@@ -122,7 +147,12 @@ class ImportController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            Log::error('File preview error: ' . $e->getMessage());
+            Log::error('🪲 IMPORT DEBUG: File preview error', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
             return response()->json([
                 'success' => false,
                 'message' => 'Dosya önizlemesi sırasında hata oluştu: ' . $e->getMessage()
@@ -135,6 +165,13 @@ class ImportController extends Controller
      */
     public function processImport(Request $request)
     {
+        Log::info('🪲 PROCESS IMPORT DEBUG: Import started', [
+            'admin_id' => auth('admin')->id(),
+            'admin_name' => auth('admin')->user()->first_name . ' ' . auth('admin')->user()->last_name,
+            'file_name' => $request->file('file')?->getClientOriginalName(),
+            'file_size' => $request->file('file')?->getSize()
+        ]);
+
         $request->validate([
             'file' => 'required|mimes:csv,xlsx,xls|max:10240',
             'mappings' => 'required|json',
@@ -144,6 +181,11 @@ class ImportController extends Controller
         try {
             $mappings = json_decode($request->input('mappings'), true);
             $settings = json_decode($request->input('settings'), true);
+            
+            Log::info('🪲 PROCESS IMPORT DEBUG: Mappings and Settings', [
+                'mappings' => $mappings,
+                'settings' => $settings
+            ]);
             
             // Validate required mappings - flexible name validation
             $hasName = isset($mappings['name']);
@@ -165,11 +207,21 @@ class ImportController extends Controller
             }
 
             // Create advanced import with mappings
+            Log::info('🪲 PROCESS IMPORT DEBUG: Creating UsersImport instance');
             $import = new UsersImport($mappings, $settings);
+            
+            Log::info('🪲 PROCESS IMPORT DEBUG: Starting Excel::import()');
             Excel::import($import, $request->file('file'));
             
+            Log::info('🪲 PROCESS IMPORT DEBUG: Excel::import() completed, getting stats');
             $stats = $import->getImportStats();
             $failures = $import->failures();
+            
+            Log::info('🪲 PROCESS IMPORT DEBUG: Import statistics', [
+                'stats' => $stats,
+                'failures_count' => count($failures),
+                'failures_sample' => $failures->take(3)->toArray() // First 3 failures for debug (Collection method)
+            ]);
             
             // Prepare detailed results
             $results = [

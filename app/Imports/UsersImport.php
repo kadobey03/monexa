@@ -59,13 +59,28 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
         $this->originalRowData = $rows->toArray();
 
         foreach ($rows as $rowIndex => $row) {
+            Log::info('🪲 USERS IMPORT DEBUG: Processing row', [
+                'row_index' => $rowIndex + 2,
+                'raw_data' => $row->toArray()
+            ]);
+            
             try {
                 $mappedData = $this->mapRowData($row->toArray(), $rowIndex + 2); // +2 for header and 0-indexing
+                
+                Log::info('🪲 USERS IMPORT DEBUG: Mapped data', [
+                    'row_index' => $rowIndex + 2,
+                    'mapped_data' => $mappedData
+                ]);
                 
                 if ($mappedData) {
                     $user = $this->createUser($mappedData, $rowIndex);
                     if ($user) {
                         $this->importStats['imported']++;
+                        Log::info('🪲 USERS IMPORT DEBUG: User created successfully', [
+                            'row_index' => $rowIndex + 2,
+                            'user_id' => $user->id,
+                            'email' => $user->email
+                        ]);
                         
                         // Send welcome email if enabled
                         if ($this->importSettings['sendWelcomeEmail']) {
@@ -75,8 +90,18 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
                                 Log::warning('Welcome email failed for user: ' . $user->email, ['error' => $e->getMessage()]);
                             }
                         }
+                    } else {
+                        Log::info('🪲 USERS IMPORT DEBUG: User creation returned null (duplicate skip)', [
+                            'row_index' => $rowIndex + 2,
+                            'skip_reason' => 'duplicate_or_validation_fail'
+                        ]);
+                        $this->importStats['skipped']++;
                     }
                 } else {
+                    Log::info('🪲 USERS IMPORT DEBUG: Mapped data is null', [
+                        'row_index' => $rowIndex + 2,
+                        'skip_reason' => 'mapping_failed'
+                    ]);
                     $this->importStats['skipped']++;
                 }
             } catch (\Exception $e) {
@@ -85,7 +110,11 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
                     'row' => $rowIndex + 2,
                     'errors' => [$e->getMessage()]
                 ];
-                Log::error('Import error on row ' . ($rowIndex + 2), ['error' => $e->getMessage()]);
+                Log::error('🪲 USERS IMPORT DEBUG: Exception caught', [
+                    'row_index' => $rowIndex + 2,
+                    'error' => $e->getMessage(),
+                    'skip_reason' => 'exception'
+                ]);
             }
         }
 
@@ -109,6 +138,16 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
             // Skip empty values for optional fields
             if (empty($value) && !in_array($systemField, ['name', 'email', 'first_name', 'last_name'])) {
                 continue;
+            }
+            
+            // Special preprocessing for phone field to handle scientific notation
+            if ($systemField === 'phone' && !empty($value)) {
+                $value = $this->preprocessPhoneValue($value);
+                Log::info('🪲 PHONE PREPROCESSING DEBUG: Scientific notation converted', [
+                    'row_index' => $rowNumber,
+                    'original_value' => $row[$columnIndex] ?? null,
+                    'processed_value' => $value
+                ]);
             }
             
             $mappedData[$systemField] = $value;
@@ -253,7 +292,8 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
                     // Remove unique constraint to allow duplicate detection in createUser method
                     break;
                 case 'phone':
-                    $rules[$columnIndex] = 'nullable|string|max:20';
+                    // Accept both string and numeric (for scientific notation from Excel)
+                    $rules[$columnIndex] = 'nullable|max:20';
                     break;
                 case 'country':
                     $rules[$columnIndex] = 'nullable|string|max:100';
@@ -281,14 +321,50 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
      */
     public function customValidationMessages()
     {
-        return [
+        $messages = [
             '*.required' => 'Bu alan zorunludur.',
             '*.email' => 'Geçerli bir e-posta adresi girin.',
             '*.unique' => 'Bu değer zaten sistemde kayıtlı.',
             '*.numeric' => 'Bu alan sayısal olmalıdır.',
             '*.min' => 'Bu alan minimum :min değerinde olmalıdır.',
             '*.max' => 'Bu alan maksimum :max karakter olabilir.',
+            '*.string' => 'Bu alan metin olmalı.',
         ];
+        
+        // Add index-specific messages for mapped fields
+        foreach ($this->columnMappings as $systemField => $mapping) {
+            $columnIndex = $mapping['index'];
+            $fieldName = $this->getFieldDisplayName($systemField);
+            
+            $messages[$columnIndex . '.required'] = $fieldName . ' alanı gereklidir.';
+            $messages[$columnIndex . '.email'] = $fieldName . ' geçerli bir e-posta adresi olmalı.';
+            $messages[$columnIndex . '.string'] = $fieldName . ' bir metin olmalı.';
+            $messages[$columnIndex . '.numeric'] = $fieldName . ' sayısal olmalıdır.';
+            $messages[$columnIndex . '.max'] = $fieldName . ' maksimum :max karakter olabilir.';
+        }
+        
+        return $messages;
+    }
+
+    /**
+     * Get display name for field
+     */
+    private function getFieldDisplayName($systemField): string
+    {
+        $displayNames = [
+            'name' => 'Ad Soyad',
+            'first_name' => 'Ad',
+            'last_name' => 'Soyad',
+            'email' => 'E-posta',
+            'phone' => 'Telefon',
+            'country' => 'Ülke',
+            'username' => 'Kullanıcı Adı',
+            'estimated_value' => 'Tahmini Değer',
+            'utm_source' => 'UTM Kaynak',
+            'utm_campaign' => 'UTM Kampanya'
+        ];
+        
+        return $displayNames[$systemField] ?? ucfirst(str_replace('_', ' ', $systemField));
     }
 
     /**
@@ -542,6 +618,44 @@ class UsersImport implements ToCollection, WithValidation, SkipsOnFailure, WithC
         }
         
         return $headers;
+    }
+
+    /**
+     * Preprocess phone value to handle scientific notation from Excel
+     */
+    private function preprocessPhoneValue($value): string
+    {
+        if (empty($value)) {
+            return '';
+        }
+        
+        // Convert to string first
+        $stringValue = (string) $value;
+        
+        // Check if it's in scientific notation (contains E+ or e+)
+        if (preg_match('/^[\d,\.]+[eE][+-]?\d+$/', $stringValue)) {
+            // Convert scientific notation to regular number
+            // Replace comma with dot for proper float conversion
+            $normalizedValue = str_replace(',', '.', $stringValue);
+            $numericValue = (float) $normalizedValue;
+            
+            // Convert to string without scientific notation
+            // Use sprintf to avoid scientific notation in output
+            $phoneString = sprintf('%.0f', $numericValue);
+            
+            Log::info('🪲 PHONE PREPROCESSING: Scientific notation detected', [
+                'original_value' => $value,
+                'string_value' => $stringValue,
+                'normalized_value' => $normalizedValue,
+                'numeric_value' => $numericValue,
+                'final_phone' => $phoneString
+            ]);
+            
+            return $phoneString;
+        }
+        
+        // If not scientific notation, return as string
+        return $stringValue;
     }
 
     /**

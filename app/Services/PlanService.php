@@ -127,9 +127,9 @@ class PlanService
                 throw new PlanException('Plan is not active');
             }
 
-            // Check user status
-            if ($user->cstatus !== 'Customer') {
-                throw new PlanException('User must be a customer to invest');
+            // Check user status - sadece converted lead'ler (customer'lar) yatırım yapabilir
+            if ($user->lead_status !== 'converted') {
+                throw new PlanException('User must be a converted customer to invest');
             }
 
             return true;

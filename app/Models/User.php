@@ -801,16 +801,18 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         // Eğer null ise Users tablosundaki notify alanından JSON çek
-        if (!empty($this->notify)) {
+        // FIXED: Use getAttributes() to avoid collision with Notifiable trait's notify() method
+        $notifyField = $this->getAttributes()['notify'] ?? null;
+        if (!empty($notifyField)) {
             try {
-                $notifyData = json_decode($this->notify, true);
+                $notifyData = json_decode($notifyField, true);
                 if (is_array($notifyData) && isset($notifyData['utm_source'])) {
                     return $notifyData['utm_source'];
                 }
             } catch (\Exception $e) {
                 \Log::warning('UTM Source JSON decode error from notify field', [
                     'user_id' => $this->id,
-                    'notify_data' => $this->notify,
+                    'notify_data' => $notifyField,
                     'error' => $e->getMessage()
                 ]);
             }
@@ -830,16 +832,18 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         // Eğer null ise Users tablosundaki notify alanından JSON çek
-        if (!empty($this->notify)) {
+        // FIXED: Use getAttributes() to avoid collision with Notifiable trait's notify() method
+        $notifyField = $this->getAttributes()['notify'] ?? null;
+        if (!empty($notifyField)) {
             try {
-                $notifyData = json_decode($this->notify, true);
+                $notifyData = json_decode($notifyField, true);
                 if (is_array($notifyData) && isset($notifyData['utm_campaign'])) {
                     return $notifyData['utm_campaign'];
                 }
             } catch (\Exception $e) {
                 \Log::warning('UTM Campaign JSON decode error from notify field', [
                     'user_id' => $this->id,
-                    'notify_data' => $this->notify,
+                    'notify_data' => $notifyField,
                     'error' => $e->getMessage()
                 ]);
             }
@@ -859,16 +863,18 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         // Eğer null ise Users tablosundaki notify alanından JSON çek
-        if (!empty($this->notify)) {
+        // FIXED: Use getAttributes() to avoid collision with Notifiable trait's notify() method
+        $notifyField = $this->getAttributes()['notify'] ?? null;
+        if (!empty($notifyField)) {
             try {
-                $notifyData = json_decode($this->notify, true);
+                $notifyData = json_decode($notifyField, true);
                 if (is_array($notifyData) && isset($notifyData['utm_medium'])) {
                     return $notifyData['utm_medium'];
                 }
             } catch (\Exception $e) {
                 \Log::warning('UTM Medium JSON decode error from notify field', [
                     'user_id' => $this->id,
-                    'notify_data' => $this->notify,
+                    'notify_data' => $notifyField,
                     'error' => $e->getMessage()
                 ]);
             }

@@ -214,8 +214,8 @@ class LeadScoringService
         // Referans eden kişi (eğer referral ise)
         if ($lead->ref_by && $lead->ref_by > 0) {
             $referrer = User::find($lead->ref_by);
-            if ($referrer && $referrer->cstatus === 'Customer') {
-                $score += 20; // Aktif müşteriden referans
+            if ($referrer && $referrer->lead_status === 'converted') {
+                $score += 20; // Aktif müşteriden (converted lead) referans
             }
         }
 

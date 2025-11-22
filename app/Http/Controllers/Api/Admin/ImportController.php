@@ -30,10 +30,27 @@ class ImportController extends Controller
      */
     public function uploadFile(Request $request): JsonResponse
     {
+        Log::info('🪲 API IMPORT DEBUG: uploadFile method called', [
+            'has_admin_auth' => auth('admin')->check(),
+            'admin_id' => auth('admin')->id(),
+            'request_has_file' => $request->hasFile('file'),
+            'request_all' => $request->all(),
+            'files' => $request->allFiles()
+        ]);
+
         try {
             $admin = auth('admin')->user();
+            
+            Log::info('🪲 API IMPORT DEBUG: Admin user retrieved', [
+                'admin' => $admin ? [
+                    'id' => $admin->id,
+                    'name' => $admin->name,
+                    'email' => $admin->email
+                ] : 'null'
+            ]);
 
             // Validate file upload
+            Log::info('🪲 API IMPORT DEBUG: Starting file validation');
             $validator = Validator::make($request->all(), [
                 'file' => 'required|file|mimes:csv,xlsx,xls|max:51200', // 50MB max
                 'duplicate_action' => 'sometimes|string|in:skip,update,create_new',
@@ -43,26 +60,50 @@ class ImportController extends Controller
             ]);
 
             if ($validator->fails()) {
+                Log::warning('🪲 API IMPORT DEBUG: Validation failed', [
+                    'errors' => $validator->errors()->toArray()
+                ]);
                 return response()->json([
                     'success' => false,
                     'message' => 'Validation failed.',
                     'errors' => $validator->errors(),
                 ], 422);
             }
+            
+            Log::info('🪲 API IMPORT DEBUG: Validation passed');
 
             $file = $request->file('file');
             $options = $request->only([
-                'duplicate_action', 
-                'default_assignee', 
-                'default_status', 
+                'duplicate_action',
+                'default_assignee',
+                'default_status',
                 'default_source'
             ]);
 
+            Log::info('🪲 API IMPORT DEBUG: Prepared for import service call', [
+                'file_original_name' => $file ? $file->getClientOriginalName() : 'null',
+                'file_size' => $file ? $file->getSize() : 'null',
+                'file_mime_type' => $file ? $file->getMimeType() : 'null',
+                'options' => $options
+            ]);
+
+            Log::info('🪲 API IMPORT DEBUG: Calling importService->startImport');
             $result = $this->importService->startImport($admin, $file, $options);
+            Log::info('🪲 API IMPORT DEBUG: Import service call completed', [
+                'result' => $result
+            ]);
 
             return response()->json($result, $result['success'] ? 200 : 400);
 
         } catch (\Exception $e) {
+            Log::error('🪲 API IMPORT DEBUG: Exception in uploadFile', [
+                'admin_id' => auth('admin')->id(),
+                'error_message' => $e->getMessage(),
+                'error_file' => $e->getFile(),
+                'error_line' => $e->getLine(),
+                'stack_trace' => $e->getTraceAsString()
+            ]);
+
             Log::error('Import file upload failed', [
                 'admin_id' => auth('admin')->id(),
                 'error' => $e->getMessage(),
