@@ -361,3 +361,5 @@ Thanks to all the contributors who have helped build Monexa platform! 🎉
 **Last Updated**: 31 Ekim 2025  
 **Documentation Version**: 3.0  
 **Platform Version**: Laravel 12 + PHP 8.3
+
+<!-- Security scan triggered at 2025-11-24 23:30:42 -->
