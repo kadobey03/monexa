@@ -789,6 +789,23 @@
 
     <!-- Scripts -->
     <script>
+        // Global secure URL helper for HTTPS enforcement
+        window.secureUrl = function(path) {
+            const baseUrl = '{{ url('/') }}';
+            const isProduction = '{{ app()->environment('production') }}' === 'production';
+            
+            // Force HTTPS in production
+            let url = baseUrl;
+            if (isProduction && !url.startsWith('https://')) {
+                url = url.replace(/^http:\/\//, 'https://');
+            }
+            
+            // Remove leading slash from path if it exists
+            path = path.replace(/^\/+/, '');
+            
+            return url + '/' + path;
+        };
+
         // Admin Layout State Management
         let adminState = {
             darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches),
@@ -1238,7 +1255,7 @@
         // Notification functions
         async function markAllNotificationsRead() {
             try {
-                const response = await fetch('/admin/notifications/mark-all-read', {
+                const response = await fetch(secureUrl('admin/notifications/mark-all-read'), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1270,7 +1287,7 @@
             }
 
             // Navigate to notifications page (you may need to create this route)
-            window.location.href = '/admin/notifications';
+            window.location.href = secureUrl('admin/notifications');
         }
     </script>
 

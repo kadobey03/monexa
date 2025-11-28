@@ -7,6 +7,7 @@ use League\Flysystem\Sftp\SftpAdapter;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 use App\Models\Settings;
 use App\Models\SettingsCont;
 use App\Models\TermsPrivacy;
@@ -41,6 +42,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Production ortamında HTTPS zorla
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+        
         // Observer'ı kaydet
         User_plans::observe(UserPlansObserver::class);
 
