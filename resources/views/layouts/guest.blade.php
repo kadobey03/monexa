@@ -83,10 +83,7 @@
         <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 <div class="text-center text-sm text-gray-500 dark:text-gray-400">
-                    <p>© {{ date('Y') }} {{ $settings->site_name ?? 'Monexa' }}. Tüm hakları saklıdır.</p>
-                    @if ($settings && $settings->google_translate == 'on')
-                        @include('layouts.lang')
-                    @endif
+                    <p>© {{ date('Y') }} {{ $settings->site_name ?? 'Monexa' }}. {{ __('footer.copyright') }}</p>
                 </div>
             </div>
         </footer>

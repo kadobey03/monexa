@@ -9,10 +9,12 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     $gradient = 'dark';
 }
 ?>
-@extends('layouts.master', ['layoutType' => 'admin', 'title' => 'Admin Paneli'])
+@extends('layouts.master', ['layoutType' => 'admin', 'title' => __('admin.common.admin_panel')])
 @section('content')
     <!-- Admin Layout Container -->
     <div class="min-h-screen bg-gray-50">
+        {{-- DEBUG: Admin Dashboard Header Check --}}
+        @php Log::info('🌐 DASHBOARD HEADER: Using admin.topmenu - Language selector should be available'); @endphp
         @include('admin.topmenu')
         @include('admin.sidebar')
         
@@ -34,7 +36,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path>
                             </svg>
-                            Yönetim Paneli
+                            {{ __('admin.common.admin_panel') }}
                         </div>
                         
                         <!-- Title -->
@@ -42,12 +44,12 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <svg class="w-10 h-10 lg:w-12 lg:h-12 mr-3 inline-block" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
                             </svg>
-                            Kontrol Paneli
+                            {{ __('admin.dashboard.control_panel') }}
                         </h1>
                         
                         <!-- Greeting -->
                         <h2 class="text-xl lg:text-2xl text-white/90 mb-4 animate-fade-in-left animation-delay-200">
-                            Hoş geldiniz, {{ Auth('admin')->User()->firstName }} {{ Auth('admin')->User()->lastName }}!
+                            {{ __('admin.dashboard.welcome_message', ['name' => Auth('admin')->User()->firstName . ' ' . Auth('admin')->User()->lastName]) }}
                         </h2>
                         
                         <!-- Date Time -->
@@ -71,19 +73,19 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <svg class="w-5 h-5 mr-2 group-hover:animate-bounce" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                 </svg>
-                                Yatırımlar
+                                {{ __('admin.navigation.deposits') }}
                             </a>
                             <a href="{{ route('mwithdrawals') }}" class="group inline-flex items-center justify-center px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
                                 <svg class="w-5 h-5 mr-2 group-hover:animate-bounce" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 11-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                Çekimler
+                                {{ __('admin.navigation.withdrawals') }}
                             </a>
                             <a href="{{ route('manageusers') }}" class="group inline-flex items-center justify-center px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
                                 <svg class="w-5 h-5 mr-2 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
                                 </svg>
-                                Kullanıcılar
+                                {{ __('admin.navigation.users') }}
                             </a>
                         </div>
                     @endif
@@ -117,7 +119,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 </svg>
                             </div>
                         </div>
-                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Toplam Yatırımlar</h3>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">{{ __('admin.dashboard.total_deposits') }}</h3>
                         <p class="text-2xl font-bold text-gray-900 mb-2">
                             @foreach ($total_deposited as $deposited)
                                 @if (!empty($deposited->count))
@@ -131,7 +133,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                             </svg>
-                            Tüm zamanlar toplamı
+                            {{ __('admin.dashboard.all_time_total') }}
                         </p>
                     </div>
                 </div>
@@ -152,7 +154,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 </svg>
                             </div>
                         </div>
-                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Bekleyen Yatırımlar</h3>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">{{ __('admin.dashboard.pending_deposits') }}</h3>
                         <p class="text-2xl font-bold text-gray-900 mb-2">
                             @foreach ($pending_deposited as $deposited)
                                 @if (!empty($deposited->count))
@@ -166,7 +168,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                             </svg>
-                            Onay bekliyor
+                            {{ __('admin.dashboard.awaiting_approval') }}
                         </p>
                     </div>
                 </div>
@@ -187,7 +189,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 </svg>
                             </div>
                         </div>
-                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Toplam Çekimler</h3>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">{{ __('admin.dashboard.total_withdrawals') }}</h3>
                         <p class="text-2xl font-bold text-gray-900 mb-2">
                             @foreach ($total_withdrawn as $deposited)
                                 @if (!empty($deposited->count))
@@ -201,7 +203,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                             </svg>
-                            Tüm zamanlar toplamı
+                            {{ __('admin.dashboard.all_time_total') }}
                         </p>
                     </div>
                 </div>
@@ -222,7 +224,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 </svg>
                             </div>
                         </div>
-                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Bekleyen Çekimler</h3>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">{{ __('admin.dashboard.pending_withdrawals') }}</h3>
                         <p class="text-2xl font-bold text-gray-900 mb-2">
                             @foreach ($pending_withdrawn as $deposited)
                                 @if (!empty($deposited->count))
@@ -236,7 +238,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                             </svg>
-                            İşleniyor
+                            {{ __('admin.dashboard.processing') }}
                         </p>
                     </div>
                 </div>
@@ -260,13 +262,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 </svg>
                             </div>
                         </div>
-                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Toplam Kullanıcılar</h3>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">{{ __('admin.dashboard.total_users') }}</h3>
                         <p class="text-2xl font-bold text-gray-900 mb-2">{{ number_format($user_count) }}</p>
                         <p class="text-xs text-gray-500 flex items-center">
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Toplam kayıtlı
+                            {{ __('admin.dashboard.registered_user') }}
                         </p>
                     </div>
                 </div>
@@ -285,13 +287,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
                             </div>
                         </div>
-                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Aktif Kullanıcılar</h3>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">{{ __('admin.dashboard.active_users') }}</h3>
                         <p class="text-2xl font-bold text-gray-900 mb-2">{{ $activeusers }}</p>
                         <p class="text-xs text-gray-500 flex items-center">
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
                             </svg>
-                            Şu anda çevrimiçi
+                            {{ __('admin.dashboard.currently_online') }}
                         </p>
                     </div>
                 </div>
@@ -312,13 +314,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 </svg>
                             </div>
                         </div>
-                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Engellenen Kullanıcılar</h3>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">{{ __('admin.dashboard.blocked_users') }}</h3>
                         <p class="text-2xl font-bold text-gray-900 mb-2">{{ $blockeusers }}</p>
                         <p class="text-xs text-gray-500 flex items-center">
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                             </svg>
-                            Askıya alınmış hesaplar
+                            {{ __('admin.dashboard.suspended') }}
                         </p>
                     </div>
                 </div>
@@ -339,13 +341,13 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 </svg>
                             </div>
                         </div>
-                        <h3 class="text-sm font-semibold text-gray-600 mb-2">Yatırım Planları</h3>
+                        <h3 class="text-sm font-semibold text-gray-600 mb-2">{{ __('admin.dashboard.investment_plans') }}</h3>
                         <p class="text-2xl font-bold text-gray-900 mb-2">{{ $plans }}</p>
                         <p class="text-xs text-gray-500 flex items-center">
                             <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
                             </svg>
-                            Mevcut planlar
+                            {{ __('admin.dashboard.active_plan') }}
                         </p>
                     </div>
                 </div>
@@ -361,24 +363,24 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <svg class="w-6 h-6 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path>
                                 </svg>
-                                Sistem Analitiği
+                                {{ __('admin.dashboard.system_analytics') }}
                             </h2>
-                            <p class="text-gray-600 text-sm">Finansal genel bakış ve işlem analitiği</p>
+                            <p class="text-gray-600 text-sm">{{ __('admin.dashboard.financial_overview') }}</p>
                         </div>
                         
                         <!-- Period Selector -->
                         <div class="inline-flex rounded-lg bg-gray-100 p-1" role="group">
                             <button type="button" class="px-4 py-2 text-sm font-medium text-gray-500 bg-transparent rounded-md hover:bg-white hover:text-gray-900 transition-all duration-200">
-                                Bugün
+                                {{ __('admin.dashboard.today') }}
                             </button>
                             <button type="button" class="px-4 py-2 text-sm font-medium text-gray-500 bg-transparent rounded-md hover:bg-white hover:text-gray-900 transition-all duration-200">
-                                Bu Hafta
+                                {{ __('admin.dashboard.this_week') }}
                             </button>
                             <button type="button" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm transition-all duration-200">
-                                Bu Ay
+                                {{ __('admin.dashboard.this_month') }}
                             </button>
                             <button type="button" class="px-4 py-2 text-sm font-medium text-gray-500 bg-transparent rounded-md hover:bg-white hover:text-gray-900 transition-all duration-200">
-                                Bu Yıl
+                                {{ __('admin.dashboard.this_year') }}
                             </button>
                         </div>
                     </div>
@@ -395,19 +397,19 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
                             <div class="flex flex-col">
                                 <span class="text-lg font-bold text-gray-900">{{ $settings->currency }}{{ number_format($chart_pdepsoit) }}</span>
-                                <span class="text-xs text-gray-600 uppercase tracking-wider">Toplam Yatırımlar</span>
+                                <span class="text-xs text-gray-600 uppercase tracking-wider">{{ __('admin.dashboard.total_deposits') }}</span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-lg font-bold text-gray-900">{{ $settings->currency }}{{ number_format($chart_pwithdraw) }}</span>
-                                <span class="text-xs text-gray-600 uppercase tracking-wider">Toplam Çekimler</span>
+                                <span class="text-xs text-gray-600 uppercase tracking-wider">{{ __('admin.dashboard.total_withdrawals') }}</span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-lg font-bold text-gray-900">{{ $settings->currency }}{{ number_format($chart_pendepsoit) }}</span>
-                                <span class="text-xs text-gray-600 uppercase tracking-wider">Bekleyen Yatırımlar</span>
+                                <span class="text-xs text-gray-600 uppercase tracking-wider">{{ __('admin.dashboard.pending_deposits') }}</span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-lg font-bold text-gray-900">{{ $settings->currency }}{{ number_format($chart_trans) }}</span>
-                                <span class="text-xs text-gray-600 uppercase tracking-wider">İşlemler</span>
+                                <span class="text-xs text-gray-600 uppercase tracking-wider">{{ __('admin.dashboard.transactions') }}</span>
                             </div>
                         </div>
                     </div>
@@ -497,9 +499,9 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Toplam Yatırımlar', 'Bekleyen Yatırımlar', 'Toplam Çekimler', 'Bekleyen Çekimler', 'Toplam İşlemler'],
+                        labels: ['{{ __('admin.dashboard.total_deposits') }}', '{{ __('admin.dashboard.pending_deposits') }}', '{{ __('admin.dashboard.total_withdrawals') }}', '{{ __('admin.dashboard.pending_withdrawals') }}', '{{ __('admin.dashboard.total_transactions') }}'],
                         datasets: [{
-                            label: `Tutar ({{ $settings->currency }})`,
+                            label: `{{ __('admin.dashboard.amount') }} ({{ $settings->currency }})`,
                             data: chartData,
                             backgroundColor: gradients,
                             borderColor: [
@@ -535,7 +537,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 callbacks: {
                                     label: function(context) {
                                         const value = new Intl.NumberFormat('tr-TR').format(context.parsed.y);
-                                        return `Tutar: {{ $settings->currency }}${value}`;
+                                        return `{{ __('admin.dashboard.amount') }}: {{ $settings->currency }}${value}`;
                                     }
                                 }
                             }

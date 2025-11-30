@@ -1,8 +1,8 @@
 <div class="space-y-8">
     <!-- Header -->
     <div>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Ödeme Tercihleri</h2>
-        <p class="text-gray-600 dark:text-gray-400 mt-1">Yatırım ve çekim işlemlerinin genel ayarlarını yapılandırın</p>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.payment_settings.preferences.title') }}</h2>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.payment_settings.preferences.subtitle') }}</p>
     </div>
 
     <form action="javascript:void(0)" method="POST" id="paypreform" class="space-y-8">
@@ -17,28 +17,28 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white">İşlem Türü Ayarları</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.payment_settings.preferences.transaction_types') }}</h3>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Yatırım Seçeneği</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.payment_settings.preferences.deposit_option') }}</label>
                     <select name="deposit_option" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
                         <option value="{{ $settings->deposit_option }}">{{ $settings->deposit_option }} (Mevcut)</option>
-                        <option value="manual">Manuel</option>
-                        <option value="auto">Otomatik</option>
+                        <option value="manual">{{ __('admin.payment_settings.preferences.manual') }}</option>
+                        <option value="auto">{{ __('admin.payment_settings.preferences.automatic') }}</option>
                     </select>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Yatırım işlemlerinin onay sürecini belirler</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.preferences.deposit_option_help') }}</p>
                 </div>
                 
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Çekim Seçeneği</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.payment_settings.preferences.withdrawal_option') }}</label>
                     <select name="withdrawal_option" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
                         <option value="{{ $settings->withdrawal_option }}">{{ $settings->withdrawal_option }} (Mevcut)</option>
-                        <option value="manual">Manuel</option>
-                        <option value="auto">Otomatik</option>
+                        <option value="manual">{{ __('admin.payment_settings.preferences.manual') }}</option>
+                        <option value="auto">{{ __('admin.payment_settings.preferences.automatic') }}</option>
                     </select>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Çekim işlemlerinin onay sürecini belirler</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.preferences.withdrawal_option_help') }}</p>
                 </div>
             </div>
         </div>
@@ -51,13 +51,13 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Finansal Limitler</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.payment_settings.limits.title') }}</h3>
             </div>
             
             <div class="space-y-2">
-                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Minimum Yatırım Tutarı ({{ $settings->currency }})</label>
-                <input type="text" name="minamt" value="{{ $moresettings->minamt }}" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" placeholder="Minimum yatırım tutarı">
-                <p class="text-xs text-gray-500 dark:text-gray-400">Kullanıcıların yapabileceği minimum yatırım miktarını belirler</p>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.payment_settings.limits.minimum_investment', ['currency' => $settings->currency]) }}</label>
+                <input type="text" name="minamt" value="{{ $moresettings->minamt }}" required class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" placeholder="{{ __('admin.payment_settings.limits.minimum_investment_placeholder') }}">
+                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.limits.minimum_investment_help') }}</p>
             </div>
         </div>
 
@@ -69,12 +69,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Ödeme Sağlayıcıları</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.payment_settings.providers.title') }}</h3>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">USDT Otomatik Ödeme Sağlayıcısı</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.payment_settings.providers.usdt_provider') }}</label>
                     <select name="merchat" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200">
                         <option value="{{ $settings->auto_merchant_option }}">{{ $settings->auto_merchant_option }} (Mevcut)</option>
                         <option value="Coinpayment">Coinpayment</option>
@@ -87,9 +87,8 @@
                             </svg>
                             <div>
                                 <p class="text-xs text-yellow-700 dark:text-yellow-300">
-                                    <strong>Önemli:</strong> Seçtiğiniz USDT sağlayıcısı için API anahtarlarınızı doğru girdiğinizden emin olun. 
-                                    Gateway/Coinpayment sekmesinden kontrol edin. <br>
-                                    <span class="font-semibold">NOT: Binance kullanmak için web sitesi para biriminizin USD olması gerekir.</span>
+                                    <strong>{{ __('admin.payment_settings.providers.important') }}:</strong> {{ __('admin.payment_settings.providers.usdt_provider_help') }}<br>
+                                    <span class="font-semibold">{{ __('admin.payment_settings.providers.binance_currency_note') }}</span>
                                 </p>
                             </div>
                         </div>
@@ -97,17 +96,14 @@
                 </div>
                 
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Kredi Kartı Ödeme Sağlayıcısı</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.payment_settings.providers.credit_card_provider') }}</label>
                     <select name="credit_card_provider" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200">
                         <option value="{{ $settings->credit_card_provider }}">{{ $settings->credit_card_provider }} (Mevcut)</option>
                         <option value="Paystack">Paystack</option>
                         <option value="Flutterwave">Flutterwave</option>
                         <option value="Stripe">Stripe</option>
                     </select>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">
-                        Kullanıcılar kredi/banka kartı ile yatırım yapmak istediklerinde kullanılacak sağlayıcı. 
-                        Seçtiğiniz seçenek için doğru API anahtarlarını girdiğinizden emin olun.
-                    </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.providers.credit_card_provider_help') }}</p>
                 </div>
             </div>
         </div>
@@ -120,27 +116,24 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Çekim İşlemleri</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.payment_settings.withdrawal.title') }}</h3>
             </div>
             
             <div class="space-y-2">
-                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Çekim Kesintisi Zamanı</label>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.payment_settings.withdrawal.deduction_timing') }}</label>
                 <select name="deduction_option" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200">
                     <option value="{{ $settings->deduction_option }}">
-                        {{ $settings->deduction_option == 'userRequest' ? 'Kullanıcı talebinde kes' : 'Admin onayında kes' }} (Mevcut)
+                        {{ $settings->deduction_option == 'userRequest' ? __('admin.payment_settings.withdrawal.deduct_on_request') : __('admin.payment_settings.withdrawal.deduct_on_approval') }} ({{ __('admin.payment_settings.current') }})
                     </option>
-                    <option value="userRequest">Kullanıcı talebinde kes</option>
-                    <option value="AdminApprove">Admin onayında kes</option>
+                    <option value="userRequest">{{ __('admin.payment_settings.withdrawal.deduct_on_request') }}</option>
+                    <option value="AdminApprove">{{ __('admin.payment_settings.withdrawal.deduct_on_approval') }}</option>
                 </select>
                 <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 mt-2">
                     <div class="flex">
                         <svg class="w-5 h-5 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                         </svg>
-                        <p class="text-xs text-blue-700 dark:text-blue-300">
-                            Kullanıcı hesabından paranın ne zaman kesileceğini belirler. Kullanıcı çekim talebinde bulunduğu anda mı, 
-                            yoksa admin onayladığı zaman mı kesileceğini seçin.
-                        </p>
+                        <p class="text-xs text-blue-700 dark:text-blue-300">{{ __('admin.payment_settings.withdrawal.deduction_timing_help') }}</p>
                     </div>
                 </div>
             </div>
@@ -152,7 +145,7 @@
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
-                <span id="saveButtonText">Ayarları Kaydet</span>
+                <span id="saveButtonText">{{ __('admin.payment_settings.actions.save') }}</span>
             </button>
         </div>
     </form>
@@ -175,7 +168,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Kaydediliyor...
+                    {{ __('admin.payment_settings.actions.saving') }}...
                 `;
                 
                 // The form handler is already defined in the parent component

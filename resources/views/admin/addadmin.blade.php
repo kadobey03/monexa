@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Yeni Yönetici Ekle'])
+@extends('layouts.admin', ['title' => __('admin.users.add_new_admin')])
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
@@ -12,8 +12,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Yeni Yönetici Ekle</h1>
-                            <p class="text-gray-600 dark:text-gray-400 mt-1">Sisteminize yeni bir yönetici kullanıcı ekleyin</p>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.users.add_new_admin') }}</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.users.add_new_admin_description') }}</p>
                         </div>
                     </div>
                 </div>
@@ -35,9 +35,9 @@
                                 <svg class="w-6 h-6 mr-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                 </svg>
-                                Yönetici Bilgileri
+                                {{ __('admin.users.admin_information') }}
                             </h2>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Tüm alanları doldurduğunuzdan emin olun</p>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">{{ __('admin.forms.ensure_all_fields_filled') }}</p>
                         </div>
                         
                         <!-- Form Body -->
@@ -53,14 +53,14 @@
                                             <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                             </svg>
-                                            Ad
+                                            {{ __('admin.forms.first_name') }}
                                         </label>
                                         <input type="text" 
                                                name="fname" 
                                                value="{{ old('fname') }}" 
                                                required
                                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 {{ $errors->has('fname') ? 'border-red-500 bg-red-50 dark:bg-red-900' : '' }}"
-                                               placeholder="Adını girin">
+                                               placeholder="{{ __('admin.forms.first_name_placeholder') }}">
                                         @if ($errors->has('fname'))
                                             <p class="text-red-500 text-sm mt-1 flex items-center">
                                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -75,14 +75,14 @@
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                             <x-heroicon name="user" class="w-4 h-4 inline mr-1" />
-                                            Soyad
+                                            {{ __('admin.forms.last_name') }}
                                         </label>
                                         <input type="text"
                                                name="l_name"
                                                value="{{ old('l_name') }}"
                                                required
                                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 {{ $errors->has('l_name') ? 'border-red-500 bg-red-50 dark:bg-red-900' : '' }}"
-                                               placeholder="Soyadını girin">
+                                               placeholder="{{ __('admin.forms.last_name_placeholder') }}">
                                         @if ($errors->has('l_name'))
                                             <p class="text-red-500 text-sm mt-1 flex items-center">
                                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -100,14 +100,14 @@
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                             <x-heroicon name="envelope" class="w-4 h-4 inline mr-1" />
-                                            E-posta Adresi
+                                            {{ __('admin.users.email_address') }}
                                         </label>
                                         <input type="email"
                                                name="email"
                                                value="{{ old('email') }}"
                                                required
                                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 {{ $errors->has('email') ? 'border-red-500 bg-red-50 dark:bg-red-900' : '' }}"
-                                               placeholder="E-posta adresini girin">
+                                               placeholder="{{ __('admin.forms.email_placeholder') }}">
                                         @if ($errors->has('email'))
                                             <p class="text-red-500 text-sm mt-1 flex items-center">
                                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -122,14 +122,14 @@
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                             <x-heroicon name="phone" class="w-4 h-4 inline mr-1" />
-                                            Telefon Numarası
+                                            {{ __('admin.users.phone_number') }}
                                         </label>
                                         <input type="number"
                                                name="phone"
                                                value="{{ old('phone') }}"
                                                required
                                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 {{ $errors->has('phone') ? 'border-red-500 bg-red-50 dark:bg-red-900' : '' }}"
-                                               placeholder="Telefon numarasını girin">
+                                               placeholder="{{ __('admin.forms.phone_placeholder') }}">
                                         @if ($errors->has('phone'))
                                             <p class="text-red-500 text-sm mt-1 flex items-center">
                                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -145,18 +145,18 @@
                                 <div class="space-y-2">
                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                         <x-heroicon name="shield-check" class="w-4 h-4 inline mr-1" />
-                                        Yönetici Türü
+                                        {{ __('admin.users.admin_type') }}
                                     </label>
                                     <select name="type" required class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
-                                        <option value="" disabled selected>Yönetici türü seçin</option>
-                                        <option value="Süper Yönetici">Süper Yönetici</option>
-                                        <option value="Yönetici">Yönetici</option>
-                                        <option value="Dönüştürme Temsilcisi">Dönüştürme Temsilcisi</option>
+                                        <option value="" disabled selected>{{ __('admin.forms.select_admin_type') }}</option>
+                                        <option value="Süper Yönetici">{{ __('admin.users.super_admin') }}</option>
+                                        <option value="Yönetici">{{ __('admin.users.admin') }}</option>
+                                        <option value="Dönüştürme Temsilcisi">{{ __('admin.users.conversion_agent') }}</option>
                                     </select>
                                     <p class="text-gray-500 dark:text-gray-400 text-sm">
-                                        <strong>Süper Yönetici:</strong> Tüm sistem yetkilerine sahip • 
-                                        <strong>Yönetici:</strong> Sınırlı yetki • 
-                                        <strong>Dönüştürme Temsilcisi:</strong> Müşteri işlemleri
+                                        <strong>{{ __('admin.users.super_admin') }}:</strong> {{ __('admin.users.super_admin_description') }} •
+                                        <strong>{{ __('admin.users.admin') }}:</strong> {{ __('admin.users.admin_description') }} •
+                                        <strong>{{ __('admin.users.conversion_agent') }}:</strong> {{ __('admin.users.conversion_agent_description') }}
                                     </p>
                                 </div>
                                 
@@ -166,13 +166,13 @@
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                             <x-heroicon name="lock-closed" class="w-4 h-4 inline mr-1" />
-                                            Şifre
+                                            {{ __('admin.forms.password') }}
                                         </label>
                                         <input type="password"
                                                name="password"
                                                required
                                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 {{ $errors->has('password') ? 'border-red-500 bg-red-50 dark:bg-red-900' : '' }}"
-                                               placeholder="Güçlü bir şifre girin">
+                                               placeholder="{{ __('admin.forms.strong_password_placeholder') }}">
                                         @if ($errors->has('password'))
                                             <p class="text-red-500 text-sm mt-1 flex items-center">
                                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -187,13 +187,13 @@
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                             <x-heroicon name="shield-check" class="w-4 h-4 inline mr-1" />
-                                            Şifreyi Onayla
+                                            {{ __('admin.forms.confirm_password') }}
                                         </label>
                                         <input type="password"
                                                name="password_confirmation"
                                                required
                                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 {{ $errors->has('password_confirmation') ? 'border-red-500 bg-red-50 dark:bg-red-900' : '' }}"
-                                               placeholder="Şifreyi tekrar girin">
+                                               placeholder="{{ __('admin.forms.repeat_password_placeholder') }}">
                                         @if ($errors->has('password_confirmation'))
                                             <p class="text-red-500 text-sm mt-1 flex items-center">
                                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -212,11 +212,11 @@
                                             <x-heroicon name="information-circle" class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5" />
                                         </div>
                                         <div class="ml-3">
-                                            <h4 class="text-sm font-semibold text-blue-800 dark:text-blue-200">Güvenlik Uyarısı</h4>
+                                            <h4 class="text-sm font-semibold text-blue-800 dark:text-blue-200">{{ __('admin.security.security_warning') }}</h4>
                                             <p class="text-sm text-blue-700 dark:text-blue-300 mt-1">
-                                                • Şifre en az 8 karakter olmalıdır<br>
-                                                • Büyük/küçük harf, sayı ve özel karakter içermelidir<br>
-                                                • Yönetici bilgileri güvenli tutulmalıdır
+                                                • {{ __('admin.validation.password_min_8') }}<br>
+                                                • {{ __('admin.validation.password_complexity') }}<br>
+                                                • {{ __('admin.security.keep_admin_info_secure') }}
                                             </p>
                                         </div>
                                     </div>
@@ -225,14 +225,14 @@
                                 <!-- Submit Button -->
                                 <div class="flex items-center justify-between pt-6">
                                     <div class="text-sm text-gray-600 dark:text-gray-400">
-                                        <span class="text-red-500">*</span> Gerekli alanlar
+                                        <span class="text-red-500">*</span> {{ __('admin.forms.required_fields') }}
                                     </div>
                                     <button type="submit" 
                                             class="group relative inline-flex items-center px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
                                         <svg class="w-5 h-5 mr-2 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path>
                                         </svg>
-                                        Kullanıcıyı Kaydet
+                                        {{ __('admin.users.save_user') }}
                                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                                         </svg>
@@ -313,7 +313,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Kaydediliyor...
+                    {{ __('admin.actions.saving') }}...
                 `;
                 submitBtn.disabled = true;
                 
@@ -326,7 +326,7 @@
                 }, 10000);
             });
             
-            console.log('Add Admin form initialized with Tailwind CSS');
+            console.log('{{ __("admin.notifications.add_admin_form_initialized") }}');
         });
     </script>
 @endsection

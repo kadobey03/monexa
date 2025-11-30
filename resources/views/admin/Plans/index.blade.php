@@ -1,24 +1,24 @@
-@extends('layouts.admin', ['title' => 'Yatırım Planları'])
+@extends('layouts.admin', ['title' => {{ __('admin.plans.investment_plans') }}])
 
 @section('content')
 <div class="space-y-6">
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Yatırım Planları</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Tüm yatırım planlarını görüntüleyin ve yönetin</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.plans.investment_plans') }}</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('admin.plans.view_and_manage_all_plans') }}</p>
         </div>
         
         <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 mt-4 sm:mt-0">
             <a href="{{ route('admin.plans.categories') }}"
                class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                 <x-heroicon name="grid" class="h-4 w-4 mr-2" />
-                Plan Kategorileri
+                {{ __('admin.plans.plan_categories') }}
             </a>
             <a href="{{ route('admin.plans.create') }}"
                class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                 <x-heroicon name="plus" class="h-4 w-4 mr-2" />
-                Yeni Plan Ekle
+                {{ __('admin.plans.add_new_plan') }}
             </a>
         </div>
     </div>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Toplam Plan</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.plans.total_plans') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ count($plans) }}</p>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Aktif Plan</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.plans.active_plans') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $plans->where('is_active', true)->count() }}</p>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Öne Çıkan</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.plans.featured_plans') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $plans->where('is_featured', true)->count() }}</p>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Pasif Plan</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.plans.inactive_plans') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $plans->where('is_active', false)->count() }}</p>
                 </div>
             </div>
@@ -94,14 +94,14 @@
         <!-- Table Header -->
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Plan Listesi</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.plans.plan_list') }}</h3>
                 <div class="flex items-center space-x-2">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <x-heroicon name="magnifying-glass" class="h-4 w-4 text-gray-400" />
                         </div>
                         <input type="text"
-                               placeholder="Plan ara..."
+                               placeholder="{{ __('admin.plans.search_plans_placeholder') }}"
                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md leading-5 bg-white dark:bg-admin-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 text-sm"
                                id="searchInput">
                     </div>
@@ -115,28 +115,28 @@
                 <thead class="bg-gray-50 dark:bg-admin-900">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Plan Adı
+                            {{ __('admin.plans.plan_name') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Kategori
+                            {{ __('admin.plans.category') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Fiyat Aralığı
+                            {{ __('admin.plans.price_range') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Getiri Oranı
+                            {{ __('admin.plans.roi_rate') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Süre
+                            {{ __('admin.plans.duration') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Durum
+                            {{ __('admin.plans.status') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Öne Çıkan
+                            {{ __('admin.plans.featured') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            İşlemler
+                            {{ __('admin.plans.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -174,7 +174,7 @@
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                                        Kategori Yok
+                                        {{ __('admin.plans.no_category') }}
                                     </span>
                                 @endif
                             </td>
@@ -213,10 +213,10 @@
                                     <button type="submit" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-all duration-200 {{ $plan->is_active ? 'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900 dark:text-green-300 dark:hover:bg-green-800' : 'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800' }}">
                                         @if($plan->is_active)
                                             <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
-                                            Aktif
+                                            {{ __('admin.plans.active') }}
                                         @else
                                             <x-heroicon name="x-circle" class="w-3 h-3 mr-1" />
-                                            Pasif
+                                            {{ __('admin.plans.inactive') }}
                                         @endif
                                     </button>
                                 </form>
@@ -227,11 +227,11 @@
                                 @if($plan->is_featured)
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
                                         <x-heroicon name="star" class="w-3 h-3 mr-1" />
-                                        Öne Çıkan
+                                        {{ __('admin.plans.featured') }}
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                                        Hayır
+                                        {{ __('admin.plans.no') }}
                                     </span>
                                 @endif
                             </td>
@@ -242,15 +242,15 @@
                                     <a href="{{ route('admin.plans.edit', $plan) }}"
                                        class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                                         <x-heroicon name="edit" class="w-3 h-3 mr-1" />
-                                        Düzenle
+                                        {{ __('admin.plans.edit') }}
                                     </a>
-                                    <form action="{{ route('admin.plans.destroy', $plan) }}" method="POST" class="inline" onsubmit="return confirm('Bu planı silmek istediğinizden emin misiniz?')">
+                                    <form action="{{ route('admin.plans.destroy', $plan) }}" method="POST" class="inline" onsubmit="return confirm('{{ __('admin.plans.confirm_delete_plan') }}')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
                                                 class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-admin-800">
                                             <x-heroicon name="trash-2" class="w-3 h-3 mr-1" />
-                                            Sil
+                                            {{ __('admin.plans.delete') }}
                                         </button>
                                     </form>
                                 </div>
@@ -261,12 +261,12 @@
                             <td colspan="8" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center">
                                     <x-heroicon name="credit-card" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
-                                    <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Yatırım Planı Bulunamadı</h3>
-                                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1 mb-6">Henüz hiç yatırım planı oluşturulmamış.</p>
+                                    <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">{{ __('admin.plans.no_investment_plans_found') }}</h3>
+                                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1 mb-6">{{ __('admin.plans.no_plans_created_yet') }}</p>
                                     <a href="{{ route('admin.plans.create') }}"
                                        class="inline-flex items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                                         <x-heroicon name="plus" class="w-5 h-5 mr-2" />
-                                        İlk Planı Oluştur
+                                        {{ __('admin.plans.create_first_plan') }}
                                     </a>
                                 </div>
                             </td>

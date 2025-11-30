@@ -11,10 +11,10 @@
             <nav class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6" aria-label="Breadcrumb">
                 <a href="{{ route('dashboard') }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     <x-heroicon name="home" class="w-4 h-4 inline mr-1" />
-                    Dashboard
+                    {{ __('user.signal.dashboard') }}
                 </a>
                 <x-heroicon name="chevron-right" class="w-4 h-4 mx-2" />
-                <span class="text-gray-900 dark:text-gray-100 font-medium">Trading Signals</span>
+                <span class="text-gray-900 dark:text-gray-100 font-medium">{{ __('user.signal.trading_signals') }}</span>
             </nav>
 
             <!-- Page Title & Description -->
@@ -22,10 +22,10 @@
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                         <x-heroicon name="signal" class="w-8 h-8 inline mr-3 text-blue-600 dark:text-blue-400" />
-                        Premium Trading Signals
+                        {{ __('user.signal.premium_trading_signals') }}
                     </h1>
                     <p class="text-gray-600 dark:text-gray-400 text-lg">
-                        Subscribe to professional trading signals and enhance your trading success
+                        {{ __('user.signal.subscribe_description') }}
                     </p>
                 </div>
 
@@ -38,7 +38,7 @@
                             </div>
                             <div>
                                 <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ count($signals) }}</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">Available Signals</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('user.signal.available_signals') }}</p>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     <div class="absolute top-4 right-4">
                         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                             <x-heroicon name="star" class="w-3 h-3 mr-1" />
-                            Premium
+                            {{ __('user.signal.premium') }}
                         </span>
                     </div>
 
@@ -74,9 +74,9 @@
                     <div class="mb-6">
                         <div class="flex items-center gap-2 mb-2">
                             <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ Auth::user()->currency }} {{ number_format($signal->price, 2) }}</span>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">/month</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.signal.per_month') }}</span>
                         </div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Professional trading signals subscription</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('user.signal.professional_subscription') }}</p>
                     </div>
 
                     <!-- Features -->
@@ -85,25 +85,25 @@
                             <div class="flex-shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
                                 <x-heroicon name="check" class="w-3 h-3 text-green-600 dark:text-green-400" />
                             </div>
-                            <span class="text-sm text-gray-700 dark:text-gray-300">Success Rate: {{ $signal->increment_amount }}%</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('user.signal.success_rate') }}: {{ $signal->increment_amount }}%</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="flex-shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
                                 <x-heroicon name="check" class="w-3 h-3 text-green-600 dark:text-green-400" />
                             </div>
-                            <span class="text-sm text-gray-700 dark:text-gray-300">Real-time notifications</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('user.signal.realtime_notifications') }}</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="flex-shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
                                 <x-heroicon name="check" class="w-3 h-3 text-green-600 dark:text-green-400" />
                             </div>
-                            <span class="text-sm text-gray-700 dark:text-gray-300">Expert analysis</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('user.signal.expert_analysis') }}</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="flex-shrink-0 w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
                                 <x-heroicon name="check" class="w-3 h-3 text-green-600 dark:text-green-400" />
                             </div>
-                            <span class="text-sm text-gray-700 dark:text-gray-300">24/7 support</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('user.signal.support_24_7') }}</span>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                     <button onclick="signalManager.openSubscriptionModal('{{ $signal->id }}', '{{ $signal->name }}', '{{ $signal->price }}')"
                             class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
                         <x-heroicon name="plus-circle" class="w-5 h-5 inline mr-2" />
-                        Subscribe Now
+                        {{ __('user.signal.subscribe_now') }}
                     </button>
                 </div>
 
@@ -126,14 +126,14 @@
             <div class="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
                 <x-heroicon name="signal" class="w-12 h-12 text-gray-400" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Signals Available</h3>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ __('user.signal.no_signals_available') }}</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
-                There are currently no trading signals available. Please check back later for premium signal subscriptions.
+                {{ __('user.signal.no_signals_description') }}
             </p>
             <a href="{{ route('dashboard') }}"
                class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
                 <x-heroicon name="arrow-left" class="w-5 h-5" />
-                Back to Dashboard
+                {{ __('user.signal.back_to_dashboard') }}
             </a>
         </div>
             @endforelse
@@ -156,7 +156,7 @@
                                 <x-heroicon name="signal" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Subscribe to Signal</h3>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('user.signal.subscribe_to_signal') }}</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400" id="selectedSignalName"></p>
                             </div>
                         </div>
@@ -175,16 +175,16 @@
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-3">
                                 <x-heroicon name="credit-card" class="w-4 h-4 inline mr-2" />
-                                Payment Method
+                                {{ __('user.signal.payment_method') }}
                             </label>
                             <select name="payment_method"
                                     required
                                     class="w-full px-4 py-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all">
-                                <option value="" selected disabled>Choose Payment Method</option>
+                                <option value="" selected disabled>{{ __('user.signal.choose_payment_method') }}</option>
                                 @forelse($dmethods as $method)
                                 <option value="{{ $method->name }}">{{ $method->name }}</option>
                                 @empty
-                                <option disabled>No Payment Method available at the moment</option>
+                                <option disabled>{{ __('user.signal.no_payment_method_available') }}</option>
                                 @endforelse
                             </select>
                         </div>
@@ -193,7 +193,7 @@
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-3">
                                 <x-heroicon name="currency-dollar" class="w-4 h-4 inline mr-2" />
-                                Subscription Amount ({{ Auth::user()->currency }})
+                                {{ __('user.signal.subscription_amount') }} ({{ Auth::user()->currency }})
                             </label>
                             <div class="relative">
                                 <input type="number"
@@ -202,12 +202,12 @@
                                        readonly
                                        class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-semibold text-lg">
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-4">
-                                    <span class="text-sm text-gray-500 dark:text-gray-400">/month</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.signal.per_month') }}</span>
                                 </div>
                             </div>
                             <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
                                 <x-heroicon name="information-circle" class="w-4 h-4 inline mr-1" />
-                                Recurring monthly subscription
+                                {{ __('user.signal.recurring_subscription') }}
                             </p>
                         </div>
 
@@ -216,12 +216,12 @@
                             <button type="button"
                                     onclick="signalManager.closeModal()"
                                     class="flex-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold py-3 px-6 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                Cancel
+                                {{ __('user.signal.cancel') }}
                             </button>
                             <button type="submit"
                                     class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-xl transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
                                 <x-heroicon name="check-circle" class="w-5 h-5 inline mr-2" />
-                                Complete Subscription
+                                {{ __('user.signal.complete_subscription') }}
                             </button>
                         </div>
                     </form>

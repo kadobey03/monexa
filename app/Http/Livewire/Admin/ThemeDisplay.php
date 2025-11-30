@@ -51,7 +51,7 @@ class ThemeDisplay extends Component
         sleep(4);
 
         if ($this->theme->extension() != 'zip') {
-            session()->flash('error', 'Please upload a zip file');
+            session()->flash('error', __('livewire.theme_management.upload_zip_file'));
         } else {
 
             // read the content of the zip file
@@ -79,9 +79,9 @@ class ThemeDisplay extends Component
 
                 // reset the upload form
                 $this->theme = null;
-                session()->flash('success', 'Theme uploaded successfully');
+                session()->flash('success', __('livewire.theme_management.theme_uploaded'));
             } else {
-                session()->flash('error', 'There was an error uploading the theme, please try again.');
+                session()->flash('error', __('livewire.theme_management.upload_error'));
             }
         }
         return redirect()->route('appsettingshow');
@@ -93,7 +93,7 @@ class ThemeDisplay extends Component
         //set the active theme, only one theme can be active at a time
         Theme::where('active', true)->update(['active' => false]);
         Theme::where('id', $id)->update(['active' => 1]);
-        session()->flash('success', 'Theme activated successfully');
+        session()->flash('success', __('livewire.theme_management.theme_activated'));
     }
 
     //clear cache files and views
@@ -103,7 +103,7 @@ class ThemeDisplay extends Component
         Artisan::call('cache:clear');
         Artisan::call('view:clear');
 
-        session()->flash('success', 'Cache cleared successfully');
+        session()->flash('success', __('livewire.theme_management.cache_cleared'));
         return redirect()->route('appsettingshow');
     }
 }

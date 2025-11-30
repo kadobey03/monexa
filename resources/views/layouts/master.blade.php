@@ -137,6 +137,140 @@
     </script>
     @endif
     
+    <!-- Global JavaScript Translation System -->
+    <script>
+        // Global translation object injection
+        window.translations = @json([
+            'js' => __('js')
+        ]);
+        
+        // JavaScript Translation Helper Function
+        function __(key, params = {}) {
+            let translation = window.translations.js;
+            const keys = key.split('.');
+            
+            // Navigate through translation object
+            for (const k of keys) {
+                translation = translation?.[k];
+                if (!translation) {
+                    console.warn(`Translation key not found: js.${key}`);
+                    return key; // fallback to key if not found
+                }
+            }
+            
+            // Simple parameter replacement for strings like ":amount :currency"
+            if (typeof translation === 'string' && Object.keys(params).length > 0) {
+                Object.keys(params).forEach(param => {
+                    translation = translation.replace(new RegExp(`:${param}`, 'g'), params[param]);
+                });
+            }
+            
+            return translation;
+        }
+        
+        // Compatibility aliases for common usage patterns
+        window.trans = __;
+        window.t = __;
+        
+        // Enhanced notification functions with translation support
+        window.showSuccess = function(key, params = {}, duration = 5000) {
+            const message = typeof key === 'string' && key.includes('.') ? __(key, params) : key;
+            showNotification(message, 'success', duration);
+        };
+        
+        window.showError = function(key, params = {}, duration = 5000) {
+            const message = typeof key === 'string' && key.includes('.') ? __(key, params) : key;
+            showNotification(message, 'error', duration);
+        };
+        
+        window.showWarning = function(key, params = {}, duration = 5000) {
+            const message = typeof key === 'string' && key.includes('.') ? __(key, params) : key;
+            showNotification(message, 'warning', duration);
+        };
+        
+        window.showInfo = function(key, params = {}, duration = 5000) {
+            const message = typeof key === 'string' && key.includes('.') ? __(key, params) : key;
+            showNotification(message, 'info', duration);
+        };
+        
+        // Enhanced SweetAlert integration with translation support
+        window.showConfirm = function(titleKey, textKey, params = {}) {
+            return new Promise((resolve, reject) => {
+                if (typeof Swal !== 'undefined') {
+                    const title = typeof titleKey === 'string' && titleKey.includes('.') ? __(titleKey, params) : titleKey;
+                    const text = typeof textKey === 'string' && textKey.includes('.') ? __(textKey, params) : textKey;
+                    
+                    Swal.fire({
+                        title: title,
+                        text: text,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: __('success.confirm', params),
+                        cancelButtonText: __('errors.cancel', params),
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    });
+                } else {
+                    // Fallback to native confirm
+                    const title = typeof titleKey === 'string' && titleKey.includes('.') ? __(titleKey, params) : titleKey;
+                    resolve(confirm(title));
+                }
+            });
+        };
+        
+        // Enhanced alert with translation support
+        window.showAlert = function(titleKey, textKey, icon = 'info', params = {}) {
+            if (typeof Swal !== 'undefined') {
+                const title = typeof titleKey === 'string' && titleKey.includes('.') ? __(titleKey, params) : titleKey;
+                const text = typeof textKey === 'string' && textKey.includes('.') ? __(textKey, params) : textKey;
+                
+                Swal.fire({
+                    title: title,
+                    text: text,
+                    icon: icon,
+                    confirmButtonText: __('success.ok', params),
+                    timer: icon === 'success' ? 3000 : undefined,
+                    timerProgressBar: icon === 'success'
+                });
+            } else {
+                const title = typeof titleKey === 'string' && titleKey.includes('.') ? __(titleKey, params) : titleKey;
+                alert(title);
+            }
+        };
+        
+        // Debug function to list all available translation keys
+        window.listTranslations = function(prefix = '') {
+            const keys = [];
+            const explore = (obj, path = '') => {
+                Object.keys(obj).forEach(key => {
+                    const currentPath = path ? `${path}.${key}` : key;
+                    if (typeof obj[key] === 'object' && obj[key] !== null) {
+                        explore(obj[key], currentPath);
+                    } else {
+                        keys.push(currentPath);
+                    }
+                });
+            };
+            explore(window.translations.js);
+            
+            if (prefix) {
+                return keys.filter(key => key.startsWith(prefix));
+            }
+            return keys;
+        };
+        
+        console.log('🌍 JavaScript Translation System initialized');
+        console.log('📝 Available functions: __(), trans(), t(), showSuccess(), showError(), showAlert(), showConfirm()');
+        console.log('🔍 Debug function: listTranslations() - shows all available translation keys');
+    </script>
+    
     @stack('head-scripts')
     @stack('head-styles')
 </head>
@@ -703,11 +837,60 @@
                                 @endif
                             </div>
                             
-                            <!-- Theme Toggle -->
-                            <button onclick="LayoutManager.toggleTheme()" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
-                                <x-heroicon name="moon" class="w-5 h-5 sun-icon" />
-                                <x-heroicon name="sun" class="w-5 h-5 moon-icon" />
-                            </button>
+                            <div class="flex items-center space-x-3">
+                                <!-- Language Switcher -->
+                                <div class="relative">
+                                    <button onclick="toggleLanguageDropdown()"
+                                            class="group flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gradient-to-r hover:from-emerald-600/20 hover:to-teal-600/20 rounded-xl transition-all duration-200">
+                                        <x-heroicon name="language" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                                        <span class="hidden sm:block">
+                                            @if(session('locale') === 'ru')
+                                                {{ __('navigation.language_russian') }}
+                                            @else
+                                                {{ __('navigation.language_turkish') }}
+                                            @endif
+                                        </span>
+                                        <x-heroicon name="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform duration-200" />
+                                    </button>
+
+                                    <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl backdrop-blur-xl z-30 border border-gray-200 dark:border-gray-700">
+                                        <div class="p-2">
+                                            <a href="{{ route('language.change', 'tr') }}"
+                                               class="group flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gradient-to-r hover:from-emerald-600/20 hover:to-teal-600/20 rounded-xl transition-all duration-200 {{ session('locale', 'tr') === 'tr' ? 'bg-emerald-600/10 text-emerald-600 dark:text-emerald-400' : '' }}">
+                                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center mr-3 group-hover:from-red-500/30 group-hover:to-red-600/30 transition-all duration-200">
+                                                    <span class="text-xs font-bold">🇹🇷</span>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium">{{ __('navigation.language_turkish') }}</div>
+                                                    <div class="text-xs text-gray-500 dark:text-gray-400">Türkçe</div>
+                                                </div>
+                                                @if(session('locale', 'tr') === 'tr')
+                                                    <x-heroicon name="check" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 ml-auto" />
+                                                @endif
+                                            </a>
+                                            <a href="{{ route('language.change', 'ru') }}"
+                                               class="group flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-indigo-600/20 rounded-xl transition-all duration-200 {{ session('locale') === 'ru' ? 'bg-blue-600/10 text-blue-600 dark:text-blue-400' : '' }}">
+                                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center mr-3 group-hover:from-blue-500/30 group-hover:to-blue-600/30 transition-all duration-200">
+                                                    <span class="text-xs font-bold">🇷🇺</span>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium">{{ __('navigation.language_russian') }}</div>
+                                                    <div class="text-xs text-gray-500 dark:text-gray-400">Русский</div>
+                                                </div>
+                                                @if(session('locale') === 'ru')
+                                                    <x-heroicon name="check" class="w-4 h-4 text-blue-600 dark:text-blue-400 ml-auto" />
+                                                @endif
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Theme Toggle -->
+                                <button onclick="LayoutManager.toggleTheme()" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">
+                                    <x-heroicon name="moon" class="w-5 h-5 sun-icon" />
+                                    <x-heroicon name="sun" class="w-5 h-5 moon-icon" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </header>
@@ -722,9 +905,6 @@
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                         <div class="text-center text-sm text-gray-500 dark:text-gray-400">
                             <p>© {{ date('Y') }} {{ $settings->site_name ?? 'Monexa' }}. Tüm hakları saklıdır.</p>
-                            @if (isset($settings) && $settings->google_translate == 'on')
-                                @include('layouts.lang')
-                            @endif
                         </div>
                     </div>
                 </footer>
@@ -941,6 +1121,35 @@
             setInterval(fetchCryptoPrices, 30000);
         }
         
+        // Language Dropdown Function
+        window.toggleLanguageDropdown = function() {
+            const dropdown = document.getElementById('languageDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('hidden');
+            }
+        };
+
+        // Click away listener for language dropdown
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('languageDropdown');
+            const button = document.querySelector('button[onclick="toggleLanguageDropdown()"]');
+            
+            if (dropdown && !dropdown.contains(e.target) &&
+                (!button || !button.contains(e.target))) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // ESC key to close dropdown
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const dropdown = document.getElementById('languageDropdown');
+                if (dropdown) {
+                    dropdown.classList.add('hidden');
+                }
+            }
+        });
+
         // Pure Tailwind CSS - No Bootstrap Dependencies
         if (typeof $ !== 'undefined') {
             $(document).ready(function() {
@@ -1122,8 +1331,6 @@
         }
     </style>
     
-    <!-- Language Component -->
-    @include('layouts.lang')
     
     <!-- Live Chat Component -->
     @include('layouts.livechat')

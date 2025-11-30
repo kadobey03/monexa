@@ -15,11 +15,11 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                 </svg>
-                Güvenli Doğrulama Süreci
+                {{ __('user.verification.secure_verification_process') }}
             </div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">Hesap Doğrulama</h1>
+            <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">{{ __('user.verification.account_verification') }}</h1>
             <p class="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
-                Tam ticaret özelliklerini açmak ve hesap güvenliğini sağlamak için KYC doğrulamanızı tamamlayın
+                {{ __('user.verification.complete_kyc_message') }}
             </p>
         </div>
     </div>
@@ -27,8 +27,8 @@
     <!-- Progress Indicator -->
     <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 mb-6 sm:mb-8">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-white">Doğrulama İlerlemesi</h2>
-            <span class="text-sm text-gray-400" id="stepCounter">Adım 1 / 3</span>
+            <h2 class="text-lg font-semibold text-white">{{ __('user.verification.verification_progress') }}</h2>
+            <span class="text-sm text-gray-400" id="stepCounter">{{ __('user.verification.step_counter', ['current' => 1, 'total' => 3]) }}</span>
         </div>
 
         <!-- Progress Bar -->
@@ -46,7 +46,7 @@
                     </svg>
                     <span id="step1Number">1</span>
                 </div>
-                <span class="ml-2 text-xs sm:text-sm font-medium hidden sm:block">Kişisel Bilgiler</span>
+                <span class="ml-2 text-xs sm:text-sm font-medium hidden sm:block">{{ __('user.verification.personal_information') }}</span>
             </div>
 
             <div class="flex items-center text-gray-500" id="step2Container">
@@ -56,14 +56,14 @@
                     </svg>
                     <span id="step2Number">2</span>
                 </div>
-                <span class="ml-2 text-xs sm:text-sm font-medium hidden sm:block">Adres</span>
+                <span class="ml-2 text-xs sm:text-sm font-medium hidden sm:block">{{ __('user.verification.address') }}</span>
             </div>
 
             <div class="flex items-center text-gray-500" id="step3Container">
                 <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium border-2 border-gray-600 text-gray-400" id="step3Circle">
                     <span>3</span>
                 </div>
-                <span class="ml-2 text-xs sm:text-sm font-medium hidden sm:block">Belgeler</span>
+                <span class="ml-2 text-xs sm:text-sm font-medium hidden sm:block">{{ __('user.verification.documents') }}</span>
             </div>
         </div>
     </div>
@@ -79,8 +79,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h2 class="text-lg sm:text-xl font-bold text-white">Kimlik Doğrulama</h2>
-                    <p class="text-gray-400 text-xs sm:text-sm">Devlet tarafından verilen kimlik doğrulamasıyla hesabınızı güvence altına alın</p>
+                    <h2 class="text-lg sm:text-xl font-bold text-white">{{ __('user.verification.identity_verification') }}</h2>
+                    <p class="text-gray-400 text-xs sm:text-sm">{{ __('user.verification.secure_account_message') }}</p>
                 </div>
             </div>
         </div>
@@ -100,8 +100,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-white">Kişisel Bilgiler</h3>
-                            <p class="text-gray-400 text-sm">Kimliğinizde göründüğü gibi kişisel bilgilerinizi sağlayın</p>
+                            <h3 class="text-lg font-semibold text-white">{{ __('user.verification.personal_information') }}</h3>
+                            <p class="text-gray-400 text-sm">{{ __('user.verification.provide_personal_info_message') }}</p>
                         </div>
                     </div>
 
@@ -111,9 +111,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <div>
-                                <p class="text-blue-400 font-medium text-sm mb-1">Önemli Uyarı</p>
+                                <p class="text-blue-400 font-medium text-sm mb-1">{{ __('user.verification.important_notice') }}</p>
                                 <p class="text-blue-300 text-xs sm:text-sm">
-                                    Lütfen tüm bilgilerin devlet tarafından verilen kimliğinizle tam olarak eşleştiğinden emin olun. Gönderimden sonra ayrıntılar değiştirilemez.
+                                    {{ __('user.verification.match_id_warning') }}
                                 </p>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-300">
-                            İlk Ad <span class="text-red-400">*</span>
+                            {{ __('user.verification.first_name') }} <span class="text-red-400">*</span>
                         </label>
                         <input type="text" name="first_name" required
                                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
@@ -131,7 +131,7 @@
 
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-300">
-                            Soyadı <span class="text-red-400">*</span>
+                            {{ __('user.verification.last_name') }} <span class="text-red-400">*</span>
                         </label>
                         <input type="text" name="last_name" required
                                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
@@ -139,7 +139,7 @@
 
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-300">
-                            E-posta Adresi <span class="text-red-400">*</span>
+                            {{ __('user.verification.email_address') }} <span class="text-red-400">*</span>
                         </label>
                         <input type="email" name="email" required
                                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
@@ -147,7 +147,7 @@
 
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-300">
-                            Telefon Numarası <span class="text-red-400">*</span>
+                            {{ __('user.verification.phone_number') }} <span class="text-red-400">*</span>
                         </label>
                         <input type="tel" name="phone_number" required
                                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
@@ -155,7 +155,7 @@
 
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-300">
-                            Doğum Tarihi <span class="text-red-400">*</span>
+                            {{ __('user.verification.date_of_birth') }} <span class="text-red-400">*</span>
                         </label>
                         <input type="date" name="dob" required
                                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
@@ -163,10 +163,10 @@
 
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-300">
-                            Sosyal Medya Kullanıcı Adı (İsteğe Bağlı)
+                            {{ __('user.verification.social_media_username') }}
                         </label>
                         <input type="text" name="social_media"
-                               placeholder="@username"
+                               placeholder="{{ __('user.verification.username_placeholder') }}"
                                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                 <div class="flex justify-end mt-8">
                     <button type="button" onclick="goToStep(2, 66)"
                             class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
-                        Adrese Devam Et
+                        {{ __('user.verification.continue_to_address') }}
                         <svg class="w-4 h-4 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
@@ -193,8 +193,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-white">Adres Bilgileri</h3>
-                            <p class="text-gray-400 text-sm">Doğrulama için mevcut ikamet adresiniz</p>
+                            <h3 class="text-lg font-semibold text-white">{{ __('user.verification.address_information') }}</h3>
+                            <p class="text-gray-400 text-sm">{{ __('user.verification.current_residence_address') }}</p>
                         </div>
                     </div>
 
@@ -204,9 +204,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                             </svg>
                             <div>
-                                <p class="text-amber-400 font-medium text-sm mb-1">Adres Doğrulama</p>
+                                <p class="text-amber-400 font-medium text-sm mb-1">{{ __('user.verification.address_verification') }}</p>
                                 <p class="text-amber-300 text-xs sm:text-sm">
-                                    Adresinizin destekleyici belgelerinizle tam olarak eşleştiğinden emin olun.
+                                    {{ __('user.verification.address_match_warning') }}
                                 </p>
                             </div>
                         </div>
@@ -216,39 +216,39 @@
                 <div class="grid grid-cols-1 gap-4 sm:gap-6">
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-300">
-                            Sokak Adresi <span class="text-red-400">*</span>
+                            {{ __('user.verification.street_address') }} <span class="text-red-400">*</span>
                         </label>
                         <input type="text" name="address" required
-                               placeholder="Tam sokak adresinizi girin"
+                               placeholder="{{ __('user.verification.enter_full_street_address') }}"
                                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-gray-300">
-                                Şehir <span class="text-red-400">*</span>
+                                {{ __('user.verification.city') }} <span class="text-red-400">*</span>
                             </label>
                             <input type="text" name="city" required
-                                   placeholder="Şehrinizi girin"
+                                   placeholder="{{ __('user.verification.enter_city') }}"
                                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
                         </div>
 
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-gray-300">
-                                Eyalet/İl <span class="text-red-400">*</span>
+                                {{ __('user.verification.state_province') }} <span class="text-red-400">*</span>
                             </label>
                             <input type="text" name="state" required
-                                   placeholder="Eyaletinizi veya ilinizi girin"
+                                   placeholder="{{ __('user.verification.enter_state_province') }}"
                                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
                         </div>
                     </div>
 
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-300">
-                            Ülke/Uyruk <span class="text-red-400">*</span>
+                            {{ __('user.verification.country_nationality') }} <span class="text-red-400">*</span>
                         </label>
                         <input type="text" name="country" required
-                               placeholder="Ülkenizi girin"
+                               placeholder="{{ __('user.verification.enter_country') }}"
                                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all">
                     </div>
                 </div>
@@ -259,11 +259,11 @@
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
-                        Önceki
+                        {{ __('user.verification.previous') }}
                     </button>
                     <button type="button" onclick="goToStep(3, 100)"
                             class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg font-medium transition-all duration-200 shadow-lg hover:shadow-xl order-1 sm:order-2">
-                        Belgelere Devam Et
+                        {{ __('user.verification.continue_to_documents') }}
                         <svg class="w-4 h-4 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
@@ -281,8 +281,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-white">Belge Yükleme</h3>
-                            <p class="text-gray-400 text-sm">Devlet tarafından verilen kimliğinizin net fotoğraflarını yükleyin</p>
+                            <h3 class="text-lg font-semibold text-white">{{ __('user.verification.document_upload') }}</h3>
+                            <p class="text-gray-400 text-sm">{{ __('user.verification.upload_clear_photos_message') }}</p>
                         </div>
                     </div>
                 </div>
@@ -290,7 +290,7 @@
                 <!-- Document Type Selection -->
                 <div class="mb-8">
                     <label class="block text-sm font-medium text-gray-300 mb-4">
-                        Belge Türünü Seçin <span class="text-red-400">*</span>
+                        {{ __('user.verification.select_document_type') }} <span class="text-red-400">*</span>
                     </label>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                         <label class="relative cursor-pointer group">
@@ -301,8 +301,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                     </svg>
                                 </div>
-                                <div class="font-medium text-white text-sm">Uluslararası Pasaport</div>
-                                <div class="text-gray-400 text-xs mt-1">Dünya çapında en çok kabul edilen</div>
+                                <div class="font-medium text-white text-sm">{{ __('user.verification.international_passport') }}</div>
+                                <div class="text-gray-400 text-xs mt-1">{{ __('user.verification.most_accepted_worldwide') }}</div>
                             </div>
                         </label>
 
@@ -314,8 +314,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                                     </svg>
                                 </div>
-                                <div class="font-medium text-white text-sm">Ulusal Kimlik Kartı</div>
-                                <div class="text-gray-400 text-xs mt-1">Devlet tarafından verilen kimlik</div>
+                                <div class="font-medium text-white text-sm">{{ __('user.verification.national_id_card') }}</div>
+                                <div class="text-gray-400 text-xs mt-1">{{ __('user.verification.government_issued_id') }}</div>
                             </div>
                         </label>
 
@@ -327,8 +327,8 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                                     </svg>
                                 </div>
-                                <div class="font-medium text-white text-sm">Ehliyet</div>
-                                <div class="text-gray-400 text-xs mt-1">Geçerli ehliyet</div>
+                                <div class="font-medium text-white text-sm">{{ __('user.verification.drivers_license') }}</div>
+                                <div class="text-gray-400 text-xs mt-1">{{ __('user.verification.valid_drivers_license') }}</div>
                             </div>
                         </label>
                     </div>
@@ -343,31 +343,31 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <h4 class="font-semibold text-amber-300 mb-3 text-sm">Belge Gereksinimleri</h4>
+                            <h4 class="font-semibold text-amber-300 mb-3 text-sm">{{ __('user.verification.document_requirements') }}</h4>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div class="flex items-center gap-2">
                                     <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                     </svg>
-                                    <span class="text-amber-200 text-xs">Süresi dolmamış veya hasar görmemiş</span>
+                                    <span class="text-amber-200 text-xs">{{ __('user.verification.not_expired_damaged') }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                     </svg>
-                                    <span class="text-amber-200 text-xs">Tüm metin net şekilde görünür</span>
+                                    <span class="text-amber-200 text-xs">{{ __('user.verification.all_text_clearly_visible') }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                     </svg>
-                                    <span class="text-amber-200 text-xs">Parlama veya gölge yok</span>
+                                    <span class="text-amber-200 text-xs">{{ __('user.verification.no_glare_shadows') }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                     </svg>
-                                    <span class="text-amber-200 text-xs">Yüksek çözünürlüklü resim</span>
+                                    <span class="text-amber-200 text-xs">{{ __('user.verification.high_resolution_image') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -379,7 +379,7 @@
                     <!-- Front Side Upload -->
                     <div class="space-y-3">
                         <label class="block text-sm font-medium text-gray-300">
-                            Ön Yüz <span class="text-red-400">*</span>
+                            {{ __('user.verification.front_side') }} <span class="text-red-400">*</span>
                         </label>
                         <div class="relative">
                             <input type="file" name="frontimg" required accept="image/*"
@@ -390,12 +390,12 @@
                                     <svg class="w-12 h-12 mx-auto mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                     </svg>
-                                    <p class="text-gray-400 font-medium mb-2">Ön Yüzü Yükle</p>
-                                    <p class="text-gray-500 text-xs">PNG, JPG 10MB'ye kadar</p>
+                                    <p class="text-gray-400 font-medium mb-2">{{ __('user.verification.upload_front_side') }}</p>
+                                    <p class="text-gray-500 text-xs">{{ __('user.verification.png_jpg_up_to_10mb') }}</p>
                                 </div>
                                 <div id="frontPreviewContent" class="space-y-3" style="display: none;">
                                     <img id="frontPreviewImage" class="w-full h-32 object-cover rounded-lg mx-auto">
-                                    <p class="text-green-400 text-sm font-medium">Ön yüz yüklendi</p>
+                                    <p class="text-green-400 text-sm font-medium">{{ __('user.verification.front_side_uploaded') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -404,7 +404,7 @@
                     <!-- Back Side Upload -->
                     <div class="space-y-3">
                         <label class="block text-sm font-medium text-gray-300">
-                            Arka Yüz <span class="text-red-400">*</span>
+                            {{ __('user.verification.back_side') }} <span class="text-red-400">*</span>
                         </label>
                         <div class="relative">
                             <input type="file" name="backimg" required accept="image/*"
@@ -415,12 +415,12 @@
                                     <svg class="w-12 h-12 mx-auto mb-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                     </svg>
-                                    <p class="text-gray-400 font-medium mb-2">Arka Yüzü Yükle</p>
-                                    <p class="text-gray-500 text-xs">PNG, JPG 10MB'ye kadar</p>
+                                    <p class="text-gray-400 font-medium mb-2">{{ __('user.verification.upload_back_side') }}</p>
+                                    <p class="text-gray-500 text-xs">{{ __('user.verification.png_jpg_up_to_10mb') }}</p>
                                 </div>
                                 <div id="backPreviewContent" class="space-y-3" style="display: none;">
                                     <img id="backPreviewImage" class="w-full h-32 object-cover rounded-lg mx-auto">
-                                    <p class="text-green-400 text-sm font-medium">Arka yüz yüklendi</p>
+                                    <p class="text-green-400 text-sm font-medium">{{ __('user.verification.back_side_uploaded') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -434,10 +434,10 @@
                                class="mt-1 w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500 focus:ring-2">
                         <div class="flex-1">
                             <span class="text-gray-300 text-sm leading-relaxed">
-                                Sağlanan tüm bilgilerin doğru ve belgelerin orijinal olduğunu onaylıyorum.
-                                Yanlış bilgi sağlamanın hesap askıya alınmasıyla sonuçlanabileceğini anlıyorum ve
-                                <a href="#" class="text-blue-400 hover:text-blue-300 underline">Hizmet Şartları</a>'na
-                                ve <a href="#" class="text-blue-400 hover:text-blue-300 underline">Gizlilik Politikası</a>'na katılıyorum.
+                                {{ __('user.verification.i_confirm_information_accurate') }}
+                                {{ __('user.verification.understand_false_info_consequences') }}
+                                <a href="#" class="text-blue-400 hover:text-blue-300 underline">{{ __('user.verification.terms_of_service') }}</a>
+                                {{ __('user.verification.and') }} <a href="#" class="text-blue-400 hover:text-blue-300 underline">{{ __('user.verification.privacy_policy') }}</a>.
                             </span>
                         </div>
                     </label>
@@ -450,7 +450,7 @@
                         <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
-                        Önceki
+                        {{ __('user.verification.previous') }}
                     </button>
 
                     @if (Auth::user()->account_verify == 'Under review')
@@ -460,7 +460,7 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            İnceleniyor
+                            {{ __('user.verification.under_review') }}
                         </button>
                     @else
                         <button type="submit" id="submitButton"
@@ -472,7 +472,7 @@
                             <svg id="submitIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
-                            <span id="submitText">Başvuru Gönder</span>
+                            <span id="submitText">{{ __('user.verification.submit_application') }}</span>
                         </button>
                     @endif
                 </div>
@@ -489,9 +489,9 @@
                 </svg>
             </div>
             <div>
-                <h4 class="font-semibold text-white mb-2">Gizliliğiniz Korunuyor</h4>
+                <h4 class="font-semibold text-white mb-2">{{ __('user.verification.your_privacy_protected') }}</h4>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    Belgeleriniz şifrelenir ve güvenli bir şekilde saklanır. Kişisel bilgilerinizi korumak ve uluslararası veri koruma düzenlemelerine uymak için banka seviyesinde güvenlik önlemleri kullanıyoruz.
+                    {{ __('user.verification.documents_encrypted_message') }}
                 </p>
             </div>
         </div>
@@ -541,7 +541,7 @@ function updateStepDisplay() {
     const currentStep = verificationState.currentStep;
     
     // Update step counter
-    document.getElementById('stepCounter').textContent = `Adım ${currentStep} / 3`;
+    document.getElementById('stepCounter').textContent = `{{ __('user.verification.step_counter', ['current' => '']) }}${currentStep} / 3`;
     
     // Update step 1
     const step1Container = document.getElementById('step1Container');
@@ -682,7 +682,7 @@ function handleFormSubmit() {
         submitButton.disabled = true;
         loadingSpinner.style.display = 'block';
         submitIcon.style.display = 'none';
-        submitText.textContent = 'Gönderiliyor...';
+        submitText.textContent = '{{ __('user.verification.submitting') }}';
     }
     
     return true; // Allow form submission to continue

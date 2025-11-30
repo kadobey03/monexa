@@ -46,7 +46,7 @@
         <div class="space-y-1.5">
             <div class="flex items-center gap-1 px-2 py-1 text-xs font-bold text-slate-400 dark:text-gray-400 uppercase tracking-wider">
                 <div class="w-1 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></div>
-                <span>Genel Bakış</span>
+                <span>{{ __('user.sidebar.overview') }}</span>
             </div>
             <ul class="space-y-0.5">
                 <li>
@@ -55,7 +55,7 @@
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center mr-2 group-hover:from-blue-500/30 group-hover:to-purple-600/30 transition-all duration-200">
                             <x-heroicon name="squares-2x2" class="w-3.5 h-3.5" />
                         </div>
-                        <span class="font-medium text-xs">Ana Sayfa</span>
+                        <span class="font-medium text-xs">{{ __('user.sidebar.dashboard') }}</span>
                         @if(request()->routeIs('dashboard'))
                             <div class="ml-auto w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
                         @endif
@@ -67,7 +67,7 @@
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-emerald-500/20 to-blue-600/20 flex items-center justify-center mr-2 group-hover:from-emerald-500/30 group-hover:to-blue-600/30 transition-all duration-200">
                             <x-heroicon name="document-chart-bar" class="w-3.5 h-3.5" />
                         </div>
-                        <span class="font-medium text-xs">Hesap Özeti</span>
+                        <span class="font-medium text-xs">{{ __('user.sidebar.account_summary') }}</span>
                         @if(request()->routeIs('accounthistory'))
                             <div class="ml-auto w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
                         @endif
@@ -79,7 +79,7 @@
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-600/20 flex items-center justify-center mr-2 group-hover:from-orange-500/30 group-hover:to-red-600/30 transition-all duration-200">
                             <x-heroicon name="chart-bar" class="w-3.5 h-3.5" />
                         </div>
-                        <span class="font-medium text-xs">İşlem Geçmişi</span>
+                        <span class="font-medium text-xs">{{ __('user.sidebar.transaction_history') }}</span>
                         @if(request()->routeIs('tradinghistory'))
                             <div class="ml-auto w-1.5 h-1.5 bg-orange-400 rounded-full animate-pulse"></div>
                         @endif
@@ -92,7 +92,7 @@
         <div class="space-y-1.5">
             <div class="flex items-center gap-1 px-2 py-1 text-xs font-bold text-slate-400 dark:text-gray-400 uppercase tracking-wider">
                 <div class="w-1 h-1 bg-gradient-to-r from-emerald-400 to-blue-500 rounded-full"></div>
-                <span>İşlem ve Yatırım</span>
+                <span>{{ __('user.sidebar.trading_investment') }}</span>
             </div>
             <ul class="space-y-0.5">
                 <li>
@@ -101,7 +101,7 @@
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-emerald-500/20 to-green-600/20 flex items-center justify-center mr-2 group-hover:from-emerald-500/30 group-hover:to-green-600/30 transition-all duration-200">
                             <x-heroicon name="arrow-down-circle" class="w-3.5 h-3.5" />
                         </div>
-                        <span class="font-medium text-xs">Para Yatırma</span>
+                        <span class="font-medium text-xs">{{ __('user.sidebar.deposits') }}</span>
                         @if(request()->routeIs('deposits'))
                             <div class="ml-auto w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
                         @endif
@@ -113,7 +113,7 @@
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-red-500/20 to-pink-600/20 flex items-center justify-center mr-2 group-hover:from-red-500/30 group-hover:to-pink-600/30 transition-all duration-200">
                             <x-heroicon name="arrow-up-circle" class="w-3.5 h-3.5" />
                         </div>
-                        <span class="font-medium text-xs">Para Çekme</span>
+                        <span class="font-medium text-xs">{{ __('user.sidebar.withdrawals') }}</span>
                         @if(request()->routeIs('withdrawalsdeposits'))
                             <div class="ml-auto w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse"></div>
                         @endif
@@ -125,7 +125,7 @@
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-yellow-500/20 to-orange-600/20 flex items-center justify-center mr-2 group-hover:from-yellow-500/30 group-hover:to-orange-600/30 transition-all duration-200">
                             <x-heroicon name="bolt" class="w-3.5 h-3.5" />
                         </div>
-                        <span class="font-medium text-xs">Canlı İşlem</span>
+                        <span class="font-medium text-xs">{{ __('user.sidebar.live_trading') }}</span>
                         @if(request()->routeIs('trade.index'))
                             <div class="ml-auto w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse"></div>
                         @endif
@@ -138,7 +138,7 @@
         <div class="space-y-1.5">
             <div class="flex items-center gap-1 px-2 py-1 text-xs font-bold text-slate-400 dark:text-gray-400 uppercase tracking-wider">
                 <div class="w-1 h-1 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full"></div>
-                <span>Hesap Yönetimi</span>
+                <span>{{ __('user.sidebar.account_management') }}</span>
             </div>
             <ul class="space-y-0.5">
                 <li>
@@ -147,7 +147,7 @@
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center mr-2 group-hover:from-purple-500/30 group-hover:to-pink-600/30 transition-all duration-200">
                             <x-heroicon name="user-circle" class="w-3.5 h-3.5" />
                         </div>
-                        <span class="font-medium text-xs">Profil Ayarları</span>
+                        <span class="font-medium text-xs">{{ __('user.sidebar.profile_settings') }}</span>
                         @if(request()->routeIs('profile'))
                             <div class="ml-auto w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"></div>
                         @endif
@@ -159,7 +159,7 @@
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-indigo-500/20 to-blue-600/20 flex items-center justify-center mr-2 group-hover:from-indigo-500/30 group-hover:to-blue-600/30 transition-all duration-200">
                             <x-heroicon name="shield-check" class="w-3.5 h-3.5" />
                         </div>
-                        <span class="font-medium text-xs">Kimlik Doğrulama</span>
+                        <span class="font-medium text-xs">{{ __('user.sidebar.kyc_verification') }}</span>
                         @if(request()->routeIs('account.verify'))
                             <div class="ml-auto w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse"></div>
                         @endif
@@ -172,7 +172,7 @@
         <div class="space-y-1.5">
             <div class="flex items-center gap-1 px-2 py-1 text-xs font-bold text-slate-400 dark:text-gray-400 uppercase tracking-wider">
                 <div class="w-1 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"></div>
-                <span>Ödüller</span>
+                <span>{{ __('user.sidebar.rewards') }}</span>
             </div>
             <ul class="space-y-0.5">
                 <li>
@@ -182,9 +182,9 @@
                             <x-heroicon name="gift" class="w-3.5 h-3.5" />
                         </div>
                         <div class="flex-1">
-                            <span class="font-medium text-xs">Tavsiye Programı</span>
+                            <span class="font-medium text-xs">{{ __('user.sidebar.referral_program') }}</span>
                             <div class="flex items-center gap-1 mt-0.5">
-                                <span class="text-xs bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent font-bold">5% Komisyon</span>
+                                <span class="text-xs bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent font-bold">{{ __('user.sidebar.commission_percent') }}</span>
                             </div>
                         </div>
                         @if(request()->routeIs('referuser'))
@@ -199,7 +199,7 @@
         <div class="space-y-1.5">
             <div class="flex items-center gap-1 px-2 py-1 text-xs font-bold text-slate-400 dark:text-gray-400 uppercase tracking-wider">
                 <div class="w-1 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"></div>
-                <span>Destek</span>
+                <span>{{ __('user.sidebar.support') }}</span>
             </div>
             <ul class="space-y-0.5">
                 <li>
@@ -208,7 +208,7 @@
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center mr-2 group-hover:from-cyan-500/30 group-hover:to-blue-600/30 transition-all duration-200">
                             <x-heroicon name="chat-bubble-left-ellipsis" class="w-3.5 h-3.5" />
                         </div>
-                        <span class="font-medium text-xs">Destek Merkezi</span>
+                        <span class="font-medium text-xs">{{ __('user.sidebar.support_center') }}</span>
                         @if(request()->routeIs('support'))
                             <div class="ml-auto w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"></div>
                         @endif
@@ -228,7 +228,7 @@
                     <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-red-500/20 to-pink-600/20 flex items-center justify-center mr-2 group-hover:from-red-500/30 group-hover:to-pink-600/30 transition-all duration-200">
                         <x-heroicon name="arrow-right-on-rectangle" class="w-3.5 h-3.5" />
                     </div>
-                    <span class="font-medium text-xs">Güvenli Çıkış</span>
+                    <span class="font-medium text-xs">{{ __('user.sidebar.logout') }}</span>
                 </button>
             </form>
         @endauth

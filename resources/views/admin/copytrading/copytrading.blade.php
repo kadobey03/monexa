@@ -15,13 +15,13 @@ if (Auth('admin')->User()->dashboard_style == "light") {
 			<div class="content bg-{{Auth('admin')->User()->dashboard_style}}">
 				<div class="page-inner">
 					<div class="mt-2 mb-4">
-						<h1 class="title1 text-{{$text}}">System Copy trading Plans</h1>
+						<h1 class="title1 text-{{$text}}">{{ __('admin.copy.system_copy_trading_plans') }}</h1>
 					</div>
 					<x-danger-alert/>
 					<x-success-alert/>
 					<div class="mb-5 row">
 						<div class="mt-2 mb-3 col-lg-12">
-							<a class="btn btn-primary" href="{{route('newcopytrading')}}"><i class="fa fa-plus"></i> New Copy Trading Plans </a>
+							<a class="btn btn-primary" href="{{route('newcopytrading')}}"><i class="fa fa-plus"></i> {{ __('admin.copy.new_copy_trading_plans') }}</a>
 						</div>
 						@forelse ( $copytradings as  $copytrading)
 						<div class="col-lg-3">
@@ -43,23 +43,23 @@ if (Auth('admin')->User()->dashboard_style == "light") {
 								<!-- Features -->
 								<div class="pricing-features">
 									<div class="feature text-{{$text}}">
-										Copy Trading Price:<span class="text-{{$text}}">{{$settings->currency}}{{number_format( $copytrading->price)}}</span>
+										{{ __('admin.copy.copy_trading_price') }}:<span class="text-{{$text}}">{{$settings->currency}}{{number_format( $copytrading->price)}}</span>
 									</div>
 
 									<div class="feature text-{{$text}}">
-										Expert Total Followers:<span class="text-{{$text}}">{{number_format( $copytrading->followers)}}</span>
+										{{ __('admin.copy.expert_total_followers') }}:<span class="text-{{$text}}">{{number_format( $copytrading->followers)}}</span>
 									</div>
 									<div class="feature text-{{$text}}">
-										Expert Total Profit:<span class="text-{{$text}}">{{$settings->currency}}{{number_format( $copytrading->total_profit)}}</span>
+										{{ __('admin.copy.expert_total_profit') }}:<span class="text-{{$text}}">{{$settings->currency}}{{number_format( $copytrading->total_profit)}}</span>
 									</div>
 									<div class="feature text-{{$text}}">
-										Equity:<span class="text-{{$text}}">{{number_format( $copytrading->equity)}}%</span>
+										{{ __('admin.copy.equity') }}:<span class="text-{{$text}}">{{number_format( $copytrading->equity)}}%</span>
 									</div>
 									<div class="feature text-{{$text}}">
-										Active Days:<span class="text-{{$text}}">{{number_format( $copytrading->active_days)}} Days</span>
+										{{ __('admin.copy.active_days') }}:<span class="text-{{$text}}">{{number_format( $copytrading->active_days)}} {{ __('admin.copy.days') }}</span>
 									</div>
 									<div class="feature text-{{$text}}">
-										Expert ratings:
+										{{ __('admin.copy.expert_ratings') }}:
 										@if($copytrading->rating==5)
 										<span class="fa fa-star checked"></span>
 										<span class="fa fa-star checked"></span>
@@ -115,7 +115,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
 						@empty
 						<div class="col-lg-8">
 							<div class="pricing-table card purple border bg-{{$bg}} shadow p-4">
-								<h4 class="text-{{$text}}">No Copytrading Plan at the moment, click the button above to add a Copy trading.</h4>
+								<h4 class="text-{{$text}}">{{ __('admin.copy.no_copytrading_plan_message') }}</h4>
 							</div>
 						</div>
 						@endforelse

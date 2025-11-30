@@ -1,16 +1,16 @@
-@extends('layouts.admin', ['title' => 'Görevlerim'])
+@extends('layouts.admin', ['title' => __('admin.tasks.my_tasks_title')])
 
 @section('content')
 <div class="space-y-6">
     <!-- Page Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Görevlerim</h1>
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Bana atanan görevleri görüntüle ve yönet</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.tasks.my_tasks_title') }}</h1>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ __('admin.tasks.my_tasks_description') }}</p>
         </div>
         <div class="flex items-center space-x-2">
             <x-heroicon name="clipboard-list" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
-            <span class="text-sm text-gray-500 dark:text-gray-400">{{ count($tasks) }} Görev</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{{ count($tasks) }} {{ __('admin.tasks.stats.task_count') }}</span>
         </div>
     </div>
 
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Toplam Görevler</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.tasks.stats.total_tasks') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ count($tasks) }}</p>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Bekleyen</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.tasks.stats.pending_tasks') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">
                         {{ $tasks->where('status', 'Pending')->count() }}
                     </p>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Tamamlanan</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.tasks.stats.completed_tasks') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">
                         {{ $tasks->where('status', '!=', 'Pending')->count() }}
                     </p>
@@ -75,7 +75,7 @@
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
                 <x-heroicon name="list-todo" class="h-5 w-5 mr-2" />
-                Görev Detayları
+                {{ __('admin.tasks.section.task_details') }}
             </h2>
         </div>
 
@@ -85,28 +85,28 @@
                     <thead class="bg-gray-50 dark:bg-admin-900">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Görev Başlığı
+                                {{ __('admin.tasks.table.task_title') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Atayan
+                                {{ __('admin.tasks.table.assignee') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Not
+                                {{ __('admin.tasks.table.note') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Başlangıç
+                                {{ __('admin.tasks.table.start_date') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Bitiş
+                                {{ __('admin.tasks.table.end_date') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Durum
+                                {{ __('admin.tasks.table.status') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Oluşturulma
+                                {{ __('admin.tasks.table.created_at') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                İşlemler
+                                {{ __('admin.tasks.table.actions') }}
                             </th>
                         </tr>
                     </thead>
@@ -151,7 +151,7 @@
                                     @if ($task->status == 'Pending')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
                                             <x-heroicon name="clock" class="w-3 h-3 mr-1" />
-                                            Beklemede
+                                            {{ __('admin.tasks.status.pending') }}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
@@ -167,14 +167,14 @@
                                     @if ($task->status == 'Pending')
                                         <a href="{{ url('admin/dashboard/markdone') }}/{{ $task->id }}"
                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 dark:focus:ring-offset-admin-800"
-                                           onclick="return confirm('Bu görevi tamamlandı olarak işaretlemek istediğinizden emin misiniz?')">
+                                           onclick="return confirm('{{ __('admin.tasks.confirm.mark_completed') }}')">
                                             <x-heroicon name="check" class="w-3 h-3 mr-1" />
-                                            Tamamlandı İşaretle
+                                            {{ __('admin.tasks.button.mark_completed') }}
                                         </a>
                                     @else
                                         <span class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-300">
                                             <x-heroicon name="check-circle-2" class="w-3 h-3 mr-1" />
-                                            Tamamlandı
+                                            {{ __('admin.tasks.status.completed') }}
                                         </span>
                                     @endif
                                 </td>
@@ -184,8 +184,8 @@
                                 <td colspan="8" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center">
                                         <x-heroicon name="clipboard-x" class="h-12 w-12 text-gray-400 mb-4" />
-                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white">Henüz görev yok</h3>
-                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Size atanan görevler burada görünecek.</p>
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white">{{ __('admin.tasks.empty.no_tasks') }}</h3>
+                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('admin.tasks.empty.assigned_tasks_description') }}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -200,11 +200,11 @@
             <div class="px-6 py-4 border-t border-gray-200 dark:border-admin-700">
                 <div class="flex items-center justify-between text-sm">
                     <div class="text-gray-500 dark:text-gray-400">
-                        Toplam {{ count($tasks) }} görev gösteriliyor
+                        {{ str_replace('{count}', count($tasks), __('admin.tasks.stats.showing_total')) }}
                     </div>
                     <div class="flex items-center space-x-4">
                         <div class="text-gray-500 dark:text-gray-400">
-                            Tamamlama oranı:
+                            {{ __('admin.tasks.stats.completion_rate') }}:
                             <span class="font-semibold text-gray-900 dark:text-white">
                                 {{ $tasks->count() > 0 ? round(($tasks->where('status', '!=', 'Pending')->count() / $tasks->count()) * 100, 1) : 0 }}%
                             </span>

@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Tavsiye/Bonus Ayarları'])
+@extends('layouts.admin', ['title' => __('admin.referral.page_title')])
 
 @section('content')
 <div class="min-h-screen bg-gray-50 dark:bg-admin-900 py-8">
@@ -7,13 +7,13 @@
         <div class="mb-8">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Tavsiye/Bonus Ayarları</h1>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Referral komisyonları ve kullanıcı bonuslarını yapılandırın</p>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.referral.page_title') }}</h1>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('admin.referral.page_subtitle') }}</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <div class="flex items-center space-x-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
                         <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                        <span class="text-sm text-blue-700 dark:text-blue-300 font-medium">Finans Sistemi</span>
+                        <span class="text-sm text-blue-700 dark:text-blue-300 font-medium">{{ __('admin.referral.finance_system') }}</span>
                     </div>
                 </div>
             </div>
@@ -35,8 +35,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white">Referral Komisyon Ayarları</h3>
-                            <p class="text-green-100 mt-1">6 seviyeli komisyon sistemi yapılandırması</p>
+                            <h3 class="text-xl font-bold text-white">{{ __('admin.referral.commission_settings') }}</h3>
+                            <p class="text-green-100 mt-1">{{ __('admin.referral.commission_description') }}</p>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                     </svg>
                                 </div>
-                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Komisyon Seviyeleri</h4>
+                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.referral.commission_levels') }}</h4>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -64,7 +64,7 @@
                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                         <span class="flex items-center">
                                             <div class="w-6 h-6 bg-gradient-to-r from-green-400 to-green-600 text-white text-xs font-bold rounded-full flex items-center justify-center mr-2">1</div>
-                                            1. Seviye Komisyon (Direkt Referral)
+                                            {{ __('admin.referral.level_1_direct') }}
                                         </span>
                                     </label>
                                     <div class="relative">
@@ -76,7 +76,7 @@
                                             <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">%</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Doğrudan davet edilen kullanıcılardan</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.referral.level_1_description') }}</p>
                                 </div>
 
                                 <!-- Level 2 -->
@@ -84,7 +84,7 @@
                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                         <span class="flex items-center">
                                             <div class="w-6 h-6 bg-gradient-to-r from-blue-400 to-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center mr-2">2</div>
-                                            2. Seviye Komisyon
+                                            {{ __('admin.referral.level_2') }}
                                         </span>
                                     </label>
                                     <div class="relative">
@@ -96,7 +96,7 @@
                                             <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">%</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">2. seviye alt referrallardan</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.referral.level_2_description') }}</p>
                                 </div>
 
                                 <!-- Level 3 -->
@@ -104,7 +104,7 @@
                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                         <span class="flex items-center">
                                             <div class="w-6 h-6 bg-gradient-to-r from-purple-400 to-purple-600 text-white text-xs font-bold rounded-full flex items-center justify-center mr-2">3</div>
-                                            3. Seviye Komisyon
+                                            {{ __('admin.referral.level_3') }}
                                         </span>
                                     </label>
                                     <div class="relative">
@@ -116,7 +116,7 @@
                                             <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">%</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">3. seviye alt referrallardan</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.referral.level_3_description') }}</p>
                                 </div>
 
                                 <!-- Level 4 -->
@@ -124,7 +124,7 @@
                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                         <span class="flex items-center">
                                             <div class="w-6 h-6 bg-gradient-to-r from-orange-400 to-orange-600 text-white text-xs font-bold rounded-full flex items-center justify-center mr-2">4</div>
-                                            4. Seviye Komisyon
+                                            {{ __('admin.referral.level_4') }}
                                         </span>
                                     </label>
                                     <div class="relative">
@@ -136,7 +136,7 @@
                                             <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">%</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">4. seviye alt referrallardan</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.referral.level_4_description') }}</p>
                                 </div>
 
                                 <!-- Level 5 -->
@@ -144,7 +144,7 @@
                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                         <span class="flex items-center">
                                             <div class="w-6 h-6 bg-gradient-to-r from-red-400 to-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center mr-2">5</div>
-                                            5. Seviye Komisyon
+                                            {{ __('admin.referral.level_5') }}
                                         </span>
                                     </label>
                                     <div class="relative">
@@ -156,7 +156,7 @@
                                             <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">%</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">5. seviye alt referrallardan</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.referral.level_5_description') }}</p>
                                 </div>
 
                                 <!-- Level 6 -->
@@ -164,7 +164,7 @@
                                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                                         <span class="flex items-center">
                                             <div class="w-6 h-6 bg-gradient-to-r from-indigo-400 to-indigo-600 text-white text-xs font-bold rounded-full flex items-center justify-center mr-2">6</div>
-                                            6. Seviye Komisyon
+                                            {{ __('admin.referral.level_6') }}
                                         </span>
                                     </label>
                                     <div class="relative">
@@ -176,7 +176,7 @@
                                             <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">%</span>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">6. seviye alt referrallardan</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.referral.level_6_description') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -188,10 +188,9 @@
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                                 </svg>
                                 <div>
-                                    <h4 class="text-sm font-medium text-green-800 dark:text-green-200 mb-1">Referral Komisyon Sistemi</h4>
+                                    <h4 class="text-sm font-medium text-green-800 dark:text-green-200 mb-1">{{ __('admin.referral.system_info_title') }}</h4>
                                     <p class="text-xs text-green-700 dark:text-green-300">
-                                        Her kullanıcı kendi referral ağından gelen yatırımlardan belirtilen yüzde oranında komisyon alır. 
-                                        Komisyonlar otomatik olarak hesaplanır ve kullanıcı bakiyesine eklenir.
+                                        {{ __('admin.referral.system_info_description') }}
                                     </p>
                                 </div>
                             </div>
@@ -203,7 +202,7 @@
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                <span id="referralButtonText">Komisyon Ayarlarını Kaydet</span>
+                                <span id="referralButtonText">{{ __('admin.referral.save_commission') }}</span>
                             </button>
                         </div>
                     </form>
@@ -221,8 +220,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white">Kullanıcı Bonus Ayarları</h3>
-                            <p class="text-blue-100 mt-1">Kayıt ve yatırım bonusları yapılandırması</p>
+                            <h3 class="text-xl font-bold text-white">{{ __('admin.referral.bonus_settings') }}</h3>
+                            <p class="text-blue-100 mt-1">{{ __('admin.referral.bonus_description') }}</p>
                         </div>
                     </div>
                 </div>
@@ -241,7 +240,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                 </div>
-                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Bonus Türleri</h4>
+                                <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.referral.bonus_types') }}</h4>
                             </div>
 
                             <!-- Registration Bonus -->
@@ -254,14 +253,14 @@
                                             </svg>
                                         </div>
                                         <div>
-                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">Kayıt Bonusu</h5>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">Yeni kayıt olan kullanıcılara verilen hoş geldin bonusu</p>
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.referral.signup_bonus') }}</h5>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('admin.referral.signup_bonus_desc') }}</p>
                                         </div>
                                     </div>
                                     
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                            Bonus Miktarı ({{ $settings->currency }})
+                                            {{ __('admin.referral.bonus_amount', ['currency' => $settings->currency]) }}
                                         </label>
                                         <div class="relative">
                                             <input type="number" name="signup_bonus" value="{{ $settings->signup_bonus }}" 
@@ -273,7 +272,7 @@
                                             </div>
                                         </div>
                                         <p class="text-xs text-gray-500 dark:text-gray-400">
-                                            0 girerseniz kayıt bonusu verilmez. Bu miktar yeni kayıt olan her kullanıcının hesabına otomatik eklenir.
+                                            {{ __('admin.referral.signup_bonus_note') }}
                                         </p>
                                     </div>
                                 </div>
@@ -289,14 +288,14 @@
                                             </svg>
                                         </div>
                                         <div>
-                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">Yatırım Bonusu</h5>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">Her yatırım için verilen yüzde bonus</p>
+                                            <h5 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.referral.deposit_bonus') }}</h5>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('admin.referral.deposit_bonus_desc') }}</p>
                                         </div>
                                     </div>
                                     
                                     <div class="space-y-2">
                                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                            Bonus Yüzdesi (%)
+                                            {{ __('admin.referral.bonus_percentage') }}
                                         </label>
                                         <div class="relative">
                                             <input type="number" name="deposit_bonus" value="{{ $settings->deposit_bonus }}" 
@@ -308,7 +307,7 @@
                                             </div>
                                         </div>
                                         <p class="text-xs text-gray-500 dark:text-gray-400">
-                                            Sistem kullanıcı yatırım miktarının belirttiğiniz yüzdesi kadar bonusu hesaplayarak bakiyesine ekler (her yatırım için).
+                                            {{ __('admin.referral.deposit_bonus_note') }}
                                         </p>
                                     </div>
                                 </div>
@@ -322,10 +321,9 @@
                                     <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                                 </svg>
                                 <div>
-                                    <h4 class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-1">Bonus Hesaplama Örneği</h4>
+                                    <h4 class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-1">{{ __('admin.referral.calculation_example') }}</h4>
                                     <p class="text-xs text-amber-700 dark:text-amber-300">
-                                        Yatırım bonusu %10 ise, kullanıcı $1000 yatırım yaptığında $100 bonus alacaktır.
-                                        Kayıt bonusu $50 ise, her yeni kullanıcı kayıt olduktan sonra hesabında $50 bulacaktır.
+                                        {{ __('admin.referral.calculation_example_text') }}
                                     </p>
                                 </div>
                             </div>
@@ -337,7 +335,7 @@
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                <span id="bonusButtonText">Bonus Ayarlarını Kaydet</span>
+                                <span id="bonusButtonText">{{ __('admin.referral.save_bonus') }}</span>
                             </button>
                         </div>
                     </form>
@@ -353,23 +351,23 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Sistem Bilgileri</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.referral.system_information') }}</h3>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div class="flex items-center justify-between p-3 bg-white dark:bg-admin-700 rounded-lg">
-                    <span class="text-gray-600 dark:text-gray-400">Para Birimi</span>
+                    <span class="text-gray-600 dark:text-gray-400">{{ __('admin.referral.currency') }}</span>
                     <span class="font-semibold text-gray-900 dark:text-white">{{ $settings->currency }}</span>
                 </div>
                 <div class="flex items-center justify-between p-3 bg-white dark:bg-admin-700 rounded-lg">
-                    <span class="text-gray-600 dark:text-gray-400">Referral Sistemi</span>
+                    <span class="text-gray-600 dark:text-gray-400">{{ __('admin.referral.referral_system') }}</span>
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
-                        6 Seviye Aktif
+                        {{ __('admin.referral.six_levels_active') }}
                     </span>
                 </div>
                 <div class="flex items-center justify-between p-3 bg-white dark:bg-admin-700 rounded-lg">
-                    <span class="text-gray-600 dark:text-gray-400">Bonus Sistemi</span>
+                    <span class="text-gray-600 dark:text-gray-400">{{ __('admin.referral.bonus_system') }}</span>
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
-                        Otomatik Hesaplama
+                        {{ __('admin.referral.automatic_calculation') }}
                     </span>
                 </div>
             </div>
@@ -390,13 +388,13 @@
                 const originalText = buttonText.innerHTML;
                 
                 button.disabled = true;
-                buttonText.innerHTML = 'Kaydediliyor...';
+                buttonText.innerHTML = '{{ __("admin.actions.saving") }}';
                 button.innerHTML = `
                     <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>Kaydediliyor...</span>
+                    <span>{{ __("admin.actions.saving") }}</span>
                 `;
                 
                 try {
@@ -413,13 +411,13 @@
                     
                     if (result.status === 200) {
                         // Success notification
-                        showNotification(result.success || 'Referral komisyon ayarları başarıyla güncellendi!', 'success');
+                        showNotification(result.success || '{{ __("admin.referral.commission_updated") }}', 'success');
                     } else {
                         throw new Error(result.message || 'İşlem başarısız oldu');
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    showNotification('Bir hata oluştu: ' + error.message, 'error');
+                    showNotification('{{ __("admin.actions.error_occurred") }}: ' + error.message, 'error');
                 } finally {
                     button.disabled = false;
                     buttonText.innerHTML = originalText;
@@ -444,13 +442,13 @@
                 const originalText = buttonText.innerHTML;
                 
                 button.disabled = true;
-                buttonText.innerHTML = 'Kaydediliyor...';
+                buttonText.innerHTML = '{{ __("admin.actions.saving") }}';
                 button.innerHTML = `
                     <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 818-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>Kaydediliyor...</span>
+                    <span>{{ __("admin.actions.saving") }}</span>
                 `;
                 
                 try {
@@ -467,13 +465,13 @@
                     
                     if (result.status === 200) {
                         // Success notification
-                        showNotification(result.success || 'Bonus ayarları başarıyla güncellendi!', 'success');
+                        showNotification(result.success || '{{ __("admin.referral.bonus_updated") }}', 'success');
                     } else {
                         throw new Error(result.message || 'İşlem başarısız oldu');
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    showNotification('Bir hata oluştu: ' + error.message, 'error');
+                    showNotification('{{ __("admin.actions.error_occurred") }}: ' + error.message, 'error');
                 } finally {
                     button.disabled = false;
                     buttonText.innerHTML = originalText;
@@ -544,8 +542,7 @@
                 const currency = '{{ $settings->currency }}';
                 
                 exampleText.innerHTML = `
-                    Yatırım bonusu %${bonusPercentage} ise, kullanıcı ${currency}1000 yatırım yaptığında ${currency}${exampleAmount} bonus alacaktır.
-                    Kayıt bonusu miktarı ne olarak ayarlandıysa, her yeni kullanıcı kayıt olduktan sonra hesabında o miktarı bulacaktır.
+                    {{ __('admin.referral.dynamic_example_text', ['percentage' => '']) }}${bonusPercentage}{{ __('admin.referral.dynamic_example_middle') }}${currency}1000{{ __('admin.referral.dynamic_example_end') }}${currency}${exampleAmount}{{ __('admin.referral.dynamic_example_signup') }}
                 `;
             }
         }

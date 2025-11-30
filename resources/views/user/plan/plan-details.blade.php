@@ -84,7 +84,7 @@
                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                         </svg>
-                        Home
+                        {{ __('user.plans.home') }}
                     </a>
                 </li>
                 <li>
@@ -92,7 +92,7 @@
                         <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <a href="{{ route('user.plans.my') }}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">My Investments</a>
+                        <a href="{{ route('user.plans.my') }}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{{ __('user.plans.my_investments') }}</a>
                     </div>
                 </li>
                 <li aria-current="page">
@@ -108,15 +108,15 @@
 
         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Investment Plan Details</h1>
-                <p class="text-gray-600 dark:text-gray-300">Track the performance of your investment</p>
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-white">{{ __('user.plans.investment_plan_details') }}</h1>
+                <p class="text-gray-600 dark:text-gray-300">{{ __('user.plans.track_performance') }}</p>
             </div>
             <div class="mt-4 md:mt-0">
                 <a href="{{ route('user.plans.my') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded-lg transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
                     </svg>
-                    Back to Investments
+                    {{ __('user.plans.back_to_investments') }}
                 </a>
             </div>
         </div>
@@ -141,24 +141,24 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Invested Amount</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">{{ __('user.plans.invested_amount') }}</p>
                             <p class="text-xl font-bold text-gray-900 dark:text-white">{{ Auth::user()->currency }}{{ number_format($userPlan->invested_amount, 2) }}</p>
                         </div>
 
                         <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Current Value</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">{{ __('user.plans.current_value') }}</p>
                             <p class="text-xl font-bold {{ $userPlan->current_value > $userPlan->invested_amount ? 'text-green-600 dark:text-green-500' : 'text-gray-900 dark:text-white' }}">
                                 {{ Auth::user()->currency }}{{ number_format($userPlan->current_value, 2) }}
                             </p>
                         </div>
 
                         <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Return Rate</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">{{ __('user.plans.return_rate') }}</p>
                             <p class="text-xl font-bold text-gray-900 dark:text-white">{{ $userPlan->plan->expected_return }}% <span class="text-sm font-normal">/ {{ $userPlan->plan->return_interval }}</span></p>
                         </div>
 
                         <div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Profit</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">{{ __('user.plans.total_profit') }}</p>
                             <p class="text-xl font-bold {{ $userPlan->total_profit > 0 ? 'text-green-600 dark:text-green-500' : 'text-gray-900 dark:text-white' }}">
                                 {{ Auth::user()->currency }}{{ number_format($userPlan->total_profit, 2) }}
                                 <span class="text-sm font-normal">({{ $userPlan->roi_percentage }}% ROI)</span>
@@ -170,7 +170,7 @@
                     @if($userPlan->status === 'active')
                     <div class="mt-6">
                         <div class="flex justify-between text-xs mb-2">
-                            <span class="text-gray-500 dark:text-gray-400">Progress</span>
+                            <span class="text-gray-500 dark:text-gray-400">{{ __('user.plans.progress') }}</span>
                             <span class="font-medium text-gray-700 dark:text-gray-300">{{ $userPlan->getProgressPercentage() }}%</span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
@@ -179,17 +179,17 @@
 
                         <div class="flex items-center justify-between mt-4">
                             <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Started On</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.started_on') }}</p>
                                 <p class="text-base font-medium text-gray-900 dark:text-white">{{ $userPlan->activated_at->format('M d, Y') }}</p>
                             </div>
 
                             <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Duration</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.duration') }}</p>
                                 <p class="text-base font-medium text-gray-900 dark:text-white">{{ $userPlan->plan->duration }} {{ Str::plural('Day', $userPlan->plan->duration) }}</p>
                             </div>
 
                             <div>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Ends On</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.ends_on') }}</p>
                                 <p class="text-base font-medium text-gray-900 dark:text-white">{{ $userPlan->expires_at->format('M d, Y') }}</p>
                             </div>
                         </div>
@@ -212,32 +212,32 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                     </svg>
-                    Complete Payment
+                    {{ __('user.plans.complete_payment') }}
                 </a>
-                <a href="{{ route('user.plans.cancel', $userPlan->id) }}" onclick="return confirm('Are you sure you want to cancel this plan?')" class="inline-flex items-center px-4 py-2 border border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 text-sm rounded-lg transition-colors duration-300">
+                <a href="{{ route('user.plans.cancel', $userPlan->id) }}" onclick="return confirm('{{ __('user.plans.cancel_confirm') }}')" class="inline-flex items-center px-4 py-2 border border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 text-sm rounded-lg transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
-                    Cancel
+                    {{ __('user.plans.cancel') }}
                 </a>
                 @elseif($userPlan->status === 'active')
                 <a href="{{ route('user.plans.reinvest', $userPlan->id) }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
-                    Reinvest Profits
+                    {{ __('user.plans.reinvest_profits') }}
                 </a>
                 <a href="{{ route('user.plans.compound', $userPlan->id) }}" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
-                    Compound Interest
+                    {{ __('user.plans.compound_interest') }}
                 </a>
                 <a href="{{ route('user.plans.withdraw', $userPlan->id) }}" class="inline-flex items-center px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white text-sm rounded-lg transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
                     </svg>
-                    Withdraw Profits
+                    {{ __('user.plans.withdraw_profits') }}
                 </a>
                 @endif
 
@@ -245,14 +245,14 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
-                    View Contract
+                    {{ __('user.plans.view_contract') }}
                 </a>
 
                 <a href="#" onclick="window.print()" class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white text-sm rounded-lg transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                     </svg>
-                    Print Details
+                    {{ __('user.plans.print_details') }}
                 </a>
             </div>
         </div>
@@ -263,7 +263,7 @@
         <!-- Plan Features Card -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden detail-card animate-fade-in stagger-item md:col-span-2">
             <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Plan Features</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ __('user.plans.plan_features') }}</h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     @foreach($userPlan->plan->features as $feature)
@@ -280,7 +280,7 @@
 
                 <!-- Plan Description -->
                 <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">About This Plan</h4>
+                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">{{ __('user.plans.about_this_plan') }}</h4>
                     <div class="prose dark:prose-invert max-w-none">
                         {!! $userPlan->plan->description !!}
                     </div>
@@ -291,11 +291,11 @@
         <!-- Risk Level & Category Info -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden detail-card animate-fade-in stagger-item">
             <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Investment Information</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ __('user.plans.investment_information') }}</h3>
 
                 <!-- Risk Level -->
                 <div class="mb-6">
-                    <h4 class="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">Risk Level</h4>
+                    <h4 class="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">{{ __('user.plans.risk_level') }}</h4>
                     <div class="flex items-center">
                         @php
                             $riskLevel = $userPlan->plan->risk_level;
@@ -309,11 +309,11 @@
                         </div>
                         <span class="ml-3 text-{{ $riskColor }}-600 dark:text-{{ $riskColor }}-400 font-medium">
                             @if($riskLevel <= 2)
-                                Low
+                                {{ __('user.plans.low') }}
                             @elseif($riskLevel <= 3)
-                                Medium
+                                {{ __('user.plans.medium') }}
                             @else
-                                High
+                                {{ __('user.plans.high') }}
                             @endif
                         </span>
                     </div>
@@ -321,7 +321,7 @@
 
                 <!-- Investment Category -->
                 <div class="mb-6">
-                    <h4 class="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">Category</h4>
+                    <h4 class="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">{{ __('user.plans.category') }}</h4>
                     <div class="flex items-center">
                         <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg mr-3">
                             @if($userPlan->plan->category->slug === 'crypto')
@@ -354,30 +354,30 @@
 
                 <!-- Plan Details List -->
                 <div>
-                    <h4 class="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">Plan Details</h4>
+                    <h4 class="text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">{{ __('user.plans.plan_details') }}</h4>
                     <ul class="space-y-3">
                         <li class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-400">Min Investment</span>
+                            <span class="text-gray-600 dark:text-gray-400">{{ __('user.plans.min_investment') }}</span>
                             <span class="text-gray-900 dark:text-white font-medium">{{ Auth::user()->currency }}{{ number_format($userPlan->plan->min_amount, 2) }}</span>
                         </li>
                         <li class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-400">Max Investment</span>
+                            <span class="text-gray-600 dark:text-gray-400">{{ __('user.plans.max_investment') }}</span>
                             <span class="text-gray-900 dark:text-white font-medium">{{ Auth::user()->currency }}{{ number_format($userPlan->plan->max_amount, 2) }}</span>
                         </li>
                         <li class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-400">Return Period</span>
+                            <span class="text-gray-600 dark:text-gray-400">{{ __('user.plans.return_period') }}</span>
                             <span class="text-gray-900 dark:text-white font-medium">{{ ucfirst($userPlan->plan->return_interval) }}</span>
                         </li>
                         <li class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-400">Total Return</span>
+                            <span class="text-gray-600 dark:text-gray-400">{{ __('user.plans.total_return') }}</span>
                             <span class="text-green-600 dark:text-green-500 font-medium">{{ $userPlan->plan->total_return }}%</span>
                         </li>
                         <li class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-400">Duration</span>
+                            <span class="text-gray-600 dark:text-gray-400">{{ __('user.plans.duration') }}</span>
                             <span class="text-gray-900 dark:text-white font-medium">{{ $userPlan->plan->duration }} {{ Str::plural('Day', $userPlan->plan->duration) }}</span>
                         </li>
                         <li class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-400">Referral Bonus</span>
+                            <span class="text-gray-600 dark:text-gray-400">{{ __('user.plans.referral_bonus') }}</span>
                             <span class="text-gray-900 dark:text-white font-medium">{{ $userPlan->plan->referral_bonus }}%</span>
                         </li>
                     </ul>
@@ -389,17 +389,17 @@
     <!-- Earning History -->
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden mb-8 animate-fade-in stagger-item">
         <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Earning History</h3>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">{{ __('user.plans.earning_history') }}</h3>
 
             @if(count($payouts) > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead>
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Type</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.plans.date') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.plans.amount') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.plans.type') }}</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.plans.status_text') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -431,8 +431,8 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2z" />
                 </svg>
-                <h4 class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">No Earnings Yet</h4>
-                <p class="text-gray-500 dark:text-gray-400">You haven't received any payouts for this investment yet.</p>
+                <h4 class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('user.plans.no_earnings_yet') }}</h4>
+                <p class="text-gray-500 dark:text-gray-400">{{ __('user.plans.no_payouts_message') }}</p>
             </div>
             @endif
         </div>

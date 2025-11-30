@@ -1,73 +1,73 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-# {{ $salutaion ? $salutaion : "Önemli Güncelleme" }} {{ $recipient}},
+# {{ $salutaion ? $salutaion : __('mail.headers.important_update') }} {{ $recipient}},
 
 @if ($attachment != null)
     @component('mail::panel')
-    **Eklenen Belge:** Bu bildirimle ilgili ek detaylar için lütfen eklenen belgeyi inceleyin.
+    **{{ __('mail.attachments.document_attached') }}:** {{ __('mail.attachments.review_details') }}
     @endcomponent
     <div style="text-align: center; margin: 24px 0;">
         <img src="{{ $message->embed(asset('storage/'. $attachment)) }}" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" alt="Attachment">
     </div>
 @endif
 
-## Hesap Bildirimi
+## {{ __('mail.headers.account_notification') }}
 
 {!! $body !!}
 
 ---
 
-### 📞 **Yardıma İhtiyacınız Var mı?**
+### 📞 **{{ __('mail.support.need_help_title') }}**
 
-Bu bildirimle ilgili sorularınız varsa veya yatırım ile ilgili konularda açıklama ihtiyacınız varsa, profesyonel destek ekibimiz burada yardımcı olmaya hazır.
+{{ __('mail.support.notification_questions') }}
 
 @component('mail::button', ['url' => config('app.url').'/support', 'color' => 'success'])
-Destek Ekibiyle İletişime Geçin
+{{ __('mail.actions.contact_support_team') }}
 @endcomponent
 
-**Hızlı Destek Seçenekleri:**
-- **7/24 Canlı Sohbet:** Panonuz aracılığıyla anında yardım
-- **E-posta Desteği:** {{$settings->contact_email}}
-- **Telefon Desteği:** İş saatleri boyunca mevcut
-- **Yatırım Danışmanlığı:** Uzmanlarımızla danışmanlık planlayın
+**{{ __('mail.support.quick_options_title') }}:**
+- **{{ __('mail.support.live_chat') }}:** {{ __('mail.support.instant_help_dashboard') }}
+- **{{ __('mail.support.email_support') }}:** {{$settings->contact_email}}
+- **{{ __('mail.support.phone_support') }}:** {{ __('mail.support.business_hours') }}
+- **{{ __('mail.support.investment_advisory') }}:** {{ __('mail.support.schedule_consultation') }}
 
-### 🔔 **Bildirim Tercihleri**
+### 🔔 **{{ __('mail.notifications.preferences_title') }}**
 
-Bildirim tercihlerinizi yönetebilir ve hesap ayarlarınız üzerinden hangi güncellemeleri almak istediğinizi seçebilirsiniz.
+{{ __('mail.notifications.manage_preferences_desc') }}
 
 @component('mail::button', ['url' => config('app.url').'/dashboard/settings'])
-Bildirimleri Yönet
+{{ __('mail.actions.manage_notifications') }}
 @endcomponent
 
-### 📊 **Bilgilendirilmiş Kalın**
+### 📊 **{{ __('mail.updates.stay_informed_title') }}**
 
-**Yatırım yolculuğunuzu takip edin:**
-- Portföy performans güncellemeleri
-- Piyasa içgörüleri ve analizleri
-- Ticaret fırsatları ve uyarıları
-- Hesap güvenliği bildirimleri
-- Platform güncellemeleri ve yeni özellikler
+**{{ __('mail.updates.track_journey') }}:**
+- {{ __('mail.updates.portfolio_performance') }}
+- {{ __('mail.updates.market_insights') }}
+- {{ __('mail.updates.trading_opportunities') }}
+- {{ __('mail.updates.security_notifications') }}
+- {{ __('mail.updates.platform_updates') }}
 
 ---
 
-### 🛡️ **Güvenlik Bildirimi**
+### 🛡️ **{{ __('mail.security.security_notice_title') }}**
 
 @component('mail::panel', ['color' => 'warning'])
-**Önemli:** {{config('app.name')}} hiçbir zaman giriş kimlik bilgilerinizi, şifrelerinizi veya hassas hesap bilgilerinizi e-posta yoluyla sormayacaktır. Şüpheli iletişimler alırsanız, lütfen güvenlik ekibimizle hemen iletişime geçin.
+**{{ __('mail.security.important_label') }}:** {{ __('mail.security.never_ask_credentials_detailed', ['appName' => config('app.name')]) }}
 @endcomponent
 
-**Saygılarımla,**<br>
-**{{config('app.name')}} Ekibi**<br>
-*Güvenilir Yatırım Ortağınız*
+**{{ __('mail.footer.regards') }},**<br>
+**{{ __('mail.footer.app_team', ['appName' => config('app.name')]) }}**<br>
+*{{ __('mail.footer.trusted_investment_partner') }}*
 
 ---
 
 @component('mail::subcopy')
-Bu bildirim, {{config('app.name')}} hesap iletişimlerinizin bir parçası olarak size gönderildi. Bu e-postayı yanlışlıkla aldığınızı düşünüyorsanız veya hesap güvenliğiniz hakkında endişeleriniz varsa, lütfen destek ekibimizle hemen iletişime geçin.
+{{ __('mail.legal.notification_sent_disclaimer', ['appName' => config('app.name')]) }}
 
-İletişim tercihlerinizi güncelleyebilir veya belirli bildirimlerden çıkabilirsiniz [Hesap Ayarları]({{config('app.url')}}/dashboard/settings) aracılığıyla. Önemli güvenlik ve hesap ile ilgili bildirimler için, bildirimleri etkin tutmanızı öneririz.
+{{ __('mail.legal.update_preferences_info') }} [{{ __('mail.legal.account_settings_link') }}]({{config('app.url')}}/dashboard/settings) {{ __('mail.legal.security_notifications_recommendation') }}
 
-© {{date('Y')}} {{$settings->site_name}}. Tüm hakları saklıdır. | [Gizlilik Politikası]({{$settings->site_address}}/privacy) | [Hizmet Şartları]({{$settings->site_address}}/terms)
+© {{date('Y')}} {{$settings->site_name}}. {{ __('mail.legal.all_rights_reserved') }} | [{{ __('mail.legal.privacy_policy') }}]({{$settings->site_address}}/privacy) | [{{ __('mail.legal.terms_of_service') }}]({{$settings->site_address}}/terms)
 @endcomponent
 
 @endcomponent

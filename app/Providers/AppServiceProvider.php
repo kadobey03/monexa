@@ -47,6 +47,12 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
         
+        // CRITICAL: Set locale from session on every request
+        $locale = Session::get('locale', config('app.locale', 'tr'));
+        if (in_array($locale, ['tr', 'ru'])) {
+            App::setLocale($locale);
+        }
+        
         // Observer'ı kaydet
         User_plans::observe(UserPlansObserver::class);
 

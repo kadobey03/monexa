@@ -13,8 +13,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Yetki Yönetimi</h1>
-                    <p class="text-admin-600 dark:text-admin-400">Rol tabanlı erişim kontrolü ve izin yönetimi</p>
+                    <h1 class="text-2xl font-bold text-admin-900 dark:text-white">{{ __('admin.permissions.index.title') }}</h1>
+                    <p class="text-admin-600 dark:text-admin-400">{{ __('admin.permissions.index.description') }}</p>
                 </div>
             </div>
             
@@ -23,7 +23,7 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    Değişim Geçmişi
+                    {{ __('admin.permissions.index.audit_log') }}
                 </button>
                 
                 <a href="{{ route('admin.permissions.hierarchy') }}" 
@@ -31,14 +31,14 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
                     </svg>
-                    Hiyerarşi Görünümü
+                    {{ __('admin.permissions.index.hierarchy_view') }}
                 </a>
                 
                 <button id="bulkAssignBtn" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
                     </svg>
-                    Toplu Atama
+                    {{ __('admin.permissions.index.bulk_assign') }}
                 </button>
             </div>
         </div>
@@ -49,10 +49,10 @@
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-2xl p-6 border border-blue-200 dark:border-blue-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">Toplam Rol</p>
+                    <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">{{ __('admin.permissions.index.total_roles') }}</p>
                     <p class="text-2xl font-bold text-blue-700 dark:text-blue-300">{{ $totalRoles ?? 0 }}</p>
                     <p class="text-xs text-blue-600 dark:text-blue-400 mt-1">
-                        {{ $activeRoles ?? 0 }} aktif
+                        {{ $activeRoles ?? 0 }} {{ __('admin.permissions.index.active') }}
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
@@ -66,10 +66,10 @@
         <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-2xl p-6 border border-green-200 dark:border-green-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-green-600 dark:text-green-400 font-medium">Toplam İzin</p>
+                    <p class="text-sm text-green-600 dark:text-green-400 font-medium">{{ __('admin.permissions.index.total_permissions') }}</p>
                     <p class="text-2xl font-bold text-green-700 dark:text-green-300">{{ $totalPermissions ?? 0 }}</p>
                     <p class="text-xs text-green-600 dark:text-green-400 mt-1">
-                        {{ $permissionCategories ?? 0 }} kategori
+                        {{ $permissionCategories ?? 0 }} {{ __('admin.permissions.index.categories') }}
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
@@ -83,10 +83,10 @@
         <div class="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-2xl p-6 border border-amber-200 dark:border-amber-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-amber-600 dark:text-amber-400 font-medium">Atanmış İzin</p>
+                    <p class="text-sm text-amber-600 dark:text-amber-400 font-medium">{{ __('admin.permissions.index.assigned_permissions') }}</p>
                     <p class="text-2xl font-bold text-amber-700 dark:text-amber-300">{{ $assignedPermissions ?? 0 }}</p>
                     <p class="text-xs text-amber-600 dark:text-amber-400 mt-1">
-                        {{ number_format(($assignedPermissions ?? 0) / (($totalRoles ?? 1) * ($totalPermissions ?? 1)) * 100, 1) }}% dolu
+                        {{ number_format(($assignedPermissions ?? 0) / (($totalRoles ?? 1) * ($totalPermissions ?? 1)) * 100, 1) }}% {{ __('admin.permissions.index.filled') }}
                     </p>
                 </div>
                 <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center">
@@ -100,7 +100,7 @@
         <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-2xl p-6 border border-purple-200 dark:border-purple-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-purple-600 dark:text-purple-400 font-medium">Son Değişiklik</p>
+                    <p class="text-sm text-purple-600 dark:text-purple-400 font-medium">{{ __('admin.permissions.index.last_change') }}</p>
                     <p class="text-lg font-bold text-purple-700 dark:text-purple-300">{{ $lastChangeAgo ?? 'N/A' }}</p>
                     <p class="text-xs text-purple-600 dark:text-purple-400 mt-1">
                         {{ $lastChangeUser ?? 'System' }}
@@ -118,7 +118,7 @@
     <!-- Quick Actions & Filters -->
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-admin-900 dark:text-white">Hızlı İşlemler</h2>
+            <h2 class="text-lg font-semibold text-admin-900 dark:text-white">{{ __('admin.permissions.index.quick_actions') }}</h2>
             <div class="flex items-center space-x-3">
                 <!-- Filter Dropdown -->
                 <div class="relative" id="filterDropdown">
@@ -126,7 +126,7 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"></path>
                         </svg>
-                        Filtrele
+                        {{ __('admin.permissions.index.filter') }}
                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
@@ -136,9 +136,9 @@
                         <div class="space-y-3">
                             <!-- Role Filter -->
                             <div>
-                                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">Rol</label>
+                                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">{{ __('admin.permissions.index.role') }}</label>
                                 <select id="roleFilter" class="admin-input w-full text-sm">
-                                    <option value="">Tümü</option>
+                                    <option value="">{{ __('admin.permissions.index.all') }}</option>
                                     @foreach($roles ?? [] as $role)
                                         <option value="{{ $role->id }}">{{ $role->display_name ?? $role->name }}</option>
                                     @endforeach
@@ -147,9 +147,9 @@
                             
                             <!-- Category Filter -->
                             <div>
-                                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">Kategori</label>
+                                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">{{ __('admin.permissions.index.category') }}</label>
                                 <select id="categoryFilter" class="admin-input w-full text-sm">
-                                    <option value="">Tümü</option>
+                                    <option value="">{{ __('admin.permissions.index.all') }}</option>
                                     @foreach($categories ?? [] as $category)
                                         <option value="{{ $category }}">{{ ucfirst($category) }}</option>
                                     @endforeach
@@ -158,11 +158,11 @@
                             
                             <!-- Status Filter -->
                             <div>
-                                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">Durum</label>
+                                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">{{ __('admin.permissions.index.status') }}</label>
                                 <select id="statusFilter" class="admin-input w-full text-sm">
-                                    <option value="">Tümü</option>
-                                    <option value="assigned">Atanmış</option>
-                                    <option value="unassigned">Atanmamış</option>
+                                    <option value="">{{ __('admin.permissions.index.all') }}</option>
+                                    <option value="assigned">{{ __('admin.permissions.index.assigned') }}</option>
+                                    <option value="unassigned">{{ __('admin.permissions.index.unassigned') }}</option>
                                 </select>
                             </div>
                             
@@ -172,7 +172,7 @@
                                 <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                Filtreleri Temizle
+                                {{ __('admin.permissions.index.clear_filters') }}
                             </button>
                         </div>
                     </div>
@@ -184,13 +184,13 @@
                         <svg class="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2z"></path>
                         </svg>
-                        Matrix
+                        {{ __('admin.permissions.index.matrix_view') }}
                     </button>
                     <button data-view="list" class="view-mode-btn px-3 py-1 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
                         <svg class="w-4 h-4 mr-1 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                         </svg>
-                        Liste
+                        {{ __('admin.permissions.index.list_view') }}
                     </button>
                 </div>
             </div>
@@ -203,7 +203,7 @@
                     <svg class="w-6 h-6 text-blue-600 dark:text-blue-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
-                    <p class="text-sm font-medium text-blue-700 dark:text-blue-300">Yeni Rol</p>
+                    <p class="text-sm font-medium text-blue-700 dark:text-blue-300">{{ __('admin.permissions.index.new_role') }}</p>
                 </div>
             </button>
             
@@ -212,7 +212,7 @@
                     <svg class="w-6 h-6 text-green-600 dark:text-green-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                     </svg>
-                    <p class="text-sm font-medium text-green-700 dark:text-green-300">İzinleri İçe Aktar</p>
+                    <p class="text-sm font-medium text-green-700 dark:text-green-300">{{ __('admin.permissions.index.import_permissions') }}</p>
                 </div>
             </button>
             
@@ -221,7 +221,7 @@
                     <svg class="w-6 h-6 text-amber-600 dark:text-amber-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 12l2 2 4-4m6-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <p class="text-sm font-medium text-amber-700 dark:text-amber-300">Rapor İndir</p>
+                    <p class="text-sm font-medium text-amber-700 dark:text-amber-300">{{ __('admin.permissions.index.download_report') }}</p>
                 </div>
             </button>
             
@@ -230,7 +230,7 @@
                     <svg class="w-6 h-6 text-purple-600 dark:text-purple-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                     </svg>
-                    <p class="text-sm font-medium text-purple-700 dark:text-purple-300">İzinleri Senkronize Et</p>
+                    <p class="text-sm font-medium text-purple-700 dark:text-purple-300">{{ __('admin.permissions.index.sync_permissions') }}</p>
                 </div>
             </button>
         </div>
@@ -240,19 +240,19 @@
     <div id="matrixView" class="view-panel bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700">
         <div class="p-6 border-b border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
-                <h2 class="text-lg font-semibold text-admin-900 dark:text-white">Rol-İzin Matrix</h2>
+                <h2 class="text-lg font-semibold text-admin-900 dark:text-white">{{ __('admin.permissions.index.role_permission_matrix') }}</h2>
                 <div class="flex items-center space-x-3">
                     <div class="flex items-center space-x-2 text-sm text-admin-600 dark:text-admin-400">
                         <div class="w-4 h-4 bg-green-500 rounded-full"></div>
-                        <span>İzin Var</span>
+                        <span>{{ __('admin.permissions.index.has_permission') }}</span>
                     </div>
                     <div class="flex items-center space-x-2 text-sm text-admin-600 dark:text-admin-400">
                         <div class="w-4 h-4 bg-red-500 rounded-full"></div>
-                        <span>İzin Yok</span>
+                        <span>{{ __('admin.permissions.index.no_permission') }}</span>
                     </div>
                     <div class="flex items-center space-x-2 text-sm text-admin-600 dark:text-admin-400">
                         <div class="w-4 h-4 bg-amber-500 rounded-full"></div>
-                        <span>Koşullu</span>
+                        <span>{{ __('admin.permissions.index.conditional') }}</span>
                     </div>
                 </div>
             </div>
@@ -265,7 +265,7 @@
                     <thead class="bg-admin-50 dark:bg-admin-700/50">
                         <tr>
                             <th class="sticky left-0 bg-admin-50 dark:bg-admin-700/50 px-6 py-3 text-left text-xs font-medium text-admin-500 dark:text-admin-400 uppercase tracking-wider border-r border-admin-200 dark:border-admin-600">
-                                İzinler
+                                {{ __('admin.permissions.index.permissions') }}
                             </th>
                             @foreach($roles ?? [] as $role)
                                 <th class="px-3 py-3 text-center text-xs font-medium text-admin-500 dark:text-admin-400 uppercase tracking-wider border-r border-admin-200 dark:border-admin-600 min-w-24">
@@ -371,9 +371,9 @@
                             <div>
                                 <h3 class="text-lg font-semibold text-admin-900 dark:text-white">{{ $role->display_name ?? $role->name }}</h3>
                                 <div class="flex items-center space-x-3 text-sm text-admin-600 dark:text-admin-400">
-                                    <span>Seviye {{ $role->hierarchy_level ?? 0 }}</span>
+                                    <span>{{ __('admin.permissions.index.level') }} {{ $role->hierarchy_level ?? 0 }}</span>
                                     <span>•</span>
-                                    <span>{{ isset($role->permissions) ? $role->permissions->count() : 0 }} izin</span>
+                                    <span>{{ isset($role->permissions) ? $role->permissions->count() : 0 }} {{ __('admin.permissions.index.permission_count') }}</span>
                                     @if($role->description ?? false)
                                         <span>•</span>
                                         <span>{{ Str::limit($role->description, 50) }}</span>
@@ -387,7 +387,7 @@
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                             </svg>
-                            Düzenle
+                            {{ __('admin.permissions.index.edit') }}
                         </a>
                     </div>
                 </div>
@@ -429,7 +429,7 @@
     <!-- Change Preview -->
     <div id="changePreview" class="fixed bottom-6 right-6 bg-white dark:bg-admin-800 rounded-2xl shadow-2xl border border-admin-200 dark:border-admin-700 p-6 max-w-md hidden">
         <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-admin-900 dark:text-white">Bekleyen Değişiklikler</h3>
+            <h3 class="text-lg font-semibold text-admin-900 dark:text-white">{{ __('admin.permissions.index.pending_changes') }}</h3>
             <button id="clearChangesBtn" class="text-admin-400 hover:text-admin-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -443,10 +443,10 @@
         
         <div class="flex items-center space-x-3 mt-6">
             <button id="cancelChangesBtn" class="flex-1 px-4 py-2 border border-admin-300 dark:border-admin-600 text-admin-700 dark:text-admin-300 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/50">
-                İptal
+                {{ __('admin.permissions.index.cancel') }}
             </button>
             <button id="saveChangesBtn" class="flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl">
-                Kaydet (<span id="changesCount">0</span>)
+                {{ __('admin.permissions.index.save') }} (<span id="changesCount">0</span>)
             </button>
         </div>
     </div>
@@ -457,7 +457,7 @@
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-2xl max-w-2xl w-full m-4 max-h-[90vh] overflow-hidden">
         <div class="p-6 border-b border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
-                <h3 class="text-xl font-semibold text-admin-900 dark:text-white">Toplu İzin Atama</h3>
+                <h3 class="text-xl font-semibold text-admin-900 dark:text-white">{{ __('admin.permissions.index.bulk_permission_assignment') }}</h3>
                 <button id="closeBulkModal" class="text-admin-400 hover:text-admin-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -470,19 +470,19 @@
             <div class="space-y-6">
                 <!-- Template Selection -->
                 <div>
-                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">Şablon Seç</label>
+                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">{{ __('admin.permissions.index.select_template') }}</label>
                     <select id="bulkTemplate" class="admin-input w-full">
-                        <option value="">Özel atama</option>
-                        <option value="admin">Admin (Tüm İzinler)</option>
-                        <option value="manager">Yönetici (Yönetim İzinleri)</option>
-                        <option value="sales">Satış (Satış İzinleri)</option>
-                        <option value="support">Destek (Destek İzinleri)</option>
+                        <option value="">{{ __('admin.permissions.index.custom_assignment') }}</option>
+                        <option value="admin">{{ __('admin.permissions.index.template_admin') }}</option>
+                        <option value="manager">{{ __('admin.permissions.index.template_manager') }}</option>
+                        <option value="sales">{{ __('admin.permissions.index.template_sales') }}</option>
+                        <option value="support">{{ __('admin.permissions.index.template_support') }}</option>
                     </select>
                 </div>
                 
                 <!-- Role Selection -->
                 <div>
-                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">Hedef Roller</label>
+                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">{{ __('admin.permissions.index.target_roles') }}</label>
                     <div class="space-y-2 max-h-32 overflow-y-auto border border-admin-200 dark:border-admin-600 rounded-lg p-3">
                         @foreach($roles ?? [] as $role)
                             <label class="flex items-center">
@@ -497,7 +497,7 @@
                 
                 <!-- Permission Selection -->
                 <div>
-                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">İzinler</label>
+                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">{{ __('admin.permissions.index.permissions') }}</label>
                     <div class="space-y-3 max-h-48 overflow-y-auto border border-admin-200 dark:border-admin-600 rounded-lg p-3">
                         @foreach($permissionsByCategory ?? [] as $category => $permissions)
                             <div>
@@ -528,10 +528,10 @@
         <div class="p-6 border-t border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-end space-x-3">
                 <button id="cancelBulkAssignment" class="px-6 py-2 border border-admin-300 dark:border-admin-600 text-admin-700 dark:text-admin-300 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/50">
-                    İptal
+                    {{ __('admin.permissions.index.cancel') }}
                 </button>
                 <button id="applyBulkAssignment" class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl">
-                    Uygula
+                    {{ __('admin.permissions.index.apply') }}
                 </button>
             </div>
         </div>
@@ -748,7 +748,7 @@ class PermissionsManager {
                         <p class="text-admin-600 dark:text-admin-400">${change.permission}</p>
                     </div>
                     <span class="px-2 py-1 text-xs font-medium rounded-lg ${change.action === 'grant' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'}">
-                        ${change.action === 'grant' ? 'Ver' : 'Al'}
+                        ${change.action === 'grant' ? '{{ __("admin.permissions.index.js.grant") }}' : '{{ __("admin.permissions.index.js.revoke") }}'}
                     </span>
                 </div>
             `).join('');
@@ -772,19 +772,19 @@ class PermissionsManager {
         
         if (typeof Swal !== 'undefined') {
             Swal.fire({
-                title: 'Değişiklikleri Kaydet',
-                text: `${this.changes.length} değişiklik kaydedilecek. Emin misiniz?`,
+                title: '{{ __("admin.permissions.index.js.save_changes_title") }}',
+                text: `${this.changes.length} {{ __("admin.permissions.index.js.changes_will_be_saved") }}`,
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'Evet, Kaydet',
-                cancelButtonText: 'İptal'
+                confirmButtonText: '{{ __("admin.permissions.index.js.yes_save") }}',
+                cancelButtonText: '{{ __("admin.permissions.index.js.cancel") }}'
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.performSaveChanges();
                 }
             });
         } else {
-            if (confirm(`${this.changes.length} değişiklik kaydedilecek. Emin misiniz?`)) {
+            if (confirm(`${this.changes.length} {{ __("admin.permissions.index.js.changes_will_be_saved") }}`)) {
                 this.performSaveChanges();
             }
         }
@@ -810,24 +810,24 @@ class PermissionsManager {
                 this.updateChangesDisplay();
                 
                 if (typeof Swal !== 'undefined') {
-                    Swal.fire('Başarılı!', 'Değişiklikler kaydedildi.', 'success');
+                    Swal.fire('{{ __("admin.permissions.index.js.success") }}', '{{ __("admin.permissions.index.js.changes_saved") }}', 'success');
                 } else {
-                    alert('Değişiklikler kaydedildi.');
+                    alert('{{ __("admin.permissions.index.js.changes_saved") }}');
                 }
             } else {
                 if (typeof Swal !== 'undefined') {
-                    Swal.fire('Hata!', data.message || 'Bir hata oluştu.', 'error');
+                    Swal.fire('{{ __("admin.permissions.index.js.error") }}', data.message || '{{ __("admin.permissions.index.js.an_error_occurred") }}', 'error');
                 } else {
-                    alert('Hata: ' + (data.message || 'Bir hata oluştu.'));
+                    alert('{{ __("admin.permissions.index.js.error") }}: ' + (data.message || '{{ __("admin.permissions.index.js.an_error_occurred") }}'));
                 }
             }
         })
         .catch(error => {
             console.error('Error:', error);
             if (typeof Swal !== 'undefined') {
-                Swal.fire('Hata!', 'Bir hata oluştu.', 'error');
+                Swal.fire('{{ __("admin.permissions.index.js.error") }}', '{{ __("admin.permissions.index.js.an_error_occurred") }}', 'error');
             } else {
-                alert('Bir hata oluştu.');
+                alert('{{ __("admin.permissions.index.js.an_error_occurred") }}');
             }
         });
     }
@@ -903,9 +903,9 @@ class PermissionsManager {
         
         if (selectedRoles.length === 0 || selectedPermissions.length === 0) {
             if (typeof Swal !== 'undefined') {
-                Swal.fire('Uyarı!', 'Lütfen en az bir rol ve izin seçin.', 'warning');
+                Swal.fire('{{ __("admin.permissions.index.js.warning") }}', '{{ __("admin.permissions.index.js.select_role_permission") }}', 'warning');
             } else {
-                alert('Lütfen en az bir rol ve izin seçin.');
+                alert('{{ __("admin.permissions.index.js.select_role_permission") }}');
             }
             return;
         }
@@ -949,10 +949,10 @@ class PermissionsManager {
             
             Toast.fire({
                 icon: 'success',
-                title: `${selectedRoles.length} rol için ${selectedPermissions.length} izin eklendi`
+                title: `${selectedRoles.length} {{ __("admin.permissions.index.js.roles_for") }} ${selectedPermissions.length} {{ __("admin.permissions.index.js.permissions_added") }}`
             });
         } else {
-            alert(`${selectedRoles.length} rol için ${selectedPermissions.length} izin eklendi`);
+            alert(`${selectedRoles.length} {{ __("admin.permissions.index.js.roles_for") }} ${selectedPermissions.length} {{ __("admin.permissions.index.js.permissions_added") }}`);
         }
     }
     
@@ -962,9 +962,9 @@ class PermissionsManager {
     
     importPermissions() {
         if (typeof Swal !== 'undefined') {
-            Swal.fire('Bilgi', 'İçe aktarma özelliği yakında eklenecek.', 'info');
+            Swal.fire('{{ __("admin.permissions.index.js.info") }}', '{{ __("admin.permissions.index.js.import_feature_coming_soon") }}', 'info');
         } else {
-            alert('İçe aktarma özelliği yakında eklenecek.');
+            alert('{{ __("admin.permissions.index.js.import_feature_coming_soon") }}');
         }
     }
     
@@ -975,19 +975,19 @@ class PermissionsManager {
     syncPermissions() {
         if (typeof Swal !== 'undefined') {
             Swal.fire({
-                title: 'İzinleri Senkronize Et',
-                text: 'Sistem izinleri güncellenecek. Bu işlem birkaç dakika sürebilir.',
+                title: '{{ __("admin.permissions.index.js.sync_permissions_title") }}',
+                text: '{{ __("admin.permissions.index.js.sync_permissions_text") }}',
                 icon: 'info',
                 showCancelButton: true,
-                confirmButtonText: 'Senkronize Et',
-                cancelButtonText: 'İptal'
+                confirmButtonText: '{{ __("admin.permissions.index.js.synchronize") }}',
+                cancelButtonText: '{{ __("admin.permissions.index.js.cancel") }}'
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.performSyncPermissions();
                 }
             });
         } else {
-            if (confirm('Sistem izinleri güncellenecek. Bu işlem birkaç dakika sürebilir. Devam edilsin mi?')) {
+            if (confirm('{{ __("admin.permissions.index.js.sync_permissions_confirm") }}')) {
                 this.performSyncPermissions();
             }
         }
@@ -1006,11 +1006,11 @@ class PermissionsManager {
         .then(data => {
             if (data.success) {
                 if (typeof Swal !== 'undefined') {
-                    Swal.fire('Başarılı!', 'İzinler senkronize edildi.', 'success').then(() => {
+                    Swal.fire('{{ __("admin.permissions.index.js.success") }}', '{{ __("admin.permissions.index.js.permissions_synchronized") }}', 'success').then(() => {
                         window.location.reload();
                     });
                 } else {
-                    alert('İzinler senkronize edildi.');
+                    alert('{{ __("admin.permissions.index.js.permissions_synchronized") }}');
                     window.location.reload();
                 }
             }
@@ -1018,9 +1018,9 @@ class PermissionsManager {
         .catch(error => {
             console.error('Error:', error);
             if (typeof Swal !== 'undefined') {
-                Swal.fire('Hata!', 'Senkronizasyon sırasında bir hata oluştu.', 'error');
+                Swal.fire('{{ __("admin.permissions.index.js.error") }}', '{{ __("admin.permissions.index.js.sync_error") }}', 'error');
             } else {
-                alert('Senkronizasyon sırasında bir hata oluştu.');
+                alert('{{ __("admin.permissions.index.js.sync_error") }}');
             }
         });
     }

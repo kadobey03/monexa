@@ -121,7 +121,7 @@ class ManageWithdrawalController extends Controller
 
         }
 
-        return redirect()->route('mwithdrawals')->with('success', 'Action Sucessful!');
+        return redirect()->route('mwithdrawals')->with('success', __('admin.messages.action_successful'));
 
     }
 
@@ -145,7 +145,7 @@ class ManageWithdrawalController extends Controller
             'withdrawal' => $with,
             'method' => $method,
             'user' => $user,
-            'title'=>'Process withdrawal Request',
+            'title'=> __('admin.titles.process_withdrawal_request'),
         ]);
     }
 
@@ -180,6 +180,6 @@ class ManageWithdrawalController extends Controller
         // Initialize notification service
 
 
-        return redirect()->back()->with('success', 'Withdrawal details updated successfully!');
+        return redirect()->back()->with('success', __('admin.messages.withdrawal_updated'));
     }
 }

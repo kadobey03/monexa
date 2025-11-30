@@ -8,16 +8,16 @@
     <div class="mb-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">Kripto Borsası</h1>
+                <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">{{ __('user.asset.exchange_title') }}</h1>
                 <p class="text-gray-400 text-sm md:text-base">
-                    Sabit oranlar ve düşük ücretlerle kripto para birimleri ticareti yapın
+                    {{ __('user.asset.exchange_description') }}
                 </p>
             </div>
             <div class="flex flex-col sm:flex-row gap-3">
                 <a href="{{ route('swaphistory') }}"
                    class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                     <x-heroicon name="history" class="w-4 h-4 mr-2" />
-                    İşlem Geçmişi
+                    {{ __('user.asset.transaction_history') }}
                 </a>
             </div>
         </div>
@@ -32,7 +32,7 @@
                     <x-heroicon name="currency-dollar" class="w-6 h-6 text-green-400" />
                 </div>
                 <div class="text-right">
-                    <p class="text-xs text-gray-400 uppercase tracking-wide">Hesap Bakiyesi</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-wide">{{ __('user.asset.account_balance') }}</p>
                     <p class="text-lg font-bold text-white">
                         {{ Auth::user()->currency }}{{ number_format(Auth::user()->account_bal, 2, '.', ',') }}
                     </p>
@@ -192,15 +192,15 @@
         <!-- Left side: Swap Form -->
         <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
             <div class="mb-6">
-                <h2 class="text-xl font-bold text-white mb-2">Anında Takas</h2>
-                <p class="text-gray-400 text-sm">Garantili sabit oranlarla kripto para birimleri takas edin</p>
+                <h2 class="text-xl font-bold text-white mb-2">{{ __('user.asset.instant_swap') }}</h2>
+                <p class="text-gray-400 text-sm">{{ __('user.asset.swap_description') }}</p>
             </div>
 
             <form id="newSwapForm" class="space-y-6">
                 @csrf
                 <!-- From Currency -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">From</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('user.asset.from_currency') }}</label>
                     <div class="flex bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
                         <div class="w-1/3 border-r border-gray-700">
                             <select id="fromCurrency" class="bg-transparent w-full h-full px-3 py-3 text-white focus:outline-none">
@@ -215,10 +215,10 @@
                             </select>
                         </div>
                         <div class="flex-1">
-                            <input type="number" id="fromAmount" class="w-full h-full bg-transparent px-3 py-3 text-white focus:outline-none" placeholder="Enter amount" step="any">
+                            <input type="number" id="fromAmount" class="w-full h-full bg-transparent px-3 py-3 text-white focus:outline-none" placeholder="{{ __('user.asset.enter_amount') }}" step="any">
                         </div>
                     </div>
-                    <p class="mt-1 text-xs text-gray-500" id="fromBalance">Available: calculating...</p>
+                    <p class="mt-1 text-xs text-gray-500" id="fromBalance">{{ __('user.asset.available') }}: calculating...</p>
                 </div>
 
                 <!-- Swap Button -->
@@ -232,7 +232,7 @@
 
                 <!-- To Currency -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">To</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('user.asset.to_currency') }}</label>
                     <div class="flex bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
                         <div class="w-1/3 border-r border-gray-700">
                             <select id="toCurrency" class="bg-transparent w-full h-full px-3 py-3 text-white focus:outline-none">
@@ -259,23 +259,23 @@
 
                 <!-- Rate Info -->
                 <div class="flex items-center justify-between py-3 px-4 bg-gray-900 rounded-lg border border-gray-700">
-                    <div class="text-gray-400 text-sm">Exchange Rate</div>
+                    <div class="text-gray-400 text-sm">{{ __('user.asset.exchange_rate') }}</div>
                     <div class="text-white font-medium" id="exchangeRate">-</div>
                 </div>
 
                 <!-- Fee Info -->
                 <div class="flex items-center justify-between py-3 px-4 bg-gray-900 rounded-lg border border-gray-700">
-                    <div class="text-gray-400 text-sm">Fee ({{ $moresettings->fee ?? '0.5' }}%)</div>
+                    <div class="text-gray-400 text-sm">{{ __('user.asset.fee') }} ({{ $moresettings->fee ?? '0.5' }}%)</div>
                     <div class="text-white font-medium" id="feeAmount">-</div>
                 </div>
 
                 <!-- Submit Button -->
                 <button type="submit" id="swapSubmitBtn" class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                    Swap Now
+                    {{ __('user.asset.swap_now') }}
                 </button>
 
                 <p class="text-center text-xs text-gray-500 mt-3">
-                    By proceeding, you agree to our exchange terms and conditions.
+                    {{ __('user.asset.terms_agreement') }}
                 </p>
             </form>
         </div>
@@ -283,7 +283,7 @@
         <!-- Right side: Live Chart -->
         <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-xl font-bold text-white">Market Chart</h2>
+                <h2 class="text-xl font-bold text-white">{{ __('user.asset.market_chart') }}</h2>
                 <select id="chartPair" class="bg-gray-900 border border-gray-700 text-white text-sm rounded-lg px-2 py-1">
                     <option value="BTCUSDT">BTC/USDT</option>
                     <option value="ETHUSDT">ETH/USDT</option>
@@ -304,8 +304,8 @@
         <!-- Left side: Swap Form -->
         <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
             <div class="mb-6">
-                <h2 class="text-xl font-bold text-white mb-2">Account Balance Swap</h2>
-                <p class="text-gray-400 text-sm">Convert between your account balance and crypto assets instantly</p>
+                <h2 class="text-xl font-bold text-white mb-2">{{ __('user.asset.account_balance_swap') }}</h2>
+                <p class="text-gray-400 text-sm">{{ __('user.asset.balance_swap_description') }}</p>
             </div>
 
             <div class="p-4 bg-blue-900/20 border border-blue-800 rounded-lg mb-6">
@@ -316,7 +316,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-sm text-blue-300">Using fixed rates for guaranteed conversions. No slippage, no surprises.</p>
+                        <p class="text-sm text-blue-300">{{ __('user.asset.fixed_rates_info') }}</p>
                     </div>
                 </div>
             </div>
@@ -325,8 +325,8 @@
                 @csrf
                 <!-- Swap Direction Tabs -->
                 <div class="grid grid-cols-2 bg-gray-900 rounded-lg overflow-hidden mb-2">
-                    <button type="button" id="buyTab" class="py-3 px-4 text-center text-white bg-blue-600 font-medium">Buy Crypto</button>
-                    <button type="button" id="sellTab" class="py-3 px-4 text-center text-gray-400 bg-transparent font-medium">Sell Crypto</button>
+                    <button type="button" id="buyTab" class="py-3 px-4 text-center text-white bg-blue-600 font-medium">{{ __('user.asset.buy_crypto') }}</button>
+                    <button type="button" id="sellTab" class="py-3 px-4 text-center text-gray-400 bg-transparent font-medium">{{ __('user.asset.sell_crypto') }}</button>
                 </div>
 
                 <!-- Account Balance Display -->
@@ -335,7 +335,7 @@
                         <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center mr-3">
                             <x-heroicon name="currency-dollar" class="w-4 h-4 text-green-400" />
                         </div>
-                        <div class="text-gray-300">Account Balance</div>
+                        <div class="text-gray-300">{{ __('user.asset.account_balance') }}</div>
                     </div>
                     <div class="text-white font-medium" id="accountBalanceDisplay">{{ Auth::user()->currency }}{{ number_format(Auth::user()->account_bal, 2, '.', ',') }}</div>
                 </div>
@@ -344,22 +344,22 @@
                 <div id="buyForm" class="space-y-6">
                     <!-- Amount to Convert -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Amount to Convert</label>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('user.asset.amount_to_convert') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <span class="text-gray-500">{{ Auth::user()->currency }}</span>
                             </div>
-                            <input type="number" id="buyAmount" class="pl-10 w-full bg-gray-900 border border-gray-700 text-white rounded-lg px-4 py-3 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter amount" step="any">
+                            <input type="number" id="buyAmount" class="pl-10 w-full bg-gray-900 border border-gray-700 text-white rounded-lg px-4 py-3 focus:ring-blue-500 focus:border-blue-500" placeholder="{{ __('user.asset.enter_amount') }}" step="any">
                             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                <button type="button" id="buyMaxBtn" class="text-xs bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded">MAX</button>
+                                <button type="button" id="buyMaxBtn" class="text-xs bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded">{{ __('user.asset.max') }}</button>
                             </div>
                         </div>
-                        <p class="mt-1 text-xs text-gray-500">Available: {{ Auth::user()->currency }}{{ number_format(Auth::user()->account_bal, 2, '.', ',') }}</p>
+                        <p class="mt-1 text-xs text-gray-500">{{ __('user.asset.available') }}: {{ Auth::user()->currency }}{{ number_format(Auth::user()->account_bal, 2, '.', ',') }}</p>
                     </div>
 
                     <!-- Select Crypto -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Select Cryptocurrency</label>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('user.asset.select_cryptocurrency') }}</label>
                         <div class="relative">
                             <select id="buyCrypto" class="w-full bg-gray-900 border border-gray-700 text-white rounded-lg pl-10 px-4 py-3 focus:ring-blue-500 focus:border-blue-500 appearance-none">
                                 <option value="btc">Bitcoin (BTC)</option>
@@ -379,13 +379,13 @@
                                 </svg>
                             </div>
                         </div>
-                        <p class="mt-1 text-xs text-gray-500" id="buyAvailableDisplay">Current: 0.00000000 BTC</p>
+                        <p class="mt-1 text-xs text-gray-500" id="buyAvailableDisplay">{{ __('user.asset.current') }}: 0.00000000 BTC</p>
                     </div>
 
                     <!-- You'll Receive Display -->
                     <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-4">
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm text-gray-400">You'll Receive</span>
+                            <span class="text-sm text-gray-400">{{ __('user.asset.youll_receive') }}</span>
                             <span class="text-sm text-gray-400" id="buyRateDisplay">1 {{ Auth::user()->currency }} = 0.00000000 BTC</span>
                         </div>
                         <div class="flex items-center justify-between">
@@ -396,12 +396,12 @@
                                 <div class="font-medium text-lg text-white" id="buyReceiveAmount">0.00000000</div>
                                 <div class="text-lg text-white ml-1" id="buyReceiveSymbol">BTC</div>
                             </div>
-                            <div class="text-sm text-gray-500" id="buyFeeInfo">Fee: 0.00000000 BTC</div>
+                            <div class="text-sm text-gray-500" id="buyFeeInfo">{{ __('user.asset.fee') }}: 0.00000000 BTC</div>
                         </div>
                     </div>
 
                     <button type="submit" id="buySubmitBtn" class="w-full py-3 px-4 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                        Buy Crypto Now
+                        {{ __('user.asset.buy_crypto_now') }}
                     </button>
                 </div>
 
@@ -409,7 +409,7 @@
                 <div id="sellForm" class="space-y-6 hidden">
                     <!-- Select Crypto to Sell -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Select Crypto to Sell</label>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('user.asset.select_crypto_to_sell') }}</label>
                         <div class="relative">
                             <select id="sellCrypto" class="w-full bg-gray-900 border border-gray-700 text-white rounded-lg pl-10 px-4 py-3 focus:ring-blue-500 focus:border-blue-500 appearance-none">
                                 <option value="btc">Bitcoin (BTC)</option>
@@ -429,16 +429,16 @@
                                 </svg>
                             </div>
                         </div>
-                        <p class="mt-1 text-xs text-gray-500" id="sellAvailableDisplay">Available: 0.00000000 BTC</p>
+                        <p class="mt-1 text-xs text-gray-500" id="sellAvailableDisplay">{{ __('user.asset.available') }}: 0.00000000 BTC</p>
                     </div>
 
                     <!-- Amount to Sell -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Amount to Sell</label>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('user.asset.amount_to_sell') }}</label>
                         <div class="relative">
-                            <input type="number" id="sellAmount" class="w-full bg-gray-900 border border-gray-700 text-white rounded-lg px-4 py-3 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter amount" step="any">
+                            <input type="number" id="sellAmount" class="w-full bg-gray-900 border border-gray-700 text-white rounded-lg px-4 py-3 focus:ring-blue-500 focus:border-blue-500" placeholder="{{ __('user.asset.enter_amount') }}" step="any">
                             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                <button type="button" id="sellMaxBtn" class="text-xs bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded">MAX</button>
+                                <button type="button" id="sellMaxBtn" class="text-xs bg-blue-600 hover:bg-blue-700 text-white py-1 px-2 rounded">{{ __('user.asset.max') }}</button>
                             </div>
                         </div>
                     </div>
@@ -446,7 +446,7 @@
                     <!-- You'll Receive Display -->
                     <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-4">
                         <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm text-gray-400">You'll Receive</span>
+                            <span class="text-sm text-gray-400">{{ __('user.asset.youll_receive') }}</span>
                             <span class="text-sm text-gray-400" id="sellRateDisplay">1 BTC = {{ Auth::user()->currency }}0.00</span>
                         </div>
                         <div class="flex items-center justify-between">
@@ -456,12 +456,12 @@
                                 </div>
                                 <div class="font-medium text-lg text-white">{{ Auth::user()->currency }}<span id="sellReceiveAmount">0.00</span></div>
                             </div>
-                            <div class="text-sm text-gray-500" id="sellFeeInfo">Fee: {{ Auth::user()->currency }}0.00</div>
+                            <div class="text-sm text-gray-500" id="sellFeeInfo">{{ __('user.asset.fee') }}: {{ Auth::user()->currency }}0.00</div>
                         </div>
                     </div>
 
                     <button type="submit" id="sellSubmitBtn" class="w-full py-3 px-4 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                        Sell Crypto Now
+                        {{ __('user.asset.sell_crypto_now') }}
                     </button>
                 </div>
             </form>
@@ -471,7 +471,7 @@
         <div class="space-y-6">
             <!-- Crypto Price Cards -->
             <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
-                <h2 class="text-xl font-bold text-white mb-4">Current Rates</h2>
+                <h2 class="text-xl font-bold text-white mb-4">{{ __('user.asset.current_rates') }}</h2>
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     <div class="bg-gray-900/50 rounded-lg border border-gray-700 p-3 flex flex-col">
                         <div class="flex items-center mb-2">
@@ -526,7 +526,7 @@
             <!-- Live Chart -->
             <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-xl font-bold text-white">Market Chart</h2>
+                    <h2 class="text-xl font-bold text-white">{{ __('user.asset.market_chart') }}</h2>
                     <select id="chartPair" class="bg-gray-900 border border-gray-700 text-white text-sm rounded-lg px-2 py-1">
                         <option value="BTCUSDT">BTC/USDT</option>
                         <option value="ETHUSDT">ETH/USDT</option>

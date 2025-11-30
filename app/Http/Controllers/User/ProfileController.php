@@ -20,7 +20,7 @@ class ProfileController extends Controller
                 'phone' => $request->phone,
                 'address' => $request->address,
             ]);
-        return response()->json(['status' => 200, 'success' => 'Profile Information Updated Sucessfully!']);
+        return response()->json(['status' => 200, 'success' => __('api.user.profile_updated')]);
     }
 
     //update account and contact info
@@ -37,7 +37,7 @@ class ProfileController extends Controller
                 'ltc_address' => $request['ltc_address'],
                 'usdt_address' => $request['usdt_address'],
             ]);
-        return response()->json(['status' => 200, 'success' => 'Withdrawal Info updated Sucessfully']);
+        return response()->json(['status' => 200, 'success' => __('api.financial.withdrawal_info_updated')]);
     }
 
     //Update Password
@@ -68,6 +68,6 @@ class ProfileController extends Controller
         $user->sendroiemail = $request->roiemail;
         $user->sendinvplanemail = $request->invplanemail;
         $user->save();
-        return response()->json(['status' => 200, 'success' => 'Email Preference updated']);
+        return response()->json(['status' => 200, 'success' => __('api.user.notification_settings_updated')]);
     }
 }

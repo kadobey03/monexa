@@ -20,7 +20,7 @@ class ManageAdminController extends Controller
         ->update([
             'acnt_type_active' => 'blocked',
         ]);
-        return redirect()->back()->with('success', 'Manager Blocked');
+        return redirect()->back()->with('success', __('admin.messages.manager_blocked'));
     }
 
     //unblock admin
@@ -29,7 +29,7 @@ class ManageAdminController extends Controller
         ->update([
             'acnt_type_active' => 'active',
         ]);
-        return redirect()->back()->with('success', 'Manager Unblocked');
+        return redirect()->back()->with('success', __('admin.messages.manager_unblocked'));
     }
 
     //Reset Password
@@ -43,7 +43,7 @@ class ManageAdminController extends Controller
 
     public function deleteadminacnt($id){
         Admin::where('id', $id)->delete();
-        return redirect()->back()->with('success', 'Manager has been deleted!');
+        return redirect()->back()->with('success', __('admin.messages.manager_deleted'));
     }
 
     //update admin info
@@ -66,7 +66,7 @@ class ManageAdminController extends Controller
             \Log::error('Failed to send admin notification email: ' . $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'Account updated Successfully!');
+        return redirect()->back()->with('success', __('admin.messages.account_updated'));
     }
 
      //Send mail to one user
@@ -74,12 +74,12 @@ class ManageAdminController extends Controller
 
         $mailduser=Admin::where('id',$request->user_id)->first();
         Mail::to($mailduser->email)->send(new NewNotification($request->message, $request->subject, $mailduser->firstname));
-        return redirect()->back()->with('success','Your message was sent successfully!');
+        return redirect()->back()->with('success', __('admin.messages.message_sent'));
     }
 
     public function adminchangepassword(){
         return view('admin.Profile.changepassword')->with(array(
-            'title'=>'Change Password',
+            'title'=> __('admin.titles.change_password'),
             'settings' => Settings::where('id', '=', '1')->first()
         ));
     }
@@ -90,7 +90,7 @@ class ManageAdminController extends Controller
         if(!password_verify($request['old_password'],$request['current_password']))
         {
           return redirect()->back()
-          ->with('message', 'Incorrect Old Password');
+          ->with('message', __('admin.messages.incorrect_old_password'));
         }
         $this->validate($request, [
             'password_confirmation' => 'same:password',
@@ -112,7 +112,7 @@ class ManageAdminController extends Controller
         }
 
         return redirect()->back()
-          ->with('success', 'Password Changed Sucessfully');
+          ->with('success', __('admin.messages.password_changed'));
     }
 
     public function changestyle(Request $request)
@@ -127,7 +127,7 @@ class ManageAdminController extends Controller
         ->update([
             'dashboard_style' => $dashboard_style,
         ]);
-        return response()->json(['success'=>'Changed']);
+        return response()->json(['success'=> __('admin.messages.changed')]);
     }
 
     public function saveadmin(Request $request){
@@ -167,7 +167,7 @@ class ManageAdminController extends Controller
         }
 
         return redirect()->back()
-          ->with('success', 'Manager added Sucessfull!y');
+          ->with('success', __('admin.messages.manager_added'));
     }
 
     public function updateadminprofile(Request $request){
@@ -179,7 +179,7 @@ class ManageAdminController extends Controller
           'enable_2fa' => $request->token,
         ]);
         return redirect()->back()
-        ->with('success', "Action successful!.");
+        ->with('success', __('admin.messages.action_successful'));
     }
 
 

@@ -1,118 +1,118 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-# Portföy Güncellemesi - Yatırım Getirileri Oluşturuldu 📈
+# {{ __('mail.headers.roi_update') }} 📈
 
-## Sevgili {{$user->name}},
+## {{ __('mail.salutation.dear_user', ['name' => $user->name]) }},
 
-**Tebrikler!** Yatırım portföyünüz yeni getiriler oluşturdu. Stratejik yatırım seçimlerinizin mevcut piyasa koşullarında iyi performans göstermeye devam ettiğini bildirmekten memnuniyet duyuyoruz.
+**{{ __('mail.investment.congratulations') }}!** {{ __('mail.financial.roi_generated') }} {{ __('mail.investment.strategic_choices_performing') }}
 
-### 💰 **Getiri Detayları**
+### 💰 **{{ __('mail.financial.return_details') }}**
 
 @component('mail::panel', ['color' => 'success'])
-**Yatırım Performans Özeti**
+**{{ __('mail.investment.performance_summary') }}**
 
-**Yatırım Planı:** {{$plan}}<br>
-**Getiri Miktarı:** {{$user->currency}}{{number_format($amount, 2)}}<br>
-**Oluşturulma Tarihi:** {{$plandate}}<br>
-**Durum:** Hesabınıza Yatırıldı
+**{{ __('mail.financial.plan') }}:** {{$plan}}<br>
+**{{ __('mail.financial.return_amount') }}:** {{$user->currency}}{{number_format($amount, 2)}}<br>
+**{{ __('mail.financial.generated_date') }}:** {{$plandate}}<br>
+**{{ __('mail.financial.status') }}:** {{ __('mail.financial.credited_to_account') }}
 @endcomponent
 
-### 📊 **Performans İçgörüleri**
+### 📊 **{{ __('mail.investment.performance_insights') }}**
 
-{{$plan}} yatırım planınız, gelişmiş yatırım stratejimizin bir parçası olarak tutarlı getiriler sunmaya devam ediyor. Bu getiri şunları yansıtıyor:
+{{ __('mail.investment.plan_continues_returns', ['plan' => $plan]) }} {{ __('mail.investment.this_return_reflects') }}:
 
-- **Piyasa Analizi**: Uzman ekibimizin stratejik piyasa konumlandırması
-- **Risk Yönetimi**: Dikkatlice dengelenmiş portföy optimizasyonu
-- **Teknoloji Üstünlüğü**: Gelişmiş algoritmik ticaret sistemleri
-- **Çeşitlendirme**: İstikrar için çoklu varlık maruziyeti
+- **{{ __('mail.investment.market_analysis') }}**: {{ __('mail.investment.expert_team_positioning') }}
+- **{{ __('mail.investment.risk_management') }}**: {{ __('mail.investment.balanced_portfolio_optimization') }}
+- **{{ __('mail.investment.technology_advantage') }}**: {{ __('mail.investment.advanced_algorithmic_systems') }}
+- **{{ __('mail.investment.diversification') }}**: {{ __('mail.investment.multi_asset_exposure') }}
 
-### 🚀 **Büyüme Potansiyelinizi Azami Düzeye Çıkarın**
+### 🚀 **{{ __('mail.investment.growth_potential') }}**
 
-**Bu Fırsatları Düşünün:**
-- **Bileşik Büyüme**: Üstel büyüme için getirilerinizi yeniden yatırım yapın
-- **Portföy Genişletme**: Ek yatırım planlarını keşfedin
-- **Kopya Ticaret**: En iyi performans gösteren tüccarları otomatik olarak takip edin
-- **Premium Stratejiler**: Daha yüksek katman yatırım planlarına yükseltin
+**{{ __('mail.investment.consider_opportunities') }}:**
+- **{{ __('mail.investment.compound_growth') }}**: {{ __('mail.investment.reinvest_exponential_growth') }}
+- **{{ __('mail.investment.portfolio_expansion') }}**: {{ __('mail.investment.explore_additional_plans') }}
+- **{{ __('mail.investment.copy_trading') }}**: {{ __('mail.investment.follow_top_traders_automatically') }}
+- **{{ __('mail.investment.premium_strategies') }}**: {{ __('mail.investment.upgrade_higher_tier_plans') }}
 
 @component('mail::button', ['url' => config('app.url').'/dashboard'])
-Portföy Performansını Görüntüle
+{{ __('mail.actions.view_portfolio') }}
 @endcomponent
 
-### 📈 **Yatırım Yolculuğunuz**
+### 📈 **{{ __('mail.investment.investment_journey') }}**
 
-**Son Etkinlik:**
-✅ Yatırımımız uzman ekibimiz tarafından aktif olarak yönetiliyor<br>
-✅ Getiriler oluşturuldu ve hesabınıza yatırıldı<br>
-✅ Portföy optimal performans için yeniden dengelendi<br>
-📊 Sürekli izleme ve optimizasyon devam ediyor
+**{{ __('mail.investment.recent_activity') }}:**
+✅ {{ __('mail.investment.actively_managed_expert_team') }}<br>
+✅ {{ __('mail.investment.returns_generated_credited') }}<br>
+✅ {{ __('mail.investment.portfolio_rebalanced_optimal') }}<br>
+📊 {{ __('mail.investment.continuous_monitoring_optimization') }}
 
-**Sonraki Adımlar:**
-- Portföy performansınızı gerçek zamanlı olarak izleyin
-- Bileşik büyüme için yeniden yatırım fırsatlarını düşünün
-- Gelişmiş ticaret araçlarımızı ve analizlerimizi keşfedin
+**{{ __('mail.investment.next_steps') }}:**
+- {{ __('mail.investment.monitor_portfolio_realtime') }}
+- {{ __('mail.investment.consider_reinvestment_compound') }}
+- {{ __('mail.investment.explore_advanced_tools') }}
 
-### 💡 **Yatırım İçgörüleri**
+### 💡 **{{ __('mail.investment.investment_insights') }}**
 
 @component('mail::panel')
-**Piyasa Yorumu:** Mevcut piyasa koşulları çeşitlendirilmiş yatırım stratejilerini tercih ediyor. {{$plan}} planınız, risk ayarlı getirileri korurken ortaya çıkan fırsatları değerlendirecek şekilde konumlandırılmıştır.
+**{{ __('mail.investment.market_analysis') }}:** {{ __('mail.investment.current_conditions_favor_diversified', ['plan' => $plan]) }}
 @endcomponent
 
-**Yatırım İpuçları:**
-- **Tutarlılık**: Düzenli yatırımlar genellikle piyasa zamanlamasını geride bırakır
-- **Çeşitlendirme**: Riski birden fazla yatırım aracı arasında dağıtın
-- **Uzun Vadeli Vizyon**: Hızlı kazançlardan ziyade sürdürülebilir büyümeye odaklanın
-- **Profesyonel Yönetim**: Uzman ekibimizin piyasa uzmanlığından yararlanın
+**{{ __('mail.investment.investment_tips') }}:**
+- **{{ __('mail.investment.consistency') }}**: {{ __('mail.investment.regular_investments_outperform') }}
+- **{{ __('mail.investment.diversification') }}**: {{ __('mail.investment.spread_risk_multiple_instruments') }}
+- **{{ __('mail.investment.long_term_vision') }}**: {{ __('mail.investment.focus_sustainable_growth') }}
+- **{{ __('mail.investment.professional_management') }}**: {{ __('mail.investment.leverage_expert_team_expertise') }}
 
-### 📞 **Profesyonel Yatırım Desteği**
+### 📞 **{{ __('mail.investment.professional_support') }}**
 
-Yatırım danışmanlık ekibimiz portföy stratejilerinizi optimize etmenize yardımcı olmak için hazır:
+{{ __('mail.investment.advisory_team_ready_optimize') }}:
 
 @component('mail::button', ['url' => config('app.url').'/login', 'color' => 'success'])
-Yatırım Danışmanlığı Planla
+{{ __('mail.actions.schedule_investment_consultation') }}
 @endcomponent
 
-**Mevcut Hizmetler:**
-- Kişisel Portföy İncelemesi
-- Yatırım Stratejisi Optimizasyonu
-- Piyasa Analizi ve İçgörüleri
-- Risk Değerlendirmesi ve Yönetimi
+**{{ __('mail.investment.available_services') }}:**
+- {{ __('mail.investment.personal_portfolio_review') }}
+- {{ __('mail.investment.strategy_optimization') }}
+- {{ __('mail.investment.market_analysis_insights') }}
+- {{ __('mail.investment.risk_assessment_management') }}
 
-### 🎯 **Daha Fazla Büyümeye Hazır mısınız?**
+### 🎯 **{{ __('mail.investment.ready_for_more_growth') }}**
 
-**Genişletme Fırsatları:**
-- **Daha Yüksek Katman Planlar**: Premium yatırım stratejilerini açın
-- **Kopya Ticaret Elit**: Kurumsal düzey tüccarlara erişim
-- **Otomatik Yeniden Dengeleme**: AI destekli portföy optimizasyonu
-- **VIP Hizmetler**: Özel yatırım danışmanı erişimi
+**{{ __('mail.investment.expansion_opportunities') }}:**
+- **{{ __('mail.investment.higher_tier_plans') }}**: {{ __('mail.investment.unlock_premium_strategies') }}
+- **{{ __('mail.investment.copy_trading_elite') }}**: {{ __('mail.investment.institutional_level_traders') }}
+- **{{ __('mail.investment.auto_rebalancing') }}**: {{ __('mail.investment.ai_powered_optimization') }}
+- **{{ __('mail.investment.vip_services') }}**: {{ __('mail.investment.dedicated_advisor_access') }}
 
 @component('mail::button', ['url' => config('app.url').'/login'])
-Yatırım Seçeneklerini Keşfedin
+{{ __('mail.actions.explore_investment_options') }}
 @endcomponent
 
 ---
 
-### 📊 **Performans Şeffaflığı**
+### 📊 **{{ __('mail.investment.performance_transparency') }}**
 
-Yatırım performansınızla ilgili tam şeffaflığa inanıyoruz. Panonuz aracılığıyla detaylı analitiklere, geçmiş getirilere ve kapsamlı raporlamaya erişin.
+{{ __('mail.investment.believe_full_transparency') }} {{ __('mail.investment.access_detailed_analytics') }}
 
-**Mevcut Ana Metrikler:**
-- Gerçek zamanlı portföy değerleme
-- Geçmiş performans grafikleri
-- Risk ayarlı getiri analizi
-- Kıyaslama karşılaştırmaları
+**{{ __('mail.investment.key_metrics_available') }}:**
+- {{ __('mail.investment.realtime_portfolio_valuation') }}
+- {{ __('mail.investment.historical_performance_charts') }}
+- {{ __('mail.investment.risk_adjusted_return_analysis') }}
+- {{ __('mail.investment.benchmark_comparisons') }}
 
-{{$settings->site_name}}'e yatırım hedeflerinizle güveniniz için teşekkür ederiz. Kanıtlanmış yatırım stratejilerimiz aracılığıyla istisnai sonuçlar sunmaya devam ediyoruz.
+{{ __('mail.investment.thank_you_trust', ['siteName' => $settings->site_name]) }} {{ __('mail.investment.continue_delivering_exceptional') }}
 
-**Saygılarımla,**<br>
-**{{$settings->site_name}} Yatırım Ekibi**<br>
-*Finansal Büyümedeki Ortaklarınız*
+**{{ __('mail.footer.regards') }},**<br>
+**{{ __('mail.footer.investment_team', ['siteName' => $settings->site_name]) }}**<br>
+*{{ __('mail.footer.partners_in_growth') }}*
 
 ---
 
 @component('mail::subcopy')
-**Yatırım Sorumluluk Reddi:** Geçmiş performans gelecek sonuçları garanti etmez. Tüm yatırımlar risk taşır ve yatırım yaptığınız sermayenin bir kısmını veya tamamını kaybedebilirsiniz. Bu bildirim sadece bilgilendirme amaçlıdır ve finansal tavsiye olarak düşünülmemelidir. Lütfen [Risk Açıklaması]({{config('app.url')}}/risk-disclosure)'mızı inceleyin ve bir finansal danışmanla danışmayı düşünün.
+**{{ __('mail.legal.risk_disclaimer') }}:** {{ __('mail.legal.past_performance') }} {{ __('mail.legal.investment_risk') }} {{ __('mail.legal.financial_advice') }} {{ __('mail.legal.review_risk_disclosure', ['url' => config('app.url').'/risk-disclosure']) }}
 
-Getiriler, yatırım planınızın performansına ve piyasa koşullarına göre hesaplanır. {{$settings->site_name}} risk ayarlı getirileri optimize etmek için tasarlanmış profesyonel yatırım stratejileri kullanır.
+{{ __('mail.legal.returns_calculated_performance') }} {{ __('mail.legal.professional_strategies', ['siteName' => $settings->site_name]) }}
 @endcomponent
 
 @endcomponent

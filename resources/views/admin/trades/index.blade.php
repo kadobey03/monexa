@@ -10,18 +10,18 @@
                 <x-heroicon name="chart-bar-square" class="w-8 h-8 text-white" />
             </div>
             <div>
-                <h1 class="text-3xl font-bold mb-1">İşlem Yönetimi</h1>
-                <p class="text-violet-100 text-lg">Kullanıcı işlemlerini izleyin ve yönetin</p>
+                <h1 class="text-3xl font-bold mb-1">{{ __('admin.trading.management') }}</h1>
+                <p class="text-violet-100 text-lg">{{ __('admin.trading.monitor_and_manage') }}</p>
             </div>
         </div>
         <div class="flex items-center space-x-3">
             <div class="hidden md:flex items-center space-x-2 text-white/80">
                 <x-heroicon name="home" class="w-4 h-4" />
-                <span>Dashboard</span>
+                <span>{{ __('admin.navigation.dashboard') }}</span>
                 <x-heroicon name="chevron-right" class="w-4 h-4" />
-                <span>Yönetim</span>
+                <span>{{ __('admin.navigation.management') }}</span>
                 <x-heroicon name="chevron-right" class="w-4 h-4" />
-                <span class="text-white font-semibold">İşlemler</span>
+                <span class="text-white font-semibold">{{ __('admin.trading.trades') }}</span>
             </div>
         </div>
     </div>
@@ -36,9 +36,9 @@
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-200">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Toplam İşlem</p>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">{{ __('admin.trading.total_trades') }}</p>
                 <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['total'] ?? 0) }}</h3>
-                <p class="text-xs text-admin-400 dark:text-admin-500 mt-1">Tüm işlemler</p>
+                <p class="text-xs text-admin-400 dark:text-admin-500 mt-1">{{ __('admin.trading.all_trades') }}</p>
             </div>
             <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <x-heroicon name="chart-bar" class="w-7 h-7 text-white" />
@@ -49,9 +49,9 @@
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-200">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Aktif İşlemler</p>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">{{ __('admin.trading.active_trades') }}</p>
                 <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['active'] ?? 0) }}</h3>
-                <p class="text-xs text-admin-400 dark:text-admin-500 mt-1">Devam eden</p>
+                <p class="text-xs text-admin-400 dark:text-admin-500 mt-1">{{ __('admin.trading.ongoing') }}</p>
             </div>
             <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <x-heroicon name="clock" class="w-7 h-7 text-white" />
@@ -62,9 +62,9 @@
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-200">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Tamamlanan</p>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">{{ __('admin.trading.completed') }}</p>
                 <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($stats['expired'] ?? 0) }}</h3>
-                <p class="text-xs text-admin-400 dark:text-admin-500 mt-1">Bitmiş işlemler</p>
+                <p class="text-xs text-admin-400 dark:text-admin-500 mt-1">{{ __('admin.trading.finished_trades') }}</p>
             </div>
             <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <x-heroicon name="check-circle" class="w-7 h-7 text-white" />
@@ -75,9 +75,9 @@
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-lg p-6 border border-admin-200 dark:border-admin-700 hover:shadow-xl transition-all duration-200">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">Toplam Hacim</p>
+                <p class="text-admin-500 dark:text-admin-400 text-sm font-medium mb-2">{{ __('admin.trading.total_volume') }}</p>
                 <h3 class="text-3xl font-bold text-admin-900 dark:text-admin-100">${{ number_format($stats['total_volume'] ?? 0, 2) }}</h3>
-                <p class="text-xs text-admin-400 dark:text-admin-500 mt-1">USD değeri</p>
+                <p class="text-xs text-admin-400 dark:text-admin-500 mt-1">{{ __('admin.trading.usd_value') }}</p>
             </div>
             <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <x-heroicon name="currency-dollar" class="w-7 h-7 text-white" />
@@ -95,13 +95,13 @@
                     <x-heroicon name="funnel" class="w-5 h-5 text-white" />
                 </div>
                 <div>
-                    <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">Filtreler ve Arama</h2>
-                    <p class="text-admin-500 dark:text-admin-400 text-sm">İşlemleri filtreleyin ve arayın</p>
+                    <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">{{ __('admin.trading.filters_and_search') }}</h2>
+                    <p class="text-admin-500 dark:text-admin-400 text-sm">{{ __('admin.trading.filter_and_search_trades') }}</p>
                 </div>
             </div>
             <button id="toggleFilters" class="flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
                 <x-heroicon name="adjustments-horizontal" class="w-4 h-4 mr-2" />
-                <span id="toggleFiltersText">Filtreleri Göster</span>
+                <span id="toggleFiltersText">{{ __('admin.trading.show_filters') }}</span>
             </button>
         </div>
     </div>
@@ -113,51 +113,51 @@
                     <div>
                         <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                             <x-heroicon name="magnifying-glass" class="w-4 h-4 mr-1" />
-                            Kullanıcı Ara
+                            {{ __('admin.trading.search_user') }}
                         </label>
                         <input type="text" name="search" value="{{ request('search') }}"
                                class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors"
-                               placeholder="İsim veya e-posta">
+                               placeholder="{{ __('admin.trading.name_or_email') }}">
                     </div>
                     
                     <div>
                         <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                             <x-heroicon name="flag" class="w-4 h-4 mr-1" />
-                            Durum
+                            {{ __('admin.trading.status') }}
                         </label>
                         <select name="status" class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors">
-                            <option value="">Tümü</option>
-                            <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>Aktif</option>
-                            <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Tamamlandı</option>
+                            <option value="">{{ __('common.all') }}</option>
+                            <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>{{ __('admin.trading.active') }}</option>
+                            <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>{{ __('admin.trading.completed') }}</option>
                         </select>
                     </div>
                     
                     <div>
                         <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                             <x-heroicon name="arrows-up-down" class="w-4 h-4 mr-1" />
-                            İşlem Türü
+                            {{ __('admin.trading.trade_type') }}
                         </label>
                         <select name="type" class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors">
-                            <option value="">Tümü</option>
-                            <option value="Buy" {{ request('type') == 'Buy' ? 'selected' : '' }}>Alış (Buy)</option>
-                            <option value="Sell" {{ request('type') == 'Sell' ? 'selected' : '' }}>Satış (Sell)</option>
+                            <option value="">{{ __('common.all') }}</option>
+                            <option value="Buy" {{ request('type') == 'Buy' ? 'selected' : '' }}>{{ __('admin.trading.buy') }}</option>
+                            <option value="Sell" {{ request('type') == 'Sell' ? 'selected' : '' }}>{{ __('admin.trading.sell') }}</option>
                         </select>
                     </div>
                     
                     <div>
                         <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                             <x-heroicon name="squares-2x2" class="w-4 h-4 mr-1" />
-                            Varlık
+                            {{ __('admin.trading.asset') }}
                         </label>
                         <input type="text" name="asset" value="{{ request('asset') }}"
                                class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors"
-                               placeholder="Varlık adı (ör. BTC)">
+                               placeholder="{{ __('admin.trading.asset_name_example') }}">
                     </div>
                     
                     <div class="flex items-end space-x-2">
                         <button type="submit" class="flex-1 flex items-center justify-center px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
                             <x-heroicon name="magnifying-glass" class="w-4 h-4 mr-2" />
-                            Filtrele
+                            {{ __('common.filter') }}
                         </button>
                         <a href="{{ route('admin.trades.index') }}" class="px-4 py-3 bg-admin-500 hover:bg-admin-600 text-white rounded-xl transition-all duration-200 shadow-lg">
                             <x-heroicon name="x-mark" class="w-4 h-4" />
@@ -178,32 +178,32 @@
                     <x-heroicon name="table-cells" class="w-5 h-5 text-white" />
                 </div>
                 <div>
-                    <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">Kullanıcı İşlemleri</h2>
-                    <p class="text-admin-500 dark:text-admin-400 text-sm">{{ $trades->total() }} toplam kayıt bulundu</p>
+                    <h2 class="text-xl font-semibold text-admin-900 dark:text-admin-100">{{ __('admin.trading.user_trades') }}</h2>
+                    <p class="text-admin-500 dark:text-admin-400 text-sm">{{ $trades->total() }} {{ __('admin.trading.total_records_found') }}</p>
                 </div>
             </div>
             <div class="flex items-center space-x-3">
                 <button onclick="testRoutes()" class="flex items-center px-4 py-2 bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
                     <x-heroicon name="wrench-screwdriver" class="w-4 h-4 mr-2" />
-                    Test Routes
+                    {{ __('admin.trading.test_routes') }}
                 </button>
                 
                 <div class="relative">
                     <button id="exportDropdown" class="flex items-center px-4 py-2 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
                         <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
-                        Dışa Aktar
+                        {{ __('admin.trading.export') }}
                         <x-heroicon name="chevron-down" class="w-4 h-4 ml-2" />
                     </button>
                     <div id="exportMenu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-xl border border-admin-200 dark:border-admin-700 z-50">
                         <a href="{{ route('admin.trades.export', ['format' => 'csv'] + request()->all()) }}"
                            class="flex items-center px-4 py-3 text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700 rounded-t-xl transition-colors">
                             <x-heroicon name="document-text" class="w-4 h-4 mr-3 text-admin-400" />
-                            CSV Formatında
+                            {{ __('admin.trading.csv_format') }}
                         </a>
                         <a href="{{ route('admin.trades.export', ['format' => 'excel'] + request()->all()) }}"
                            class="flex items-center px-4 py-3 text-admin-700 dark:text-admin-300 hover:bg-admin-50 dark:hover:bg-admin-700 rounded-b-xl transition-colors">
                             <x-heroicon name="document-chart-bar" class="w-4 h-4 mr-3 text-admin-400" />
-                            Excel Formatında
+                            {{ __('admin.trading.excel_format') }}
                         </a>
                     </div>
                 </div>
@@ -224,61 +224,61 @@
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="user" class="w-3 h-3" />
-                            <span>Kullanıcı</span>
+                            <span>{{ __('admin.users.user') }}</span>
                         </div>
                     </th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="squares-2x2" class="w-3 h-3" />
-                            <span>Varlık</span>
+                            <span>{{ __('admin.trading.asset') }}</span>
                         </div>
                     </th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="arrows-up-down" class="w-3 h-3" />
-                            <span>Tür</span>
+                            <span>{{ __('admin.trading.type') }}</span>
                         </div>
                     </th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="currency-dollar" class="w-3 h-3" />
-                            <span>Miktar</span>
+                            <span>{{ __('admin.trading.amount') }}</span>
                         </div>
                     </th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="scale" class="w-3 h-3" />
-                            <span>Kaldıraç</span>
+                            <span>{{ __('admin.trading.leverage') }}</span>
                         </div>
                     </th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="chart-pie" class="w-3 h-3" />
-                            <span>Kar/Zarar</span>
+                            <span>{{ __('admin.trading.profit_loss') }}</span>
                         </div>
                     </th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="flag" class="w-3 h-3" />
-                            <span>Durum</span>
+                            <span>{{ __('admin.trading.status') }}</span>
                         </div>
                     </th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="calendar" class="w-3 h-3" />
-                            <span>Oluşturuldu</span>
+                            <span>{{ __('admin.trading.created') }}</span>
                         </div>
                     </th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="clock" class="w-3 h-3" />
-                            <span>Bitiş</span>
+                            <span>{{ __('admin.trading.expiry') }}</span>
                         </div>
                     </th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-admin-600 dark:text-admin-400 uppercase tracking-wider">
                         <div class="flex items-center space-x-1">
                             <x-heroicon name="cog-6-tooth" class="w-3 h-3" />
-                            <span>İşlemler</span>
+                            <span>{{ __('admin.users.actions') }}</span>
                         </div>
                     </th>
                 </tr>
@@ -300,10 +300,10 @@
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-admin-900 dark:text-admin-100">
-                                        {{ $trade->user_name ?? 'Kullanıcı Bulunamadı' }}
+                                        {{ $trade->user_name ?? __('admin.trading.user_not_found') }}
                                     </div>
                                     <div class="text-sm text-admin-500 dark:text-admin-400">
-                                        {{ $trade->user_email ?? 'Belirtilmemiş' }}
+                                        {{ $trade->user_email ?? __('admin.trading.not_specified') }}
                                     </div>
                                 </div>
                             </div>
@@ -361,12 +361,12 @@
                             @if($trade->active == 'yes')
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-medium bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200">
                                     <x-heroicon name="clock" class="w-3 h-3 mr-1" />
-                                    Aktif
+                                    {{ __('admin.trading.active') }}
                                 </span>
                             @elseif($trade->active == 'expired')
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
                                     <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
-                                    Tamamlandı
+                                    {{ __('admin.trading.completed') }}
                                 </span>
                             @else
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-medium bg-admin-100 dark:bg-admin-700 text-admin-800 dark:text-admin-200">
@@ -383,24 +383,24 @@
                                 <div class="font-medium">{{ \Carbon\Carbon::parse($trade->expire_date)->format('d.m.Y') }}</div>
                                 <div class="text-xs text-admin-500 dark:text-admin-400">{{ \Carbon\Carbon::parse($trade->expire_date)->format('H:i') }}</div>
                             @else
-                                <span class="text-admin-400 dark:text-admin-500">Belirtilmemiş</span>
+                                <span class="text-admin-400 dark:text-admin-500">{{ __('admin.trading.not_specified') }}</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-admin-500 dark:text-admin-400">
                             <div class="flex items-center space-x-2">
                                 <a href="{{ route('admin.trades.edit', $trade->id) }}" 
                                    class="p-2 text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/50 rounded-lg transition-all duration-200" 
-                                   title="İşlemi Düzenle">
+                                   title="{{ __('admin.trading.edit_trade') }}">
                                     <x-heroicon name="pencil-square" class="w-4 h-4" />
                                 </a>
                                 <button onclick="showAddProfitForm({{ $trade->id }})" 
                                         class="p-2 text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300 hover:bg-green-50 dark:hover:bg-green-900/50 rounded-lg transition-all duration-200" 
-                                        title="Kar/Zarar Ekle">
+                                        title="{{ __('admin.trading.add_profit_loss') }}">
                                     <x-heroicon name="plus-circle" class="w-4 h-4" />
                                 </button>
                                 <button onclick="deleteTrade({{ $trade->id }})" 
                                         class="p-2 text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/50 rounded-lg transition-all duration-200" 
-                                        title="İşlemi Sil">
+                                        title="{{ __('admin.trading.delete_trade') }}">
                                     <x-heroicon name="trash" class="w-4 h-4" />
                                 </button>
                             </div>
@@ -414,15 +414,15 @@
                                     <x-heroicon name="chart-bar" class="w-8 h-8 text-admin-400 dark:text-admin-500" />
                                 </div>
                                 <h3 class="text-lg font-semibold text-admin-900 dark:text-admin-100 mb-2">
-                                    Henüz işlem bulunmuyor
+                                    {{ __('admin.trading.no_trades_yet') }}
                                 </h3>
                                 <p class="text-admin-500 dark:text-admin-400 mb-4">
-                                    Filtreleme kriterlerinizi kontrol edin veya farklı arama yapmayı deneyin
+                                    {{ __('admin.trading.check_filters_or_try_different_search') }}
                                 </p>
                                 <a href="{{ route('admin.trades.index') }}" 
                                    class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl transition-all duration-200 shadow-lg">
                                     <x-heroicon name="arrow-path" class="w-4 h-4 mr-2" />
-                                    Filtreleri Temizle
+                                    {{ __('admin.trading.clear_filters') }}
                                 </a>
                             </div>
                         </td>
@@ -450,7 +450,7 @@
                             <x-heroicon name="plus-circle" class="w-5 h-5 text-white" />
                         </div>
                         <h3 class="text-xl font-semibold text-admin-900 dark:text-admin-100">
-                            Kar/Zarar Ekle
+                            {{ __('admin.trading.add_profit_loss') }}
                         </h3>
                     </div>
                     <button onclick="closeModal('addProfitModal')" class="p-2 text-admin-400 hover:text-admin-600 dark:text-admin-500 dark:hover:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
@@ -467,7 +467,7 @@
                             <x-heroicon name="information-circle" class="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
                             <div class="text-sm text-blue-800 dark:text-blue-200">
                                 <p class="font-medium mb-1">Bilgilendirme:</p>
-                                <p>Bu miktar hem işlemin kar/zarar bilgisine hem de kullanıcının ROI'sine eklenecektir.</p>
+                                <p>{{ __('admin.trading.profit_loss_info') }}</p>
                             </div>
                         </div>
                     </div>
@@ -476,7 +476,7 @@
                         <div>
                             <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                                 <x-heroicon name="currency-dollar" class="w-4 h-4 mr-1" />
-                                Kar/Zarar Miktarı ($)
+                                {{ __('admin.trading.profit_loss_amount') }}
                             </label>
                             <input type="number" 
                                    id="profit_amount" 
@@ -484,22 +484,22 @@
                                    step="0.01" 
                                    required
                                    class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors"
-                                   placeholder="Eklenecek miktarı girin">
+                                   placeholder="{{ __('admin.trading.enter_amount_to_add') }}">
                             <p class="text-xs text-admin-500 dark:text-admin-400 mt-2">
-                                Kar için pozitif, zarar için negatif sayı kullanın
+                                {{ __('admin.trading.positive_for_profit_negative_for_loss') }}
                             </p>
                         </div>
                         
                         <div>
                             <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                                 <x-heroicon name="document-text" class="w-4 h-4 mr-1" />
-                                Not (İsteğe bağlı)
+                                {{ __('admin.trading.note_optional') }}
                             </label>
                             <textarea id="profit_note" 
                                       name="note" 
                                       rows="3"
                                       class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-admin-900 dark:text-admin-100 transition-colors resize-none"
-                                      placeholder="Bu kar/zarar düzenlemesi hakkında not ekleyin..."></textarea>
+                                      placeholder="{{ __('admin.trading.add_note_about_adjustment') }}"></textarea>
                         </div>
                     </div>
                 </div>
@@ -509,12 +509,12 @@
                         <button type="button" 
                                 onclick="closeModal('addProfitModal')" 
                                 class="px-4 py-2 text-admin-700 dark:text-admin-300 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 rounded-xl transition-colors font-medium">
-                            İptal
+                            {{ __('common.cancel') }}
                         </button>
                         <button type="submit" 
                                 class="flex items-center px-6 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
                             <x-heroicon name="plus-circle" class="w-4 h-4 mr-2" />
-                            Kar/Zarar Ekle
+                            {{ __('admin.trading.add_profit_loss') }}
                         </button>
                     </div>
                 </div>
@@ -580,22 +580,22 @@ document.addEventListener('DOMContentLoaded', function() {
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-admin-900 dark:text-admin-100">İşlemi Sil</h3>
-                            <p class="text-admin-500 dark:text-admin-400 text-sm">Bu işlem geri alınamaz</p>
+                            <h3 class="text-lg font-semibold text-admin-900 dark:text-admin-100">{{ __('admin.trading.delete_trade') }}</h3>
+                            <p class="text-admin-500 dark:text-admin-400 text-sm">{{ __('admin.trading.this_action_irreversible') }}</p>
                         </div>
                     </div>
                     <p class="text-admin-600 dark:text-admin-300 mb-6">
-                        Bu işlemi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz ve tüm veriler kalıcı olarak silinecektir.
+                        {{ __('admin.trading.confirm_delete_trade_message') }}
                     </p>
                     <div class="flex justify-end space-x-3">
                         <button onclick="this.closest('.fixed').remove()" class="px-4 py-2 text-admin-700 dark:text-admin-300 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 rounded-xl transition-colors font-medium">
-                            İptal
+                            {{ __('common.cancel') }}
                         </button>
                         <button onclick="confirmDelete('${deleteUrl}', this)" class="flex items-center px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl transition-all duration-200 shadow-lg font-medium">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                             </svg>
-                            Evet, Sil
+                            {{ __('admin.trading.yes_delete') }}
                         </button>
                     </div>
                 </div>
@@ -613,7 +613,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <svg class="w-4 h-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
             </svg>
-            Siliniyor...
+            {{ __('admin.trading.deleting') }}...
         `;
         
         // Create and submit form
@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
 
         // Show loading notification
-        showNotification('info', 'Route testleri başlatılıyor...');
+        showNotification('info', '{{ __("admin.trading.starting_route_tests") }}...');
 
         routes.forEach((route, index) => {
             fetch(route.url, {
@@ -674,13 +674,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Show final result after last test
                 if (index === routes.length - 1) {
-                    showNotification('success', 'Route testleri tamamlandı! Sonuçlar konsola yazdırıldı.');
+                    showNotification('success', '{{ __("admin.trading.route_tests_completed") }}');
                 }
             })
             .catch(error => {
                 console.log(`💥 ${route.name}: Network hatası - ${error.message}`);
                 if (index === routes.length - 1) {
-                    showNotification('warning', 'Route testleri tamamlandı (bazı hatalar ile). Konsolu kontrol edin.');
+                    showNotification('warning', '{{ __("admin.trading.route_tests_completed_with_errors") }}');
                 }
             });
         });
@@ -697,12 +697,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (isHidden) {
                 filtersPanel.classList.remove('hidden');
-                toggleFiltersText.textContent = 'Filtreleri Gizle';
+                toggleFiltersText.textContent = '{{ __("admin.trading.hide_filters") }}';
                 // Save filter state
                 localStorage.setItem('tradesFiltersOpen', 'true');
             } else {
                 filtersPanel.classList.add('hidden');
-                toggleFiltersText.textContent = 'Filtreleri Göster';
+                toggleFiltersText.textContent = '{{ __("admin.trading.show_filters") }}';
                 localStorage.setItem('tradesFiltersOpen', 'false');
             }
         });
@@ -711,7 +711,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const filtersOpen = localStorage.getItem('tradesFiltersOpen');
         if (filtersOpen === 'true') {
             filtersPanel.classList.remove('hidden');
-            toggleFiltersText.textContent = 'Filtreleri Gizle';
+            toggleFiltersText.textContent = '{{ __("admin.trading.hide_filters") }}';
         }
     }
 

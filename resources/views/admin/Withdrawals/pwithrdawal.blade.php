@@ -17,8 +17,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <h1 class="text-3xl font-bold text-gray-900">Çekim Talebini İşle</h1>
-                                <p class="text-gray-600 mt-1">Müşteri çekim talebini görüntüleyin ve işleme alın</p>
+                                <h1 class="text-3xl font-bold text-gray-900">{{ __('admin.withdrawals.process_withdrawal_request') }}</h1>
+                                <p class="text-gray-600 mt-1">{{ __('admin.withdrawals.view_and_process_request_description') }}</p>
                             </div>
                         </div>
                         
@@ -26,7 +26,7 @@
                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                             </svg>
-                            Geri Dön
+                            {{ __('admin.withdrawals.back') }}
                         </a>
                     </div>
                 </div>
@@ -52,14 +52,14 @@
                                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                         </svg>
                                     </div>
-                                    <h2 class="text-xl font-bold text-gray-900">Çekim Detaylarını Düzenle</h2>
+                                    <h2 class="text-xl font-bold text-gray-900">{{ __('admin.withdrawals.edit_withdrawal_details') }}</h2>
                                 </div>
                                 <button type="button" id="toggleEditForm" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-200">
                                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
                                         <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
                                     </svg>
-                                    Düzenle Formunu Aç/Kapat
+                                    {{ __('admin.withdrawals.toggle_edit_form') }}
                                 </button>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                                 <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
                                             </svg>
                                             <div>
-                                                <p class="text-sm font-medium text-red-600">Mevcut Tutar</p>
+                                                <p class="text-sm font-medium text-red-600">{{ __('admin.withdrawals.current_amount') }}</p>
                                                 <p class="text-lg font-bold text-red-800">${{ number_format($withdrawal->amount, 2) }}</p>
                                             </div>
                                         </div>
@@ -86,7 +86,7 @@
                                                 <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd"></path>
                                             </svg>
                                             <div>
-                                                <p class="text-sm font-medium text-blue-600">Mevcut Durum</p>
+                                                <p class="text-sm font-medium text-blue-600">{{ __('admin.withdrawals.current_status') }}</p>
                                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium {{ $withdrawal->status == 'Processed' ? 'bg-green-100 text-green-800' : ($withdrawal->status == 'Pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
                                                     {{ $withdrawal->status }}
                                                 </span>
@@ -100,7 +100,7 @@
                                                 <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
                                             </svg>
                                             <div>
-                                                <p class="text-sm font-medium text-purple-600">Mevcut Ödeme Yöntemi</p>
+                                                <p class="text-sm font-medium text-purple-600">{{ __('admin.withdrawals.current_payment_method') }}</p>
                                                 <p class="text-lg font-semibold text-purple-800">{{ $withdrawal->payment_mode }}</p>
                                             </div>
                                         </div>
@@ -114,7 +114,7 @@
                                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                                             </svg>
                                             <div>
-                                                <p class="text-sm font-medium text-gray-600">Oluşturulma Tarihi</p>
+                                                <p class="text-sm font-medium text-gray-600">{{ __('admin.withdrawals.creation_date') }}</p>
                                                 <p class="text-lg font-semibold text-gray-800">{{ \Carbon\Carbon::parse($withdrawal->created_at)->format('d M Y H:i') }}</p>
                                             </div>
                                         </div>
@@ -126,8 +126,8 @@
                                                 <path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zM3 15a1 1 0 011-1h1a1 1 0 110 2H4a1 1 0 01-1-1zm6-11a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm6 2a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm0 3a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zm0 3a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                                             </svg>
                                             <div>
-                                                <p class="text-sm font-medium text-green-600">Ödeme Detayları</p>
-                                                <p class="text-sm text-green-800">{{ $withdrawal->paydetails ?: 'Belirtilmemiş' }}</p>
+                                                <p class="text-sm font-medium text-green-600">{{ __('admin.withdrawals.payment_details') }}</p>
+                                                <p class="text-sm text-green-800">{{ $withdrawal->paydetails ?: __('admin.withdrawals.not_specified') }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -144,7 +144,7 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <!-- Amount -->
                                     <div>
-                                        <label for="edit_amount" class="block text-sm font-medium text-gray-700 mb-2">Tutar</label>
+                                        <label for="edit_amount" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.amount') }}</label>
                                         <div class="relative">
                                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                 <span class="text-gray-500 sm:text-sm">$</span>
@@ -156,25 +156,25 @@
                                     
                                     <!-- Status -->
                                     <div>
-                                        <label for="edit_status" class="block text-sm font-medium text-gray-700 mb-2">Durum</label>
+                                        <label for="edit_status" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.status') }}</label>
                                         <select name="status" id="edit_status" required
                                                 class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent">
-                                            <option value="Pending" {{ $withdrawal->status == 'Pending' ? 'selected' : '' }}>Beklemede</option>
-                                            <option value="Processed" {{ $withdrawal->status == 'Processed' ? 'selected' : '' }}>İşlenmiş</option>
-                                            <option value="Rejected" {{ $withdrawal->status == 'Rejected' ? 'selected' : '' }}>Reddedildi</option>
+                                            <option value="Pending" {{ $withdrawal->status == 'Pending' ? 'selected' : '' }}>{{ __('admin.withdrawals.pending') }}</option>
+                                            <option value="Processed" {{ $withdrawal->status == 'Processed' ? 'selected' : '' }}>{{ __('admin.withdrawals.processed') }}</option>
+                                            <option value="Rejected" {{ $withdrawal->status == 'Rejected' ? 'selected' : '' }}>{{ __('admin.withdrawals.rejected') }}</option>
                                         </select>
                                     </div>
                                     
                                     <!-- Payment Mode -->
                                     <div>
-                                        <label for="edit_payment_mode" class="block text-sm font-medium text-gray-700 mb-2">Ödeme Yöntemi</label>
+                                        <label for="edit_payment_mode" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.payment_method') }}</label>
                                         <input type="text" name="payment_mode" id="edit_payment_mode" value="{{ $withdrawal->payment_mode }}" required
                                                class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent">
                                     </div>
                                     
                                     <!-- Created Date -->
                                     <div>
-                                        <label for="edit_created_at" class="block text-sm font-medium text-gray-700 mb-2">Oluşturulma Tarihi</label>
+                                        <label for="edit_created_at" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.creation_date') }}</label>
                                         <input type="datetime-local" name="created_at" id="edit_created_at" 
                                                value="{{ \Carbon\Carbon::parse($withdrawal->created_at)->format('Y-m-d\TH:i') }}" required
                                                class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent">
@@ -183,8 +183,8 @@
                                 
                                 <!-- Payment Details -->
                                 <div>
-                                    <label for="edit_paydetails" class="block text-sm font-medium text-gray-700 mb-2">Ödeme Detayları</label>
-                                    <textarea name="paydetails" id="edit_paydetails" rows="3" placeholder="Ödeme detaylarını girin..."
+                                    <label for="edit_paydetails" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.payment_details') }}</label>
+                                    <textarea name="paydetails" id="edit_paydetails" rows="3" placeholder="{{ __('admin.withdrawals.enter_payment_details_placeholder') }}"
                                               class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent">{{ $withdrawal->paydetails }}</textarea>
                                 </div>
                                 
@@ -195,14 +195,14 @@
                                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                         </svg>
-                                        İptal
+                                        {{ __('admin.withdrawals.cancel') }}
                                     </button>
                                     <button type="submit" 
                                             class="inline-flex items-center px-6 py-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
                                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z"></path>
                                         </svg>
-                                        Çekim Detaylarını Güncelle
+                                        {{ __('admin.withdrawals.update_withdrawal_details') }}
                                     </button>
                                 </div>
                             </form>
@@ -215,9 +215,9 @@
                         <div class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border-b border-gray-200">
                             <h2 class="text-xl font-bold text-gray-900">
                                 @if ($withdrawal->status != 'Processed')
-                                    {{ $user->name ?? "N/A" }} için Ödeme Detayları
+                                    {{ __('admin.withdrawals.payment_details_for_user', ['user' => $user->name ?? 'N/A']) }}
                                 @else
-                                    <span class="text-green-600">✓ Ödeme Tamamlandı</span>
+                                    <span class="text-green-600">✓ {{ __('admin.withdrawals.payment_completed') }}</span>
                                 @endif
                             </h2>
                         </div>
@@ -228,7 +228,7 @@
                                 @if ($method->defaultpay == 'yes')
                                     @if ($withdrawal->payment_mode == 'Bitcoin')
                                         <div class="mb-4">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">BTC Adresi</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.btc_address') }}</label>
                                             <div class="flex">
                                                 <input type="text" value="{{ $withdrawal->duser->btc_address }}" readonly
                                                        class="flex-1 block border-gray-300 rounded-l-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
@@ -243,7 +243,7 @@
                                         </div>
                                     @elseif($withdrawal->payment_mode == 'Ethereum')
                                         <div class="mb-4">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">ETH Adresi</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.eth_address') }}</label>
                                             <div class="flex">
                                                 <input type="text" value="{{ $withdrawal->duser->eth_address }}" readonly
                                                        class="flex-1 block border-gray-300 rounded-l-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
@@ -258,7 +258,7 @@
                                         </div>
                                     @elseif($withdrawal->payment_mode == 'Litecoin')
                                         <div class="mb-4">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">LTC Adresi</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.ltc_address') }}</label>
                                             <div class="flex">
                                                 <input type="text" value="{{ $withdrawal->duser->ltc_address }}" readonly
                                                        class="flex-1 block border-gray-300 rounded-l-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
@@ -273,7 +273,7 @@
                                         </div>
                                     @elseif ($withdrawal->payment_mode == 'USDT')
                                         <div class="mb-4">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">USDT Adresi</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.usdt_address') }}</label>
                                             <div class="flex">
                                                 <input type="text" value="{{ $withdrawal->duser->usdt_address }}" readonly
                                                        class="flex-1 block border-gray-300 rounded-l-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
@@ -288,7 +288,7 @@
                                         </div>
                                     @elseif ($withdrawal->payment_mode == 'BUSD')
                                         <div class="mb-4">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">BUSD Adresi</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.busd_address') }}</label>
                                             <div class="flex">
                                                 <input type="text" value="{{ $withdrawal->paydetails }}" readonly
                                                        class="flex-1 block border-gray-300 rounded-l-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
@@ -304,23 +304,23 @@
                                     @elseif($withdrawal->payment_mode == 'Bank Transfer')
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">Banka Adı</label>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.bank_name') }}</label>
                                                 <input type="text" value="{{ $withdrawal->duser->bank_name }}" readonly
                                                        class="block w-full border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
                                             </div>
                                             <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">Hesap Adı</label>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.account_name') }}</label>
                                                 <input type="text" value="{{ $withdrawal->duser->account_name }}" readonly
                                                        class="block w-full border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
                                             </div>
                                             <div>
-                                                <label class="block text-sm font-medium text-gray-700 mb-2">Hesap Numarası</label>
+                                                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.account_number') }}</label>
                                                 <input type="text" value="{{ $withdrawal->duser->account_number }}" readonly
                                                        class="block w-full border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
                                             </div>
                                             @if (!empty($withdrawal->duser->swift_code))
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700 mb-2">Swift Kodu</label>
+                                                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.swift_code') }}</label>
                                                     <input type="text" value="{{ $withdrawal->duser->swift_code }}" readonly
                                                            class="block w-full border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
                                                 </div>
@@ -330,7 +330,7 @@
                                 @else
                                     @if ($method->methodtype == 'crypto')
                                         <div class="mb-4">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $withdrawal->payment_mode }} Adresi</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.crypto_address', ['currency' => $withdrawal->payment_mode]) }}</label>
                                             <div class="flex">
                                                 <input type="text" value="{{ $withdrawal->paydetails }}" readonly
                                                        class="flex-1 block border-gray-300 rounded-l-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
@@ -345,7 +345,7 @@
                                         </div>
                                     @else
                                         <div class="mb-4">
-                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ $withdrawal->payment_mode }} Ödeme Detayları</label>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.payment_details_for_method', ['method' => $withdrawal->payment_mode]) }}</label>
                                             <input type="text" value="{{ $withdrawal->paydetails }}" readonly
                                                    class="block w-full border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:ring-0 focus:border-gray-300">
                                         </div>
@@ -360,7 +360,7 @@
                         <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
                             <!-- Action Header -->
                             <div class="bg-gradient-to-r from-orange-50 to-yellow-50 px-6 py-4 border-b border-gray-200">
-                                <h2 class="text-xl font-bold text-gray-900">İşlem Yapın</h2>
+                                <h2 class="text-xl font-bold text-gray-900">{{ __('admin.withdrawals.perform_action') }}</h2>
                             </div>
                             
                             <!-- Action Form -->
@@ -370,24 +370,24 @@
                                     
                                     <!-- Action Selection -->
                                     <div>
-                                        <label for="action" class="block text-sm font-medium text-gray-700 mb-2">İşlem</label>
+                                        <label for="action" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.action') }}</label>
                                         <select name="action" id="action" class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                            <option value="Paid">Ödendi</option>
-                                            <option value="Reject">Reddet</option>
+                                            <option value="Paid">{{ __('admin.withdrawals.paid') }}</option>
+                                            <option value="Reject">{{ __('admin.withdrawals.reject') }}</option>
                                         </select>
                                     </div>
                                     
                                     <!-- Email Options (Initially Hidden) -->
                                     <div id="emailcheck" class="hidden">
-                                        <label class="block text-sm font-medium text-gray-700 mb-3">E-posta Gönder</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-3">{{ __('admin.withdrawals.send_email') }}</label>
                                         <div class="flex space-x-4">
                                             <label class="inline-flex items-center">
                                                 <input type="radio" name="emailsend" id="dontsend" value="false" class="form-radio text-orange-500 focus:ring-orange-500" checked>
-                                                <span class="ml-2">E-posta Gönderme</span>
+                                                <span class="ml-2">{{ __('admin.withdrawals.dont_send_email') }}</span>
                                             </label>
                                             <label class="inline-flex items-center">
                                                 <input type="radio" name="emailsend" id="sendemail" value="true" class="form-radio text-orange-500 focus:ring-orange-500">
-                                                <span class="ml-2">E-posta Gönder</span>
+                                                <span class="ml-2">{{ __('admin.withdrawals.send_email') }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -395,13 +395,13 @@
                                     <!-- Email Content (Initially Hidden) -->
                                     <div id="emailtext" class="hidden space-y-4">
                                         <div>
-                                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Konu</label>
+                                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.subject') }}</label>
                                             <input type="text" name="subject" id="subject" 
                                                    class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-transparent">
                                         </div>
                                         <div>
-                                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Reddetme Nedeni</label>
-                                            <textarea name="reason" id="message" rows="3" placeholder="Reddetme nedenini buraya yazın..."
+                                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.withdrawals.rejection_reason') }}</label>
+                                            <textarea name="reason" id="message" rows="3" placeholder="{{ __('admin.withdrawals.enter_rejection_reason_placeholder') }}"
                                                       class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-orange-500 focus:border-transparent"></textarea>
                                         </div>
                                     </div>
@@ -413,7 +413,7 @@
                                             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                             </svg>
-                                            İşlemi Tamamla
+                                            {{ __('admin.withdrawals.complete_action') }}
                                         </button>
                                     </div>
                                 </form>
@@ -436,11 +436,11 @@
             if (editContainer.style.display === 'none') {
                 editContainer.style.display = 'block';
                 currentValues.style.display = 'none';
-                button.innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l6 6a1 1 0 001.414 0l6-6a1 1 0 00-1.414-1.414L10 6.586 4.293 2.293z" clip-rule="evenodd"></path></svg>Formu Gizle';
+                button.innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l6 6a1 1 0 001.414 0l6-6a1 1 0 00-1.414-1.414L10 6.586 4.293 2.293z" clip-rule="evenodd"></path></svg>{{ __('admin.withdrawals.hide_form') }}';
             } else {
                 editContainer.style.display = 'none';
                 currentValues.style.display = 'block';
-                button.innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>Düzenle Formunu Aç/Kapat';
+                button.innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>{{ __('admin.withdrawals.toggle_edit_form') }}';
             }
         });
         
@@ -448,7 +448,7 @@
         document.getElementById('cancelEdit').addEventListener('click', function() {
             document.getElementById('editFormContainer').style.display = 'none';
             document.getElementById('currentValues').style.display = 'block';
-            document.getElementById('toggleEditForm').innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>Düzenle Formunu Aç/Kapat';
+            document.getElementById('toggleEditForm').innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>{{ __('admin.withdrawals.toggle_edit_form') }}';
         });
         
         // Form validation
@@ -456,11 +456,11 @@
             const amount = parseFloat(document.getElementById('edit_amount').value);
             if (amount < 0) {
                 e.preventDefault();
-                alert('Tutar negatif olamaz');
+                alert('{{ __('admin.withdrawals.amount_cannot_be_negative') }}');
                 return false;
             }
             
-            if (confirm('Bu çekim talebini güncellemek istediğinizden emin misiniz?')) {
+            if (confirm('{{ __('admin.withdrawals.update_withdrawal_confirmation') }}')) {
                 return true;
             } else {
                 e.preventDefault();
@@ -510,7 +510,7 @@
         // Copy to clipboard function
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(function() {
-                alert('Adres panoya kopyalandı!');
+                alert('{{ __('admin.withdrawals.address_copied_to_clipboard') }}');
             }).catch(function(err) {
                 console.error('Could not copy text: ', err);
             });

@@ -44,11 +44,11 @@
                 <!-- Status Badge -->
                 @if($role->is_active)
                     <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-medium rounded-full">
-                        Aktif
+                        {{ __('admin.roles.tree.active') }}
                     </span>
                 @else
                     <span class="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-xs font-medium rounded-full">
-                        Pasif
+                        {{ __('admin.roles.tree.inactive') }}
                     </span>
                 @endif
                 
@@ -61,18 +61,18 @@
             <div class="flex items-center space-x-4 text-sm text-admin-600 dark:text-admin-400">
                 <span class="flex items-center">
                     <x-heroicon name="users" class="w-4 h-4 mr-1" />
-                    {{ $role->admins->count() }} admin
+                    {{ $role->admins->count() }} {{ __('admin.roles.tree.admins') }}
                 </span>
                 
                 <span class="flex items-center">
                     <x-heroicon name="shield-check" class="w-4 h-4 mr-1" />
-                    {{ $role->permissions->where('pivot.is_granted', true)->count() }} izin
+                    {{ $role->permissions->where('pivot.is_granted', true)->count() }} {{ __('admin.roles.tree.permissions') }}
                 </span>
                 
                 @if($hasChildren)
                     <span class="flex items-center">
                         <x-heroicon name="git-branch" class="w-4 h-4 mr-1" />
-                        {{ $role->childRoles->count() }} alt rol
+                        {{ $role->childRoles->count() }} {{ __('admin.roles.tree.child_roles') }}
                     </span>
                 @endif
                 
@@ -94,21 +94,21 @@
             <!-- View Button -->
             <a href="{{ route('admin.roles.show', $role) }}" 
                class="w-8 h-8 flex items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors" 
-               title="Detayları Görüntüle">
+               title="{{ __('admin.roles.tree.view_details') }}">
                 <x-heroicon name="eye" class="w-4 h-4" />
             </a>
             
             <!-- Edit Button -->
             <a href="{{ route('admin.roles.edit', $role) }}" 
                class="w-8 h-8 flex items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors" 
-               title="Düzenle">
+               title="{{ __('admin.roles.tree.edit') }}">
                 <x-heroicon name="edit-3" class="w-4 h-4" />
             </a>
             
             <!-- Permissions Button -->
             <a href="{{ route('admin.permissions.role-permissions', $role) }}"
                class="w-8 h-8 flex items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors" 
-               title="İzinleri Yönet">
+               title="{{ __('admin.roles.tree.manage_permissions') }}">
                 <x-heroicon name="shield-check" class="w-4 h-4" />
             </a>
             
@@ -116,13 +116,13 @@
             @if($role->is_active)
                 <button onclick="toggleRoleStatus({{ $role->id }}, false)" 
                         class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors" 
-                        title="Pasif Yap">
+                        title="{{ __('admin.roles.tree.deactivate') }}">
                     <x-heroicon name="user-minus" class="w-4 h-4" />
                 </button>
             @else
                 <button onclick="toggleRoleStatus({{ $role->id }}, true)" 
                         class="w-8 h-8 flex items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors" 
-                        title="Aktif Yap">
+                        title="{{ __('admin.roles.tree.activate') }}">
                     <x-heroicon name="user-check" class="w-4 h-4" />
                 </button>
             @endif
@@ -131,7 +131,7 @@
             @if(!$role->is_system_role && $role->admins->count() == 0)
                 <button onclick="deleteRole({{ $role->id }})" 
                         class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors" 
-                        title="Sil">
+                        title="{{ __('admin.roles.tree.delete') }}">
                     <x-heroicon name="trash-2" class="w-4 h-4" />
                 </button>
             @endif
@@ -175,16 +175,16 @@
     <script>
     function toggleRoleStatus(roleId, status) {
         Swal.fire({
-            title: status ? 'Rolü Aktif Yap?' : 'Rolü Pasif Yap?',
-            text: status ? 
-                "Bu rol aktif hale getirilecek ve adminler bu rolün izinlerini kullanabilecek." : 
-                "Bu rol pasif hale getirilecek ve adminler geçici olarak kısıtlanacak.",
+            title: status ? '{{ __('admin.roles.tree.activate_title') }}' : '{{ __('admin.roles.tree.deactivate_title') }}',
+            text: status ?
+                "{{ __('admin.roles.tree.activate_message') }}" :
+                "{{ __('admin.roles.tree.deactivate_message') }}",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: status ? '#10b981' : '#ef4444',
             cancelButtonColor: '#6b7280',
-            confirmButtonText: status ? 'Evet, Aktif Yap' : 'Evet, Pasif Yap',
-            cancelButtonText: 'İptal'
+            confirmButtonText: status ? '{{ __('admin.roles.tree.yes_activate') }}' : '{{ __('admin.roles.tree.yes_deactivate') }}',
+            cancelButtonText: '{{ __('admin.roles.tree.cancel') }}'
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch(`/admin/dashboard/roles/${roleId}/${status ? 'activate' : 'deactivate'}`, {
@@ -198,7 +198,7 @@
                 .then(data => {
                     if (data.success) {
                         Swal.fire({
-                            title: 'Başarılı!',
+                            title: '{{ __('admin.roles.tree.success') }}!',
                             text: data.message,
                             icon: 'success',
                             timer: 1500,
@@ -212,7 +212,7 @@
                 })
                 .catch(error => {
                     Swal.fire({
-                        title: 'Hata!',
+                        title: '{{ __('admin.roles.tree.error') }}!',
                         text: error.message,
                         icon: 'error'
                     });
@@ -223,14 +223,14 @@
     
     function deleteRole(roleId) {
         Swal.fire({
-            title: 'Rolü Sil?',
-            text: "Bu işlem geri alınamaz. Rol kalıcı olarak silinecek.",
+            title: '{{ __('admin.roles.tree.delete_title') }}',
+            text: "{{ __('admin.roles.tree.delete_message') }}",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#ef4444',
             cancelButtonColor: '#6b7280',
-            confirmButtonText: 'Evet, Sil',
-            cancelButtonText: 'İptal'
+            confirmButtonText: '{{ __('admin.roles.tree.yes_delete') }}',
+            cancelButtonText: '{{ __('admin.roles.tree.cancel') }}'
         }).then((result) => {
             if (result.isConfirmed) {
                 const form = document.createElement('form');

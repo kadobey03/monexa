@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Trade Sinyalleri'])
+@extends('layouts.admin', ['title' => __('admin.signals.title')])
 
 @section('content')
 <div class="space-y-6">
@@ -11,8 +11,8 @@
                 </div>
             </div>
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Trade Sinyalleri</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Trading sinyallerini yönetin ve takip edin</p>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.signals.title') }}</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('admin.signals.subtitle') }}</p>
             </div>
         </div>
         
@@ -22,7 +22,7 @@
                     @click="$dispatch('open-modal', { name: 'add-signal' })"
                     class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                 <x-heroicon name="plus" class="h-4 w-4 mr-2" />
-                Sinyal Ekle
+                {{ __('admin.signals.add_signal') }}
             </button>
         </div>
     </div>
@@ -56,13 +56,13 @@
                         <div class="sm:flex sm:items-start">
                             <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4">
-                                    Yeni Sinyal Ekle
+                                    {{ __('admin.signals.add_new_title') }}
                                 </h3>
                                 
                                 <div class="space-y-4">
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">İşlem Yönü</label>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.signals.trade_direction') }}</label>
                                             <select name="direction"
                                                     class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm bg-white dark:bg-admin-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                                     required>
@@ -72,7 +72,7 @@
                                         </div>
                                         
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Döviz Çifti</label>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.signals.currency_pair') }}</label>
                                             <input type="text"
                                                    name="pair"
                                                    placeholder="ör. EUR/USD"
@@ -83,7 +83,7 @@
                                     
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Fiyat</label>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.signals.price') }}</label>
                                             <input type="text"
                                                    name="price"
                                                    class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm bg-white dark:bg-admin-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -91,7 +91,7 @@
                                         </div>
                                         
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Take Profit 1</label>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.signals.take_profit_1') }}</label>
                                             <input type="text"
                                                    name="tp1"
                                                    step="any"
@@ -102,7 +102,7 @@
                                     
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Take Profit 2</label>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.signals.take_profit_2') }}</label>
                                             <input type="text"
                                                    name="tp2"
                                                    step="any"
@@ -110,7 +110,7 @@
                                         </div>
                                         
                                         <div>
-                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Stop Loss</label>
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.signals.stop_loss') }}</label>
                                             <input type="text"
                                                    name="sl1"
                                                    step="any"
@@ -125,12 +125,12 @@
                     <div class="bg-gray-50 dark:bg-admin-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <button type="submit"
                                 class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                            Sinyal Ekle
+                            {{ __('admin.signals.add_signal') }}
                         </button>
                         <button type="button"
                                 @click="show = false"
                                 class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-admin-600 shadow-sm px-4 py-2 bg-white dark:bg-admin-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-admin-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                            İptal
+                            {{ __('admin.signals.cancel') }}
                         </button>
                     </div>
                 </form>
@@ -140,7 +140,7 @@
     <!-- Signals Table -->
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Sinyaller</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.signals.title') }}</h3>
         </div>
         
         <div class="overflow-x-auto">
@@ -148,37 +148,37 @@
                 <thead class="bg-gray-50 dark:bg-admin-900">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Referans
+                            {{ __('admin.signals.reference') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            İşlem Yönü
+                            {{ __('admin.signals.trade_direction') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Döviz Çifti
+                            {{ __('admin.signals.currency_pair') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Fiyat
+                            {{ __('admin.signals.price') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Take Profit 1
+                            {{ __('admin.signals.take_profit_1') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Take Profit 2
+                            {{ __('admin.signals.take_profit_2') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Stop Loss
+                            {{ __('admin.signals.stop_loss') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Sonuç
+                            {{ __('admin.signals.result') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Durum
+                            {{ __('admin.signals.status') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Eklenme Tarihi
+                            {{ __('admin.signals.date_added') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            İşlemler
+                            {{ __('admin.signals.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -236,21 +236,21 @@
                                     @if ($signal->status == 'unpublished')
                                         <a href="{{ route('pubsignals', ['signal' => $signal->id]) }}"
                                            class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                                            Yayınla
+                                            {{ __('admin.signals.publish') }}
                                         </a>
                                     @else
                                         <button type="button"
                                                 x-data
                                                 @click="$dispatch('open-modal', { name: 'result-modal-{{ $signal->id }}' })"
                                                 class="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-admin-600 text-xs font-medium rounded text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                                            Sonuç Ekle
+                                            {{ __('admin.signals.add_result') }}
                                         </button>
                                     @endif
                                     
                                     <a href="{{ route('delete.signal', ['signal' => $signal->id]) }}"
-                                       onclick="return confirm('Bu sinyali silmek istediğinizden emin misiniz?')"
+                                       onclick="return confirm('{{ __('admin.signals.delete_confirm') }}')"
                                        class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 dark:focus:ring-offset-admin-800">
-                                        Sil
+                                        {{ __('admin.signals.delete') }}
                                     </a>
                                 </div>
                             </td>
@@ -285,11 +285,11 @@
                                             <div class="sm:flex sm:items-start">
                                                 <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
                                                     <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white mb-4">
-                                                        Sinyal Sonucunu Güncelle
+                                                        {{ __('admin.signals.update_result_title') }}
                                                     </h3>
                                                     
                                                     <div>
-                                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Sonuç</label>
+                                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.signals.result') }}</label>
                                                         <input type="text"
                                                                name="result"
                                                                value="{{ $signal->result }}"
@@ -301,12 +301,12 @@
                                         <div class="bg-gray-50 dark:bg-admin-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                             <button type="submit"
                                                     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
-                                                Sonucu Yayınla
+                                                {{ __('admin.signals.publish_result') }}
                                             </button>
                                             <button type="button"
                                                     @click="show = false"
                                                     class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-admin-600 shadow-sm px-4 py-2 bg-white dark:bg-admin-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-admin-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                                                İptal
+                                                {{ __('admin.signals.cancel') }}
                                             </button>
                                         </div>
                                     </form>
@@ -318,8 +318,8 @@
                             <td colspan="11" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center">
                                     <x-heroicon name="arrow-trending-up" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
-                                    <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Veri Bulunamadı</h3>
-                                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Henüz hiç sinyal eklenmemiş.</p>
+                                    <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">{{ __('admin.signals.no_data_found') }}</h3>
+                                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">{{ __('admin.signals.no_signals_yet') }}</p>
                                 </div>
                             </td>
                         </tr>

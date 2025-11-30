@@ -1,16 +1,16 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-# Merhaba {{ $demo->receiver_name }},
+# {{ __('mail.greetings.hello') }} {{ $demo->receiver_name }},
 
-Bu, yatırım planınızın ({{ $demo->receiver_plan }} planı) süresi dolduğunu ve bu plan için sermayenizin çekim için hesabınıza eklendiğini bildirmek için. <br>
+{{ __('mail.plans.expiry_notification', ['planName' => $demo->receiver_plan]) }} <br>
 
-<strong>Plan:</strong> {{ $demo->receiver_plan }} <br>
+<strong>{{ __('mail.financial.plan') }}:</strong> {{ $demo->receiver_plan }} <br>
 
-<strong>Miktar:</strong> {{ $demo->received_amount }} <br>
+<strong>{{ __('mail.financial.amount') }}:</strong> {{ $demo->received_amount }} <br>
 
-<strong>Tarih:</strong> {{ $demo->date }} <br>
+<strong>{{ __('mail.common.date') }}:</strong> {{ $demo->date }} <br>
 
-Saygılarımla,<br>
+{{ __('mail.footer.regards') }},<br>
 {{ $demo->sender }}.
 @endcomponent
 {{-- blade-formatter-disable --}}

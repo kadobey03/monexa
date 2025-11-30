@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Notification Details')
+@section('title', __('admin.notifications.notification_details'))
 
 @php
     // Helper function to safely get user name
@@ -22,7 +22,7 @@
 @section('content')
 <div class="container-fluid px-4 py-4">
     <div class="mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Notification Details</h1>
+        <h1 class="h3 mb-0 text-gray-800">{{ __('admin.notifications.notification_details') }}</h1>
     </div>
 
 <div class="row">
@@ -38,7 +38,7 @@
                 <div class="mb-4">
                     <div class="row">
                         <div class="col-md-12">
-                            <p><strong>User:</strong>
+                            <p><strong>{{ __('admin.notifications.user') }}:</strong>
                                 @php
                                     $userId = null;
                                     $userName = 'N/A';
@@ -65,7 +65,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <p><strong>Message:</strong></p>
+                            <p><strong>{{ __('admin.notifications.message') }}:</strong></p>
                             <div class="p-3 bg-light rounded">
                                 {{ $notification->message }}
                             </div>
@@ -75,17 +75,17 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>Date:</strong> {{ $notification->created_at->format('F d, Y h:i A') }}</p>
+                        <p><strong>{{ __('admin.notifications.date') }}:</strong> {{ $notification->created_at->format('F d, Y h:i A') }}</p>
                     </div>
                     <div class="col-md-6 text-md-right">
-                        <p><strong>Status:</strong> {{ $notification->is_read ? 'Read' : 'Unread' }}</p>
+                        <p><strong>{{ __('admin.notifications.status') }}:</strong> {{ $notification->is_read ? __('admin.notifications.read') : __('admin.notifications.unread') }}</p>
                     </div>
                 </div>
 
                 @if($notification->source_id && $notification->source_type)
                     <hr>
                     <div class="mt-3">
-                        <h6>Related Information</h6>
+                        <h6>{{ __('admin.notifications.related_information') }}</h6>
                         @php
                             $sourceModel = null;
                             try {
@@ -103,118 +103,118 @@
                                     <tbody>
                                         @if($notification->source_type == 'App\\Models\\Deposit')
                                             <tr>
-                                                <th>User</th>
+                                                <th>{{ __('admin.notifications.user') }}</th>
                                                 <td>{{ safeGetUserName($sourceModel->user) }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Amount</th>
+                                                <th>{{ __('admin.notifications.amount') }}</th>
                                                 <td>{{ $sourceModel->amount }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Status</th>
+                                                <th>{{ __('admin.notifications.status') }}</th>
                                                 <td>{{ $sourceModel->status }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Payment Mode</th>
+                                                <th>{{ __('admin.notifications.payment_mode') }}</th>
                                                 <td>{{ $sourceModel->payment_mode }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Action</th>
+                                                <th>{{ __('admin.notifications.action') }}</th>
                                                 <td>
-                                                    <a href="" class="btn btn-sm btn-primary">View Deposit</a>
+                                                    <a href="" class="btn btn-sm btn-primary">{{ __('admin.notifications.view_deposit') }}</a>
                                                 </td>
                                             </tr>
                                         @elseif($notification->source_type == 'App\\Models\\Withdrawal')
                                             <tr>
-                                                <th>User</th>
+                                                <th>{{ __('admin.notifications.user') }}</th>
                                                 <td>{{ safeGetUserName($sourceModel->user) }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Amount</th>
+                                                <th>{{ __('admin.notifications.amount') }}</th>
                                                 <td>{{ $sourceModel->amount }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Status</th>
+                                                <th>{{ __('admin.notifications.status') }}</th>
                                                 <td>{{ $sourceModel->status }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Payment Mode</th>
+                                                <th>{{ __('admin.notifications.payment_mode') }}</th>
                                                 <td>{{ $sourceModel->payment_mode }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Action</th>
+                                                <th>{{ __('admin.notifications.action') }}</th>
                                                 <td>
-                                                    <a href="#" class="btn btn-sm btn-primary">View Withdrawal</a>
+                                                    <a href="#" class="btn btn-sm btn-primary">{{ __('admin.notifications.view_withdrawal') }}</a>
                                                 </td>
                                             </tr>
                                         @elseif($notification->source_type == 'App\\Models\\User_plans')
                                             <tr>
-                                                <th>User</th>
+                                                <th>{{ __('admin.notifications.user') }}</th>
                                                 <td>{{ safeGetUserName($sourceModel->user) }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Amount</th>
+                                                <th>{{ __('admin.notifications.amount') }}</th>
                                                 <td>{{ $sourceModel->amount }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Status</th>
-                                                <td>{{ $sourceModel->active ? 'Active' : 'Inactive' }}</td>
+                                                <th>{{ __('admin.notifications.status') }}</th>
+                                                <td>{{ $sourceModel->active ? __('admin.notifications.active') : __('admin.notifications.inactive') }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Asset</th>
+                                                <th>{{ __('admin.notifications.asset') }}</th>
                                                 <td>{{ $sourceModel->assets }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Action</th>
+                                                <th>{{ __('admin.notifications.action') }}</th>
                                                 <td>
-                                                    <a href="#" class="btn btn-sm btn-primary">View Plan</a>
+                                                    <a href="#" class="btn btn-sm btn-primary">{{ __('admin.notifications.view_plan') }}</a>
                                                 </td>
                                             </tr>
                                         @elseif($notification->source_type == 'App\\Models\\UserBotInvestment')
                                             <tr>
-                                                <th>User</th>
+                                                <th>{{ __('admin.notifications.user') }}</th>
                                                 <td>{{ safeGetUserName($sourceModel->user) }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Amount</th>
+                                                <th>{{ __('admin.notifications.amount') }}</th>
                                                 <td>{{ $sourceModel->investment_amount }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Status</th>
+                                                <th>{{ __('admin.notifications.status') }}</th>
                                                 <td>{{ $sourceModel->status }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Current Balance</th>
+                                                <th>{{ __('admin.notifications.current_balance') }}</th>
                                                 <td>{{ $sourceModel->current_balance }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Action</th>
+                                                <th>{{ __('admin.notifications.action') }}</th>
                                                 <td>
-                                                    <a href="#" class="btn btn-sm btn-primary">View Bot Investment</a>
+                                                    <a href="#" class="btn btn-sm btn-primary">{{ __('admin.notifications.view_bot_investment') }}</a>
                                                 </td>
                                             </tr>
                                         @else
                                             <tr>
-                                                <td colspan="2">No detailed information available.</td>
+                                                <td colspan="2">{{ __('admin.notifications.no_detailed_information') }}</td>
                                             </tr>
                                         @endif
                                     </tbody>
                                 </table>
                             </div>
                         @else
-                            <p>No related information available.</p>
+                            <p>{{ __('admin.notifications.no_related_information') }}</p>
                         @endif
                     </div>
                 @endif
 
                 <div class="mt-4">
-                    <a href="{{ route('admin.notifications') }}" class="btn btn-secondary">Back to Notifications</a>
+                    <a href="{{ route('admin.notifications') }}" class="btn btn-secondary">{{ __('admin.notifications.back_to_notifications') }}</a>
 
                     <form action="{{ route('admin.notifications.delete') }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="notification_id" value="{{ $notification->id }}">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this notification?')">Delete</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('{{ __('admin.notifications.confirm_delete_notification') }}')">{{ __('admin.notifications.delete') }}</button>
                     </form>
                 </div>
             </div>

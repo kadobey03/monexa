@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'KYC Başvuru Yönetimi'])
+@extends('layouts.admin', ['title' => __('admin.kyc.applications_management')])
 
 @section('content')
 <div class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 min-h-screen p-4">
@@ -11,17 +11,17 @@
                 <div>
                     <h1 class="text-4xl font-bold text-white mb-2">
                         <x-heroicon name="user-check" class="inline w-10 h-10 mr-3 text-blue-200" />
-                        KYC Başvuru Yönetimi
+                        {{ __('admin.kyc.applications_management') }}
                     </h1>
                     <p class="text-blue-100 text-lg">
-                        {{ $settings->site_name }} - Kullanıcı kimlik doğrulama başvurularını yönetin
+                        {{ $settings->site_name }} - {{ __('admin.kyc.manage_user_verification') }}
                     </p>
                 </div>
                 <div class="hidden md:block">
                     <div class="flex items-center space-x-4">
                         <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4">
                             <div class="text-2xl font-bold text-white">{{ $kycs->count() }}</div>
-                            <div class="text-blue-100 text-sm">Toplam Başvuru</div>
+                            <div class="text-blue-100 text-sm">{{ __('admin.kyc.total_applications') }}</div>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     <div class="text-2xl font-bold text-gray-900 dark:text-white">
                         {{ $kycs->where('status', 'Verified')->count() }}
                     </div>
-                    <div class="text-gray-500 dark:text-gray-400 text-sm">Onaylanmış</div>
+                    <div class="text-gray-500 dark:text-gray-400 text-sm">{{ __('admin.kyc.approved') }}</div>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
                     <div class="text-2xl font-bold text-gray-900 dark:text-white">
                         {{ $kycs->where('status', 'Pending')->count() }}
                     </div>
-                    <div class="text-gray-500 dark:text-gray-400 text-sm">Beklemede</div>
+                    <div class="text-gray-500 dark:text-gray-400 text-sm">{{ __('admin.kyc.pending') }}</div>
                 </div>
             </div>
         </div>
@@ -70,7 +70,7 @@
                     <div class="text-2xl font-bold text-gray-900 dark:text-white">
                         {{ $kycs->whereNotIn('status', ['Verified', 'Pending'])->count() }}
                     </div>
-                    <div class="text-gray-500 dark:text-gray-400 text-sm">Reddedilmiş</div>
+                    <div class="text-gray-500 dark:text-gray-400 text-sm">{{ __('admin.kyc.rejected') }}</div>
                 </div>
             </div>
         </div>
@@ -81,9 +81,9 @@
         <div class="p-6 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-admin-900 dark:to-admin-800 border-b border-admin-200 dark:border-admin-700">
             <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center">
                 <x-heroicon name="list-bullet" class="w-6 h-6 mr-3 text-blue-600 dark:text-blue-400" />
-                KYC Başvuru Listesi
+                {{ __('admin.kyc.applications_list') }}
             </h3>
-            <p class="text-gray-600 dark:text-gray-400 mt-1">Kullanıcı kimlik doğrulama başvurularını inceleyin ve yönetin</p>
+            <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.kyc.review_manage_applications') }}</p>
         </div>
 
         <div class="overflow-x-auto">
@@ -92,15 +92,15 @@
                     <tr>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
                             <x-heroicon name="user" class="inline w-4 h-4 mr-2 text-gray-400" />
-                            Kullanıcı
+                            {{ __('admin.users.user') }}
                         </th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
                             <x-heroicon name="shield-check" class="inline w-4 h-4 mr-2 text-gray-400" />
-                            KYC Durumu
+                            {{ __('admin.kyc.status') }}
                         </th>
                         <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900 dark:text-white">
                             <x-heroicon name="cog-6-tooth" class="inline w-4 h-4 mr-2 text-gray-400" />
-                            İşlemler
+                            {{ __('admin.users.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -124,12 +124,12 @@
                                 @if ($list->status == 'Verified')
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
                                         <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
-                                        Doğrulandı
+                                        {{ __('admin.kyc.verified') }}
                                     </span>
                                 @elseif ($list->status == 'Pending')
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
                                         <x-heroicon name="clock" class="w-3 h-3 mr-1" />
-                                        Beklemede
+                                        {{ __('admin.kyc.pending') }}
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">
@@ -142,7 +142,7 @@
                                 <a href="{{ route('viewkyc', $list->id) }}"
                                    class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transform hover:-translate-y-0.5 transition-all duration-200 shadow-md hover:shadow-lg">
                                     <x-heroicon name="eye" class="w-4 h-4 mr-2" />
-                                    Başvuruyu Görüntüle
+                                    {{ __('admin.kyc.view_application') }}
                                 </a>
                             </td>
                         </tr>
@@ -151,8 +151,8 @@
                             <td colspan="3" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center">
                                     <x-heroicon name="inbox" class="w-16 h-16 text-gray-300 mb-4" />
-                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Henüz başvuru yok</h3>
-                                    <p class="text-gray-500 dark:text-gray-400">KYC başvurusu yapılmamış.</p>
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('admin.kyc.no_applications_yet') }}</h3>
+                                    <p class="text-gray-500 dark:text-gray-400">{{ __('admin.kyc.no_applications_submitted') }}</p>
                                 </div>
                             </td>
                         </tr>
@@ -194,7 +194,7 @@
             document.querySelectorAll('a[href*="viewkyc"]').forEach(button => {
                 button.addEventListener('click', function(e) {
                     const originalText = this.innerHTML;
-                    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Yükleniyor...';
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>{{ __("common.loading") }}...';
                     this.classList.add('opacity-75', 'cursor-not-allowed');
                     
                     setTimeout(() => {

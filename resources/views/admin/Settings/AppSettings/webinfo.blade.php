@@ -11,31 +11,31 @@
                         <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z" clip-rule="evenodd"></path>
                     </svg>
                 </div>
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Temel Web Sitesi Bilgileri</h2>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.settings.app.webinfo.basic_info') }}</h2>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Website Adı</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.website_name') }}</label>
                     <input type="text" name="site_name" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->site_name }}" required>
                 </div>
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Website Başlığı</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.website_title') }}</label>
                     <input type="text" name="site_title" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->site_title }}" required>
                 </div>
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Website Anahtar Kelimeleri</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.website_keywords') }}</label>
                     <input type="text" name="keywords" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->keywords }}" required>
                 </div>
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Website URL'si</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.website_url') }}</label>
                     <input type="url" placeholder="https://yoursite.com" name="site_address" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" value="{{ $settings->site_address }}" required>
                 </div>
             </div>
             
             <div class="space-y-2">
-                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Website Açıklaması</label>
-                <textarea name="description" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" rows="4" placeholder="Web sitenizin kısa açıklamasını yazın...">{{ $settings->description }}</textarea>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.website_description') }}</label>
+                <textarea name="description" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" rows="4" placeholder="{{ __('admin.settings.app.webinfo.description_placeholder') }}">{{ $settings->description }}</textarea>
             </div>
         </div>
 
@@ -47,34 +47,34 @@
                         <path fill-rule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                     </svg>
                 </div>
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">İletişim ve Duyurular</h2>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.settings.app.webinfo.contact_announcements') }}</h2>
             </div>
             
             <div class="space-y-6">
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Site Duyurusu</label>
-                    <textarea name="update" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" rows="3" placeholder="Ana sayfada gösterilecek duyuruyu yazın...">{{ $settings->newupdate }}</textarea>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.site_announcement') }}</label>
+                    <textarea name="update" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" rows="3" placeholder="{{ __('admin.settings.app.webinfo.announcement_placeholder') }}">{{ $settings->newupdate }}</textarea>
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Yeni Üyeler İçin Hoş Geldin Mesajı</label>
-                        <textarea name="welcome_message" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" rows="3" placeholder="Yeni kayıt olan kullanıcılar için mesaj...">{{ $settings->welcome_message }}</textarea>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Bu mesaj, kayıt tarihinden itibaren 3 gün boyunca gösterilir</p>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.welcome_message') }}</label>
+                        <textarea name="welcome_message" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" rows="3" placeholder="{{ __('admin.settings.app.webinfo.welcome_message_placeholder') }}">{{ $settings->welcome_message }}</textarea>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.settings.app.webinfo.welcome_message_help') }}</p>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">WhatsApp Numarası</label>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.whatsapp_number') }}</label>
                         <input name="whatsapp" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" type="tel" value="{{ $settings->whatsapp }}" placeholder="+90 555 555 55 55">
                     </div>
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Tido Livechat ID</label>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.tido_livechat_id') }}</label>
                         <input name="tido" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" type="text" value="{{ $settings->tido }}" placeholder="Tido ID'nizi girin">
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Kuruluş Yılı</label>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.establishment_year') }}</label>
                         <input name="twak" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" type="number" value="{{ $settings->twak }}" placeholder="2024" min="1900" max="2030">
                     </div>
                 </div>
@@ -89,19 +89,19 @@
                         <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zM14 6a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h10zM4 8a1 1 0 011-1h1a1 1 0 010 2H5a1 1 0 01-1-1zm5 1a1 1 0 100 2h1a1 1 0 100-2H9z"></path>
                     </svg>
                 </div>
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Trading ve Sistem Ayarları</h2>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.settings.app.webinfo.trading_system_settings') }}</h2>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Trading Kazanç Oranı (%)</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.trading_winrate') }}</label>
                     <input type="number" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 placeholder-gray-400" name="trading_winrate" placeholder="75" value="{{ $settings->trading_winrate }}" min="1" max="100">
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Kullanıcılar için varsayılan kazanç oranı (1-100 arası). Yüksek oran daha fazla kazanç, düşük oran daha fazla kayıp demektir.</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.settings.app.webinfo.trading_winrate_help') }}</p>
                 </div>
                 
                 <div class="space-y-4">
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Zaman Dilimi</label>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.timezone') }}</label>
                         <select name="timezone" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 select2">
                             <option value="{{ $settings->timezone }}">{{ $settings->timezone }}</option>
                             @foreach ($timezones as $list)
@@ -111,12 +111,12 @@
                     </div>
                     
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Kurulum Tipi</label>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.install_type') }}</label>
                         <select name="install_type" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200">
                             <option value="{{ $settings->install_type }}">{{ $settings->install_type }}</option>
-                            <option value="Main-Domain">Ana Domain</option>
-                            <option value="Sub-Domain">Alt Domain</option>
-                            <option value="Sub-Folder">Alt Klasör</option>
+                            <option value="Main-Domain">{{ __('admin.settings.app.webinfo.main_domain') }}</option>
+                            <option value="Sub-Domain">{{ __('admin.settings.app.webinfo.sub_domain') }}</option>
+                            <option value="Sub-Folder">{{ __('admin.settings.app.webinfo.sub_folder') }}</option>
                         </select>
                     </div>
                 </div>
@@ -131,14 +131,14 @@
                         <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
                     </svg>
                 </div>
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Görsel Ayarları</h2>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.settings.app.webinfo.visual_settings') }}</h2>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="space-y-4">
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Website Logosu</label>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Önerilen boyut: Max 200px genişlik, 100px yükseklik</p>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.website_logo') }}</label>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.settings.app.webinfo.logo_size_recommendation') }}</p>
                         <input name="logo" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" type="file" accept="image/*">
                     </div>
                     <div class="text-center border-2 border-dashed border-orange-200 dark:border-orange-700 p-6 rounded-xl bg-orange-50/50 dark:bg-orange-900/10">
@@ -149,7 +149,7 @@
                                 <svg class="w-12 h-12 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
                                 </svg>
-                                <p class="text-sm">Logo yüklenmedi</p>
+                                <p class="text-sm">{{ __('admin.settings.app.webinfo.logo_not_uploaded') }}</p>
                             </div>
                         @endif
                     </div>
@@ -157,8 +157,8 @@
                 
                 <div class="space-y-4">
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Website Favicon</label>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Önerilen boyut: 32x32 piksel</p>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.website_favicon') }}</label>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.settings.app.webinfo.favicon_size_recommendation') }}</p>
                         <input name="favicon" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100" type="file" accept="image/*">
                     </div>
                     <div class="text-center border-2 border-dashed border-orange-200 dark:border-orange-700 p-6 rounded-xl bg-orange-50/50 dark:bg-orange-900/10">
@@ -169,7 +169,7 @@
                                 <svg class="w-8 h-8 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
                                 </svg>
-                                <p class="text-sm">Favicon yüklenmedi</p>
+                                <p class="text-sm">{{ __('admin.settings.app.webinfo.favicon_not_uploaded') }}</p>
                             </div>
                         @endif
                     </div>
@@ -183,7 +183,7 @@
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
-                Kaydet
+                {{ __('admin.settings.app.webinfo.save') }}
             </button>
         </div>
 

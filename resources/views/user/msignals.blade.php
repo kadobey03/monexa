@@ -11,10 +11,10 @@
             <nav class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6" aria-label="Breadcrumb">
                 <a href="{{ route('dashboard') }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     <x-heroicon name="home" class="w-4 h-4 inline mr-1" />
-                    Dashboard
+                    {{ __('user.navigation.dashboard') }}
                 </a>
                 <x-heroicon name="chevron-right" class="w-4 h-4 mx-2" />
-                <span class="text-gray-900 dark:text-gray-100 font-medium">My Trading Signals</span>
+                <span class="text-gray-900 dark:text-gray-100 font-medium">{{ __('user.signals.page_title') }}</span>
             </nav>
 
             <!-- Page Title & Signal Info -->
@@ -22,10 +22,10 @@
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
                         <x-heroicon name="activity" class="w-8 h-8 inline mr-3 text-blue-600 dark:text-blue-400" />
-                        My Trading Signals
+                        {{ __('user.signals.page_title') }}
                     </h1>
                     <p class="text-gray-600 dark:text-gray-400 text-lg">
-                        Monitor and track your active trading signal subscriptions
+                        {{ __('user.signals.page_subtitle') }}
                     </p>
                 </div>
 
@@ -36,14 +36,14 @@
                             <x-heroicon name="radio" class="w-6 h-6 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Current Signal Plan</p>
-                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ Auth::user()->signals ?? 'No Active Plan' }}</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ __('user.signals.current_plan') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ Auth::user()->signals ?? __('user.signals.no_active_plan') }}</p>
                         </div>
                         @if(Auth::user()->signals)
                         <div class="ml-4">
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
                                 <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                                Active
+                                {{ __('user.signals.active') }}
                             </span>
                         </div>
                         @endif
@@ -65,7 +65,7 @@
             <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Signals</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ __('user.signals.total_signals') }}</p>
                         <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ count($signals) }}</p>
                     </div>
                     <div class="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
@@ -78,7 +78,7 @@
             <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Active Signals</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ __('user.signals.active_signals') }}</p>
                         <p class="text-3xl font-bold text-green-600 dark:text-green-400">
                             {{ $signals->where('status', 'ongoing')->count() }}
                         </p>
@@ -93,7 +93,7 @@
             <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm ring-1 ring-gray-200 dark:ring-gray-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Trade Value</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ __('user.signals.total_trade_value') }}</p>
                         <p class="text-3xl font-bold text-purple-600 dark:text-purple-400">
                             {{ Auth::user()->currency }}{{ number_format($signals->sum('amount'), 2) }}
                         </p>
@@ -110,7 +110,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">
                     <x-heroicon name="funnel" class="w-5 h-5 inline mr-2" />
-                    Signal Activity
+                    {{ __('user.signals.signal_activity') }}
                 </h2>
 
                 <!-- Filter Controls -->
@@ -119,18 +119,18 @@
                     <select x-model="statusFilter"
                             @change="filterSignals()"
                             class="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400">
-                        <option value="">All Status</option>
-                        <option value="ongoing">Active</option>
-                        <option value="closed">Closed</option>
+                        <option value="">{{ __('user.signals.all_status') }}</option>
+                        <option value="ongoing">{{ __('user.signals.active') }}</option>
+                        <option value="closed">{{ __('user.signals.closed') }}</option>
                     </select>
 
                     <!-- Order Type Filter -->
                     <select x-model="orderFilter"
                             @change="filterSignals()"
                             class="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400">
-                        <option value="">All Orders</option>
-                        <option value="Buy">Buy Orders</option>
-                        <option value="Sell">Sell Orders</option>
+                        <option value="">{{ __('user.signals.all_orders') }}</option>
+                        <option value="Buy">{{ __('user.signals.buy_orders') }}</option>
+                        <option value="Sell">{{ __('user.signals.sell_orders') }}</option>
                     </select>
                 </div>
             </div>
@@ -142,20 +142,20 @@
         <!-- Desktop Table View -->
         <div class="hidden lg:block bg-white dark:bg-gray-900 rounded-2xl shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 overflow-hidden mb-8">
             <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Signal Details</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('user.signals.signal_details') }}</h3>
             </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Asset</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order Type</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Leverage</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
-                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Plan</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.signals.asset') }}</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.signals.order_type') }}</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.signals.amount') }}</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.signals.leverage') }}</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.signals.status') }}</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.signals.date') }}</th>
+                            <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('user.signals.plan') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
@@ -248,12 +248,12 @@
                     @if($signal->status == 'ongoing')
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300">
                         <div class="w-2 h-2 bg-yellow-500 rounded-full mr-2 animate-pulse"></div>
-                        Active
+                        {{ __('user.signals.active') }}
                     </span>
                     @else
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300">
                         <x-heroicon name="check-circle" class="w-4 h-4 mr-1" />
-                        Closed
+                        {{ __('user.signals.closed') }}
                     </span>
                     @endif
                 </div>
@@ -262,7 +262,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <!-- Order Type -->
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Order Type</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ __('user.signals.order_type') }}</p>
                         @if($signal->order_type == 'Buy')
                         <span class="inline-flex items-center px-2 py-1 rounded-lg text-sm font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
                             <x-heroicon name="arrow-up" class="w-4 h-4 mr-1" />
@@ -278,13 +278,13 @@
 
                     <!-- Amount -->
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Trade Amount</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ __('user.signals.trade_amount') }}</p>
                         <p class="text-lg font-bold text-gray-900 dark:text-white">{{ Auth::user()->currency }}{{ number_format($signal->amount, 2) }}</p>
                     </div>
 
                     <!-- Leverage -->
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Leverage</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ __('user.signals.leverage') }}</p>
                         <span class="inline-flex items-center px-2 py-1 rounded-lg text-sm font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
                             1:{{ $signal->leverage }}
                         </span>
@@ -292,7 +292,7 @@
 
                     <!-- Date -->
                     <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Date Added</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ __('user.signals.date_added') }}</p>
                         <p class="text-sm text-gray-900 dark:text-white">{{ \Carbon\Carbon::parse($signal->created_at)->format('M d, Y') }}</p>
                     </div>
                 </div>
@@ -300,7 +300,7 @@
                 <!-- Signal Plan -->
                 <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
                     <div class="flex items-center justify-between">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">Signal Plan</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ __('user.signals.signal_plan') }}</span>
                         <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">
                             {{ Auth::user()->signals }}
                         </span>
@@ -314,14 +314,14 @@
             <div class="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
                 <x-heroicon name="signal" class="w-12 h-12 text-gray-400" />
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Trading Signals</h3>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ __('user.signals.no_signals') }}</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
-                You don't have any trading signals yet. Subscribe to a signal plan to start receiving professional trading recommendations.
+                {{ __('user.signals.no_signals_message') }}
             </p>
             <a href="{{ route('tsignals') }}"
                class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
                 <x-heroicon name="plus-circle" class="w-5 h-5" />
-                Subscribe to Signals
+                {{ __('user.signals.subscribe_signals') }}
             </a>
         </div>
         @endforelse

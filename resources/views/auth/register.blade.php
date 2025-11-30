@@ -6,7 +6,7 @@
       $captcha_answer = $num1 + $num2;
 @endphp
 @extends('layouts.guest1')
-@section('title', 'Hesap Oluştur')
+@section('title', __('auth.register.title'))
 @section('content')
 
 <!-- Fintech Trading Platform Registration -->
@@ -28,10 +28,10 @@
 
                     <!-- Title -->
                     <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">{{ $settings->site_name }}</span>'a Katılın
+                        {{ __('auth.register.join_platform', ['site_name' => $settings->site_name]) }}
                     </h1>
                     <p class="text-gray-300 text-sm sm:text-base lg:text-lg mb-6">
-                        Profesyonel ticaret yolculuğunuza başlayın
+                        {{ __('auth.register.start_trading_journey') }}
                     </p>
 
                     <!-- Trading Stats - Mobile Responsive -->
@@ -53,9 +53,9 @@
                         <div class="text-center p-3 bg-gray-800/50 rounded-xl border border-gray-700/50">
                             <div class="flex items-center justify-center gap-1 text-cyan-400 mb-1">
                                 <x-heroicon name="users" class="w-3 h-3" />
-                                <span class="font-semibold">1M+ Yatırımcı</span>
+                                <span class="font-semibold">{{ __('auth.register.investor_count') }}</span>
                             </div>
-                            <div class="text-gray-400">Topluluk</div>
+                            <div class="text-gray-400">{{ __('auth.register.community') }}</div>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                                 <x-heroicon name="exclamation-triangle" class="w-5 h-5 text-red-400" />
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-lg font-bold text-red-300 mb-2">Lütfen Bu Sorunları Düzeltin:</h4>
+                                <h4 class="text-lg font-bold text-red-300 mb-2">{{ __('auth.register.please_fix_issues') }}</h4>
                                 <ul class="space-y-1">
                                     @foreach ($errors->all() as $error)
                                         <li class="text-sm text-red-200 flex items-start gap-2">
@@ -86,7 +86,7 @@
                                 </ul>
                                 <div class="mt-3 text-xs text-red-300/80">
                                     <x-heroicon name="information-circle" class="w-3 h-3 inline mr-1" />
-                                    Lütfen aşağı kaydırarak vurgulanan alanları düzeltin, ardından tekrar deneyin.
+                                    {{ __('auth.register.scroll_fix_fields') }}
                                 </div>
                             </div>
                         </div>
@@ -107,8 +107,8 @@
                                     <x-heroicon name="user-circle" class="w-5 h-5 text-blue-400" />
                                 </div>
                                 <div>
-                                    <h3 class="text-lg sm:text-xl font-bold text-white">Kişisel Bilgiler</h3>
-                                    <p class="text-gray-400 text-sm">Ticaret profilinizi oluşturun</p>
+                                    <h3 class="text-lg sm:text-xl font-bold text-white">{{ __('auth.register.personal_info') }}</h3>
+                                    <p class="text-gray-400 text-sm">{{ __('auth.register.create_trading_profile') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@
                             <!-- Username Field -->
                             <div class="space-y-2">
                                 <label for="username" class="block text-sm font-bold text-gray-200">
-                                    Ticaret Kullanıcı Adı <span class="text-red-400">*</span>
+                                    {{ __('auth.forms.trading_username') }} <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -125,7 +125,7 @@
                                     </div>
                                     <input type="text" name="username" id="username" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                           placeholder="Kullanıcı adı seçin">
+                                           placeholder="{{ __('auth.forms.choose_username') }}">
                                 </div>
                                 @error('username')
                                     <p class="text-sm text-red-400 flex items-center gap-1">
@@ -137,7 +137,7 @@
                             <!-- Full Name Field -->
                             <div class="space-y-2">
                                 <label for="name" class="block text-sm font-bold text-gray-200">
-                                    Ad Soyad <span class="text-red-400">*</span>
+                                    {{ __('auth.forms.full_name') }} <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -145,7 +145,7 @@
                                     </div>
                                     <input type="text" name="name" id="name" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                           placeholder="Ad soyad giriniz">
+                                           placeholder="{{ __('auth.forms.enter_full_name') }}">
                                 </div>
                                 @error('name')
                                     <p class="text-sm text-red-400 flex items-center gap-1">
@@ -157,7 +157,7 @@
                             <!-- Email Field -->
                             <div class="space-y-2">
                                 <label for="email" class="block text-sm font-bold text-gray-200">
-                                    E-posta Adresi <span class="text-red-400">*</span>
+                                    {{ __('auth.forms.email_address') }} <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -165,7 +165,7 @@
                                     </div>
                                     <input type="email" name="email" id="email" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                           placeholder="eposta@ornek.com">
+                                           placeholder="{{ __('auth.forms.email_example') }}">
                                 </div>
                                 @error('email')
                                     <p class="text-sm text-red-400 flex items-center gap-1">
@@ -177,7 +177,7 @@
                             <!-- Phone Field -->
                             <div class="space-y-2">
                                 <label for="phone" class="block text-sm font-bold text-gray-200">
-                                    Telefon Numarası <span class="text-red-400">*</span>
+                                    {{ __('auth.forms.phone_number') }} <span class="text-red-400">*</span>
                                 </label>
                                 <div class="relative group">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -185,7 +185,7 @@
                                     </div>
                                     <input type="tel" name="phone" id="phone" required
                                            class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                           placeholder="+90 (555) 123-4567">
+                                           placeholder="{{ __('auth.forms.phone_example') }}">
                                 </div>
                             </div>
                         </div>
@@ -201,8 +201,8 @@
                                 <x-heroicon name="globe-2" class="w-5 h-5 text-purple-400" />
                             </div>
                             <div>
-                                <h3 class="text-lg sm:text-xl font-bold text-white">Konum</h3>
-                                <p class="text-gray-400 text-sm">Bölgesel ticaret tercihlerinizi ayarlayın</p>
+                                <h3 class="text-lg sm:text-xl font-bold text-white">{{ __('auth.register.location') }}</h3>
+                                <p class="text-gray-400 text-sm">{{ __('auth.register.regional_trading_preferences') }}</p>
                             </div>
                         </div>
                     </div>
@@ -211,7 +211,7 @@
                         <!-- Country Field -->
                         <div class="space-y-2">
                             <label for="country" class="block text-sm font-bold text-gray-200">
-                                Ülke <span class="text-red-400">*</span>
+                                {{ __('auth.forms.country') }} <span class="text-red-400">*</span>
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4 z-10">
@@ -219,7 +219,7 @@
                                 </div>
                                 <select name="country" id="country" required
                                         class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-8 py-4 text-white focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold appearance-none">
-                                    <option selected disabled class="text-gray-400">Ülkenizi seçin</option>
+                                    <option selected disabled class="text-gray-400">{{ __('auth.forms.select_country') }}</option>
                                     @include('auth.countries')
                                 </select>
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
@@ -258,8 +258,8 @@
                         <div class="flex items-start gap-3">
                             <x-heroicon name="information-circle" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                             <div class="text-sm">
-                                <p class="text-blue-300 font-bold mb-1">Bölgesel Ticaret Bilgileri</p>
-                                <p class="text-gray-300">Konumunuz, bölgeye özel özellikler, uyumluluk ve daha hızlı ticaret yürütme için optimum sunucu bağlantıları sağlamamıza yardımcı olur.</p>
+                                <p class="text-blue-300 font-bold mb-1">{{ __('auth.register.regional_trading_info') }}</p>
+                                <p class="text-gray-300">{{ __('auth.register.location_benefits') }}</p>
                             </div>
                         </div>
                     </div>
@@ -275,8 +275,8 @@
                                 <x-heroicon name="shield-check" class="w-5 h-5 text-green-400" />
                             </div>
                             <div>
-                                <h3 class="text-lg sm:text-xl font-bold text-white">Hesap Güvenliği</h3>
-                                <p class="text-gray-400 text-sm">Ticaret hesabınızı güvenceye alın</p>
+                                <h3 class="text-lg sm:text-xl font-bold text-white">{{ __('auth.register.account_security') }}</h3>
+                                <p class="text-gray-400 text-sm">{{ __('auth.register.secure_trading_account') }}</p>
                             </div>
                         </div>
                     </div>
@@ -285,7 +285,7 @@
                         <!-- Password Field -->
                         <div class="space-y-2">
                             <label for="password" class="block text-sm font-bold text-gray-200">
-                                Şifre <span class="text-red-400">*</span>
+                                {{ __('auth.forms.password') }} <span class="text-red-400">*</span>
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -294,7 +294,7 @@
                                 <input type="password" name="password" id="password" required
                                        autocomplete="new-password"
                                        class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                       placeholder="Güçlü şifre oluşturun">
+                                       placeholder="{{ __('auth.forms.create_strong_password') }}">
                             </div>
                             @error('password')
                                 <p class="text-sm text-red-400 flex items-center gap-1">
@@ -306,7 +306,7 @@
                         <!-- Confirm Password Field -->
                         <div class="space-y-2">
                             <label for="password_confirmation" class="block text-sm font-bold text-gray-200">
-                                Şifreyi Onayla <span class="text-red-400">*</span>
+                                {{ __('auth.forms.confirm_password') }} <span class="text-red-400">*</span>
                             </label>
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-4">
@@ -315,7 +315,7 @@
                                 <input type="password" name="password_confirmation" id="password_confirmation" required
                                        autocomplete="new-password"
                                        class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold"
-                                       placeholder="Şifrenizi onaylayın">
+                                       placeholder="{{ __('auth.forms.confirm_password_placeholder') }}">
                             </div>
                         </div>
                     </div>
@@ -324,7 +324,7 @@
                     <div class="space-y-4 mt-6">
                         <div class="space-y-2">
                             <label for="captcha" class="block text-sm font-bold text-gray-200">
-                                Basit Matematik Doğrulama <span class="text-red-400">*</span>
+                                {{ __('auth.register.math_verification') }} <span class="text-red-400">*</span>
                             </label>
 
                             <!-- CAPTCHA Display -->
@@ -332,7 +332,7 @@
                                 <div class="flex items-center justify-center">
                                     <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-4 border border-gray-600">
                                         <div class="text-center">
-                                            <p class="text-sm text-gray-300 mb-3 font-medium">Bu basit matematiğin cevabı nedir?</p>
+                                            <p class="text-sm text-gray-300 mb-3 font-medium">{{ __('auth.register.math_question') }}</p>
                                             <div class="bg-gray-900 rounded-lg px-8 py-4 border border-gray-700">
                                                 <span class="text-3xl font-bold text-green-400 tracking-wide select-none"
                                                       style="font-family: 'Arial', sans-serif;">
@@ -351,7 +351,7 @@
                                 </div>
                                 <input type="number" name="captcha" id="captcha" required
                                        class="block w-full rounded-xl border border-gray-600 bg-gray-900 pl-12 pr-4 py-4 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-gray-800 transition-all duration-200 text-sm font-bold text-center"
-                                       placeholder="Cevabı giriniz (sadece rakamlar)"
+                                       placeholder="{{ __('auth.register.math_answer_placeholder') }}"
                                        autocomplete="off"
                                        min="0"
                                        max="99">
@@ -366,7 +366,7 @@
                             <!-- Helper text -->
                             <p class="text-xs text-gray-400 flex items-center gap-1">
                                 <x-heroicon name="information-circle" class="w-3 h-3" />
-                                İnsan olduğunuzu doğrulamak için bu basit matematik problemini çözün. Rastgele kodlar yazmaktan çok daha kolay!
+                                {{ __('auth.register.math_helper_text') }}
                             </p>
                         </div>
                     </div>
@@ -380,19 +380,19 @@
 
                     <!-- Password Requirements -->
                     <div class="mt-6 p-4 bg-gray-800/50 rounded-xl border border-gray-700">
-                        <p class="text-sm font-bold text-gray-200 mb-2">Şifre Gereksinimleri:</p>
+                        <p class="text-sm font-bold text-gray-200 mb-2">{{ __('auth.register.password_requirements') }}</p>
                         <ul class="text-xs text-gray-300 space-y-1">
                             <li class="flex items-center gap-2">
                                 <x-heroicon name="check" class="w-3 h-3 text-green-400" />
-                                En az 8 karakter uzunluğunda
+                                {{ __('auth.register.password_min_length') }}
                             </li>
                             <li class="flex items-center gap-2">
                                 <x-heroicon name="check" class="w-3 h-3 text-green-400" />
-                                Büyük ve küçük harf içerir
+                                {{ __('auth.register.password_mixed_case') }}
                             </li>
                             <li class="flex items-center gap-2">
                                 <x-heroicon name="check" class="w-3 h-3 text-green-400" />
-                                En az bir rakam veya özel karakter içerir
+                                {{ __('auth.register.password_special_char') }}
                             </li>
                         </ul>
                     </div>
@@ -406,18 +406,18 @@
                             </div>
                             <div class="flex-1">
                                 <label for="agree" class="text-sm font-bold text-gray-200 leading-relaxed">
-                                    {{ $settings->site_name }}'ın
+                                    {{ __('auth.register.terms_accept_start', ['site_name' => $settings->site_name]) }}
                                     <a href="rules" target="_blank" class="text-blue-400 hover:text-blue-300 font-bold underline underline-offset-2">
-                                        Şartlar ve Koşullarını
+                                        {{ __('auth.register.terms_conditions') }}
                                     </a>
-                                    kabul ediyorum ve
+                                    {{ __('auth.register.terms_accept_and') }}
                                     <a href="#" target="_blank" class="text-blue-400 hover:text-blue-300 font-bold underline underline-offset-2">
-                                        Gizlilik Politikasını
+                                        {{ __('auth.register.privacy_policy') }}
                                     </a>
-                                    okuduğumu ve anladığımı beyan ediyorum
+                                    {{ __('auth.register.terms_accept_end') }}
                                 </label>
                                 <p class="text-xs text-gray-400 mt-2">
-                                    Hesap oluşturarak en az 18 yaşında olduğunuzu ve ticaret güncellemeleri ile piyasa analizleri almayı kabul ettiğinizi onaylarsınız.
+                                    {{ __('auth.register.age_market_consent') }}
                                 </p>
                             </div>
                         </div>
@@ -431,18 +431,18 @@
                             style="display: none;"
                             class="inline-flex items-center gap-2 px-6 py-3 text-gray-400 hover:text-white transition-all duration-200 rounded-xl hover:bg-gray-800/50 group">
                         <x-heroicon name="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                        <span class="font-bold">Önceki Adım</span>
+                        <span class="font-bold">{{ __('auth.register.previous_step') }}</span>
                     </button>
 
                     <!-- Progress Indicator -->
                     <div class="flex items-center gap-2 text-sm text-gray-400">
-                        <span id="step-indicator" class="font-bold">Adım 1 / 3</span>
+                        <span id="step-indicator" class="font-bold">{{ __('auth.register.step_indicator', ['current' => '1', 'total' => '3']) }}</span>
                     </div>
 
                     <!-- Next Button -->
                     <button type="button" id="next-btn" onclick="sonrakiAdim()"
                             class="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group">
-                        <span>Devam Et</span>
+                        <span>{{ __('auth.register.continue') }}</span>
                         <x-heroicon name="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>
 
@@ -451,7 +451,7 @@
                             style="display: none;"
                             class="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group">
                         <x-heroicon name="user-plus" class="w-5 h-5" />
-                        <span>Ticaret Hesabı Oluştur</span>
+                        <span>{{ __('auth.register.create_trading_account') }}</span>
                         <x-heroicon name="sparkles" class="w-4 h-4 group-hover:rotate-12 transition-transform" />
                     </button>
                 </div>
@@ -460,10 +460,10 @@
                 <div class="mt-8 text-center space-y-4">
                     <div class="flex items-center justify-center gap-6 text-sm">
                         <p class="text-gray-400">
-                            Zaten hesabınız var mı?
+                            {{ __('auth.register.already_have_account') }}
                             <a href="{{ route('login') }}"
                                class="font-bold text-blue-400 hover:text-blue-300 transition-colors underline underline-offset-2">
-                                Buradan giriş yapın
+                                {{ __('auth.register.login_here') }}
                             </a>
                         </p>
                     </div>
@@ -472,21 +472,21 @@
                     <div class="flex items-center justify-center gap-8 py-4 text-xs text-gray-500">
                         <div class="flex items-center gap-1">
                             <x-heroicon name="shield-check" class="w-3 h-3" />
-                            <span>SSL Güvenliği</span>
+                            <span>{{ __('auth.register.ssl_security') }}</span>
                         </div>
                         <div class="flex items-center gap-1">
                             <x-heroicon name="lock-closed" class="w-3 h-3" />
-                            <span>256-bit Şifreleme</span>
+                            <span>{{ __('auth.register.encryption_256bit') }}</span>
                         </div>
                         <div class="flex items-center gap-1">
                             <x-heroicon name="award" class="w-3 h-3" />
-                            <span>Düzenlenmiş Platform</span>
+                            <span>{{ __('auth.register.regulated_platform') }}</span>
                         </div>
                     </div>
 
                     <p class="text-xs text-gray-500">
-                        © {{ date('Y') }} {{ $settings->site_name }}. Tüm hakları saklıdır. |
-                        Lisanslı ve düzenlenmiş ticaret platformu.
+                        {{ __('auth.register.copyright', ['year' => date('Y'), 'site_name' => $settings->site_name]) }} |
+                        {{ __('auth.register.licensed_platform') }}
                     </p>
                 </div>
             </form>
@@ -516,9 +516,9 @@
         // Vanilla JavaScript Multi-Step Form
         let currentStep = 0;
         const steps = [
-            { title: 'Kişisel Bilgiler', description: 'Temel bilgiler', completed: false },
-            { title: 'Konum', description: 'Bölgesel ayarlar', completed: false },
-            { title: 'Güvenlik', description: 'Hesap koruması', completed: false }
+            { title: '{{ __('auth.register.personal_info') }}', description: '{{ __('auth.register.basic_info') }}', completed: false },
+            { title: '{{ __('auth.register.location') }}', description: '{{ __('auth.register.regional_settings') }}', completed: false },
+            { title: '{{ __('auth.register.security') }}', description: '{{ __('auth.register.account_protection') }}', completed: false }
         ];
 
         function updateStepsDisplay() {
@@ -564,7 +564,7 @@
             prevBtn.style.display = currentStep > 0 ? 'inline-flex' : 'none';
             nextBtn.style.display = currentStep < steps.length - 1 ? 'inline-flex' : 'none';
             submitBtn.style.display = currentStep === steps.length - 1 ? 'inline-flex' : 'none';
-            indicator.textContent = `Adım ${currentStep + 1} / ${steps.length}`;
+            indicator.textContent = `{{ __('auth.register.step') }} ${currentStep + 1} / ${steps.length}`;
         }
 
         function showStep(stepIndex) {
@@ -609,10 +609,10 @@
 
             if (currentStep === 0) {
                 const fields = [
-                    { id: 'username', name: 'Kullanıcı Adı' },
-                    { id: 'name', name: 'Ad Soyad' },
-                    { id: 'email', name: 'E-posta' },
-                    { id: 'phone', name: 'Telefon Numarası' }
+                    { id: 'username', name: '{{ __('auth.forms.username') }}' },
+                    { id: 'name', name: '{{ __('auth.forms.full_name') }}' },
+                    { id: 'email', name: '{{ __('auth.forms.email_address') }}' },
+                    { id: 'phone', name: '{{ __('auth.forms.phone_number') }}' }
                 ];
 
                 fields.forEach(field => {
@@ -632,14 +632,14 @@
                 const emailElement = document.getElementById('email');
                 const email = emailElement.value.trim();
                 if (email && !email.includes('@')) {
-                    missingFields.push('Geçerli E-posta Formatı');
+                    missingFields.push('{{ __('auth.validation.valid_email_format') }}');
                     isValid = false;
                     emailElement.classList.add('border-red-500', 'bg-red-900/20');
                 }
             } else if (currentStep === 1) {
                 const countryElement = document.getElementById('country');
                 if (!countryElement.value) {
-                    missingFields.push('Ülke Seçimi');
+                    missingFields.push('{{ __('auth.forms.country') }}');
                     isValid = false;
                     countryElement.classList.add('border-red-500', 'bg-red-900/20');
                 } else {
@@ -657,11 +657,11 @@
                 const agree = agreeElement.checked;
 
                 if (!password) {
-                    missingFields.push('Şifre');
+                    missingFields.push('{{ __('auth.forms.password') }}');
                     isValid = false;
                     passwordElement.classList.add('border-red-500', 'bg-red-900/20');
                 } else if (password.length < 8) {
-                    missingFields.push('Şifre (minimum 8 karakter)');
+                    missingFields.push('{{ __('auth.validation.password_min_8_chars') }}');
                     isValid = false;
                     passwordElement.classList.add('border-red-500', 'bg-red-900/20');
                 } else {
@@ -669,7 +669,7 @@
                 }
 
                 if (!confirmPassword || password !== confirmPassword) {
-                    missingFields.push('Şifre Onaylaması');
+                    missingFields.push('{{ __('auth.forms.confirm_password') }}');
                     isValid = false;
                     confirmPasswordElement.classList.add('border-red-500', 'bg-red-900/20');
                 } else {
@@ -677,7 +677,7 @@
                 }
 
                 if (!captcha) {
-                    missingFields.push('Matematik Doğrulama');
+                    missingFields.push('{{ __('auth.register.math_verification') }}');
                     isValid = false;
                     captchaElement.classList.add('border-red-500', 'bg-red-900/20');
                 } else {
@@ -685,16 +685,16 @@
                 }
 
                 if (!agree) {
-                    missingFields.push('Şartlar ve Koşullar Kabulü');
+                    missingFields.push('{{ __('auth.register.terms_acceptance') }}');
                     isValid = false;
                 }
             }
 
             if (!isValid) {
                 const message = missingFields.length === 1
-                    ? `Lütfen sağlayın: ${missingFields[0]}`
-                    : `Lütfen bu alanları doldurun: ${missingFields.join(', ')}`;
-                alert(`Gerekli Alanları Doldurun: ${message}`);
+                    ? `{{ __('auth.validation.please_provide') }}: ${missingFields[0]}`
+                    : `{{ __('auth.validation.please_fill_fields') }}: ${missingFields.join(', ')}`;
+                alert(`{{ __('auth.validation.required_fields') }}: ${message}`);
             }
 
             return isValid;
@@ -711,7 +711,7 @@
                     const submitBtn = form.querySelector('button[type="submit"]');
                     if (submitBtn) {
                         submitBtn.disabled = true;
-                        submitBtn.innerHTML = '<svg class="w-4 h-4 animate-spin mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Hesap Oluşturuluyor...';
+                        submitBtn.innerHTML = '<svg class="w-4 h-4 animate-spin mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>{{ __('auth.register.creating_account') }}';
                     }
                 });
             }

@@ -1,16 +1,16 @@
-@extends('layouts.admin', ['title' => 'Yeni Kullanıcı Ekle'])
+@extends('layouts.admin', ['title' => __('admin.users.add_new_user')])
 
 @section('content')
 <div class="space-y-6">
     <!-- Page Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Yeni Kullanıcı Ekle</h1>
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ $settings->site_name }} topluluğuna yeni kullanıcılar ekleyin</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.users.add_new_user') }}</h1>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ __('admin.users.add_users_to_community', ['site_name' => $settings->site_name]) }}</p>
         </div>
         <div class="flex items-center space-x-2">
             <x-heroicon name="user-plus" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
-            <span class="text-sm text-gray-500 dark:text-gray-400">Manuel Kayıt</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('admin.users.manual_registration') }}</span>
         </div>
     </div>
 
@@ -42,7 +42,7 @@
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
                 <x-heroicon name="user-plus" class="h-5 w-5 mr-2" />
-                Kullanıcı Bilgileri
+                {{ __('admin.users.user_information') }}
             </h2>
         </div>
 
@@ -54,13 +54,13 @@
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         <x-heroicon name="at-sign" class="h-4 w-4 inline mr-1" />
-                        Kullanıcı Adı
+                        {{ __('admin.forms.username') }}
                     </label>
                     <input type="text"
                            id="username"
                            name="username"
                            value="{{ old('username') }}"
-                           placeholder="Benzersiz kullanıcı adı girin"
+                           placeholder="{{ __('admin.forms.unique_username_placeholder') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('username') border-red-300 @enderror"
                            required>
                     @error('username')
@@ -72,13 +72,13 @@
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         <x-heroicon name="user" class="h-4 w-4 inline mr-1" />
-                        Ad Soyad
+                        {{ __('admin.forms.full_name') }}
                     </label>
                     <input type="text"
                            id="name"
                            name="name"
                            value="{{ old('name') }}"
-                           placeholder="Tam adını girin"
+                           placeholder="{{ __('admin.forms.full_name_placeholder') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('name') border-red-300 @enderror"
                            required>
                     @error('name')
@@ -90,13 +90,13 @@
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         <x-heroicon name="envelope" class="h-4 w-4 inline mr-1" />
-                        E-posta Adresi
+                        {{ __('admin.users.email_address') }}
                     </label>
                     <input type="email"
                            id="email"
                            name="email"
                            value="{{ old('email') }}"
-                           placeholder="email@example.com"
+                           placeholder="{{ __('admin.forms.email_placeholder') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('email') border-red-300 @enderror"
                            required>
                     @error('email')
@@ -108,13 +108,13 @@
                 <div>
                     <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         <x-heroicon name="phone" class="h-4 w-4 inline mr-1" />
-                        Telefon Numarası
+                        {{ __('admin.users.phone_number') }}
                     </label>
                     <input type="tel"
                            id="phone"
                            name="phone"
                            value="{{ old('phone') }}"
-                           placeholder="Telefon numarasını girin"
+                           placeholder="{{ __('admin.forms.phone_placeholder') }}"
                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('phone') border-red-300 @enderror"
                            required>
                     @error('phone')
@@ -127,13 +127,13 @@
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             <x-heroicon name="lock-closed" class="h-4 w-4 inline mr-1" />
-                            Şifre
+                            {{ __('admin.forms.password') }}
                         </label>
                         <div class="relative">
                             <input type="password"
                                    id="password"
                                    name="password"
-                                   placeholder="Güçlü şifre girin"
+                                   placeholder="{{ __('admin.forms.strong_password_placeholder') }}"
                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('password') border-red-300 @enderror"
                                    required>
                             <button type="button" onclick="togglePassword('password')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -148,13 +148,13 @@
                     <div>
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             <x-heroicon name="lock-closed" class="h-4 w-4 inline mr-1" />
-                            Şifre Onayı
+                            {{ __('admin.forms.password_confirmation') }}
                         </label>
                         <div class="relative">
                             <input type="password"
                                    id="password_confirmation"
                                    name="password_confirmation"
-                                   placeholder="Şifreyi tekrar girin"
+                                   placeholder="{{ __('admin.forms.repeat_password_placeholder') }}"
                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-admin-700 dark:border-admin-600 dark:text-white dark:placeholder-gray-400 @error('password_confirmation') border-red-300 @enderror"
                                    required>
                             <button type="button" onclick="togglePassword('password_confirmation')" class="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -172,12 +172,12 @@
                     <a href="{{ route('admin.dashboard') }}"
                        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:bg-admin-700 dark:border-admin-600 dark:text-gray-300 dark:hover:bg-admin-600">
                         <x-heroicon name="arrow-left" class="h-4 w-4 mr-2" />
-                        İptal
+                        {{ __('admin.actions.cancel') }}
                     </a>
                     <button type="submit"
                             class="inline-flex items-center px-6 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                         <x-heroicon name="user-plus" class="h-4 w-4 mr-2" />
-                        Kullanıcıyı Kaydet
+                        {{ __('admin.users.save_user') }}
                     </button>
                 </div>
             </form>
@@ -189,12 +189,12 @@
         <div class="flex items-start">
             <x-heroicon name="information-circle" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3" />
             <div>
-                <h3 class="font-medium text-blue-900 dark:text-blue-100">Önemli Bilgiler</h3>
+                <h3 class="font-medium text-blue-900 dark:text-blue-100">{{ __('admin.notifications.important_info') }}</h3>
                 <div class="mt-2 text-sm text-blue-700 dark:text-blue-300 space-y-1">
-                    <p>• Kullanıcı adı benzersiz olmalıdır</p>
-                    <p>• E-posta adresi geçerli ve aktif olmalıdır</p>
-                    <p>• Şifre en az 8 karakter olmalıdır</p>
-                    <p>• Telefon numarası doğru formatta girilmelidir</p>
+                    <p>• {{ __('admin.validation.username_unique') }}</p>
+                    <p>• {{ __('admin.validation.email_valid') }}</p>
+                    <p>• {{ __('admin.validation.password_min_8') }}</p>
+                    <p>• {{ __('admin.validation.phone_format') }}</p>
                 </div>
             </div>
         </div>
@@ -208,10 +208,10 @@ function togglePassword(fieldId) {
     
     if (field.type === 'password') {
         field.type = 'text';
-        // Heroicon: eye icon changed to eye-slash;
+        // {{ __('admin.notifications.password_visible') }}
     } else {
         field.type = 'password';
-        // Heroicon: eye icon changed to eye;
+        // {{ __('admin.notifications.password_hidden') }}
     }
 
 }

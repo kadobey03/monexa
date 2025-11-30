@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark bg-gray-300 h-full" data-theme="">
+<html lang="{{ app()->getLocale() }}" class="dark bg-gray-300 h-full" data-theme="">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -144,11 +144,59 @@ EXPERTISE.???">
 
 <body class="h-full bg-gray-300 font-sans antialiased transition-colors duration-300 text-gray-900 dark js-hidden" id="main-body">
 
-    <!-- Theme Toggle (Hidden but accessible) -->
-    <div class="fixed top-4 right-4 z-50">
+    <!-- Header Controls (Language + Theme Toggle) -->
+    <div class="fixed top-4 right-4 z-50 flex items-center space-x-3">
+        
+        <!-- Language Switcher -->
+        <div class="relative">
+            <button onclick="toggleLanguageDropdown()"
+                    class="group flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-gray-800/80 rounded-xl transition-all duration-200 backdrop-blur-sm">
+                <x-heroicon name="language" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                <span class="hidden sm:block">
+                    @if(session('locale') === 'ru')
+                        {{ __('navigation.language_russian') }}
+                    @else
+                        {{ __('navigation.language_turkish') }}
+                    @endif
+                </span>
+                <x-heroicon name="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform duration-200" />
+            </button>
 
+            <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] bg-white/95 dark:bg-gray-800/95 rounded-2xl shadow-2xl backdrop-blur-xl z-30 border border-gray-200/50 dark:border-gray-700/50">
+                <div class="p-2">
+                    <a href="{{ route('language.change', 'tr') }}"
+                       class="group flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gradient-to-r hover:from-emerald-600/20 hover:to-teal-600/20 rounded-xl transition-all duration-200 {{ session('locale', 'tr') === 'tr' ? 'bg-emerald-600/10 text-emerald-600 dark:text-emerald-400' : '' }}">
+                        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center mr-3 group-hover:from-red-500/30 group-hover:to-red-600/30 transition-all duration-200">
+                            <span class="text-xs font-bold">🇹🇷</span>
+                        </div>
+                        <div>
+                            <div class="font-medium">{{ __('navigation.language_turkish') }}</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Türkçe</div>
+                        </div>
+                        @if(session('locale', 'tr') === 'tr')
+                            <x-heroicon name="check" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 ml-auto" />
+                        @endif
+                    </a>
+                    <a href="{{ route('language.change', 'ru') }}"
+                       class="group flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-indigo-600/20 rounded-xl transition-all duration-200 {{ session('locale') === 'ru' ? 'bg-blue-600/10 text-blue-600 dark:text-blue-400' : '' }}">
+                        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center mr-3 group-hover:from-blue-500/30 group-hover:to-blue-600/30 transition-all duration-200">
+                            <span class="text-xs font-bold">🇷🇺</span>
+                        </div>
+                        <div>
+                            <div class="font-medium">{{ __('navigation.language_russian') }}</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400">Русский</div>
+                        </div>
+                        @if(session('locale') === 'ru')
+                            <x-heroicon name="check" class="w-4 h-4 text-blue-600 dark:text-blue-400 ml-auto" />
+                        @endif
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme Toggle -->
         <button id="theme-toggle"
-            class="relative inline-flex items-center justify-center w-10 h-10 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-150 backdrop-blur-sm">
+            class="relative inline-flex items-center justify-center w-10 h-10 text-gray-600 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-gray-800/80 rounded-lg transition-colors duration-150 backdrop-blur-sm">
             <svg id="sun-icon" class="w-5 h-5 js-hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 12.728l-.707-.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
@@ -189,7 +237,6 @@ EXPERTISE.???">
             <!--    "locale": "en"-->
             <!--}-->
             <!--</script>-->
-            @include('layouts.lang')
         </div>
     </div>
 
@@ -247,10 +294,36 @@ EXPERTISE.???">
 
             // Icons initialized via unified Icon Service
         });
+
+        // Language Dropdown Function
+        window.toggleLanguageDropdown = function() {
+            const dropdown = document.getElementById('languageDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('hidden');
+            }
+        };
+
+        // Click away listener for language dropdown
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('languageDropdown');
+            const button = document.querySelector('button[onclick="toggleLanguageDropdown()"]');
+            
+            if (dropdown && !dropdown.contains(e.target) &&
+                (!button || !button.contains(e.target))) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // ESC key to close dropdown
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const dropdown = document.getElementById('languageDropdown');
+                if (dropdown) {
+                    dropdown.classList.add('hidden');
+                }
+            }
+        });
     </script>
- <!-- Language Selector -->
-    @include('layouts.lang')
-    <!-- Language Selector -->
-    <!--@include('layouts.lang')-->
+ <!-- Modern Language Selector already integrated above in header -->
 </body>
 </html>

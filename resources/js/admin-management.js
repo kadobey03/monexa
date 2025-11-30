@@ -13,10 +13,10 @@ import { NotificationManager } from './utils/notification-manager.js';
 export class ManagerOperations {
     static async toggleStatus(adminId) {
         try {
-            const result = await this.confirmAction(
-                'Durum Değişikliği',
-                'Yöneticinin durumunu değiştirmek istediğinizden emin misiniz?'
-            );
+            const titleText = typeof window.__ === 'function' ? window.__('confirmations.status_change') : 'Durum Değişikliği';
+            const messageText = typeof window.__ === 'function' ? window.__('confirmations.admin_status_change') : 'Yöneticinin durumunu değiştirmek istediğinizden emin misiniz?';
+            
+            const result = await this.confirmAction(titleText, messageText);
 
             if (result.isConfirmed) {
                 const response = await axios.post(`/admin/dashboard/managers/${adminId}/toggle-status`);

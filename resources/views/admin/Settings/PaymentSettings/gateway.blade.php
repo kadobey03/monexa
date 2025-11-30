@@ -1,8 +1,8 @@
 <div class="space-y-8">
     <!-- Header -->
     <div>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Ödeme Gateway'leri</h2>
-        <p class="text-gray-600 dark:text-gray-400 mt-1">Ödeme sağlayıcılarının API anahtarlarını yapılandırın</p>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.payment_settings.gateways.title') }}</h2>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.payment_settings.gateways.subtitle') }}</p>
     </div>
 
     <form action="javascript:void(0)" method="POST" id="gatewayform" class="space-y-8">
@@ -19,8 +19,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-white">Stripe Payment Gateway</h3>
-                        <p class="text-blue-100 mt-1">Kredi kartı ödemeleri için global ödeme çözümü</p>
+                        <h3 class="text-xl font-bold text-white">{{ __('admin.payment_settings.gateways.stripe.title') }}</h3>
+                        <p class="text-blue-100 mt-1">{{ __('admin.payment_settings.gateways.stripe.description') }}</p>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                                 <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                Stripe Secret Key
+                                {{ __('admin.payment_settings.gateways.stripe.secret_key') }}
                             </span>
                         </label>
                         <div class="relative">
@@ -50,7 +50,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Stripe dashboard'tan alacağınız gizli anahtar</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.stripe.secret_key_help') }}</p>
                     </div>
                     
                     <div class="space-y-2">
@@ -59,13 +59,13 @@
                                 <svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                Stripe Publishable Key
+                                {{ __('admin.payment_settings.gateways.stripe.public_key') }}
                             </span>
                         </label>
                         <input type="text" name="s_p_k" value="{{ $settings->s_p_k }}" 
                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm" 
                                placeholder="pk_live_...">
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Herkese açık olan, frontend'de kullanılan anahtar</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.stripe.public_key_help') }}</p>
                     </div>
                 </div>
             </div>
@@ -81,8 +81,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-white">PayPal Payment Gateway</h3>
-                        <p class="text-yellow-100 mt-1">Dünya çapında güvenilir online ödeme çözümü</p>
+                        <h3 class="text-xl font-bold text-white">{{ __('admin.payment_settings.gateways.paypal.title') }}</h3>
+                        <p class="text-yellow-100 mt-1">{{ __('admin.payment_settings.gateways.paypal.description') }}</p>
                     </div>
                 </div>
             </div>
@@ -95,13 +95,13 @@
                                 <svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                 </svg>
-                                PayPal Client ID
+                                {{ __('admin.payment_settings.gateways.paypal.client_id') }}
                             </span>
                         </label>
                         <input type="text" name="pp_ci" value="{{ $settings->pp_ci }}" 
                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm" 
                                placeholder="PayPal Client ID'nizi girin">
-                        <p class="text-xs text-gray-500 dark:text-gray-400">PayPal Developer Console'dan alacağınız Client ID</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.paypal.client_id_help') }}</p>
                     </div>
                     
                     <div class="space-y-2">
@@ -110,7 +110,7 @@
                                 <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                PayPal Client Secret
+                                {{ __('admin.payment_settings.gateways.paypal.client_secret') }}
                             </span>
                         </label>
                         <div class="relative">
@@ -127,7 +127,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">PayPal Developer Console'dan alacağınız gizli anahtar</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.paypal.client_secret_help') }}</p>
                     </div>
                 </div>
             </div>
@@ -143,8 +143,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="text-xl font-bold text-white">Paystack Payment Gateway</h3>
-                        <p class="text-green-100 mt-1">Afrika odaklı modern ödeme altyapısı</p>
+                        <h3 class="text-xl font-bold text-white">{{ __('admin.payment_settings.gateways.paystack.title') }}</h3>
+                        <p class="text-green-100 mt-1">{{ __('admin.payment_settings.gateways.paystack.description') }}</p>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@
                         </svg>
                         <div>
                             <p class="text-sm text-teal-700 dark:text-teal-300">
-                                <strong>Önemli:</strong> Paystack dashboard'ınızda Callback URL'yi şu şekilde ayarlayın:<br>
+                                <strong>{{ __('admin.payment_settings.gateways.paystack.important') }}:</strong> {{ __('admin.payment_settings.gateways.paystack.callback_help') }}<br>
                                 <code class="bg-teal-100 dark:bg-teal-800 px-2 py-1 rounded text-xs font-mono">{{ $settings->site_address }}/dashboard/paystackcallback</code>
                             </p>
                         </div>
@@ -172,13 +172,13 @@
                                 <svg class="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                Paystack Public Key
+                                {{ __('admin.payment_settings.gateways.paystack.public_key') }}
                             </span>
                         </label>
                         <input type="text" name="paystack_public_key" value="{{ $paystack->paystack_public_key }}" 
                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm" 
                                placeholder="pk_test_... veya pk_live_...">
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Paystack dashboard'tan alacağınız public key</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.paystack.public_key_help') }}</p>
                     </div>
                     
                     <div class="space-y-2">
@@ -187,7 +187,7 @@
                                 <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                Paystack Secret Key
+                                {{ __('admin.payment_settings.gateways.paystack.secret_key') }}
                             </span>
                         </label>
                         <div class="relative">
@@ -204,7 +204,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Paystack dashboard'tan alacağınız secret key</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.paystack.secret_key_help') }}</p>
                     </div>
                     
                     <div class="space-y-2">
@@ -213,13 +213,13 @@
                                 <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
                                 </svg>
-                                Paystack URL
+                                {{ __('admin.payment_settings.gateways.paystack.url') }}
                             </span>
                         </label>
                         <input type="text" name="paystack_url" value="{{ $paystack->paystack_url }}" readonly
                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-gray-100 dark:bg-admin-600 dark:text-gray-300 rounded-xl cursor-not-allowed font-mono text-sm" 
                                placeholder="https://api.paystack.co">
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Paystack API URL (otomatik)</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.paystack.url_help') }}</p>
                     </div>
                     
                     <div class="space-y-2">
@@ -229,13 +229,13 @@
                                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                                 </svg>
-                                Paystack Email
+                                {{ __('admin.payment_settings.gateways.paystack.email') }}
                             </span>
                         </label>
                         <input type="email" name="paystack_email" value="{{ $paystack->paystack_email }}" 
                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" 
                                placeholder="merchant@example.com">
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Paystack hesabınızla ilişkili email adresi</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.paystack.email_help') }}</p>
                     </div>
                 </div>
             </div>
@@ -252,8 +252,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white">Flutterwave Payment Gateway</h3>
-                            <p class="text-purple-100 mt-1">Modern Afrika ödeme altyapısı</p>
+                            <h3 class="text-xl font-bold text-white">{{ __('admin.payment_settings.gateways.flutterwave.title') }}</h3>
+                            <p class="text-purple-100 mt-1">{{ __('admin.payment_settings.gateways.flutterwave.description') }}</p>
                         </div>
                     </div>
                     <a href="https://dashboard.flutterwave.com/login" target="_blank" class="text-white/80 hover:text-white transition-colors text-sm underline">
@@ -270,13 +270,13 @@
                                 <svg class="w-4 h-4 mr-2 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                Flutterwave Public Key
+                                {{ __('admin.payment_settings.gateways.flutterwave.public_key') }}
                             </span>
                         </label>
                         <input type="text" name="flw_public_key" value="{{ $moresettings->flw_public_key }}" 
                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm" 
                                placeholder="FLWPUBK_TEST-...">
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Flutterwave public key</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.flutterwave.public_key_help') }}</p>
                     </div>
                     
                     <div class="space-y-2">
@@ -285,7 +285,7 @@
                                 <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                Flutterwave Secret Key
+                                {{ __('admin.payment_settings.gateways.flutterwave.secret_key') }}
                             </span>
                         </label>
                         <div class="relative">
@@ -302,7 +302,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Flutterwave secret key</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.flutterwave.secret_key_help') }}</p>
                     </div>
                     
                     <div class="space-y-2">
@@ -311,7 +311,7 @@
                                 <svg class="w-4 h-4 mr-2 text-pink-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                Flutterwave Secret Hash
+                                {{ __('admin.payment_settings.gateways.flutterwave.secret_hash') }}
                             </span>
                         </label>
                         <div class="relative">
@@ -328,7 +328,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Webhook güvenliği için secret hash</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.flutterwave.secret_hash_help') }}</p>
                     </div>
                 </div>
             </div>
@@ -345,8 +345,8 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-white">Binance Payment Gateway</h3>
-                            <p class="text-amber-100 mt-1">Kripto para ödemeleri için Binance Pay</p>
+                            <h3 class="text-xl font-bold text-white">{{ __('admin.payment_settings.gateways.binance.title') }}</h3>
+                            <p class="text-amber-100 mt-1">{{ __('admin.payment_settings.gateways.binance.description') }}</p>
                         </div>
                     </div>
                     <a href="https://merchant.binance.com/en" target="_blank" class="text-white/80 hover:text-white transition-colors text-sm underline">
@@ -363,18 +363,13 @@
                                 <svg class="w-4 h-4 mr-2 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                Binance API Key
+                                {{ __('admin.payment_settings.gateways.binance.api_key') }}
                             </span>
                         </label>
                         <input type="text" name="bnc_api_key" value="{{ $moresettings->bnc_api_key }}" 
                                class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm" 
                                placeholder="Binance API Key'inizi girin">
-                        <p class="text-xs text-gray-500 dark:text-gray-400">
-                            <a href="https://merchant.binance.com/en" target="_blank" class="text-amber-600 dark:text-amber-400 hover:underline">
-                                Binance Merchant Portal
-                            </a>
-                            'dan alacağınız API key
-                        </p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.binance.api_key_help') }}</p>
                     </div>
                     
                     <div class="space-y-2">
@@ -383,7 +378,7 @@
                                 <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                Binance Secret Key
+                                {{ __('admin.payment_settings.gateways.binance.secret_key') }}
                             </span>
                         </label>
                         <div class="relative">
@@ -400,12 +395,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">
-                            <a href="https://merchant.binance.com/en" target="_blank" class="text-amber-600 dark:text-amber-400 hover:underline">
-                                Binance Merchant Portal
-                            </a>
-                            'dan alacağınız secret key
-                        </p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.gateways.binance.secret_key_help') }}</p>
                     </div>
                 </div>
             </div>
@@ -417,7 +407,7 @@
                 <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                 </svg>
-                <span id="gatewayButtonText">Tüm Gateway Ayarlarını Kaydet</span>
+                <span id="gatewayButtonText">{{ __('admin.payment_settings.gateways.save_all') }}</span>
             </button>
         </div>
     </form>
@@ -440,7 +430,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Kaydediliyor...
+                    {{ __('admin.payment_settings.processing') }}...
                 `;
                 
                 // The form handler is already defined in the parent component

@@ -9,7 +9,11 @@ class SettingsCont extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'use_crypto_feature',
+    ];
+
     protected $casts = [
-        'use_transfer' => 'boolean',
+        'use_crypto_feature' => 'boolean',
     ];
 }

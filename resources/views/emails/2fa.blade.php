@@ -1,12 +1,12 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-#2FA kodu.
+#{{ __('mail.security.two_factor_code') }}
 
-Hesabınız kullanılarak geçici bir 2FA kodu isteği yapıldı. <br>
-Lütfen aşağıdaki detayları kullanarak kimlik doğrulayın:<br>
-2FA kodu: <strong>{!! $demo->message !!}</strong> <br>
+{{ __('mail.security.account_verification') }} <br>
+{{ __('mail.security.verify_identity') }}:<br>
+{{ __('mail.security.two_factor_code') }}: <strong>{!! $demo->message !!}</strong> <br>
 
-Teşekkürler,<br>
+{{ __('mail.footer.thanks') }},<br>
 {{ $demo->sender }}.
 @endcomponent
 {{-- blade-formatter-disable --}}

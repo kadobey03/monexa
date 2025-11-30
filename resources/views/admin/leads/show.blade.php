@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
-@section('title', 'Lead Detayı - ' . $lead->name)
+@section('title', __('admin.leads.lead_detail') . ' - ' . $lead->name)
 
 @section('breadcrumb')
 <nav class="flex" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 md:space-x-3">
         <li class="inline-flex items-center">
-            <a href="{{ route('admin.dashboard') }}" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+            <a href="{{ route('admin.dashboard') }}" class="text-gray-700 hover:text-blue-600">{{ __('admin.dashboard.dashboard') }}</a>
         </li>
         <li>
             <div class="flex items-center">
                 <i class="fas fa-chevron-right text-gray-400 mx-1"></i>
-                <a href="{{ route('admin.leads.index') }}" class="text-gray-700 hover:text-blue-600">Leads</a>
+                <a href="{{ route('admin.leads.index') }}" class="text-gray-700 hover:text-blue-600">{{ __('admin.leads.leads') }}</a>
             </div>
         </li>
         <li aria-current="page">

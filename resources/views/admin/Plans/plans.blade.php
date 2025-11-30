@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Sistem Planları'])
+@extends('layouts.admin', ['title' => {{ __('admin.plans.system_plans') }}])
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
@@ -11,14 +11,14 @@
                             <x-heroicon name="credit-card" class="w-8 h-8 text-white" />
                         </div>
                         <div>
-                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Sistem Planları</h1>
-                            <p class="text-gray-600 dark:text-gray-400 mt-1">Yatırım planlarını görüntüleyin ve yönetin</p>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.plans.system_plans') }}</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.plans.view_and_manage_plans') }}</p>
                         </div>
                         </div>
                         
                     <a href="{{ route('newplan') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
                         <x-heroicon name="plus" class="w-5 h-5 mr-2" />
-                        Yeni Plan
+                        {{ __('admin.plans.new_plan') }}
                     </a>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                                                             <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                                         </svg>
                                                     </div>
-                                                    <span class="font-semibold text-gray-700">Minimum Yatırım</span>
+                                                    <span class="font-semibold text-gray-700">{{ __('admin.plans.minimum_investment') }}</span>
                                                 </div>
                                                 <span class="font-bold text-green-700">{{ $settings->currency }}{{ number_format($plan->min_price) }}</span>
                                             </div>
@@ -82,7 +82,7 @@
                                                             <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 11-1.414 1.414L10 4.414 7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                                                         </svg>
                                                     </div>
-                                                    <span class="font-semibold text-gray-700">Maksimum Yatırım</span>
+                                                    <span class="font-semibold text-gray-700">{{ __('admin.plans.maximum_investment') }}</span>
                                                 </div>
                                                 <span class="font-bold text-blue-700">{{ $settings->currency }}{{ number_format($plan->max_price) }}</span>
                                             </div>
@@ -95,7 +95,7 @@
                                                             <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                                         </svg>
                                                     </div>
-                                                    <span class="font-semibold text-gray-700">Getiri Oranı</span>
+                                                    <span class="font-semibold text-gray-700">{{ __('admin.plans.return_rate') }}</span>
                                                 </div>
                                                 <span class="font-bold text-purple-700">{{ number_format($plan->minr) }}% - {{ number_format($plan->maxr) }}%</span>
                                             </div>
@@ -109,7 +109,7 @@
                                                             <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z"></path>
                                                         </svg>
                                                     </div>
-                                                    <span class="font-semibold text-gray-700">Hediye Bonus</span>
+                                                    <span class="font-semibold text-gray-700">{{ __('admin.plans.gift_bonus') }}</span>
                                                 </div>
                                                 <span class="font-bold text-yellow-700">{{ $settings->currency }}{{ $plan->gift }}</span>
                                             </div>
@@ -122,7 +122,7 @@
                                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                                         </svg>
                                                     </div>
-                                                    <span class="font-semibold text-gray-700">Süre</span>
+                                                    <span class="font-semibold text-gray-700">{{ __('admin.plans.duration') }}</span>
                                                 </div>
                                                 <span class="font-bold text-teal-700">{{ $plan->expiration }}</span>
                                             </div>
@@ -134,9 +134,9 @@
                                                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                                 </svg>
-                                                Düzenle
+                                                {{ __('admin.plans.edit') }}
                                             </a>
-                                            <a href="{{ url('admin/dashboard/trashplan') }}/{{ $plan->id }}" onclick="return confirm('Bu planı silmek istediğinizden emin misiniz?')" class="inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105">
+                                            <a href="{{ url('admin/dashboard/trashplan') }}/{{ $plan->id }}" onclick="return confirm('{{ __('admin.plans.confirm_delete_plan') }}')" class="inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-semibold rounded-lg transition-all duration-200 transform hover:scale-105">
                                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"></path>
                                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414L9.586 12l-2.293 2.293a1 1 0 101.414 1.414L10 13.414l1.293 1.293a1 1 0 001.414-1.414L11.414 12l2.293-2.293z" clip-rule="evenodd"></path>
@@ -160,13 +160,13 @@
                                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-2">Henüz Plan Yok</h3>
-                            <p class="text-gray-500 text-lg mb-6">Şu anda sistemde hiç yatırım planı bulunmuyor.</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">{{ __('admin.plans.no_plans_yet') }}</h3>
+                            <p class="text-gray-500 text-lg mb-6">{{ __('admin.plans.no_investment_plans_currently') }}</p>
                             <a href="{{ route('newplan') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
                                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path>
                                 </svg>
-                                İlk Planı Oluştur
+                                {{ __('admin.plans.create_first_plan') }}
                             </a>
                     </div>
                 @endforelse

@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'E-posta Doğrulama - Ticaret Hesabınızı Güvenceye Alın')
+@section('title', __('auth.verify_email.page_title'))
 @section('content')
 
 <!-- Email Verification Interface -->
@@ -17,10 +17,10 @@
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                    E-posta Adresinizi Doğrulayın
+                    {{ __('auth.verify_email.title') }}
                 </h1>
                 <p class="text-gray-400 text-sm md:text-base">
-                    E-posta adresinizi doğrulayarak ticaret hesabınızı güvenceye alın
+                    {{ __('auth.verify_email.subtitle') }}
                 </p>
             </div>
 
@@ -30,9 +30,9 @@
                     <div class="flex items-start gap-3">
                         <x-heroicon name="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
-                            <p class="text-green-300 font-bold mb-1">Doğrulama E-postası Gönderildi</p>
+                            <p class="text-green-300 font-bold mb-1">{{ __('auth.verify_email.verification_sent') }}</p>
                             <p class="text-gray-300">
-                                E-posta adresinize bir doğrulama bağlantısı gönderildi. Hesabınızı doğrulamak için lütfen gelen kutunuzu kontrol edin ve bağlantıya tıklayın.
+                                {{ __('auth.verify_email.verification_sent_message') }}
                             </p>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                     <div class="flex items-start gap-3">
                         <x-heroicon name="information-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
-                            <p class="text-green-300 font-bold mb-1">Güncelleme</p>
+                            <p class="text-green-300 font-bold mb-1">{{ __('common.messages.update') }}</p>
                             <p class="text-gray-300">{{ session('message') }}</p>
                         </div>
                     </div>
@@ -56,25 +56,24 @@
                 <div class="flex items-start gap-4">
                     <x-heroicon name="envelope" class="w-6 h-6 text-blue-400 mt-1 flex-shrink-0" />
                     <div>
-                        <h3 class="text-blue-300 font-bold text-lg mb-3">E-postanızı Kontrol Edin</h3>
+                        <h3 class="text-blue-300 font-bold text-lg mb-3">{{ __('auth.verify_email.check_email_title') }}</h3>
                         <p class="text-gray-300 text-sm mb-4 leading-relaxed">
-                            Kayıtlı e-posta adresinize güvenli bir doğrulama bağlantısı gönderdik.
-                            Ticaret hesabınızı etkinleştirmek ve tüm özelliklere erişmek için e-postadaki bağlantıya tıklayın.
+                            {{ __('auth.verify_email.check_email_message') }}
                         </p>
 
                         <!-- Email Steps -->
                         <div class="space-y-3">
                             <div class="flex items-center gap-3 text-sm text-gray-300">
                                 <span class="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 font-bold text-xs">1</span>
-                                <span>Doğrulama e-postamız için gelen kutunuzu kontrol edin</span>
+                                <span>{{ __('auth.verify_email.step_1') }}</span>
                             </div>
                             <div class="flex items-center gap-3 text-sm text-gray-300">
                                 <span class="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 font-bold text-xs">2</span>
-                                <span>E-postadaki "E-postayı Doğrula" düğmesine tıklayın</span>
+                                <span>{{ __('auth.verify_email.step_2') }}</span>
                             </div>
                             <div class="flex items-center gap-3 text-sm text-gray-300">
                                 <span class="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 font-bold text-xs">3</span>
-                                <span>Hesap kurulumunu tamamlamak için geri dönün</span>
+                                <span>{{ __('auth.verify_email.step_3') }}</span>
                             </div>
                         </div>
                     </div>
@@ -94,7 +93,7 @@
                     >
                         <span class="flex items-center justify-center gap-2">
                             <x-heroicon name="arrow-path" class="w-5 h-5" />
-                            Doğrulama E-postasını Tekrar Gönder
+                            {{ __('auth.verify_email.resend_verification') }}
                         </span>
                     </button>
                 </form>
@@ -108,7 +107,7 @@
                     >
                         <span class="flex items-center justify-center gap-2">
                             <x-heroicon name="arrow-left-on-rectangle" class="w-5 h-5" />
-                            Çıkış Yap
+                            {{ __('auth.logout') }}
                         </span>
                     </button>
                 </form>
@@ -118,24 +117,24 @@
             <div class="mt-8 bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                 <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
                     <x-heroicon name="question-mark-circle" class="w-4 h-4 text-yellow-400" />
-                    E-posta Bulamıyor musunuz?
+                    {{ __('auth.verify_email.cant_find_email') }}
                 </h4>
                 <ul class="text-gray-300 text-xs space-y-2">
                     <li class="flex items-start gap-2">
                         <span class="text-yellow-400 mt-1">•</span>
-                        Spam veya gereksiz klasörünüzü kontrol edin
+                        {{ __('auth.verify_email.tip_spam') }}
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-yellow-400 mt-1">•</span>
-                        E-posta adresinin doğru olduğundan emin olun
+                        {{ __('auth.verify_email.tip_correct_email') }}
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-yellow-400 mt-1">•</span>
-                        Teslimat için birkaç dakika bekleyin
+                        {{ __('auth.verify_email.tip_wait') }}
                     </li>
                     <li class="flex items-start gap-2">
                         <span class="text-yellow-400 mt-1">•</span>
-                        Gerekirse 2 dakikadan sonra "Tekrar Gönder"e tıklayın
+                        {{ __('auth.verify_email.tip_resend') }}
                     </li>
                 </ul>
             </div>
@@ -143,19 +142,19 @@
             <!-- Security Notice -->
             <div class="mt-6 pt-6 border-t border-gray-700">
                 <div class="text-center">
-                    <p class="text-xs text-gray-500 mb-3">E-posta neden doğrulanıyor?</p>
+                    <p class="text-xs text-gray-500 mb-3">{{ __('auth.verify_email.why_verify') }}</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                         <div class="flex flex-col items-center gap-1 text-gray-400">
                             <x-heroicon name="shield-check" class="w-4 h-4 text-green-400" />
-                            <span>Hesap Güvenliği</span>
+                            <span>{{ __('auth.verify_email.security.account') }}</span>
                         </div>
                         <div class="flex flex-col items-center gap-1 text-gray-400">
                             <x-heroicon name="bell" class="w-4 h-4 text-blue-400" />
-                            <span>Ticaret Uyarıları</span>
+                            <span>{{ __('auth.verify_email.security.trade_alerts') }}</span>
                         </div>
                         <div class="flex flex-col items-center gap-1 text-gray-400">
                             <x-heroicon name="key" class="w-4 h-4 text-purple-400" />
-                            <span>Şifre Kurtarma</span>
+                            <span>{{ __('auth.verify_email.security.password_recovery') }}</span>
                         </div>
                     </div>
                 </div>
@@ -172,9 +171,9 @@
         <!-- Support Contact -->
         <div class="text-center mt-6">
             <p class="text-gray-500 text-sm">
-                Yardıma ihtiyacınız var mı?
+                {{ __('auth.verify_email.need_help') }}
                 <a href="mailto:support@bluetrade.com" class="text-blue-400 hover:text-blue-300 font-medium ml-1 transition-colors duration-200">
-                    Destek ile İletişime Geç
+                    {{ __('common.support.contact_support') }}
                 </a>
             </p>
         </div>
@@ -217,7 +216,7 @@
                 checkCount = 0;
 
                 // Visual feedback
-                this.innerHTML = '<span class="flex items-center justify-center gap-2"><x-heroicon name="loader-2" class="w-5 h-5 animate-spin" />Gönderiliyor...</span>';
+                this.innerHTML = '<span class="flex items-center justify-center gap-2"><x-heroicon name="loader-2" class="w-5 h-5 animate-spin" />{{ __('common.buttons.sending') }}</span>';
 
                 // Re-initialize icons after content change
                 setTimeout(() => {

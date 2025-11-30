@@ -70,7 +70,7 @@ Route::controller(ForgotPasswordController::class)->group(function () {
     Route::post('/reset-password-admin', 'validateResetPasswordToken')->name('restpass');
 });
 
-Route::middleware(['isadmin', '2fa'])->prefix('admin')->group(function () {
+Route::middleware([\App\Http\Middleware\SetLocale::class, 'web', 'isadmin', '2fa'])->prefix('admin')->group(function () {
 
     Route::controller(HomeController::class)->group(function () {
         Route::get('dashboard', 'index')->name('admin.dashboard');

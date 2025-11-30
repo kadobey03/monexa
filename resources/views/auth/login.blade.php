@@ -1,5 +1,5 @@
 @extends('layouts.master', ['layoutType' => 'guest'])
-@section('title', 'Giriş Yap')
+@section('title', __('auth.login.title'))
 @section('content')
 
 <div class="w-full max-w-md">
@@ -30,10 +30,10 @@
             @endif
 
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                Hoş Geldiniz
+                {{ __('auth.login.welcome') }}
             </h1>
             <p class="text-gray-600 dark:text-gray-400">
-                {{ $settings->site_name ?? 'Monexa' }} Paneline Giriş Yapın
+                {{ __('auth.login.login_to_platform', ['site_name' => $settings->site_name ?? 'Monexa']) }}
             </p>
         </div>
 
@@ -76,7 +76,7 @@
             <!-- Email Field -->
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    E-posta Adresi
+                    {{ __('auth.forms.email_address') }}
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -85,7 +85,7 @@
                     <input type="email" name="email" id="email" required
                            autocomplete="email"
                            class="block w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                           placeholder="ornek@email.com"
+                           placeholder="{{ __('auth.forms.email_placeholder') }}"
                            value="{{ old('email') }}">
                 </div>
             </div>
@@ -93,7 +93,7 @@
             <!-- Password Field -->
             <div>
                 <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Şifre
+                    {{ __('auth.forms.password') }}
                 </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -102,7 +102,7 @@
                     <input type="password" name="password" id="password" required
                            autocomplete="current-password"
                            class="block w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                           placeholder="Şifrenizi giriniz">
+                           placeholder="{{ __('auth.forms.password_placeholder') }}">
                     <button type="button" onclick="togglePasswordVisibility('password')"
                             class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                         <x-heroicon name="eye" class="h-5 w-5" id="password-eye" />
@@ -116,12 +116,12 @@
                     <input type="checkbox" name="remember" id="remember"
                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                     <label for="remember" class="ml-2 text-sm text-gray-600 dark:text-gray-400">
-                        Beni hatırla
+                        {{ __('auth.login.remember_me') }}
                     </label>
                 </div>
                 <a href="{{ route('password.request') }}"
                    class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
-                    Şifremi unuttum
+                    {{ __('auth.login.forgot_password') }}
                 </a>
             </div>
 
@@ -129,17 +129,17 @@
             <button type="submit"
                     class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
                 <x-heroicon name="arrow-right-on-rectangle" class="h-4 w-4" />
-                Giriş Yap
+                {{ __('auth.login.login_button') }}
             </button>
         </form>
 
         <!-- Register Link -->
         <div class="mt-6 text-center">
             <p class="text-sm text-gray-600 dark:text-gray-400">
-                Hesabınız yok mu?
+                {{ __('auth.login.no_account') }}
                 <a href="{{ route('register') }}"
                    class="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
-                    Kayıt olun
+                    {{ __('auth.login.register_link') }}
                 </a>
             </p>
         </div>

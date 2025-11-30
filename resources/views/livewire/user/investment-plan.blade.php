@@ -1,17 +1,17 @@
 <div>
     <x-layout.card
-        title="Investment Plans"
-        subtitle="Choose and invest in a plan to start earning">
+        title="{{ __('user.investment.investment_plans') }}"
+        subtitle="{{ __('user.investment.choose_invest_subtitle') }}">
 
         <x-slot name="header">
             <x-financial.balance-card
                 :balance="$user->account_bal"
                 :currency="$currency"
-                label="Available Balance" />
+                label="{{ __('user.financial.available_balance') }}" />
         </x-slot>
                         <div class="mt-5">
                             <div class="">
-                                <p>Choose Quick Amount to Invest</p>
+                                <p>{{ __('user.investment.choose_quick_amount') }}</p>
                             </div>
                             <div class="flex-wrap mb-1 d-flex justify-content-start align-items-center">
                                 <button class="mb-2 border-black rounded-none btn btn-light"
@@ -31,11 +31,11 @@
 
                         <div class="mt-5">
                             <div class="">
-                                <p>Or Enter Your Amount</p>
+                                <p>{{ __('user.investment.or_enter_amount') }}</p>
                                 <div>
                                     <input type="number" required wire:model='amountToInvest'
                                         wire:keyup="checkIfAmountIsEmpty" name="" id=""
-                                        class="form-control d-block w-100" placeholder="1000"
+                                        class="form-control d-block w-100" placeholder="{{ __('user.investment.amount_placeholder') }}"
                                         min="{{ $planSelected ? $planSelected->min_price : '0' }}"
                                         max="{{ $planSelected ? $planSelected->max_price : '10000000000' }}">
                                 </div>
@@ -43,14 +43,14 @@
                         </div>
 
                         <div class="mt-5">
-                            <p>Choose Payment Method</p>
+                            <p>{{ __('user.investment.choose_payment_method') }}</p>
                         </div>
                         <div class="select-menu2">
                             <ul class="options2 d-block">
                                 <li class="mb-3 option2 {{ $paymentMethod == 'Account Balance' ? 'bg-light border border-primary' : '' }}"
                                     id="acnt" wire:click="chanegePaymentMethod('Account Balance')">
                                     <i class="fas fa-wallet"></i>
-                                    <span class="option-text2 d-block mr-2">Account Balance </span> <br>
+                                    <span class="option-text2 d-block mr-2">{{ __('user.financial.account_balance') }} </span> <br>
                                     <span class="small">
                                         {{ $settings->currency }}{{ number_format(Auth::user()->account_bal) }}
                                     </span>
@@ -72,24 +72,24 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                        <p>Your Investment Details</p>
+                        <p>{{ __('user.investment.investment_details') }}</p>
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <p class="mb-0 small">Name of plan</p>
+                                <p class="mb-0 small">{{ __('user.investment.plan_name') }}</p>
                                 <span class="text-primary small">{{ $planSelected ? $planSelected->name : '-' }}</span>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <p class="mb-0 small">Plan Price</p>
+                                <p class="mb-0 small">{{ __('user.investment.plan_price') }}</p>
                                 <span
                                     class="text-primary small">{{ $settings->currency }}{{ $planSelected ? $planSelected->price : '-' }}</span>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <p class="mb-0 small">Duration</p>
+                                <p class="mb-0 small">{{ __('user.investment.duration') }}</p>
                                 <span
                                     class="text-primary small">{{ $planSelected ? $planSelected->expiration : '-' }}</span>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <p class="mb-0 small">Profit</p>
+                                <p class="mb-0 small">{{ __('user.investment.profit') }}</p>
                                 <span class="text-primary small">
                                     @if ($planSelected)
                                         @if ($planSelected->increment_type == 'Fixed')
@@ -105,46 +105,46 @@
                                 </span>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <p class="mb-0 small">Minimum Deposit</p>
+                                <p class="mb-0 small">{{ __('user.investment.min_deposit') }}</p>
                                 <span
                                     class="text-primary small">{{ $planSelected ? $settings->currency . $planSelected->min_price : '-' }}</span>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <p class="mb-0 small">Maximum Deposit</p>
+                                <p class="mb-0 small">{{ __('user.investment.max_deposit') }}</p>
                                 <span
                                     class="text-primary small">{{ $planSelected ? $settings->currency . $planSelected->max_price : '-' }}</span>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <p class="mb-0 small">Minimum Return</p>
+                                <p class="mb-0 small">{{ __('user.investment.min_return') }}</p>
                                 <span
                                     class="text-primary small">{{ $planSelected ? $planSelected->minr . '%' : '-' }}</span>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <p class="mb-0 small">Maximum Return</p>
+                                <p class="mb-0 small">{{ __('user.investment.max_return') }}</p>
                                 <span
                                     class="text-primary small">{{ $planSelected ? $planSelected->maxr . '%' : '-' }}</span>
                             </div>
                             <div class="mb-3 col-md-6">
-                                <p class="mb-0 small">Bonus</p>
+                                <p class="mb-0 small">{{ __('user.investment.bonus') }}</p>
                                 <span
                                     class="text-primary small">{{ $planSelected ? $settings->currency . $planSelected->gift : '-' }}</span>
                             </div>
                         </div>
                         <hr>
                         <div class="justify-content-between d-md-flex">
-                            <span class="small d-block d-md-inline">Payment method:</span>
+                            <span class="small d-block d-md-inline">{{ __('user.investment.payment_method') }}:</span>
                             <span class="small text-primary">{{ $paymentMethod ? $paymentMethod : '-' }}</span>
                         </div>
                         <hr>
                         <div class="justify-content-between d-md-flex">
-                            <span class="d-block d-md-inline font-weight-bold">Amount to Invest:</span>
+                            <span class="d-block d-md-inline font-weight-bold">{{ __('user.investment.amount_to_invest') }}:</span>
                             <span
                                 class="text-primary font-weight-bold">{{ $settings->currency }}{{ $amountToInvest ? number_format($amountToInvest) : '0' }}</span>
                         </div>
                         <div class="mt-3 text-center">
                             <form action="" wire:submit.prevent="joinPlan">
                                 <button class="px-3 btn btn-primary" {{ $disabled }}>
-                                    Confirm & Invest
+                                    {{ __('user.investment.confirm_invest') }}
                                 </button>
                             </form>
                             <span class="mt-2 small text-primary" wire:loading wire:target="joinPlan">
@@ -159,7 +159,7 @@
             <div class="col-md-12">
                 <div class="py-4 card">
                     <div class="text-center card-body">
-                        <p>No investment plan at the moment, please contact our support for more information</p>
+                        <p>{{ __('user.investment.no_plans_available') }}</p>
                     </div>
                 </div>
             </div>
@@ -208,6 +208,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    console.log('Investment Plan component initialized');
+    console.log("{{ __('user.investment.component_initialized') }}");
 });
 </script>

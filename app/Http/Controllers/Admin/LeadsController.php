@@ -38,7 +38,7 @@ class LeadsController extends Controller
     public function index(Request $request)
     {
         return view('admin.leads', [
-            'title' => 'Lead Yönetimi'
+            'title' => __('admin.leads.page_title')
         ]);
     }
 
@@ -157,7 +157,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch leads data.',
+                'message' => __('admin.leads.fetch_failed'),
                 'error' => config('app.debug') ? $e->getMessage() : null
             ], 500);
         }
@@ -221,7 +221,7 @@ class LeadsController extends Controller
                     'user_id' => $lead->id,
                     'admin_id' => $adminUser->id,
                     'type' => 'created',
-                    'description' => 'Lead oluşturuldu',
+                    'description' => __('admin.leads.activity.created'),
                     'metadata' => json_encode([
                         'created_by' => $adminUser->firstName . ' ' . $adminUser->lastName,
                         'initial_status' => $leadData['lead_status_id']
@@ -239,7 +239,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Lead başarıyla oluşturuldu',
+                'message' => __('admin.leads.created_successfully'),
                 'data' => $lead->load(['leadStatus', 'assignedAdmin', 'leadSource'])
             ], 201);
 
@@ -247,7 +247,7 @@ class LeadsController extends Controller
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
+                'message' => __('validation.failed'),
                 'errors' => $e->errors()
             ], 422);
 
@@ -261,7 +261,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Lead oluşturulamadı'
+                'message' => __('admin.leads.creation_failed')
             ], 500);
         }
     }
@@ -304,7 +304,7 @@ class LeadsController extends Controller
             if (!$this->leadAuthService->canEditLead($adminUser, $lead)) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Bu lead\'i düzenleme yetkiniz yok'
+                    'message' => __('admin.leads.no_edit_permission')
                 ], 403);
             }
 
@@ -348,7 +348,7 @@ class LeadsController extends Controller
                     'user_id' => $lead->id,
                     'admin_id' => $adminUser->id,
                     'type' => 'updated',
-                    'description' => 'Lead bilgileri güncellendi',
+                    'description' => __('admin.leads.activity.updated'),
                     'metadata' => json_encode([
                         'changes' => $changes,
                         'updated_by' => $adminUser->firstName . ' ' . $adminUser->lastName
@@ -366,7 +366,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Lead başarıyla güncellendi',
+                'message' => __('admin.leads.updated_successfully'),
                 'data' => $lead->fresh(['leadStatus', 'assignedAdmin', 'leadSource'])
             ]);
 
@@ -374,7 +374,7 @@ class LeadsController extends Controller
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
+                'message' => __('validation.failed'),
                 'errors' => $e->errors()
             ], 422);
 
@@ -388,7 +388,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Lead güncellenemedi'
+                'message' => __('admin.leads.update_failed')
             ], 500);
         }
     }
@@ -412,7 +412,7 @@ class LeadsController extends Controller
             if (!$this->leadAuthService->canDeleteLead($adminUser, $lead)) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Lead silme yetkiniz yok'
+                    'message' => __('admin.leads.no_delete_permission')
                 ], 403);
             }
 
@@ -423,7 +423,7 @@ class LeadsController extends Controller
                 'user_id' => $lead->id,
                 'admin_id' => $adminUser->id,
                 'type' => 'deleted',
-                'description' => 'Lead silindi',
+                'description' => __('admin.leads.activity.deleted'),
                 'metadata' => json_encode([
                     'deleted_by' => $adminUser->firstName . ' ' . $adminUser->lastName,
                     'deleted_lead_name' => $lead->name
@@ -443,7 +443,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Lead başarıyla silindi'
+                'message' => __('admin.leads.deleted_successfully')
             ]);
 
         } catch (\Exception $e) {
@@ -456,7 +456,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Lead silinemedi'
+                'message' => __('admin.leads.deletion_failed')
             ], 500);
         }
     }
@@ -495,7 +495,7 @@ class LeadsController extends Controller
                         'user_id' => $lead->id,
                         'admin_id' => $adminUser->id,
                         'type' => 'status_updated',
-                        'description' => 'Durum toplu güncelleme ile değiştirildi',
+                        'description' => __('admin.leads.activity.bulk_status_updated'),
                         'metadata' => json_encode([
                             'old_status' => $oldStatus,
                             'new_status' => $request->status,
@@ -518,14 +518,14 @@ class LeadsController extends Controller
             return response()->json([
                 'success' => true,
                 'updated' => $updated,
-                'message' => "{$updated} lead'in durumu güncellendi"
+                'message' => __('admin.leads.bulk_status_updated_count', ['count' => $updated])
             ]);
 
         } catch (ValidationException $e) {
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
+                'message' => __('validation.failed'),
                 'errors' => $e->errors()
             ], 422);
 
@@ -538,7 +538,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Toplu durum güncellemesi başarısız'
+                'message' => __('admin.leads.bulk_status_update_failed')
             ], 500);
         }
     }
@@ -565,7 +565,7 @@ class LeadsController extends Controller
                 if (!$targetAdmin || !$this->leadAuthService->canAssignToAdmin($adminUser, $targetAdmin)) {
                     return response()->json([
                         'success' => false,
-                        'message' => 'Bu admin\'e atama yapma yetkiniz yok'
+                        'message' => __('admin.leads.no_assign_permission')
                     ], 403);
                 }
             }
@@ -592,7 +592,7 @@ class LeadsController extends Controller
                         'user_id' => $lead->id,
                         'admin_id' => $adminUser->id,
                         'type' => 'assigned',
-                        'description' => 'Lead atama toplu işlem ile değiştirildi',
+                        'description' => __('admin.leads.activity.bulk_assigned'),
                         'metadata' => json_encode([
                             'old_admin_id' => $oldAdminId,
                             'new_admin_id' => $request->admin_id,
@@ -616,14 +616,14 @@ class LeadsController extends Controller
             return response()->json([
                 'success' => true,
                 'assigned' => $assigned,
-                'message' => "{$assigned} lead atandı"
+                'message' => __('admin.leads.bulk_assigned_count', ['count' => $assigned])
             ]);
 
         } catch (ValidationException $e) {
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
+                'message' => __('validation.failed'),
                 'errors' => $e->errors()
             ], 422);
 
@@ -636,7 +636,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Toplu atama başarısız'
+                'message' => __('admin.leads.bulk_assign_failed')
             ], 500);
         }
     }
@@ -678,7 +678,7 @@ class LeadsController extends Controller
                         'user_id' => $lead->id,
                         'admin_id' => $adminUser->id,
                         'type' => 'tags_added',
-                        'description' => 'Etiketler toplu işlem ile eklendi',
+                        'description' => __('admin.leads.activity.bulk_tags_added'),
                         'metadata' => json_encode([
                             'added_tags' => $request->tags,
                             'added_by' => $adminUser->firstName . ' ' . $adminUser->lastName
@@ -700,14 +700,14 @@ class LeadsController extends Controller
             return response()->json([
                 'success' => true,
                 'updated' => $updated,
-                'message' => "{$updated} lead'e etiket eklendi"
+                'message' => __('admin.leads.bulk_tags_added_count', ['count' => $updated])
             ]);
 
         } catch (ValidationException $e) {
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
+                'message' => __('validation.failed'),
                 'errors' => $e->errors()
             ], 422);
 
@@ -720,7 +720,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Toplu etiket ekleme başarısız'
+                'message' => __('admin.leads.bulk_tags_add_failed')
             ], 500);
         }
     }
@@ -743,7 +743,7 @@ class LeadsController extends Controller
             if (!$adminUser->hasBypassPrivileges()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Toplu silme işlemi için üst düzey yetki gerekli'
+                    'message' => __('admin.leads.bulk_delete_permission_required')
                 ], 403);
             }
 
@@ -764,7 +764,7 @@ class LeadsController extends Controller
                         'user_id' => $lead->id,
                         'admin_id' => $adminUser->id,
                         'type' => 'deleted',
-                        'description' => 'Lead toplu silme ile silindi',
+                        'description' => __('admin.leads.activity.bulk_deleted'),
                         'metadata' => json_encode([
                             'deleted_by' => $adminUser->firstName . ' ' . $adminUser->lastName,
                             'deleted_lead_name' => $lead->name
@@ -786,14 +786,14 @@ class LeadsController extends Controller
             return response()->json([
                 'success' => true,
                 'deleted' => $deleted,
-                'message' => "{$deleted} lead silindi"
+                'message' => __('admin.leads.bulk_deleted_count', ['count' => $deleted])
             ]);
 
         } catch (ValidationException $e) {
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
+                'message' => __('validation.failed'),
                 'errors' => $e->errors()
             ], 422);
 
@@ -806,7 +806,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Toplu silme başarısız'
+                'message' => __('admin.leads.bulk_delete_failed')
             ], 500);
         }
     }
@@ -839,7 +839,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Aktivite eklendi',
+                'message' => __('admin.leads.activity_added'),
                 'data' => [
                     'id' => $activity->id,
                     'type' => $activity->type,
@@ -852,7 +852,7 @@ class LeadsController extends Controller
         } catch (ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Validation failed',
+                'message' => __('validation.failed'),
                 'errors' => $e->errors()
             ], 422);
 
@@ -865,7 +865,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Aktivite eklenemedi'
+                'message' => __('admin.leads.activity_add_failed')
             ], 500);
         }
     }
@@ -883,7 +883,7 @@ class LeadsController extends Controller
             if (!$adminUser->hasBypassPrivileges()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Export işlemi için üst düzey yetki gerekli'
+                    'message' => __('admin.leads.export_permission_required')
                 ], 403);
             }
 
@@ -912,7 +912,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Export işlemi başarısız'
+                'message' => __('admin.leads.export_failed')
             ], 500);
         }
     }
@@ -1060,7 +1060,7 @@ class LeadsController extends Controller
 
         // Check view permission using LeadAuthorizationService
         if (!$this->leadAuthService->canViewLead($adminUser, $lead)) {
-            abort(403, 'Bu lead\'i görüntüleme yetkiniz yok');
+            abort(403, __('admin.leads.no_view_permission'));
         }
 
         // Get lead activities
@@ -1161,7 +1161,7 @@ class LeadsController extends Controller
             $adminUser = Auth::guard('admin')->user();
             
             if (!$adminUser) {
-                return $this->errorResponse('Yetkilendirme hatası', 401);
+                return $this->errorResponse(__('admin.auth.unauthorized'), 401);
             }
 
             // Get validated request data
@@ -1197,7 +1197,7 @@ class LeadsController extends Controller
             return $this->successResponse([
                 'admins' => $formattedAdmins,
                 'metadata' => $metadata
-            ], 'Atanabilir adminler başarıyla getirildi', 200);
+            ], __('admin.leads.assignable_admins_fetched'), 200);
             
         } catch (\Exception $e) {
             Log::error('Failed to fetch assignable admins', [
@@ -1208,7 +1208,7 @@ class LeadsController extends Controller
             ]);
 
             return $this->errorResponse(
-                'Atanabilir adminler getirilemedi',
+                __('admin.leads.assignable_admins_fetch_failed'),
                 500,
                 config('app.debug') ? [
                     'message' => $e->getMessage(),
@@ -1229,7 +1229,7 @@ class LeadsController extends Controller
             $adminUser = Auth::guard('admin')->user();
             
             if (!$adminUser || !$adminUser->hasBypassPrivileges()) {
-                return $this->errorResponse('Bu işlem için yetkiniz bulunmamaktadır', 403);
+                return $this->errorResponse(__('admin.permissions.insufficient'), 403);
             }
 
             $adminCacheService = new AdminCacheService();
@@ -1238,10 +1238,10 @@ class LeadsController extends Controller
             $adminId = $request->get('admin_id');
             if ($adminId) {
                 $adminCacheService->clearAdminCache((int)$adminId);
-                $message = "Admin ID {$adminId} için cache temizlendi";
+                $message = __('admin.cache.admin_cleared', ['id' => $adminId]);
             } else {
                 $adminCacheService->clearAllCache();
-                $message = 'Tüm admin dropdown cache temizlendi';
+                $message = __('admin.cache.all_admin_cleared');
             }
             
             Log::info('Admin dropdown cache cleared', [
@@ -1261,7 +1261,7 @@ class LeadsController extends Controller
                 'error' => $e->getMessage()
             ]);
 
-            return $this->errorResponse('Cache temizleme işlemi başarısız', 500);
+            return $this->errorResponse(__('admin.cache.clear_failed'), 500);
         }
     }
 
@@ -1275,7 +1275,7 @@ class LeadsController extends Controller
             $adminUser = Auth::guard('admin')->user();
             
             if (!$adminUser) {
-                return $this->errorResponse('Yetkilendirme hatası', 401);
+                return $this->errorResponse(__('admin.auth.unauthorized'), 401);
             }
 
             $cacheKey = "admin_assignment_stats_{$adminUser->id}";
@@ -1320,7 +1320,7 @@ class LeadsController extends Controller
                 ];
             });
 
-            return $this->successResponse($stats, 'Admin istatistikleri başarıyla getirildi');
+            return $this->successResponse($stats, __('admin.stats.fetched_successfully'));
             
         } catch (\Exception $e) {
             Log::error('Failed to fetch admin assignment stats', [
@@ -1328,7 +1328,7 @@ class LeadsController extends Controller
                 'error' => $e->getMessage()
             ]);
 
-            return $this->errorResponse('Admin istatistikleri getirilemedi', 500);
+            return $this->errorResponse(__('admin.stats.fetch_failed'), 500);
         }
     }
 
@@ -1475,7 +1475,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Filtre preset\'leri getirilemedi'
+                'message' => __('admin.leads.filter_presets_fetch_failed')
             ], 500);
         }
     }
@@ -1500,7 +1500,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Lead statusleri getirilemedi'
+                'message' => __('admin.leads.statuses_fetch_failed')
             ], 500);
         }
 
@@ -1528,7 +1528,7 @@ class LeadsController extends Controller
                 default:
                     return response()->json([
                         'success' => false,
-                        'message' => 'Geçersiz field parametresi',
+                        'message' => __('admin.leads.invalid_field_parameter'),
                         'available_fields' => ['lead_source', 'assigned_admin', 'lead_status']
                     ], 400);
             }
@@ -1541,7 +1541,7 @@ class LeadsController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Dropdown seçenekleri getirilemedi'
+                'message' => __('admin.leads.options_fetch_failed')
             ], 500);
         }
     }

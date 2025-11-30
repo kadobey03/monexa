@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'E-posta Servisleri'])
+@extends('layouts.admin', ['title' => __('admin.emails.title')])
 
 @section('content')
 <div class="min-h-screen bg-gray-50 dark:bg-admin-900 py-8">
@@ -13,17 +13,17 @@
                         </svg>
                     </div>
                     <div>
-                        <h1 class="text-3xl font-bold mb-1">E-posta Servisleri</h1>
-                        <p class="text-blue-100 text-lg">Kullanıcılara toplu e-posta gönderin ve yönetin</p>
+                        <h1 class="text-3xl font-bold mb-1">{{ __('admin.emails.title') }}</h1>
+                        <p class="text-blue-100 text-lg">{{ __('admin.emails.description') }}</p>
                     </div>
                 </div>
                 <div>
-                    <a href='https://t.me/+VRumJJSKKGdjM2I0' 
+                    <a href='https://t.me/+VRumJJSKKGdjM2I0'
                        class="inline-flex items-center px-6 py-3 bg-white/20 hover:bg-white/30 rounded-xl text-white font-semibold transition-all duration-200 backdrop-blur-sm transform hover:scale-105">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                         </svg>
-                        Yardım Al
+                        {{ __('common.get_help') }}
                     </a>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                     </svg>
-                    <h2 class="text-xl font-bold text-white">E-posta Oluşturma Formu</h2>
+                    <h2 class="text-xl font-bold text-white">{{ __('admin.emails.compose_form') }}</h2>
                 </div>
             </div>
             
@@ -57,15 +57,15 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-lg font-semibold text-blue-900 dark:text-blue-100">Alıcı Kategorisi</h3>
-                                <p class="text-blue-700 dark:text-blue-300">E-posta gönderilecek kullanıcı grubunu seçin</p>
+                                <h3 class="text-lg font-semibold text-blue-900 dark:text-blue-100">{{ __('admin.emails.recipient_category') }}</h3>
+                                <p class="text-blue-700 dark:text-blue-300">{{ __('admin.emails.select_user_group') }}</p>
                             </div>
                         </div>
                         <select class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-admin-900 dark:text-admin-100 transition-all duration-200" id="category" name="category">
-                            <option value="All">🌐 Tüm Kullanıcılar</option>
-                            <option value="No active plans">📊 Aktif yatırım planı olmayan kullanıcılar</option>
-                            <option value="No deposit">💰 Herhangi bir yatırımı olmayan kullanıcılar</option>
-                            <option value="Select Users">👤 Kullanıcıları Manuel Seç</option>
+                            <option value="All">🌐 {{ __('admin.emails.all_users') }}</option>
+                            <option value="No active plans">📊 {{ __('admin.emails.no_active_plans') }}</option>
+                            <option value="No deposit">💰 {{ __('admin.emails.no_deposit') }}</option>
+                            <option value="Select Users">👤 {{ __('admin.emails.select_users_manual') }}</option>
                         </select>
                     </div>
 
@@ -78,10 +78,10 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-lg font-semibold text-amber-900 dark:text-amber-100">Kullanıcı Seçimi</h3>
+                                <h3 class="text-lg font-semibold text-amber-900 dark:text-amber-100">{{ __('admin.emails.user_selection') }}</h3>
                                 <p class="text-amber-700 dark:text-amber-300">
-                                    Gönderilecek kullanıcıları seçin 
-                                    (<span class="text-blue-600 dark:text-blue-400 font-semibold" id="numofusers">0</span> kişi seçildi)
+                                    {{ __('admin.emails.select_users_to_send') }}
+                                    (<span class="text-blue-600 dark:text-blue-400 font-semibold" id="numofusers">0</span> {{ __('admin.emails.people_selected') }})
                                 </p>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                         <div class="relative">
                             <div class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl cursor-pointer transition-all duration-200 hover:border-amber-400" id="multiSelectTrigger">
                                 <div class="flex items-center justify-between">
-                                    <span class="text-admin-900 dark:text-admin-100" id="selectedUsersText">Kullanıcıları seçin...</span>
+                                    <span class="text-admin-900 dark:text-admin-100" id="selectedUsersText">{{ __('admin.emails.select_users_placeholder') }}</span>
                                     <svg class="w-5 h-5 text-admin-500 transition-transform duration-200" id="dropdownArrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                     </svg>
@@ -100,7 +100,7 @@
                             <!-- Dropdown Options -->
                             <div class="absolute z-50 w-full mt-1 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl shadow-lg max-h-60 overflow-y-auto hidden" id="multiSelectDropdown">
                                 <div class="p-3 border-b border-admin-200 dark:border-admin-600">
-                                    <input type="text" placeholder="Kullanıcı ara..." class="w-full px-3 py-2 border border-admin-300 dark:border-admin-600 rounded-lg bg-white dark:bg-admin-800 text-admin-900 dark:text-admin-100 focus:outline-none focus:ring-2 focus:ring-amber-500" id="userSearchInput">
+                                    <input type="text" placeholder="{{ __('admin.emails.search_user') }}" class="w-full px-3 py-2 border border-admin-300 dark:border-admin-600 rounded-lg bg-white dark:bg-admin-800 text-admin-900 dark:text-admin-100 focus:outline-none focus:ring-2 focus:ring-amber-500" id="userSearchInput">
                                 </div>
                                 <div class="p-2" id="userOptionsList">
                                     <!-- Options will be populated here -->
@@ -121,13 +121,13 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-lg font-semibold text-emerald-900 dark:text-emerald-100">Selamlama ve Başlık</h3>
-                                <p class="text-emerald-700 dark:text-emerald-300">E-postanın başlangıç selamlaması</p>
+                                <h3 class="text-lg font-semibold text-emerald-900 dark:text-emerald-100">{{ __('admin.emails.greeting_and_title') }}</h3>
+                                <p class="text-emerald-700 dark:text-emerald-300">{{ __('admin.emails.email_opening_greeting') }}</p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <input type="text" value="Merhaba" name="greet" class="px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-admin-900 dark:text-admin-100 transition-all duration-200" placeholder="Selamlama (örn: Merhaba)">
-                            <input type="text" value="Yatırımcı" name="title" class="px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-admin-900 dark:text-admin-100 transition-all duration-200" placeholder="Başlık (örn: Değerli Yatırımcı)">
+                            <input type="text" value="{{ __('admin.emails.default_greeting') }}" name="greet" class="px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-admin-900 dark:text-admin-100 transition-all duration-200" placeholder="{{ __('admin.emails.greeting_placeholder') }}">
+                            <input type="text" value="{{ __('admin.emails.default_title') }}" name="title" class="px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-admin-900 dark:text-admin-100 transition-all duration-200" placeholder="{{ __('admin.emails.title_placeholder') }}">
                         </div>
                     </div>
 
@@ -140,11 +140,11 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-lg font-semibold text-cyan-900 dark:text-cyan-100">E-posta Konusu</h3>
-                                <p class="text-cyan-700 dark:text-cyan-300">Alıcıların göreceği konu başlığı</p>
+                                <h3 class="text-lg font-semibold text-cyan-900 dark:text-cyan-100">{{ __('admin.emails.email_subject') }}</h3>
+                                <p class="text-cyan-700 dark:text-cyan-300">{{ __('admin.emails.subject_recipients_see') }}</p>
                             </div>
                         </div>
-                        <input type="text" name="subject" class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 text-admin-900 dark:text-admin-100 transition-all duration-200" placeholder="E-posta konusu..." required>
+                        <input type="text" name="subject" class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500 text-admin-900 dark:text-admin-100 transition-all duration-200" placeholder="{{ __('admin.emails.subject_placeholder') }}" required>
                     </div>
 
                     <!-- Message Field -->
@@ -156,11 +156,11 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3 class="text-lg font-semibold text-rose-900 dark:text-rose-100">E-posta Mesajı</h3>
-                                <p class="text-rose-700 dark:text-rose-300">Gönderilecek e-posta içeriği</p>
+                                <h3 class="text-lg font-semibold text-rose-900 dark:text-rose-100">{{ __('admin.emails.email_message') }}</h3>
+                                <p class="text-rose-700 dark:text-rose-300">{{ __('admin.emails.email_content_to_send') }}</p>
                             </div>
                         </div>
-                        <textarea placeholder="E-posta mesajınızı buraya yazın..." class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 text-admin-900 dark:text-admin-100 transition-all duration-200 ckeditor" name="message" rows="8" required></textarea>
+                        <textarea placeholder="{{ __('admin.emails.message_placeholder') }}" class="w-full px-4 py-3 bg-white dark:bg-admin-700 border border-admin-300 dark:border-admin-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 text-admin-900 dark:text-admin-100 transition-all duration-200 ckeditor" name="message" rows="8" required></textarea>
                     </div>
 
                     <!-- Submit Button -->
@@ -169,7 +169,7 @@
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                             </svg>
-                            <span id="submitButtonText">E-postayı Gönder</span>
+                            <span id="submitButtonText">{{ __('admin.emails.send_email') }}</span>
                         </button>
                     </div>
                 </form>
@@ -311,17 +311,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Set default content if empty
             if (!editor.getData().trim()) {
-                editor.setData('<p>E-posta içeriğinizi buraya yazın...</p>');
+                editor.setData('<p>{{ __('admin.emails.editor_placeholder') }}</p>');
             }
             
             console.log('✅ CKEditor başarıyla yüklendi ve yapılandırıldı');
-            showNotification('Zengin metin editörü hazır! 📝', 'success');
+            showNotification('{{ __('admin.emails.editor_ready') }}', 'success');
         });
         
         // Enhanced error handling
         CKEDITOR.on('error', function(evt) {
             console.error('❌ CKEditor Hatası:', evt.data);
-            showNotification('Editör yüklenirken sorun oluştu. Sayfa yenilenirse düzelir. 🔄', 'error');
+            showNotification('{{ __('admin.emails.editor_loading_error') }}', 'error');
         });
 
         // Handle paste events for better email formatting
@@ -342,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
     } else {
         console.error('❌ CKEditor kütüphanesi yüklenemedi');
-        showNotification('Zengin metin editörü yüklenemedi. İnternet bağlantınızı kontrol edin. 📶', 'error');
+        showNotification('{{ __('admin.emails.editor_load_failed') }}', 'error');
     }
 
     // DOM Elements
@@ -395,13 +395,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#emailForm').addEventListener('submit', function(e) {
         if (category.value === "Select Users" && selectedUsers.length === 0) {
             e.preventDefault();
-            showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+            showNotification('{{ __('admin.emails.select_at_least_one_user') }}', 'error');
             return;
         }
 
         // Show loading state
         submitButton.disabled = true;
-        submitButtonText.innerHTML = 'Gönderiliyor...';
+        submitButtonText.innerHTML = '{{ __('admin.emails.sending') }}...';
         submitButton.querySelector('svg').classList.add('animate-spin');
 
         // Update hidden input with selected users
@@ -484,7 +484,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <svg class="w-8 h-8 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
-                    <p>Kullanıcı bulunamadı</p>
+                    <p>{{ __('admin.emails.no_user_found') }}</p>
                 </div>
             `;
             return;
@@ -528,14 +528,14 @@ document.addEventListener('DOMContentLoaded', function() {
         numOfUsersSpan.textContent = count;
         
         if (count === 0) {
-            selectedUsersText.textContent = 'Kullanıcıları seçin...';
+            selectedUsersText.textContent = '{{ __('admin.emails.select_users_placeholder') }}';
             selectedUsersText.className = 'text-admin-500 dark:text-admin-400';
         } else if (count === 1) {
             const selectedUser = allUsers.find(user => user.id === selectedUsers[0]);
-            selectedUsersText.textContent = selectedUser ? selectedUser.name : '1 kullanıcı seçildi';
+            selectedUsersText.textContent = selectedUser ? selectedUser.name : '{{ __('admin.emails.one_user_selected') }}';
             selectedUsersText.className = 'text-admin-900 dark:text-admin-100 font-medium';
         } else {
-            selectedUsersText.textContent = `${count} kullanıcı seçildi`;
+            selectedUsersText.textContent = `${count} {{ __('admin.emails.users_selected') }}`;
             selectedUsersText.className = 'text-admin-900 dark:text-admin-100 font-medium';
         }
         
@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span class="text-admin-600 dark:text-admin-300">Kullanıcılar yükleniyor...</span>
+                    <span class="text-admin-600 dark:text-admin-300">{{ __('admin.emails.loading_users') }}</span>
                 </div>
             </div>
         `;
@@ -576,7 +576,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <svg class="w-8 h-8 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
-                <p>Hiç kullanıcı bulunamadı</p>
+                <p>{{ __('admin.emails.no_users_found') }}</p>
             </div>
         `;
     }
@@ -587,9 +587,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <p>Kullanıcılar yüklenirken hata oluştu</p>
+                <p>{{ __('admin.emails.users_loading_error') }}</p>
                 <button type="button" class="mt-2 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300" onclick="loadUsers()">
-                    Tekrar dene
+                    {{ __('common.try_again') }}
                 </button>
             </div>
         `;

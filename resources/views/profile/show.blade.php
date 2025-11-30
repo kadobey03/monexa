@@ -11,10 +11,10 @@
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-                    {{ __('Güvenlik/Hesap Silme') }}
+                    {{ __('profile.security.title') }}
                 </h1>
                 <p class="text-gray-600 dark:text-gray-400 mt-1">
-                    Hesap güvenlik ayarlarınızı yönetin
+                    {{ __('profile.security.manage_description') }}
                 </p>
             </div>
         </div>
@@ -26,10 +26,10 @@
             <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        İki Faktörlü Kimlik Doğrulama
+                        {{ __('profile.security.two_factor_authentication') }}
                     </h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        Hesabınızın güvenliğini artırmak için 2FA'yı etkinleştirin
+                        {{ __('profile.security.two_factor_description') }}
                     </p>
                 </div>
                 <div class="p-6">
@@ -46,10 +46,10 @@
             <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm ring-1 ring-gray-200 dark:ring-gray-800 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        Aktif Oturumlar
+                        {{ __('profile.security.active_sessions') }}
                     </h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                        Diğer tarayıcılardaki oturumları yönetin
+                        {{ __('profile.security.manage_sessions_description') }}
                     </p>
                 </div>
                 <div class="p-6">
@@ -62,10 +62,10 @@
                 <div class="bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-200 dark:border-red-800 overflow-hidden">
                     <div class="px-6 py-4 border-b border-red-200 dark:border-red-800">
                         <h3 class="text-lg font-semibold text-red-900 dark:text-red-100">
-                            Hesap Silme
+                            {{ __('profile.security.account_deletion') }}
                         </h3>
                         <p class="text-sm text-red-600 dark:text-red-400 mt-1">
-                            Bu işlem geri alınamaz
+                            {{ __('profile.security.deletion_warning') }}
                         </p>
                     </div>
                     <div class="p-6">

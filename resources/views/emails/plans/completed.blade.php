@@ -1,31 +1,31 @@
 @component('mail::message')
-# Yatırım Planı Tamamlandı
+# {{ __('mail.headers.plan_completed') }}
 
-Sayın {{ $name }},
+{{ __('mail.salutation.dear_user', ['name' => $name]) }},
 
-**{{ $planName }}** planındaki yatırımınız başarıyla tamamlandı.
+{{ __('mail.investment.plan_successfully_completed', ['planName' => $planName]) }}
 
-## Yatırım Detayları
-- **Yatırım Miktarı:** {{ $currency }}{{ number_format($amount, 2) }}
-- **Kazanılan Toplam Kar:** {{ $currency }}{{ number_format($profit, 2) }}
-- **Toplam Getiri:** {{ $currency }}{{ number_format($totalReturn, 2) }}
-- **Başlangıç Tarihi:** {{ $startDate }}
-- **Bitiş Tarihi:** {{ $endDate }}
+## {{ __('mail.financial.investment_details') }}
+- **{{ __('mail.financial.investment_amount') }}:** {{ $currency }}{{ number_format($amount, 2) }}
+- **{{ __('mail.financial.total_profit_earned') }}:** {{ $currency }}{{ number_format($profit, 2) }}
+- **{{ __('mail.financial.total_return') }}:** {{ $currency }}{{ number_format($totalReturn, 2) }}
+- **{{ __('mail.financial.start_date') }}:** {{ $startDate }}
+- **{{ __('mail.financial.end_date') }}:** {{ $endDate }}
 
 @if($profit > 0)
-Başarılı yatırımınız için tebrikler! Karlar hesap bakiyenize yatırıldı.
+{{ __('mail.investment.congratulations_successful') }} {{ __('mail.financial.profits_credited') }}
 @else
-Yatırımınız tamamlandı. Lütfen en son bakiye için hesabınızı kontrol edin.
+{{ __('mail.investment.investment_completed') }} {{ __('mail.financial.check_latest_balance') }}
 @endif
 
-Başka bir planla yatırım yapabilir veya hesap panonuzdan fonlarınızı çekebilirsiniz.
+{{ __('mail.investment.can_invest_another_plan') }}
 
 @component('mail::button', ['url' => $siteUrl . '/login'])
-Hesaba Giriş Yap
+{{ __('mail.actions.login_account') }}
 @endcomponent
 
-Yatırım ihtiyaçlarınız için {{ $siteName }}'i seçtiğiniz için teşekkür ederiz.
+{{ __('mail.investment.thank_you_for_choosing', ['siteName' => $siteName]) }}
 
-Saygılarımla,<br>
-{{ $siteName }} Ekibi
+{{ __('mail.footer.regards') }},<br>
+{{ __('mail.footer.team', ['siteName' => $siteName]) }}
 @endcomponent

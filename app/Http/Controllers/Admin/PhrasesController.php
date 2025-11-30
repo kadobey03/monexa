@@ -3,32 +3,128 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Contracts\Repositories\TranslationRepositoryInterface;
+use App\Services\TranslationService;
+use App\Models\Language;
+use App\Models\Phrase;
+use App\Models\PhraseTranslation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class PhrasesController extends Controller
 {
+    protected TranslationRepositoryInterface $translationRepository;
+    protected TranslationService $translationService;
+
+    public function __construct(
+        TranslationRepositoryInterface $translationRepository,
+        TranslationService $translationService
+    ) {
+        $this->translationRepository = $translationRepository;
+        $this->translationService = $translationService;
+    }
+
     /**
      * Display a listing of phrases/translations.
      */
     public function index(Request $request)
     {
+        // DEBUG: Check current admin
+        $currentAdmin = auth()->guard('admin')->user();
+        Log::info('Admin Debug Info:', [
+            'admin_id' => $currentAdmin?->id,
+            'admin_name' => $currentAdmin?->getFullName(),
+            'is_super_admin' => $currentAdmin?->isSuperAdmin(),
+            'auth_guard' => auth()->guard('admin')->check(),
+            'auth_default' => auth()->check()
+        ]);
+        
+        // Check permissions with admin guard
+        Gate::forUser(auth()->guard('admin')->user())->authorize('view-translations');
+        
         $search = $request->get('search');
         $language = $request->get('language', 'tr');
+        $group = $request->get('group');
+        $status = $request->get('status');
+        $perPage = $request->get('per_page', 15);
         
-        // Get available languages
-        $availableLanguages = $this->getAvailableLanguages();
+        // Get available languages from database
+        $availableLanguages = Language::active()->get()->pluck('name', 'code');
         
-        // Get phrases for selected language
-        $phrases = $this->getPhrases($language, $search);
+        // Get phrase groups
+        $groups = Phrase::distinct('group')->pluck('group')->filter()->values();
+        
+        // Build query for phrases with translations
+        $query = Phrase::with(['translations' => function ($query) use ($language) {
+            $query->whereHas('language', function ($q) use ($language) {
+                $q->where('code', $language);
+            })->with('language');
+        }]);
+        
+        // Apply search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('key', 'LIKE', "%{$search}%")
+                  ->orWhere('description', 'LIKE', "%{$search}%")
+                  ->orWhereHas('translations', function ($query) use ($search) {
+                      $query->where('translation', 'LIKE', "%{$search}%");
+                  });
+            });
+        }
+        
+        // Apply group filter
+        if ($group) {
+            $query->where('group', $group);
+        }
+        
+        // Apply status filter
+        if ($status) {
+            if ($status === 'translated') {
+                $query->whereHas('translations', function ($q) use ($language) {
+                    $q->whereHas('language', function ($query) use ($language) {
+                        $query->where('code', $language);
+                    });
+                });
+            } elseif ($status === 'untranslated') {
+                $query->whereDoesntHave('translations', function ($q) use ($language) {
+                    $q->whereHas('language', function ($query) use ($language) {
+                        $query->where('code', $language);
+                    });
+                });
+            } elseif ($status === 'needs_review') {
+                $query->whereHas('translations', function ($q) use ($language) {
+                    $q->where('needs_update', true)
+                      ->whereHas('language', function ($query) use ($language) {
+                          $query->where('code', $language);
+                      });
+                });
+            }
+        }
+        
+        // Get paginated results
+        $phrases = $query->orderBy('key')->paginate($perPage);
+        
+        // Get translation statistics
+        $stats = $this->getTranslationStats($language);
         
         return view('admin.phrases.index', [
-            'title' => 'Dil/Cümle Yönetimi',
+            'title' => 'Dil/Çeviri Yönetimi',
+            'breadcrumbs' => [
+                ['title' => 'Ana Sayfa', 'url' => route('admin.dashboard')],
+                ['title' => 'Dil/Çeviri Yönetimi', 'url' => route('admin.phrases')]
+            ],
             'phrases' => $phrases,
             'availableLanguages' => $availableLanguages,
+            'groups' => $groups,
             'currentLanguage' => $language,
-            'search' => $search
+            'search' => $search,
+            'selectedGroup' => $group,
+            'selectedStatus' => $status,
+            'stats' => $stats,
+            'perPage' => $perPage
         ]);
     }
 
@@ -37,21 +133,59 @@ class PhrasesController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('manage-translations');
+        
         $request->validate([
-            'key' => 'required|string|max:255',
-            'value' => 'required|string',
-            'language' => 'required|string|in:tr,en,ar',
-            'category' => 'nullable|string|max:100'
+            'key' => 'required|string|max:255|unique:phrases,key',
+            'group' => 'nullable|string|max:100',
+            'description' => 'nullable|string|max:500',
+            'translations' => 'required|array',
+            'translations.*.language_id' => 'required|exists:languages,id',
+            'translations.*.translation' => 'required|string'
         ]);
 
         try {
-            $this->savePhrase($request->language, $request->key, $request->value);
+            DB::transaction(function () use ($request) {
+                // Create phrase
+                $phrase = Phrase::create([
+                    'key' => $request->key,
+                    'group' => $request->group ?: 'general',
+                    'description' => $request->description,
+                    'usage_count' => 0
+                ]);
+                
+                // Create translations
+                foreach ($request->translations as $translation) {
+                    PhraseTranslation::create([
+                        'phrase_id' => $phrase->id,
+                        'language_id' => $translation['language_id'],
+                        'translation' => $translation['translation'],
+                        'needs_update' => false,
+                        'approved_at' => now(),
+                        'approved_by' => auth()->guard('admin')->id()
+                    ]);
+                }
+                
+                // Log activity
+                Log::info('Translation phrase created', [
+                    'key' => $phrase->key,
+                    'admin_id' => auth()->guard('admin')->id()
+                ]);
+            });
+            
+            // Clear cache
+            $this->translationService->clearCache();
             
             return response()->json([
                 'success' => true,
                 'message' => 'Çeviri başarıyla eklendi.'
             ]);
         } catch (\Exception $e) {
+            Log::error('Error creating translation phrase', [
+                'error' => $e->getMessage(),
+                'request' => $request->all()
+            ]);
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Çeviri eklenirken bir hata oluştu: ' . $e->getMessage()
@@ -64,19 +198,53 @@ class PhrasesController extends Controller
      */
     public function update(Request $request, $key)
     {
+        Gate::authorize('manage-translations');
+        
         $request->validate([
-            'value' => 'required|string',
-            'language' => 'required|string|in:tr,en,ar'
+            'translation' => 'required|string',
+            'language_code' => 'required|string|exists:languages,code'
         ]);
 
         try {
-            $this->savePhrase($request->language, $key, $request->value);
+            DB::transaction(function () use ($request, $key) {
+                $phrase = Phrase::where('key', $key)->firstOrFail();
+                $language = Language::where('code', $request->language_code)->firstOrFail();
+                
+                $translation = PhraseTranslation::updateOrCreate(
+                    [
+                        'phrase_id' => $phrase->id,
+                        'language_id' => $language->id
+                    ],
+                    [
+                        'translation' => $request->translation,
+                        'needs_update' => false,
+                        'approved_at' => now(),
+                        'approved_by' => auth()->guard('admin')->id(),
+                        'updated_at' => now()
+                    ]
+                );
+                
+                // Log activity
+                Log::info('Translation updated', [
+                    'key' => $key,
+                    'language' => $request->language_code,
+                    'admin_id' => auth()->guard('admin')->id()
+                ]);
+            });
+            
+            // Clear cache
+            $this->translationService->clearCache();
             
             return response()->json([
                 'success' => true,
                 'message' => 'Çeviri başarıyla güncellendi.'
             ]);
         } catch (\Exception $e) {
+            Log::error('Error updating translation', [
+                'key' => $key,
+                'error' => $e->getMessage()
+            ]);
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Çeviri güncellenirken bir hata oluştu: ' . $e->getMessage()
@@ -89,14 +257,45 @@ class PhrasesController extends Controller
      */
     public function destroy($language, $key)
     {
+        Gate::authorize('manage-translations');
+        
         try {
-            $this->deletePhrase($language, $key);
+            DB::transaction(function () use ($language, $key) {
+                $phrase = Phrase::where('key', $key)->firstOrFail();
+                $lang = Language::where('code', $language)->firstOrFail();
+                
+                // Delete specific translation
+                PhraseTranslation::where('phrase_id', $phrase->id)
+                    ->where('language_id', $lang->id)
+                    ->delete();
+                
+                // If no translations left, delete the phrase
+                if ($phrase->translations()->count() === 0) {
+                    $phrase->delete();
+                }
+                
+                // Log activity
+                Log::info('Translation deleted', [
+                    'key' => $key,
+                    'language' => $language,
+                    'admin_id' => auth()->guard('admin')->id()
+                ]);
+            });
+            
+            // Clear cache
+            $this->translationService->clearCache();
             
             return response()->json([
                 'success' => true,
                 'message' => 'Çeviri başarıyla silindi.'
             ]);
         } catch (\Exception $e) {
+            Log::error('Error deleting translation', [
+                'key' => $key,
+                'language' => $language,
+                'error' => $e->getMessage()
+            ]);
+            
             return response()->json([
                 'success' => false,
                 'message' => 'Çeviri silinirken bir hata oluştu: ' . $e->getMessage()
@@ -105,186 +304,39 @@ class PhrasesController extends Controller
     }
 
     /**
-     * Get available languages from lang directory.
+     * Get translation statistics.
      */
-    private function getAvailableLanguages()
+    private function getTranslationStats($languageCode)
     {
-        $langPath = resource_path('lang');
-        $languages = [];
+        $cacheKey = "translation_stats_{$languageCode}";
         
-        if (File::exists($langPath)) {
-            $directories = File::directories($langPath);
-            foreach ($directories as $directory) {
-                $langCode = basename($directory);
-                $languages[$langCode] = $this->getLanguageName($langCode);
+        return Cache::remember($cacheKey, 300, function () use ($languageCode) {
+            $language = Language::where('code', $languageCode)->first();
+            
+            if (!$language) {
+                return [];
             }
-        }
-        
-        // Add default languages if not exists
-        if (empty($languages)) {
-            $languages = [
-                'tr' => 'Türkçe',
-                'en' => 'English',
-                'ar' => 'العربية'
+            
+            $totalPhrases = Phrase::count();
+            $translatedPhrases = Phrase::whereHas('translations', function ($query) use ($language) {
+                $query->where('language_id', $language->id);
+            })->count();
+            
+            $needsReview = PhraseTranslation::where('language_id', $language->id)
+                ->where('needs_update', true)
+                ->count();
+                
+            $completionPercentage = $totalPhrases > 0
+                ? round(($translatedPhrases / $totalPhrases) * 100, 1)
+                : 0;
+            
+            return [
+                'total_phrases' => $totalPhrases,
+                'translated_phrases' => $translatedPhrases,
+                'untranslated_phrases' => $totalPhrases - $translatedPhrases,
+                'needs_review' => $needsReview,
+                'completion_percentage' => $completionPercentage
             ];
-        }
-        
-        return $languages;
-    }
-
-    /**
-     * Get phrases for a specific language.
-     */
-    private function getPhrases($language, $search = null)
-    {
-        $phrases = [];
-        $langPath = resource_path("lang/{$language}");
-        
-        if (File::exists($langPath)) {
-            $files = File::files($langPath);
-            
-            foreach ($files as $file) {
-                if ($file->getExtension() === 'php') {
-                    $fileName = $file->getFilenameWithoutExtension();
-                    $translations = include $file->getPathname();
-                    
-                    if (is_array($translations)) {
-                        $this->flattenArray($translations, $phrases, $fileName);
-                    }
-                }
-            }
-        }
-        
-        // Filter by search term if provided
-        if ($search) {
-            $phrases = array_filter($phrases, function($phrase) use ($search) {
-                return stripos($phrase['key'], $search) !== false || 
-                       stripos($phrase['value'], $search) !== false;
-            });
-        }
-        
-        return $phrases;
-    }
-
-    /**
-     * Flatten nested array to dot notation.
-     */
-    private function flattenArray($array, &$result, $prefix = '', $category = 'general')
-    {
-        foreach ($array as $key => $value) {
-            $newKey = $prefix ? "{$prefix}.{$key}" : $key;
-            
-            if (is_array($value)) {
-                $this->flattenArray($value, $result, $newKey, $category);
-            } else {
-                $result[] = [
-                    'key' => $newKey,
-                    'value' => $value,
-                    'category' => $category,
-                    'updated_at' => now()->format('Y-m-d H:i:s')
-                ];
-            }
-        }
-    }
-
-    /**
-     * Save phrase to language file.
-     */
-    private function savePhrase($language, $key, $value)
-    {
-        $langPath = resource_path("lang/{$language}");
-        
-        if (!File::exists($langPath)) {
-            File::makeDirectory($langPath, 0755, true);
-        }
-        
-        // Determine which file to save to based on key
-        $parts = explode('.', $key);
-        $fileName = $parts[0] ?? 'custom';
-        $filePath = "{$langPath}/{$fileName}.php";
-        
-        // Load existing translations or create new array
-        $translations = File::exists($filePath) ? include $filePath : [];
-        
-        // Set the value using dot notation
-        $this->setArrayValue($translations, $key, $value);
-        
-        // Save to file
-        $content = "<?php\n\nreturn " . var_export($translations, true) . ";\n";
-        File::put($filePath, $content);
-    }
-
-    /**
-     * Delete phrase from language file.
-     */
-    private function deletePhrase($language, $key)
-    {
-        $parts = explode('.', $key);
-        $fileName = $parts[0] ?? 'custom';
-        $filePath = resource_path("lang/{$language}/{$fileName}.php");
-        
-        if (File::exists($filePath)) {
-            $translations = include $filePath;
-            $this->unsetArrayValue($translations, $key);
-            
-            $content = "<?php\n\nreturn " . var_export($translations, true) . ";\n";
-            File::put($filePath, $content);
-        }
-    }
-
-    /**
-     * Set array value using dot notation.
-     */
-    private function setArrayValue(&$array, $key, $value)
-    {
-        $keys = explode('.', $key);
-        $current = &$array;
-        
-        foreach ($keys as $k) {
-            if (!isset($current[$k]) || !is_array($current[$k])) {
-                $current[$k] = [];
-            }
-            $current = &$current[$k];
-        }
-        
-        $current = $value;
-    }
-
-    /**
-     * Unset array value using dot notation.
-     */
-    private function unsetArrayValue(&$array, $key)
-    {
-        $keys = explode('.', $key);
-        $current = &$array;
-        
-        for ($i = 0; $i < count($keys) - 1; $i++) {
-            if (!isset($current[$keys[$i]]) || !is_array($current[$keys[$i]])) {
-                return;
-            }
-            $current = &$current[$keys[$i]];
-        }
-        
-        unset($current[end($keys)]);
-    }
-
-    /**
-     * Get language display name.
-     */
-    private function getLanguageName($code)
-    {
-        $names = [
-            'tr' => 'Türkçe',
-            'en' => 'English', 
-            'ar' => 'العربية',
-            'de' => 'Deutsch',
-            'fr' => 'Français',
-            'es' => 'Español',
-            'it' => 'Italiano',
-            'pt' => 'Português',
-            'ru' => 'Русский'
-        ];
-        
-        return $names[$code] ?? ucfirst($code);
+        });
     }
 }

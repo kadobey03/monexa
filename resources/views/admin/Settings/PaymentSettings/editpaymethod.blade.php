@@ -7,14 +7,14 @@
         <div class="mb-8">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Ödeme Yöntemi Güncelle</h1>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">{{ $method->name }} ödeme yöntemi ayarlarını düzenleyin</p>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.payment_settings.editpaymethod.title') }}</h1>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">{{ $method->name }} {{ __('admin.payment_settings.editpaymethod.subtitle') }}</p>
                 </div>
                 <a href="{{ route('paymentview') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
-                    Geri Dön
+                    {{ __('admin.payment_settings.editpaymethod.back') }}
                 </a>
             </div>
         </div>
@@ -33,11 +33,9 @@
                             <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                         </svg>
                         <div>
-                            <h3 class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">USDT Ödeme Yöntemi Hakkında Önemli Bilgi</h3>
+                            <h3 class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">{{ __('admin.payment_settings.editpaymethod.usdt_warning_title') }}</h3>
                             <p class="text-sm text-amber-700 dark:text-amber-300">
-                                Kullanıcılarınızın USDT ile para çekebilmeleri için, Binance merchant kullanıyor ve otomatik para çekme ayarlıyorsanız, 
-                                IP adreslerini whitelist'e almanız gerekir. Bunun için "Kullanıcı Yönetimi"nden giriş aktivitelerini kontrol edin, 
-                                IP adreslerini toplayın ve Binance merchant dashboard'ınızda whitelist'e ekleyin.
+                                {{ __('admin.payment_settings.editpaymethod.usdt_warning_text') }}
                             </p>
                         </div>
                     </div>
@@ -59,7 +57,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Temel Bilgiler</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.payment_settings.editpaymethod.basic_info') }}</h3>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -70,25 +68,24 @@
                                         <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                         </svg>
-                                        Ödeme Yöntemi Adı
+                                        {{ __('admin.payment_settings.editpaymethod.payment_method_name') }}
                                     </span>
                                 </label>
                                 @if ($method->defaultpay == 'yes')
                                     <input type="text" name="name" value="{{ $method->name }}" readonly
                                            class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-gray-100 dark:bg-admin-600 dark:text-gray-300 rounded-xl cursor-not-allowed font-medium" 
-                                           placeholder="Ödeme yöntemi adı">
-                                    <p class="text-xs text-gray-500 dark:text-gray-400">Bu varsayılan ödeme yöntemidir, adı değiştirilemez</p>
+                                           placeholder="{{ __('admin.payment_settings.editpaymethod.payment_method_name_placeholder') }}">
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.default_payment_note') }}</p>
                                 @else
                                     <input type="text" name="name" value="{{ $method->name }}" required
                                            class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" 
-                                           placeholder="Ödeme yöntemi adı">
+                                           placeholder="{{ __('admin.payment_settings.editpaymethod.payment_method_name_placeholder') }}">
                                 @endif
                                 
                                 @if ($method->name == 'Credit Card')
                                     <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mt-3">
                                         <p class="text-sm text-blue-700 dark:text-blue-300">
-                                            <strong>Önemli:</strong> Ödeme tercihleri sekmesinden bir kredi kartı sağlayıcısı seçtiğinizden emin olun. 
-                                            Bu yöntem zaten Paystack ve Stripe'ı kullandığından, bunları ayrı olarak eklemeyin.
+                                            <strong>{{ __('admin.payment_settings.editpaymethod.important') }}:</strong> {{ __('admin.payment_settings.editpaymethod.credit_card_note') }}
                                         </p>
                                     </div>
                                 @endif
@@ -101,16 +98,16 @@
                                         <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
                                         </svg>
-                                        Ödeme Türü
+                                        {{ __('admin.payment_settings.editpaymethod.payment_type') }}
                                     </span>
                                 </label>
                                 <select name="methodtype" id="methodtype" required
                                         class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
-                                    <option value="{{ $method->methodtype }}">{{ $method->methodtype == 'currency' ? 'Para Birimi' : 'Kripto Para' }}</option>
-                                    <option value="currency">Para Birimi</option>
-                                    <option value="crypto">Kripto Para</option>
+                                    <option value="{{ $method->methodtype }}">{{ $method->methodtype == 'currency' ? __('admin.payment_settings.editpaymethod.currency') : __('admin.payment_settings.editpaymethod.crypto') }}</option>
+                                    <option value="currency">{{ __('admin.payment_settings.editpaymethod.currency') }}</option>
+                                    <option value="crypto">{{ __('admin.payment_settings.editpaymethod.crypto') }}</option>
                                 </select>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Geleneksel para birimi veya kripto para seçin</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.payment_type_help') }}</p>
                             </div>
 
                             <!-- Image URL -->
@@ -120,13 +117,13 @@
                                         <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                         </svg>
-                                        Logo URL'si
+                                        {{ __('admin.payment_settings.editpaymethod.logo_url') }}
                                     </span>
                                 </label>
                                 <input type="url" name="url" value="{{ $method->img_url }}" 
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" 
-                                       placeholder="https://example.com/logo.png">
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Ödeme yöntemi logosu için URL (isteğe bağlı)</p>
+                                       placeholder="{{ __('admin.payment_settings.editpaymethod.logo_url_placeholder') }}">
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.logo_url_help') }}</p>
                             </div>
                         </div>
                     </div>
@@ -139,7 +136,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Limitler ve Komisyonlar</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.payment_settings.editpaymethod.limits_commissions') }}</h3>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -150,18 +147,18 @@
                                         <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
                                         </svg>
-                                        Minimum Miktar
+                                        {{ __('admin.payment_settings.editpaymethod.minimum_amount') }}
                                     </span>
                                 </label>
                                 <div class="relative">
                                     <input type="number" name="minimum" value="{{ $method->minimum }}" required min="0" step="0.01"
                                            class="w-full px-4 py-3 pl-12 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" 
-                                           placeholder="10.00">
+                                           placeholder="{{ __('admin.payment_settings.editpaymethod.minimum_amount_placeholder') }}">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">{{ $settings->currency }}</span>
                                     </div>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Sadece para çekme işlemleri için geçerlidir</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.withdrawal_only') }}</p>
                             </div>
 
                             <!-- Maximum Amount -->
@@ -171,18 +168,18 @@
                                         <svg class="w-4 h-4 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                         </svg>
-                                        Maximum Miktar
+                                        {{ __('admin.payment_settings.editpaymethod.maximum_amount') }}
                                     </span>
                                 </label>
                                 <div class="relative">
                                     <input type="number" name="maximum" value="{{ $method->maximum }}" required min="0" step="0.01"
                                            class="w-full px-4 py-3 pl-12 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" 
-                                           placeholder="1000.00">
+                                           placeholder="{{ __('admin.payment_settings.editpaymethod.maximum_amount_placeholder') }}">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <span class="text-gray-500 dark:text-gray-400 text-sm font-medium">{{ $settings->currency }}</span>
                                     </div>
                                 </div>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Sadece para çekme işlemleri için geçerlidir</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.withdrawal_only') }}</p>
                             </div>
 
                             <!-- Charges -->
@@ -192,13 +189,13 @@
                                         <svg class="w-4 h-4 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                                         </svg>
-                                        Komisyon Miktarı
+                                        {{ __('admin.payment_settings.editpaymethod.commission_amount') }}
                                     </span>
                                 </label>
                                 <input type="number" name="charges" value="{{ $method->charges_amount }}" required min="0" step="0.01"
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400" 
-                                       placeholder="5.00">
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Sadece para çekme işlemleri için geçerlidir</p>
+                                       placeholder="{{ __('admin.payment_settings.editpaymethod.commission_amount_placeholder') }}">
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.withdrawal_only') }}</p>
                             </div>
 
                             <!-- Charges Type -->
@@ -208,18 +205,18 @@
                                         <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
                                         </svg>
-                                        Komisyon Türü
+                                        {{ __('admin.payment_settings.editpaymethod.commission_type') }}
                                     </span>
                                 </label>
                                 <select name="chargetype" required
                                         class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
                                     <option value="{{ $method->charges_type }}">
-                                        {{ $method->charges_type == 'percentage' ? 'Yüzde (%)' : 'Sabit ('.$settings->currency.')' }}
+                                        {{ $method->charges_type == 'percentage' ? __('admin.payment_settings.editpaymethod.percentage') : __('admin.payment_settings.editpaymethod.fixed', ['currency' => $settings->currency]) }}
                                     </option>
-                                    <option value="percentage">Yüzde (%)</option>
-                                    <option value="fixed">Sabit ({{ $settings->currency }})</option>
+                                    <option value="percentage">{{ __('admin.payment_settings.editpaymethod.percentage') }}</option>
+                                    <option value="fixed">{{ __('admin.payment_settings.editpaymethod.fixed', ['currency' => $settings->currency]) }}</option>
                                 </select>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Komisyon hesaplama türü</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.commission_type_help') }}</p>
                             </div>
                         </div>
                     </div>
@@ -232,7 +229,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Banka Bilgileri</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.payment_settings.editpaymethod.bank_info') }}</h3>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -242,11 +239,11 @@
                                         <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                         </svg>
-                                        Banka Adı
+                                        {{ __('admin.payment_settings.editpaymethod.bank_name') }}
                                     </span>
                                 </label>
                                 <input type="text" name="bank" value="{{ $method->bankname }}" class="currency-input"
-                                       placeholder="Örnek: Ziraat Bankası"
+                                       placeholder="{{ __('admin.payment_settings.editpaymethod.bank_name_placeholder') }}"
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400">
                             </div>
 
@@ -256,11 +253,11 @@
                                         <svg class="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                         </svg>
-                                        Hesap Sahibi
+                                        {{ __('admin.payment_settings.editpaymethod.account_holder') }}
                                     </span>
                                 </label>
                                 <input type="text" name="account_name" value="{{ $method->account_name }}" class="currency-input"
-                                       placeholder="Örnek: Ahmet Yılmaz"
+                                       placeholder="{{ __('admin.payment_settings.editpaymethod.account_holder_placeholder') }}"
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400">
                             </div>
 
@@ -270,11 +267,11 @@
                                         <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h4a1 1 0 011 1v2a1 1 0 01-1 1h-1v10a2 2 0 01-2 2H6a2 2 0 01-2-2V8H3a1 1 0 01-1-1V5a1 1 0 011-1h4z"></path>
                                         </svg>
-                                        Hesap Numarası
+                                        {{ __('admin.payment_settings.editpaymethod.account_number') }}
                                     </span>
                                 </label>
                                 <input type="text" name="account_number" value="{{ $method->account_number }}" class="currency-input"
-                                       placeholder="Örnek: 1234567890123456"
+                                       placeholder="{{ __('admin.payment_settings.editpaymethod.account_number_placeholder') }}"
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400 font-mono">
                             </div>
 
@@ -284,13 +281,13 @@
                                         <svg class="w-4 h-4 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                         </svg>
-                                        SWIFT/Diğer Kod
+                                        {{ __('admin.payment_settings.editpaymethod.swift_code') }}
                                     </span>
                                 </label>
                                 <input type="text" name="swift" value="{{ $method->swift_code }}" class="currency-input"
-                                       placeholder="Örnek: TCZBTR2AXXX"
+                                       placeholder="{{ __('admin.payment_settings.editpaymethod.swift_code_placeholder') }}"
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400 font-mono">
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Uluslararası transferler için gerekli</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.swift_code_help') }}</p>
                             </div>
                         </div>
                     </div>
@@ -303,7 +300,7 @@
                                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Kripto Para Bilgileri</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.payment_settings.editpaymethod.crypto_info') }}</h3>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -313,11 +310,11 @@
                                         <svg class="w-4 h-4 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                         </svg>
-                                        Cüzdan Adresi
+                                        {{ __('admin.payment_settings.editpaymethod.wallet_address') }}
                                     </span>
                                 </label>
                                 <input type="text" name="walletaddress" value="{{ $method->wallet_address }}" class="crypto-input"
-                                       placeholder="Kripto cüzdan adresinizi girin"
+                                       placeholder="{{ __('admin.payment_settings.editpaymethod.wallet_address_placeholder') }}"
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm">
                             </div>
 
@@ -327,12 +324,12 @@
                                         <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                         </svg>
-                                        QR Kod (Barcode)
+                                        {{ __('admin.payment_settings.editpaymethod.qr_code') }}
                                     </span>
                                 </label>
                                 <input type="file" name="barcode" accept="image/*"
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900/50 dark:file:text-blue-300">
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Cüzdan adresi için QR kod resmi (isteğe bağlı)</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.qr_code_help') }}</p>
                             </div>
 
                             <div class="lg:col-span-2 space-y-2">
@@ -341,19 +338,18 @@
                                         <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                         </svg>
-                                        Ağ Türü (Network)
+                                        {{ __('admin.payment_settings.editpaymethod.network_type') }}
                                     </span>
                                 </label>
                                 <input type="text" name="wallettype" value="{{ $method->network }}" class="crypto-input"
-                                       placeholder="Örnek: TRC20, ERC20, BSC"
+                                       placeholder="{{ __('admin.payment_settings.editpaymethod.network_type_placeholder') }}"
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400">
                                 
                                 @if ($method->name == 'USDT' or $method->name == 'BUSD')
                                     <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mt-3">
                                         <p class="text-sm text-amber-700 dark:text-amber-300">
-                                            <strong>Önemli Network Bilgisi:</strong><br>
-                                            USDT ödemeleri için ağ türünün her zaman TRC20, BUSD ödemeleri için ERC20 olması gerekir 
-                                            (otomatik ödeme ve coinpayment kullanıyorsanız). Manuel ödeme kullanıyorsanız istediğiniz ağı seçebilirsiniz.
+                                            <strong>{{ __('admin.payment_settings.editpaymethod.important_network_info') }}:</strong><br>
+                                            {{ __('admin.payment_settings.editpaymethod.network_warning') }}
                                         </p>
                                     </div>
                                 @endif
@@ -370,7 +366,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Genel Ayarlar</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.payment_settings.editpaymethod.general_settings') }}</h3>
                         </div>
 
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -381,14 +377,14 @@
                                         <svg class="w-4 h-4 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
-                                        Durum
+                                        {{ __('admin.payment_settings.editpaymethod.status') }}
                                     </span>
                                 </label>
                                 <select name="status" required
                                         class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
-                                    <option value="{{ $method->status }}">{{ $method->status == 'enabled' ? 'Aktif' : 'Pasif' }}</option>
-                                    <option value="enabled">Aktif</option>
-                                    <option value="disabled">Pasif</option>
+                                    <option value="{{ $method->status }}">{{ $method->status == 'enabled' ? __('admin.payment_settings.editpaymethod.active') : __('admin.payment_settings.editpaymethod.inactive') }}</option>
+                                    <option value="enabled">{{ __('admin.payment_settings.editpaymethod.active') }}</option>
+                                    <option value="disabled">{{ __('admin.payment_settings.editpaymethod.inactive') }}</option>
                                 </select>
                             </div>
 
@@ -399,19 +395,19 @@
                                         <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                                         </svg>
-                                        Kullanım Alanı
+                                        {{ __('admin.payment_settings.editpaymethod.usage_area') }}
                                     </span>
                                 </label>
                                 <select name="typefor" required
                                         class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
                                     <option value="{{ $method->type }}">
-                                        @if($method->type == 'withdrawal') Para Çekme
-                                        @elseif($method->type == 'deposit') Para Yatırma  
-                                        @else Her İkisi @endif
+                                        @if($method->type == 'withdrawal') {{ __('admin.payment_settings.editpaymethod.withdrawal') }}
+                                        @elseif($method->type == 'deposit') {{ __('admin.payment_settings.editpaymethod.deposit') }}
+                                        @else {{ __('admin.payment_settings.editpaymethod.both') }} @endif
                                     </option>
-                                    <option value="withdrawal">Para Çekme</option>
-                                    <option value="deposit">Para Yatırma</option>
-                                    <option value="both">Her İkisi</option>
+                                    <option value="withdrawal">{{ __('admin.payment_settings.editpaymethod.withdrawal') }}</option>
+                                    <option value="deposit">{{ __('admin.payment_settings.editpaymethod.deposit') }}</option>
+                                    <option value="both">{{ __('admin.payment_settings.editpaymethod.both') }}</option>
                                 </select>
                             </div>
 
@@ -422,13 +418,13 @@
                                         <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
                                         </svg>
-                                        İsteğe Bağlı Not
+                                        {{ __('admin.payment_settings.editpaymethod.optional_note') }}
                                     </span>
                                 </label>
                                 <input type="text" name="note" value="{{ $method->duration }}" 
-                                       placeholder="Örnek: İşlem 24 saate kadar sürebilir"
+                                       placeholder="{{ __('admin.payment_settings.editpaymethod.optional_note_placeholder') }}"
                                        class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-gray-400">
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Kullanıcılara gösterilecek bilgi notu</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.editpaymethod.optional_note_help') }}</p>
                             </div>
                         </div>
                     </div>
@@ -439,7 +435,7 @@
                             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
-                            Değişiklikleri Kaydet
+                            {{ __('admin.payment_settings.editpaymethod.save_changes') }}
                         </button>
                     </div>
                 </form>
@@ -522,7 +518,7 @@
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Kaydediliyor...
+                {{ __('admin.payment_settings.actions.saving') }}...
             `;
         });
 

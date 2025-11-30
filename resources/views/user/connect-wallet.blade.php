@@ -9,17 +9,17 @@
         <div class="mb-6 sm:mb-8">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
                 <div class="min-w-0 flex-1">
-                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white leading-tight">Connect Your Wallet</h1>
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white leading-tight">{{ __('user.wallet.page_title') }}</h1>
                     <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-1 sm:mt-2 leading-relaxed">
-                        Securely connect your cryptocurrency wallet to start earning rewards
+                        {{ __('user.wallet.page_description') }}
                     </p>
                 </div>
                 <div class="flex-shrink-0">
                     <a href="{{ route('dashboard') }}"
                        class="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 text-sm sm:text-base">
                         <x-heroicon name="arrow-left" class="w-4 h-4" />
-                        <span class="hidden sm:inline">Back to Dashboard</span>
-                        <span class="sm:hidden">Back</span>
+                        <span class="hidden sm:inline">{{ __('user.wallet.back_to_dashboard') }}</span>
+                        <span class="sm:hidden">{{ __('user.wallet.back') }}</span>
                     </a>
                 </div>
             </div>
@@ -74,23 +74,22 @@
                             <x-heroicon name="coins" class="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div class="flex-1 min-w-0">
-                            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-blue-900 dark:text-blue-100 mb-2 leading-tight">Start Earning {{ $settings->currency }}{{ $settings->min_return }} Daily</h3>
+                            <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-blue-900 dark:text-blue-100 mb-2 leading-tight">{{ __('user.wallet.start_earning_daily', ['currency' => $settings->currency, 'amount' => $settings->min_return]) }}</h3>
                             <p class="text-blue-700 dark:text-blue-300 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
-                                Connect your cryptocurrency wallet to unlock daily earning opportunities.
-                                Ensure your wallet contains at least <span class="font-semibold">{{ $settings->currency }}{{ $settings->min_balance }}</span> to be eligible for automatic daily rewards.
+                                {{ __('user.wallet.earning_description', ['min_balance' => $settings->currency . $settings->min_balance]) }}
                             </p>
                             <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm">
                                 <div class="flex items-center gap-1.5 sm:gap-2">
                                     <x-heroicon name="shield-check" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0" />
-                                    <span class="text-blue-700 dark:text-blue-300">Secure Connection</span>
+                                    <span class="text-blue-700 dark:text-blue-300">{{ __('user.wallet.secure_connection') }}</span>
                                 </div>
                                 <div class="flex items-center gap-1.5 sm:gap-2">
                                     <x-heroicon name="bolt" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0" />
-                                    <span class="text-blue-700 dark:text-blue-300">Instant Setup</span>
+                                    <span class="text-blue-700 dark:text-blue-300">{{ __('user.wallet.instant_setup') }}</span>
                                 </div>
                                 <div class="flex items-center gap-1.5 sm:gap-2">
                                     <x-heroicon name="arrow-trending-up" class="w-3 h-3 sm:w-4 sm:h-4 text-blue-600 flex-shrink-0" />
-                                    <span class="text-blue-700 dark:text-blue-300">Daily Rewards</span>
+                                    <span class="text-blue-700 dark:text-blue-300">{{ __('user.wallet.daily_rewards') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -105,8 +104,8 @@
                                 <x-heroicon name="wallet" class="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-purple-600 dark:text-purple-400" />
                             </div>
                             <div class="min-w-0 flex-1">
-                                <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white leading-tight">Connect Your Wallet</h2>
-                                <p class="text-gray-600 dark:text-gray-400 mt-1 text-sm sm:text-base leading-relaxed">Choose your wallet provider and enter your recovery phrase</p>
+                                <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white leading-tight">{{ __('user.wallet.connect_wallet_title') }}</h2>
+                                <p class="text-gray-600 dark:text-gray-400 mt-1 text-sm sm:text-base leading-relaxed">{{ __('user.wallet.connect_wallet_description') }}</p>
                             </div>
                         </div>
                     </div>
@@ -119,7 +118,7 @@
                             <div>
                                 <label for="wallet" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 sm:mb-4">
                                     <x-heroicon name="wallet" class="w-4 h-4 inline mr-2" />
-                                    Select Wallet Provider
+                                    {{ __('user.wallet.select_wallet_provider') }}
                                 </label>
 
                                 <!-- Popular Wallets Grid -->
@@ -175,7 +174,7 @@
                                             <div class="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-lg flex items-center justify-center">
                                                 <x-heroicon name="more-horizontal" class="w-4 h-4 sm:w-6 sm:h-6 text-gray-600 dark:text-gray-400" />
                                             </div>
-                                            <div class="text-xs sm:text-sm font-medium text-gray-900 dark:text-white leading-tight">Others</div>
+                                            <div class="text-xs sm:text-sm font-medium text-gray-900 dark:text-white leading-tight">{{ __('user.wallet.others') }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -184,19 +183,19 @@
                                 <div x-show="showOtherWallets" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" class="mb-4 sm:mb-6" style="display: none;">
                                     <select x-model="selectedWallet" name="wallet" required
                                             class="w-full px-3 sm:px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg sm:rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white text-sm sm:text-base transition-all duration-200">
-                                        <option value="">Choose a wallet provider</option>
-                                        <optgroup label="Popular Wallets">
+                                        <option value="">{{ __('user.wallet.choose_wallet_provider') }}</option>
+                                        <optgroup label="{{ __('user.wallet.popular_wallets') }}">
                                             <option value="MetaMask">🦊 MetaMask</option>
                                             <option value="Trust Wallet">🛡️ Trust Wallet</option>
                                             <option value="Coinbase Wallet">🔵 Coinbase Wallet</option>
                                             <option value="Exodus">🚀 Exodus</option>
                                         </optgroup>
-                                        <optgroup label="Hardware Wallets">
+                                        <optgroup label="{{ __('user.wallet.hardware_wallets') }}">
                                             <option value="Ledger">🔐 Ledger</option>
                                             <option value="Trezor">🔒 Trezor</option>
                                             <option value="KeepKey">🗝️ KeepKey</option>
                                         </optgroup>
-                                        <optgroup label="Mobile Wallets">
+                                        <optgroup label="{{ __('user.wallet.mobile_wallets') }}">
                                             <option value="Atomic Wallet">⚛️ Atomic Wallet</option>
                                             <option value="Mycelium">🍄 Mycelium</option>
                                             <option value="Jaxx Liberty">💎 Jaxx Liberty</option>
@@ -207,17 +206,17 @@
                                             <option value="Ellipal">📱 Ellipal</option>
                                             <option value="Safepal">🔐 Safepal</option>
                                         </optgroup>
-                                        <optgroup label="Web Wallets">
+                                        <optgroup label="{{ __('user.wallet.web_wallets') }}">
                                             <option value="Blockchain Wallet">🔗 Blockchain Wallet</option>
                                             <option value="BitPay">💳 BitPay</option>
                                             <option value="BTC.com Wallet">₿ BTC.com Wallet</option>
                                         </optgroup>
-                                        <optgroup label="Exchange Wallets">
+                                        <optgroup label="{{ __('user.wallet.exchange_wallets') }}">
                                             <option value="Binance Chain Wallet">🟡 Binance Chain Wallet</option>
                                             <option value="Huobi Wallet">🔴 Huobi Wallet</option>
                                             <option value="WazirX">💜 WazirX</option>
                                         </optgroup>
-                                        <optgroup label="Other Wallets">
+                                        <optgroup label="{{ __('user.wallet.other_wallets') }}">
                                             <option value="Coinomi">🪙 Coinomi</option>
                                             <option value="Edge">🌊 Edge</option>
                                             <option value="Electrum">⚡ Electrum</option>
@@ -242,7 +241,7 @@
                             <div x-show="selectedWallet" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" style="display: none;">
                                 <label for="mnemonic" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 sm:mb-4">
                                     <x-heroicon name="key" class="w-4 h-4 inline mr-2" />
-                                    Recovery Phrase (Seed Phrase)
+                                    {{ __('user.wallet.recovery_phrase') }}
                                 </label>
 
                                 <!-- Security Warning -->
@@ -250,8 +249,7 @@
                                     <div class="flex items-start">
                                         <x-heroicon name="exclamation-triangle" class="h-4 w-4 sm:h-5 sm:w-5 text-amber-400 mt-0.5 mr-2 sm:mr-3 flex-shrink-0" />
                                         <div class="text-xs sm:text-sm text-amber-700 dark:text-amber-300 leading-relaxed">
-                                            <strong>Important:</strong> Your recovery phrase is encrypted and securely stored.
-                                            We never store your private keys or access your funds.
+                                            <strong>{{ __('user.wallet.important') }}:</strong> {{ __('user.wallet.security_notice') }}
                                         </div>
                                     </div>
                                 </div>
@@ -266,11 +264,11 @@
                                         :class="hasError ? 'border-red-500 ring-red-500' : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500'"
                                         class="w-full px-3 sm:px-4 py-3 sm:py-4 bg-white dark:bg-gray-800 border rounded-lg sm:rounded-xl shadow-sm focus:outline-none focus:ring-2 dark:text-white text-sm sm:text-base transition-all duration-200 resize-none"
                                         rows="4"
-                                        placeholder="Enter your 12 or 24 word recovery phrase separated by spaces..."></textarea>
+                                        placeholder="{{ __('user.wallet.recovery_phrase_placeholder') }}"></textarea>
 
                                     <!-- Word Counter -->
                                     <div class="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 text-xs text-gray-400">
-                                        <span x-text="wordCount"></span> words
+                                        <span x-text="wordCount"></span> {{ __('user.wallet.words') }}
                                     </div>
                                 </div>
 
@@ -281,21 +279,21 @@
                                            :class="wordCount >= 12 && wordCount <= 24 ? 'text-green-500' : 'text-gray-400'"
                                            class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0"></i>
                                         <span :class="wordCount >= 12 && wordCount <= 24 ? 'text-green-600 dark:text-green-400' : 'text-gray-500'" class="leading-tight">
-                                            Valid word count (12-24 words)
+                                            {{ __('user.wallet.valid_word_count') }}
                                         </span>
                                     </div>
                                     <div class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
                                         <x-heroicon name="question-mark-circle" class="!hasInvalidChars ? " />
                                         <span :class="!hasInvalidChars ? 'text-green-600 dark:text-green-400' : 'text-gray-500'" class="leading-tight">
-                                            Contains only valid characters
+                                            {{ __('user.wallet.contains_valid_characters') }}
                                         </span>
                                     </div>
                                     <div x-show="recoveryPhrase.length > 0 && !isValidPhrase" class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
                                         <x-heroicon name="exclamation-circle" class="w-3 h-3 sm:w-4 sm:h-4 text-amber-500 flex-shrink-0" />
                                         <span class="text-amber-600 dark:text-amber-400 leading-tight">
-                                            <span x-show="wordCount < 12">Recovery phrase too short</span>
-                                            <span x-show="wordCount > 24">Recovery phrase too long</span>
-                                            <span x-show="hasInvalidChars">Invalid characters detected</span>
+                                            <span x-show="wordCount < 12">{{ __('user.wallet.phrase_too_short') }}</span>
+                                            <span x-show="wordCount > 24">{{ __('user.wallet.phrase_too_long') }}</span>
+                                            <span x-show="hasInvalidChars">{{ __('user.wallet.invalid_characters') }}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -313,11 +311,11 @@
                                         :class="isConnecting ? 'opacity-75 cursor-wait' : ''">
                                     <div x-show="!isConnecting" class="flex items-center gap-2 sm:gap-3">
                                         <x-heroicon name="link" class="h-4 w-4 sm:h-5 sm:w-5" />
-                                        <span>Connect Wallet</span>
+                                        <span>{{ __('user.wallet.connect_wallet_button') }}</span>
                                     </div>
                                     <div x-show="isConnecting" class="flex items-center gap-2 sm:gap-3">
                                         <div class="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-white"></div>
-                                        <span>Connecting...</span>
+                                        <span>{{ __('user.wallet.connecting') }}</span>
                                     </div>
                                 </button>
                             </div>

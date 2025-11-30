@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>{{ $title ?? 'Admin Panel' }} - {{ isset($settings) ? $settings->site_name : 'Monexa' }}</title>
+    <title>{{ $title ?? __('admin.common.admin_panel') }} - {{ isset($settings) ? $settings->site_name : 'Monexa' }}</title>
     
     <!-- Favicon -->
     <link href="{{ (isset($settings) && $settings->favicon) ? asset('storage/' . $settings->favicon) : asset('favicon.ico') }}" rel="icon" type="image/x-icon" />
@@ -125,7 +125,7 @@
     <div id="loading-screen" class="fixed inset-0 bg-white dark:bg-admin-900 z-50 flex items-center justify-center">
         <div class="text-center">
             <div class="w-12 h-12 border-4 border-primary-200 border-t-primary-600 rounded-full loading-spinner mx-auto mb-4"></div>
-            <p class="text-admin-600 dark:text-admin-400">Yükleniyor...</p>
+            <p class="text-admin-600 dark:text-admin-400">{{ __('admin.common.loading') }}</p>
         </div>
     </div>
 
@@ -156,9 +156,9 @@
                 <!-- Dashboard -->
                 <a href="{{ route('admin.dashboard') }}" 
                    class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-700 dark:hover:text-primary-300 transition-all duration-200 group {{ request()->routeIs('admin.dashboard') ? 'bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300' : '' }}"
-                   title="Kontrol Paneli">
+                   title="{{ __('admin.navigation.dashboard') }}">
                     <x-heroicon name="layout-dashboard" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
-                    <span class="font-medium">Kontrol Paneli</span>
+                    <span class="font-medium">{{ __('admin.navigation.dashboard') }}</span>
                 </a>
 
                 @php $adminUser = Auth::guard('admin')->user(); @endphp
@@ -168,17 +168,17 @@
                 <div class="mt-4" id="usersMenu">
                     <button onclick="toggleSubMenu('usersMenu')"
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700/50 transition-all duration-200 group"
-                            title="Kullanıcıları Yönet">
+                            title="{{ __('admin.navigation.users') }}">
                         <div class="flex items-center">
                             <x-heroicon name="users" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500" />
-                            <span class="font-medium">Kullanıcılar</span>
+                            <span class="font-medium">{{ __('admin.navigation.users') }}</span>
                         </div>
                         <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="usersMenuChevron" />
                     </button>
                     
                     <div class="mt-2 ml-12 space-y-1" id="usersMenuContent" style="display: none;">
                         <a href="{{ route('manageusers') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                            Tüm Kullanıcılar
+                            {{ __('admin.navigation.all_users') }}
                         </a>
                     </div>
                 </div>
@@ -186,50 +186,50 @@
                 <!-- Financial Management -->
                 <div class="mt-6">
                     <div class="px-4 mb-3">
-                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">Finans Yönetimi</span>
+                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">{{ __('admin.navigation.financial_management') }}</span>
                     </div>
                     
                     <a href="{{ route('mdeposits') }}" 
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-200 group {{ request()->routeIs('mdeposits') ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300' : '' }}"
-                       title="Yatırımları Yönet">
+                       title="{{ __('admin.navigation.manage_deposits') }}">
                         <x-heroicon name="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-emerald-500" />
-                        <span class="font-medium">Yatırımlar</span>
+                        <span class="font-medium">{{ __('admin.navigation.deposits') }}</span>
                     </a>
 
                     <a href="{{ route('mwithdrawals') }}" 
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-rose-50 dark:hover:bg-rose-900/20 hover:text-rose-700 dark:hover:text-rose-300 transition-all duration-200 group {{ request()->routeIs('mwithdrawals') ? 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300' : '' }}"
-                       title="Çekimleri Yönet">
+                       title="{{ __('admin.navigation.manage_withdrawals') }}">
                         <x-heroicon name="trending-down" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-rose-500" />
-                        <span class="font-medium">Çekimler</span>
+                        <span class="font-medium">{{ __('admin.navigation.withdrawals') }}</span>
                     </a>
                 </div>
 
                 <!-- Business Management -->
                 <div class="mt-6">
                     <div class="px-4 mb-3">
-                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">İş Yönetimi</span>
+                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">{{ __('admin.navigation.business_management') }}</span>
                     </div>
 
 
                     <a href="{{ route('emailservices') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-200 group {{ request()->routeIs('emailservices') ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300' : '' }}"
-                       title="E-posta Servisleri">
+                       title="{{ __('admin.navigation.email_services') }}">
                         <x-heroicon name="mail" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-blue-500" />
-                        <span class="font-medium">E-posta Servisleri</span>
+                        <span class="font-medium">{{ __('admin.navigation.email_services') }}</span>
                     </a>
 
                     <a href="{{ route('kyc') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:text-teal-700 dark:hover:text-teal-300 transition-all duration-200 group {{ request()->routeIs('kyc') ? 'bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300' : '' }}"
-                       title="KYC Başvuruları">
+                       title="{{ __('admin.navigation.kyc_applications') }}">
                         <x-heroicon name="user-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-teal-500" />
-                        <span class="font-medium">KYC Başvuruları</span>
+                        <span class="font-medium">{{ __('admin.navigation.kyc_applications') }}</span>
                     </a>
 
                     <a href="{{ route('admin.trades.index') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-violet-50 dark:hover:bg-violet-900/20 hover:text-violet-700 dark:hover:text-violet-300 transition-all duration-200 group {{ request()->routeIs('admin.trades.index') ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300' : '' }}"
-                       title="İşlem Yönetimi">
+                       title="{{ __('admin.navigation.trade_management') }}">
                         <x-heroicon name="trending-up" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-violet-500" />
-                        <span class="font-medium">İşlem Yönetimi</span>
+                        <span class="font-medium">{{ __('admin.navigation.trade_management') }}</span>
                     </a>
 
                 </div>
@@ -237,23 +237,23 @@
                 <!-- Content Management -->
                 <div class="mt-6">
                     <div class="px-4 mb-3">
-                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">İçerik Yönetimi</span>
+                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">{{ __('admin.navigation.content_management') }}</span>
                     </div>
                     
                     <a href="{{ route('admin.phrases') }}"
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-pink-50 dark:hover:bg-pink-900/20 hover:text-pink-700 dark:hover:text-pink-300 transition-all duration-200 group {{ request()->routeIs('admin.phrases') ? 'bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300' : '' }}"
-                       title="Dil/Cümleler">
+                       title="{{ __('admin.navigation.language_phrases') }}">
                         <x-heroicon name="languages" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-pink-500" />
-                        <span class="font-medium">Dil/Cümleler</span>
+                        <span class="font-medium">{{ __('admin.navigation.language_phrases') }}</span>
                     </a>
 
                     @if ($adminUser && $adminUser->type == 'Super Admin')
                     <!-- Status Management Menu - Super Admin Only -->
                     <a href="{{ route('admin.lead-statuses.index') }}"
                        class="flex items-center px-4 py-3 mt-1 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 hover:text-cyan-700 dark:hover:text-cyan-300 transition-all duration-200 group {{ request()->routeIs('admin.lead-statuses.*') ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300' : '' }}"
-                       title="Status Yönetimi">
+                       title="{{ __('admin.navigation.status_management') }}">
                         <x-heroicon name="tag" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-cyan-500" />
-                        <span class="font-medium">Status Yönetimi</span>
+                        <span class="font-medium">{{ __('admin.navigation.status_management') }}</span>
                     </a>
                     @endif
                 </div>
@@ -264,10 +264,10 @@
                 <div class="mt-6" id="tasksMenu">
                     <button onclick="toggleSubMenu('tasksMenu')"
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-slate-50 dark:hover:bg-slate-900/20 hover:text-slate-700 dark:hover:text-slate-300 transition-all duration-200 group"
-                            title="Görevler">
+                            title="{{ __('admin.navigation.tasks') }}">
                         <div class="flex items-center">
                             <x-heroicon name="list-checks" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-slate-500" />
-                            <span class="font-medium">Görevler</span>
+                            <span class="font-medium">{{ __('admin.navigation.tasks') }}</span>
                         </div>
                         <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="tasksMenuChevron" />
                     </button>
@@ -275,14 +275,14 @@
                     <div class="mt-2 ml-12 space-y-1" id="tasksMenuContent" style="display: none;">
                         @if ($adminUser && $adminUser->type == 'Super Admin')
                             <a href="{{ url('/admin/dashboard/task') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                                Görev Oluştur
+                                {{ __('admin.navigation.create_task') }}
                             </a>
                             <a href="{{ url('/admin/dashboard/mtask') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                                Görevleri Yönet
+                                {{ __('admin.navigation.manage_tasks') }}
                             </a>
                         @else
                             <a href="{{ url('/admin/dashboard/viewtask') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                                Görevlerimi Görüntüle
+                                {{ __('admin.navigation.view_my_tasks') }}
                             </a>
                         @endif
                     </div>
@@ -294,10 +294,10 @@
                 <div class="mt-4" id="managersMenu">
                     <button onclick="toggleSubMenu('managersMenu')"
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-700 dark:hover:text-red-300 transition-all duration-200 group {{ request()->routeIs('admin.managers.*') ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' : '' }}"
-                            title="Yöneticiler">
+                            title="{{ __('admin.navigation.managers') }}">
                         <div class="flex items-center">
                             <x-heroicon name="user-cog" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-red-500" />
-                            <span class="font-medium">Yöneticiler</span>
+                            <span class="font-medium">{{ __('admin.navigation.managers') }}</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             @php
@@ -312,28 +312,28 @@
                     <div class="mt-2 ml-12 space-y-1" id="managersMenuContent" style="display: none;">
                         <a href="{{ route('admin.managers.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.managers.index') ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300' : '' }}">
-                            <span>Yöneticiler Listesi</span>
+                            <span>{{ __('admin.navigation.managers_list') }}</span>
                             <x-heroicon name="list" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         <a href="{{ route('admin.managers.create') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.managers.create') ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300' : '' }}">
-                            <span>Yönetici Ekle</span>
+                            <span>{{ __('admin.navigation.add_manager') }}</span>
                             <x-heroicon name="user-plus" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         <a href="{{ route('admin.hierarchy.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-violet-600 dark:hover:text-violet-400 hover:bg-violet-50 dark:hover:bg-violet-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.hierarchy.*') ? 'bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-300' : '' }}">
-                            <span>Hiyerarşi Görünümü</span>
+                            <span>{{ __('admin.navigation.hierarchy_view') }}</span>
                             <x-heroicon name="git-branch" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         
                         <!-- Legacy Routes (Backward Compatibility) -->
                         <div class="pt-2 border-t border-admin-200 dark:border-admin-700 mt-2">
-                            <p class="text-xs text-admin-400 dark:text-admin-500 px-4 mb-1 font-medium">Eski Sistem</p>
+                            <p class="text-xs text-admin-400 dark:text-admin-500 px-4 mb-1 font-medium">{{ __('admin.navigation.legacy_system') }}</p>
                             <a href="{{ url('/admin/dashboard/addmanager') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
-                                Eski Yönetici Ekle
+                                {{ __('admin.navigation.old_add_manager') }}
                             </a>
                             <a href="{{ route('admin.managers.index') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
-                                Eski Yöneticiler (Modern)
+                                {{ __('admin.navigation.old_managers_modern') }}
                             </a>
                         </div>
                     </div>
@@ -343,10 +343,10 @@
                 <div class="mt-4" id="permissionsMenu">
                     <button onclick="toggleSubMenu('permissionsMenu')"
                             class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:text-indigo-700 dark:hover:text-indigo-300 transition-all duration-200 group {{ request()->routeIs('admin.permissions.*') || request()->routeIs('admin.roles.*') ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300' : '' }}"
-                            title="Yetkiler & Roller">
+                            title="{{ __('admin.navigation.permissions_roles') }}">
                         <div class="flex items-center">
                             <x-heroicon name="shield-check" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-indigo-500" />
-                            <span class="font-medium">Yetkiler & Roller</span>
+                            <span class="font-medium">{{ __('admin.navigation.permissions_roles') }}</span>
                         </div>
                         <div class="flex items-center space-x-2">
                             @php
@@ -361,17 +361,17 @@
                     <div class="mt-2 ml-12 space-y-1" id="permissionsMenuContent" style="display: none;">
                         <a href="{{ route('admin.permissions.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.permissions.index') ? 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300' : '' }}">
-                            <span>İzinler Matrisi</span>
+                            <span>{{ __('admin.navigation.permissions_matrix') }}</span>
                             <x-heroicon name="grid-3x3" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         <a href="{{ route('admin.roles.index') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-colors flex items-center justify-between group {{ request()->routeIs('admin.roles.*') ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300' : '' }}">
-                            <span>Rol Yönetimi</span>
+                            <span>{{ __('admin.navigation.role_management') }}</span>
                             <x-heroicon name="users" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         <a href="{{ route('admin.permissions.audit-log') }}"
                            class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors flex items-center justify-between group">
-                            <span>İzin Geçmişi</span>
+                            <span>{{ __('admin.navigation.permissions_history') }}</span>
                             <x-heroicon name="history" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                     </div>
@@ -380,41 +380,41 @@
                 <!-- Super Admin Settings -->
                 <div class="mt-8 pt-6 border-t border-admin-200 dark:border-admin-700">
                     <div class="px-4 mb-3">
-                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">Sistem Yönetimi</span>
+                        <span class="text-xs font-semibold text-admin-400 dark:text-admin-500 uppercase tracking-wider">{{ __('admin.navigation.system_management') }}</span>
                     </div>
                     
                     <!-- System Settings Menu -->
                     <a href="{{ route('appsettingshow') }}"
                        class="flex items-center px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-orange-50 dark:hover:bg-orange-900/20 hover:text-orange-700 dark:hover:text-orange-300 transition-all duration-200 group {{ request()->routeIs('appsettingshow') ? 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300' : '' }}"
-                       title="Sistem Ayarları">
+                       title="{{ __('admin.navigation.system_settings') }}">
                         <x-heroicon name="server" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-orange-500" />
-                        <span class="font-medium">Sistem Ayarları</span>
+                        <span class="font-medium">{{ __('admin.navigation.system_settings') }}</span>
                     </a>
 
                     <!-- Settings Dropdown -->
                     <div class="mt-4" id="settingsMenu">
                         <button onclick="toggleSubMenu('settingsMenu')"
                                 class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-admin-700 dark:text-admin-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:text-purple-700 dark:hover:text-purple-300 transition-all duration-200 group"
-                                title="Diğer Ayarlar">
+                                title="{{ __('admin.navigation.other_settings') }}">
                             <div class="flex items-center">
                                 <x-heroicon name="settings" class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform text-purple-500" />
-                                <span class="font-medium">Diğer Ayarlar</span>
+                                <span class="font-medium">{{ __('admin.navigation.other_settings') }}</span>
                             </div>
                             <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="settingsMenuChevron" />
                         </button>
                         
                         <div class="mt-2 ml-12 space-y-1" id="settingsMenuContent" style="display: none;">
                             <a href="{{ route('refsetshow') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                                Tavsiye/Bonus Ayarları
+                                {{ __('admin.navigation.referral_bonus_settings') }}
                             </a>
                             <a href="{{ route('paymentview') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                                Ödeme Ayarları
+                                {{ __('admin.navigation.payment_settings') }}
                             </a>
                             <a href="{{ route('managecryptoasset') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                                Takas Ayarları
+                                {{ __('admin.navigation.exchange_settings') }}
                             </a>
                             <a href="{{ url('/admin/dashboard/ipaddress') }}" class="block px-4 py-2 text-sm text-admin-600 dark:text-admin-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-                                IP Adresi
+                                {{ __('admin.navigation.ip_address') }}
                             </a>
                         </div>
                     </div>
@@ -429,7 +429,7 @@
                     <!-- Dark Mode Toggle -->
                     <button onclick="toggleDarkMode()"
                             class="p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors"
-                            id="darkModeToggle" title="Tema Değiştir">
+                            id="darkModeToggle" title="{{ __('admin.common.change_theme') }}">
                         <x-heroicon name="sun" class="w-4 h-4" id="sunIcon" />
                         <x-heroicon name="moon" class="w-4 h-4" id="moonIcon" style="display: none;" />
                     </button>
@@ -437,7 +437,7 @@
                     <!-- Collapse Toggle (Desktop Only) -->
                     <button onclick="toggleSidebarCollapse()"
                             class="hidden lg:block p-2 rounded-lg bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 transition-colors"
-                            id="collapseToggle" title="Daralt">
+                            id="collapseToggle" title="{{ __('admin.common.collapse') }}">
                         <x-heroicon name="panel-left" class="w-4 h-4" id="panelLeftIcon" />
                         <x-heroicon name="panel-right" class="w-4 h-4" id="panelRightIcon" style="display: none;" />
                     </button>
@@ -502,9 +502,70 @@
                             <x-heroicon name="search" class="w-4 h-4 text-admin-400" />
                         </div>
                         <input type="text"
-                               placeholder="Kullanıcıları ara..."
+                               placeholder="{{ __('admin.common.search_users') }}"
                                class="w-64 pl-10 pr-4 py-2 text-sm bg-admin-50 dark:bg-admin-700/50 border border-admin-200 dark:border-admin-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-admin-900 dark:text-admin-100 transition-all"
                                onclick="window.location.href='{{ route('manageusers') }}';">
+                    </div>
+
+                    <!-- Language Selector -->
+                    <div class="relative" id="languageDropdown">
+                        <button onclick="toggleLanguageDropdown()"
+                                class="relative p-2 rounded-lg text-admin-500 hover:text-admin-700 dark:hover:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors"
+                                title="{{ __('admin.common.change_language') }}">
+                            @php
+                                $currentLocale = app()->getLocale();
+                                $currentFlag = $currentLocale === 'tr' ? '🇹🇷' : '🇷🇺';
+                                $currentLang = $currentLocale === 'tr' ? 'TR' : 'RU';
+                            @endphp
+                            <div class="flex items-center space-x-2">
+                                <span class="text-lg">{{ $currentFlag }}</span>
+                                <span class="text-sm font-medium hidden sm:block">{{ $currentLang }}</span>
+                                <x-heroicon name="chevron-down" class="w-3 h-3" />
+                            </div>
+                        </button>
+
+                        <!-- Language Dropdown -->
+                        <div id="languageDropdownContent"
+                             class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700 z-50 transition opacity-0"
+                             style="display: none;">
+                            
+                            <!-- Header -->
+                            <div class="px-4 py-3 border-b border-admin-200 dark:border-admin-700 bg-gradient-to-r from-blue-50 to-blue-100/50 dark:from-admin-900/80 dark:to-admin-800/80">
+                                <div class="flex items-center space-x-2">
+                                    <x-heroicon name="language" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                    <h3 class="text-sm font-semibold text-admin-900 dark:text-admin-100">{{ __('admin.common.language_selection') }}</h3>
+                                </div>
+                            </div>
+
+                            <!-- Language Options -->
+                            <div class="p-2">
+                                <!-- Turkish -->
+                                <a href="{{ route('language.switch', 'tr') }}"
+                                   class="flex items-center px-3 py-2.5 text-sm hover:bg-admin-50 dark:hover:bg-admin-700/50 rounded-lg transition-colors group {{ $currentLocale === 'tr' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : 'text-admin-700 dark:text-admin-300' }}">
+                                    <span class="text-lg mr-3">🇹🇷</span>
+                                    <div class="flex-1">
+                                        <div class="font-medium">Türkçe</div>
+                                        <div class="text-xs text-admin-500 dark:text-admin-400">Turkish</div>
+                                    </div>
+                                    @if($currentLocale === 'tr')
+                                        <x-heroicon name="check-circle" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                    @endif
+                                </a>
+
+                                <!-- Russian -->
+                                <a href="{{ route('language.switch', 'ru') }}"
+                                   class="flex items-center px-3 py-2.5 text-sm hover:bg-admin-50 dark:hover:bg-admin-700/50 rounded-lg transition-colors group {{ $currentLocale === 'ru' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : 'text-admin-700 dark:text-admin-300' }}">
+                                    <span class="text-lg mr-3">🇷🇺</span>
+                                    <div class="flex-1">
+                                        <div class="font-medium">Русский</div>
+                                        <div class="text-xs text-admin-500 dark:text-admin-400">Russian</div>
+                                    </div>
+                                    @if($currentLocale === 'ru')
+                                        <x-heroicon name="check-circle" class="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                    @endif
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Notifications -->
@@ -533,12 +594,12 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center space-x-2">
                                         <x-heroicon name="bell" class="w-5 h-5 text-primary-600 dark:text-primary-400" />
-                                        <h3 class="font-semibold text-admin-900 dark:text-admin-100">Bildirimler</h3>
+                                        <h3 class="font-semibold text-admin-900 dark:text-admin-100">{{ __('admin.common.notifications') }}</h3>
                                     </div>
                                     <div class="flex items-center space-x-2">
                                         @if($notificationCount > 0)
                                             <span class="text-xs bg-primary-100 dark:bg-primary-900/50 text-primary-800 dark:text-primary-200 px-2.5 py-1 rounded-full font-medium">{{ $notificationCount }}</span>
-                                            <span class="text-xs text-primary-600 dark:text-primary-400">yeni</span>
+                                            <span class="text-xs text-primary-600 dark:text-primary-400">{{ __('admin.common.new') }}</span>
                                         @endif
                                     </div>
                                 </div>
@@ -647,28 +708,28 @@
                                                         ">
                                                             @switch($notification->type)
                                                                 @case('deposit')
-                                                                    Yatırım
+                                                                    {{ __('admin.notifications.deposit') }}
                                                                     @break
                                                                 @case('withdrawal')
-                                                                    Çekim
+                                                                    {{ __('admin.notifications.withdrawal') }}
                                                                     @break
                                                                 @case('plan_purchase')
-                                                                    Plan Alımı
+                                                                    {{ __('admin.notifications.plan_purchase') }}
                                                                     @break
                                                                 @case('bot_purchase')
-                                                                    Bot Alımı
+                                                                    {{ __('admin.notifications.bot_purchase') }}
                                                                     @break
                                                                 @case('trade')
-                                                                    İşlem
+                                                                    {{ __('admin.notifications.trade') }}
                                                                     @break
                                                                 @case('profit')
-                                                                    Kâr
+                                                                    {{ __('admin.notifications.profit') }}
                                                                     @break
                                                                 @case('login')
-                                                                    Giriş
+                                                                    {{ __('admin.notifications.login') }}
                                                                     @break
                                                                 @default
-                                                                    Bildirim
+                                                                    {{ __('admin.notifications.notification') }}
                                                             @endswitch
                                                         </span>
                                                     </div>
@@ -685,14 +746,14 @@
                                     @if($notificationCount > 5)
                                         <div class="p-3 text-center border-b border-admin-100 dark:border-admin-700/50">
                                             <p class="text-xs text-admin-500 dark:text-admin-400">
-                                                <span class="font-medium">{{ $notificationCount - 5 }}</span> adet daha bildirim var
+                                                <span class="font-medium">{{ $notificationCount - 5 }}</span> {{ __('admin.notifications.more_notifications') }}
                                             </p>
                                         </div>
                                     @endif
                                 @else
                                     <div class="p-8 text-center">
                                         <x-heroicon name="bell-slash" class="w-12 h-12 text-admin-400 mx-auto mb-3" />
-                                        <p class="text-sm text-admin-500">Henüz bildirim yok</p>
+                                        <p class="text-sm text-admin-500">{{ __('admin.notifications.no_notifications') }}</p>
                                     </div>
                                 @endif
                             </div>
@@ -703,12 +764,12 @@
                                     <button onclick="markAllNotificationsRead()"
                                             class="flex-1 flex items-center justify-center px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-xl transition-all duration-200 hover:shadow-md group">
                                         <x-heroicon name="check-circle" class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                                        Tümünü Okunmuş İşaretle
+                                        {{ __('admin.notifications.mark_all_read') }}
                                     </button>
                                     <button onclick="viewAllNotifications()"
                                             class="flex-1 flex items-center justify-center px-4 py-2.5 bg-white dark:bg-admin-800 border border-admin-300 dark:border-admin-600 hover:bg-admin-50 dark:hover:bg-admin-700 text-admin-700 dark:text-admin-300 text-sm font-medium rounded-xl transition-all duration-200 hover:shadow-sm group">
                                         <x-heroicon name="eye" class="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                                        Tümünü Gör
+                                        {{ __('admin.notifications.view_all') }}
                                     </button>
                                 </div>
                             </div>
@@ -749,18 +810,18 @@
                             <div class="p-2">
                                 <a href="{{ route('adminprofile') }}" class="flex items-center px-3 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
                                     <x-heroicon name="user-cog" class="w-4 h-4 mr-3" />
-                                    Hesap Ayarları
+                                    {{ __('admin.profile.account_settings') }}
                                 </a>
                                 <a href="{{ url('admin/dashboard/adminchangepassword') }}" class="flex items-center px-3 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
                                     <x-heroicon name="key" class="w-4 h-4 mr-3" />
-                                    Şifre Değiştir
+                                    {{ __('admin.profile.change_password') }}
                                 </a>
                                 <div class="border-t border-admin-200 dark:border-admin-700 my-2"></div>
                                 <form action="{{ route('adminlogout') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="w-full flex items-center px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
                                         <x-heroicon name="arrow-right-start-on-rectangle" class="w-4 h-4 mr-3" />
-                                        Çıkış Yap
+                                        {{ __('admin.profile.logout') }}
                                     </button>
                                 </form>
                             </div>
@@ -934,7 +995,7 @@
                 }
                 if (panelLeftIcon) panelLeftIcon.style.display = 'none';
                 if (panelRightIcon) panelRightIcon.style.display = 'block';
-                if (collapseToggle) collapseToggle.title = 'Genişlet';
+                if (collapseToggle) collapseToggle.title = '{{ __("admin.common.expand") }}';
                 
                 // Hide all menu text and chevrons
                 updateMenuTextVisibility(false);
@@ -960,7 +1021,7 @@
                 }
                 if (panelLeftIcon) panelLeftIcon.style.display = 'block';
                 if (panelRightIcon) panelRightIcon.style.display = 'none';
-                if (collapseToggle) collapseToggle.title = 'Daralt';
+                if (collapseToggle) collapseToggle.title = '{{ __("admin.common.collapse") }}';
                 
                 // Show all menu text and chevrons
                 updateMenuTextVisibility(true);
@@ -1096,6 +1157,28 @@
             }
         }
 
+        // Toggle language dropdown
+        function toggleLanguageDropdown() {
+            adminState.languageOpen = !adminState.languageOpen;
+            const dropdown = document.getElementById('languageDropdownContent');
+            
+            if (dropdown) {
+                if (adminState.languageOpen) {
+                    dropdown.style.display = 'block';
+                    setTimeout(() => {
+                        dropdown.classList.remove('opacity-0');
+                        dropdown.classList.add('opacity-100');
+                    }, 10);
+                } else {
+                    dropdown.classList.remove('opacity-100');
+                    dropdown.classList.add('opacity-0');
+                    setTimeout(() => {
+                        dropdown.style.display = 'none';
+                    }, 150);
+                }
+            }
+        }
+
         // Toggle profile dropdown
         function toggleProfileDropdown() {
             adminState.profileOpen = !adminState.profileOpen;
@@ -1131,6 +1214,20 @@
                         notificationsContent.classList.add('opacity-0');
                         setTimeout(() => {
                             notificationsContent.style.display = 'none';
+                        }, 150);
+                    }
+                }
+                
+                // Close language dropdown
+                const languageDropdown = document.getElementById('languageDropdown');
+                const languageContent = document.getElementById('languageDropdownContent');
+                if (adminState.languageOpen && languageDropdown && !languageDropdown.contains(event.target)) {
+                    adminState.languageOpen = false;
+                    if (languageContent) {
+                        languageContent.classList.remove('opacity-100');
+                        languageContent.classList.add('opacity-0');
+                        setTimeout(() => {
+                            languageContent.style.display = 'none';
                         }, 150);
                     }
                 }

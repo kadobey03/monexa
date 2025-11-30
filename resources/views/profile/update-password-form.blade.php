@@ -7,7 +7,7 @@
             </div>
             <div class="ml-3">
                 <p class="text-sm text-blue-700 dark:text-blue-400">
-                    Şifrenizi düzenli olarak güncellemek hesabınızın güvenliğini sağlar. Başka yerde kullanmadığınız güçlü bir şifre oluşturun.
+                    {{ __('user.profile.password.security_intro') }}
                 </p>
             </div>
         </div>
@@ -22,7 +22,7 @@
             <!-- Current Password -->
             <div class="space-y-2">
                 <label for="current_password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Mevcut Şifre
+                    {{ __('user.profile.password.current_password') }}
                 </label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -34,7 +34,7 @@
                         id="current_password"
                         class="pl-10 pr-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         required
-                        placeholder="Mevcut şifreyi girin"
+                        placeholder="{{ __('user.profile.password.current_password_placeholder') }}"
                     >
                     <div class="absolute inset-y-0 right-0 flex items-center px-3">
                         <button
@@ -52,7 +52,7 @@
             <!-- New Password -->
             <div class="space-y-2">
                 <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Yeni Şifre
+                    {{ __('user.profile.password.new_password') }}
                 </label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -64,7 +64,7 @@
                         id="password"
                         class="pl-10 pr-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         required
-                        placeholder="Yeni şifre girin"
+                        placeholder="{{ __('user.profile.password.new_password_placeholder') }}"
                         oninput="checkPasswordStrength(this.value)"
                     >
                     <div class="absolute inset-y-0 right-0 flex items-center px-3">
@@ -83,7 +83,7 @@
                 <div class="mt-2">
                     <div class="flex items-center justify-between mb-1">
                         <div class="text-xs font-medium text-gray-500 dark:text-gray-400" id="password-feedback"></div>
-                        <div class="text-xs font-medium text-gray-500 dark:text-gray-400">Şifre Gücü</div>
+                        <div class="text-xs font-medium text-gray-500 dark:text-gray-400">{{ __('user.profile.password.strength') }}</div>
                     </div>
                     <div class="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                         <div
@@ -98,7 +98,7 @@
             <!-- Confirm New Password -->
             <div class="space-y-2">
                 <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Yeni Şifreyi Onayla
+                    {{ __('user.profile.password.confirm_password') }}
                 </label>
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -110,7 +110,7 @@
                         id="password_confirmation"
                         class="pl-10 pr-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         required
-                        placeholder="Yeni şifreyi onaylayın"
+                        placeholder="{{ __('user.profile.password.confirm_password_placeholder') }}"
                     >
                     <div class="absolute inset-y-0 right-0 flex items-center px-3">
                         <button
@@ -133,7 +133,7 @@
                 class="inline-flex items-center px-6 py-4 border border-transparent rounded-xl shadow-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
             >
                 <x-heroicon name="save" class="mr-2 h-5 w-5" />
-                Şifreyi Güncelle
+                {{ __('user.profile.password.update_button') }}
             </button>
         </div>
     </form>
@@ -146,7 +146,7 @@
             <div class="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
                 <x-heroicon name="shield-check" class="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
             </div>
-            <h3 class="text-base font-medium text-gray-900 dark:text-white">Şifre Gereksinimleri</h3>
+            <h3 class="text-base font-medium text-gray-900 dark:text-white">{{ __('user.profile.password.requirements_title') }}</h3>
         </div>
 
         <div class="space-y-3 pl-2">
@@ -155,7 +155,7 @@
                     <x-heroicon name="check-circle" class="h-5 w-5 text-green-500" />
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
-                    Minimum 8 karakter uzunluğunda - ne kadar çok olursa o kadar iyi
+                    {{ __('user.profile.password.requirement_length') }}
                 </p>
             </div>
 
@@ -164,7 +164,7 @@
                     <x-heroicon name="check-circle" class="h-5 w-5 text-green-500" />
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
-                    En az bir küçük harf
+                    {{ __('user.profile.password.requirement_lowercase') }}
                 </p>
             </div>
 
@@ -173,7 +173,7 @@
                     <x-heroicon name="check-circle" class="h-5 w-5 text-green-500" />
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
-                    En az bir büyük harf
+                    {{ __('user.profile.password.requirement_uppercase') }}
                 </p>
             </div>
 
@@ -182,7 +182,7 @@
                     <x-heroicon name="check-circle" class="h-5 w-5 text-green-500" />
                 </div>
                 <p class="ml-3 text-sm text-gray-700 dark:text-gray-300">
-                    En az bir sayı veya özel sembol
+                    {{ __('user.profile.password.requirement_number') }}
                 </p>
             </div>
         </div>
@@ -232,16 +232,16 @@ function checkPasswordStrength(password) {
     // Update colors and feedback
     if (strength < 25) {
         strengthBar.className = 'h-full transition-all duration-300 ease-out rounded-full bg-red-500';
-        feedbackElement.textContent = 'Çok Zayıf';
+        feedbackElement.textContent = "{{ __('user.profile.password.strength_very_weak') }}";
     } else if (strength < 50) {
         strengthBar.className = 'h-full transition-all duration-300 ease-out rounded-full bg-red-500';
-        feedbackElement.textContent = 'Zayıf';
+        feedbackElement.textContent = "{{ __('user.profile.password.strength_weak') }}";
     } else if (strength < 75) {
         strengthBar.className = 'h-full transition-all duration-300 ease-out rounded-full bg-yellow-500';
-        feedbackElement.textContent = 'Orta';
+        feedbackElement.textContent = "{{ __('user.profile.password.strength_medium') }}";
     } else {
         strengthBar.className = 'h-full transition-all duration-300 ease-out rounded-full bg-green-500';
-        feedbackElement.textContent = 'Güçlü';
+        feedbackElement.textContent = "{{ __('user.profile.password.strength_strong') }}";
     }
 }
 

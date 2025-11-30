@@ -11,15 +11,15 @@
                     <x-heroicon name="plus-circle" class="w-6 h-6 text-white" />
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Yeni Rol Oluştur</h1>
-                    <p class="text-admin-600 dark:text-admin-400">Yeni bir sistem rolü tanımlayın ve izinlerini atayın</p>
+                    <h1 class="text-2xl font-bold text-admin-900 dark:text-white">{{ __('admin.roles.create.title') }}</h1>
+                    <p class="text-admin-600 dark:text-admin-400">{{ __('admin.roles.create.description') }}</p>
                 </div>
             </div>
             
             <a href="{{ route('admin.roles.index') }}" 
                class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
                 <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
-                Geri Dön
+                {{ __('admin.roles.create.back') }}
             </a>
         </div>
     </div>
@@ -29,19 +29,19 @@
         
         <!-- Basic Information -->
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
-            <h2 class="text-lg font-semibold text-admin-900 dark:text-white mb-6">Temel Bilgiler</h2>
+            <h2 class="text-lg font-semibold text-admin-900 dark:text-white mb-6">{{ __('admin.roles.create.basic_information') }}</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="name" class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        Rol Adı <span class="text-red-500">*</span>
+                        {{ __('admin.roles.create.role_name') }} <span class="text-red-500">*</span>
                     </label>
                     <input type="text" 
                            id="name" 
                            name="name" 
                            value="{{ old('name') }}"
                            class="admin-input w-full @error('name') border-red-500 @enderror"
-                           placeholder="admin, manager, user..."
+                           placeholder="{{ __('admin.roles.create.role_name_placeholder') }}"
                            required>
                     @error('name')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
@@ -50,14 +50,14 @@
                 
                 <div>
                     <label for="display_name" class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        Görünen Ad <span class="text-red-500">*</span>
+                        {{ __('admin.roles.create.display_name') }} <span class="text-red-500">*</span>
                     </label>
                     <input type="text" 
                            id="display_name" 
                            name="display_name" 
                            value="{{ old('display_name') }}"
                            class="admin-input w-full @error('display_name') border-red-500 @enderror"
-                           placeholder="Yönetici, Kullanıcı..."
+                           placeholder="{{ __('admin.roles.create.display_name_placeholder') }}"
                            required>
                     @error('display_name')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
@@ -66,13 +66,13 @@
                 
                 <div class="md:col-span-2">
                     <label for="description" class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        Açıklama
+                        {{ __('admin.roles.create.description') }}
                     </label>
                     <textarea id="description" 
                               name="description" 
                               rows="3"
                               class="admin-input w-full @error('description') border-red-500 @enderror"
-                              placeholder="Bu rolün yetkilerini ve sorumluluklarını açıklayın...">{{ old('description') }}</textarea>
+                              placeholder="{{ __('admin.roles.create.description_placeholder') }}">{{ old('description') }}</textarea>
                     @error('description')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
@@ -82,20 +82,20 @@
 
         <!-- Hierarchy & Settings -->
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
-            <h2 class="text-lg font-semibold text-admin-900 dark:text-white mb-6">Hiyerarşi ve Ayarlar</h2>
+            <h2 class="text-lg font-semibold text-admin-900 dark:text-white mb-6">{{ __('admin.roles.create.hierarchy_settings') }}</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                     <label for="parent_role_id" class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        Üst Rol
+                        {{ __('admin.roles.create.parent_role') }}
                     </label>
                     <select id="parent_role_id" 
                             name="parent_role_id" 
                             class="admin-input w-full @error('parent_role_id') border-red-500 @enderror">
-                        <option value="">Üst rol yok (Kök seviye)</option>
+                        <option value="">{{ __('admin.roles.create.no_parent_role') }}</option>
                         @foreach($parentRoles as $role)
                             <option value="{{ $role->id }}" {{ old('parent_role_id') == $role->id ? 'selected' : '' }}>
-                                {{ str_repeat('- ', $role->hierarchy_level) }}{{ $role->display_name }} (Seviye {{ $role->hierarchy_level }})
+                                {{ str_repeat('- ', $role->hierarchy_level) }}{{ $role->display_name }} ({{ __('admin.roles.create.level') }} {{ $role->hierarchy_level }})
                             </option>
                         @endforeach
                     </select>
@@ -106,12 +106,12 @@
                 
                 <div>
                     <label for="department" class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        Departman
+                        {{ __('admin.roles.create.department') }}
                     </label>
                     <select id="department" 
                             name="department" 
                             class="admin-input w-full @error('department') border-red-500 @enderror">
-                        <option value="">Departman seç</option>
+                        <option value="">{{ __('admin.roles.create.select_department') }}</option>
                         @foreach($departments as $key => $value)
                             <option value="{{ $key }}" {{ old('department') == $key ? 'selected' : '' }}>
                                 {{ $value }}
@@ -125,7 +125,7 @@
                 
                 <div>
                     <label for="hierarchy_level" class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        Manuel Hiyerarşi Seviyesi
+                        {{ __('admin.roles.create.manual_hierarchy_level') }}
                     </label>
                     <input type="number" 
                            id="hierarchy_level" 
@@ -134,7 +134,7 @@
                            min="0" 
                            max="10"
                            class="admin-input w-full @error('hierarchy_level') border-red-500 @enderror"
-                           placeholder="Otomatik hesaplanacak">
+                           placeholder="{{ __('admin.roles.create.auto_calculated') }}">
                     @error('hierarchy_level')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
@@ -145,7 +145,7 @@
             <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="max_subordinates" class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        Maksimum Alt Personel
+                        {{ __('admin.roles.create.max_subordinates') }}
                     </label>
                     <input type="number" 
                            id="max_subordinates" 
@@ -153,7 +153,7 @@
                            value="{{ old('max_subordinates') }}"
                            min="0"
                            class="admin-input w-full"
-                           placeholder="Sınırsız">
+                           placeholder="{{ __('admin.roles.create.unlimited') }}">
                 </div>
                 
                 <div class="space-y-3">
@@ -163,7 +163,7 @@
                                value="1"
                                {{ old('can_manage_subordinates') ? 'checked' : '' }}
                                class="rounded border-admin-300 dark:border-admin-600 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2 text-sm text-admin-700 dark:text-admin-300">Alt personeli yönetebilir</span>
+                        <span class="ml-2 text-sm text-admin-700 dark:text-admin-300">{{ __('admin.roles.create.can_manage_subordinates') }}</span>
                     </label>
                     
                     <label class="flex items-center">
@@ -172,7 +172,7 @@
                                value="1"
                                {{ old('can_assign_leads') ? 'checked' : '' }}
                                class="rounded border-admin-300 dark:border-admin-600 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2 text-sm text-admin-700 dark:text-admin-300">Lead atayabilir</span>
+                        <span class="ml-2 text-sm text-admin-700 dark:text-admin-300">{{ __('admin.roles.create.can_assign_leads') }}</span>
                     </label>
                     
                     <label class="flex items-center">
@@ -181,7 +181,7 @@
                                value="1"
                                {{ old('auto_assign_leads') ? 'checked' : '' }}
                                class="rounded border-admin-300 dark:border-admin-600 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2 text-sm text-admin-700 dark:text-admin-300">Otomatik lead atama</span>
+                        <span class="ml-2 text-sm text-admin-700 dark:text-admin-300">{{ __('admin.roles.create.auto_assign_leads') }}</span>
                     </label>
                     
                     <label class="flex items-center">
@@ -190,7 +190,7 @@
                                value="1"
                                {{ old('is_active', true) ? 'checked' : '' }}
                                class="rounded border-admin-300 dark:border-admin-600 text-blue-600 focus:ring-blue-500">
-                        <span class="ml-2 text-sm text-admin-700 dark:text-admin-300">Aktif</span>
+                        <span class="ml-2 text-sm text-admin-700 dark:text-admin-300">{{ __('admin.roles.create.active') }}</span>
                     </label>
                 </div>
             </div>
@@ -199,15 +199,15 @@
         <!-- Permissions -->
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-lg font-semibold text-admin-900 dark:text-white">İzinler</h2>
+                <h2 class="text-lg font-semibold text-admin-900 dark:text-white">{{ __('admin.roles.create.permissions') }}</h2>
                 <div class="flex items-center space-x-3">
                     <button type="button" @click="selectAll()" 
                             class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200">
-                        Tümünü Seç
+                        {{ __('admin.roles.create.select_all') }}
                     </button>
                     <button type="button" @click="deselectAll()" 
                             class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200">
-                        Hiçbirini Seçme
+                        {{ __('admin.roles.create.select_none') }}
                     </button>
                 </div>
             </div>
@@ -268,12 +268,12 @@
             <div class="flex items-center justify-end space-x-3">
                 <a href="{{ route('admin.roles.index') }}" 
                    class="px-6 py-2 border border-admin-300 dark:border-admin-600 text-admin-700 dark:text-admin-300 rounded-xl hover:bg-admin-50 dark:hover:bg-admin-700/50 transition-colors">
-                    İptal
+                    {{ __('admin.roles.create.cancel') }}
                 </a>
                 <button type="submit" 
                         class="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
                     <x-heroicon name="save" class="w-4 h-4 mr-2" />
-                    Rolü Oluştur
+                    {{ __('admin.roles.create.create_role') }}
                 </button>
             </div>
         </div>

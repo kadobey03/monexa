@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'Yönetici Şifre Kurtarma - Güvenli Erişim Kurtarma')
+@section('title', '{{ __('auth.admin.forgot.page_title') }}')
 @section('content')
 
 <!-- Admin Password Recovery Interface -->
@@ -19,14 +19,14 @@
                 <!-- Admin Badge -->
                 <div class="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2 mb-4">
                     <x-heroicon name="key" class="w-4 h-4 text-orange-400" />
-                    <span class="text-orange-300 text-sm font-bold">Yönetici Kurtarma</span>
+                    <span class="text-orange-300 text-sm font-bold">{{ __('auth.admin.forgot.admin_recovery_badge') }}</span>
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                    Şifrenizi mi Unuttunuz?
+                    {{ __('auth.admin.forgot.main_title') }}
                 </h1>
                 <p class="text-gray-400 text-sm md:text-base">
-                    Yönetimsel erişim için güvenli şifre kurtarma
+                    {{ __('auth.admin.forgot.subtitle') }}
                 </p>
             </div>
 
@@ -39,7 +39,7 @@
                     <div class="flex items-start gap-3">
                         <x-heroicon name="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
-                            <p class="text-green-300 font-bold mb-1">Kurtarma E-postası Gönderildi</p>
+                            <p class="text-green-300 font-bold mb-1">{{ __('auth.admin.forgot.recovery_email_sent') }}</p>
                             <p class="text-gray-300">{{ session('status') }}</p>
                         </div>
                     </div>
@@ -51,9 +51,9 @@
                 <div class="flex items-start gap-3">
                     <x-heroicon name="information-circle" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                     <div class="text-sm">
-                        <p class="text-blue-300 font-bold mb-1">Şifre Kurtarma Süreci</p>
+                        <p class="text-blue-300 font-bold mb-1">{{ __('auth.admin.forgot.recovery_process') }}</p>
                         <p class="text-gray-300">
-                            Aşağıya yönetici e-posta adresinizi girin. Şifrenizi sıfırlamak için kurtarma token ile güvenli talimatlar göndereceğiz.
+                            {{ __('auth.admin.forgot.recovery_instructions') }}
                         </p>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                 <!-- Email Address -->
                 <div class="space-y-2">
                     <label for="email" class="block text-sm font-bold text-gray-200">
-                        Yönetici E-posta Adresi
+                        {{ __('auth.admin.forgot.admin_email') }}
                     </label>
                     <div class="relative">
                         <input
@@ -75,7 +75,7 @@
                             name="email"
                             value="{{ old('email') }}"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none transition-all duration-200"
-                            placeholder="Yönetici e-posta adresinizi girin"
+                            placeholder="{{ __('auth.admin.forgot.admin_email_placeholder') }}"
                             autocomplete="email"
                             required
                             autofocus
@@ -90,7 +90,7 @@
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
-                    <p class="text-xs text-gray-500">Yönetici hesabınızla ilişkili e-posta adresini girin</p>
+                    <p class="text-xs text-gray-500">{{ __('auth.admin.forgot.email_help') }}</p>
                 </div>
 
                 <!-- Security Notice -->
@@ -98,19 +98,19 @@
                     <div class="flex items-start gap-3">
                         <x-heroicon name="shield-exclamation" class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
-                            <p class="text-yellow-300 font-bold mb-1">Güvenlik Bildirimi</p>
+                            <p class="text-yellow-300 font-bold mb-1">{{ __('auth.admin.forgot.security_notice_title') }}</p>
                             <ul class="text-gray-300 space-y-1">
                                 <li class="flex items-start gap-2">
                                     <span class="text-yellow-400 mt-1">•</span>
-                                    Kurtarma token 15 dakika içinde süresi dolacak
+                                    {{ __('auth.admin.forgot.token_expires_15min') }}
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-yellow-400 mt-1">•</span>
-                                    Sadece yönetici e-postaları kurtarma talebinde bulunabilir
+                                    {{ __('auth.admin.forgot.only_admin_emails') }}
                                 </li>
                                 <li class="flex items-start gap-2">
                                     <span class="text-yellow-400 mt-1">•</span>
-                                    Tüm kurtarma girişimleri günlüğe kaydedilir
+                                    {{ __('auth.admin.forgot.all_attempts_logged') }}
                                 </li>
                             </ul>
                         </div>
@@ -124,7 +124,7 @@
                 >
                     <span class="flex items-center justify-center gap-2">
                         <x-heroicon name="send" class="w-5 h-5" />
-                        Kurtarma Talimatlarını Gönder
+                        {{ __('auth.admin.forgot.send_recovery_instructions') }}
                     </span>
                 </button>
 
@@ -133,7 +133,7 @@
                     <a href="{{ route('adminloginform') }}"
                        class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200">
                         <x-heroicon name="arrow-left" class="w-4 h-4" />
-                        Yönetici Girişine Geri Dön
+                        {{ __('auth.admin.forgot.back_to_admin_login') }}
                     </a>
                 </div>
             </form>
@@ -142,24 +142,24 @@
             <div class="mt-8 bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                 <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
                     <x-heroicon name="check-list" class="w-4 h-4 text-blue-400" />
-                    Kurtarma Süreci
+                    {{ __('auth.admin.forgot.recovery_process_steps') }}
                 </h4>
                 <div class="space-y-3">
                     <div class="flex items-center gap-3 text-sm text-gray-300">
                         <span class="flex-shrink-0 w-6 h-6 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-400 font-bold text-xs">1</span>
-                        <span>Yönetici e-posta adresinizi girin</span>
+                        <span>{{ __('auth.admin.forgot.step_1') }}</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-gray-300">
                         <span class="flex-shrink-0 w-6 h-6 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-400 font-bold text-xs">2</span>
-                        <span>Kurtarma talimatları için e-postanızı kontrol edin</span>
+                        <span>{{ __('auth.admin.forgot.step_2') }}</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-gray-300">
                         <span class="flex-shrink-0 w-6 h-6 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-400 font-bold text-xs">3</span>
-                        <span>Şifrenizi sıfırlamak için token kullanın</span>
+                        <span>{{ __('auth.admin.forgot.step_3') }}</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-gray-300">
                         <span class="flex-shrink-0 w-6 h-6 bg-orange-500/20 rounded-full flex items-center justify-center text-orange-400 font-bold text-xs">4</span>
-                        <span>Yeni şifre ile yönetici hesabınıza erişin</span>
+                        <span>{{ __('auth.admin.forgot.step_4') }}</span>
                     </div>
                 </div>
             </div>
@@ -167,19 +167,19 @@
             <!-- Admin Security Features -->
             <div class="mt-6 pt-6 border-t border-gray-700">
                 <div class="text-center">
-                    <p class="text-xs text-gray-500 mb-3">Kurumsal yönetici güvenliği</p>
+                    <p class="text-xs text-gray-500 mb-3">{{ __('auth.admin.forgot.enterprise_security') }}</p>
                     <div class="flex items-center justify-center gap-4 text-gray-600">
                         <span class="flex items-center gap-1">
                             <x-heroicon name="shield-check" class="w-3 h-3" />
-                            <span class="text-xs">Şifrelenmiş</span>
+                            <span class="text-xs">{{ __('auth.admin.forgot.encrypted') }}</span>
                         </span>
                         <span class="flex items-center gap-1">
                             <x-heroicon name="clock" class="w-3 h-3" />
-                            <span class="text-xs">Zaman Sınırlı</span>
+                            <span class="text-xs">{{ __('auth.admin.forgot.time_limited') }}</span>
                         </span>
                         <span class="flex items-center gap-1">
                             <x-heroicon name="eye" class="w-3 h-3" />
-                            <span class="text-xs">Denetim Günlüğü</span>
+                            <span class="text-xs">{{ __('auth.admin.forgot.audit_log') }}</span>
                         </span>
                     </div>
                 </div>
@@ -196,9 +196,9 @@
         <!-- Support Information -->
         <div class="text-center mt-6">
             <p class="text-gray-500 text-sm">
-                Hemen yardıma ihtiyacınız var mı?
+                {{ __('auth.admin.forgot.need_help') }}
                 <a href="mailto:admin-support@bluetrade.com" class="text-orange-400 hover:text-orange-300 font-medium ml-1 transition-colors duration-200">
-                    Yönetici Desteğiyle İletişime Geç
+                    {{ __('auth.admin.forgot.contact_admin_support') }}
                 </a>
             </p>
         </div>

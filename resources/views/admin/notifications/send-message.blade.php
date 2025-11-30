@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Kullanıcıya Mesaj Gönder')
+@section('title', __('admin.notifications.send_message_to_user'))
 
 @section('content')
     @include('admin.topmenu')
@@ -16,17 +16,17 @@
                             <div>
                                 <h1 class="text-4xl font-bold text-white mb-2">
                                     <i class="fas fa-paper-plane mr-3 text-indigo-200"></i>
-                                    Kullanıcıya Mesaj Gönder
+                                    {{ __('admin.notifications.send_message_to_user') }}
                                 </h1>
                                 <p class="text-indigo-100 text-lg">
-                                    Seçtiğiniz kullanıcıya özel bildirim mesajı gönderin
+                                    {{ __('admin.notifications.send_custom_notification_message') }}
                                 </p>
                             </div>
                             <div class="mt-4 md:mt-0">
                                 <a href="{{ route('admin.notifications') }}"
                                    class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                                     <i class="fas fa-arrow-left mr-2"></i>
-                                    Bildirimlere Dön
+                                    {{ __('admin.notifications.back_to_notifications') }}
                                 </a>
                             </div>
                         </div>
@@ -68,9 +68,9 @@
                         <div class="p-6 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                             <h3 class="text-xl font-bold text-gray-900 flex items-center">
                                 <i class="fas fa-envelope mr-3 text-blue-600"></i>
-                                Mesaj Oluştur
+                                {{ __('admin.notifications.create_message') }}
                             </h3>
-                            <p class="text-gray-600 mt-1">Kullanıcıya gönderilecek bildirimi hazırlayın</p>
+                            <p class="text-gray-600 mt-1">{{ __('admin.notifications.prepare_notification_for_user') }}</p>
                         </div>
 
                         <div class="p-8">
@@ -81,12 +81,12 @@
                                     <div>
                                         <label class="block text-sm font-semibold text-gray-700 mb-3">
                                             <i class="fas fa-user mr-2 text-gray-400"></i>
-                                            Alıcı Kullanıcı
+                                            {{ __('admin.notifications.recipient_user') }}
                                         </label>
                                         <select name="user_id"
                                                 class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white"
                                                 required>
-                                            <option value="">Kullanıcı seçiniz...</option>
+                                            <option value="">{{ __('admin.notifications.select_user') }}</option>
                                             @foreach($users as $user)
                                                 <option value="{{ $user->id }}"
                                                         data-email="{{ $user->email }}"
@@ -95,14 +95,14 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        <p class="mt-2 text-sm text-gray-500">Mesaj gönderilecek kullanıcıyı seçin</p>
+                                        <p class="mt-2 text-sm text-gray-500">{{ __('admin.notifications.select_user_to_send_message') }}</p>
                                     </div>
 
                                     <!-- Message Type -->
                                     <div>
                                         <label class="block text-sm font-semibold text-gray-700 mb-3">
                                             <i class="fas fa-tag mr-2 text-gray-400"></i>
-                                            Mesaj Türü
+                                            {{ __('admin.notifications.message_type') }}
                                         </label>
                                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                                             <label class="relative cursor-pointer">
@@ -112,7 +112,7 @@
                                                         <i class="fas fa-info-circle text-blue-600 text-2xl"></i>
                                                     </div>
                                                     <div class="text-center">
-                                                        <div class="font-semibold text-blue-900 text-sm">Bilgi</div>
+                                                        <div class="font-semibold text-blue-900 text-sm">{{ __('admin.notifications.info') }}</div>
                                                     </div>
                                                 </div>
                                             </label>
@@ -124,7 +124,7 @@
                                                         <i class="fas fa-check-circle text-green-600 text-2xl"></i>
                                                     </div>
                                                     <div class="text-center">
-                                                        <div class="font-semibold text-green-900 text-sm">Başarılı</div>
+                                                        <div class="font-semibold text-green-900 text-sm">{{ __('admin.notifications.success') }}</div>
                                                     </div>
                                                 </div>
                                             </label>
@@ -136,7 +136,7 @@
                                                         <i class="fas fa-exclamation-triangle text-yellow-600 text-2xl"></i>
                                                     </div>
                                                     <div class="text-center">
-                                                        <div class="font-semibold text-yellow-900 text-sm">Uyarı</div>
+                                                        <div class="font-semibold text-yellow-900 text-sm">{{ __('admin.notifications.warning') }}</div>
                                                     </div>
                                                 </div>
                                             </label>
@@ -148,7 +148,7 @@
                                                         <i class="fas fa-times-circle text-red-600 text-2xl"></i>
                                                     </div>
                                                     <div class="text-center">
-                                                        <div class="font-semibold text-red-900 text-sm">Önemli</div>
+                                                        <div class="font-semibold text-red-900 text-sm">{{ __('admin.notifications.important') }}</div>
                                                     </div>
                                                 </div>
                                             </label>
@@ -159,31 +159,31 @@
                                     <div>
                                         <label class="block text-sm font-semibold text-gray-700 mb-3">
                                             <i class="fas fa-heading mr-2 text-gray-400"></i>
-                                            Mesaj Başlığı
+                                            {{ __('admin.notifications.message_title') }}
                                         </label>
                                         <input type="text" name="title"
                                                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                               placeholder="Mesaj başlığını giriniz..." required>
-                                        <p class="mt-2 text-sm text-gray-500">Kısa ve açık bir başlık yazın</p>
+                                               placeholder="{{ __('admin.notifications.enter_message_title') }}" required>
+                                        <p class="mt-2 text-sm text-gray-500">{{ __('admin.notifications.write_short_clear_title') }}</p>
                                     </div>
 
                                     <!-- Message Content -->
                                     <div>
                                         <label class="block text-sm font-semibold text-gray-700 mb-3">
                                             <i class="fas fa-comment mr-2 text-gray-400"></i>
-                                            Mesaj İçeriği
+                                            {{ __('admin.notifications.message_content') }}
                                         </label>
                                         <textarea name="message" rows="6"
                                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
-                                                  placeholder="Kullanıcıya gönderilecek mesajı yazınız..." required></textarea>
-                                        <p class="mt-2 text-sm text-gray-500">Detaylı ve anlaşılır bir mesaj yazın</p>
+                                                  placeholder="{{ __('admin.notifications.enter_message_to_send') }}" required></textarea>
+                                        <p class="mt-2 text-sm text-gray-500">{{ __('admin.notifications.write_detailed_clear_message') }}</p>
                                     </div>
 
                                     <!-- Message Preview -->
                                     <div id="messagePreview" class="hidden">
                                         <label class="block text-sm font-semibold text-gray-700 mb-3">
                                             <i class="fas fa-eye mr-2 text-gray-400"></i>
-                                            Mesaj Önizleme
+                                            {{ __('admin.notifications.message_preview') }}
                                         </label>
                                         <div class="border border-gray-200 rounded-xl p-4 bg-gray-50">
                                             <div class="flex items-start space-x-4">
@@ -202,12 +202,12 @@
                                         <button type="button" onclick="togglePreview()"
                                                 class="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-200">
                                             <i class="fas fa-eye mr-2"></i>
-                                            Önizle
+                                            {{ __('admin.notifications.preview') }}
                                         </button>
                                         <button type="submit"
                                                 class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transform hover:-translate-y-0.5 transition-all duration-200 shadow-lg hover:shadow-xl">
                                             <i class="fas fa-paper-plane mr-2"></i>
-                                            Mesaj Gönder
+                                            {{ __('admin.notifications.send_message') }}
                                         </button>
                                     </div>
                                 </div>
@@ -220,31 +220,31 @@
                         <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-gray-200">
                             <h3 class="text-lg font-bold text-gray-900 flex items-center">
                                 <i class="fas fa-magic mr-3 text-purple-600"></i>
-                                Hızlı Mesaj Şablonları
+                                {{ __('admin.notifications.quick_message_templates') }}
                             </h3>
-                            <p class="text-gray-600 mt-1">Sık kullanılan mesaj şablonlarını seçin</p>
+                            <p class="text-gray-600 mt-1">{{ __('admin.notifications.select_frequently_used_templates') }}</p>
                         </div>
                         <div class="p-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <button onclick="useTemplate('welcome')"
                                         class="p-4 bg-blue-50 border border-blue-200 rounded-xl hover:bg-blue-100 transition-colors duration-200 text-left">
-                                    <div class="font-semibold text-blue-900">Hoş Geldin Mesajı</div>
-                                    <div class="text-sm text-blue-700 mt-1">Yeni kullanıcılar için karşılama mesajı</div>
+                                    <div class="font-semibold text-blue-900">{{ __('admin.notifications.welcome_message') }}</div>
+                                    <div class="text-sm text-blue-700 mt-1">{{ __('admin.notifications.welcome_message_description') }}</div>
                                 </button>
                                 <button onclick="useTemplate('security')"
                                         class="p-4 bg-yellow-50 border border-yellow-200 rounded-xl hover:bg-yellow-100 transition-colors duration-200 text-left">
-                                    <div class="font-semibold text-yellow-900">Güvenlik Uyarısı</div>
-                                    <div class="text-sm text-yellow-700 mt-1">Güvenlik ile ilgili önemli bildirim</div>
+                                    <div class="font-semibold text-yellow-900">{{ __('admin.notifications.security_warning') }}</div>
+                                    <div class="text-sm text-yellow-700 mt-1">{{ __('admin.notifications.security_warning_description') }}</div>
                                 </button>
                                 <button onclick="useTemplate('maintenance')"
                                         class="p-4 bg-orange-50 border border-orange-200 rounded-xl hover:bg-orange-100 transition-colors duration-200 text-left">
-                                    <div class="font-semibold text-orange-900">Bakım Bildirimi</div>
-                                    <div class="text-sm text-orange-700 mt-1">Sistem bakımı hakkında bilgilendirme</div>
+                                    <div class="font-semibold text-orange-900">{{ __('admin.notifications.maintenance_notification') }}</div>
+                                    <div class="text-sm text-orange-700 mt-1">{{ __('admin.notifications.maintenance_notification_description') }}</div>
                                 </button>
                                 <button onclick="useTemplate('promotion')"
                                         class="p-4 bg-green-50 border border-green-200 rounded-xl hover:bg-green-100 transition-colors duration-200 text-left">
-                                    <div class="font-semibold text-green-900">Promosyon Bildirimi</div>
-                                    <div class="text-sm text-green-700 mt-1">Özel kampanya ve fırsatlar</div>
+                                    <div class="font-semibold text-green-900">{{ __('admin.notifications.promotion_notification') }}</div>
+                                    <div class="text-sm text-green-700 mt-1">{{ __('admin.notifications.promotion_notification_description') }}</div>
                                 </button>
                             </div>
                         </div>
@@ -258,23 +258,23 @@
         // Message templates
         const templates = {
             welcome: {
-                title: 'Hoş Geldiniz!',
-                message: 'Platformumuza hoş geldiniz! Hesabınız başarıyla oluşturulmuştur. Herhangi bir sorunuz olursa destek ekibimizle iletişime geçebilirsiniz.',
+                title: '{{ __('admin.notifications.welcome_template_title') }}',
+                message: '{{ __('admin.notifications.welcome_template_message') }}',
                 type: 'success'
             },
             security: {
-                title: 'Güvenlik Uyarısı',
-                message: 'Hesabınızın güvenliği için lütfen şifrenizi düzenli olarak değiştirin ve iki faktörlü kimlik doğrulamayı aktif hale getirin.',
+                title: '{{ __('admin.notifications.security_template_title') }}',
+                message: '{{ __('admin.notifications.security_template_message') }}',
                 type: 'warning'
             },
             maintenance: {
-                title: 'Sistem Bakımı',
-                message: 'Sistemimizde planlı bakım çalışması yapılacaktır. Bakım süresince hizmetlerimizde kısa süreli kesintiler yaşanabilir.',
+                title: '{{ __('admin.notifications.maintenance_template_title') }}',
+                message: '{{ __('admin.notifications.maintenance_template_message') }}',
                 type: 'info'
             },
             promotion: {
-                title: 'Özel Kampanya!',
-                message: 'Size özel hazırladığımız kampanyalardan yararlanmak için hesabınıza giriş yapın ve fırsatları kaçırmayın!',
+                title: '{{ __('admin.notifications.promotion_template_title') }}',
+                message: '{{ __('admin.notifications.promotion_template_message') }}',
                 type: 'success'
             }
         };
@@ -317,9 +317,9 @@
             
             document.getElementById('previewIcon').className = `w-8 h-8 rounded-full flex items-center justify-center ${config.color}`;
             document.getElementById('previewIcon').innerHTML = `<i class="${config.icon}"></i>`;
-            document.getElementById('previewTitle').textContent = title || 'Mesaj Başlığı';
-            document.getElementById('previewMessage').textContent = message || 'Mesaj içeriği buraya gelecek...';
-            document.getElementById('previewUser').textContent = userOption ? `Alıcı: ${userOption.textContent}` : 'Alıcı seçilmedi';
+            document.getElementById('previewTitle').textContent = title || '{{ __('admin.notifications.message_title') }}';
+            document.getElementById('previewMessage').textContent = message || '{{ __('admin.notifications.message_content_here') }}';
+            document.getElementById('previewUser').textContent = userOption ? `{{ __('admin.notifications.recipient') }}: ${userOption.textContent}` : '{{ __('admin.notifications.no_recipient_selected') }}';
         }
 
         // Form submission with loading state
@@ -327,7 +327,7 @@
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Gönderiliyor...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>{{ __('admin.notifications.sending') }}';
             submitBtn.disabled = true;
             
             // Re-enable button after 10 seconds as fallback

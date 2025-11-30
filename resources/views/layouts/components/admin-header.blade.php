@@ -40,12 +40,12 @@
                  x-transition>
                 
                 <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                    <h3 class="font-semibold text-gray-900 dark:text-white">Bildirimler</h3>
+                    <h3 class="font-semibold text-gray-900 dark:text-white">{{ __('admin.header.notifications') }}</h3>
                 </div>
 
                 <div class="p-4 text-center text-gray-500 dark:text-gray-400">
                     <x-heroicon name="bell" class="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <p class="text-sm">Yeni bildirim yok</p>
+                    <p class="text-sm">{{ __('admin.header.no_notifications') }}</p>
                 </div>
             </div>
         </div>
@@ -80,14 +80,14 @@
                 <div class="p-2">
                     <a href="#" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
                         <x-heroicon name="user-cog" class="w-4 h-4 mr-3" />
-                        Hesap Ayarları
+                        {{ __('admin.header.account_settings') }}
                     </a>
                     <div class="border-t border-gray-200 dark:border-gray-700 my-2"></div>
                     <form action="{{ route('adminlogout') }}" method="POST">
                         @csrf
                         <button type="submit" class="w-full flex items-center px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
                             <x-heroicon name="arrow-left-on-rectangle" class="w-4 h-4 mr-3" />
-                            Çıkış Yap
+                            {{ __('admin.header.logout') }}
                         </button>
                     </form>
                 </div>

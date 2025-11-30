@@ -14,17 +14,17 @@
                             <div>
                                 <h1 class="text-4xl font-bold text-white mb-2">
                                     <i class="fas fa-plus-circle mr-3 text-teal-200"></i>
-                                    Yeni Sinyal Ekle
+                                    {{ __('admin.signals.add_new') }}
                                 </h1>
                                 <p class="text-teal-100 text-lg">
-                                    Yeni bir trading sinyali oluşturun ve kullanıcılarınıza sunun
+                                    {{ __('admin.signals.new_signal_description') }}
                                 </p>
                             </div>
                             <div class="mt-4 md:mt-0">
                                 <a href="{{ route('signals') }}"
                                    class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                                     <i class="fas fa-arrow-left mr-2"></i>
-                                    Sinyallere Dön
+                                    {{ __('admin.signals.back_to_signals') }}
                                 </a>
                             </div>
                         </div>
@@ -42,9 +42,9 @@
                         <div class="p-6 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
                             <h3 class="text-xl font-bold text-gray-900 flex items-center">
                                 <i class="fas fa-chart-line mr-3 text-green-600"></i>
-                                Sinyal Bilgileri
+                                {{ __('admin.signals.signal_name') }}
                             </h3>
-                            <p class="text-gray-600 mt-1">Trading sinyalinizin detaylarını girin</p>
+                            <p class="text-gray-600 mt-1">{{ __('admin.signals.signal_info_description') }}</p>
                         </div>
 
                         <div class="p-8">
@@ -56,7 +56,7 @@
                                         <div class="space-y-2">
                                             <label class="block text-sm font-semibold text-gray-700 mb-3">
                                                 <i class="fas fa-tag mr-2 text-gray-400"></i>
-                                                Sinyal Adı
+                                                {{ __('admin.signals.signal_name') }}
                                             </label>
                                             <input type="text" name="name"
                                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
@@ -67,7 +67,7 @@
                                         <div class="space-y-2">
                                             <label class="block text-sm font-semibold text-gray-700 mb-3">
                                                 <i class="fas fa-dollar-sign mr-2 text-gray-400"></i>
-                                                Sinyal Fiyatı ({{ $settings->currency }})
+                                                {{ __('admin.signals.signal_price') }} ({{ $settings->currency }})
                                             </label>
                                             <div class="relative">
                                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -86,7 +86,7 @@
                                         <div class="space-y-2">
                                             <label class="block text-sm font-semibold text-gray-700 mb-3">
                                                 <i class="fas fa-percentage mr-2 text-gray-400"></i>
-                                                Getiri Oranı (%)
+                                                {{ __('admin.signals.return_rate') }}
                                             </label>
                                             <div class="relative">
                                                 <input type="number" name="increment_amount"
@@ -102,15 +102,15 @@
                                         <div class="space-y-2">
                                             <label class="block text-sm font-semibold text-gray-700 mb-3">
                                                 <i class="fas fa-info-circle mr-2 text-gray-400"></i>
-                                                Sinyal Etiketi (İsteğe Bağlı)
+                                                {{ __('admin.signals.signal_tag') }}
                                             </label>
                                             <select name="tag" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200">
                                                 <option value="">Etiket seçin...</option>
-                                                <option value="HOT">🔥 HOT</option>
-                                                <option value="NEW">🆕 YENİ</option>
-                                                <option value="PREMIUM">⭐ PREMİUM</option>
-                                                <option value="POPULAR">📈 POPÜLER</option>
-                                                <option value="LIMITED">⏰ SINIRLI</option>
+                                                <option value="HOT">{{ __('admin.signals.tag_hot') }}</option>
+                                                <option value="NEW">{{ __('admin.signals.tag_new') }}</option>
+                                                <option value="PREMIUM">{{ __('admin.signals.tag_premium') }}</option>
+                                                <option value="POPULAR">{{ __('admin.signals.tag_popular') }}</option>
+                                                <option value="LIMITED">{{ __('admin.signals.tag_limited') }}</option>
                                             </select>
                                             <p class="text-sm text-gray-500">Sinyalinizi öne çıkaracak bir etiket seçin</p>
                                         </div>
@@ -120,7 +120,7 @@
                                     <div id="signalPreview" class="border-2 border-dashed border-gray-200 rounded-2xl p-6 bg-gray-50 hidden">
                                         <h4 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
                                             <i class="fas fa-eye mr-2 text-blue-500"></i>
-                                            Sinyal Önizleme
+                                            {{ __('admin.signals.signal_preview') }}
                                         </h4>
                                         <div class="bg-white rounded-xl p-4 shadow-sm">
                                             <div class="flex items-center justify-between mb-4">
@@ -129,13 +129,13 @@
                                                 </div>
                                                 <span id="previewTag" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium hidden"></span>
                                             </div>
-                                            <h5 id="previewName" class="text-xl font-bold text-gray-900 mb-2">Sinyal Adı</h5>
+                                            <h5 id="previewName" class="text-xl font-bold text-gray-900 mb-2">{{ __('admin.signals.signal_name') }}</h5>
                                             <div class="text-3xl font-bold text-gray-900 mb-4">
                                                 <span class="text-lg text-gray-500">{{ $settings->currency }}</span>
                                                 <span id="previewPrice">0</span>
                                             </div>
                                             <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                                                <span class="font-medium text-gray-700">Getiri Oranı</span>
+                                                <span class="font-medium text-gray-700">{{ __('admin.signals.return_rate') }}</span>
                                                 <span id="previewPercentage" class="font-bold text-green-600">0%</span>
                                             </div>
                                         </div>
@@ -146,18 +146,18 @@
                                         <button type="button" onclick="togglePreview()"
                                                 class="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-200">
                                             <i class="fas fa-eye mr-2"></i>
-                                            Önizle
+                                            {{ __('admin.signals.preview') }}
                                         </button>
                                         <div class="flex space-x-4">
                                             <button type="button" onclick="resetForm()"
                                                     class="px-6 py-3 bg-red-100 text-red-700 font-semibold rounded-xl hover:bg-red-200 transition-all duration-200">
                                                 <i class="fas fa-redo mr-2"></i>
-                                                Sıfırla
+                                                {{ __('admin.signals.reset') }}
                                             </button>
                                             <button type="submit"
                                                     class="px-8 py-3 bg-gradient-to-r from-green-500 to-teal-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-teal-700 transform hover:-translate-y-0.5 transition-all duration-200 shadow-lg hover:shadow-xl">
                                                 <i class="fas fa-plus mr-2"></i>
-                                                Sinyal Oluştur
+                                                {{ __('admin.signals.create_signal') }}
                                             </button>
                                         </div>
                                     </div>
@@ -171,9 +171,9 @@
                         <div class="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-gray-200">
                             <h3 class="text-lg font-bold text-gray-900 flex items-center">
                                 <i class="fas fa-lightbulb mr-3 text-yellow-600"></i>
-                                Başarılı Sinyal İpuçları
+                                {{ __('admin.signals.tips_title') }}
                             </h3>
-                            <p class="text-gray-600 mt-1">Daha etkili sinyaller oluşturmak için önerilerimiz</p>
+                            <p class="text-gray-600 mt-1">{{ __('admin.signals.tips_description') }}</p>
                         </div>
                         <div class="p-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -182,7 +182,7 @@
                                         <i class="fas fa-check text-green-600"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900">Net ve Açık İsim</h4>
+                                        <h4 class="font-semibold text-gray-900">{{ __('admin.signals.tip_clear_name') }}</h4>
                                         <p class="text-sm text-gray-600 mt-1">Sinyalinizin ne hakkında olduğunu açıkça belirten bir isim seçin.</p>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@
                                         <i class="fas fa-chart-line text-blue-600"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900">Gerçekçi Getiri</h4>
+                                        <h4 class="font-semibold text-gray-900">{{ __('admin.signals.tip_realistic_return') }}</h4>
                                         <p class="text-sm text-gray-600 mt-1">Abartılmayan, sürdürülebilir getiri oranları belirleyin.</p>
                                     </div>
                                 </div>
@@ -200,7 +200,7 @@
                                         <i class="fas fa-users text-purple-600"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900">Hedef Kitle</h4>
+                                        <h4 class="font-semibold text-gray-900">{{ __('admin.signals.tip_target_audience') }}</h4>
                                         <p class="text-sm text-gray-600 mt-1">Hangi yatırımcı profiline hitap edeceğinizi düşünün.</p>
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@
                                         <i class="fas fa-tag text-yellow-600"></i>
                                     </div>
                                     <div>
-                                        <h4 class="font-semibold text-gray-900">Doğru Etiket</h4>
+                                        <h4 class="font-semibold text-gray-900">{{ __('admin.signals.tip_correct_tag') }}</h4>
                                         <p class="text-sm text-gray-600 mt-1">Sinyalinizi öne çıkaracak uygun etiket kullanın.</p>
                                     </div>
                                 </div>

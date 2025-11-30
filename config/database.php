@@ -142,6 +142,15 @@ return [
             'database' => env('REDIS_CACHE_DB', '1'),
         ],
 
+        'translation' => [
+            'url' => env('REDIS_URL'),
+            'host' => env('REDIS_HOST', 'redis-monexa'),
+            'password' => env('REDIS_PASSWORD', null),
+            'port' => env('REDIS_PORT', '6379'),
+            'database' => env('TRANSLATION_CACHE_DB', '2'),
+            'prefix' => env('TRANSLATION_CACHE_PREFIX', 'monexa_trans'),
+        ],
+
     ],
 
 ];

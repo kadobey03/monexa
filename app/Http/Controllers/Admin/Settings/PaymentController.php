@@ -159,7 +159,7 @@ class PaymentController extends Controller
             'minamt' => $request->minamt,
         ]);
 
-        return response()->json(['status' => 200, 'success' => 'Payment Option Saved successfully']);
+        return response()->json(['status' => 200, 'success' => __('api.admin.payment_settings_saved')]);
     }
 
     //save CoinPayments credentials to DB
@@ -173,7 +173,7 @@ class PaymentController extends Controller
                 'cp_ipn_secret' => $request['cp_ipn_secret'],
                 'cp_debug_email' => $request['cp_debug_email'],
             ]);
-        return response()->json(['status' => 200, 'success' => 'Coinpayment Settings Saved successfully']);
+        return response()->json(['status' => 200, 'success' => __('api.admin.coinpayment_settings_saved')]);
     }
 
     //save paystack credentials to DB
@@ -204,7 +204,7 @@ class PaymentController extends Controller
         $settingChanges->bnc_secret_key = $request->bnc_secret_key;
         $settingChanges->save();
 
-        return response()->json(['status' => 200, 'success' => ' Gateway Settings updated successfully']);
+        return response()->json(['status' => 200, 'success' => __('api.admin.gateway_settings_updated')]);
     }
 
     public function updateTransfer(Request $request)
@@ -215,6 +215,6 @@ class PaymentController extends Controller
             'min_transfer' => $request->min_transfer,
             'transfer_charges' => $request->charges,
         ]);
-        return response()->json(['status' => 200, 'success' => 'Settings updated successfully']);
+        return response()->json(['status' => 200, 'success' => __('api.admin.settings_updated')]);
     }
 }

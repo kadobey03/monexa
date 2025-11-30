@@ -57,7 +57,7 @@ class TradesController extends Controller
             'total_volume' => User_plans::sum('amount')
         ];
 
-        $title = 'User Trades Management';
+        $title = __('admin.titles.user_trades_management');
 
         return view('admin.trades.index', compact('trades', 'stats', 'title'));
     }
@@ -98,7 +98,7 @@ class TradesController extends Controller
                 'error' => $e->getMessage()
             ]);
 
-            return response()->json(['error' => 'Kontrol sırasında hata oluştu'], 500);
+            return response()->json(['error' => __('admin.messages.control_error')], 500);
         }
     }
 
@@ -190,7 +190,7 @@ class TradesController extends Controller
                 'error' => $e->getMessage()
             ]);
 
-            return response()->json(['error' => 'Düzeltme sırasında hata oluştu'], 500);
+            return response()->json(['error' => __('admin.messages.fix_error')], 500);
         }
     }
 
@@ -209,16 +209,16 @@ class TradesController extends Controller
             }
 
             // Otherwise return the edit view
-            $title = 'Edit Trade';
+            $title = __('admin.titles.edit_trade');
             return view('admin.trades.edit', compact('trade', 'title'));
         } catch (\Exception $e) {
             \Log::error('Error finding trade for edit:', ['id' => $id, 'error' => $e->getMessage()]);
 
             if (request()->ajax()) {
-                return response()->json(['error' => 'Trade not found'], 404);
+                return response()->json(['error' => __('admin.messages.trade_not_found')], 404);
             }
 
-            return redirect()->route('admin.trades.index')->with('error', 'Trade not found');
+            return redirect()->route('admin.trades.index')->with('error', __('admin.messages.trade_not_found'));
         }
     }
 
@@ -251,7 +251,7 @@ class TradesController extends Controller
             ]);
 
             return redirect()->route('admin.trades.index')
-                           ->with('success', 'Trade updated successfully!');
+                           ->with('success', __('admin.messages.trade_updated'));
 
         } catch (\Exception $e) {
             Log::error('Error updating trade: ' . $e->getMessage(), [
@@ -260,7 +260,7 @@ class TradesController extends Controller
             ]);
 
             return redirect()->back()
-                           ->with('error', 'Failed to update trade. Please try again.');
+                           ->with('error', __('admin.messages.trade_update_failed'));
         }
     }
 
@@ -280,7 +280,7 @@ class TradesController extends Controller
                 $user = $trade->user;
 
                 if (!$user) {
-                    throw new \Exception('User not found for this trade');
+                    throw new \Exception(__('admin.messages.user_not_found_for_trade'));
                 }
 
                 $profitAmount = $request->profit_amount;
@@ -322,7 +322,7 @@ class TradesController extends Controller
             });
 
             return redirect()->route('admin.trades.index')
-                           ->with('success', 'Profit added successfully! User ROI has been updated.');
+                           ->with('success', __('admin.messages.profit_added_successfully'));
 
         } catch (\Exception $e) {
             Log::error('Error adding profit to trade: ' . $e->getMessage(), [
@@ -331,7 +331,7 @@ class TradesController extends Controller
             ]);
 
             return redirect()->back()
-                           ->with('error', 'Failed to add profit. Please try again.');
+                           ->with('error', __('admin.messages.profit_add_failed'));
         }
     }
 
@@ -360,7 +360,7 @@ class TradesController extends Controller
             });
 
             return redirect()->route('admin.trades.index')
-                           ->with('success', 'Trade deleted successfully!');
+                           ->with('success', __('admin.messages.trade_deleted'));
 
         } catch (\Exception $e) {
             Log::error('Error deleting trade: ' . $e->getMessage(), [
@@ -368,7 +368,7 @@ class TradesController extends Controller
             ]);
 
             return redirect()->back()
-                           ->with('error', 'Failed to delete trade. Please try again.');
+                           ->with('error', __('admin.messages.trade_delete_failed'));
         }
     }
 
@@ -416,7 +416,7 @@ class TradesController extends Controller
             Log::error('Error exporting trades: ' . $e->getMessage());
 
             return redirect()->back()
-                           ->with('error', 'Failed to export trades. Please try again.');
+                           ->with('error', __('admin.messages.export_failed'));
         }
     }
 
@@ -452,7 +452,7 @@ class TradesController extends Controller
 
         } catch (\Exception $e) {
             Log::error('Error getting trade stats: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to fetch statistics'], 500);
+            return response()->json(['error' => __('admin.messages.stats_fetch_failed')], 500);
         }
     }
 
@@ -496,7 +496,7 @@ class TradesController extends Controller
             });
 
             return redirect()->route('admin.trades.index')
-                           ->with('success', 'Bulk action completed successfully!');
+                           ->with('success', __('admin.messages.bulk_action_completed'));
 
         } catch (\Exception $e) {
             Log::error('Error performing bulk action: ' . $e->getMessage(), [
@@ -505,7 +505,7 @@ class TradesController extends Controller
             ]);
 
             return redirect()->back()
-                           ->with('error', 'Failed to perform bulk action. Please try again.');
+                           ->with('error', __('admin.messages.bulk_action_failed'));
         }
     }
 }

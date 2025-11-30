@@ -9,11 +9,11 @@
             <div class="text-center">
                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300 rounded-full text-sm font-medium mb-4">
                     <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                    Doğrulama Gerekli
+                    {{ __('user.verify.verification_required') }}
                 </div>
-                <h1 class="text-2xl font-medium text-gray-900 dark:text-white mb-2">KYC Doğrulama</h1>
+                <h1 class="text-2xl font-medium text-gray-900 dark:text-white mb-2">{{ __('user.verify.kyc_verification') }}</h1>
                 <p class="text-gray-600 dark:text-gray-400 max-w-lg mx-auto">
-                    Tüm platform özelliklerini açmak için kimlik doğrulamanızı tamamlayın
+                    {{ __('user.verify.complete_verification_description') }}
                 </p>
             </div>
         </div>
@@ -38,12 +38,12 @@
 
                 <!-- Title -->
                 <h2 class="text-xl font-medium text-gray-900 dark:text-white mb-3">
-                    Kimlik Doğrulama Gerekli
+                    {{ __('user.verify.identity_verification_required') }}
                 </h2>
 
                 <!-- Description -->
                 <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto mb-6">
-                    Düzenlemelere uymak ve tüm özelliklere erişmek için KYC doğrulamanızı tamamlayın.
+                    {{ __('user.verify.compliance_access_description') }}
                 </p>
 
                 <!-- Status and Action -->
@@ -53,10 +53,10 @@
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                             </svg>
-                            <span class="font-medium">Doğrulandı</span>
+                            <span class="font-medium">{{ __('user.verify.verified') }}</span>
                         </div>
                         <p class="text-sm text-green-600 dark:text-green-400">
-                            Hesabınız başarıyla doğrulandı!
+                            {{ __('user.verify.account_verified_success') }}
                         </p>
                     @elseif (Auth::user()->account_verify == 'Under review')
                         <button disabled
@@ -64,11 +64,11 @@
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                             </svg>
-                            İncelemede
+                            {{ __('user.verify.under_review') }}
                         </button>
                         <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 text-center">
                             <p class="text-sm text-blue-700 dark:text-blue-300">
-                                Belgeleriniz inceleniyor. Lütfen ekibimizin doğrulamanızı işlemesini bekleyin.
+                                {{ __('user.verify.documents_under_review') }}
                             </p>
                         </div>
                     @else
@@ -77,13 +77,13 @@
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                             </svg>
-                            Doğrulamayı Tamamla
+                            {{ __('user.verify.complete_verification') }}
                         </a>
 
                         <!-- Quick Info Toggle -->
                         <button onclick="verifyManager.toggleDetails()"
                                 class="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                            <span id="toggleText">Daha Fazla Bilgi</span>
+                            <span id="toggleText">{{ __('user.verify.more_info') }}</span>
                             <svg id="toggleIcon" class="w-4 h-4 inline ml-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                             </svg>
@@ -93,7 +93,7 @@
 
                 <!-- Expandable Details -->
                 <div id="expandableDetails" class="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg text-left" style="display: none;">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">KYC Doğrulama Nedir?</h3>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">{{ __('user.verify.what_is_kyc') }}</h3>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-3">
@@ -104,8 +104,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-gray-900 dark:text-white text-sm">Güvenlik ve Uyumluluk</h4>
-                                    <p class="text-xs text-gray-600 dark:text-gray-400">Platform güvenliğini ve düzenleyici uyumluluğu sağlar</p>
+                                    <h4 class="font-medium text-gray-900 dark:text-white text-sm">{{ __('user.verify.security_compliance') }}</h4>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400">{{ __('user.verify.security_compliance_desc') }}</p>
                                 </div>
                             </div>
 
@@ -116,8 +116,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-gray-900 dark:text-white text-sm">Kimlik Koruması</h4>
-                                    <p class="text-xs text-gray-600 dark:text-gray-400">Kimliğinizi korur ve dolandırıcılığı önler</p>
+                                    <h4 class="font-medium text-gray-900 dark:text-white text-sm">{{ __('user.verify.identity_protection') }}</h4>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400">{{ __('user.verify.identity_protection_desc') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -130,8 +130,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-gray-900 dark:text-white text-sm">Tam Erişim</h4>
-                                    <p class="text-xs text-gray-600 dark:text-gray-400">Tüm ticaret ve yatırım özelliklerini açar</p>
+                                    <h4 class="font-medium text-gray-900 dark:text-white text-sm">{{ __('user.verify.full_access') }}</h4>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400">{{ __('user.verify.full_access_desc') }}</p>
                                 </div>
                             </div>
 
@@ -142,8 +142,8 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-gray-900 dark:text-white text-sm">Hızlı Süreç</h4>
-                                    <p class="text-xs text-gray-600 dark:text-gray-400">Basit 3 adımlı doğrulama süreci</p>
+                                    <h4 class="font-medium text-gray-900 dark:text-white text-sm">{{ __('user.verify.fast_process') }}</h4>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400">{{ __('user.verify.fast_process_desc') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -168,10 +168,10 @@
                     <!-- Content -->
                     <div class="flex-1 text-center lg:text-left">
                         <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                            Yardıma İhtiyacınız Var mı?
+                            {{ __('user.verify.need_help') }}
                         </h3>
                         <p class="text-gray-600 dark:text-gray-400 mb-4">
-                            Destek ekibimiz doğrulama süreciyle ilgili size yardımcı olmaya hazır.
+                            {{ __('user.verify.support_team_ready') }}
                         </p>
 
                         <!-- Support Features -->
@@ -180,20 +180,20 @@
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path>
                                 </svg>
-                                Canlı Sohbet
+                                {{ __('user.verify.live_chat') }}
                             </div>
                             <div class="flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                                 </svg>
-                                E-posta Desteği
+                                {{ __('user.verify.email_support') }}
                             </div>
                             <div class="flex items-center gap-1">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                 </svg>
-                                7/24 Mevcut
+                                {{ __('user.verify.available_24_7') }}
                             </div>
                         </div>
                     </div>
@@ -205,7 +205,7 @@
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                             </svg>
-                            Destek Al
+                            {{ __('user.verify.get_support') }}
                         </a>
                     </div>
                 </div>
@@ -241,7 +241,7 @@ class VerifyManager {
         }
         
         if (toggleText) {
-            toggleText.textContent = this.showDetails ? 'Ayrıntıları Gizle' : 'Daha Fazla Bilgi';
+            toggleText.textContent = this.showDetails ? '{{ __("user.verify.hide_details") }}' : '{{ __("user.verify.more_info") }}';
         }
         
         if (toggleIcon) {

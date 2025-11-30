@@ -9,83 +9,94 @@ use Illuminate\Support\Facades\App;
 class LanguageController extends Controller
 {
     /**
-     * Change the application language
+     * Switch language and redirect back
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function switch($locale = null, Request $request = null)
+    {
+        // CRITICAL DEBUG LOGGING
+        \Log::info("🚀 LanguageController::switch() CALLED", [
+            'url' => request()->url(),
+            'method' => request()->method(),
+            'locale_param' => $locale,
+            'request_input_locale' => $request ? $request->input('locale') : 'no-request',
+            'session_id' => session()->getId(),
+            'before_session_locale' => Session::get('locale', 'not-set'),
+            'before_app_locale' => App::getLocale()
+        ]);
+        
+        // Handle both POST and GET requests
+        if (!$locale) {
+            $locale = $request->input('locale');
+        }
+        
+        // Validate locale
+        if (!in_array($locale, ['tr', 'ru'])) {
+            $locale = 'tr'; // Default fallback
+        }
+        
+        \Log::info("🚀 LanguageController VALIDATED LOCALE", [
+            'validated_locale' => $locale
+        ]);
+        
+        // Set locale in session
+        Session::put('locale', $locale);
+        App::setLocale($locale);
+        
+        \Log::info("🚀 LanguageController AFTER SETTING", [
+            'session_locale' => Session::get('locale'),
+            'app_locale' => App::getLocale(),
+            'redirect_back_to' => url()->previous()
+        ]);
+        
+        return redirect()->back()->with('success', __('common.language_changed'));
+    }
+    
+    /**
+     * Get available languages for API/AJAX calls
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAvailableLanguages()
+    {
+        return response()->json([
+            'success' => true,
+            'languages' => [
+                ['code' => 'tr', 'name' => 'Türkçe', 'flag' => '🇹🇷'],
+                ['code' => 'ru', 'name' => 'Русский', 'flag' => '🇷🇺'],
+            ],
+            'current' => app()->getLocale()
+        ]);
+    }
+    
+    /**
+     * Switch language via AJAX
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function changeLanguage(Request $request)
+    public function switchAjax(Request $request)
     {
-        $language = $request->input('language');
-
-        // List of supported languages
-        $supportedLanguages = [
-            'en', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'ko',
-            'ar', 'hi', 'th', 'vi', 'nl', 'sv', 'da', 'no', 'fi', 'pl',
-            'cs', 'hu', 'ro', 'bg', 'hr', 'sk', 'sl', 'et', 'lv', 'lt',
-            'mt', 'ga', 'cy', 'is'
-        ];
-
-        // Validate the language code
-        if (in_array($language, $supportedLanguages)) {
-            // Store language preference in session
-            Session::put('locale', $language);
-
-            // Set application locale
-            App::setLocale($language);
-
+        $locale = $request->input('locale');
+        
+        // Validate locale
+        if (!in_array($locale, ['tr', 'ru'])) {
             return response()->json([
-                'success' => true,
-                'message' => 'Language changed successfully',
-                'language' => $language
-            ]);
+                'success' => false,
+                'message' => 'Invalid language code'
+            ], 400);
         }
-
+        
+        // Set locale in session
+        Session::put('locale', $locale);
+        App::setLocale($locale);
+        
         return response()->json([
-            'success' => false,
-            'message' => 'Unsupported language'
-        ], 400);
-    }
-
-    /**
-     * Switch language via GET request (for direct navigation)
-     *
-     * @param string $locale
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function switchLanguage($locale)
-    {
-        // List of supported languages
-        $supportedLanguages = [
-            'en', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'ko',
-            'ar', 'hi', 'th', 'vi', 'nl', 'sv', 'da', 'no', 'fi', 'pl',
-            'cs', 'hu', 'ro', 'bg', 'hr', 'sk', 'sl', 'et', 'lv', 'lt',
-            'mt', 'ga', 'cy', 'is', 'tr', 'uk', 'he', 'id', 'ms', 'tl'
-        ];
-
-        // Validate the language code
-        if (in_array($locale, $supportedLanguages)) {
-            // Store language preference in session
-            Session::put('locale', $locale);
-
-            // Set application locale
-            App::setLocale($locale);
-        }
-
-        return redirect()->back();
-    }
-
-    /**
-     * Get current language
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getCurrentLanguage()
-    {
-        $currentLocale = Session::get('locale', config('app.locale'));
-
-        return response()->json([
-            'current_language' => $currentLocale
+            'success' => true,
+            'message' => __('common.language_changed'),
+            'locale' => $locale
         ]);
     }
 }

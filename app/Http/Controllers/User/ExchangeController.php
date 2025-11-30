@@ -233,7 +233,7 @@ class ExchangeController extends Controller
             if ($base === $quote) {
                 return response()->json([
                     'status' => 400,
-                    'message' => 'Source and destination currencies cannot be the same'
+                    'message' => __('api.financial.same_currency_error')
                 ]);
             }
 
@@ -250,7 +250,7 @@ class ExchangeController extends Controller
                 if ($rate <= 0) {
                     return response()->json([
                         'status' => 400,
-                        'message' => 'Unable to get exchange rate for ' . strtoupper($base) . '. Please try again later.'
+                        'message' => __('api.financial.exchange_rate_unavailable', ['currency' => strtoupper($base)])
                     ]);
                 }
                 $mainbal = $amount_after_fee * $rate;
@@ -262,7 +262,7 @@ class ExchangeController extends Controller
                 if ($rate <= 0) {
                     return response()->json([
                         'status' => 400,
-                        'message' => 'Unable to get exchange rate for ' . strtoupper($quote) . '. Please try again later.'
+                        'message' => __('api.financial.exchange_rate_unavailable', ['currency' => strtoupper($quote)])
                     ]);
                 }
                 $mainbal = $amount_after_fee / $rate;
@@ -274,7 +274,7 @@ class ExchangeController extends Controller
                 if ($rate <= 0) {
                     return response()->json([
                         'status' => 400,
-                        'message' => 'Unable to get exchange rate for ' . strtoupper($base) . '. Please try again later.'
+                        'message' => __('api.financial.exchange_rate_unavailable', ['currency' => strtoupper($base)])
                     ]);
                 }
                 $prices = round($amount_after_fee * $rate, 8);
@@ -285,7 +285,7 @@ class ExchangeController extends Controller
                 if ($rate <= 0) {
                     return response()->json([
                         'status' => 400,
-                        'message' => 'Unable to get exchange rate for ' . strtoupper($quote) . '. Please try again later.'
+                        'message' => __('api.financial.exchange_rate_unavailable', ['currency' => strtoupper($quote)])
                     ]);
                 }
                 $mainbal = $amount_after_fee / $rate;
@@ -299,7 +299,7 @@ class ExchangeController extends Controller
                 if ($rate1 <= 0 || $rate2 <= 0) {
                     return response()->json([
                         'status' => 400,
-                        'message' => 'Unable to get exchange rates. Please try again later.'
+                        'message' => __('api.financial.exchange_rate_unavailable', ['currency' => strtoupper($base) . '/' . strtoupper($quote)])
                     ]);
                 }
 
@@ -387,7 +387,7 @@ class ExchangeController extends Controller
             if ($request->source === $request->destination) {
                 return response()->json([
                     'status' => 400,
-                    'message' => 'Source and destination currencies cannot be the same'
+                    'message' => __('api.financial.same_currency_error')
                 ]);
             }
 
@@ -405,7 +405,7 @@ class ExchangeController extends Controller
                 if ($acntbal < $request->amount) {
                     return response()->json([
                         'status' => 400,
-                        'message' => 'Insufficient funds in your USD account. Available: ' . number_format($acntbal, 2)
+                        'message' => __('api.financial.insufficient_usd_balance', ['balance' => number_format($acntbal, 2)])
                     ]);
                 }
 
@@ -420,7 +420,10 @@ class ExchangeController extends Controller
                 if ($cryptobalances->$src < $request->amount) {
                     return response()->json([
                         'status' => 400,
-                        'message' => 'Insufficient funds in your ' . strtoupper($src) . ' account. Available: ' . number_format($cryptobalances->$src, 8)
+                        'message' => __('api.financial.insufficient_crypto_balance', [
+                            'currency' => strtoupper($src),
+                            'balance' => number_format($cryptobalances->$src, 8)
+                        ])
                     ]);
                 }
 
@@ -435,7 +438,10 @@ class ExchangeController extends Controller
                 if ($cryptobalances->$src < $request->amount) {
                     return response()->json([
                         'status' => 400,
-                        'message' => 'Insufficient funds in your ' . strtoupper($src) . ' account. Available: ' . number_format($cryptobalances->$src, 8)
+                        'message' => __('api.financial.insufficient_crypto_balance', [
+                            'currency' => strtoupper($src),
+                            'balance' => number_format($cryptobalances->$src, 8)
+                        ])
                     ]);
                 }
 
@@ -460,21 +466,21 @@ class ExchangeController extends Controller
 
             return response()->json([
                 'status' => 200,
-                'success' => 'Exchange completed successfully! Your balances are being refreshed.'
+                'success' => __('api.financial.exchange_successful')
             ]);
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
             return response()->json([
                 'status' => 400,
-                'message' => 'Invalid input data: ' . implode(', ', $e->validator->errors()->all())
+                'message' => __('api.validation.invalid_input_data', ['errors' => implode(', ', $e->validator->errors()->all())])
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
             \Log::error('Exchange error for user ' . Auth::id() . ': ' . $e->getMessage());
             return response()->json([
                 'status' => 500,
-                'message' => 'Exchange failed. Please try again later.'
+                'message' => __('api.financial.exchange_failed')
             ]);
         }
     }

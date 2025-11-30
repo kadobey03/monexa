@@ -195,7 +195,7 @@
 
                                     <!-- Bank Name -->
                                     <div class="space-y-2">
-                                        <label class="text-sm font-medium text-gray-400">Bank Name</label>
+                                        <label class="text-sm font-medium text-gray-400">{{ __('user.payment.bank_name') }}</label>
                                         <div class="flex items-center gap-2">
                                             <input type="text" value="{{ $payment_mode->bankname }}" readonly
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
@@ -208,7 +208,7 @@
 
                                     <!-- Account Name -->
                                     <div class="space-y-2">
-                                        <label class="text-sm font-medium text-gray-400">Account Name</label>
+                                        <label class="text-sm font-medium text-gray-400">{{ __('user.payment.account_name') }}</label>
                                         <div class="flex items-center gap-2">
                                             <input type="text" value="{{ $payment_mode->account_name }}" readonly
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
@@ -221,7 +221,7 @@
 
                                     <!-- Account Number -->
                                     <div class="space-y-2">
-                                        <label class="text-sm font-medium text-gray-400">Account Number</label>
+                                        <label class="text-sm font-medium text-gray-400">{{ __('user.payment.account_number') }}</label>
                                         <div class="flex items-center gap-2">
                                             <input type="text" value="{{ $payment_mode->account_number }}" readonly
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
@@ -235,7 +235,7 @@
                                     @if($payment_mode->swift_code)
                                     <!-- Swift Code -->
                                     <div class="space-y-2">
-                                        <label class="text-sm font-medium text-gray-400">Swift Code</label>
+                                        <label class="text-sm font-medium text-gray-400">{{ __('user.payment.swift_code') }}</label>
                                         <div class="flex items-center gap-2">
                                             <input type="text" value="{{ $payment_mode->swift_code }}" readonly
                                                    class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm">
@@ -285,7 +285,7 @@
                                 <div class="mt-2 text-center">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
                                         <x-heroicon name="network" class="w-3 h-3 mr-1" />
-                                        Network: {{ $payment_mode->network }}
+                                        {{ __('user.payment.network') }}: {{ $payment_mode->network }}
                                     </span>
                                 </div>
                                 @endif
@@ -375,24 +375,24 @@
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <x-heroicon name="headphones" class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
                 </div>
-                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">7/24 Destek</h3>
-                <p class="text-gray-400 text-xs sm:text-sm">Yardım mı lazım? Destek ekibimiz 24 saat hizmet veriyor</p>
+                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">{{ __('user.payment.support_247') }}</h3>
+                <p class="text-gray-400 text-xs sm:text-sm">{{ __('user.payment.support_desc') }}</p>
             </div>
 
             <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 text-center">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <x-heroicon name="bolt" class="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
                 </div>
-                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">Anında İşleme</h3>
-                <p class="text-gray-400 text-xs sm:text-sm">Yatırımlar onaydan sonraki dakikalar içinde işlenir</p>
+                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">{{ __('user.payment.instant_processing') }}</h3>
+                <p class="text-gray-400 text-xs sm:text-sm">{{ __('user.payment.instant_processing_desc') }}</p>
             </div>
 
             <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 text-center md:col-span-1">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                     <x-heroicon name="shield-check" class="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
                 </div>
-                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">Banka Seviyesi Güvenlik</h3>
-                <p class="text-gray-400 text-xs sm:text-sm">Fonlarınız ve verileriniz kurumsal güvenlik önlemleriyle korunur</p>
+                <h3 class="text-base sm:text-lg font-semibold text-white mb-2">{{ __('user.payment.bank_level_security') }}</h3>
+                <p class="text-gray-400 text-xs sm:text-sm">{{ __('user.payment.bank_level_security_desc') }}</p>
             </div>
         </div>
     </div>

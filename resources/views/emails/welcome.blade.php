@@ -1,100 +1,100 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-# {{$settings->site_name}}'a hoş geldiniz, {{$user->name}}!
+# {{ __('mail.headers.welcome', ['siteName' => $settings->site_name, 'userName' => $user->name]) }}!
 
-## Gelişmiş Yatırım Fırsatlarına Geçidiniz
+## {{ __('mail.investment.gateway_to_opportunities') }}
 
-Sayın {{$user->name}},
+{{ __('mail.salutation.dear_user', ['name' => $user->name]) }},
 
-**{{$settings->site_name}}** ailesine katılmanızdan heyecan duyuyoruz - akıllı yatırımın en son teknolojiyle buluştuğu yer. Finansal büyüme ve portföy çeşitlendirmeye yolculuğunuz bugün başlıyor.
+{{ __('mail.investment.excited_to_join', ['siteName' => $settings->site_name]) }} {{ __('mail.investment.financial_growth_journey_begins') }}
 
-### 🚀 **Bizi Farklı Kılan Nedir**
+### 🚀 **{{ __('mail.investment.what_makes_us_different') }}**
 
-**{{$settings->site_name}}** sadece bir ticaret platformu değil. Uzun vadeli zenginlik oluşturma konusunda stratejik ortağınızız:
+{{ __('mail.investment.more_than_platform', ['siteName' => $settings->site_name]) }} {{ __('mail.investment.strategic_partner_wealth') }}:
 
-- **Gelişmiş Algoritmik Ticaret** - AI destekli stratejilerden yararlanın
-- **Kopya Ticaret Mükemmelliği** - Başarılı tüccarları takip edin ve çoğaltın
-- **Çeşitlendirilmiş Yatırım Planları** - Muhafazakardan agresif büyüme seçeneklerine
-- **Gerçek Zamanlı Analitikler** - Profesyonel düzey piyasa içgörüleri
-- **Risk Yönetimi Araçları** - Yatırımlarınızı koruyun ve optimize edin
+- **{{ __('mail.investment.advanced_algorithmic_trading') }}** - {{ __('mail.investment.leverage_ai_strategies') }}
+- **{{ __('mail.investment.copy_trading_excellence') }}** - {{ __('mail.investment.follow_replicate_traders') }}
+- **{{ __('mail.investment.diversified_plans') }}** - {{ __('mail.investment.conservative_to_aggressive') }}
+- **{{ __('mail.investment.realtime_analytics') }}** - {{ __('mail.investment.professional_market_insights') }}
+- **{{ __('mail.investment.risk_management_tools') }}** - {{ __('mail.investment.protect_optimize_investments') }}
 
-### 📈 **Başarıya Sonraki Adımlarınız**
+### 📈 **{{ __('mail.investment.next_steps_success') }}**
 
 @component('mail::panel')
-**Başlamak Basit:**
+**{{ __('mail.investment.getting_started_simple') }}:**
 
-1. **Profilinizi Tamamlayın** - Gelişmiş güvenlik için hesabınızı doğrulayın
-2. **Yatırım Seçeneklerini Keşfedin** - Küratörlüğümüz yatırım planlarını inceleyin
-3. **İlk Para Yatırmanızı Yapın** - Rahat olduğunuz bir tutarla başlayın
-4. **Stratejinizi Seçin** - Algoritmik ticaret veya kopya ticaret arasından seçin
-5. **İzleyin ve Büyütün** - Portföy performansınızı gerçek zamanlı takip edin
+1. **{{ __('mail.investment.complete_profile') }}** - {{ __('mail.investment.verify_account_security') }}
+2. **{{ __('mail.investment.explore_options') }}** - {{ __('mail.investment.review_curated_plans') }}
+3. **{{ __('mail.investment.make_first_deposit') }}** - {{ __('mail.investment.start_comfortable_amount') }}
+4. **{{ __('mail.investment.choose_strategy') }}** - {{ __('mail.investment.algorithmic_or_copy_trading') }}
+5. **{{ __('mail.investment.monitor_grow') }}** - {{ __('mail.investment.track_portfolio_realtime') }}
 @endcomponent
 
 @component('mail::button', ['url' => config('app.url').'/dashboard'])
-Panonuza Erişin
+{{ __('mail.actions.access_dashboard') }}
 @endcomponent
 
-### 💡 **Yatırım Fırsatları Bekliyor**
+### 💡 **{{ __('mail.investment.opportunities_awaiting') }}**
 
-**Yeni Başlayan Dostu Seçenekler:**
-- Düşük riskli yatırım planları sabit getirilerle
-- Eğitim kaynakları ve piyasa analizi
-- Yeni yatırımcılar için özel destek
+**{{ __('mail.investment.beginner_friendly_options') }}:**
+- {{ __('mail.investment.low_risk_fixed_returns') }}
+- {{ __('mail.investment.educational_resources') }}
+- {{ __('mail.investment.dedicated_beginner_support') }}
 
-**Gelişmiş Ticaret Özellikleri:**
-- Başarılı tüccarları otomatik olarak kopyalayın
-- Premium piyasa sinyallerine erişim
-- Gelişmiş portföy yönetim araçları
+**{{ __('mail.investment.advanced_features') }}:**
+- {{ __('mail.investment.copy_successful_traders_auto') }}
+- {{ __('mail.investment.premium_market_signals') }}
+- {{ __('mail.investment.advanced_portfolio_tools') }}
 
-### 🛡️ **Güvenliğiniz Önceliğimiz**
+### 🛡️ **{{ __('mail.security.your_security_priority') }}**
 
-Yatırımlarınızın aşağıdakilerle korunduğundan emin olun:
-- Banka düzeyinde şifreleme ve güvenlik protokolleri
-- Düzenleyici uyumluluk ve şeffaf işlemler
-- 7/24 izleme ve dolandırıcılık koruması
-- Maksimum güvenlik için ayrılmış müşteri fonları
+{{ __('mail.security.investments_protected_with') }}:
+- {{ __('mail.security.bank_level_encryption') }}
+- {{ __('mail.security.regulatory_compliance') }}
+- {{ __('mail.security.24_7_monitoring') }}
+- {{ __('mail.security.segregated_customer_funds') }}
 
-### 📞 **İhtiyacınız Olduğunda Uzman Desteği**
+### 📞 **{{ __('mail.support.expert_support_needed') }}**
 
-Profesyonel ekibimiz her adımda size rehberlik etmek için burada:
+{{ __('mail.support.professional_team_guidance') }}:
 
 @component('mail::button', ['url' => config('app.url').'/support', 'color' => 'success'])
-Yatırım Danışmanlarımızla İletişime Geçin
+{{ __('mail.actions.contact_investment_advisors') }}
 @endcomponent
 
-**Mevcut Destek:**
-- 7/24 Müşteri Hizmetleri
-- Kişisel Yatırım Danışmanlıkları
-- Eğitim Webinarları ve Kaynakları
-- Piyasa Analizi ve İçgörüleri
+**{{ __('mail.support.available_support') }}:**
+- {{ __('mail.support.24_7_customer_service') }}
+- {{ __('mail.support.personal_investment_consulting') }}
+- {{ __('mail.support.educational_webinars') }}
+- {{ __('mail.support.market_analysis_insights') }}
 
 ---
 
-### 🎯 **Başlamaya Hazır mısınız?**
+### 🎯 **{{ __('mail.investment.ready_to_start') }}**
 
-Küresel piyasalar asla uyumaz ve fırsatlar da öyle. Aradığınız şey:
-- Emeklilik zenginliği oluşturmak
-- Pasif gelir üretmek
-- Yatırım portföyünüzü çeşitlendirmek
-- Gelişmiş ticaret stratejilerini öğrenmek
+{{ __('mail.investment.global_markets_never_sleep') }} {{ __('mail.investment.whether_seeking') }}:
+- {{ __('mail.investment.build_retirement_wealth') }}
+- {{ __('mail.investment.generate_passive_income') }}
+- {{ __('mail.investment.diversify_portfolio') }}
+- {{ __('mail.investment.learn_advanced_strategies') }}
 
-**{{$settings->site_name}}** finansal hedeflerinize ulaşmanız için gereken araçları, uzmanlığı ve desteği sağlar.
+{{ __('mail.investment.platform_provides_tools', ['siteName' => $settings->site_name]) }}
 
 @component('mail::panel', ['color' => 'success'])
-**Özel Hoş Geldiniz Teklifi:** Yeni üye olarak, ilk 30 gün boyunca premium piyasa analizimize ücretsiz erişim alacaksınız. Gün birinden itibaren bilinçli yatırım kararları vermeye başlayın!
+**{{ __('mail.investment.special_welcome_offer') }}:** {{ __('mail.investment.30_day_premium_access') }} {{ __('mail.investment.informed_decisions_day_one') }}!
 @endcomponent
 
-Gemiye hoş geldiniz, yatırım başarınız için!
+{{ __('mail.investment.welcome_aboard_success') }}!
 
-**{{$settings->site_name}} Ekibi**<br>
-*Gün Birinden Beri Akıllı Yatırımcıları Güçlendiriyor*
+**{{ __('mail.footer.team', ['siteName' => $settings->site_name]) }}**<br>
+*{{ __('mail.footer.empowering_smart_investors') }}*
 
 ---
 
 @component('mail::subcopy')
-**Sorumluluk Reddi:** Tüm yatırımlar risk taşır ve geçmiş performans gelecek sonuçları garanti etmez. Lütfen dahil olan riskleri anladığınızdan emin olun ve gerekirse bağımsız finansal tavsiye almayı düşünün. {{$settings->site_name}} sorumlu yatırım uygulamalarına bağlıdır.
+**{{ __('mail.legal.disclaimer') }}:** {{ __('mail.legal.investment_risk') }} {{ __('mail.legal.past_performance') }} {{ __('mail.legal.understand_risks') }} {{ __('mail.legal.responsible_practices', ['siteName' => $settings->site_name]) }}
 
-Daha fazla bilgi için [Risk Açıklaması]() sayfamızı ziyaret edin.
+{{ __('mail.legal.visit_risk_disclosure') }} [{{ __('mail.legal.risk_disclosure') }}]() {{ __('mail.legal.for_more_info') }}
 @endcomponent
 
 @endcomponent

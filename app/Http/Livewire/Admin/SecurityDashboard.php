@@ -235,7 +235,7 @@ class SecurityDashboard extends Component
 
         $this->loadSecurityData();
 
-        session()->flash('message', "IP {$ip} başarıyla engellendi.");
+        session()->flash('message', __('livewire.security_dashboard.ip_blocked_successfully', ['ip' => $ip]));
     }
 
     public function unblockIP(string $ip): void
@@ -249,7 +249,7 @@ class SecurityDashboard extends Component
 
         $this->loadSecurityData();
 
-        session()->flash('message', "IP {$ip} başarıyla serbest bırakıldı.");
+        session()->flash('message', __('livewire.security_dashboard.ip_unblocked_successfully', ['ip' => $ip]));
     }
 
     public function resetRateLimits(string $tier = null): void
@@ -268,7 +268,7 @@ class SecurityDashboard extends Component
         }
 
         $this->loadSecurityData();
-        session()->flash('message', 'Rate limit istatistikleri sıfırlandı.');
+        session()->flash('message', __('livewire.security_dashboard.rate_limits_reset'));
     }
 
     public function runSecurityScan(): void
@@ -279,7 +279,7 @@ class SecurityDashboard extends Component
         // Yeni kontroller ekle
         $this->checkSecurityHeaders();
 
-        session()->flash('message', 'Güvenlik taraması tamamlandı.');
+        session()->flash('message', __('livewire.security_dashboard.security_scan_completed'));
     }
 
     private function checkSecurityHeaders(): void

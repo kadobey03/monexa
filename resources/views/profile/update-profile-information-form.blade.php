@@ -8,9 +8,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div class="md:col-span-1">
                     <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Tam Ad
+                        {{ __('user.profile.form.full_name') }}
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Platformdaki görünen adınız</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('user.profile.form.display_name') }}</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -25,7 +25,7 @@
                                class="pl-10 block w-full rounded-xl border-gray-300 dark:border-gray-600 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm py-4"
                         >
                     </div>
-                    <p class="mt-1 text-xs text-red-600 dark:text-red-400 hidden">Please add your full name</p>
+                    <p class="mt-1 text-xs text-red-600 dark:text-red-400 hidden">{{ __('user.profile.form.full_name_error') }}</p>
                 </div>
             </div>
 
@@ -33,9 +33,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div class="md:col-span-1">
                     <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Telefon Numarası
+                        {{ __('user.profile.form.phone_number') }}
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Hesap doğrulaması için kullanılır</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('user.profile.form.phone_description') }}</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -57,9 +57,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div class="md:col-span-1">
                     <label for="emailAddress" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        E-posta Adresi
+                        {{ __('user.profile.form.email_address') }}
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Birincil iletişim e-postanız</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('user.profile.form.email_description') }}</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -77,7 +77,7 @@
                     <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                         <span class="inline-flex items-center">
                             <x-heroicon name="information-circle" class="h-3.5 w-3.5 mr-1 text-gray-400" />
-                            E-posta adresi değiştirilemez
+                            {{ __('user.profile.form.email_readonly') }}
                         </span>
                     </p>
                 </div>
@@ -87,9 +87,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
                 <div class="md:col-span-1">
                     <label for="country" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Ülke
+                        {{ __('user.profile.form.country') }}
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Mevcut konumunuz</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('user.profile.form.country_description') }}</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -362,9 +362,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
                 <div class="md:col-span-1">
                     <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Kullanıcı Adı
+                        {{ __('user.profile.form.username') }}
                     </label>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Benzersiz tanımlayıcınız</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('user.profile.form.username_description') }}</p>
                 </div>
                 <div class="md:col-span-3">
                     <div class="relative">
@@ -382,7 +382,7 @@
                     <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
                         <span class="inline-flex items-center">
                             <x-heroicon name="lock-closed" class="h-3.5 w-3.5 mr-1 text-gray-400" />
-                            Kullanıcı adı değiştirilemez
+                            {{ __('user.profile.form.username_readonly') }}
                         </span>
                     </p>
                 </div>
@@ -398,14 +398,14 @@
                     >
                         <span class="btn-text">
                             <x-heroicon name="save" class="mr-2 h-5 w-5" />
-                            Değişiklikleri Kaydet
+                            {{ __('user.profile.form.save_changes') }}
                         </span>
                         <span class="btn-loading" style="display: none;">
                             <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
-                            İşleniyor...
+                            {{ __('user.profile.form.processing') }}
                         </span>
                     </button>
                 </div>
@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium">Profil güncellenemedi. Lütfen tekrar deneyin.</p>
+                        <p class="text-sm font-medium">{{ __('user.profile.form.update_error') }}</p>
                     </div>
                     <div class="ml-auto pl-3">
                         <div class="-mx-1.5 -my-1.5">

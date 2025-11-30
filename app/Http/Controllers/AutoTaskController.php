@@ -141,7 +141,7 @@ class AutoTaskController extends Controller
                             $th->user = $user->id;
                             $th->amount = $increment;
                             $th->user_plan_id = $plan->id;
-                            $th->type = "ROI";
+                            $th->type = __('admin.transactions.roi');
                             $th->save();
 
                             Investment::where('id', $plan->id)
@@ -153,8 +153,12 @@ class AutoTaskController extends Controller
                             // Create in-app notification for ROI earnings
                             $this->createUserNotification(
                                 $user->id,
-                                'ROI Earnings Received',
-                                "You have received a return of {$user->currency}{$increment} from your investment in {$dplan->name}.",
+                                __('notifications.roi_earnings_title'),
+                                __('notifications.roi_earnings_message', [
+                                    'currency' => $user->currency,
+                                    'amount' => $increment,
+                                    'plan' => $dplan->name
+                                ]),
                                 'success',
                                 $th->id,
                                 'Tp_Transaction'
@@ -190,7 +194,7 @@ class AutoTaskController extends Controller
                         $th->plan = $dplan->name;
                         $th->user = $plan->user;
                         $th->amount = $plan->amount;
-                        $th->type = "Investment capital";
+                        $th->type = __('admin.transactions.investment_capital');
                         $th->save();
                     }
 
@@ -203,8 +207,12 @@ class AutoTaskController extends Controller
                     // Create in-app notification for plan expiration
                     $this->createUserNotification(
                         $user->id,
-                        'Investment Plan Completed',
-                        "Your investment plan '{$dplan->name}' has been completed. Total profit earned: {$user->currency}{$plan->profit_earned}",
+                        __('notifications.investment_plan_completed_title'),
+                        __('notifications.investment_plan_completed_message', [
+                            'plan' => $dplan->name,
+                            'currency' => $user->currency,
+                            'profit' => $plan->profit_earned
+                        ]),
                         'info',
                         $plan->id,
                         'Investment'
@@ -219,7 +227,7 @@ class AutoTaskController extends Controller
                         $objDemo->sender = $settings->site_name;
                         $objDemo->receiver_name = $user->name;
                         $objDemo->date = \Carbon\Carbon::Now();
-                        $objDemo->subject = "Investment plan closed";
+                        $objDemo->subject = __('emails.investment_plan_closed');
 
                         try {
                             Mail::to($user->email)->send(new endplan($objDemo));
@@ -278,7 +286,7 @@ class AutoTaskController extends Controller
                             'user' => $user->id,
                             'plan' => $trade->assets,
                             'amount' => $profit,
-                            'type' => 'WIN',
+                            'type' => __('admin.transactions.win'),
                             'leverage' => $profitResult['percentage'],
                         ]);
 
@@ -287,7 +295,7 @@ class AutoTaskController extends Controller
                             'user' => $user->id,
                             'plan' => $trade->assets,
                             'amount' => $trade->amount,
-                            'type' => 'Trading capital return',
+                            'type' => __('admin.transactions.trading_capital_return'),
                             'leverage' => 0,
                         ]);
 
@@ -314,7 +322,7 @@ class AutoTaskController extends Controller
                                 'user' => $user->id,
                                 'plan' => $trade->assets,
                                 'amount' => $refundAmount,
-                                'type' => 'Trading capital refund',
+                                'type' => __('admin.transactions.trading_capital_refund'),
                                 'leverage' => 0,
                             ]);
                         }
@@ -324,7 +332,7 @@ class AutoTaskController extends Controller
                             'user' => $user->id,
                             'plan' => $trade->assets,
                             'amount' => $actualLoss,
-                            'type' => 'LOSE',
+                            'type' => __('admin.transactions.lose'),
                             'leverage' => $profitResult['loss_percentage'],
                         ]);
                     }
@@ -332,7 +340,7 @@ class AutoTaskController extends Controller
                     // Mark trade as expired
                     User_plans::where('id', $trade->id)
                         ->update([
-                            'active' => 'expired',
+                            'active' => __('admin.status.expired'),
                         ]);
 
                     // Update user trade status
@@ -347,8 +355,13 @@ class AutoTaskController extends Controller
 
                         $this->createUserNotification(
                             $user->id,
-                            'Trading Profit Generated',
-                            "Your {$trade->assets} trade has completed successfully with a profit of {$user->currency}{$profit} ({$profitResult['percentage']}%).",
+                            __('notifications.trading_profit_title'),
+                            __('notifications.trading_profit_message', [
+                                'asset' => $trade->assets,
+                                'currency' => $user->currency,
+                                'profit' => $profit,
+                                'percentage' => $profitResult['percentage']
+                            ]),
                             'success',
                             $trade->id,
                             'User_plans'
@@ -359,8 +372,14 @@ class AutoTaskController extends Controller
 
                         $this->createUserNotification(
                             $user->id,
-                            'Trading Loss',
-                            "Your {$trade->assets} trade resulted in a {$profitResult['loss_percentage']}% loss ({$user->currency}{$actualLoss}). Due to leverage protection, {$user->currency}{$refundAmount} has been refunded to your account.",
+                            __('notifications.trading_loss_title'),
+                            __('notifications.trading_loss_message', [
+                                'asset' => $trade->assets,
+                                'percentage' => $profitResult['loss_percentage'],
+                                'currency' => $user->currency,
+                                'loss' => $actualLoss,
+                                'refund' => $refundAmount
+                            ]),
                             'warning',
                             $trade->id,
                             'User_plans'
@@ -370,7 +389,7 @@ class AutoTaskController extends Controller
                     // Send notification email if enabled
                     if ($user->sendroiemail == 'Yes') {
                         $message = "Your {$trade->assets} trade has been completed with a {$profitResult['result']} result.";
-                        $subject = "Trading Result: {$profitResult['result']}";
+                        $subject = __('emails.trading_result', ['result' => $profitResult['result']]);
 
                         try {
                             Mail::to($user->email)->send(new NewNotification($message, $subject, $user->name));
@@ -402,7 +421,7 @@ class AutoTaskController extends Controller
             $profitPercentage = min($baseProfitRate * $leverageMultiplier, 200); // Cap at 200%
 
             return [
-                'result' => 'WIN',
+                'result' => __('admin.trading.win'),
                 'percentage' => round($profitPercentage, 2)
             ];
         } else {
@@ -423,7 +442,7 @@ class AutoTaskController extends Controller
             }
 
             return [
-                'result' => 'LOSE',
+                'result' => __('admin.trading.lose'),
                 'loss_percentage' => round($lossPercentage, 2),
                 'percentage' => round($lossPercentage, 2) // For backward compatibility
             ];
@@ -488,7 +507,7 @@ class AutoTaskController extends Controller
                             'user' => $user->id,
                             'plan' => "Copy Trading - {$copyTrade->name}",
                             'amount' => $profit,
-                            'type' => "Copy Trading Profit",
+                            'type' => __('admin.transactions.copy_trading_profit'),
                             'leverage' => $profitResult['percentage'],
                             'status' => 'Processed',
                         ]);
@@ -496,8 +515,13 @@ class AutoTaskController extends Controller
                         // Create in-app notification for copy trading profit
                         $this->createUserNotification(
                             $user->id,
-                            'Copy Trading Profit',
-                            "Your copy trading with {$copyTrade->name} has generated a profit of {$user->currency}{$profit} ({$profitResult['percentage']}%).",
+                            __('notifications.copy_trading_profit_title'),
+                            __('notifications.copy_trading_profit_message', [
+                                'name' => $copyTrade->name,
+                                'currency' => $user->currency,
+                                'profit' => $profit,
+                                'percentage' => $profitResult['percentage']
+                            ]),
                             'success',
                             $copyTrade->id,
                             'User_copytradings'
@@ -507,7 +531,7 @@ class AutoTaskController extends Controller
                         if ($user->sendroiemail == 'Yes') {
                             try {
                                 $message = "Great news! Your copy trading with {$copyTrade->name} has generated a profit of {$user->currency}{$profit}. Current balance: {$user->currency}{$newBalance}";
-                                $subject = "Copy Trading Profit - {$copyTrade->name}";
+                                $subject = __('emails.copy_trading_profit', ['name' => $copyTrade->name]);
                                 //Mail::to($user->email)->send(new NewNotification($message, $subject, $user->name));
                             } catch (\Exception $e) {
                                 \Log::error('Failed to send copy trading profit email: ' . $e->getMessage());
@@ -538,7 +562,7 @@ class AutoTaskController extends Controller
                             'user' => $user->id,
                             'plan' => "Copy Trading - {$copyTrade->name}",
                             'amount' => $loss,
-                            'type' => "Copy Trading Loss",
+                            'type' => __('admin.transactions.copy_trading_loss'),
                             'leverage' => $profitResult['percentage'],
                             'status' => 'Processed',
                         ]);
@@ -572,7 +596,7 @@ class AutoTaskController extends Controller
             $profitAmount = ($currentBalance * $profitPercentage) / 100;
 
             return [
-                'result' => 'PROFIT',
+                'result' => __('admin.trading.profit'),
                 'amount' => round($profitAmount, 2),
                 'percentage' => round($profitPercentage, 2)
             ];
@@ -583,7 +607,7 @@ class AutoTaskController extends Controller
             $lossAmount = ($currentBalance * $lossPercentage) / 100;
 
             return [
-                'result' => 'LOSS',
+                'result' => __('admin.trading.loss'),
                 'amount' => round($lossAmount, 2),
                 'percentage' => round($lossPercentage, 2)
             ];
@@ -658,15 +682,21 @@ class AutoTaskController extends Controller
                         'user' => $user->id,
                         'plan' => "Bot Trading Profit - {$bot->name}",
                         'amount' => $profit,
-                        'type' => "Bot Trading Profit",
+                        'type' => __('admin.transactions.bot_trading_profit'),
                         'leverage' => $tradingResult['percentage'],
                     ]);
 
                     // Create in-app notification for bot trading profit
                     $this->createUserNotification(
                         $user->id,
-                        'Bot Trading Profit',
-                        "Your {$bot->name} trading bot has generated a profit of {$user->currency}{$profit} using {$tradingResult['strategy']} strategy on {$tradingResult['trading_pair']}.",
+                        __('notifications.bot_trading_profit_title'),
+                        __('notifications.bot_trading_profit_message', [
+                            'bot' => $bot->name,
+                            'currency' => $user->currency,
+                            'profit' => $profit,
+                            'strategy' => $tradingResult['strategy'],
+                            'pair' => $tradingResult['trading_pair']
+                        ]),
                         'success',
                         $investment->id,
                         'UserBotInvestment'
@@ -676,7 +706,7 @@ class AutoTaskController extends Controller
                     if ($user->sendroiemail == 'Yes') {
                         try {
                             $message = "Your {$bot->name} trading bot has generated a profit of \${$profit}. Keep investing and earning!";
-                            $subject = "Bot Trading Profit Earned";
+                            $subject = __('emails.bot_trading_profit_earned');
                             \Mail::to($user->email)->send(new \App\Mail\NewNotification($message, $subject, $user->name));
                         } catch (\Exception $e) {
                             \Log::error('Failed to send bot trading profit email: ' . $e->getMessage());
@@ -714,8 +744,12 @@ class AutoTaskController extends Controller
                     if ($tradingResult['percentage'] > 1.0) {
                         $this->createUserNotification(
                             $user->id,
-                            'Bot Trading Alert',
-                            "Your {$bot->name} bot had a trade loss of {$tradingResult['percentage']}% on {$tradingResult['trading_pair']}. The system has automatically adjusted the strategy.",
+                            __('notifications.bot_trading_alert_title'),
+                            __('notifications.bot_trading_alert_message', [
+                                'bot' => $bot->name,
+                                'percentage' => $tradingResult['percentage'],
+                                'pair' => $tradingResult['trading_pair']
+                            ]),
                             'warning',
                             $investment->id,
                             'UserBotInvestment'
@@ -755,7 +789,7 @@ class AutoTaskController extends Controller
                         'user' => $user->id,
                         'plan' => "Bot Investment Completed - {$bot->name}",
                         'amount' => $investment->current_balance,
-                        'type' => "Bot Investment Return",
+                        'type' => __('admin.transactions.bot_investment_return'),
                         'status' => 'Processed',
                     ]);
                 }
@@ -773,10 +807,15 @@ class AutoTaskController extends Controller
                 $notificationType = $totalProfit > 0 ? 'success' : 'info';
                 $this->createUserNotification(
                     $user->id,
-                    'Bot Investment Completed',
-                    "Your {$bot->name} bot investment has completed with a " .
-                    ($totalProfit > 0 ? "profit of {$user->currency}{$totalProfit} ({$profitPercent}%)" : "final balance of {$user->currency}{$totalReturn}") .
-                    ". The funds have been credited to your account balance.",
+                    __('notifications.bot_investment_completed_title'),
+                    __('notifications.bot_investment_completed_message', [
+                        'bot' => $bot->name,
+                        'currency' => $user->currency,
+                        'profit' => $totalProfit,
+                        'percent' => $profitPercent,
+                        'return' => $totalReturn,
+                        'has_profit' => $totalProfit > 0
+                    ]),
                     $notificationType,
                     $investment->id,
                     'UserBotInvestment'
@@ -786,7 +825,7 @@ class AutoTaskController extends Controller
                 if ($user->sendroiemail == 'Yes') {
                     try {
                         $message = "Your {$bot->name} bot investment has completed. Total return: \${$totalReturn}, Net profit: \${$totalProfit}";
-                        $subject = "Bot Investment Completed";
+                        $subject = __('emails.bot_investment_completed');
                         \Mail::to($user->email)->send(new \App\Mail\NewNotification($message, $subject, $user->name));
                     } catch (\Exception $e) {
                         \Log::error('Failed to send bot completion email: ' . $e->getMessage());
@@ -827,7 +866,7 @@ class AutoTaskController extends Controller
                 : $entryPrice * (1 - $profitPercentage / 100);
 
             return [
-                'result' => 'PROFIT',
+                'result' => __('admin.trading.profit'),
                 'amount' => round($profitAmount, 2),
                 'percentage' => round($profitPercentage, 2),
                 'trade_type' => $tradeType,
@@ -846,7 +885,7 @@ class AutoTaskController extends Controller
                 : $entryPrice * (1 + $lossPercentage / 100);
 
             return [
-                'result' => 'LOSS',
+                'result' => __('admin.trading.loss'),
                 'amount' => round($lossAmount, 2),
                 'percentage' => round($lossPercentage, 2),
                 'trade_type' => $tradeType,
@@ -905,16 +944,16 @@ class AutoTaskController extends Controller
     private function getRandomStrategy($bot)
     {
         $strategies = [
-            'Trend Following',
-            'Scalping',
-            'Momentum Trading',
-            'Mean Reversion',
-            'Breakout Strategy',
-            'Support & Resistance',
-            'RSI Divergence',
-            'MACD Crossover',
-            'Moving Average Strategy',
-            'Fibonacci Retracement',
+            __('trading.strategies.trend_following'),
+            __('trading.strategies.scalping'),
+            __('trading.strategies.momentum_trading'),
+            __('trading.strategies.mean_reversion'),
+            __('trading.strategies.breakout_strategy'),
+            __('trading.strategies.support_resistance'),
+            __('trading.strategies.rsi_divergence'),
+            __('trading.strategies.macd_crossover'),
+            __('trading.strategies.moving_average'),
+            __('trading.strategies.fibonacci_retracement'),
         ];
 
         return $strategies[array_rand($strategies)];
@@ -1121,19 +1160,19 @@ class AutoTaskController extends Controller
         // Emergency auto close if loss exceeds 95% (extreme demo stop-loss)
         if ($pnlPercentage <= -95) {
             $shouldClose = true;
-            $closeReason = 'Emergency Stop Loss (95% loss)';
+            $closeReason = __('demo.close_reasons.emergency_stop_loss');
         }
 
         // Emergency auto close if profit exceeds 1000% (extreme demo take-profit)
         elseif ($pnlPercentage >= 1000) {
             $shouldClose = true;
-            $closeReason = 'Emergency Take Profit (1000% gain)';
+            $closeReason = __('demo.close_reasons.emergency_take_profit');
         }
 
         // 2. Check for maximum trade duration (48 hours for demo safety)
         elseif ($trade->created_at->diffInHours($now) >= 48) {
             $shouldClose = true;
-            $closeReason = 'Maximum safety duration reached (48 hours)';
+            $closeReason = __('demo.close_reasons.maximum_duration');
         }
 
         if ($shouldClose) {
@@ -1233,7 +1272,7 @@ class AutoTaskController extends Controller
             'user' => $user->id,
             'plan' => "Demo Trade - {$trade->assets}",
             'amount' => $trade->amount,
-            'type' => 'Demo Investment Return',
+            'type' => __('admin.transactions.demo_investment_return'),
             'status' => 'Processed',
         ]);
 
@@ -1243,7 +1282,7 @@ class AutoTaskController extends Controller
                 'user' => $user->id,
                 'plan' => "Demo Trade - {$trade->assets}",
                 'amount' => $finalPnL,
-                'type' => $isWin ? 'Demo Profit' : 'Demo Loss',
+                'type' => $isWin ? __('admin.transactions.demo_profit') : __('admin.transactions.demo_loss'),
                 'status' => 'Processed',
             ]);
         }
@@ -1258,8 +1297,17 @@ class AutoTaskController extends Controller
 
         $this->createUserNotification(
             $user->id,
-            'Demo Trade Completed',
-            "Your {$duration} demo trade for {$trade->assets} (Leverage: {$leverage}x) has expired. Investment returned: \${$trade->amount}, {$resultType}: \${$resultAmount}. Total received: \${$totalReturn}. Your new demo balance is \${$newDemoBalance}.",
+            __('notifications.demo_trade_completed_title'),
+            __('notifications.demo_trade_completed_message', [
+                'duration' => $duration,
+                'asset' => $trade->assets,
+                'leverage' => $leverage,
+                'amount' => $trade->amount,
+                'result_type' => $resultType,
+                'result_amount' => $resultAmount,
+                'total_return' => $totalReturn,
+                'new_balance' => $newDemoBalance
+            ]),
             $notificationType,
             $trade->id,
             'DemoTrade'
@@ -1300,7 +1348,7 @@ class AutoTaskController extends Controller
             'user' => $user->id,
             'plan' => "Demo Trade - {$trade->assets}",
             'amount' => $trade->amount,
-            'type' => 'Demo Investment Return',
+            'type' => __('admin.transactions.demo_investment_return'),
             'status' => 'Processed',
         ]);
 
@@ -1310,7 +1358,7 @@ class AutoTaskController extends Controller
                 'user' => $user->id,
                 'plan' => "Demo Trade - {$trade->assets}",
                 'amount' => $finalPnL,
-                'type' => $finalPnL >= 0 ? 'Demo Profit' : 'Demo Loss',
+                'type' => $finalPnL >= 0 ? __('admin.transactions.demo_profit') : __('admin.transactions.demo_loss'),
                 'status' => 'Processed',
             ]);
         }
@@ -1322,8 +1370,15 @@ class AutoTaskController extends Controller
 
         $this->createUserNotification(
             $user->id,
-            'Demo Trade Auto-Closed',
-            "Your demo trade for {$trade->assets} has been automatically closed. Investment returned: \${$trade->amount}, {$resultType}: \${$resultAmount}. Total received: \${$totalReturn}. Reason: {$reason}",
+            __('notifications.demo_trade_auto_closed_title'),
+            __('notifications.demo_trade_auto_closed_message', [
+                'asset' => $trade->assets,
+                'amount' => $trade->amount,
+                'result_type' => $resultType,
+                'result_amount' => $resultAmount,
+                'total_return' => $totalReturn,
+                'reason' => $reason
+            ]),
             $notificationType,
             $trade->id,
             'DemoTrade'

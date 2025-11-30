@@ -15,11 +15,11 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="content">
             <div class="page-inner">
                 <div class="mt-2 mb-4">
-                    <h1 class="title1 d-inline text-{{ $text }}">Demo Trades Management</h1>
+                    <h1 class="title1 d-inline text-{{ $text }}">{{ __('admin.demo.trades_management') }}</h1>
                     <div class="d-inline">
                         <div class="float-right btn-group">
                             <a class="btn btn-primary btn-sm" href="{{ route('admin.demo.users') }}">
-                                <i class="fa fa-users"></i> Manage Demo Users
+                                <i class="fa fa-users"></i> {{ __('admin.demo.manage_users') }}
                             </a>
                         </div>
                     </div>
@@ -35,7 +35,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Total Demo Trades</div>
+                                            {{ __('admin.demo.total_demo_trades') }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-{{ $text }}">{{ $stats['total_trades'] }}</div>
                                     </div>
                                     <div class="col-auto">
@@ -52,7 +52,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Active Trades</div>
+                                            {{ __('admin.demo.active_trades') }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-{{ $text }}">{{ $stats['active_trades'] }}</div>
                                     </div>
                                     <div class="col-auto">
@@ -69,7 +69,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                            Total Volume</div>
+                                            {{ __('admin.demo.total_volume') }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-{{ $text }}">
                                             ${{ number_format($stats['total_volume'], 2) }}
                                         </div>
@@ -88,7 +88,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Profitable Trades</div>
+                                            {{ __('admin.demo.profitable_trades') }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-{{ $text }}">{{ $stats['profitable_trades'] }}</div>
                                     </div>
                                     <div class="col-auto">
@@ -103,37 +103,37 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                 <!-- Filters Section -->
                 <div class="mb-4 row">
                     <div class="col-12 card shadow p-4">
-                        <h6 class="m-0 font-weight-bold text-primary mb-3">Filter Demo Trades</h6>
+                        <h6 class="m-0 font-weight-bold text-primary mb-3">{{ __('admin.demo.filter_trades') }}</h6>
                         <form method="GET" class="row">
                             <div class="col-md-3 mb-3">
-                                <label for="search" class="form-label">Search</label>
+                                <label for="search" class="form-label">{{ __('admin.demo.search') }}</label>
                                 <input type="text" class="form-control" id="search" name="search"
-                                       value="{{ request('search') }}" placeholder="User name, email, or asset">
+                                       value="{{ request('search') }}" placeholder="{{ __('admin.demo.search_placeholder') }}">
                             </div>
                             <div class="col-md-2 mb-3">
-                                <label for="status" class="form-label">Status</label>
+                                <label for="status" class="form-label">{{ __('admin.demo.status') }}</label>
                                 <select class="form-control" id="status" name="status">
-                                    <option value="">All Status</option>
-                                    <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>Active</option>
-                                    <option value="no" {{ request('status') == 'no' ? 'selected' : '' }}>Closed</option>
+                                    <option value="">{{ __('admin.demo.all_status') }}</option>
+                                    <option value="yes" {{ request('status') == 'yes' ? 'selected' : '' }}>{{ __('admin.demo.active') }}</option>
+                                    <option value="no" {{ request('status') == 'no' ? 'selected' : '' }}>{{ __('admin.demo.closed') }}</option>
                                 </select>
                             </div>
                             <div class="col-md-2 mb-3">
-                                <label for="type" class="form-label">Type</label>
+                                <label for="type" class="form-label">{{ __('admin.demo.type') }}</label>
                                 <select class="form-control" id="type" name="type">
-                                    <option value="">All Types</option>
-                                    <option value="buy" {{ request('type') == 'buy' ? 'selected' : '' }}>Buy</option>
-                                    <option value="sell" {{ request('type') == 'sell' ? 'selected' : '' }}>Sell</option>
+                                    <option value="">{{ __('admin.demo.all_types') }}</option>
+                                    <option value="buy" {{ request('type') == 'buy' ? 'selected' : '' }}>{{ __('admin.demo.buy') }}</option>
+                                    <option value="sell" {{ request('type') == 'sell' ? 'selected' : '' }}>{{ __('admin.demo.sell') }}</option>
                                 </select>
                             </div>
                             <div class="col-md-2 mb-3">
-                                <label for="asset" class="form-label">Asset</label>
+                                <label for="asset" class="form-label">{{ __('admin.demo.asset') }}</label>
                                 <input type="text" class="form-control" id="asset" name="asset"
                                        value="{{ request('asset') }}" placeholder="BTC, ETH, etc.">
                             </div>
                             <div class="col-md-3 mb-3 d-flex align-items-end">
-                                <button type="submit" class="btn btn-primary me-2">Filter</button>
-                                <a href="{{ route('admin.demo.trades') }}" class="btn btn-secondary ml-2">Clear</a>
+                                <button type="submit" class="btn btn-primary me-2">{{ __('admin.demo.filter') }}</button>
+                                <a href="{{ route('admin.demo.trades') }}" class="btn btn-secondary ml-2">{{ __('admin.demo.clear') }}</a>
                             </div>
                         </form>
                     </div>
@@ -146,26 +146,26 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <table id="ShipTable" class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Trade ID</th>
-                                        <th>User Name</th>
-                                        <th>User Email</th>
-                                        <th>Asset</th>
-                                        <th>Type</th>
-                                        <th>Amount</th>
-                                        <th>Leverage</th>
-                                        <th>Entry Price</th>
-                                        <th>Current P&L</th>
-                                        <th>Status</th>
-                                        <th>Date Created</th>
-                                        <th>Option</th>
+                                        <th>{{ __('admin.demo.trade_id') }}</th>
+                                        <th>{{ __('admin.demo.user_name') }}</th>
+                                        <th>{{ __('admin.demo.user_email') }}</th>
+                                        <th>{{ __('admin.demo.asset') }}</th>
+                                        <th>{{ __('admin.demo.type') }}</th>
+                                        <th>{{ __('admin.demo.amount') }}</th>
+                                        <th>{{ __('admin.demo.leverage') }}</th>
+                                        <th>{{ __('admin.demo.entry_price') }}</th>
+                                        <th>{{ __('admin.demo.current_pnl') }}</th>
+                                        <th>{{ __('admin.demo.status') }}</th>
+                                        <th>{{ __('admin.demo.date_created') }}</th>
+                                        <th>{{ __('admin.demo.option') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse($demoTrades as $trade)
                                     <tr>
                                         <td>{{ $trade->id }}</td>
-                                        <td>{{ $trade->user ? $trade->user->name : 'Kullanıcı Bulunamadı' }}</td>
-                                        <td>{{ $trade->user ? $trade->user->email : 'Belirtilmemiş' }}</td>
+                                        <td>{{ $trade->user ? $trade->user->name : __('admin.demo.user_not_found') }}</td>
+                                        <td>{{ $trade->user ? $trade->user->email : __('admin.demo.not_specified') }}</td>
                                         <td>
                                             <span class="badge badge-info">{{ $trade->assets }}</span>
                                         </td>
@@ -187,9 +187,9 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         </td>
                                         <td>
                                             @if($trade->active == 'yes')
-                                                <span class="badge badge-success">Active</span>
+                                                <span class="badge badge-success">{{ __('admin.demo.active') }}</span>
                                             @else
-                                                <span class="badge badge-secondary">Closed</span>
+                                                <span class="badge badge-secondary">{{ __('admin.demo.closed') }}</span>
                                             @endif
                                         </td>
                                         <td>{{ $trade->created_at->toDayDateTimeString() }}</td>
@@ -198,15 +198,15 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 <form action="{{ route('admin.demo.close-trade', $trade->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     <button type="submit" class="btn btn-warning btn-sm m-1"
-                                                            onclick="return confirm('Are you sure you want to close this demo trade?')"
-                                                            title="Close Trade">
-                                                        <i class="fa fa-stop-circle"></i> Close
+                                                            onclick="return confirm('{{ __('admin.demo.confirm_close_trade') }}')"
+                                                            title="{{ __('admin.demo.close_trade_tooltip') }}">
+                                                        <i class="fa fa-stop-circle"></i> {{ __('admin.demo.close') }}
                                                     </button>
                                                 </form>
                                             @endif
                                             <a href="{{ route('admin.demo.users') }}?search={{ $trade->user ? $trade->user->email : '' }}"
-                                               class="btn btn-info btn-sm m-1" title="View User">
-                                                <i class="fa fa-user"></i> View User
+                                               class="btn btn-info btn-sm m-1" title="{{ __('admin.demo.view_user_tooltip') }}">
+                                                <i class="fa fa-user"></i> {{ __('admin.demo.view_user') }}
                                             </a>
                                         </td>
                                     </tr>
@@ -215,8 +215,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                         <td colspan="12" class="text-center">
                                             <div class="py-4">
                                                 <i class="fas fa-chart-line fa-3x text-gray-300 mb-3"></i>
-                                                <h5 class="text-gray-500">No demo trades found</h5>
-                                                <p class="text-muted">No demo trading activity matches your current filters.</p>
+                                                <h5 class="text-gray-500">{{ __('admin.demo.no_trades_found') }}</h5>
+                                                <p class="text-muted">{{ __('admin.demo.no_trading_activity') }}</p>
                                             </div>
                                         </td>
                                     </tr>

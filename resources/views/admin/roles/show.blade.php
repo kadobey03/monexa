@@ -12,22 +12,22 @@
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-admin-900 dark:text-white">{{ $role->display_name }}</h1>
-                    <p class="text-admin-600 dark:text-admin-400">Rol Detayları ve İzinler</p>
+                    <p class="text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.description') }}</p>
                 </div>
                 <div class="flex items-center space-x-2">
                     @if($role->is_active)
                         <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm font-medium">
                             <x-heroicon name="check-circle" class="w-4 h-4 inline mr-1" />
-                            Aktif
+                            {{ __('admin.roles.show.active') }}
                         </span>
                     @else
                         <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-full text-sm font-medium">
                             <x-heroicon name="x-circle" class="w-4 h-4 inline mr-1" />
-                            Pasif
+                            {{ __('admin.roles.show.inactive') }}
                         </span>
                     @endif
                     <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">
-                        Seviye {{ $role->hierarchy_level }}
+                        {{ __('admin.roles.show.level') }} {{ $role->hierarchy_level }}
                     </span>
                 </div>
             </div>
@@ -36,12 +36,12 @@
                 <a href="{{ route('admin.roles.edit', $role) }}" 
                    class="inline-flex items-center px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl transition-all duration-200">
                     <x-heroicon name="edit-3" class="w-4 h-4 mr-2" />
-                    Düzenle
+                    {{ __('admin.roles.show.edit') }}
                 </a>
                 <a href="{{ route('admin.roles.index') }}" 
                    class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
                     <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
-                    Geri Dön
+                    {{ __('admin.roles.show.back') }}
                 </a>
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Toplam Admin</p>
+                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.total_admins') }}</p>
                     <p class="text-2xl font-bold text-admin-900 dark:text-white">{{ $statistics['total_admins'] }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
@@ -61,8 +61,8 @@
             </div>
             <div class="mt-4">
                 <div class="flex items-center">
-                    <span class="text-sm text-green-600 dark:text-green-400 font-medium">{{ $statistics['active_admins'] }} aktif</span>
-                    <span class="text-sm text-admin-500 dark:text-admin-400 ml-2">{{ $statistics['inactive_admins'] }} pasif</span>
+                    <span class="text-sm text-green-600 dark:text-green-400 font-medium">{{ $statistics['active_admins'] }} {{ __('admin.roles.show.active') }}</span>
+                    <span class="text-sm text-admin-500 dark:text-admin-400 ml-2">{{ $statistics['inactive_admins'] }} {{ __('admin.roles.show.inactive') }}</span>
                 </div>
             </div>
         </div>
@@ -70,7 +70,7 @@
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">İzin Sayısı</p>
+                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.permission_count') }}</p>
                     <p class="text-2xl font-bold text-admin-900 dark:text-white">{{ $statistics['total_permissions'] }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
@@ -79,7 +79,7 @@
             </div>
             <div class="mt-4">
                 <div class="flex items-center">
-                    <span class="text-sm text-green-600 dark:text-green-400 font-medium">{{ $statistics['granted_permissions'] }} verildi</span>
+                    <span class="text-sm text-green-600 dark:text-green-400 font-medium">{{ $statistics['granted_permissions'] }} {{ __('admin.roles.show.granted') }}</span>
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Alt Roller</p>
+                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.child_roles') }}</p>
                     <p class="text-2xl font-bold text-admin-900 dark:text-white">{{ $statistics['child_roles'] }}</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
@@ -99,11 +99,11 @@
                     <div class="text-sm text-admin-600 dark:text-admin-400">
                         {{ $role->childRoles->pluck('display_name')->take(2)->implode(', ') }}
                         @if($role->childRoles->count() > 2)
-                            ve {{ $role->childRoles->count() - 2 }} diğeri
+                            {{ __('admin.roles.show.and_others', ['count' => $role->childRoles->count() - 2]) }}
                         @endif
                     </div>
                 @else
-                    <span class="text-sm text-admin-500 dark:text-admin-400">Alt rol yok</span>
+                    <span class="text-sm text-admin-500 dark:text-admin-400">{{ __('admin.roles.show.no_child_roles') }}</span>
                 @endif
             </div>
         </div>
@@ -111,7 +111,7 @@
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Oluşturulma</p>
+                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.created') }}</p>
                     <p class="text-2xl font-bold text-admin-900 dark:text-white">{{ $role->created_at->diffInDays() }}g</p>
                 </div>
                 <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center">
@@ -129,41 +129,41 @@
         <div class="lg:col-span-2 space-y-6">
             <!-- Role Details -->
             <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
-                <h2 class="text-lg font-semibold text-admin-900 dark:text-white mb-6">Rol Bilgileri</h2>
+                <h2 class="text-lg font-semibold text-admin-900 dark:text-white mb-6">{{ __('admin.roles.show.role_information') }}</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">Rol Adı</label>
+                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.role_name') }}</label>
                         <p class="mt-1 text-admin-900 dark:text-white font-mono bg-admin-50 dark:bg-admin-700/30 px-3 py-2 rounded-lg">{{ $role->name }}</p>
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">Görünen Ad</label>
+                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.display_name') }}</label>
                         <p class="mt-1 text-admin-900 dark:text-white">{{ $role->display_name }}</p>
                     </div>
                     
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">Açıklama</label>
+                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.description_label') }}</label>
                         <p class="mt-1 text-admin-700 dark:text-admin-300">
-                            {{ $role->description ?: 'Açıklama eklenmemiş.' }}
+                            {{ $role->description ?: __('admin.roles.show.no_description') }}
                         </p>
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">Hiyerarşi Seviyesi</label>
+                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.hierarchy_level') }}</label>
                         <p class="mt-1 text-admin-900 dark:text-white">{{ $role->hierarchy_level }}</p>
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">Departman</label>
+                        <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.department') }}</label>
                         <p class="mt-1 text-admin-900 dark:text-white">
-                            {{ $role->settings['department'] ?? 'Belirtilmemiş' }}
+                            {{ $role->settings['department'] ?? __('admin.roles.show.not_specified') }}
                         </p>
                     </div>
                     
                     @if($role->parentRole)
                         <div>
-                            <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">Üst Rol</label>
+                            <label class="block text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.parent_role') }}</label>
                             <a href="{{ route('admin.roles.show', $role->parentRole) }}" 
                                class="mt-1 inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200">
                                 <x-heroicon name="external-link" class="w-4 h-4 mr-1" />
@@ -178,11 +178,11 @@
             <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700">
                 <div class="p-6 border-b border-admin-200 dark:border-admin-600">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-lg font-semibold text-admin-900 dark:text-white">İzinler</h2>
+                        <h2 class="text-lg font-semibold text-admin-900 dark:text-white">{{ __('admin.roles.show.permissions') }}</h2>
                         <div class="flex items-center space-x-2">
                             <button @click="showAllPermissions = !showAllPermissions" 
                                     class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200">
-                                <span x-text="showAllPermissions ? 'Sadece Verilen İzinler' : 'Tüm İzinleri Göster'"></span>
+                                <span x-text="showAllPermissions ? '{{ __('admin.roles.show.only_granted_permissions') }}' : '{{ __('admin.roles.show.show_all_permissions') }}'"></span>
                             </button>
                         </div>
                     </div>
@@ -236,11 +236,11 @@
                     @else
                         <div class="text-center py-8">
                             <x-heroicon name="shield-off" class="w-16 h-16 text-admin-400 dark:text-admin-500 mx-auto mb-4" />
-                            <p class="text-admin-600 dark:text-admin-400">Bu role henüz izin atanmamış.</p>
+                            <p class="text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.no_permissions_assigned') }}</p>
                             <a href="{{ route('admin.roles.edit', $role) }}" 
                                class="mt-4 inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
                                 <x-heroicon name="plus" class="w-4 h-4 mr-2" />
-                                İzin Ekle
+                                {{ __('admin.roles.show.add_permission') }}
                             </a>
                         </div>
                     @endif
@@ -252,13 +252,13 @@
         <div class="space-y-6">
             <!-- Hierarchy -->
             <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
-                <h3 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">Hiyerarşi</h3>
+                <h3 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">{{ __('admin.roles.show.hierarchy') }}</h3>
                 
                 @if($role->parentRole || $role->childRoles->count() > 0)
                     <div class="space-y-4">
                         @if($role->parentRole)
                             <div>
-                                <p class="text-sm text-admin-600 dark:text-admin-400 mb-2">Üst Rol</p>
+                                <p class="text-sm text-admin-600 dark:text-admin-400 mb-2">{{ __('admin.roles.show.parent_role') }}</p>
                                 <a href="{{ route('admin.roles.show', $role->parentRole) }}" 
                                    class="flex items-center p-3 border border-admin-200 dark:border-admin-600 rounded-lg hover:bg-admin-50 dark:hover:bg-admin-700/30 transition-colors">
                                     <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-3">
@@ -266,7 +266,7 @@
                                     </div>
                                     <div>
                                         <p class="font-medium text-admin-900 dark:text-white">{{ $role->parentRole->display_name }}</p>
-                                        <p class="text-xs text-admin-600 dark:text-admin-400">Seviye {{ $role->parentRole->hierarchy_level }}</p>
+                                        <p class="text-xs text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.level') }} {{ $role->parentRole->hierarchy_level }}</p>
                                     </div>
                                 </a>
                             </div>
@@ -274,7 +274,7 @@
                         
                         @if($role->childRoles->count() > 0)
                             <div>
-                                <p class="text-sm text-admin-600 dark:text-admin-400 mb-2">Alt Roller ({{ $role->childRoles->count() }})</p>
+                                <p class="text-sm text-admin-600 dark:text-admin-400 mb-2">{{ __('admin.roles.show.child_roles') }} ({{ $role->childRoles->count() }})</p>
                                 <div class="space-y-2">
                                     @foreach($role->childRoles->take(5) as $childRole)
                                         <a href="{{ route('admin.roles.show', $childRole) }}" 
@@ -284,13 +284,13 @@
                                             </div>
                                             <div>
                                                 <p class="font-medium text-admin-900 dark:text-white">{{ $childRole->display_name }}</p>
-                                                <p class="text-xs text-admin-600 dark:text-admin-400">{{ $childRole->admins->count() }} admin</p>
+                                                <p class="text-xs text-admin-600 dark:text-admin-400">{{ $childRole->admins->count() }} {{ __('admin.roles.show.admins') }}</p>
                                             </div>
                                         </a>
                                     @endforeach
                                     @if($role->childRoles->count() > 5)
                                         <p class="text-sm text-admin-600 dark:text-admin-400 text-center py-2">
-                                            ve {{ $role->childRoles->count() - 5 }} diğer alt rol...
+                                            {{ __('admin.roles.show.and_other_child_roles', ['count' => $role->childRoles->count() - 5]) }}
                                         </p>
                                     @endif
                                 </div>
@@ -300,7 +300,7 @@
                 @else
                     <div class="text-center py-4">
                         <x-heroicon name="git-branch-plus" class="w-12 h-12 text-admin-400 dark:text-admin-500 mx-auto mb-2" />
-                        <p class="text-sm text-admin-600 dark:text-admin-400">Hiyerarşi bağlantısı yok</p>
+                        <p class="text-sm text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.no_hierarchy_connection') }}</p>
                     </div>
                 @endif
             </div>
@@ -308,11 +308,11 @@
             <!-- Recent Admins -->
             <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-admin-900 dark:text-white">Bu Roldeki Adminler</h3>
+                    <h3 class="text-lg font-semibold text-admin-900 dark:text-white">{{ __('admin.roles.show.admins_in_role') }}</h3>
                     @if($role->admins->count() > 5)
                         <a href="{{ route('admin.managers.index', ['role' => $role->id]) }}" 
                            class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200">
-                            Tümünü Gör
+                            {{ __('admin.roles.show.view_all') }}
                         </a>
                     @endif
                 </div>
@@ -343,39 +343,39 @@
                 @else
                     <div class="text-center py-4">
                         <x-heroicon name="user-minus" class="w-12 h-12 text-admin-400 dark:text-admin-500 mx-auto mb-2" />
-                        <p class="text-sm text-admin-600 dark:text-admin-400">Bu role henüz admin atanmamış</p>
+                        <p class="text-sm text-admin-600 dark:text-admin-400">{{ __('admin.roles.show.no_admins_assigned') }}</p>
                     </div>
                 @endif
             </div>
 
             <!-- Quick Actions -->
             <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
-                <h3 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">Hızlı İşlemler</h3>
+                <h3 class="text-lg font-semibold text-admin-900 dark:text-white mb-4">{{ __('admin.roles.show.quick_actions') }}</h3>
                 
                 <div class="space-y-3">
                     <a href="{{ route('admin.roles.edit', $role) }}" 
                        class="w-full flex items-center px-4 py-3 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors">
                         <x-heroicon name="edit-3" class="w-5 h-5 mr-3" />
-                        Rolü Düzenle
+                        {{ __('admin.roles.show.edit_role') }}
                     </a>
                     
                     <a href="{{ route('admin.permissions.role', $role) }}" 
                        class="w-full flex items-center px-4 py-3 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
                         <x-heroicon name="shield-check" class="w-5 h-5 mr-3" />
-                        İzinleri Yönet
+                        {{ __('admin.roles.show.manage_permissions') }}
                     </a>
                     
                     <a href="{{ route('admin.managers.create', ['role' => $role->id]) }}" 
                        class="w-full flex items-center px-4 py-3 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
                         <x-heroicon name="user-plus" class="w-5 h-5 mr-3" />
-                        Admin Ekle
+                        {{ __('admin.roles.show.add_admin') }}
                     </a>
                     
                     @if(!$role->is_system_role)
                         <button @click="confirmDelete()" 
                                 class="w-full flex items-center px-4 py-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
                             <x-heroicon name="trash-2" class="w-5 h-5 mr-3" />
-                            Rolü Sil
+                            {{ __('admin.roles.show.delete_role') }}
                         </button>
                     @endif
                 </div>
@@ -399,14 +399,14 @@ function roleShowManager() {
         
         confirmDelete() {
             Swal.fire({
-                title: 'Rolü Sil?',
-                text: "Bu işlem geri alınamaz. Role atanmış tüm adminler varsayılan role geçecek.",
+                title: '{{ __('admin.roles.show.delete_role_title') }}',
+                text: "{{ __('admin.roles.show.delete_role_warning') }}",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#ef4444',
                 cancelButtonColor: '#6b7280',
-                confirmButtonText: 'Evet, Sil',
-                cancelButtonText: 'İptal'
+                confirmButtonText: '{{ __('admin.roles.show.yes_delete') }}',
+                cancelButtonText: '{{ __('admin.roles.show.cancel') }}'
             }).then((result) => {
                 if (result.isConfirmed) {
                     const form = document.createElement('form');

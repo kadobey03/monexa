@@ -5,7 +5,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
     $text = 'light';
 }
 ?>
-@extends('layouts.admin', ['title' => 'Yöneticiler Paneli'])
+@extends('layouts.admin', ['title' => __('admin.users.admin_panel')])
 
 @section('content')
     <!-- Main Content Area with Tailwind -->
@@ -19,8 +19,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     <x-heroicon name="user-cog" class="w-8 h-8" />
                 </div>
                 <div>
-                    <h1 class="text-3xl font-bold mb-2">Yöneticiler Paneli</h1>
-                    <p class="text-white/80 text-lg">Sistem yöneticilerini yönetin ve kontrol edin</p>
+                    <h1 class="text-3xl font-bold mb-2">{{ __('admin.users.admin_panel') }}</h1>
+                    <p class="text-white/80 text-lg">{{ __('admin.users.manage_and_control_admins') }}</p>
                 </div>
             </div>
         </div>
@@ -52,11 +52,11 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         <div>
                             @if ($admin->acnt_type_active == null || $admin->acnt_type_active == 'blocked')
                                 <span class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold animate-pulse">
-                                    Engelli
+                                    {{ __('admin.status.blocked') }}
                                 </span>
                             @else
                                 <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-                                    Aktif
+                                    {{ __('admin.status.active') }}
                                 </span>
                             @endif
                         </div>
@@ -76,7 +76,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     <div class="bg-green-100 dark:bg-green-900 p-2 rounded-lg group-hover:bg-green-200 dark:group-hover:bg-green-800 transition-colors">
                         <x-heroicon name="phone" class="w-4 h-4 text-green-600 dark:text-green-400" />
                     </div>
-                    <span class="text-gray-700 dark:text-gray-300 group-hover:text-green-600 transition-colors">{{ $admin->phone ?: 'Telefon yok' }}</span>
+                    <span class="text-gray-700 dark:text-gray-300 group-hover:text-green-600 transition-colors">{{ $admin->phone ?: __('admin.users.no_phone') }}</span>
                     </div>
                     
                     <div class="flex items-center space-x-3 group">
@@ -94,18 +94,18 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         @if ($admin->acnt_type_active == null || $admin->acnt_type_active == 'blocked')
                         <a href="{{ url('admin/dashboard/unblock') }}/{{ $admin->id }}"
                            class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 text-center transform hover:scale-105 shadow-lg">
-                            <x-heroicon name="lock-open" class="w-4 h-4 mr-2 inline" />Engeli Kaldır
+                            <x-heroicon name="lock-open" class="w-4 h-4 mr-2 inline" />{{ __('admin.actions.unblock') }}
                         </a>
                         @else
                         <a href="{{ url('admin/dashboard/ublock') }}/{{ $admin->id }}"
                            class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 text-center transform hover:scale-105 shadow-lg">
-                            <x-heroicon name="lock-closed" class="w-4 h-4 mr-2 inline" />Engelle
+                            <x-heroicon name="lock-closed" class="w-4 h-4 mr-2 inline" />{{ __('admin.actions.block') }}
                         </a>
                         @endif
                         
                     <button onclick="openModal('editModal{{ $admin->id }}')"
                             class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-lg">
-                        <x-heroicon name="edit" class="w-4 h-4 mr-2 inline" />Düzenle
+                        <x-heroicon name="edit" class="w-4 h-4 mr-2 inline" />{{ __('admin.actions.edit') }}
                     </button>
                     </div>
                     
@@ -113,19 +113,19 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     <div class="grid grid-cols-3 gap-2">
                         <button onclick="openModal('resetModal{{ $admin->id }}')"
                                 class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 transform hover:scale-105"
-                                title="Şifre Sıfırla">
+                                title="{{ __('admin.actions.reset_password') }}">
                             <i class="fas fa-key"></i>
                         </button>
                         
                         <button onclick="openModal('deleteModal{{ $admin->id }}')"
                                 class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 transform hover:scale-105"
-                                title="Sil">
+                                title="{{ __('admin.actions.delete') }}">
                             <i class="fas fa-trash"></i>
                         </button>
                         
                         <button onclick="openModal('emailModal{{ $admin->id }}')"
                                 class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 transform hover:scale-105"
-                                title="E-posta Gönder">
+                                title="{{ __('admin.actions.send_email') }}">
                             <i class="fas fa-envelope"></i>
                         </button>
                     </div>
@@ -149,7 +149,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     <i class="fas fa-key text-xl"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-bold">Şifre Sıfırlama</h3>
+                                    <h3 class="text-xl font-bold">{{ __('admin.actions.password_reset') }}</h3>
                                     <p class="text-white/80 text-sm">{{ $admin->firstName }} {{ $admin->lastName }}</p>
                                 </div>
                             </div>
@@ -169,8 +169,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     <i class="fas fa-exclamation-triangle text-yellow-500"></i>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-yellow-700 font-medium">Dikkat!</p>
-                                    <p class="text-yellow-600 text-sm">Şifre varsayılan değere sıfırlanacak.</p>
+                                    <p class="text-yellow-700 font-medium">{{ __('admin.notifications.attention') }}!</p>
+                                    <p class="text-yellow-600 text-sm">{{ __('admin.actions.password_reset_warning') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -182,25 +182,25 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     <i class="fas fa-lock"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-gray-800">Yeni Şifre</h4>
+                                    <h4 class="font-bold text-gray-800">{{ __('admin.forms.new_password') }}</h4>
                                     <p class="text-gray-600 font-mono bg-white px-2 py-1 rounded border">admin01236</p>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Confirmation Text -->
-                        <p class="text-gray-700">{{ $admin->firstName }} için şifreyi sıfırlamak istediğinizden emin misiniz?</p>
+                        <p class="text-gray-700">{{ __('admin.actions.confirm_password_reset', ['name' => $admin->firstName]) }}</p>
                     </div>
                     
                     <!-- Footer -->
                     <div class="flex space-x-3 p-6 bg-gray-50 rounded-b-2xl">
                         <a href="{{ url('admin/dashboard/resetadpwd') }}/{{ $admin->id }}"
                            class="flex-1 bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-6 py-3 rounded-xl font-semibold text-center hover:from-yellow-600 hover:to-orange-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                            <i class="fas fa-key mr-2"></i>Evet, Sıfırla
+                            <i class="fas fa-key mr-2"></i>{{ __('admin.actions.yes_reset') }}
                         </a>
                         <button onclick="closeModal('resetModal{{ $admin->id }}')"
                                 class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                            İptal
+                            {{ __('admin.actions.cancel') }}
                         </button>
                     </div>
                 </div>
@@ -216,7 +216,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <div class="bg-white/20 p-3 rounded-full backdrop-blur-sm">
                                     <i class="fas fa-trash-alt text-xl"></i>
                                 </div>
-                                <h3 class="text-xl font-bold">Yöneticiyi Sil</h3>
+                                <h3 class="text-xl font-bold">{{ __('admin.actions.delete_admin') }}</h3>
                             </div>
                             <button onclick="closeModal('deleteModal{{ $admin->id }}')"
                                     class="text-white/80 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10">
@@ -232,9 +232,9 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
                             </div>
                             <p class="text-gray-700 text-lg">
-                                <span class="font-semibold">{{ $admin->firstName }} {{ $admin->lastName }}</span> kullanıcısını silmek istediğinizden emin misiniz?
+                                {{ __('admin.actions.confirm_delete_user', ['name' => $admin->firstName . ' ' . $admin->lastName]) }}
                             </p>
-                            <p class="text-red-600 text-sm">Bu işlem geri alınamaz!</p>
+                            <p class="text-red-600 text-sm">{{ __('admin.notifications.irreversible_action') }}</p>
                         </div>
                     </div>
                     
@@ -242,11 +242,11 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     <div class="flex space-x-3 p-6 bg-gray-50 rounded-b-2xl">
                         <a href="{{ url('admin/dashboard/deleletadmin') }}/{{ $admin->id }}"
                            class="flex-1 bg-gradient-to-r from-red-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold text-center hover:from-red-600 hover:to-pink-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                            <i class="fas fa-trash mr-2"></i>Evet, Sil
+                            <i class="fas fa-trash mr-2"></i>{{ __('admin.actions.yes_delete') }}
                         </a>
                         <button onclick="closeModal('deleteModal{{ $admin->id }}')"
                                 class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                            İptal
+                            {{ __('admin.actions.cancel') }}
                         </button>
                     </div>
                 </div>
@@ -262,7 +262,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <div class="bg-white/20 p-3 rounded-full backdrop-blur-sm">
                                     <i class="fas fa-user-edit text-xl"></i>
                                 </div>
-                                <h3 class="text-xl font-bold">Kullanıcı Düzenle</h3>
+                                <h3 class="text-xl font-bold">{{ __('admin.actions.edit_user') }}</h3>
                             </div>
                             <button onclick="closeModal('editModal{{ $admin->id }}')"
                                     class="text-white/80 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10">
@@ -279,40 +279,40 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             
                             <!-- First Name -->
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Ad</label>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">{{ __('admin.forms.first_name') }}</label>
                                 <input type="text" name="fname" value="{{ $admin->firstName }}" required
                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 outline-none">
                             </div>
                             
                             <!-- Last Name -->
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Soyad</label>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">{{ __('admin.forms.last_name') }}</label>
                                 <input type="text" name="l_name" value="{{ $admin->lastName }}" required
                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 outline-none">
                             </div>
                             
                             <!-- Email -->
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">E-posta</label>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">{{ __('admin.users.email') }}</label>
                                 <input type="email" name="email" value="{{ $admin->email }}" required
                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 outline-none">
                             </div>
                             
                             <!-- Phone -->
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Telefon</label>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">{{ __('admin.users.phone') }}</label>
                                 <input type="text" name="phone" value="{{ $admin->phone }}" required
                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 outline-none">
                             </div>
                             
                             <!-- Type -->
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Tür</label>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">{{ __('admin.users.type') }}</label>
                                 <select name="type" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300 outline-none">
                                     <option value="{{ $admin->type }}">{{ $admin->type }}</option>
-                                    <option value="Süper Yönetici">Süper Yönetici</option>
-                                    <option value="Yönetici">Yönetici</option>
-                                    <option value="Dönüşüm Aracısı">Dönüşüm Aracısı</option>
+                                    <option value="Süper Yönetici">{{ __('admin.users.super_admin') }}</option>
+                                    <option value="Yönetici">{{ __('admin.users.admin') }}</option>
+                                    <option value="Dönüşüm Aracısı">{{ __('admin.users.conversion_agent') }}</option>
                                 </select>
                             </div>
                             
@@ -320,11 +320,11 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <div class="flex space-x-3 pt-4">
                                 <button type="submit"
                                         class="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                                    <i class="fas fa-save mr-2"></i>Güncelle
+                                    <i class="fas fa-save mr-2"></i>{{ __('admin.actions.update') }}
                                 </button>
                                 <button type="button" onclick="closeModal('editModal{{ $admin->id }}')"
                                         class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                                    İptal
+                                    {{ __('admin.actions.cancel') }}
                                 </button>
                             </div>
                         </form>
@@ -342,7 +342,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <div class="bg-white/20 p-3 rounded-full backdrop-blur-sm">
                                     <i class="fas fa-envelope text-xl"></i>
                                 </div>
-                                <h3 class="text-xl font-bold">E-posta Gönder</h3>
+                                <h3 class="text-xl font-bold">{{ __('admin.actions.send_email') }}</h3>
                             </div>
                             <button onclick="closeModal('emailModal{{ $admin->id }}')"
                                     class="text-white/80 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10">
@@ -356,7 +356,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         <div class="bg-blue-50 p-4 rounded-xl mb-4">
                             <p class="text-blue-800">
                                 <i class="fas fa-info-circle mr-2"></i>
-                                <span class="font-semibold">{{ $admin->firstName }} {{ $admin->lastName }}</span> kullanıcısına mesaj gönderilecek.
+                                {{ __('admin.actions.email_will_be_sent', ['name' => $admin->firstName . ' ' . $admin->lastName]) }}
                             </p>
                         </div>
                         
@@ -366,15 +366,15 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             
                             <!-- Subject -->
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Konu</label>
-                                <input type="text" name="subject" placeholder="E-posta konusu girin" required
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">{{ __('admin.forms.subject') }}</label>
+                                <input type="text" name="subject" placeholder="{{ __('admin.forms.email_subject_placeholder') }}" required
                                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 outline-none">
                             </div>
                             
                             <!-- Message -->
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Mesaj</label>
-                                <textarea name="message" rows="4" placeholder="Mesajınızı buraya yazın" required
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">{{ __('admin.forms.message') }}</label>
+                                <textarea name="message" rows="4" placeholder="{{ __('admin.forms.message_placeholder') }}" required
                                           class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 outline-none resize-none"></textarea>
                             </div>
                             
@@ -382,11 +382,11 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <div class="flex space-x-3 pt-4">
                                 <button type="submit"
                                         class="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-indigo-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
-                                    <i class="fas fa-paper-plane mr-2"></i>Gönder
+                                    <i class="fas fa-paper-plane mr-2"></i>{{ __('admin.actions.send') }}
                                 </button>
                                 <button type="button" onclick="closeModal('emailModal{{ $admin->id }}')"
                                         class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                                    İptal
+                                    {{ __('admin.actions.cancel') }}
                                 </button>
                             </div>
                         </form>
@@ -473,7 +473,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     });
                 });
 
-                console.log('Modern admin panel loaded successfully');
+                console.log('{{ __("admin.notifications.modern_admin_panel_loaded") }}');
         });
     </script>
 @endsection

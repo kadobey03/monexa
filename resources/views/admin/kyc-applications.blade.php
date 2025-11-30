@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'KYC Başvuru Detayları'])
+@extends('layouts.admin', ['title' => __('admin.kyc.application_details')])
 
 @section('content')
 <div class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 min-h-screen">
@@ -8,7 +8,7 @@
             <a href="{{ route('kyc') }}"
                class="inline-flex items-center px-4 py-2 bg-white dark:bg-admin-800 border border-gray-300 dark:border-admin-600 rounded-lg text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-admin-700 hover:border-gray-400 transition-all duration-200 shadow-sm">
                 <x-heroicon name="arrow-left" class="w-4 h-4 mr-2" />
-                Geri Dön
+                {{ __('common.back') }}
             </a>
         </div>
 
@@ -27,18 +27,18 @@
                             </div>
                             <div>
                                 <h1 class="text-3xl font-bold text-white">{{ $kyc->user->name }}</h1>
-                                <p class="text-indigo-100">KYC Kimlik Doğrulama Başvurusu</p>
+                                <p class="text-indigo-100">{{ __('admin.kyc.identity_verification_application') }}</p>
                             </div>
                         </div>
                         @if ($kyc->status == 'Verified')
                             <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
                                 <x-heroicon name="check-circle" class="w-4 h-4 mr-2" />
-                                Doğrulandı
+                                {{ __('admin.kyc.verified') }}
                             </span>
                         @elseif ($kyc->status == 'Pending')
                             <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
                                 <x-heroicon name="clock" class="w-4 h-4 mr-2" />
-                                Beklemede
+                                {{ __('admin.kyc.pending') }}
                             </span>
                         @else
                             <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-200">
@@ -51,7 +51,7 @@
                         <button onclick="openActionModal()"
                                 class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                             <x-heroicon name="cog-6-tooth" class="w-5 h-5 mr-2" />
-                            KYC İşlemi Yap
+                            {{ __('admin.kyc.perform_action') }}
                         </button>
                     </div>
                 </div>
@@ -71,16 +71,16 @@
                     <div class="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-admin-900 dark:to-admin-800 border-b border-admin-200 dark:border-admin-700">
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center">
                             <x-heroicon name="user" class="w-6 h-6 mr-3 text-blue-600 dark:text-blue-400" />
-                            Kişisel Bilgiler
+                            {{ __('admin.kyc.personal_information') }}
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 mt-1">Kullanıcının kimlik ve iletişim bilgileri</p>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.kyc.user_identity_contact_info') }}</p>
                     </div>
                     <div class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="group">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="id-card" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Ad</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.first_name') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
                                     {{ $kyc->first_name }}
@@ -90,7 +90,7 @@
                             <div class="group">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="id-card" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Soyad</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.last_name') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
                                     {{ $kyc->last_name }}
@@ -100,7 +100,7 @@
                             <div class="group">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="envelope" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">E-posta</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.users.email') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
                                     {{ $kyc->email }}
@@ -110,7 +110,7 @@
                             <div class="group">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="phone" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Telefon Numarası</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.phone_number') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
                                     {{ $kyc->phone_number }}
@@ -120,7 +120,7 @@
                             <div class="group">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="calendar-days" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Doğum Tarihi</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.date_of_birth') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
                                     {{ \Carbon\Carbon::parse($kyc->dob)->format('d.m.Y') }}
@@ -130,10 +130,10 @@
                             <div class="group">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="share-2" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Sosyal Medya</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.social_media') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
-                                    {{ $kyc->social_media ?: 'Belirtilmemiş' }}
+                                    {{ $kyc->social_media ?: __('admin.kyc.not_specified') }}
                                 </div>
                             </div>
                         </div>
@@ -145,16 +145,16 @@
                     <div class="p-6 bg-gradient-to-r from-green-50 to-teal-50 dark:from-admin-900 dark:to-admin-800 border-b border-admin-200 dark:border-admin-700">
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center">
                             <x-heroicon name="map-pin" class="w-6 h-6 mr-3 text-green-600 dark:text-green-400" />
-                            Adres Bilgileri
+                            {{ __('admin.kyc.address_information') }}
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 mt-1">Kullanıcının kayıtlı adres bilgileri</p>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.kyc.user_registered_address_info') }}</p>
                     </div>
                     <div class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="md:col-span-2 group">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="home" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Adres</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.address') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
                                     {{ $kyc->address }}
@@ -164,7 +164,7 @@
                             <div class="group">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="building" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Şehir</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.city') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
                                     {{ $kyc->city }}
@@ -174,7 +174,7 @@
                             <div class="group">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="map" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Eyalet/İl</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.state_province') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
                                     {{ $kyc->state }}
@@ -184,7 +184,7 @@
                             <div class="group md:col-span-2">
                                 <div class="flex items-center mb-2">
                                     <x-heroicon name="flag" class="w-4 h-4 text-gray-400 mr-2" />
-                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Ülke</span>
+                                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.country') }}</span>
                                 </div>
                                 <div class="text-lg font-semibold text-gray-900 dark:text-white bg-gray-50 dark:bg-admin-700 rounded-lg p-3 group-hover:bg-gray-100 dark:group-hover:bg-admin-600 transition-colors duration-200">
                                     {{ $kyc->country }}
@@ -201,16 +201,16 @@
                     <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-admin-900 dark:to-admin-800 border-b border-admin-200 dark:border-admin-700">
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center">
                             <x-heroicon name="file-text" class="w-6 h-6 mr-3 text-purple-600 dark:text-purple-400" />
-                            Kimlik Belgeleri
+                            {{ __('admin.kyc.identity_documents') }}
                         </h3>
-                        <p class="text-gray-600 dark:text-gray-400 mt-1">Yüklenen kimlik doğrulama belgeleri</p>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.kyc.uploaded_verification_documents') }}</p>
                     </div>
                     <div class="p-6">
                         <!-- Document Type -->
                         <div class="mb-6">
                             <div class="flex items-center mb-2">
                                 <x-heroicon name="award" class="w-4 h-4 text-gray-400 mr-2" />
-                                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Belge Türü</span>
+                                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.kyc.document_type') }}</span>
                             </div>
                             <div class="text-lg font-semibold text-gray-900 dark:text-white bg-purple-50 dark:bg-admin-700 rounded-lg p-3">
                                 {{ $kyc->document_type }}
@@ -223,14 +223,14 @@
                                 <div class="mb-3">
                                     <span class="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center justify-center">
                                         <x-heroicon name="id-card" class="w-4 h-4 mr-2" />
-                                        Belgenin Ön Yüzü
+                                        {{ __('admin.kyc.document_front_side') }}
                                     </span>
                                 </div>
                                 <div class="relative group">
                                     <img src="{{ asset('storage/' . $kyc->frontimg) }}"
                                          alt="Kimlik Ön Yüz"
                                          class="w-full h-auto rounded-lg shadow-md border border-admin-200 dark:border-admin-600 hover:shadow-lg transition-shadow duration-200 cursor-pointer"
-                                         onclick="openImageModal('{{ asset('storage/' . $kyc->frontimg) }}', 'Belgenin Ön Yüzü')">
+                                         onclick="openImageModal('{{ asset('storage/' . $kyc->frontimg) }}', '{{ __("admin.kyc.document_front_side") }}')">
                                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition-all duration-200 flex items-center justify-center">
                                         <x-heroicon name="zoom-in" class="text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                                     </div>
@@ -241,14 +241,14 @@
                                 <div class="mb-3">
                                     <span class="text-sm font-medium text-gray-500 dark:text-gray-400 flex items-center justify-center">
                                         <x-heroicon name="id-card" class="w-4 h-4 mr-2" />
-                                        Belgenin Arka Yüzü
+                                        {{ __('admin.kyc.document_back_side') }}
                                     </span>
                                 </div>
                                 <div class="relative group">
                                     <img src="{{ asset('storage/' . $kyc->backimg) }}"
                                          alt="Kimlik Arka Yüz"
                                          class="w-full h-auto rounded-lg shadow-md border border-admin-200 dark:border-admin-600 hover:shadow-lg transition-shadow duration-200 cursor-pointer"
-                                         onclick="openImageModal('{{ asset('storage/' . $kyc->backimg) }}', 'Belgenin Arka Yüzü')">
+                                         onclick="openImageModal('{{ asset('storage/' . $kyc->backimg) }}', '{{ __("admin.kyc.document_back_side") }}')">
                                     <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 rounded-lg transition-all duration-200 flex items-center justify-center">
                                         <x-heroicon name="zoom-in" class="text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                                     </div>
@@ -268,13 +268,13 @@
                         <div class="flex items-center justify-between">
                             <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center">
                                 <x-heroicon name="cog-6-tooth" class="w-6 h-6 mr-3 text-blue-600 dark:text-blue-400" />
-                                KYC İşlemi
+                                {{ __('admin.kyc.kyc_action') }}
                             </h3>
                             <button onclick="closeActionModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">
                                 <x-heroicon name="x-mark" class="w-6 h-6" />
                             </button>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400 mt-1">Başvuruyu onaylayın veya reddedin</p>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.kyc.approve_or_reject_application') }}</p>
                     </div>
                     <div class="p-6">
                         <form action="{{ route('processkyc') }}" method="post" id="kycForm">
@@ -283,32 +283,32 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         <x-heroicon name="clipboard-check" class="w-4 h-4 inline mr-2" />
-                                        İşlem Türü
+                                        {{ __('admin.kyc.action_type') }}
                                     </label>
                                     <select name="action" class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" required>
-                                        <option value="Accept">Kullanıcıyı kabul et ve doğrula</option>
-                                        <option value="Reject">Reddet ve doğrulanmamış bırak</option>
+                                        <option value="Accept">{{ __('admin.kyc.accept_and_verify_user') }}</option>
+                                        <option value="Reject">{{ __('admin.kyc.reject_and_keep_unverified') }}</option>
                                     </select>
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         <x-heroicon name="envelope" class="w-4 h-4 inline mr-2" />
-                                        E-posta Konusu
+                                        {{ __('admin.kyc.email_subject') }}
                                     </label>
                                     <input type="text" name="subject"
                                            class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                           placeholder="Hesap başarıyla doğrulandı" required>
+                                           placeholder="{{ __('admin.kyc.account_successfully_verified') }}" required>
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                         <x-heroicon name="message-circle" class="w-4 h-4 inline mr-2" />
-                                        Kullanıcıya Gönderilecek Mesaj
+                                        {{ __('admin.kyc.message_to_user') }}
                                     </label>
                                     <textarea name="message" rows="4"
                                               class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
-                                              placeholder="Mesaj Girin" required>Belgeleri inceledikten sonra hesabınız doğrulandı. Artık tüm hizmetlerimizden kısıtlama olmadan yararlanabilirsiniz. Teşekkürler!!</textarea>
+                                              placeholder="{{ __('admin.kyc.enter_message') }}" required>{{ __('admin.kyc.default_verification_message') }}</textarea>
                                 </div>
 
                                 <input type="hidden" name="kyc_id" value="{{ $kyc->id }}">
@@ -316,12 +316,12 @@
                                 <div class="flex justify-end space-x-3 pt-4 border-t border-admin-200 dark:border-admin-700">
                                     <button type="button" onclick="closeActionModal()"
                                             class="px-6 py-3 bg-gray-100 dark:bg-admin-700 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:bg-gray-200 dark:hover:bg-admin-600 transition-all duration-200">
-                                        İptal
+                                        {{ __('common.cancel') }}
                                     </button>
                                     <button type="submit"
                                             class="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transform hover:-translate-y-0.5 transition-all duration-200 shadow-lg hover:shadow-xl">
                                         <x-heroicon name="check" class="w-4 h-4 inline mr-2" />
-                                        İşlemi Onayla
+                                        {{ __('admin.kyc.confirm_action') }}
                                     </button>
                                 </div>
                             </div>
@@ -399,7 +399,7 @@
         const submitBtn = this.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
         
-        submitBtn.innerHTML = '<x-heroicon name="loader" class="w-4 h-4 inline mr-2 animate-spin" />İşlem Yapılıyor...';
+        submitBtn.innerHTML = '<x-heroicon name="loader" class="w-4 h-4 inline mr-2 animate-spin" />{{ __("admin.kyc.processing") }}...';
         submitBtn.disabled = true;
         
         // Re-enable button after 10 seconds as fallback

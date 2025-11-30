@@ -15,7 +15,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="content bg-{{ $bg }}">
             <div class="page-inner">
                 <div class="mt-2 mb-4">
-                    <h1 class="title1 text-{{ $text }}">Active Trade Copying</h1>
+                    <h1 class="title1 text-{{ $text }}">{{ __('admin.copy.active_trade_copying') }}</h1>
                 </div>
                 <x-danger-alert />
                 <x-success-alert />
@@ -24,21 +24,21 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         <table id="ShipTable" class="table table-hover text-{{ $text }}">
                             <thead>
                                 <tr>
-                                    <th>Expert Name</th>
-                                    <th>Expert Tag</th>
-                                    <th>Amount </th>
-                                    <th>User</th>
-                                    <th>Date created</th>
+                                    <th>{{ __('admin.copy.expert_name') }}</th>
+                                    <th>{{ __('admin.copy.expert_tag') }}</th>
+                                    <th>{{ __('admin.copy.amount') }}</th>
+                                    <th>{{ __('admin.copy.user') }}</th>
+                                    <th>{{ __('admin.copy.date_created') }}</th>
                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($copytrades as $copytrade)
                                     <tr>
-                                        <td>{{ $copytrade->name ?? "N/A"}}</td>
-                                        <td>{{ $copytrade->tag ?? "N/A"}}</td>
+                                        <td>{{ $copytrade->name ?? __('admin.copy.na') }}</td>
+                                        <td>{{ $copytrade->tag ?? __('admin.copy.na') }}</td>
                                         <td>{{ $settings->currency }}{{ number_format($copytrade->price) }}</td>
-                                        <td>{{ $copytrade->cuser->name ?? "N/A"}}</td>
+                                        <td>{{ $copytrade->cuser->name ?? __('admin.copy.na') }}</td>
                                         <td>{{ \Carbon\Carbon::parse($copytrade->created_at)->toDayDateTimeString() }}</td>
                                         {{-- <td>
                                             <div class="dropdown">

@@ -7,8 +7,8 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">My Investment Plans</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-2">Track and manage your active investment portfolios</p>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('user.my_plans.page_title') }}</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('user.my_plans.page_subtitle') }}</p>
             </div>
 
             <a href="{{ route('mplans') }}"
@@ -16,7 +16,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
-                New Investment
+                {{ __('user.my_plans.new_investment') }}
             </a>
         </div>
 
@@ -37,7 +37,7 @@
                                 </svg>
                             </div>
                             <div class="text-2xl font-bold text-gray-900 dark:text-white">{{ $numOfPlan }}</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Total Plans</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">{{ __('user.my_plans.total_plans') }}</div>
                         </div>
 
                         <div class="text-center">
@@ -47,7 +47,7 @@
                                 </svg>
                             </div>
                             <div class="text-2xl font-bold text-green-600">{{ $plans->where('active', 'yes')->count() }}</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Active</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">{{ __('user.my_plans.active') }}</div>
                         </div>
 
                         <div class="text-center">
@@ -57,7 +57,7 @@
                                 </svg>
                             </div>
                             <div class="text-2xl font-bold text-red-600">{{ $plans->where('active', 'expired')->count() }}</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Expired</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">{{ __('user.my_plans.expired') }}</div>
                         </div>
 
                         <div class="text-center">
@@ -70,7 +70,7 @@
                                 $totalInvested = $plans->sum('amount');
                             @endphp
                             <div class="text-2xl font-bold text-gray-900 dark:text-white">${{ number_format($totalInvested) }}</div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400">Total Invested</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">{{ __('user.my_plans.total_invested') }}</div>
                         </div>
                     </div>
 
@@ -78,14 +78,14 @@
                     <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                             <div class="flex items-center gap-3">
-                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Filter by status:</span>
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('user.my_plans.filter_status') }}:</span>
                                 <div class="relative">
                                     <select name="filter_status"
                                             onchange="updateFilter(this.value)"
                                             class="appearance-none bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                        <option value="All">All Plans</option>
-                                        <option value="yes">Active Plans</option>
-                                        <option value="expired">Expired Plans</option>
+                                        <option value="All">{{ __('user.my_plans.all_plans') }}</option>
+                                        <option value="yes">{{ __('user.my_plans.active_plans') }}</option>
+                                        <option value="expired">{{ __('user.my_plans.expired_plans') }}</option>
                                     </select>
                                     <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                                         <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,7 +96,7 @@
                             </div>
 
                             <div class="text-sm text-gray-600 dark:text-gray-400">
-                                Showing {{ $plans->count() }} of {{ $plans->total() }} plans
+                                {{ __('user.my_plans.showing_plans', ['count' => $plans->count(), 'total' => $plans->total()]) }}
                             </div>
                         </div>
                     </div>
@@ -125,21 +125,21 @@
                                             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                             </svg>
-                                            <span class="text-gray-600 dark:text-gray-400">Investment Amount:</span>
+                                            <span class="text-gray-600 dark:text-gray-400">{{ __('user.my_plans.investment_amount') }}:</span>
                                             <span class="font-semibold text-gray-900 dark:text-white">{{ Auth::user()->currency }}{{ number_format($plan->amount) }}</span>
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                             </svg>
-                                            <span class="text-gray-600 dark:text-gray-400">Expected ROI:</span>
+                                            <span class="text-gray-600 dark:text-gray-400">{{ __('user.my_plans.expected_roi') }}:</span>
                                             <span class="font-semibold text-green-600">{{ $plan->uplan->increment_amount	 }}%</span>
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                             </svg>
-                                            <span class="text-gray-600 dark:text-gray-400">Expiration :</span>
+                                            <span class="text-gray-600 dark:text-gray-400">{{ __('user.my_plans.expiration') }}:</span>
                                             <span class="font-semibold text-gray-900 dark:text-white">{{ $plan->expiration }}</span>
                                         </div>
                                     </div>
@@ -156,7 +156,7 @@
                                     <div class="text-sm text-gray-600 dark:text-gray-400">
                                         {{ $plan->created_at->format('Y') }}
                                     </div>
-                                    <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">Start Date</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">{{ __('user.my_plans.start_date') }}</div>
                                 </div>
 
                                 <!-- Arrow -->
@@ -177,7 +177,7 @@
                                     <div class="text-sm text-gray-600 dark:text-gray-400">
                                         {{ \Carbon\Carbon::parse($plan->expire_date)->format('Y') }}
                                     </div>
-                                    <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">End Date</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">{{ __('user.my_plans.end_date') }}</div>
                                 </div>
                             </div>
 
@@ -187,25 +187,25 @@
                                     @if ($plan->active == 'yes')
                                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
                                             <div class="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-                                            Active
+                                            {{ __('user.my_plans.active') }}
                                         </span>
                                     @elseif($plan->active == 'expired')
                                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
                                             <div class="w-2 h-2 bg-red-400 rounded-full mr-2"></div>
-                                            Expired
+                                            {{ __('user.my_plans.expired') }}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
                                             <div class="w-2 h-2 bg-yellow-400 rounded-full mr-2"></div>
-                                            Inactive
+                                            {{ __('user.my_plans.inactive') }}
                                         </span>
                                     @endif
-                                    <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">Status</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">{{ __('user.my_plans.status') }}</div>
                                 </div>
 
                                 <a href="{{ route('plandetails', $plan->id) }}"
                                    class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-all duration-200">
-                                    View Details
+                                    {{ __('user.my_plans.view_details') }}
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                     </svg>
@@ -227,16 +227,16 @@
                             @endphp
                             <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Investment Progress</span>
-                                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ $remainingDays }} days remaining</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('user.my_plans.investment_progress') }}</span>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ __('user.my_plans.days_remaining', ['days' => $remainingDays]) }}</span>
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                     <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-300"
                                          style="width: {{ $progress }}%"></div>
                                 </div>
                                 <div class="flex justify-between text-xs text-gray-500 dark:text-gray-500 mt-1">
-                                    <span>{{ number_format($progress, 1) }}% complete</span>
-                                    <span>{{ $totalDays }} total days</span>
+                                    <span>{{ __('user.my_plans.progress_complete', ['progress' => number_format($progress, 1)]) }}</span>
+                                    <span>{{ __('user.my_plans.total_days', ['days' => $totalDays]) }}</span>
                                 </div>
                             </div>
                         @endif
@@ -251,16 +251,16 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">No Investment Plans Found</h3>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('user.my_plans.no_plans_found') }}</h3>
                         <p class="text-gray-600 dark:text-gray-400 max-w-md mx-auto mb-8">
-                            You don't have any investment plans at the moment or no plans match your current filter criteria.
+                            {{ __('user.my_plans.no_plans_message') }}
                         </p>
                         <a href="{{ route('mplans') }}"
                            class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 text-white rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
-                            Start Your First Investment
+                            {{ __('user.my_plans.start_first_investment') }}
                         </a>
                     </div>
                 </div>
@@ -277,14 +277,14 @@
                                 <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0L2.586 11l3.707-3.707a1 1 0 011.414 1.414L5.414 11l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                                 </svg>
-                                Previous
+                                {{ __('user.common.previous') }}
                             </span>
                         @else
                             <a href="{{ $plans->previousPageUrl() }}" class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-blue-300 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors duration-200">
                                 <svg class="mr-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0L2.586 11l3.707-3.707a1 1 0 011.414 1.414L5.414 11l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                                 </svg>
-                                Previous
+                                {{ __('user.common.previous') }}
                             </a>
                         @endif
                     </div>
@@ -310,14 +310,14 @@
                     <div class="-mt-px flex w-0 flex-1 justify-end">
                         @if ($plans->hasMorePages())
                             <a href="{{ $plans->nextPageUrl() }}" class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-blue-300 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors duration-200">
-                                Next
+                                {{ __('user.common.next') }}
                                 <svg class="ml-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4.707 4.707-4.707 4.707a1 1 0 01-1.414-1.414L15.586 10l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                 </svg>
                             </a>
                         @else
                             <span class="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-300 dark:text-gray-600 cursor-not-allowed">
-                                Next
+                                {{ __('user.common.next') }}
                                 <svg class="ml-3 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4.707 4.707-4.707 4.707a1 1 0 01-1.414-1.414L15.586 10l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                 </svg>
@@ -329,26 +329,26 @@
                 <!-- Mobile pagination -->
                 <div class="flex justify-between items-center md:hidden px-4 py-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 rounded-b-2xl">
                     <div class="text-sm text-gray-700 dark:text-gray-300">
-                        Showing {{ $plans->firstItem() }} to {{ $plans->lastItem() }} of {{ $plans->total() }} results
+                        {{ __('user.common.showing_results', ['first' => $plans->firstItem(), 'last' => $plans->lastItem(), 'total' => $plans->total()]) }}
                     </div>
                     <div class="flex space-x-2">
                         @if ($plans->onFirstPage())
                             <span class="px-3 py-2 text-sm font-medium text-gray-300 dark:text-gray-600 bg-gray-100 dark:bg-gray-700 rounded-lg cursor-not-allowed">
-                                Previous
+                                {{ __('user.common.previous') }}
                             </span>
                         @else
                             <a href="{{ $plans->previousPageUrl() }}" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-                                Previous
+                                {{ __('user.common.previous') }}
                             </a>
                         @endif
 
                         @if ($plans->hasMorePages())
                             <a href="{{ $plans->nextPageUrl() }}" class="px-3 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200">
-                                Next
+                                {{ __('user.common.next') }}
                             </a>
                         @else
                             <span class="px-3 py-2 text-sm font-medium text-gray-300 dark:text-gray-600 bg-gray-100 dark:bg-gray-700 rounded-lg cursor-not-allowed">
-                                Next
+                                {{ __('user.common.next') }}
                             </span>
                         @endif
                     </div>
@@ -357,7 +357,7 @@
                 <!-- Pagination Info -->
                 <div class="hidden md:flex justify-center mt-4">
                     <p class="text-sm text-gray-700 dark:text-gray-300">
-                        Showing <span class="font-medium">{{ $plans->firstItem() }}</span> to <span class="font-medium">{{ $plans->lastItem() }}</span> of <span class="font-medium">{{ $plans->total() }}</span> investment plans
+                        {{ __('user.my_plans.showing_investment_plans', ['first' => $plans->firstItem(), 'last' => $plans->lastItem(), 'total' => $plans->total()]) }}
                     </p>
                 </div>
             </div>

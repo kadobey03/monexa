@@ -7,10 +7,10 @@
     <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4">
         <div class="text-center">
             <h1 class="text-2xl font-medium text-gray-900 dark:text-white">
-                Hesabınızı Yatırın
+                {{ __('user.deposits.title') }}
             </h1>
             <p class="mt-2 text-gray-600 dark:text-gray-400">
-                Alım satım yapmaya başlamak için güvenli yatırımlar
+                {{ __('user.deposits.description') }}
             </p>
         </div>
     </div>
@@ -26,7 +26,7 @@
 
     <!-- Quick Amount Selector -->
     <div class="mb-8 text-center">
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Hızlı miktarlar:</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{{ __('user.deposits.quick_amounts') }}:</p>
         <div class="flex flex-wrap justify-center gap-3">
             @php
                 $quickAmounts = [100, 500, 1000, 5000];
@@ -49,11 +49,11 @@
             <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-                        Yatırım Yapın
+                        {{ __('user.deposits.make_deposit') }}
                     </h2>
                     <div class="flex items-center gap-2 px-3 py-1 bg-green-50 dark:bg-green-900/20 rounded-full">
                         <x-heroicon name="shield-check" class="w-4 h-4 text-green-600 dark:text-green-400" />
-                        <span class="text-sm text-green-600 dark:text-green-400">Güvenli</span>
+                        <span class="text-sm text-green-600 dark:text-green-400">{{ __('user.deposits.secure') }}</span>
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@
                     <!-- Payment Method Selection -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Ödeme Yöntemi <span class="text-red-500">*</span>
+                            {{ __('user.deposits.payment_method') }} <span class="text-red-500">*</span>
                         </label>
                         <select name="payment_method" required
                                 class="block w-full px-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
@@ -72,7 +72,7 @@
                             @forelse ($dmethods as $method)
                                 <option value="{{$method->name}}">{{$method->name}}</option>
                             @empty
-                                <option>Şu anda hiçbir ödeme yöntemi etkin değil, lütfen daha sonra tekrar kontrol edin.</option>
+                                <option>{{ __('user.deposits.no_payment_methods') }}</option>
                             @endforelse
                         </select>
                     </div>
@@ -80,7 +80,7 @@
                     <!-- Amount Input -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Yatırım Miktarı <span class="text-red-500">*</span>
+                            {{ __('user.deposits.amount') }} <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -92,12 +92,12 @@
                                    required
                                    min="1"
                                    step="0.01"
-                                   placeholder="0.00"
+                                   placeholder="{{ __('user.deposits.amount_placeholder') }}"
                                    class="block w-full pl-8 pr-3 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700
                                           rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
-                            Yatırmak istediğiniz miktarı girin
+                            {{ __('user.deposits.amount_help') }}
                         </p>
                     </div>
 
@@ -105,7 +105,7 @@
                     <div class="pt-4">
                         <button type="submit"
                                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors">
-                            Yatırım İle İlerle
+                            {{ __('user.deposits.proceed_button') }}
                         </button>
                     </div>
                 </form>
@@ -117,7 +117,7 @@
             <!-- Payment Methods Card -->
             <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                    Ödeme Yöntemleri
+                    {{ __('user.deposits.payment_methods_title') }}
                 </h3>
                 <div class="space-y-3">
                     @foreach ($dmethods as $method)
@@ -132,7 +132,7 @@
             <!-- Deposit Guide Card -->
             <div class="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 p-6">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
-                    Nasıl Yatırım Yapılır
+                    {{ __('user.deposits.guide_title') }}
                 </h3>
                 <div class="space-y-4">
                     <div class="flex items-start gap-3">
@@ -140,7 +140,7 @@
                             <span class="text-xs font-medium text-gray-600 dark:text-gray-400">1</span>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Ödeme yönteminizi seçin
+                            {{ __('user.deposits.guide_step1') }}
                         </p>
                     </div>
                     <div class="flex items-start gap-3">
@@ -148,7 +148,7 @@
                             <span class="text-xs font-medium text-gray-600 dark:text-gray-400">2</span>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Yatırım miktarını girin
+                            {{ __('user.deposits.guide_step2') }}
                         </p>
                     </div>
                     <div class="flex items-start gap-3">
@@ -156,7 +156,7 @@
                             <span class="text-xs font-medium text-gray-600 dark:text-gray-400">3</span>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Güvenli ödemeyi tamamlayın
+                            {{ __('user.deposits.guide_step3') }}
                         </p>
                     </div>
                 </div>

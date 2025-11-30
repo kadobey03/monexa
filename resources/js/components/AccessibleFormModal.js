@@ -476,7 +476,7 @@ class AccessibleFormModal {
         this.addValidationRule('required', {
             validate: (value) => value.trim().length > 0,
             message: {
-                tr: 'Bu alan zorunludur.',
+                tr: typeof window.__ === 'function' ? window.__('validation.required_field') : 'Bu alan zorunludur.',
                 en: 'This field is required.'
             }
         });
@@ -487,7 +487,7 @@ class AccessibleFormModal {
                 return emailRegex.test(value);
             },
             message: {
-                tr: 'Geçerli bir email adresi giriniz.',
+                tr: typeof window.__ === 'function' ? window.__('validation.invalid_email') : 'Geçerli bir email adresi giriniz.',
                 en: 'Please enter a valid email address.'
             }
         });
@@ -495,7 +495,7 @@ class AccessibleFormModal {
         this.addValidationRule('min', {
             validate: (value, min) => value.length >= min,
             message: {
-                tr: (min) => `En az ${min} karakter giriniz.`,
+                tr: (min) => typeof window.__ === 'function' ? window.__('validation.min_length', {min: min}) : `En az ${min} karakter giriniz.`,
                 en: (min) => `Minimum ${min} characters required.`
             }
         });
@@ -503,7 +503,7 @@ class AccessibleFormModal {
         this.addValidationRule('max', {
             validate: (value, max) => value.length <= max,
             message: {
-                tr: (max) => `En fazla ${max} karakter girebilirsiniz.`,
+                tr: (max) => typeof window.__ === 'function' ? window.__('validation.max_length', {max: max}) : `En fazla ${max} karakter girebilirsiniz.`,
                 en: (max) => `Maximum ${max} characters allowed.`
             }
         });
@@ -511,7 +511,7 @@ class AccessibleFormModal {
         this.addValidationRule('numeric', {
             validate: (value) => !isNaN(value) && !isNaN(parseFloat(value)),
             message: {
-                tr: 'Sadece sayısal değer girebilirsiniz.',
+                tr: typeof window.__ === 'function' ? window.__('validation.numeric_only') : 'Sadece sayısal değer girebilirsiniz.',
                 en: 'Only numeric values are allowed.'
             }
         });

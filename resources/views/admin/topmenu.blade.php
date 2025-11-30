@@ -10,7 +10,7 @@
                         id="sidebar-toggle"
                         class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-colors duration-200"
                         onclick="toggleSidebar()">
-                    <span class="sr-only">Menüyü aç/kapat</span>
+                    <span class="sr-only">{{ __('admin.topmenu.sidebar_toggle') }}</span>
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
@@ -23,7 +23,7 @@
                             <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-tachometer-alt text-white text-sm"></i>
                             </div>
-                            <span class="hidden sm:block text-xl font-semibold text-gray-900">{{ $settings->site_name ?? 'Admin Panel' }}</span>
+                            <span class="hidden sm:block text-xl font-semibold text-gray-900">{{ $settings->site_name ?? __('admin.topmenu.admin_panel') }}</span>
                         </div>
                     </a>
                 </div>
@@ -37,7 +37,7 @@
                     </div>
                     <input type="text" 
                            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                           placeholder="Kullanıcıları ara..."
+                           placeholder="{{ __('admin.topmenu.search_placeholder') }}"
                            onclick="window.location.href='{{ route('manageusers') }}'">
                 </div>
             </div>
@@ -102,7 +102,7 @@
                         <!-- Header -->
                         <div class="px-4 py-3 border-b border-gray-200 bg-gray-50 rounded-t-lg">
                             <div class="flex items-center justify-between">
-                                <h3 class="text-sm font-semibold text-gray-900">Bildirimler</h3>
+                                <h3 class="text-sm font-semibold text-gray-900">{{ __('admin.topmenu.notifications') }}</h3>
                                 @if($notificationCount > 0)
                                     <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">{{ $notificationCount }}</span>
                                 @endif
@@ -145,7 +145,7 @@
                             @empty
                                 <div class="px-4 py-8 text-center">
                                     <i class="fas fa-bell-slash text-gray-400 text-2xl mb-2"></i>
-                                    <p class="text-sm text-gray-500">Yeni bildirim yok</p>
+                                    <p class="text-sm text-gray-500">{{ __('admin.topmenu.no_notifications') }}</p>
                                 </div>
                             @endforelse
                         </div>
@@ -154,10 +154,56 @@
                             <div class="px-4 py-3 border-t border-gray-200">
                                 <a href="{{ route('admin.notifications') }}" 
                                    class="block w-full text-center px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200">
-                                    Tüm bildirimleri görüntüle
+                                    {{ __('admin.topmenu.view_all_notifications') }}
                                 </a>
                             </div>
                         @endif
+                    </div>
+                </div>
+
+                <!-- Language Selector -->
+                <div class="relative">
+                    <button type="button"
+                            class="language-btn p-2 rounded-lg text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            id="language-button">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-globe h-5 w-5"></i>
+                            <span class="hidden sm:block text-sm font-medium">
+                                @php
+                                    $currentLang = Session::get('locale', config('app.locale'));
+                                    $langNames = [
+                                        'tr' => __('admin.topmenu.language.turkish'),
+                                        'ru' => __('admin.topmenu.language.russian'),
+                                        'en' => __('admin.topmenu.language.english')
+                                    ];
+                                @endphp
+                                {{ $langNames[$currentLang] ?? __('admin.topmenu.language.turkish') }}
+                            </span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </div>
+                    </button>
+
+                    <!-- Language Dropdown -->
+                    <div id="language-dropdown"
+                         class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                        <div class="py-2">
+                            <a href="{{ route('language.switch', 'tr') }}"
+                               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ Session::get('locale', 'tr') === 'tr' ? 'bg-indigo-50 text-indigo-600' : '' }}">
+                                <span class="flag-icon w-4 h-4 mr-3 rounded">🇹🇷</span>
+                                {{ __('admin.topmenu.language.turkish') }}
+                                @if(Session::get('locale', 'tr') === 'tr')
+                                    <i class="fas fa-check ml-auto text-indigo-600"></i>
+                                @endif
+                            </a>
+                            <a href="{{ route('language.switch', 'ru') }}"
+                               class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ Session::get('locale', 'tr') === 'ru' ? 'bg-indigo-50 text-indigo-600' : '' }}">
+                                <span class="flag-icon w-4 h-4 mr-3 rounded">🇷🇺</span>
+                                {{ __('admin.topmenu.language.russian') }}
+                                @if(Session::get('locale', 'tr') === 'ru')
+                                    <i class="fas fa-check ml-auto text-indigo-600"></i>
+                                @endif
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -180,19 +226,19 @@
                             <a href="{{ url('admin/dashboard/adminprofile') }}" 
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                                 <i class="fas fa-user-cog w-4 h-4 mr-3 text-gray-400"></i>
-                                Hesap Ayarları
+                                {{ __('admin.profile.dropdown.account_settings') }}
                             </a>
                             <a href="{{ url('admin/dashboard/adminchangepassword') }}" 
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200">
                                 <i class="fas fa-key w-4 h-4 mr-3 text-gray-400"></i>
-                                Şifre Değiştir
+                                {{ __('admin.profile.dropdown.change_password') }}
                             </a>
                             <hr class="my-2 border-gray-200">
                             <a href="{{ route('adminlogout') }}" 
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                                class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200">
                                 <i class="fas fa-sign-out-alt w-4 h-4 mr-3"></i>
-                                Çıkış Yap
+                                {{ __('admin.profile.dropdown.logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('adminlogout') }}" method="POST" class="hidden">
                                 @csrf
@@ -214,7 +260,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const notificationsButton = document.getElementById('notifications-button');
     const notificationsDropdown = document.getElementById('notifications-dropdown');
     
-    // Profile dropdown  
+    // Language dropdown
+    const languageButton = document.getElementById('language-button');
+    const languageDropdown = document.getElementById('language-dropdown');
+    
+    // Profile dropdown
     const profileButton = document.getElementById('profile-button');
     const profileDropdown = document.getElementById('profile-dropdown');
     
@@ -223,9 +273,12 @@ document.addEventListener('DOMContentLoaded', function() {
         notificationsButton.addEventListener('click', function(e) {
             e.stopPropagation();
             notificationsDropdown.classList.toggle('hidden');
-            // Close profile dropdown if open
+            // Close other dropdowns if open
             if (profileDropdown) {
                 profileDropdown.classList.add('hidden');
+            }
+            if (languageDropdown) {
+                languageDropdown.classList.add('hidden');
             }
         });
     }
@@ -235,9 +288,27 @@ document.addEventListener('DOMContentLoaded', function() {
         profileButton.addEventListener('click', function(e) {
             e.stopPropagation();
             profileDropdown.classList.toggle('hidden');
-            // Close notifications dropdown if open
+            // Close notifications and language dropdowns if open
             if (notificationsDropdown) {
                 notificationsDropdown.classList.add('hidden');
+            }
+            if (languageDropdown) {
+                languageDropdown.classList.add('hidden');
+            }
+        });
+    }
+    
+    // Toggle language dropdown
+    if (languageButton && languageDropdown) {
+        languageButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('hidden');
+            // Close other dropdowns if open
+            if (notificationsDropdown) {
+                notificationsDropdown.classList.add('hidden');
+            }
+            if (profileDropdown) {
+                profileDropdown.classList.add('hidden');
             }
         });
     }
@@ -247,6 +318,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!e.target.closest('.relative')) {
             if (notificationsDropdown) {
                 notificationsDropdown.classList.add('hidden');
+            }
+            if (languageDropdown) {
+                languageDropdown.classList.add('hidden');
             }
             if (profileDropdown) {
                 profileDropdown.classList.add('hidden');

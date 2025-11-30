@@ -1,27 +1,27 @@
-@extends('layouts.admin', ['title' => 'Demo Kullanıcı Yönetimi'])
+@extends('layouts.admin', ['title' => __('admin.demo.user_management')])
 
 @section('content')
 <div class="space-y-6">
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Demo Kullanıcı Yönetimi</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Demo hesaplarını yönet ve kontrol et</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.demo.user_management') }}</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('admin.demo.manage_and_control') }}</p>
         </div>
         <div class="flex space-x-3 mt-4 sm:mt-0">
             <form action="{{ route('admin.demo.bulk-reset') }}" method="POST" class="inline"
-                  onsubmit="return confirm('Tüm demo hesapları sıfırlamak istediğinizden emin misiniz? Bu işlem tüm kullanıcıları etkileyecek.')">
+                  onsubmit="return confirm('{{ __('admin.demo.confirm_bulk_reset') }}')">
                 @csrf
                 <button type="submit"
                         class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 dark:focus:ring-offset-admin-800">
                     <x-heroicon name="rotate-cw" class="h-4 w-4 mr-2" />
-                    Toplu Sıfırla
+                    {{ __('admin.demo.bulk_reset') }}
                 </button>
             </form>
             <a href="{{ route('admin.demo.trades') }}"
                class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                 <x-heroicon name="arrow-trending-up" class="h-4 w-4 mr-2" />
-                Demo İşlemler
+                {{ __('admin.demo.demo_trades') }}
             </a>
         </div>
     </div>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Toplam Demo Kullanıcı</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.demo.total_demo_users') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $demoStats['total_users'] ?? $users->total() }}</p>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Aktif Demo İşlem</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.demo.active_demo_trades') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $demoStats['active_demo_trades'] ?? 0 }}</p>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Ort. Demo Bakiye</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.demo.avg_demo_balance') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">${{ number_format($demoStats['avg_demo_balance'] ?? 0, 2) }}</p>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Toplam Demo Hacim</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.demo.total_demo_volume') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">${{ number_format($demoStats['total_demo_volume'] ?? 0, 2) }}</p>
                 </div>
             </div>
@@ -90,25 +90,25 @@
 
     <!-- Search Filter -->
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700 p-6">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Demo Kullanıcı Ara</h3>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('admin.demo.search_users') }}</h3>
         <form method="GET" class="flex flex-col md:flex-row gap-4">
             <div class="flex-1">
                 <input type="text"
                        name="search"
                        value="{{ request('search') }}"
-                       placeholder="İsim, e-posta veya kullanıcı adına göre arama yapın"
+                       placeholder="{{ __('admin.demo.search_placeholder') }}"
                        class="w-full rounded-md border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
             </div>
             <div class="flex space-x-3">
                 <button type="submit"
                         class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                     <x-heroicon name="magnifying-glass" class="h-4 w-4 mr-2" />
-                    Ara
+                    {{ __('admin.demo.search') }}
                 </button>
                 <a href="{{ route('admin.demo.users') }}"
                    class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                     <x-heroicon name="x-mark" class="h-4 w-4 mr-2" />
-                    Temizle
+                    {{ __('admin.demo.clear') }}
                 </a>
             </div>
         </form>
@@ -117,20 +117,20 @@
     <!-- Demo Users Table -->
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Demo Kullanıcılar</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.demo.users') }}</h3>
         </div>
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-admin-700">
                 <thead class="bg-gray-50 dark:bg-admin-900">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Kullanıcı Adı</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">E-posta</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Demo Bakiye</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Demo Mod</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Hesap Bakiyesi</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Kayıt Tarihi</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">İşlemler</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('admin.demo.user_id') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('admin.demo.username') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('admin.demo.email') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('admin.demo.demo_balance') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('admin.demo.demo_mode') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('admin.demo.account_balance') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('admin.demo.registration_date') }}</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('admin.demo.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-admin-800 divide-y divide-gray-200 dark:divide-admin-700">
@@ -148,12 +148,12 @@
                             @if($user->demo_mode)
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
                                     <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
-                                    Aktif
+                                    {{ __('admin.demo.active') }}
                                 </span>
                             @else
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300">
                                     <x-heroicon name="x-circle" class="w-3 h-3 mr-1" />
-                                    Pasif
+                                    {{ __('admin.demo.passive') }}
                                 </span>
                             @endif
                         </td>
@@ -163,19 +163,19 @@
                             <button type="button"
                                     class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800"
                                     @click="openEditModal({{ $user->id }}, '{{ $user->name }}', {{ $user->demo_balance }})"
-                                    title="Demo Bakiye Düzenle">
-                                <x-heroicon name="edit" class="w-3 h-3 mr-1" />
-                                Düzenle
+                                    title="{{ __('admin.demo.edit_balance_tooltip') }}">
+                               <x-heroicon name="edit" class="w-3 h-3 mr-1" />
+                               {{ __('admin.demo.edit') }}
                             </button>
 
                             <form action="{{ route('admin.demo.reset-user', $user->id) }}" method="POST" class="inline">
                                 @csrf
                                 <button type="submit"
                                         class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 dark:focus:ring-offset-admin-800"
-                                        onclick="return confirm('Bu kullanıcının demo hesabını sıfırlamak istediğinizden emin misiniz?')"
-                                        title="Demo Hesap Sıfırla">
+                                        onclick="return confirm('{{ __('admin.demo.confirm_user_reset') }}')"
+                                        title="{{ __('admin.demo.reset_account_tooltip') }}">
                                     <x-heroicon name="rotate-cw" class="w-3 h-3 mr-1" />
-                                    Sıfırla
+                                    {{ __('admin.demo.reset') }}
                                 </button>
                             </form>
                         </td>
@@ -185,8 +185,8 @@
                         <td colspan="8" class="px-6 py-12 text-center">
                             <div class="flex flex-col items-center">
                                 <x-heroicon name="users" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
-                                <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Kullanıcı bulunamadı</h3>
-                                <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Mevcut arama kriterlerinizle eşleşen kullanıcı yok.</p>
+                                <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">{{ __('admin.demo.no_users_found') }}</h3>
+                                <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">{{ __('admin.demo.no_matching_users') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -240,12 +240,12 @@
                     <x-heroicon name="edit" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Demo Bakiye Düzenle</h3>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ __('admin.demo.edit_balance') }}</h3>
                     
                     <form :action="`/admin/demo/users/${editUserId}/balance`" method="POST" class="mt-4 space-y-4">
                         @csrf
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Kullanıcı Adı</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.demo.username') }}</label>
                             <input type="text"
                                    :value="editUserName"
                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white bg-gray-50 dark:bg-admin-900 shadow-sm"
@@ -253,7 +253,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Mevcut Demo Bakiye</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.demo.current_balance') }}</label>
                             <input type="text"
                                    :value="`$${parseFloat(editCurrentBalance).toFixed(2)}`"
                                    class="mt-1 block w-full rounded-md border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white bg-gray-50 dark:bg-admin-900 shadow-sm"
@@ -261,19 +261,19 @@
                         </div>
 
                         <div>
-                            <label for="action" class="block text-sm font-medium text-gray-700 dark:text-gray-300">İşlem</label>
+                            <label for="action" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.demo.operation') }}</label>
                             <select name="action"
                                     x-model="action"
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500"
                                     required>
-                                <option value="set">Bakiyeyi Ayarla</option>
-                                <option value="add">Miktar Ekle</option>
-                                <option value="subtract">Miktar Çıkar</option>
+                                <option value="set">{{ __('admin.demo.set_balance') }}</option>
+                                <option value="add">{{ __('admin.demo.add_amount') }}</option>
+                                <option value="subtract">{{ __('admin.demo.subtract_amount') }}</option>
                             </select>
                         </div>
 
                         <div>
-                            <label for="demo_balance" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Miktar</label>
+                            <label for="demo_balance" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.demo.amount') }}</label>
                             <div class="mt-1 relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <span class="text-gray-500 dark:text-gray-400 sm:text-sm">$</span>
@@ -292,12 +292,12 @@
                         <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse space-y-2 sm:space-y-0 sm:space-x-reverse sm:space-x-3">
                             <button type="submit"
                                     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800 sm:ml-3 sm:w-auto sm:text-sm">
-                                Güncelle
+                                {{ __('admin.demo.update') }}
                             </button>
                             <button type="button"
                                     @click="editModal = false"
                                     class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-admin-600 shadow-sm px-4 py-2 bg-white dark:bg-admin-700 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800 sm:mt-0 sm:w-auto sm:text-sm">
-                                İptal
+                                {{ __('admin.demo.cancel') }}
                             </button>
                         </div>
                     </form>

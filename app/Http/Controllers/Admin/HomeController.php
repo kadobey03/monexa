@@ -157,7 +157,7 @@ class HomeController extends Controller
         ]);
 
         return view('admin.dashboard-modern', [
-            'title' => 'Admin Dashboard',
+            'title' => __('admin.dashboard.title'),
             'settings' => Settings::find(1),
             'total_deposited' => $total_deposited,
             'pending_deposited' => $pending_deposited,
@@ -274,7 +274,7 @@ class HomeController extends Controller
             
             return response()->json([
                 'success' => false,
-                'message' => 'Dashboard verileri yüklenirken hata oluştu'
+                'message' => __('admin.dashboard.data_load_error')
             ], 500);
         }
     }
@@ -458,7 +458,7 @@ class HomeController extends Controller
     {
         return view('admin.Plans.plans')
             ->with(array(
-                'title' => 'System Plans',
+                'title' => __('admin.plans.title'),
                 'plans' => Plans::where('type', 'Main')->orderby('created_at', 'ASC')->get(),
                 'pplans' => Plans::where('type', 'Promo')->get(),
 
@@ -469,7 +469,7 @@ class HomeController extends Controller
     {
         return view('admin.Plans.newplan')
             ->with(array(
-                'title' => 'Add Investment Plan',
+                'title' => __('admin.plans.add_new'),
 
             ));
     }
@@ -478,7 +478,7 @@ class HomeController extends Controller
     {
         return view('admin.Plans.editplan')
             ->with(array(
-                'title' => 'Edit Investment Plan',
+                'title' => __('admin.plans.edit'),
                 'plan' => Plans::where('id', $id)->first(),
 
             ));
@@ -493,7 +493,7 @@ class HomeController extends Controller
     {
         return view('admin.Signals.signals')
             ->with(array(
-                'title' => 'System Signals',
+                'title' => __('admin.signals.title'),
                 'signals' => Signal::where('type', 'Main')->orderby('created_at', 'ASC')->get(),
                 'ssignals' => Signal::where('type', 'Promo')->get(),
 
@@ -504,7 +504,7 @@ class HomeController extends Controller
     {
         return view('admin.Signals.newsignal')
             ->with(array(
-                'title' => 'Add Trading Signals',
+                'title' => __('admin.signals.add_new'),
 
             ));
     }
@@ -513,7 +513,7 @@ class HomeController extends Controller
     {
         return view('admin.Signals.editsignal')
             ->with(array(
-                'title' => 'Edit Trading Signals',
+                'title' => __('admin.signals.edit'),
                 'signal' => Signal::where('id', $id)->first(),
 
             ));
@@ -523,7 +523,7 @@ class HomeController extends Controller
     public function activesignals()
     {
         return view('admin.Signals.activesingnals', [
-            'title' => 'Active Trading Signals',
+            'title' => __('admin.signals.active'),
             'signals' => User_signal::orderByDesc('id')->with(['dsignal', 'suser'])->get(),
         ]);
     }
@@ -638,7 +638,7 @@ class HomeController extends Controller
             ];
 
             return view('admin.users-management', [
-                'title' => 'All users',
+                'title' => __('admin.users.all_users'),
                 'users' => $users,
                 'user_count' => $user_count,
                 'filtered_count' => $filtered_count,
@@ -653,7 +653,7 @@ class HomeController extends Controller
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()->withErrors($e->errors())->withInput()
-                ->with('error', 'Geçersiz filtre parametreleri.');
+                ->with('error', __('admin.users.invalid_filter_parameters'));
 
         } catch (\Exception $e) {
             \Log::error('User management filter error: ' . $e->getMessage(), [
@@ -662,7 +662,7 @@ class HomeController extends Controller
                 'trace' => $e->getTraceAsString()
             ]);
 
-            return back()->with('error', 'Kullanıcı listesi yüklenirken bir hata oluştu.')
+            return back()->with('error', __('admin.users.load_error'))
                 ->withInput();
         }
     }
@@ -697,13 +697,13 @@ class HomeController extends Controller
     {
         session()->forget(['user_management_filters', 'user_management_per_page']);
         
-        return redirect()->route('manageusers')->with('success', 'Filtreler temizlendi.');
+        return redirect()->route('manageusers')->with('success', __('admin.users.filters_cleared'));
     }
 
     public function activeInvestments()
     {
         return view('admin.Plans.activeinv', [
-            'title' => 'Active Trades plans',
+            'title' => __('admin.plans.active_trades'),
             'plans' => User_plans::where('active', 'yes')->orderByDesc('id')->with(['dplan', 'duser'])->get(),
         ]);
     }
@@ -711,7 +711,7 @@ class HomeController extends Controller
     public function activeLoans()
     {
         return view('admin.Plans.loans', [
-            'title' => 'Active Loans',
+            'title' => __('admin.plans.active_loans'),
             'plans' => Loan::where('active', 'Pending')->orderByDesc('id')->with([ 'luser'])->get(),
         ]);
     }
@@ -720,7 +720,7 @@ class HomeController extends Controller
         $plans = investment::where('active', 'yes')->orderByDesc('id')->with(['uplan', 'puser'])->get();
 
         return view('admin.Plans.investment', [
-            'title' => 'Active investment plans',
+            'title' => __('admin.plans.active_investments'),
             'plans' => investment::where('active', 'yes')->orderByDesc('id')->with(['uplan', 'puser'])->get(),
         ]);
     }
@@ -734,7 +734,7 @@ class HomeController extends Controller
         }
         return view('admin.msubtrade')
             ->with(array(
-                'title' => 'Subscription search result',
+                'title' => __('admin.search.subscription_results'),
                 'subscriptions' => $result,
 
             ));
@@ -755,7 +755,7 @@ class HomeController extends Controller
         return view('admin.mwithdrawals')
             ->with(array(
                 'dp' => $dp,
-                'title' => 'Withdrawals search result',
+                'title' => __('admin.search.withdrawal_results'),
                 'withdrawals' => $result,
 
             ));
@@ -793,7 +793,7 @@ class HomeController extends Controller
 
         return view('admin.Withdrawals.mwithdrawals')
             ->with(array(
-                'title' => 'Manage users withdrawals',
+                'title' => __('admin.withdrawals.manage'),
                 'withdrawals' => $withdrawalsQuery->orderBy('id', 'desc')->get(),
             ));
     }
@@ -829,7 +829,7 @@ class HomeController extends Controller
 
         return view('admin.Deposits.mdeposits')
             ->with(array(
-                'title' => 'Manage users deposits',
+                'title' => __('admin.deposits.manage'),
                 'deposits' => $depositsQuery->orderBy('id', 'desc')->paginate(15),
             ));
     }
@@ -839,7 +839,7 @@ class HomeController extends Controller
     {
         return view('admin.agents')
             ->with(array(
-                'title' => 'Manage agents',
+                'title' => __('admin.agents.manage'),
                 'users' => User::orderBy('id', 'desc')->get(),
                 'agents' => Agent::all(),
             ));
@@ -849,7 +849,7 @@ class HomeController extends Controller
     {
         return view('admin.about')
             ->with(array(
-                'title' => 'About Remedy Algo trade script',
+                'title' => __('admin.about.title'),
 
             ));
     }
@@ -857,7 +857,7 @@ class HomeController extends Controller
     public function emailServices()
     {
         return view('admin.email.index', [
-            'title' =>  "Email services"
+            'title' =>  __('admin.email.services')
         ]);
     }
 
@@ -866,7 +866,7 @@ class HomeController extends Controller
     {
         return view('admin.viewagent')
             ->with(array(
-                'title' => 'Agent record',
+                'title' => __('admin.agents.view_record'),
                 'agent' => User::where('id', $agent)->first(),
                 'ag_r' => User::where('ref_by', $agent)->get(),
 
@@ -884,7 +884,7 @@ class HomeController extends Controller
             //'markets' => markets::all(),
             'cpd' => Cp_transaction::where('id', '=', '1')->first(),
             'currencies' => $currencies,
-            'title' => 'System Settings'
+            'title' => __('admin.settings.title')
         ));
         //return view('settings')->with(array('title' =>'System Settings'));
     }
@@ -896,7 +896,7 @@ class HomeController extends Controller
  public function mwalletdelete($id)
  {
      Wallets::where('id', $id)->delete();
-     return redirect()->back()->with('success', 'Wallet deleted Sucessful!');
+     return redirect()->back()->with('success', __('admin.wallet.deleted_successfully'));
  }
 
     //Return manage mwalletconnect route
@@ -904,7 +904,7 @@ class HomeController extends Controller
     {
         return view('admin.wallet.mwalletconnect')
             ->with(array(
-                'title' => 'Manage users wallet connect',
+                'title' => __('admin.wallet.manage_connections'),
 
                 'wallets' => Wallets::with('wuser')->orderBy('id', 'desc')->get(),
 
@@ -918,7 +918,7 @@ class HomeController extends Controller
     {
         return view('admin.wallet.mwalletsettings')
             ->with(array(
-                'title' => 'Manage users wallet connect settings',
+                'title' => __('admin.wallet.manage_settings'),
                 'settings' => Settings::where('id',1)->first(),
 
             ));
@@ -946,7 +946,7 @@ class HomeController extends Controller
             ]);
 
         return redirect()->back()
-          ->with('success', 'Updated added Sucessfull!y');
+          ->with('success', __('admin.wallet.updated_successfully'));
     }
 
 
@@ -958,7 +958,7 @@ class HomeController extends Controller
         return view('admin.subscription.msubtrade')
             ->with(array(
                 'subscriptions' => Mt4Details::with('tuser')->orderBy('id', 'desc')->paginate(10),
-                'title' => 'Manage Subscription',
+                'title' => __('admin.subscription.manage'),
 
             ));
     }
@@ -969,7 +969,7 @@ class HomeController extends Controller
             ->with(array(
                 'plans' => User_plans::where('user', $id)->orderBy('id', 'desc')->get(),
                 'user' => User::where('id', $id)->first(),
-                'title' => 'User Investment trades',
+                'title' => __('admin.users.investment_trades'),
 
             ));
     }
@@ -981,7 +981,7 @@ class HomeController extends Controller
             ->with(array(
                 'plans' => investment::where('user', $id)->orderBy('id', 'desc')->get(),
                 'user' => User::where('id', $id)->first(),
-                'title' => 'User Investment Plan(s)',
+                'title' => __('admin.users.investment_plans'),
 
             ));
     }
@@ -993,7 +993,7 @@ class HomeController extends Controller
     public function frontpage()
     {
         return view('admin.Settings.FrontendSettings.frontpage', [
-            'title' => 'Front page management',
+            'title' => __('admin.frontend.page_management'),
             'faqs' => Faq::orderByDesc('id')->get(),
             'images' => Images::orderBy('id', 'desc')->get(),
             'testimonies' => Testimony::orderBy('id', 'desc')->get(),
@@ -1005,7 +1005,7 @@ class HomeController extends Controller
     public function adduser()
     {
         return view('admin.referuser')->with(array(
-            'title' => 'Add new Users',
+            'title' => __('admin.users.add_new'),
             'settings' => Settings::where('id', '=', '1')->first()
         ));
     }
@@ -1013,7 +1013,7 @@ class HomeController extends Controller
     public function addmanager()
     {
         return view('admin.addadmin')->with(array(
-            'title' => 'Add new manager',
+            'title' => __('admin.managers.add_new'),
             'settings' => Settings::where('id', '=', '1')->first()
         ));
     }
@@ -1053,7 +1053,7 @@ class HomeController extends Controller
         ]);
 
         return view('admin.kyc', [
-            'title' => 'KYC Applications',
+            'title' => __('admin.kyc.applications'),
             'settings' => Settings::find(1),
             'kycs' => $kycsQuery->orderByDesc('id')->get(),
         ]);
@@ -1063,7 +1063,7 @@ class HomeController extends Controller
     {
 
         return view('admin.kyc-applications', [
-            'title' => 'View KYC Application',
+            'title' => __('admin.kyc.view_application'),
             'kyc' => Kyc::where('id', $id)->with(['user'])->first(),
         ]);
     }
@@ -1072,7 +1072,7 @@ class HomeController extends Controller
     {
         return view('admin.Profile.profile')
             ->with(array(
-                'title' => 'Admin Profile',
+                'title' => __('admin.profile.title'),
 
 
             ));
@@ -1082,7 +1082,7 @@ class HomeController extends Controller
     {
 
         return view('admin.Settings.Crypto.pageview', [
-            'title' => 'Manage Crypto Asset',
+            'title' => __('admin.crypto.manage_assets'),
             'moresettings' => SettingsCont::find(1),
         ]);
     }
@@ -1091,7 +1091,7 @@ class HomeController extends Controller
     public function p2pView()
     {
         return view('admin.p2p.show', [
-            'title' => 'Manage P2P transactions',
+            'title' => __('admin.p2p.manage_transactions'),
         ]);
     }
 
@@ -1101,7 +1101,7 @@ class HomeController extends Controller
         return view('admin.task')
             ->with(array(
                 'admin' => Admin::orderby('id', 'desc')->get(),
-                'title' => 'Create a New Task',
+                'title' => __('admin.tasks.create_new'),
 
             ));
     }
@@ -1112,7 +1112,7 @@ class HomeController extends Controller
             ->with(array(
                 'admin' => Admin::orderby('id', 'desc')->get(),
                 'tasks' => Task::orderby('id', 'desc')->get(),
-                'title' => 'Manage Task',
+                'title' => __('admin.tasks.manage'),
 
             ));
     }
@@ -1121,7 +1121,7 @@ class HomeController extends Controller
         return view('admin.vtask')
             ->with(array(
                 'tasks' => Task::orderby('id', 'desc')->where('designation', Auth('admin')->User()->id)->get(),
-                'title' => 'View my Task',
+                'title' => __('admin.tasks.view_mine'),
 
             ));
     }
@@ -1135,7 +1135,7 @@ class HomeController extends Controller
                     ->orderby('id', 'desc')
                     ->where('cstatus', NULL)
                     ->get(),
-                'title' => 'Manage New Registered Clients',
+                'title' => __('admin.leads.manage_new_clients'),
             ));
     }
 
@@ -1239,7 +1239,7 @@ class HomeController extends Controller
             'availableActions' => $availableActions,
             'userPermissions' => $userPermissions,
             'mobileData' => $mobileData,
-            'title' => 'Lead Detayı - ' . $lead->name
+            'title' => __('admin.leads.detail_title', ['name' => $lead->name])
         ]);
     }
 
@@ -1462,7 +1462,7 @@ class HomeController extends Controller
                     ['cstatus', NULL]
                 ])->get(),
 
-                'title' => 'Manage New Registered Clients',
+                'title' => __('admin.leads.manage_assigned'),
 
             ));
     }
@@ -1473,7 +1473,7 @@ class HomeController extends Controller
         return view('admin.customer')
             ->with(array(
                 'users' => User::orderby('id', 'desc')->where('cstatus', 'Customer')->get(),
-                'title' => 'Manage New Registered Clients',
+                'title' => __('admin.customers.manage'),
 
             ));
     }
@@ -1550,7 +1550,7 @@ class HomeController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Lead status başarıyla güncellendi.',
+                'message' => __('admin.leads.status_updated'),
                 'data' => [
                     'user_id' => $user->id,
                     'old_status' => $oldStatus,
@@ -1567,14 +1567,14 @@ class HomeController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Geçersiz veri gönderildi.',
+                'message' => __('validation.invalid_data'),
                 'errors' => $e->errors()
             ], 422);
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Kullanıcı bulunamadı.'
+                'message' => __('admin.users.not_found')
             ], 404);
 
         } catch (\Exception $e) {
@@ -1587,7 +1587,7 @@ class HomeController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Lead status güncellenirken bir hata oluştu.'
+                'message' => __('admin.leads.status_update_error')
             ], 500);
         }
     }
@@ -1630,7 +1630,7 @@ class HomeController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Admin ataması başarıyla güncellendi!',
+                'message' => __('admin.leads.admin_assigned'),
                 'data' => [
                     'user_id' => $user->id,
                     'old_admin_id' => $oldAdminId,
@@ -1642,14 +1642,14 @@ class HomeController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Geçersiz admin seçimi.',
+                'message' => __('admin.leads.invalid_admin'),
                 'errors' => $e->errors()
             ], 422);
 
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Kullanıcı veya admin bulunamadı.'
+                'message' => __('admin.leads.user_or_admin_not_found')
             ], 404);
 
         } catch (\Exception $e) {
@@ -1662,7 +1662,7 @@ class HomeController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Admin ataması güncellenirken bir hata oluştu.'
+                'message' => __('admin.leads.assignment_update_error')
             ], 500);
         }
     }
@@ -1804,7 +1804,7 @@ class HomeController extends Controller
             ]);
             
             return back()->withErrors($e->errors())->withInput()
-                ->with('error', 'Geçersiz export parametreleri.');
+                ->with('error', __('admin.export.invalid_parameters'));
                 
         } catch (\Exception $e) {
             // Log general error
@@ -1835,7 +1835,7 @@ class HomeController extends Controller
                 'trace' => $e->getTraceAsString()
             ]);
             
-            return back()->with('error', 'Export işlemi sırasında bir hata oluştu: ' . $e->getMessage());
+            return back()->with('error', __('admin.export.error', ['error' => $e->getMessage()]));
         }
     }
 
@@ -1880,7 +1880,7 @@ class HomeController extends Controller
             
             return response()->json([
                 'success' => true,
-                'message' => "{$updatedCount} kullanıcının lead status'u '{$newStatus}' olarak güncellendi.",
+                'message' => __('admin.leads.bulk_status_updated_message', ['count' => $updatedCount, 'status' => $newStatus]),
                 'updated_count' => $updatedCount
             ]);
             
@@ -1888,7 +1888,7 @@ class HomeController extends Controller
             DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Geçersiz veri gönderildi.',
+                'message' => __('validation.invalid_data'),
                 'errors' => $e->errors()
             ], 422);
             
@@ -1904,7 +1904,7 @@ class HomeController extends Controller
             
             return response()->json([
                 'success' => false,
-                'message' => 'Toplu durum güncelleme sırasında bir hata oluştu.'
+                'message' => __('admin.leads.bulk_status_update_error')
             ], 500);
         }
     }
@@ -2028,7 +2028,7 @@ class HomeController extends Controller
             
             return response()->json([
                 'success' => true,
-                'message' => "{$updatedCount} kullanıcı '{$adminName}' adminına atandı.",
+                'message' => __('admin.leads.bulk_assigned_message', ['count' => $updatedCount, 'admin' => $adminName]),
                 'updated_count' => $updatedCount,
                 'admin_name' => $adminName
             ]);
@@ -2060,7 +2060,7 @@ class HomeController extends Controller
             
             return response()->json([
                 'success' => false,
-                'message' => 'Geçersiz veri gönderildi.',
+                'message' => __('validation.invalid_data'),
                 'errors' => $e->errors()
             ], 422);
             
@@ -2099,7 +2099,7 @@ class HomeController extends Controller
             
             return response()->json([
                 'success' => false,
-                'message' => 'Toplu admin ataması sırasında bir hata oluştu.'
+                'message' => __('admin.leads.bulk_assignment_error')
             ], 500);
         }
     }

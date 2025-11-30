@@ -32,7 +32,7 @@ class CryptoPayment extends Component
         try {
             // Validate session data
             if (!$this->amount || !$this->paymentMode) {
-                session()->flash('error', 'Payment session expired. Please try again.');
+                session()->flash('error', __('livewire.crypto_payment.session_expired'));
                 return;
             }
 
@@ -49,7 +49,7 @@ class CryptoPayment extends Component
                     'amount' => $this->amount,
                     'response' => $response
                 ]);
-                session()->flash('error', 'Failed to create payment order. Please try again.');
+                session()->flash('error', __('livewire.crypto_payment.order_creation_failed'));
                 return;
             }
 
@@ -69,7 +69,7 @@ class CryptoPayment extends Component
                 'user_id' => auth()->id(),
                 'error' => $e->getMessage()
             ]);
-            session()->flash('error', 'An error occurred. Please try again.');
+            session()->flash('error', __('livewire.crypto_payment.payment_error'));
         } finally {
             $this->processing = false;
         }
@@ -111,7 +111,7 @@ class CryptoPayment extends Component
         $settings = Settings::where('id', '1')->first();
 
         return view('livewire.user.crypto-payment', [
-            'title' => 'Deposit via crypto',
+            'title' => __('livewire.crypto_payment.deposit_via_crypto'),
             'amount' => $this->amount,
             'payment_mode' => $method,
             'currency' => $settings->currency ?? 'USD'

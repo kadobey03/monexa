@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Müşteri Çekimleri'])
+@extends('layouts.admin', ['title' => __('admin.withdrawals.customer_withdrawals')])
 
 @section('content')
 <div class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 min-h-screen">
@@ -13,8 +13,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Müşteri Çekimlerini Yönet</h1>
-                                <p class="text-gray-600 dark:text-gray-400 mt-1">Tüm müşteri çekim taleplerini buradan yönetebilirsiniz</p>
+                                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.withdrawals.manage_customer_withdrawals') }}</h1>
+                                <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.withdrawals.manage_withdrawal_requests_description') }}</p>
                             </div>
                         </div>
                         
@@ -24,13 +24,13 @@
                                     <path fill-rule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd"></path>
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd"></path>
                                 </svg>
-                                {{ count($withdrawals) }} Toplam Talep
+                                {{ count($withdrawals) }} {{ __('admin.withdrawals.total_requests') }}
                             </div>
                             <button onclick="refreshTable()" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200">
                                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
                                 </svg>
-                                Yenile
+                                {{ __('admin.withdrawals.refresh') }}
                             </button>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                             <div class="relative z-10">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-yellow-100 text-sm font-medium">Bekleyen</p>
+                                        <p class="text-yellow-100 text-sm font-medium">{{ __('admin.withdrawals.pending') }}</p>
                                         <p class="text-2xl font-bold mt-1">{{ collect($withdrawals)->where('status', '!=', 'Processed')->count() }}</p>
                                     </div>
                                     <div class="p-3 bg-white/20 rounded-full">
@@ -69,7 +69,7 @@
                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                 </svg>
-                                Onay bekliyor
+                                {{ __('admin.withdrawals.waiting_approval') }}
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                             <div class="relative z-10">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-green-100 text-sm font-medium">İşlenen</p>
+                                        <p class="text-green-100 text-sm font-medium">{{ __('admin.withdrawals.processed') }}</p>
                                         <p class="text-2xl font-bold mt-1">{{ collect($withdrawals)->where('status', 'Processed')->count() }}</p>
                                     </div>
                                     <div class="p-3 bg-white/20 rounded-full">
@@ -97,7 +97,7 @@
                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                Tamamlananlar
+                                {{ __('admin.withdrawals.completed') }}
                             </div>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                             <div class="relative z-10">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-blue-100 text-sm font-medium">Toplam Tutar</p>
+                                        <p class="text-blue-100 text-sm font-medium">{{ __('admin.withdrawals.total_amount') }}</p>
                                         <p class="text-2xl font-bold mt-1">{{ $settings->currency }}{{ number_format(collect($withdrawals)->sum('amount')) }}</p>
                                     </div>
                                     <div class="p-3 bg-white/20 rounded-full">
@@ -125,7 +125,7 @@
                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
                                 </svg>
-                                Tüm çekimler
+                                {{ __('admin.withdrawals.all_withdrawals') }}
                             </div>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                             <div class="relative z-10">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-purple-100 text-sm font-medium">Bu Ay</p>
+                                        <p class="text-purple-100 text-sm font-medium">{{ __('admin.withdrawals.this_month') }}</p>
                                         <p class="text-2xl font-bold mt-1">{{ collect($withdrawals)->where('created_at', '>=', now()->startOfMonth())->count() }}</p>
                                     </div>
                                     <div class="p-3 bg-white/20 rounded-full">
@@ -153,7 +153,7 @@
                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                                 </svg>
-                                Son 30 gün
+                                {{ __('admin.withdrawals.last_30_days') }}
                             </div>
                         </div>
                     </div>
@@ -164,13 +164,13 @@
                     <!-- Table Header -->
                     <div class="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-admin-900 dark:to-admin-800 px-6 py-4 border-b border-admin-200 dark:border-admin-700">
                         <div class="flex items-center justify-between">
-                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Çekim Talepleri</h2>
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.withdrawals.withdrawal_requests') }}</h2>
                             <div class="flex items-center space-x-2">
                                 <div class="flex items-center space-x-2 bg-white px-3 py-2 rounded-lg border border-gray-200">
                                     <svg class="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                                     </svg>
-                                    <input type="text" placeholder="Çekim ara..." class="border-0 focus:ring-0 focus:outline-none text-sm w-32" id="searchInput">
+                                    <input type="text" placeholder="{{ __('admin.withdrawals.search_withdrawal_placeholder') }}" class="border-0 focus:ring-0 focus:outline-none text-sm w-32" id="searchInput">
                                 </div>
                             </div>
                         </div>
@@ -182,28 +182,28 @@
                             <thead class="bg-gray-50 dark:bg-admin-900">
                                 <tr>
                                     <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Müşteri Adı
+                                        {{ __('admin.withdrawals.customer_name') }}
                                     </th>
                                     <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Talep Edilen Tutar
+                                        {{ __('admin.withdrawals.requested_amount') }}
                                     </th>
                                     <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Tutar + Masraflar
+                                        {{ __('admin.withdrawals.amount_plus_fees') }}
                                     </th>
                                     <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Ödeme Yöntemi
+                                        {{ __('admin.withdrawals.payment_method') }}
                                     </th>
                                     <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        E-posta
+                                        {{ __('admin.withdrawals.email') }}
                                     </th>
                                     <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Durum
+                                        {{ __('admin.withdrawals.status') }}
                                     </th>
                                     <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Tarih
+                                        {{ __('admin.withdrawals.date') }}
                                     </th>
                                     <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        İşlemler
+                                        {{ __('admin.withdrawals.actions') }}
                                     </th>
                                 </tr>
                             </thead>
@@ -232,8 +232,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="ml-4">
-                                                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Kullanıcı Silindi</div>
-                                                        <div class="text-sm text-gray-400">Hesap mevcut değil</div>
+                                                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.withdrawals.user_deleted') }}</div>
+                                                        <div class="text-sm text-gray-400">{{ __('admin.withdrawals.account_not_available') }}</div>
                                                     </div>
                                                 @endif
                                             </div>
@@ -281,14 +281,14 @@
                                                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                                     </svg>
-                                                    İşlendi
+                                                    {{ __('admin.withdrawals.processed') }}
                                                 </span>
                                             @else
                                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                                                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                                                     </svg>
-                                                    Bekliyor
+                                                    {{ __('admin.withdrawals.waiting') }}
                                                 </span>
                                             @endif
                                         </td>
@@ -314,7 +314,7 @@
                                                     <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
                                                     <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
                                                 </svg>
-                                                Görüntüle
+                                                {{ __('admin.withdrawals.view') }}
                                             </a>
                                         </td>
                                     </tr>
@@ -327,13 +327,13 @@
                                                         <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                                     </svg>
                                                 </div>
-                                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Henüz Çekim Talebi Yok</h3>
-                                                <p class="text-gray-500 mb-6">Müşterilerden gelen çekim talepleri burada listelenecek.</p>
+                                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">{{ __('admin.withdrawals.no_withdrawal_requests') }}</h3>
+                                                <p class="text-gray-500 mb-6">{{ __('admin.withdrawals.requests_will_be_listed_here') }}</p>
                                                 <button onclick="refreshTable()" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
                                                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
                                                     </svg>
-                                                    Sayfayı Yenile
+                                                    {{ __('admin.withdrawals.refresh_page') }}
                                                 </button>
                                             </div>
                                         </td>
@@ -358,7 +358,7 @@
             setTimeout(() => {
                 table.style.opacity = '1';
                 // Show success message if you have a notification system
-                console.log('Tablo yenilendi');
+                console.log('{{ __('admin.withdrawals.table_refreshed') }}');
             }, 1000);
         }
         

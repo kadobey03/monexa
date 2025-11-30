@@ -38,7 +38,7 @@ class ManageUsers extends Component
     public $selectAll = false;
     public $checkrecord = [];
     public $selected = '';
-    public $action = 'Delete';
+    public $action = 'Delete'; // Bu değer HTML'de value olarak kullanılıyor, template'te çevrilecek
     public $fullname;
     public $email;
     public $password;
@@ -51,8 +51,8 @@ class ManageUsers extends Component
     public $datecreated;
     public $topamount;
     public $toptype;
-    public $topcolumn = "Bonus";
-    public $userTypes = "All";
+    public $topcolumn = "Bonus"; // Bu değer HTML'de value olarak kullanılıyor, template'te çevrilecek
+    public $userTypes = "All"; // Bu değer HTML'de value olarak kullanılıyor, template'te çevrilecek
     public $success = '';
     
     // DEBUG: Filter properties ekliyorum
@@ -169,10 +169,10 @@ class ManageUsers extends Component
     {
         try {
             User::findOrFail($userId)->update(['lead_status' => $statusName]);
-            session()->flash('success', 'Lead status başarıyla güncellendi!');
+            session()->flash('success', __('admin.users.lead_status_updated'));
             $this->dispatch('status-updated');
         } catch (\Exception $e) {
-            session()->flash('error', 'Status güncellenirken hata oluştu.');
+            session()->flash('error', __('admin.users.status_update_error'));
         }
     }
 
@@ -247,8 +247,8 @@ class ManageUsers extends Component
             ]);
 
         // Success message and form reset
-        $this->success = 'Kullanıcı başarıyla oluşturuldu!';
-        session()->flash('success', 'Kullanıcı başarıyla oluşturuldu!');
+        $this->success = __('admin.users.created_successfully');
+        session()->flash('success', __('admin.users.created_successfully'));
 
         // Reset form fields
         $this->reset(['fullname', 'email', 'password', 'password_confirmation', 'mobile_number', 'user_role']);
@@ -276,7 +276,7 @@ class ManageUsers extends Component
                             $newt->user = $user->id;
                             $newt->plan = $plan->name;
                             $newt->amount = $amount;
-                            $newt->type = 'ROI';
+                            $newt->type = __('admin.transactions.roi');
                             $newt->user_plan_id = $uplan->id;
                             $newt->created_at = Carbon::parse($this->datecreated);
                             $newt->updated_at = Carbon::parse($this->datecreated);
@@ -295,7 +295,7 @@ class ManageUsers extends Component
                     }
                 }
             });
-        session()->flash('success', 'Action Successful');
+        session()->flash('success', __('admin.messages.action_successful'));
         return redirect()->route('manageusers');
     }
 
@@ -326,7 +326,7 @@ class ManageUsers extends Component
                 //add history
                 Tp_Transaction::create([
                     'user' => $user->id,
-                    'plan' => "Credit",
+                    'plan' => __('admin.transactions.credit'),
                     'amount'=> $this->topamount,
                     'type'=> $this->topcolumn,
                 ]);
@@ -349,7 +349,7 @@ class ManageUsers extends Component
                 //add history
                 Tp_Transaction::create([
                     'user' => $user->id,
-                    'plan' => "Credit reversal",
+                    'plan' => __('admin.transactions.credit_reversal'),
                     'amount'=>$this->topamount,
                     'type'=>$this->topcolumn,
                 ]);
@@ -357,7 +357,7 @@ class ManageUsers extends Component
             }
         }
 
-        session()->flash('success', 'Action Successful');
+        session()->flash('success', __('admin.messages.action_successful'));
         return redirect()->route('manageusers');
     }
     //Delete user
@@ -513,7 +513,7 @@ class ManageUsers extends Component
             }
         }
 
-        session()->flash('success', 'Action successful!');
+        session()->flash('success', __('admin.messages.action_successful'));
         return redirect()->route('manageusers');
     }
 }

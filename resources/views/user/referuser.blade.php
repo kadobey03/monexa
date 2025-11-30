@@ -16,8 +16,8 @@
     <div class="mb-6 sm:mb-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">Referans Programı</h1>
-                <p class="text-gray-400 text-sm sm:text-base">{{ $settings->site_name }} ile ağınızı büyütün ve ödüller kazanın</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">{{ __('user.referral.program_title') }}</h1>
+                <p class="text-gray-400 text-sm sm:text-base">{{ __('user.referral.program_description', ['site_name' => $settings->site_name]) }}</p>
             </div>
             <div class="flex flex-wrap gap-2">
                 <button onclick="referralManager.showShareModal()"
@@ -25,14 +25,14 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
                     </svg>
-                    Programı Paylaş
+                    {{ __('user.referral.share_program') }}
                 </button>
                 <button onclick="referralManager.toggleQRCode()"
                         class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors duration-200 text-sm font-medium">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h2M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1v-2a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
                     </svg>
-                    QR Kod
+                    {{ __('user.referral.qr_code') }}
                 </button>
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Toplam Referans</p>
+                    <p class="text-gray-400 text-xs sm:text-sm font-medium">{{ __('user.referral.total_referrals') }}</p>
                     <p class="text-white text-xl sm:text-2xl font-bold mt-1">{{ count($array->where('ref_by', Auth::user()->id)) }}</p>
                 </div>
                 <div class="bg-blue-600/10 p-2 sm:p-3 rounded-lg">
@@ -53,14 +53,14 @@
                 </div>
             </div>
             <div class="mt-3 sm:mt-4">
-                <span class="text-green-500 text-xs sm:text-sm font-medium">Bu ay +%12</span>
+                <span class="text-green-500 text-xs sm:text-sm font-medium">{{ __('user.referral.this_month_growth', ['percentage' => '12']) }}</span>
             </div>
         </div>
 
         <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Toplam Kazanç</p>
+                    <p class="text-gray-400 text-xs sm:text-sm font-medium">{{ __('user.referral.total_earnings') }}</p>
                     <p class="text-white text-xl sm:text-2xl font-bold mt-1">${{ number_format(Auth::user()->ref_earnings ?? 0, 2) }}</p>
                 </div>
                 <div class="bg-green-600/10 p-2 sm:p-3 rounded-lg">
@@ -70,22 +70,22 @@
                 </div>
             </div>
             <div class="mt-3 sm:mt-4">
-                <span class="text-green-500 text-xs sm:text-sm font-medium">Bu ay +%8.3</span>
+                <span class="text-green-500 text-xs sm:text-sm font-medium">{{ __('user.referral.this_month_growth', ['percentage' => '8.3']) }}</span>
             </div>
         </div>
 
         <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Seviyeniz</p>
+                    <p class="text-gray-400 text-xs sm:text-sm font-medium">{{ __('user.referral.your_level') }}</p>
                     <p class="text-white text-xl sm:text-2xl font-bold mt-1">
                         @php
                             $referralCount = count($array->where('ref_by', Auth::user()->id));
-                            if($referralCount >= 100) echo 'Elite';
-                            elseif($referralCount >= 50) echo 'Gold';
-                            elseif($referralCount >= 25) echo 'Silver';
-                            elseif($referralCount >= 10) echo 'Bronze';
-                            else echo 'Starter';
+                            if($referralCount >= 100) echo __('user.referral.level_elite');
+                            elseif($referralCount >= 50) echo __('user.referral.level_gold');
+                            elseif($referralCount >= 25) echo __('user.referral.level_silver');
+                            elseif($referralCount >= 10) echo __('user.referral.level_bronze');
+                            else echo __('user.referral.level_starter');
                         @endphp
                     </p>
                 </div>
@@ -105,8 +105,8 @@
         <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Referans Veren</p>
-                    <p class="text-white text-lg sm:text-xl font-bold mt-1">{{ $uc->getUserParent($usr) ?: 'Doğrudan Kayıt' }}</p>
+                    <p class="text-gray-400 text-xs sm:text-sm font-medium">{{ __('user.referral.referred_by') }}</p>
+                    <p class="text-white text-lg sm:text-xl font-bold mt-1">{{ $uc->getUserParent($usr) ?: __('user.referral.direct_registration') }}</p>
                 </div>
                 <div class="bg-amber-600/10 p-2 sm:p-3 rounded-lg">
                     <svg class="w-5 h-5 sm:w-6 sm:h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,13 +119,13 @@
 
     <!-- Referral Tools Section -->
     <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 mb-6 sm:mb-8">
-        <h2 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Referans Araçları</h2>
+        <h2 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">{{ __('user.referral.referral_tools') }}</h2>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Referral Link -->
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Referans Bağlantınız</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('user.referral.your_referral_link') }}</label>
                     <div class="flex rounded-lg overflow-hidden">
                         <input type="text"
                                id="refLinkInput"
@@ -140,12 +140,12 @@
                         </button>
                     </div>
                     <div id="copiedMessage" class="text-green-500 text-sm mt-2" style="display: none;">
-                        ✓ Bağlantı panoya kopyalandı!
+                        ✓ {{ __('user.referral.link_copied') }}
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Referans Kimliğiniz</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('user.referral.your_referral_id') }}</label>
                     <div class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-3">
                         <span class="text-blue-400 font-mono text-lg">{{ Auth::user()->username }}</span>
                     </div>
@@ -155,10 +155,10 @@
             <!-- QR Code -->
             <div class="space-y-4" id="qrCodeSection" style="display: none;">
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">QR Kod</label>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('user.referral.qr_code') }}</label>
                     <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 text-center">
                         <div id="qrcode" class="inline-block"></div>
-                        <p class="text-gray-400 text-sm mt-2">Referans bağlantısını kullanmak için tarayın</p>
+                        <p class="text-gray-400 text-sm mt-2">{{ __('user.referral.scan_to_use') }}</p>
                     </div>
                 </div>
             </div>
@@ -172,12 +172,12 @@
                 <button onclick="referralManager.setActiveTab('overview')"
                         id="overviewTab"
                         class="px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors duration-200 bg-blue-600 text-white">
-                    Genel Bakış
+                    {{ __('user.referral.overview') }}
                 </button>
                 <button onclick="referralManager.setActiveTab('referrals')"
                         id="referralsTab"
                         class="px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium transition-colors duration-200 text-gray-400 hover:text-white hover:bg-gray-800">
-                    Referanslarım
+                    {{ __('user.referral.my_referrals') }}
                 </button>
             </nav>
         </div>
@@ -188,34 +188,34 @@
             <div id="overviewTabContent">
                 <div class="space-y-6">
                     <div>
-                        <h3 class="text-lg font-semibold text-white mb-4">Nasıl Çalışır</h3>
+                        <h3 class="text-lg font-semibold text-white mb-4">{{ __('user.referral.how_it_works') }}</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="text-center">
                                 <div class="bg-blue-600/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                                     <span class="text-blue-500 font-bold">1</span>
                                 </div>
-                                <h4 class="text-white font-medium mb-2">Bağlantınızı Paylaşın</h4>
-                                <p class="text-gray-400 text-sm">Benzersiz referans bağlantınızı arkadaşlarınız ve ailenizle paylaşın</p>
+                                <h4 class="text-white font-medium mb-2">{{ __('user.referral.step1_title') }}</h4>
+                                <p class="text-gray-400 text-sm">{{ __('user.referral.step1_description') }}</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-green-600/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                                     <span class="text-green-500 font-bold">2</span>
                                 </div>
-                                <h4 class="text-white font-medium mb-2">Katılırlar</h4>
-                                <p class="text-gray-400 text-sm">Birisi bağlantınızı kullanarak kaydolduğunda, referansınız olur</p>
+                                <h4 class="text-white font-medium mb-2">{{ __('user.referral.step2_title') }}</h4>
+                                <p class="text-gray-400 text-sm">{{ __('user.referral.step2_description') }}</p>
                             </div>
                             <div class="text-center">
                                 <div class="bg-purple-600/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                                     <span class="text-purple-500 font-bold">3</span>
                                 </div>
-                                <h4 class="text-white font-medium mb-2">Ödüller Kazanın</h4>
-                                <p class="text-gray-400 text-sm">Ticaret faaliyetlerinden ve işlemlerinden komisyon alın</p>
+                                <h4 class="text-white font-medium mb-2">{{ __('user.referral.step3_title') }}</h4>
+                                <p class="text-gray-400 text-sm">{{ __('user.referral.step3_description') }}</p>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <h3 class="text-lg font-semibold text-white mb-4">Referans Seviyeleri</h3>
+                        <h3 class="text-lg font-semibold text-white mb-4">{{ __('user.referral.referral_levels') }}</h3>
                         <div class="space-y-3">
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -223,11 +223,11 @@
                                         <span class="text-xs font-bold text-white">S</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Başlangıç</span>
-                                        <p class="text-gray-400 text-sm">0-9 referans</p>
+                                        <span class="text-white font-medium">{{ __('user.referral.level_starter') }}</span>
+                                        <p class="text-gray-400 text-sm">{{ __('user.referral.referral_range_starter') }}</p>
                                     </div>
                                 </div>
-                                <span class="text-gray-400">%5 komisyon</span>
+                                <span class="text-gray-400">{{ __('user.referral.commission_rate', ['rate' => '5']) }}</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -235,11 +235,11 @@
                                         <span class="text-xs font-bold text-white">B</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Bronz</span>
-                                        <p class="text-gray-400 text-sm">10-24 referans</p>
+                                        <span class="text-white font-medium">{{ __('user.referral.level_bronze') }}</span>
+                                        <p class="text-gray-400 text-sm">{{ __('user.referral.referral_range_bronze') }}</p>
                                     </div>
                                 </div>
-                                <span class="text-amber-400">%7 komisyon</span>
+                                <span class="text-amber-400">{{ __('user.referral.commission_rate', ['rate' => '7']) }}</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -247,11 +247,11 @@
                                         <span class="text-xs font-bold text-gray-900">S</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Gümüş</span>
-                                        <p class="text-gray-400 text-sm">25-49 referans</p>
+                                        <span class="text-white font-medium">{{ __('user.referral.level_silver') }}</span>
+                                        <p class="text-gray-400 text-sm">{{ __('user.referral.referral_range_silver') }}</p>
                                     </div>
                                 </div>
-                                <span class="text-gray-400">%10 komisyon</span>
+                                <span class="text-gray-400">{{ __('user.referral.commission_rate', ['rate' => '10']) }}</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -259,11 +259,11 @@
                                         <span class="text-xs font-bold text-gray-900">G</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Altın</span>
-                                        <p class="text-gray-400 text-sm">50-99 referans</p>
+                                        <span class="text-white font-medium">{{ __('user.referral.level_gold') }}</span>
+                                        <p class="text-gray-400 text-sm">{{ __('user.referral.referral_range_gold') }}</p>
                                     </div>
                                 </div>
-                                <span class="text-yellow-400">%12 komisyon</span>
+                                <span class="text-yellow-400">{{ __('user.referral.commission_rate', ['rate' => '12']) }}</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                                 <div class="flex items-center">
@@ -271,11 +271,11 @@
                                         <span class="text-xs font-bold text-white">E</span>
                                     </div>
                                     <div>
-                                        <span class="text-white font-medium">Elit</span>
-                                        <p class="text-gray-400 text-sm">100+ referans</p>
+                                        <span class="text-white font-medium">{{ __('user.referral.level_elite') }}</span>
+                                        <p class="text-gray-400 text-sm">{{ __('user.referral.referral_range_elite') }}</p>
                                     </div>
                                 </div>
-                                <span class="text-purple-400">%15 komisyon</span>
+                                <span class="text-purple-400">{{ __('user.referral.commission_rate', ['rate' => '15']) }}</span>
                             </div>
                         </div>
                     </div>
@@ -290,7 +290,7 @@
                         <div class="flex-1">
                             <input type="text"
                                    id="searchInput"
-                                   placeholder="Referansları ara..."
+                                   placeholder="{{ __('user.referral.search_referrals') }}"
                                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
@@ -301,11 +301,11 @@
                     <table class="w-full">
                         <thead>
                             <tr class="border-b border-gray-800">
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Müşteri Adı</th>
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Seviye</th>
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Üst</th>
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Durum</th>
-                                <th class="text-left py-3 px-4 text-gray-400 font-medium">Kayıt Tarihi</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">{{ __('user.referral.customer_name') }}</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">{{ __('user.referral.level') }}</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">{{ __('user.referral.parent') }}</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">{{ __('user.referral.status') }}</th>
+                                <th class="text-left py-3 px-4 text-gray-400 font-medium">{{ __('user.referral.registration_date') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -331,11 +331,11 @@
                             </div>
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between">
-                                    <span class="text-gray-400">E-posta:</span>
+                                    <span class="text-gray-400">{{ __('user.referral.email') }}:</span>
                                     <span class="text-white">{{ $referral->email }}</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-gray-400">Katıldı:</span>
+                                    <span class="text-gray-400">{{ __('user.referral.joined') }}:</span>
                                     <span class="text-white">{{ $referral->created_at->format('M d, Y') }}</span>
                                 </div>
                             </div>
@@ -348,11 +348,11 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-gray-400 font-medium mb-2">Henüz referans yok</h3>
-                            <p class="text-gray-500 text-sm mb-4">Ağınızı oluşturmak için referans bağlantınızı paylaşmaya başlayın</p>
+                            <h3 class="text-gray-400 font-medium mb-2">{{ __('user.referral.no_referrals_yet') }}</h3>
+                            <p class="text-gray-500 text-sm mb-4">{{ __('user.referral.start_sharing_to_build_network') }}</p>
                             <button onclick="referralManager.copyReferralLink()"
                                     class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 text-sm">
-                                Referans Bağlantısını Kopyala
+                                {{ __('user.referral.copy_referral_link') }}
                             </button>
                         </div>
                     @endif
@@ -371,7 +371,7 @@
                 <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="w-full">
-                            <h3 class="text-lg leading-6 font-medium text-white mb-4">Referans Programını Paylaş</h3>
+                            <h3 class="text-lg leading-6 font-medium text-white mb-4">{{ __('user.referral.share_referral_program') }}</h3>
 
                             <div class="grid grid-cols-2 gap-3">
                                 <button onclick="referralManager.shareToSocial('twitter')"
@@ -379,7 +379,7 @@
                                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                                     </svg>
-                                    Twitter
+                                    {{ __('user.referral.twitter') }}
                                 </button>
 
                                 <button onclick="referralManager.shareToSocial('facebook')"
@@ -387,7 +387,7 @@
                                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                                     </svg>
-                                    Facebook
+                                    {{ __('user.referral.facebook') }}
                                 </button>
 
                                 <button onclick="referralManager.shareToSocial('linkedin')"
@@ -395,7 +395,7 @@
                                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                                     </svg>
-                                    LinkedIn
+                                    {{ __('user.referral.linkedin') }}
                                 </button>
 
                                 <button onclick="referralManager.shareToSocial('whatsapp')"
@@ -403,7 +403,7 @@
                                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                                     </svg>
-                                    WhatsApp
+                                    {{ __('user.referral.whatsapp') }}
                                 </button>
                             </div>
                         </div>
@@ -413,7 +413,7 @@
                 <div class="bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button onclick="referralManager.closeShareModal()"
                             class="w-full inline-flex justify-center rounded-md border border-gray-600 shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-500 sm:ml-3 sm:w-auto sm:text-sm">
-                        Kapat
+                        {{ __('user.referral.close') }}
                     </button>
                 </div>
             </div>
@@ -426,7 +426,7 @@
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
-            <span id="toastMessage">Başarıyla paylaşıldı!</span>
+            <span id="toastMessage">{{ __('user.referral.successfully_shared') }}</span>
         </div>
     </div>
 </div>

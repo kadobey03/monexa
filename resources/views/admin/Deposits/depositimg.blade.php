@@ -17,8 +17,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <h1 class="text-3xl font-bold text-gray-900">Yatırım Ekran Görüntüsü</h1>
-                                <p class="text-gray-600 mt-1">Müşteri yatırım kanıtını görüntüleyin ve düzenleyin</p>
+                                <h1 class="text-3xl font-bold text-gray-900">{{ __('admin.deposits.investment_screenshot') }}</h1>
+                                <p class="text-gray-600 mt-1">{{ __('admin.deposits.view_edit_investment_proof') }}</p>
                             </div>
                         </div>
                         
@@ -26,7 +26,7 @@
                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
                             </svg>
-                            Geri Dön
+                            {{ __('admin.deposits.back') }}
                         </a>
                     </div>
                 </div>
@@ -52,14 +52,14 @@
                                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                         </svg>
                                     </div>
-                                    <h2 class="text-xl font-bold text-gray-900">Yatırım Detaylarını Düzenle</h2>
+                                    <h2 class="text-xl font-bold text-gray-900">{{ __('admin.deposits.edit_investment_details') }}</h2>
                                 </div>
                                 <button type="button" id="toggleEditForm" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200">
                                     <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
                                         <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path>
                                     </svg>
-                                    Düzenle Formunu Aç/Kapat
+                                    {{ __('admin.deposits.toggle_edit_form') }}
                                 </button>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                                 <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
                                             </svg>
                                             <div>
-                                                <p class="text-sm font-medium text-green-600">Mevcut Tutar</p>
+                                                <p class="text-sm font-medium text-green-600">{{ __('admin.deposits.current_amount') }}</p>
                                                 <p class="text-lg font-bold text-green-800">${{ number_format($deposit->amount, 2) }}</p>
                                             </div>
                                         </div>
@@ -86,7 +86,7 @@
                                                 <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd"></path>
                                             </svg>
                                             <div>
-                                                <p class="text-sm font-medium text-blue-600">Mevcut Durum</p>
+                                                <p class="text-sm font-medium text-blue-600">{{ __('admin.deposits.current_status') }}</p>
                                                 <span class="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium {{ $deposit->status == 'Processed' ? 'bg-green-100 text-green-800' : ($deposit->status == 'Pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">
                                                     {{ $deposit->status }}
                                                 </span>
@@ -102,7 +102,7 @@
                                                 <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"></path>
                                             </svg>
                                             <div>
-                                                <p class="text-sm font-medium text-purple-600">Mevcut Ödeme Yöntemi</p>
+                                                <p class="text-sm font-medium text-purple-600">{{ __('admin.deposits.current_payment_method') }}</p>
                                                 <p class="text-lg font-semibold text-purple-800">{{ $deposit->payment_mode }}</p>
                                             </div>
                                         </div>
@@ -114,7 +114,7 @@
                                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                                             </svg>
                                             <div>
-                                                <p class="text-sm font-medium text-gray-600">Oluşturulma Tarihi</p>
+                                                <p class="text-sm font-medium text-gray-600">{{ __('admin.deposits.creation_date') }}</p>
                                                 <p class="text-lg font-semibold text-gray-800">{{ \Carbon\Carbon::parse($deposit->created_at)->format('d M Y H:i') }}</p>
                                             </div>
                                         </div>
@@ -132,7 +132,7 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <!-- Amount -->
                                     <div>
-                                        <label for="edit_amount" class="block text-sm font-medium text-gray-700 mb-2">Tutar</label>
+                                        <label for="edit_amount" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.deposits.amount') }}</label>
                                         <div class="relative">
                                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                                 <span class="text-gray-500 sm:text-sm">$</span>
@@ -144,25 +144,25 @@
                                     
                                     <!-- Status -->
                                     <div>
-                                        <label for="edit_status" class="block text-sm font-medium text-gray-700 mb-2">Durum</label>
+                                        <label for="edit_status" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.deposits.status') }}</label>
                                         <select name="status" id="edit_status" required
                                                 class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="Pending" {{ $deposit->status == 'Pending' ? 'selected' : '' }}>Beklemede</option>
-                                            <option value="Processed" {{ $deposit->status == 'Processed' ? 'selected' : '' }}>İşlenmiş</option>
-                                            <option value="Rejected" {{ $deposit->status == 'Rejected' ? 'selected' : '' }}>Reddedildi</option>
+                                            <option value="Pending" {{ $deposit->status == 'Pending' ? 'selected' : '' }}>{{ __('admin.deposits.pending') }}</option>
+                                            <option value="Processed" {{ $deposit->status == 'Processed' ? 'selected' : '' }}>{{ __('admin.deposits.processed') }}</option>
+                                            <option value="Rejected" {{ $deposit->status == 'Rejected' ? 'selected' : '' }}>{{ __('admin.deposits.rejected') }}</option>
                                         </select>
                                     </div>
                                     
                                     <!-- Payment Mode -->
                                     <div>
-                                        <label for="edit_payment_mode" class="block text-sm font-medium text-gray-700 mb-2">Ödeme Yöntemi</label>
+                                        <label for="edit_payment_mode" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.deposits.payment_method') }}</label>
                                         <input type="text" name="payment_mode" id="edit_payment_mode" value="{{ $deposit->payment_mode }}" required
                                                class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     </div>
                                     
                                     <!-- Created Date -->
                                     <div>
-                                        <label for="edit_created_at" class="block text-sm font-medium text-gray-700 mb-2">Oluşturulma Tarihi</label>
+                                        <label for="edit_created_at" class="block text-sm font-medium text-gray-700 mb-2">{{ __('admin.deposits.creation_date') }}</label>
                                         <input type="datetime-local" name="created_at" id="edit_created_at" 
                                                value="{{ \Carbon\Carbon::parse($deposit->created_at)->format('Y-m-d\TH:i') }}" required
                                                class="block w-full border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -176,14 +176,14 @@
                                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                         </svg>
-                                        İptal
+                                        {{ __('admin.deposits.cancel') }}
                                     </button>
                                     <button type="submit" 
                                             class="inline-flex items-center px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
                                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z"></path>
                                         </svg>
-                                        Yatırım Detaylarını Güncelle
+                                        {{ __('admin.deposits.update_investment_details') }}
                                     </button>
                                 </div>
                             </form>
@@ -200,7 +200,7 @@
                                         <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
                                     </svg>
                                 </div>
-                                <h2 class="text-xl font-bold text-gray-900">Yatırım Kanıt Ekran Görüntüsü</h2>
+                                <h2 class="text-xl font-bold text-gray-900">{{ __('admin.deposits.investment_proof_screenshot') }}</h2>
                             </div>
                         </div>
                         
@@ -209,7 +209,7 @@
                             <div class="max-w-full mx-auto">
                                 <div class="bg-gray-50 rounded-lg p-4 border-2 border-dashed border-gray-300">
                                     <img src="{{ asset('storage/' . $deposit->proof) }}" 
-                                         alt="Ödeme Kanıtı" 
+                                         alt="{{ __('admin.deposits.payment_proof') }}"
                                          class="w-full h-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-zoom-in"
                                          onclick="openImageModal(this.src)">
                                 </div>
@@ -230,7 +230,7 @@
                         <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                     </svg>
                 </button>
-                <img id="modalImage" src="" alt="Büyütülmüş Görüntü" class="max-w-full max-h-screen rounded-lg">
+                <img id="modalImage" src="" alt="{{ __('admin.deposits.enlarged_image') }}" class="max-w-full max-h-screen rounded-lg">
             </div>
         </div>
     </div>
@@ -246,11 +246,11 @@
             if (editContainer.style.display === 'none') {
                 editContainer.style.display = 'block';
                 currentValues.style.display = 'none';
-                button.innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l6 6a1 1 0 001.414 0l6-6a1 1 0 00-1.414-1.414L10 6.586 4.293 2.293z" clip-rule="evenodd"></path></svg>Formu Gizle';
+                button.innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l6 6a1 1 0 001.414 0l6-6a1 1 0 00-1.414-1.414L10 6.586 4.293 2.293z" clip-rule="evenodd"></path></svg>{{ __('admin.deposits.hide_form') }}';
             } else {
                 editContainer.style.display = 'none';
                 currentValues.style.display = 'block';
-                button.innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>Düzenle Formunu Aç/Kapat';
+                button.innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>{{ __('admin.deposits.toggle_edit_form') }}';
             }
         });
         
@@ -258,7 +258,7 @@
         document.getElementById('cancelEdit').addEventListener('click', function() {
             document.getElementById('editFormContainer').style.display = 'none';
             document.getElementById('currentValues').style.display = 'block';
-            document.getElementById('toggleEditForm').innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>Düzenle Formunu Aç/Kapat';
+            document.getElementById('toggleEditForm').innerHTML = '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>{{ __('admin.deposits.toggle_edit_form') }}';
         });
         
         // Form validation
@@ -266,11 +266,11 @@
             const amount = parseFloat(document.getElementById('edit_amount').value);
             if (amount < 0) {
                 e.preventDefault();
-                alert('Tutar negatif olamaz');
+                alert('{{ __('admin.deposits.amount_cannot_be_negative') }}');
                 return false;
             }
             
-            if (confirm('Bu yatırım talebini güncellemek istediğinizden emin misiniz?')) {
+            if (confirm('{{ __('admin.deposits.update_investment_confirmation') }}')) {
                 return true;
             } else {
                 e.preventDefault();

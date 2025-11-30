@@ -43,7 +43,7 @@ class SoftwareModule extends Component
             $options[$module] = $value == 'true' ? true : false;
             $settings->modules = $options;
             $settings->save();
-            return redirect()->route('appsettingshow')->with('success', 'Action Successful');
+            return redirect()->route('appsettingshow')->with('success', __('livewire.software_module.action_successful'));
         }
     }
 }

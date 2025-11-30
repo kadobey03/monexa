@@ -1,5 +1,5 @@
 @extends('layouts.master', ['layoutType' => 'dashboard'])
-@section('title', 'İşlem Pazarları')
+@section('title', __('trade.page_title'))
 @section('content')
 
 <div class="w-full max-w-6xl mx-auto px-2 sm:px-3 md:px-4 py-2 sm:py-3 md:py-4" id="tradingMarketsContainer">
@@ -35,8 +35,8 @@
     <div class="mb-8">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">İşlem Pazarları</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-1">Çoklu varlık sınıflarında binlerce işlem enstrümanından seçin</p>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('trade.page_title') }}</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('trade.page_description') }}</p>
             </div>
 
             <!-- Search and Stats -->
@@ -44,7 +44,7 @@
                 <div class="relative">
                     <input type="text"
                            id="searchInput"
-                           placeholder="Enstrüman ara..."
+                           placeholder="{{ __('trade.search_placeholder') }}"
                            class="w-64 pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white">
                     <x-heroicon name="magnifying-glass" class="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
                 </div>
@@ -52,12 +52,12 @@
                 <div class="hidden md:flex items-center gap-4 text-sm">
                     <div class="text-center">
                         <div class="text-gray-900 dark:text-white font-semibold" id="totalInstruments">0</div>
-                        <div class="text-gray-500 dark:text-gray-400">Enstrümanlar</div>
+                        <div class="text-gray-500 dark:text-gray-400">{{ __('trade.instruments') }}</div>
                     </div>
                     <div class="w-px h-8 bg-gray-300 dark:bg-gray-600"></div>
                     <div class="text-center">
                         <div class="text-green-600 dark:text-green-400 font-semibold">7/24</div>
-                        <div class="text-gray-500 dark:text-gray-400">İşlem</div>
+                        <div class="text-gray-500 dark:text-gray-400">{{ __('trade.trading') }}</div>
                     </div>
                 </div>
             </div>
@@ -72,42 +72,42 @@
                         data-filter="all"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 bg-blue-500 text-white shadow-md">
                     <x-heroicon name="squares-plus" class="w-4 h-4" />
-                    Tüm Pazarlar
+                    {{ __('trade.all_markets') }}
                 </button>
 
                 <button onclick="setSelectedType('crypto')"
                         data-filter="crypto"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <x-heroicon name="bitcoin" class="w-4 h-4" />
-                    Kripto Para
+                    {{ __('trade.crypto') }}
                 </button>
 
                 <button onclick="setSelectedType('stock')"
                         data-filter="stock"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
-                    Hisseler
+                    {{ __('trade.stocks') }}
                 </button>
 
                 <button onclick="setSelectedType('forex')"
                         data-filter="forex"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <x-heroicon name="globe" class="w-4 h-4" />
-                    Döviz
+                    {{ __('trade.forex') }}
                 </button>
 
                 <button onclick="setSelectedType('commodity')"
                         data-filter="commodity"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <x-heroicon name="bolt" class="w-4 h-4" />
-                    Emtialar
+                    {{ __('trade.commodities') }}
                 </button>
 
                 <button onclick="setSelectedType('bond')"
                         data-filter="bond"
                         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <x-heroicon name="landmark" class="w-4 h-4" />
-                    Tahviller
+                    {{ __('trade.bonds') }}
                 </button>
             </div>
         </div>
@@ -119,7 +119,7 @@
         <div id="loadingState" class="flex items-center justify-center py-12" style="display: none;">
             <div class="flex items-center gap-3">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                <span class="text-gray-600 dark:text-gray-400">Loading instruments...</span>
+                <span class="text-gray-600 dark:text-gray-400">{{ __('trade.loading_instruments') }}</span>
             </div>
         </div>
 
@@ -127,8 +127,8 @@
         <div id="noResultsState" class="text-center py-12" style="display: none;">
             <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8">
                 <x-heroicon name="search-x" class="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No instruments found</h3>
-                <p class="text-gray-600 dark:text-gray-400">Try adjusting your search or filter criteria</p>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('trade.no_instruments_found') }}</h3>
+                <p class="text-gray-600 dark:text-gray-400">{{ __('trade.no_instruments_help') }}</p>
             </div>
         </div>
 
@@ -156,7 +156,7 @@
                         </template>
 
                         <h2 class="text-xl font-bold text-gray-900 dark:text-white capitalize" x-text="getTypeDisplayName(type)"></h2>
-                        <span class="text-sm text-gray-500 dark:text-gray-400" x-text="`(${typeGroup.length} enstrüman)`"></span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400" x-text="`(${typeGroup.length} {{ __('trade.instrument') }})`"></span>
                     </div>
                 </div>
 
@@ -165,11 +165,11 @@
                     <!-- Table Header -->
                     <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
                         <div class="grid grid-cols-12 gap-4 items-center text-sm font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            <div class="col-span-8 md:col-span-3">Varlık</div>
-                            <div class="col-span-2 text-right hidden md:block">Fiyat</div>
-                            <div class="col-span-2 text-right hidden md:block">24s Değişim</div>
-                            <div class="col-span-2 text-right hidden md:block">Hacim</div>
-                            <div class="col-span-4 md:col-span-3 text-right">İşlem</div>
+                            <div class="col-span-8 md:col-span-3">{{ __('trade.asset') }}</div>
+                            <div class="col-span-2 text-right hidden md:block">{{ __('trade.price') }}</div>
+                            <div class="col-span-2 text-right hidden md:block">{{ __('trade.change_24h') }}</div>
+                            <div class="col-span-2 text-right hidden md:block">{{ __('trade.volume') }}</div>
+                            <div class="col-span-4 md:col-span-3 text-right">{{ __('trade.action') }}</div>
                         </div>
                     </div>
 
@@ -229,7 +229,7 @@
                                         <a :href="`{{ url('/dashboard/trade') }}/${instrument.id}`"
                                            class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm hover:shadow-md">
                                             <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
-                                            <span>İşle</span>
+                                            <span>{{ __('trade.trade_button') }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -363,11 +363,11 @@ const TradingMarkets = {
 
     renderTypeSection(type, instruments) {
         const typeDisplayNames = {
-            'crypto': 'Cryptocurrency',
-            'stock': 'Stocks',
-            'forex': 'Foreign Exchange',
-            'commodity': 'Commodities',
-            'bond': 'Bonds'
+            'crypto': '{{ __('trade.cryptocurrency') }}',
+            'stock': '{{ __('trade.stocks_full') }}',
+            'forex': '{{ __('trade.foreign_exchange') }}',
+            'commodity': '{{ __('trade.commodities_full') }}',
+            'bond': '{{ __('trade.bonds_full') }}'
         };
 
         const displayName = typeDisplayNames[type] || type;
@@ -387,17 +387,17 @@ const TradingMarkets = {
                             ${this.getIconPath(iconMap[type] || 'circle')}
                         </svg>
                         <h2 class="text-xl font-bold text-gray-900 dark:text-white capitalize">${displayName}</h2>
-                        <span class="text-sm text-gray-500 dark:text-gray-400">(${instruments.length} enstrüman)</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">(${instruments.length} {{ __('trade.instrument') }})</span>
                     </div>
                 </div>
                 <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
                     <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
                         <div class="grid grid-cols-12 gap-4 items-center text-sm font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            <div class="col-span-8 md:col-span-3">Varlık</div>
-                            <div class="col-span-2 text-right hidden md:block">Fiyat</div>
-                            <div class="col-span-2 text-right hidden md:block">24s Değişim</div>
-                            <div class="col-span-2 text-right hidden md:block">Hacim</div>
-                            <div class="col-span-4 md:col-span-3 text-right">İşlem</div>
+                            <div class="col-span-8 md:col-span-3">{{ __('trade.asset') }}</div>
+                            <div class="col-span-2 text-right hidden md:block">{{ __('trade.price') }}</div>
+                            <div class="col-span-2 text-right hidden md:block">{{ __('trade.change_24h') }}</div>
+                            <div class="col-span-2 text-right hidden md:block">{{ __('trade.volume') }}</div>
+                            <div class="col-span-4 md:col-span-3 text-right">{{ __('trade.action') }}</div>
                         </div>
                     </div>
                     <div class="divide-y divide-gray-200 dark:divide-gray-600">
@@ -455,7 +455,7 @@ const TradingMarkets = {
                     <div class="col-span-4 md:col-span-3 text-right">
                         <a href="{{ url('/dashboard/trade') }}/${instrument.id}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 shadow-sm hover:shadow-md">
                             <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
-                            <span>İşle</span>
+                            <span>{{ __('trade.trade_button') }}</span>
                         </a>
                     </div>
                 </div>

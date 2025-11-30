@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Lead Management')
+@section('title', __('admin.leads.lead_management'))
 
 @section('content')
 <div class="leads-management-container">
@@ -8,8 +8,8 @@
     <div class="page-header bg-white border-b border-gray-200 px-6 py-4 mb-6">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-2xl font-semibold text-gray-900">Lead Management</h1>
-                <p class="text-sm text-gray-600 mt-1">Lead assignment ve yönetim sistemi</p>
+                <h1 class="text-2xl font-semibold text-gray-900">{{ __('admin.leads.lead_management') }}</h1>
+                <p class="text-sm text-gray-600 mt-1">{{ __('admin.leads.lead_assignment_system') }}</p>
             </div>
             
             <div class="flex items-center space-x-3">
@@ -20,7 +20,7 @@
                     onclick="exportLeads()"
                 >
                     <i class="fas fa-download w-4 h-4 mr-2"></i>
-                    Export
+                    {{ __('admin.leads.export') }}
                 </button>
                 
                 <!-- Import Button -->
@@ -30,7 +30,7 @@
                     onclick="importLeads()"
                 >
                     <i class="fas fa-upload w-4 h-4 mr-2"></i>
-                    Import
+                    {{ __('admin.leads.import') }}
                 </button>
                 
                 <!-- Add New Lead -->
@@ -40,7 +40,7 @@
                     onclick="addNewLead()"
                 >
                     <i class="fas fa-plus w-4 h-4 mr-2"></i>
-                    Yeni Lead
+                    {{ __('admin.leads.new_lead') }}
                 </button>
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="loading-state flex items-center justify-center min-h-96" v-if="!appMounted">
             <div class="text-center">
                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                <p class="text-gray-600">Lead assignment sistemi yükleniyor...</p>
+                <p class="text-gray-600">{{ __('admin.leads.system_loading') }}</p>
             </div>
         </div>
 

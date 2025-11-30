@@ -1,12 +1,12 @@
-@extends('layouts.admin', ['title' => 'Hakkında Remedy Technology'])
+@extends('layouts.admin', ['title' => __('admin.about.page_title')])
 
 @section('content')
 <div class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 min-h-screen p-6">
     
     <!-- Header Section -->
     <div class="mb-8">
-        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">Hakkında Remedy Technology</h1>
-        <p class="text-gray-600 dark:text-gray-400">Profesyonel PHP Script Geliştirme ve Destek Hizmetleri</p>
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-2">{{ __('admin.about.page_title') }}</h1>
+        <p class="text-gray-600 dark:text-gray-400">{{ __('admin.about.subtitle') }}</p>
     </div>
 
     <!-- Hero Section -->
@@ -21,19 +21,19 @@
                 <div class="mb-8">
                     <x-heroicon name="code" class="w-20 h-20 mx-auto mb-6 opacity-75" />
                 </div>
-                <h1 class="text-5xl font-bold mb-6">Remedy Teknoloji</h1>
-                <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">Uzman Laravel PHP Script Geliştirme ve Profesyonel Destek Hizmetleri</p>
+                <h1 class="text-5xl font-bold mb-6">{{ __('admin.about.company_name') }}</h1>
+                <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">{{ __('admin.about.hero_subtitle') }}</p>
                 <div class="max-w-4xl mx-auto">
-                    <p class="text-lg text-white/90 mb-8">Özel Laravel PHP uygulamaları oluşturma, profesyonel kurulum hizmetleri sağlama ve dünya çapındaki işletmeler için sürekli destek sunma konusunda uzmanız.</p>
+                    <p class="text-lg text-white/90 mb-8">{{ __('admin.about.hero_description') }}</p>
                 </div>
                 <div class="flex justify-center gap-4 flex-wrap">
                     <a href="https://t.me/+heFFLpE7w5RjZjQ0" target="_blank"
                        class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-bold rounded-xl hover:bg-white/30 transition-all duration-300 transform hover:scale-105">
-                        <x-heroicon name="send" class="w-5 h-5 mr-2" />Destek Al
+                        <x-heroicon name="send" class="w-5 h-5 mr-2" />{{ __('admin.about.get_support') }}
                     </a>
                     <a href="https://codesremedy.com/" target="_blank"
                        class="inline-flex items-center px-6 py-3 border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
-                        <x-heroicon name="globe" class="w-5 h-5 mr-2" />Web Sitesini Ziyaret Et
+                        <x-heroicon name="globe" class="w-5 h-5 mr-2" />{{ __('admin.about.visit_website') }}
                     </a>
                 </div>
             </div>
@@ -54,10 +54,10 @@
                         <x-heroicon name="code" class="w-10 h-10 text-blue-600 dark:text-blue-400" />
                     </div>
                 </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Özel Geliştirme</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">İşletmenizin ihtiyaçlarına göre uyarlanmış Laravel PHP Script Geliştirme</p>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">{{ __('admin.about.custom_development') }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">{{ __('admin.about.custom_development_desc') }}</p>
                 <div class="mt-auto">
-                    <span class="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full">Özel Çözümler</span>
+                    <span class="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs font-medium rounded-full">{{ __('admin.about.custom_solutions') }}</span>
                 </div>
             </div>
         </div>
@@ -70,10 +70,10 @@
                         <x-heroicon name="cog-6-tooth" class="w-10 h-10 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Kurulum ve Ayarlar</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Profesyonel script kurulumu ve sunucu yapılandırması</p>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">{{ __('admin.about.installation_setup') }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">{{ __('admin.about.installation_setup_desc') }}</p>
                 <div class="mt-auto">
-                    <span class="inline-block px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium rounded-full">Hızlı Kurulum</span>
+                    <span class="inline-block px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs font-medium rounded-full">{{ __('admin.about.quick_installation') }}</span>
                 </div>
             </div>
         </div>
@@ -86,10 +86,10 @@
                         <x-heroicon name="life-buoy" class="w-10 h-10 text-yellow-600 dark:text-yellow-400" />
                     </div>
                 </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Ömür Boyu Destek</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Devam eden destek, güncellemeler ve güvenlik iyileştirmeleri</p>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">{{ __('admin.about.lifetime_support') }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">{{ __('admin.about.lifetime_support_desc') }}</p>
                 <div class="mt-auto">
-                    <span class="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs font-medium rounded-full">7/24 Destek</span>
+                    <span class="inline-block px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs font-medium rounded-full">{{ __('admin.about.support_247') }}</span>
                 </div>
             </div>
         </div>
@@ -102,10 +102,10 @@
                         <x-heroicon name="palette" class="w-10 h-10 text-purple-600 dark:text-purple-400" />
                     </div>
                 </div>
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Web Sitesi Özelleştirme</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Özel markalama ve UI/UX tasarım iyileştirmeleri</p>
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">{{ __('admin.about.website_customization') }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">{{ __('admin.about.website_customization_desc') }}</p>
                 <div class="mt-auto">
-                    <span class="inline-block px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs font-medium rounded-full">Özel Tasarım</span>
+                    <span class="inline-block px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs font-medium rounded-full">{{ __('admin.about.custom_design') }}</span>
                 </div>
             </div>
         </div>
@@ -118,11 +118,11 @@
             <div class="bg-blue-600 text-white p-6">
                 <h3 class="text-xl font-bold flex items-center">
                     <x-heroicon name="laptop-minimal" class="w-6 h-6 mr-3" />
-                    Özel Laravel PHP Script Geliştirme
+                    {{ __('admin.about.custom_laravel_development') }}
                 </h3>
             </div>
             <div class="p-6">
-                <p class="text-gray-600 dark:text-gray-400 mb-6">Benzersiz bir özellik veya özel yapım bir Laravel PHP script'e mi ihtiyacınız var? Uzman geliştiricilerimiz mevcut script'leri değiştirebilir veya işletmenizin ihtiyaçlarına uygun tamamen yeni çözümler oluşturabilir.</p>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">{{ __('admin.about.custom_laravel_desc') }}</p>
 
                 <div class="mb-6">
                     <h4 class="font-bold text-gray-900 dark:text-white mb-4">Uzmanlıklar:</h4>

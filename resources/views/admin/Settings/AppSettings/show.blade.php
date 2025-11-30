@@ -8,7 +8,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
     $bg = 'dark';
 }
 ?>
-@extends('layouts.admin', ['title' => 'Uygulama Ayarları'])
+@extends('layouts.admin', ['title' => __('admin.settings.app.show.title')])
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
@@ -21,8 +21,8 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                             <x-heroicon name="cog-6-tooth" class="w-8 h-8 text-white" />
                         </div>
                         <div>
-                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Uygulama Ayarları</h1>
-                            <p class="text-gray-600 dark:text-gray-400 mt-1">Sistem yapılandırması ve tercihlerini yönetin</p>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.settings.app.show.header') }}</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.settings.app.show.description') }}</p>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <h3 class="text-sm font-medium text-red-800">Aşağıdaki hatalar oluştu:</h3>
+                                <h3 class="text-sm font-medium text-red-800">{{ __('admin.settings.app.show.errors_occurred') }}</h3>
                                 <div class="mt-2 text-sm text-red-700">
                                     <ul class="list-disc list-inside space-y-1">
                                         @foreach ($errors->all() as $error)
@@ -65,7 +65,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                         <button onclick="switchTab('info')" data-tab="info" class="tab-button active-tab flex-1 min-w-0 py-4 px-6 lg:px-8 text-sm font-medium text-center border-b-2 transition-all duration-200 focus:outline-none focus:text-blue-600 whitespace-nowrap border-blue-500 text-blue-600 bg-blue-50 dark:bg-blue-900/20">
                             <div class="flex items-center justify-center space-x-2">
                                 <x-heroicon name="information-circle" class="w-5 h-5" />
-                                <span>Site Bilgileri</span>
+                                <span>{{ __('admin.settings.app.show.site_information') }}</span>
                             </div>
                         </button>
                             
@@ -74,7 +74,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                                     </svg>
-                                    <span>Tercihler</span>
+                                    <span>{{ __('admin.settings.app.show.preferences') }}</span>
                                 </div>
                             </button>
                             
@@ -84,7 +84,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                                     </svg>
-                                    <span>E-posta/Google</span>
+                                    <span>{{ __('admin.settings.app.show.email_google') }}</span>
                                 </div>
                             </button>
                         </nav>
@@ -170,7 +170,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
             if (selectElement && hiddenElement) {
                 const selected = selectElement.options[selectElement.selectedIndex].id;
                 hiddenElement.value = selected;
-                console.log('Currency changed to:', selected);
+                console.log('{{ __('admin.settings.app.show.currency_changed_to') }}:', selected);
             }
         }
 
@@ -193,11 +193,11 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                     const result = await response.json();
                     
                     if (result.status === 200) {
-                        showNotification('success', 'Başarılı', result.success);
+                        showNotification('success', '{{ __('admin.settings.app.show.success') }}', result.success);
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    showNotification('error', 'Hata', 'Bir hata oluştu');
+                    showNotification('error', '{{ __('admin.settings.app.show.error') }}', '{{ __('admin.settings.app.show.error_occurred') }}');
                 }
             });
         }
@@ -220,11 +220,11 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                     const result = await response.json();
                     
                     if (result.status === 200) {
-                        showNotification('success', 'Başarılı', result.success);
+                        showNotification('success', '{{ __('admin.settings.app.show.success') }}', result.success);
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    showNotification('error', 'Hata', 'Bir hata oluştu');
+                    showNotification('error', '{{ __('admin.settings.app.show.error') }}', '{{ __('admin.settings.app.show.error_occurred') }}');
                 }
             });
         }

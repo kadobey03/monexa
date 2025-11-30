@@ -46,7 +46,7 @@ class BuySlot extends Component
             }
             return redirect()->route('tsettings');
         } else {
-            $this->message = 'Invalid Number of slot';
+            $this->message = __('livewire.slot_management.invalid_slot_number');
         }
     }
 }

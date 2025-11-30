@@ -16,7 +16,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
     <div class="content">
         <div class="page-inner">
         <div class="page-header">
-            <h4 class="page-title">Trading Bots Management</h4>
+            <h4 class="page-title">{{ __('admin.bots.management') }}</h4>
             <ul class="breadcrumbs">
                 <li class="nav-home">
                     <a href="{{ route('admin.dashboard') }}">
@@ -27,7 +27,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">Bot Trading</a>
+                    <a href="#">{{ __('admin.bots.bot_trading') }}</a>
                 </li>
             </ul>
         </div>
@@ -45,7 +45,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                             </div>
                             <div class="col col-stats ml-3 ml-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Total Bots</p>
+                                    <p class="card-category">{{ __('admin.bots.total_bots') }}</p>
                                     <h4 class="card-title">{{ $stats['total_bots'] }}</h4>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                             </div>
                             <div class="col col-stats ml-3 ml-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Active Bots</p>
+                                    <p class="card-category">{{ __('admin.bots.active_bots') }}</p>
                                     <h4 class="card-title">{{ $stats['active_bots'] }}</h4>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                             </div>
                             <div class="col col-stats ml-3 ml-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Total Investments</p>
+                                    <p class="card-category">{{ __('admin.bots.total_investments') }}</p>
                                     <h4 class="card-title">${{ number_format($stats['total_investments'], 2) }}</h4>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                             </div>
                             <div class="col col-stats ml-3 ml-sm-0">
                                 <div class="numbers">
-                                    <p class="card-category">Total Profits</p>
+                                    <p class="card-category">{{ __('admin.bots.total_profits') }}</p>
                                     <h4 class="card-title">${{ number_format($stats['total_profits'], 2) }}</h4>
                                 </div>
                             </div>
@@ -118,13 +118,13 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex align-items-center">
-                            <h4 class="card-title">Trading Bots</h4>
+                            <h4 class="card-title">{{ __('admin.bots.trading_bots') }}</h4>
                             <div class="ml-auto">
                                 <button id="bulkTradeBtn" class="btn btn-success btn-round mr-2" onclick="generateBulkTrades()">
-                                    <i class="fa fa-chart-line"></i> Generate 20 Trades Per Bot
+                                    <i class="fa fa-chart-line"></i> {{ __('admin.bots.generate_20_trades_per_bot') }}
                                 </button>
                                 <a href="{{ route('admin.bots.create') }}" class="btn btn-primary btn-round">
-                                    <i class="fa fa-plus"></i> Add New Bot
+                                    <i class="fa fa-plus"></i> {{ __('admin.bots.add_new_bot') }}
                                 </a>
                             </div>
                         </div>
@@ -143,13 +143,13 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                             <table id="botsTable" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Bot</th>
-                                        <th>Market</th>
-                                        <th>Investment Range</th>
-                                        <th>Success Rate</th>
-                                        <th>Investors</th>
-                                        <th>Status</th>
-                                        <th style="width: 10%">Actions</th>
+                                        <th>{{ __('admin.bots.bot') }}</th>
+                                        <th>{{ __('admin.bots.market') }}</th>
+                                        <th>{{ __('admin.bots.investment_range') }}</th>
+                                        <th>{{ __('admin.bots.success_rate') }}</th>
+                                        <th>{{ __('admin.bots.investors') }}</th>
+                                        <th>{{ __('admin.bots.status') }}</th>
+                                        <th style="width: 10%">{{ __('admin.bots.actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -193,27 +193,27 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                                         </td>
                                         <td>
                                             @if($bot->status == 'active')
-                                                <span class="badge badge-success">Active</span>
+                                                <span class="badge badge-success">{{ __('admin.bots.active') }}</span>
                                             @elseif($bot->status == 'inactive')
-                                                <span class="badge badge-secondary">Inactive</span>
+                                                <span class="badge badge-secondary">{{ __('admin.bots.inactive') }}</span>
                                             @else
-                                                <span class="badge badge-warning">Maintenance</span>
+                                                <span class="badge badge-warning">{{ __('admin.bots.maintenance') }}</span>
                                             @endif
                                         </td>
                                         <td>
                                             <div class="form-button-action">
                                                 <a href="{{ route('admin.bots.show', $bot) }}"
                                                    class="btn btn-link btn-primary btn-lg"
-                                                   data-toggle="tooltip" data-original-title="View Details">
+                                                   data-toggle="tooltip" data-original-title="{{ __('admin.bots.view_details') }}">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                                 <a href="{{ route('admin.bots.edit', $bot) }}"
                                                    class="btn btn-link btn-primary btn-lg"
-                                                   data-toggle="tooltip" data-original-title="Edit Bot">
+                                                   data-toggle="tooltip" data-original-title="{{ __('admin.bots.edit_bot') }}">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                                 <button type="button" class="btn btn-link btn-danger btn-lg"
-                                                        data-toggle="tooltip" data-original-title="Delete Bot"
+                                                        data-toggle="tooltip" data-original-title="{{ __('admin.bots.delete_bot') }}"
                                                         onclick="confirmDelete({{ $bot->id }})">
                                                     <i class="fa fa-times"></i>
                                                 </button>
@@ -231,10 +231,10 @@ if (Auth('admin')->User()->dashboard_style == "light") {
                                         <td colspan="7" class="text-center">
                                             <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px;">
                                                 <i class="fas fa-robot fa-3x text-muted mb-3"></i>
-                                                <h5 class="text-muted">No trading bots found</h5>
-                                                <p class="text-muted">Create your first trading bot to get started</p>
+                                                <h5 class="text-muted">{{ __('admin.bots.no_trading_bots_found') }}</h5>
+                                                <p class="text-muted">{{ __('admin.bots.create_first_trading_bot') }}</p>
                                                 <a href="{{ route('admin.bots.create') }}" class="btn btn-primary">
-                                                    <i class="fa fa-plus"></i> Create Trading Bot
+                                                    <i class="fa fa-plus"></i> {{ __('admin.bots.create_trading_bot') }}
                                                 </a>
                                             </div>
                                         </td>
@@ -279,16 +279,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function confirmDelete(botId) {
     swal({
-        title: 'Are you sure?',
-        text: "This will permanently delete the trading bot and all associated data!",
+        title: '{{ __("admin.bots.are_you_sure") }}',
+        text: "{{ __('admin.bots.delete_bot_confirmation') }}",
         type: 'warning',
         buttons: {
             confirm: {
-                text: 'Yes, delete it!',
+                text: '{{ __("admin.bots.yes_delete") }}',
                 className: 'btn btn-success'
             },
             cancel: {
                 visible: true,
+                text: '{{ __("common.cancel") }}',
                 className: 'btn btn-danger'
             }
         }
@@ -304,23 +305,24 @@ function generateBulkTrades() {
     const originalText = btn.innerHTML;
 
     swal({
-        title: 'Generate Bulk Trades?',
-        text: "This will generate 20 trades for each active bot investment. Are you sure?",
+        title: '{{ __("admin.bots.generate_bulk_trades") }}?',
+        text: "{{ __('admin.bots.bulk_trades_confirmation') }}",
         type: 'info',
         buttons: {
             confirm: {
-                text: 'Yes, generate trades!',
+                text: '{{ __("admin.bots.yes_generate_trades") }}',
                 className: 'btn btn-success'
             },
             cancel: {
                 visible: true,
+                text: '{{ __("common.cancel") }}',
                 className: 'btn btn-danger'
             }
         }
     }).then((confirmed) => {
         if (confirmed) {
             // Show loading state
-            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Generating Trades...';
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> {{ __("admin.bots.generating_trades") }}...';
             btn.disabled = true;
 
             // Make the request
@@ -339,8 +341,8 @@ function generateBulkTrades() {
 
                 if (data.success) {
                     swal({
-                        title: 'Success!',
-                        text: `Generated ${data.total_trades_created} trades across ${data.investments_processed} bot investments`,
+                        title: '{{ __("admin.bots.success") }}!',
+                        text: `{{ __('admin.bots.generated_trades_success') }}`.replace(':trades', data.total_trades_created).replace(':investments', data.investments_processed),
                         type: 'success',
                         buttons: {
                             confirm: {
@@ -353,8 +355,8 @@ function generateBulkTrades() {
                     });
                 } else {
                     swal({
-                        title: 'Error!',
-                        text: data.message || 'Failed to generate trades',
+                        title: '{{ __("admin.bots.error") }}!',
+                        text: data.message || '{{ __("admin.bots.failed_to_generate_trades") }}',
                         type: 'error',
                         buttons: {
                             confirm: {
@@ -370,8 +372,8 @@ function generateBulkTrades() {
                 btn.disabled = false;
 
                 swal({
-                    title: 'Error!',
-                    text: 'Network error occurred while generating trades',
+                    title: '{{ __("admin.bots.error") }}!',
+                    text: '{{ __("admin.bots.network_error") }}',
                     type: 'error',
                     buttons: {
                         confirm: {

@@ -11,8 +11,8 @@
                     <x-heroicon name="shield-check" class="w-6 h-6 text-white" />
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Rol Yönetimi</h1>
-                    <p class="text-admin-600 dark:text-admin-400">Sistem rollerini ve hiyerarşilerini yönetin</p>
+                    <h1 class="text-2xl font-bold text-admin-900 dark:text-white">{{ __('admin.roles.index.title') }}</h1>
+                    <p class="text-admin-600 dark:text-admin-400">{{ __('admin.roles.index.description') }}</p>
                 </div>
             </div>
             
@@ -20,13 +20,13 @@
                 <a href="{{ route('admin.roles.hierarchy') }}" 
                    class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 rounded-xl transition-all duration-200">
                     <x-heroicon name="git-branch" class="w-4 h-4 mr-2" />
-                    Hiyerarşi
+                    {{ __('admin.roles.index.hierarchy') }}
                 </a>
                 
                 <a href="{{ route('admin.roles.create') }}" 
                    class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-blue-500/25 transition-all duration-200">
                     <x-heroicon name="plus" class="w-4 h-4 mr-2" />
-                    Yeni Rol
+                    {{ __('admin.roles.index.new_role') }}
                 </a>
             </div>
         </div>
@@ -37,7 +37,7 @@
         <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-2xl p-6 border border-blue-200 dark:border-blue-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">Toplam Rol</p>
+                    <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">{{ __('admin.roles.index.total_roles') }}</p>
                     <p class="text-2xl font-bold text-blue-700 dark:text-blue-300">{{ $stats['total_roles'] ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
@@ -49,7 +49,7 @@
         <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-2xl p-6 border border-green-200 dark:border-green-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-green-600 dark:text-green-400 font-medium">Aktif Rol</p>
+                    <p class="text-sm text-green-600 dark:text-green-400 font-medium">{{ __('admin.roles.index.active_roles') }}</p>
                     <p class="text-2xl font-bold text-green-700 dark:text-green-300">{{ $stats['active_roles'] ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
@@ -61,7 +61,7 @@
         <div class="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-2xl p-6 border border-amber-200 dark:border-amber-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-amber-600 dark:text-amber-400 font-medium">Admin Rolleri</p>
+                    <p class="text-sm text-amber-600 dark:text-amber-400 font-medium">{{ __('admin.roles.index.admin_roles') }}</p>
                     <p class="text-2xl font-bold text-amber-700 dark:text-amber-300">{{ $stats['admin_roles'] ?? 0 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center">
@@ -73,7 +73,7 @@
         <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-2xl p-6 border border-purple-200 dark:border-purple-800">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-purple-600 dark:text-purple-400 font-medium">Hiyerarşi Seviyesi</p>
+                    <p class="text-sm text-purple-600 dark:text-purple-400 font-medium">{{ __('admin.roles.index.hierarchy_levels') }}</p>
                     <p class="text-2xl font-bold text-purple-700 dark:text-purple-300">{{ $hierarchyLevels->max() + 1 ?? 1 }}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
@@ -86,25 +86,25 @@
     <!-- Filters and Search -->
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700">
         <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-admin-900 dark:text-white">Rolleri Filtrele</h2>
+            <h2 class="text-lg font-semibold text-admin-900 dark:text-white">{{ __('admin.roles.index.filter_roles') }}</h2>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <!-- Search -->
             <div>
-                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">Ara</label>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">{{ __('admin.roles.index.search') }}</label>
                 <input type="text" 
                        x-model="search" 
                        @input="applyFilters()"
-                       placeholder="Rol adı veya açıklama..."
+                       placeholder="{{ __('admin.roles.index.search_placeholder') }}"
                        class="admin-input w-full">
             </div>
             
             <!-- Department Filter -->
             <div>
-                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">Departman</label>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">{{ __('admin.roles.index.department') }}</label>
                 <select x-model="filters.department" @change="applyFilters()" class="admin-input w-full">
-                    <option value="">Tümü</option>
+                    <option value="">{{ __('admin.roles.index.all') }}</option>
                     @foreach($departments as $dept)
                         <option value="{{ $dept }}">{{ ucfirst($dept) }}</option>
                     @endforeach
@@ -113,22 +113,22 @@
             
             <!-- Level Filter -->
             <div>
-                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">Hiyerarşi Seviyesi</label>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">{{ __('admin.roles.index.hierarchy_level') }}</label>
                 <select x-model="filters.level" @change="applyFilters()" class="admin-input w-full">
-                    <option value="">Tümü</option>
+                    <option value="">{{ __('admin.roles.index.all') }}</option>
                     @foreach($hierarchyLevels as $level)
-                        <option value="{{ $level }}">Seviye {{ $level }}</option>
+                        <option value="{{ $level }}">{{ __('admin.roles.index.level') }} {{ $level }}</option>
                     @endforeach
                 </select>
             </div>
             
             <!-- Status Filter -->
             <div>
-                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">Durum</label>
+                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-1">{{ __('admin.roles.index.status') }}</label>
                 <select x-model="filters.status" @change="applyFilters()" class="admin-input w-full">
-                    <option value="">Tümü</option>
-                    <option value="active">Aktif</option>
-                    <option value="inactive">Pasif</option>
+                    <option value="">{{ __('admin.roles.index.all') }}</option>
+                    <option value="active">{{ __('admin.roles.index.active') }}</option>
+                    <option value="inactive">{{ __('admin.roles.index.inactive') }}</option>
                 </select>
             </div>
         </div>
@@ -138,7 +138,7 @@
     <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark border border-admin-200 dark:border-admin-700">
         <div class="p-6 border-b border-admin-200 dark:border-admin-700">
             <div class="flex items-center justify-between">
-                <h2 class="text-lg font-semibold text-admin-900 dark:text-white">Roller</h2>
+                <h2 class="text-lg font-semibold text-admin-900 dark:text-white">{{ __('admin.roles.index.roles') }}</h2>
                 <div class="flex items-center space-x-3">
                     <!-- View Toggle -->
                     <div class="flex items-center bg-admin-100 dark:bg-admin-700 rounded-xl p-1">
@@ -146,13 +146,13 @@
                                 :class="viewMode === 'list' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
                                 class="px-3 py-1 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
                             <x-heroicon name="list-bullet" class="w-4 h-4 mr-1" />
-                            Liste
+                            {{ __('admin.roles.index.list_view') }}
                         </button>
                         <button @click="viewMode = 'tree'" 
                                 :class="viewMode === 'tree' ? 'bg-white dark:bg-admin-600 shadow-sm' : ''"
                                 class="px-3 py-1 text-sm font-medium text-admin-700 dark:text-admin-300 rounded-lg transition-all">
                             <x-heroicon name="git-branch" class="w-4 h-4 mr-1" />
-                            Ağaç
+                            {{ __('admin.roles.index.tree_view') }}
                         </button>
                     </div>
                 </div>
@@ -181,18 +181,18 @@
                                         <h3 class="text-lg font-semibold text-admin-900 dark:text-white">{{ $role->display_name }}</h3>
                                         <span class="px-2 py-1 text-xs font-medium rounded-lg
                                             {{ $role->is_active ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300' }}">
-                                            {{ $role->is_active ? 'Aktif' : 'Pasif' }}
+                                            {{ $role->is_active ? __('admin.roles.index.active') : __('admin.roles.index.inactive') }}
                                         </span>
                                     </div>
                                     <div class="flex items-center space-x-4 text-sm text-admin-600 dark:text-admin-400 mt-1">
-                                        <span>Seviye {{ $role->hierarchy_level }}</span>
+                                        <span>{{ __('admin.roles.index.level') }} {{ $role->hierarchy_level }}</span>
                                         <span>•</span>
-                                        <span>{{ $role->admins_count }} admin</span>
+                                        <span>{{ $role->admins_count }} {{ __('admin.roles.index.admins') }}</span>
                                         <span>•</span>
-                                        <span>{{ $role->active_permissions_count }} izin</span>
+                                        <span>{{ $role->active_permissions_count }} {{ __('admin.roles.index.permissions') }}</span>
                                         @if($role->parentRole)
                                             <span>•</span>
-                                            <span>Üst: {{ $role->parentRole->display_name }}</span>
+                                            <span>{{ __('admin.roles.index.parent') }}: {{ $role->parentRole->display_name }}</span>
                                         @endif
                                         @if($role->settings['department'] ?? false)
                                             <span>•</span>
@@ -225,7 +225,7 @@
                         <!-- Child Roles -->
                         @if($role->childRoles->count() > 0)
                             <div class="mt-4 pl-4 border-l-2 border-admin-200 dark:border-admin-600">
-                                <p class="text-sm text-admin-600 dark:text-admin-400 mb-2">Alt Roller:</p>
+                                <p class="text-sm text-admin-600 dark:text-admin-400 mb-2">{{ __('admin.roles.index.child_roles') }}:</p>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach($role->childRoles as $childRole)
                                         <a href="{{ route('admin.roles.show', $childRole) }}" 
@@ -243,7 +243,7 @@
             <!-- Tree View -->
             <div x-show="viewMode === 'tree'" x-transition class="space-y-4">
                 <div class="bg-admin-50 dark:bg-admin-700/20 rounded-xl p-4">
-                    <h3 class="font-medium text-admin-900 dark:text-white mb-4">Rol Hiyerarşisi</h3>
+                    <h3 class="font-medium text-admin-900 dark:text-white mb-4">{{ __('admin.roles.index.role_hierarchy') }}</h3>
                     <div id="role-tree" class="role-hierarchy">
                         @include('admin.roles.partials.tree', ['roles' => $roleTree, 'level' => 0])
                     </div>
@@ -307,14 +307,14 @@ function rolesManager() {
         
         deleteRole(roleId) {
             Swal.fire({
-                title: 'Rolü Sil',
-                text: 'Bu rolü silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.',
+                title: '{{ __('admin.roles.index.delete_role') }}',
+                text: '{{ __('admin.roles.index.delete_confirmation') }}',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc2626',
                 cancelButtonColor: '#6b7280',
-                confirmButtonText: 'Evet, Sil',
-                cancelButtonText: 'İptal'
+                confirmButtonText: '{{ __('admin.roles.index.yes_delete') }}',
+                cancelButtonText: '{{ __('admin.roles.index.cancel') }}'
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Create form and submit

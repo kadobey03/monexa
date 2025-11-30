@@ -40,7 +40,7 @@ class PlanCompleted extends Mailable
      */
     public function build()
     {
-        return $this->subject("Investment Plan Completed: {$this->plan->name}")
+        return $this->subject(__('mail.subjects.plan_completed', ['planName' => $this->plan->name]))
             ->markdown('emails.plans.completed')
             ->with([
                 'name' => $this->user->name,

@@ -13,11 +13,11 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="content  ">
             <div class="page-inner">
                 <div class="mt-2 mb-4">
-                    <h1 class="title1  d-inline">{{ $user->name }} login activities</h1>
+                    <h1 class="title1  d-inline">{{ __('admin.activities.login_activities_for', ['name' => $user->name]) }}</h1>
                     <div class="d-inline">
                         <div class="float-right btn-group">
                             <a class="btn btn-primary btn-sm" href="{{ route('viewuser', $user->id) }}"> <i
-                                    class="fa fa-arrow-left"></i> back</a>
+                                    class="fa fa-arrow-left"></i> {{ __('admin.actions.back') }}</a>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                     @if (count($activities) > 0)
                         <div class="mb-4 col-md-12">
                             <a class="btn btn-danger btn-sm" href="{{ route('clearactivity', $user->id) }}"> <i
-                                    class="fa fa-trash"></i> Clear Data</a>
+                                    class="fa fa-trash"></i> {{ __('admin.actions.clear_data') }}</a>
                         </div>
                     @endif
                     <div class="col-md-12 card shadow p-4 ">
@@ -36,9 +36,9 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                 <thead>
                                     <tr>
                                         {{-- <th>Client name</th> --}}
-                                        <th>IP Address</th>
-                                        <th>Device/OS/Browser</th>
-                                        <th>Date/Time logged in</th>
+                                        <th>{{ __('admin.activities.ip_address') }}</th>
+                                        <th>{{ __('admin.activities.device_os_browser') }}</th>
+                                        <th>{{ __('admin.activities.login_datetime') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

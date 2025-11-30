@@ -42,10 +42,23 @@ services:
     volumes:
       - mysql_data_monexa:/var/lib/mysql
 
-  # Redis Service (optional but useful for Laravel)
+  # Redis Service - Optimized for translation caching
   redis-monexa:
-    image: redis:alpine
+    image: redis:7-alpine
+    container_name: redis-monexa
     restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_monexa:/data
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
   # PhpMyAdmin Service (optional for database management)
   phpmyadmin-monexa:
@@ -78,4 +91,6 @@ networks:
 # Volumes
 volumes:
   mysql_data_monexa:
+    driver: local
+  redis_data_monexa:
     driver: local

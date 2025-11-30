@@ -6,20 +6,20 @@
     <!-- Page Header -->
     <div class="flex flex-col items-start justify-between space-y-4 sm:flex-row sm:items-center sm:space-y-0">
         <div>
-            <h1 class="text-3xl font-bold text-admin-900 dark:text-admin-100">Kullanıcı Yönetimi</h1>
-            <p class="mt-2 text-admin-600 dark:text-admin-400">Platform kullanıcılarını görüntüle ve yönet</p>
+            <h1 class="text-3xl font-bold text-admin-900 dark:text-admin-100">{{ __('admin.users.user_management') }}</h1>
+            <p class="mt-2 text-admin-600 dark:text-admin-400">{{ __('admin.users.view_and_manage_platform_users') }}</p>
         </div>
         
         <!-- Action Buttons -->
         <div class="flex items-center space-x-3">
             <button class="admin-btn admin-btn-secondary flex items-center space-x-2" onclick="exportUsers()">
                 <x-heroicon name="arrow-down-tray" class="h-4 w-4" />
-                <span>Dışa Aktar</span>
+                <span>{{ __('admin.actions.export') }}</span>
             </button>
             
             <button class="admin-btn admin-btn-primary flex items-center space-x-2" onclick="openAddUserModal()">
                 <x-heroicon name="plus" class="h-4 w-4" />
-                <span>Yeni Kullanıcı</span>
+                <span>{{ __('admin.users.new_user') }}</span>
             </button>
         </div>
     </div>
@@ -32,7 +32,7 @@
                     <x-heroicon name="users" class="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Toplam Kullanıcılar</p>
+                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.users.total_users') }}</p>
                     <p class="text-2xl font-bold text-admin-900 dark:text-admin-100">{{ $user_count ?? 0 }}</p>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                     <x-heroicon name="user-check" class="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Aktif Kullanıcılar</p>
+                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.users.active_users') }}</p>
                     <p class="text-2xl font-bold text-admin-900 dark:text-admin-100">{{ $active_users ?? 0 }}</p>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                     <x-heroicon name="clock" class="h-6 w-6 text-amber-600 dark:text-amber-400" />
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Bekleyen Doğrulama</p>
+                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.users.pending_verification') }}</p>
                     <p class="text-2xl font-bold text-admin-900 dark:text-admin-100">{{ $pending_verification ?? 0 }}</p>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     <x-heroicon name="user-minus" class="h-6 w-6 text-red-600 dark:text-red-400" />
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">Engellenen</p>
+                    <p class="text-sm font-medium text-admin-600 dark:text-admin-400">{{ __('admin.status.blocked') }}</p>
                     <p class="text-2xl font-bold text-admin-900 dark:text-admin-100">{{ $blocked_users ?? 0 }}</p>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                     type="text" 
                     id="user-search"
                     class="admin-input w-full pl-10 pr-4" 
-                    placeholder="Kullanıcı ara..."
+                    placeholder="{{ __('admin.filters.search_users') }}"
                     oninput="filterUsers(this.value)"
                 >
             </div>
@@ -95,18 +95,18 @@
             <!-- Filters -->
             <div class="flex items-center space-x-4">
                 <select id="status-filter" class="admin-input" onchange="filterByStatus(this.value)">
-                    <option value="">Tüm Durumlar</option>
-                    <option value="active">Aktif</option>
-                    <option value="inactive">Pasif</option>
-                    <option value="blocked">Engellenen</option>
-                    <option value="pending">Bekleyen</option>
+                    <option value="">{{ __('admin.filters.all_statuses') }}</option>
+                    <option value="active">{{ __('admin.status.active') }}</option>
+                    <option value="inactive">{{ __('admin.status.inactive') }}</option>
+                    <option value="blocked">{{ __('admin.status.blocked') }}</option>
+                    <option value="pending">{{ __('admin.status.pending') }}</option>
                 </select>
 
                 <select id="role-filter" class="admin-input" onchange="filterByRole(this.value)">
-                    <option value="">Tüm Roller</option>
-                    <option value="user">Kullanıcı</option>
-                    <option value="premium">Premium</option>
-                    <option value="vip">VIP</option>
+                    <option value="">{{ __('admin.filters.all_roles') }}</option>
+                    <option value="user">{{ __('admin.users.user') }}</option>
+                    <option value="premium">{{ __('admin.users.premium') }}</option>
+                    <option value="vip">{{ __('admin.users.vip') }}</option>
                 </select>
 
                 <button class="admin-btn admin-btn-secondary" onclick="resetFilters()">
@@ -125,14 +125,14 @@
                         <th class="w-4">
                             <input type="checkbox" class="rounded" id="select-all" onchange="toggleSelectAll(this)">
                         </th>
-                        <th>Kullanıcı</th>
-                        <th>E-posta</th>
-                        <th>Telefon</th>
-                        <th>Kayıt Tarihi</th>
-                        <th>Son Aktivite</th>
-                        <th>Bakiye</th>
-                        <th>Durum</th>
-                        <th>İşlemler</th>
+                        <th>{{ __('admin.users.user') }}</th>
+                        <th>{{ __('admin.users.email') }}</th>
+                        <th>{{ __('admin.users.phone') }}</th>
+                        <th>{{ __('admin.users.registration_date') }}</th>
+                        <th>{{ __('admin.users.last_activity') }}</th>
+                        <th>{{ __('admin.users.balance') }}</th>
+                        <th>{{ __('admin.users.status') }}</th>
+                        <th>{{ __('admin.actions.operations') }}</th>
                     </tr>
                 </thead>
                 <tbody id="users-table-body">
@@ -160,7 +160,7 @@
                             {{ $user->created_at?->format('d.m.Y H:i') }}
                         </td>
                         <td class="text-sm text-admin-500 dark:text-admin-400">
-                            {{ $user->last_seen?->diffForHumans() ?? 'Hiçbir zaman' }}
+                            {{ $user->last_seen?->diffForHumans() ?? __('admin.users.never') }}
                         </td>
                         <td class="text-sm font-mono text-admin-900 dark:text-admin-100">
                             {{ $user->currency ?? '$' }}{{ number_format($user->account_bal ?? 0, 2) }}
@@ -170,44 +170,44 @@
                                 @case('active')
                                     <span class="badge badge-success">
                                         <x-heroicon name="check-circle" class="mr-1 h-3 w-3" />
-                                        Aktif
+                                        {{ __('admin.status.active') }}
                                     </span>
                                     @break
                                 @case('blocked')
                                     <span class="badge badge-error">
                                         <x-heroicon name="x-circle" class="mr-1 h-3 w-3" />
-                                        Engelli
+                                        {{ __('admin.status.blocked') }}
                                     </span>
                                     @break
                                 @case('pending')
                                     <span class="badge badge-warning">
                                         <x-heroicon name="clock" class="mr-1 h-3 w-3" />
-                                        Bekliyor
+                                        {{ __('admin.status.pending') }}
                                     </span>
                                     @break
                                 @default
                                     <span class="badge badge-info">
                                         <x-heroicon name="user" class="mr-1 h-3 w-3" />
-                                        Bilinmiyor
+                                        {{ __('admin.status.unknown') }}
                                     </span>
                             @endswitch
                         </td>
                         <td>
                             <div class="flex items-center space-x-2">
                                 <button class="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors" 
-                                        onclick="viewUser({{ $user->id }})" title="Görüntüle">
+                                        onclick="viewUser({{ $user->id }})" title="{{ __('admin.actions.view') }}">
                                     <x-heroicon name="eye" class="h-4 w-4" />
                                 </button>
                                 <button class="p-2 text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg transition-colors" 
-                                        onclick="editUser({{ $user->id }})" title="Düzenle">
+                                        onclick="editUser({{ $user->id }})" title="{{ __('admin.actions.edit') }}">
                                     <x-heroicon name="edit" class="h-4 w-4" />
                                 </button>
                                 <button class="p-2 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors" 
-                                        onclick="toggleUserStatus({{ $user->id }})" title="Durum Değiştir">
+                                        onclick="toggleUserStatus({{ $user->id }})" title="{{ __('admin.actions.change_status') }}">
                                     <x-heroicon name="power" class="h-4 w-4" />
                                 </button>
                                 <button class="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors" 
-                                        onclick="deleteUser({{ $user->id }})" title="Sil">
+                                        onclick="deleteUser({{ $user->id }})" title="{{ __('admin.actions.delete') }}">
                                     <x-heroicon name="trash-2" class="h-4 w-4" />
                                 </button>
                             </div>
@@ -218,8 +218,8 @@
                         <td colspan="9" class="px-6 py-12 text-center">
                             <div class="flex flex-col items-center">
                                 <x-heroicon name="users" class="h-12 w-12 text-admin-400 mb-4" />
-                                <h3 class="text-lg font-medium text-admin-900 dark:text-admin-100 mb-2">Kullanıcı bulunamadı</h3>
-                                <p class="text-admin-500 dark:text-admin-400">Henüz hiç kullanıcı eklenmemiş.</p>
+                                <h3 class="text-lg font-medium text-admin-900 dark:text-admin-100 mb-2">{{ __('admin.users.user_not_found') }}</h3>
+                                <p class="text-admin-500 dark:text-admin-400">{{ __('admin.users.no_users_added_yet') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -241,25 +241,25 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <span class="text-sm font-medium text-admin-900 dark:text-admin-100">
-                    <span id="selected-count">0</span> kullanıcı seçildi
+                    <span id="selected-count">0</span> {{ __('admin.users.users_selected') }}
                 </span>
             </div>
             <div class="flex items-center space-x-2">
                 <button class="admin-btn admin-btn-secondary" onclick="bulkActivate()">
                     <x-heroicon name="check" class="mr-2 h-4 w-4" />
-                    Aktifleştir
+                    {{ __('admin.actions.activate') }}
                 </button>
                 <button class="admin-btn admin-btn-secondary" onclick="bulkDeactivate()">
                     <x-heroicon name="x-mark" class="mr-2 h-4 w-4" />
-                    Devre Dışı Bırak
+                    {{ __('admin.actions.deactivate') }}
                 </button>
                 <button class="admin-btn admin-btn-secondary" onclick="bulkExport()">
                     <x-heroicon name="arrow-down-tray" class="mr-2 h-4 w-4" />
-                    Dışa Aktar
+                    {{ __('admin.actions.export') }}
                 </button>
                 <button class="admin-btn admin-btn-secondary text-red-600" onclick="bulkDelete()">
                     <x-heroicon name="trash-2" class="mr-2 h-4 w-4" />
-                    Sil
+                    {{ __('admin.actions.delete') }}
                 </button>
             </div>
         </div>
@@ -275,7 +275,7 @@
             <div class="modal-content w-full max-w-2xl" x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100">
                 
                 <div class="modal-header">
-                    <h3 class="text-lg font-semibold text-admin-900 dark:text-admin-100">Yeni Kullanıcı Ekle</h3>
+                    <h3 class="text-lg font-semibold text-admin-900 dark:text-admin-100">{{ __('admin.users.add_new_user') }}</h3>
                     <button onclick="closeAddUserModal()" class="p-2 hover:bg-admin-100 dark:hover:bg-admin-700 rounded-lg transition-colors">
                         <x-heroicon name="x-mark" class="h-5 w-5" />
                     </button>
@@ -286,49 +286,49 @@
                         
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div class="form-group">
-                                <label class="form-label">Ad Soyad</label>
+                                <label class="form-label">{{ __('admin.forms.full_name') }}</label>
                                 <input type="text" name="name" class="form-input" required>
                             </div>
                             
                             <div class="form-group">
-                                <label class="form-label">E-posta</label>
+                                <label class="form-label">{{ __('admin.users.email') }}</label>
                                 <input type="email" name="email" class="form-input" required>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div class="form-group">
-                                <label class="form-label">Telefon</label>
+                                <label class="form-label">{{ __('admin.users.phone') }}</label>
                                 <input type="tel" name="phone" class="form-input">
                             </div>
                             
                             <div class="form-group">
-                                <label class="form-label">Rol</label>
+                                <label class="form-label">{{ __('admin.users.role') }}</label>
                                 <select name="role" class="form-select">
-                                    <option value="user">Kullanıcı</option>
-                                    <option value="premium">Premium</option>
-                                    <option value="vip">VIP</option>
+                                    <option value="user">{{ __('admin.users.user') }}</option>
+                                    <option value="premium">{{ __('admin.users.premium') }}</option>
+                                    <option value="vip">{{ __('admin.users.vip') }}</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Şifre</label>
+                            <label class="form-label">{{ __('admin.forms.password') }}</label>
                             <input type="password" name="password" class="form-input" required>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Şifre Tekrar</label>
+                            <label class="form-label">{{ __('admin.forms.password_confirmation') }}</label>
                             <input type="password" name="password_confirmation" class="form-input" required>
                         </div>
 
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" onclick="closeAddUserModal()" class="admin-btn admin-btn-secondary">İptal</button>
+                        <button type="button" onclick="closeAddUserModal()" class="admin-btn admin-btn-secondary">{{ __('admin.actions.cancel') }}</button>
                         <button type="submit" class="admin-btn admin-btn-primary">
                             <x-heroicon name="plus" class="mr-2 h-4 w-4" />
-                            Kullanıcı Ekle
+                            {{ __('admin.users.add_user') }}
                         </button>
                     </div>
                 </form>
@@ -393,7 +393,7 @@ function filterByStatus(status) {
 
 function filterByRole(role) {
     // Implement role-based filtering
-    console.log('Filtering by role:', role);
+    console.log('{{ __("admin.notifications.filtering_by_role") }}:', role);
 }
 
 function resetFilters() {
@@ -445,12 +445,12 @@ function editUser(userId) {
 
 function toggleUserStatus(userId) {
     Swal.fire({
-        title: 'Kullanıcı Durumunu Değiştir',
-        text: 'Bu kullanıcının durumunu değiştirmek istediğinizden emin misiniz?',
+        title: '{{ __("admin.users.change_user_status") }}',
+        text: '{{ __("admin.users.confirm_change_user_status") }}',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Evet, Değiştir',
-        cancelButtonText: 'İptal'
+        confirmButtonText: '{{ __("admin.actions.yes_change") }}',
+        cancelButtonText: '{{ __("admin.actions.cancel") }}'
     }).then((result) => {
         if (result.isConfirmed) {
             // Kullanıcı durumunu toggle et (block/unblock)
@@ -461,12 +461,12 @@ function toggleUserStatus(userId) {
 
 function deleteUser(userId) {
     Swal.fire({
-        title: 'Kullanıcıyı Sil',
-        text: 'Bu kullanıcıyı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!',
+        title: '{{ __("admin.users.delete_user") }}',
+        text: '{{ __("admin.users.confirm_delete_user_irreversible") }}',
         icon: 'error',
         showCancelButton: true,
-        confirmButtonText: 'Evet, Sil',
-        cancelButtonText: 'İptal'
+        confirmButtonText: '{{ __("admin.actions.yes_delete") }}',
+        cancelButtonText: '{{ __("admin.actions.cancel") }}'
     }).then((result) => {
         if (result.isConfirmed) {
             // Kullanıcıyı sil
@@ -479,17 +479,17 @@ function deleteUser(userId) {
 function bulkActivate() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        Swal.fire('Uyarı', 'Lütfen en az bir kullanıcı seçin.', 'warning');
+        Swal.fire('{{ __("admin.notifications.warning") }}', '{{ __("admin.users.please_select_at_least_one_user") }}', 'warning');
         return;
     }
     
     Swal.fire({
-        title: 'Toplu Aktifleştir',
-        text: `${selectedUsers.length} kullanıcıyı aktifleştirmek istediğinizden emin misiniz?`,
+        title: '{{ __("admin.users.bulk_activate") }}',
+        text: `${selectedUsers.length} {{ __("admin.users.users_to_activate_confirm") }}`,
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Evet, Aktifleştir',
-        cancelButtonText: 'İptal'
+        confirmButtonText: '{{ __("admin.actions.yes_activate") }}',
+        cancelButtonText: '{{ __("admin.actions.cancel") }}'
     }).then((result) => {
         if (result.isConfirmed) {
             // Her kullanıcıyı ayrı ayrı aktifleştir (bulk API yok)
@@ -503,17 +503,17 @@ function bulkActivate() {
 function bulkDeactivate() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        Swal.fire('Uyarı', 'Lütfen en az bir kullanıcı seçin.', 'warning');
+        Swal.fire('{{ __("admin.notifications.warning") }}', '{{ __("admin.users.please_select_at_least_one_user") }}', 'warning');
         return;
     }
     
     Swal.fire({
-        title: 'Toplu Deaktifleştir',
-        text: `${selectedUsers.length} kullanıcıyı deaktifleştirmek istediğinizden emin misiniz?`,
+        title: '{{ __("admin.users.bulk_deactivate") }}',
+        text: `${selectedUsers.length} {{ __("admin.users.users_to_deactivate_confirm") }}`,
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Evet, Deaktifleştir',
-        cancelButtonText: 'İptal'
+        confirmButtonText: '{{ __("admin.actions.yes_deactivate") }}',
+        cancelButtonText: '{{ __("admin.actions.cancel") }}'
     }).then((result) => {
         if (result.isConfirmed) {
             // Her kullanıcıyı ayrı ayrı deaktifleştir
@@ -527,27 +527,27 @@ function bulkDeactivate() {
 function bulkExport() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        Swal.fire('Uyarı', 'Lütfen en az bir kullanıcı seçin.', 'warning');
+        Swal.fire('{{ __("admin.notifications.warning") }}', '{{ __("admin.users.please_select_at_least_one_user") }}', 'warning');
         return;
     }
     // Export fonksiyonu için özel route gerekli - şimdilik basit uyarı
-    Swal.fire('Bilgi', 'Dışa aktarma özelliği yakında eklenecek.', 'info');
+    Swal.fire('{{ __("admin.notifications.info") }}', '{{ __("admin.features.export_feature_coming_soon") }}', 'info');
 }
 
 function bulkDelete() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        Swal.fire('Uyarı', 'Lütfen en az bir kullanıcı seçin.', 'warning');
+        Swal.fire('{{ __("admin.notifications.warning") }}', '{{ __("admin.users.please_select_at_least_one_user") }}', 'warning');
         return;
     }
     
     Swal.fire({
-        title: 'Seçilen Kullanıcıları Sil',
-        text: `${selectedUsers.length} kullanıcıyı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!`,
+        title: '{{ __("admin.users.delete_selected_users") }}',
+        text: `${selectedUsers.length} {{ __("admin.users.users_to_delete_irreversible_confirm") }}`,
         icon: 'error',
         showCancelButton: true,
-        confirmButtonText: 'Evet, Sil',
-        cancelButtonText: 'İptal'
+        confirmButtonText: '{{ __("admin.actions.yes_delete") }}',
+        cancelButtonText: '{{ __("admin.actions.cancel") }}'
     }).then((result) => {
         if (result.isConfirmed) {
             // Her kullanıcıyı ayrı ayrı sil
@@ -586,8 +586,8 @@ function submitAddUser(event) {
 function exportUsers() {
     // Henüz export route'u yok, geçici bilgi mesajı
     Swal.fire({
-        title: 'Bilgi',
-        text: 'Kullanıcı dışa aktarma özelliği yakında eklenecek.',
+        title: '{{ __("admin.notifications.info") }}',
+        text: '{{ __("admin.features.user_export_feature_coming_soon") }}',
         icon: 'info'
     });
 }

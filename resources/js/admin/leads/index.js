@@ -21,7 +21,7 @@ function initializeLeadsModule() {
         return;
     }
     
-    console.log('🚀 Lead Yönetim Sistemi başlatılıyor (Vanilla JS)...');
+    console.log('🚀 ' + (typeof window.__ === 'function' ? window.__('success.leads_system_starting') : 'Lead Yönetim Sistemi başlatılıyor (Vanilla JS)') + '...');
     
     // Icons are handled by Heroicons component - no JS initialization needed
     console.log('✅ Using Heroicons - No icon initialization required');
@@ -46,7 +46,7 @@ function initializeLeadsModule() {
     // Setup performance monitoring
     setupPerformanceMonitoring();
     
-    console.log('✅ Lead Yönetim Sistemi hazır (Vanilla JS)');
+    console.log('✅ ' + (typeof window.__ === 'function' ? window.__('success.leads_system_ready') : 'Lead Yönetim Sistemi hazır (Vanilla JS)'));
 }
 
 /**
@@ -65,7 +65,8 @@ function setupErrorHandling() {
             });
             
             // Show user-friendly error message
-            showGlobalNotification('Bir hata oluştu. Sayfa yenilenmesi gerekebilir.', 'error');
+            const errorMessage = typeof window.__ === 'function' ? window.__('errors.general_error_refresh') : 'Bir hata oluştu. Sayfa yenilenmesi gerekebilir.';
+            showGlobalNotification(errorMessage, 'error');
         }
     });
     

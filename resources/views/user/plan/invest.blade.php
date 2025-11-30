@@ -90,7 +90,7 @@
                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                         </svg>
-                        Home
+                        {{ __('user.plans.home') }}
                     </a>
                 </li>
                 <li>
@@ -98,7 +98,7 @@
                         <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <a href="{{ route('user.plans.index') }}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">Investment Plans</a>
+                        <a href="{{ route('user.plans.index') }}" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">{{ __('user.plans.investment_plans') }}</a>
                     </div>
                 </li>
                 <li>
@@ -114,14 +114,14 @@
                         <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">Invest</span>
+                        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">{{ __('user.plans.invest') }}</span>
                     </div>
                 </li>
             </ol>
         </nav>
 
-        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">Invest in {{ $plan->name }}</h1>
-        <p class="text-gray-600 dark:text-gray-300">Complete your investment details below</p>
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">{{ __('user.plans.invest_in_plan', ['name' => $plan->name]) }}</h1>
+        <p class="text-gray-600 dark:text-gray-300">{{ __('user.plans.complete_investment_details') }}</p>
     </div>
 
     <!-- Alerts -->
@@ -136,11 +136,11 @@
                     @csrf
 
                     <div class="mb-8">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Investment Amount</h3>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ __('user.plans.investment_amount') }}</h3>
 
                         <!-- Investment Amount Slider -->
                         <div class="mb-6">
-                            <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select Investment Amount</label>
+                            <label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('user.plans.select_investment_amount') }}</label>
                             <div class="flex items-center mb-2">
                                 <span class="text-gray-500 dark:text-gray-400">{{ Auth::user()->currency }}{{ number_format($plan->min_amount, 2) }}</span>
                                 <div class="mx-4 flex-1">
@@ -159,14 +159,14 @@
                                 <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                                 @enderror
                                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    Available Balance: {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
+                                    {{ __('user.plans.available_balance') }}: {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
                                 </p>
                             </div>
                         </div>
 
                         <!-- Payment Method Selection -->
                         <div class="mb-6">
-                            <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Payment Method</h4>
+                            <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-3">{{ __('user.plans.payment_method') }}</h4>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="relative">
@@ -179,8 +179,8 @@
                                                 </svg>
                                             </div>
                                             <div>
-                                                <p class="font-medium text-gray-900 dark:text-white">Wallet Balance</p>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">Use your existing account balance</p>
+                                                <p class="font-medium text-gray-900 dark:text-white">{{ __('user.plans.wallet_balance') }}</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.use_existing_balance') }}</p>
                                             </div>
                                         </div>
                                     </label>
@@ -196,8 +196,8 @@
                                                 </svg>
                                             </div>
                                             <div>
-                                                <p class="font-medium text-gray-900 dark:text-white">Cryptocurrency</p>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">Pay with Bitcoin, Ethereum, etc.</p>
+                                                <p class="font-medium text-gray-900 dark:text-white">{{ __('user.plans.cryptocurrency') }}</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.pay_with_crypto') }}</p>
                                             </div>
                                         </div>
                                     </label>
@@ -210,16 +210,16 @@
 
                         <!-- Investment Options -->
                         <div class="mb-6">
-                            <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-3">Investment Options</h4>
+                            <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-3">{{ __('user.plans.investment_options') }}</h4>
 
                             @if($plan->compound_interest)
                             <div class="mb-4">
                                 <label class="inline-flex items-center">
                                     <input type="checkbox" name="compound_interest" value="1" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800">
-                                    <span class="ml-2 text-gray-700 dark:text-gray-300">Enable Compound Interest</span>
+                                    <span class="ml-2 text-gray-700 dark:text-gray-300">{{ __('user.plans.enable_compound_interest') }}</span>
                                 </label>
                                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    Compound interest reinvests your earnings to potentially increase your returns.
+                                    {{ __('user.plans.compound_interest_description') }}
                                 </p>
                             </div>
                             @endif
@@ -227,10 +227,10 @@
                             <div>
                                 <label class="inline-flex items-center">
                                     <input type="checkbox" name="auto_renewal" value="1" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800">
-                                    <span class="ml-2 text-gray-700 dark:text-gray-300">Auto-renew After Maturity</span>
+                                    <span class="ml-2 text-gray-700 dark:text-gray-300">{{ __('user.plans.auto_renew_after_maturity') }}</span>
                                 </label>
                                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                    Automatically reinvest in this plan after it reaches maturity.
+                                    {{ __('user.plans.auto_renew_description') }}
                                 </p>
                             </div>
                         </div>
@@ -238,13 +238,13 @@
 
                     <!-- Referral Code -->
                     <div class="mb-8">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Referans Kodu (İsteğe Bağlı)</h3>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ __('user.plans.referral_code_optional') }}</h3>
 
                         <div>
-                            <label for="referral_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Referans Kodunuz Var mı?</label>
-                            <input type="text" id="referral_code" name="referral_code" value="{{ old('referral_code') }}" class="block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white sm:text-sm" placeholder="Referans kodunu girin">
+                            <label for="referral_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('user.plans.do_you_have_referral_code') }}</label>
+                            <input type="text" id="referral_code" name="referral_code" value="{{ old('referral_code') }}" class="block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-800 dark:text-white sm:text-sm" placeholder="{{ __('user.plans.enter_referral_code') }}">
                             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                Birisi sizi yönlendirdiyse, kodunu buraya girin. {{ $plan->referral_bonus }}% bonus alacaklar.
+                                {{ __('user.plans.referral_code_description', ['bonus' => $plan->referral_bonus]) }}
                             </p>
                         </div>
                     </div>
@@ -256,7 +256,7 @@
                                 <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800">
                             </div>
                             <div class="ml-3 text-sm">
-                                <label for="terms" class="text-gray-700 dark:text-gray-300">I agree to the <a href="{{ route('terms') }}" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Terms of Service</a> and <a href="{{ route('privacy') }}" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Privacy Policy</a></label>
+                                <label for="terms" class="text-gray-700 dark:text-gray-300">{{ __('user.plans.agree_to_terms_and_privacy') }}</label>
                             </div>
                         </div>
                         @error('terms')
@@ -270,7 +270,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                             </svg>
-                            Complete Investment
+                            {{ __('user.plans.complete_investment') }}
                         </button>
                     </div>
                 </form>
@@ -281,42 +281,42 @@
         <div>
             <div class="sticky top-6">
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6 animate-fade-in stagger-item">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Investment Summary</h3>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ __('user.plans.investment_summary') }}</h3>
 
                     <div class="space-y-4">
                         <div class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-300">Selected Plan:</span>
+                            <span class="text-gray-600 dark:text-gray-300">{{ __('user.plans.selected_plan') }}:</span>
                             <span class="font-medium text-gray-900 dark:text-white">{{ $plan->name }}</span>
                         </div>
 
                         <div class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-300">Investment Amount:</span>
+                            <span class="text-gray-600 dark:text-gray-300">{{ __('user.plans.investment_amount') }}:</span>
                             <span class="font-medium text-gray-900 dark:text-white" id="summaryAmount">{{ Auth::user()->currency }}{{ number_format($plan->min_amount, 2) }}</span>
                         </div>
 
                         <div class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-300">Return Rate:</span>
+                            <span class="text-gray-600 dark:text-gray-300">{{ __('user.plans.return_rate') }}:</span>
                             <span class="font-medium text-green-600 dark:text-green-500">{{ $plan->expected_return }}% / {{ $plan->return_interval }}</span>
                         </div>
 
                         <div class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-300">Duration:</span>
+                            <span class="text-gray-600 dark:text-gray-300">{{ __('user.plans.duration') }}:</span>
                             <span class="font-medium text-gray-900 dark:text-white">{{ $plan->duration }} {{ Str::plural('Day', $plan->duration) }}</span>
                         </div>
 
                         <div class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-300">Total Return:</span>
+                            <span class="text-gray-600 dark:text-gray-300">{{ __('user.plans.total_return') }}:</span>
                             <span class="font-medium text-green-600 dark:text-green-500" id="summaryReturn">{{ Auth::user()->currency }}0.00</span>
                         </div>
 
                         <div class="flex justify-between">
-                            <span class="text-gray-600 dark:text-gray-300">Maturity Date:</span>
+                            <span class="text-gray-600 dark:text-gray-300">{{ __('user.plans.maturity_date') }}:</span>
                             <span class="font-medium text-gray-900 dark:text-white" id="maturityDate">{{ now()->addDays($plan->duration)->format('M d, Y') }}</span>
                         </div>
 
                         <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
                             <div class="flex justify-between text-lg">
-                                <span class="font-medium text-gray-900 dark:text-white">Final Amount:</span>
+                                <span class="font-medium text-gray-900 dark:text-white">{{ __('user.plans.final_amount') }}:</span>
                                 <span class="font-bold text-gray-900 dark:text-white" id="summaryFinal">{{ Auth::user()->currency }}0.00</span>
                             </div>
                         </div>
@@ -325,10 +325,10 @@
 
                 <!-- Need Help Card -->
                 <div class="bg-indigo-50 dark:bg-indigo-900/30 rounded-xl p-6 animate-fade-in stagger-item">
-                    <h4 class="font-medium text-indigo-900 dark:text-indigo-300 mb-2">Need Help?</h4>
-                    <p class="text-sm text-indigo-700 dark:text-indigo-400 mb-4">If you have any questions about this investment plan, our support team is available 24/7.</p>
+                    <h4 class="font-medium text-indigo-900 dark:text-indigo-300 mb-2">{{ __('user.plans.need_help') }}</h4>
+                    <p class="text-sm text-indigo-700 dark:text-indigo-400 mb-4">{{ __('user.plans.support_available_247') }}</p>
                     <a href="{{ route('user.support') }}" class="inline-flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
-                        Contact Support
+                        {{ __('user.plans.contact_support') }}
                         <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                         </svg>

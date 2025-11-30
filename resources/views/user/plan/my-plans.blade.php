@@ -71,7 +71,7 @@
                         <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                         </svg>
-                        Home
+                        {{ __('user.plans.home') }}
                     </a>
                 </li>
                 <li aria-current="page">
@@ -79,7 +79,7 @@
                         <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">My Investments</span>
+                        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">{{ __('user.plans.my_investments') }}</span>
                     </div>
                 </li>
             </ol>
@@ -88,15 +88,15 @@
         <!-- Page Title with Action -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">My Investment Plans</h1>
-                <p class="text-gray-600 dark:text-gray-300">Track the performance of your investment portfolio</p>
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">{{ __('user.plans.my_investment_plans') }}</h1>
+                <p class="text-gray-600 dark:text-gray-300">{{ __('user.plans.track_performance') }}</p>
             </div>
             <div class="mt-4 md:mt-0">
                 <a href="{{ route('user.plans.index') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
-                    Invest in New Plan
+                    {{ __('user.plans.invest_in_new_plan') }}
                 </a>
             </div>
         </div>
@@ -116,7 +116,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Total Invested</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.total_invested') }}</p>
                     <p class="text-xl font-bold text-gray-800 dark:text-white">{{ Auth::user()->currency }}{{ number_format($stats['total_invested'], 2) }}</p>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Total Profit</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.total_profit') }}</p>
                     <p class="text-xl font-bold text-green-600 dark:text-green-500">{{ Auth::user()->currency }}{{ number_format($stats['total_profit'], 2) }}</p>
                 </div>
             </div>
@@ -144,7 +144,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Active Plans</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.active_plans') }}</p>
                     <p class="text-xl font-bold text-gray-800 dark:text-white">{{ $stats['active'] }}</p>
                 </div>
             </div>
@@ -158,7 +158,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Total Plans</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.total_plans') }}</p>
                     <p class="text-xl font-bold text-gray-800 dark:text-white">{{ $stats['active'] + $stats['completed'] + $stats['pending'] }}</p>
                 </div>
             </div>
@@ -169,28 +169,28 @@
     <div class="border-b border-gray-200 dark:border-gray-700 mb-6 overflow-x-auto">
         <div class="flex space-x-6">
             <a href="{{ route('user.plans.my', ['status' => 'all']) }}" class="py-3 px-1 border-b-2 {{ $status === 'all' ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300' }} whitespace-nowrap font-medium text-sm">
-                All Plans
+                {{ __('user.plans.all_plans') }}
             </a>
             <a href="{{ route('user.plans.my', ['status' => 'active']) }}" class="py-3 px-1 border-b-2 {{ $status === 'active' ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300' }} whitespace-nowrap font-medium text-sm">
-                Active
+                {{ __('user.plans.active') }}
                 @if($stats['active'] > 0)
                 <span class="ml-1 px-2 py-0.5 bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400 rounded-full text-xs">{{ $stats['active'] }}</span>
                 @endif
             </a>
             <a href="{{ route('user.plans.my', ['status' => 'pending']) }}" class="py-3 px-1 border-b-2 {{ $status === 'pending' ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300' }} whitespace-nowrap font-medium text-sm">
-                Pending
+                {{ __('user.plans.pending') }}
                 @if($stats['pending'] > 0)
                 <span class="ml-1 px-2 py-0.5 bg-yellow-100 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-400 rounded-full text-xs">{{ $stats['pending'] }}</span>
                 @endif
             </a>
             <a href="{{ route('user.plans.my', ['status' => 'completed']) }}" class="py-3 px-1 border-b-2 {{ $status === 'completed' ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300' }} whitespace-nowrap font-medium text-sm">
-                Completed
+                {{ __('user.plans.completed') }}
                 @if($stats['completed'] > 0)
                 <span class="ml-1 px-2 py-0.5 bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-400 rounded-full text-xs">{{ $stats['completed'] }}</span>
                 @endif
             </a>
             <a href="{{ route('user.plans.my', ['status' => 'cancelled']) }}" class="py-3 px-1 border-b-2 {{ $status === 'cancelled' ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300' }} whitespace-nowrap font-medium text-sm">
-                Cancelled
+                {{ __('user.plans.cancelled') }}
             </a>
         </div>
     </div>
@@ -213,14 +213,14 @@
                                 {{ $userPlan->plan->name }}
                             </h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">
-                                Invested on {{ $userPlan->created_at->format('M d, Y') }}
+                                {{ __('user.plans.invested_on') }} {{ $userPlan->created_at->format('M d, Y') }}
                             </p>
                         </div>
                     </div>
 
                     <!-- Amount Info -->
                     <div class="mt-4 md:mt-0 text-right">
-                        <div class="text-sm text-gray-500 dark:text-gray-400">Invested Amount</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.invested_amount') }}</div>
                         <div class="text-lg font-bold text-gray-900 dark:text-white">
                             {{ Auth::user()->currency }}{{ number_format($userPlan->invested_amount, 2) }}
                         </div>
@@ -231,15 +231,15 @@
                 @if($userPlan->status === 'active')
                 <div class="mt-6">
                     <div class="flex justify-between text-xs mb-2">
-                        <span class="text-gray-500 dark:text-gray-400">Progress</span>
+                        <span class="text-gray-500 dark:text-gray-400">{{ __('user.plans.progress') }}</span>
                         <span class="font-medium text-gray-700 dark:text-gray-300">{{ $userPlan->getProgressPercentage() }}%</span>
                     </div>
                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div class="bg-green-500 h-2 rounded-full" style="width: {{ $userPlan->getProgressPercentage() }}%"></div>
                     </div>
                     <div class="flex justify-between text-xs mt-2">
-                        <span class="text-gray-500 dark:text-gray-400">Started: {{ $userPlan->activated_at->format('M d, Y') }}</span>
-                        <span class="text-gray-500 dark:text-gray-400">Ends: {{ $userPlan->expires_at->format('M d, Y') }}</span>
+                        <span class="text-gray-500 dark:text-gray-400">{{ __('user.plans.started') }}: {{ $userPlan->activated_at->format('M d, Y') }}</span>
+                        <span class="text-gray-500 dark:text-gray-400">{{ __('user.plans.ends') }}: {{ $userPlan->expires_at->format('M d, Y') }}</span>
                     </div>
                 </div>
                 @endif
@@ -248,21 +248,21 @@
                 <div class="flex flex-col sm:flex-row justify-between mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                     <div class="flex space-x-6">
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Current Value</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.current_value') }}</span>
                             <div class="text-lg font-bold {{ $userPlan->current_value > $userPlan->invested_amount ? 'text-green-600 dark:text-green-500' : 'text-gray-900 dark:text-white' }}">
                                 {{ Auth::user()->currency }}{{ number_format($userPlan->current_value, 2) }}
                             </div>
                         </div>
 
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Profit</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.profit') }}</span>
                             <div class="text-lg font-bold {{ $userPlan->total_profit > 0 ? 'text-green-600 dark:text-green-500' : 'text-gray-900 dark:text-white' }}">
                                 {{ Auth::user()->currency }}{{ number_format($userPlan->total_profit, 2) }}
                             </div>
                         </div>
 
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">ROI</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.plans.roi') }}</span>
                             <div class="text-lg font-bold text-gray-900 dark:text-white">
                                 {{ $userPlan->roi_percentage }}%
                             </div>
@@ -275,13 +275,13 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                             </svg>
-                            Complete Payment
+                            {{ __('user.plans.complete_payment') }}
                         </a>
                         <a href="{{ route('user.plans.cancel', $userPlan->id) }}" onclick="return confirm('Are you sure you want to cancel this plan?')" class="inline-flex items-center px-4 py-2 border border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 text-sm rounded-lg transition-colors duration-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
-                            Cancel
+                            {{ __('user.plans.cancel') }}
                         </a>
                         @else
                         <a href="{{ route('user.plans.details', $userPlan->id) }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg transition-colors duration-300">
@@ -289,7 +289,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                             </svg>
-                            View Details
+                            {{ __('user.plans.view_details') }}
                         </a>
                         @endif
                     </div>
@@ -301,13 +301,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 16h.01M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2z" />
             </svg>
-            <h3 class="text-xl font-medium text-gray-700 dark:text-gray-300 mb-2">No Investment Plans Found</h3>
-            <p class="text-gray-500 dark:text-gray-400 mb-6">You don't have any {{ $status !== 'all' ? $status : '' }} investment plans yet.</p>
+            <h3 class="text-xl font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('user.plans.no_investment_plans') }}</h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-6">{{ __('user.plans.no_plans_description') }}</p>
             <a href="{{ route('user.plans.index') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
-                Browse Investment Plans
+                {{ __('user.plans.browse_investment_plans') }}
             </a>
         </div>
         @endforelse

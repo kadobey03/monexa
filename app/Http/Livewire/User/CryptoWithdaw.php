@@ -49,13 +49,13 @@ class CryptoWithdaw extends Component
             $otpCode = $this->userService->generateWithdrawalOtp(auth()->user());
             $this->otpRequested = true;
 
-            session()->flash('success', 'OTP has been sent to your email');
+            session()->flash('success', __('livewire.crypto_withdrawal.otp_sent_to_email'));
         } catch (\Exception $e) {
             Log::error('OTP generation failed', [
                 'user_id' => auth()->id(),
                 'error' => $e->getMessage()
             ]);
-            session()->flash('error', 'Failed to send OTP. Please try again.');
+            session()->flash('error', __('livewire.crypto_withdrawal.otp_send_failed'));
         } finally {
             $this->processing = false;
         }
@@ -70,7 +70,7 @@ class CryptoWithdaw extends Component
         try {
             // Check OTP if required
             if (auth()->user()->sendotpemail == "Yes" && !$this->userService->verifyWithdrawalOtp(auth()->user(), $this->otpCode)) {
-                session()->flash('error', 'OTP is incorrect, please recheck the code');
+                session()->flash('error', __('livewire.crypto_withdrawal.otp_incorrect'));
                 return;
             }
 
@@ -87,7 +87,7 @@ class CryptoWithdaw extends Component
                 $data = json_decode($http_response);
 
                 if ($data->status == "FAIL") {
-                    session()->flash('error', 'Something went wrong, please contact our support team if problem persists');
+                    session()->flash('error', __('livewire.crypto_withdrawal.contact_support_error'));
                     Log::error('Binance payout failed', [
                         'user_id' => auth()->id(),
                         'response' => $http_response
@@ -102,17 +102,17 @@ class CryptoWithdaw extends Component
                     $this->emit('notification-count-updated');
 
                     $this->reset(['amount', 'otpCode']);
-                    session()->flash('success', 'Withdrawal request submitted successfully');
+                    session()->flash('success', __('livewire.crypto_withdrawal.withdrawal_submitted'));
                 }
             } else {
-                session()->flash('error', $result->errorMessage ?? 'Failed to process withdrawal');
+                session()->flash('error', $result->errorMessage ?? __('livewire.crypto_withdrawal.withdrawal_failed'));
             }
         } catch (\Exception $e) {
             Log::error('Withdrawal processing failed in Livewire component', [
                 'user_id' => auth()->id(),
                 'error' => $e->getMessage()
             ]);
-            session()->flash('error', 'An error occurred processing your withdrawal');
+            session()->flash('error', __('livewire.crypto_withdrawal.withdrawal_error'));
         } finally {
             $this->processing = false;
         }

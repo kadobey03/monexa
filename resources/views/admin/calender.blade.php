@@ -1,12 +1,12 @@
-@extends('layouts.admin', ['title' => 'Takvim & Yapılacaklar'])
+@extends('layouts.admin', ['title' => __('admin.misc.calendar.page_title')])
 
 @section('content')
 <div class="space-y-6">
     <!-- Page Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Takvim & Yapılacaklar</h1>
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Yapılacaklar listenizi oluşturun ve takip edin</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.misc.calendar.page_title') }}</h1>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ __('admin.misc.calendar.page_description') }}</p>
         </div>
         <div class="flex items-center space-x-2">
             <x-heroicon name="calendar-days" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
@@ -42,7 +42,7 @@
         <div class="p-6">
             <div class="mb-4 flex items-center">
                 <x-heroicon name="calendar-days" class="h-5 w-5 text-gray-500 dark:text-gray-400 mr-2" />
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Takvim Görünümü</h2>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.misc.calendar.calendar_view') }}</h2>
             </div>
             
             <!-- Calendar Integration -->
@@ -57,10 +57,9 @@
         <div class="flex items-start">
             <x-heroicon name="lightbulb" class="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 mr-3" />
             <div>
-                <h3 class="font-medium text-blue-900 dark:text-blue-100">İpucu</h3>
+                <h3 class="font-medium text-blue-900 dark:text-blue-100">{{ __('admin.misc.calendar.tip_title') }}</h3>
                 <p class="mt-1 text-sm text-blue-700 dark:text-blue-300">
-                    Bu takvimi kullanarak önemli tarihlerinizi ve yapılacaklar listenizi organize edebilirsiniz.
-                    Takvim entegrasyonu sayesinde tüm önemli etkinliklerinizi tek yerden takip edebilirsiniz.
+                    {{ __('admin.misc.calendar.tip_description') }}
                 </p>
             </div>
         </div>

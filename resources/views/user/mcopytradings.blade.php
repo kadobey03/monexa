@@ -22,37 +22,37 @@
         <div class="text-center max-w-3xl mx-auto">
             <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 rounded-full border border-blue-500/20 mb-4">
                 <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span class="text-blue-200 text-sm font-medium">Live Copy Trading</span>
+                <span class="text-blue-200 text-sm font-medium">{{ __('user.copytrading.live_copy_trading') }}</span>
             </div>
 
             <h1 class="text-4xl md:text-5xl font-bold mb-4">
                 <span class="bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
-                    Copy Trading
+                    {{ __('user.copytrading.copy_trading') }}
                 </span>
                 <br>
                 <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    Hub
+                    {{ __('user.copytrading.hub') }}
                 </span>
             </h1>
 
             <p class="text-lg text-blue-100/80 mb-6 max-w-xl mx-auto leading-relaxed">
-                Follow top-performing traders and automatically replicate their winning strategies.
+                {{ __('user.copytrading.description') }}
             </p>
 
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a href="{{ route('dashboard') }}"
                    class="group relative inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-lg rounded-xl border border-white/20 text-white hover:bg-white/20 transition-all duration-300">
                     <x-heroicon name="arrow-left" class="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-                    Back to Dashboard
+                    {{ __('user.copytrading.back_to_dashboard') }}
                 </a>
                 <div class="flex items-center gap-4 text-blue-200">
                     <div class="flex items-center gap-2">
                         <x-heroicon name="shield-check" class="w-4 h-4 text-green-400" />
-                        <span class="text-sm">Secure</span>
+                        <span class="text-sm">{{ __('user.copytrading.secure') }}</span>
                     </div>
                     <div class="flex items-center gap-2">
                         <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-blue-400" />
-                        <span class="text-sm">Profitable</span>
+                        <span class="text-sm">{{ __('user.copytrading.profitable') }}</span>
                     </div>
                 </div>
             </div>
@@ -83,12 +83,12 @@
                         </div>
                         <div class="text-right">
                             <div class="text-3xl font-bold text-slate-900 dark:text-white">{{ count($copytradings) }}</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">Expert Traders</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">{{ __('user.copytrading.expert_traders') }}</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-2 text-green-600 dark:text-green-400">
                         <x-heroicon name="arrow-trending-up" class="w-4 h-4" />
-                        <span class="text-sm font-medium">Active & Verified</span>
+                        <span class="text-sm font-medium">{{ __('user.copytrading.active_verified') }}</span>
                     </div>
                 </div>
             </div>
@@ -103,12 +103,12 @@
                         </div>
                         <div class="text-right">
                             <div class="text-3xl font-bold text-slate-900 dark:text-white">87%</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">Success Rate</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">{{ __('user.copytrading.success_rate') }}</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-2 text-green-600 dark:text-green-400">
                         <x-heroicon name="check-circle" class="w-4 h-4" />
-                        <span class="text-sm font-medium">Profitable Trades</span>
+                        <span class="text-sm font-medium">{{ __('user.copytrading.profitable_trades') }}</span>
                     </div>
                 </div>
             </div>
@@ -123,12 +123,12 @@
                         </div>
                         <div class="text-right">
                             <div class="text-3xl font-bold text-slate-900 dark:text-white">{{ $settings->currency }}50</div>
-                            <div class="text-sm text-slate-500 dark:text-slate-400">Min Investment</div>
+                            <div class="text-sm text-slate-500 dark:text-slate-400">{{ __('user.copytrading.min_investment') }}</div>
                         </div>
                     </div>
                     <div class="flex items-center gap-2 text-purple-600 dark:text-purple-400">
                         <x-heroicon name="currency-dollar" class="w-4 h-4" />
-                        <span class="text-sm font-medium">Start Small</span>
+                        <span class="text-sm font-medium">{{ __('user.copytrading.start_small') }}</span>
                     </div>
                 </div>
             </div>
@@ -207,7 +207,7 @@
                             <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
                                 <div class="flex items-center gap-2 mb-1">
                                     <x-heroicon name="users" class="w-4 h-4 text-blue-500" />
-                                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Followers</span>
+                                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ __('user.copytrading.followers') }}</span>
                                 </div>
                                 <div class="text-lg font-bold text-slate-900 dark:text-white">{{ number_format($copytrading->followers) }}</div>
                             </div>
@@ -215,7 +215,7 @@
                             <div class="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
                                 <div class="flex items-center gap-2 mb-1">
                                     <x-heroicon name="arrow-trending-up" class="w-4 h-4 text-green-500" />
-                                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Profit Rate</span>
+                                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">{{ __('user.copytrading.profit_rate') }}</span>
                                 </div>
                                 <div class="text-lg font-bold text-green-600 dark:text-green-400">{{ $copytrading->equity }}%</div>
                             </div>
@@ -224,11 +224,11 @@
                         <!-- Performance Metrics -->
                         <div class="space-y-3 mb-6">
                             <div class="flex items-center justify-between py-2">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Min. Capital</span>
+                                <span class="text-sm text-slate-600 dark:text-slate-400">{{ __('user.copytrading.min_capital') }}</span>
                                 <span class="text-sm font-semibold text-slate-900 dark:text-white">{{ $settings->currency }}{{ number_format($copytrading->price) }}</span>
                             </div>
                             <div class="flex items-center justify-between py-2">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Total Profit</span>
+                                <span class="text-sm text-slate-600 dark:text-slate-400">{{ __('user.copytrading.total_profit') }}</span>
                                 <span class="text-sm font-semibold text-green-600 dark:text-green-400">{{ $settings->currency }}{{ number_format($copytrading->total_profit) }}</span>
                             </div>
                         </div>
@@ -241,7 +241,7 @@
                                     class="w-full py-3 px-4 bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group/btn">
                                 <span class="flex items-center justify-center gap-2">
                                     <x-heroicon name="x-mark" class="w-4 h-4 transition-transform group-hover/btn:scale-110" />
-                                    Stop Copying
+                                    {{ __('user.copytrading.stop_copying') }}
                                 </span>
                             </button>
                         </form>
@@ -250,7 +250,7 @@
                                 class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 group/btn">
                             <span class="flex items-center justify-center gap-2">
                                 <x-heroicon name="copy" class="w-4 h-4 transition-transform group-hover/btn:scale-110" />
-                                Copy Expert
+                                {{ __('user.copytrading.copy_expert') }}
                             </span>
                         </button>
                         @endif
@@ -331,34 +331,34 @@
     // Modern Copy Trading Investment Modal
     function openInvestModal(expertId, expertName, minAmount) {
         Swal.fire({
-            title: `Copy ${expertName}`,
+            title: `{{ __('user.copytrading.copy') }} ${expertName}`,
             html: `
                 <div class="text-left space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Investment Amount</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('user.copytrading.investment_amount') }}</label>
                         <div class="relative">
                             <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
                             <input type="number" 
                                    id="investAmount" 
                                    class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
-                                   placeholder="Enter amount"
+                                   placeholder="{{ __('user.copytrading.enter_amount') }}"
                                    min="${minAmount}"
                                    step="0.01"
                                    value="${minAmount}">
                         </div>
-                        <p class="text-xs text-gray-500 mt-1">Minimum investment: $${minAmount}</p>
+                        <p class="text-xs text-gray-500 mt-1">{{ __('user.copytrading.minimum_investment') }}: $${minAmount}</p>
                     </div>
                     <div class="bg-blue-50 p-3 rounded-lg">
                         <p class="text-sm text-blue-800">
                             <i class="fas fa-info-circle mr-1"></i>
-                            You'll automatically copy all trades from this expert trader.
+                            {{ __('user.copytrading.copy_description') }}
                         </p>
                     </div>
                 </div>
             `,
             showCancelButton: true,
-            confirmButtonText: 'Start Copying',
-            cancelButtonText: 'Cancel',
+            confirmButtonText: '{{ __('user.copytrading.start_copying') }}',
+            cancelButtonText: '{{ __('user.copytrading.cancel') }}',
             customClass: {
                 popup: 'rounded-2xl',
                 confirmButton: 'bg-blue-600 hover:bg-blue-700 rounded-xl px-6 py-2',
@@ -367,7 +367,7 @@
             preConfirm: () => {
                 const amount = document.getElementById('investAmount').value;
                 if (!amount || amount < minAmount) {
-                    Swal.showValidationMessage(`Please enter an amount of at least $${minAmount}`);
+                    Swal.showValidationMessage(`{{ __('user.copytrading.validation_message') }} $${minAmount}`);
                     return false;
                 }
                 return { expertId, amount };

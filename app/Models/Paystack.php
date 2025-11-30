@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Paystack extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'paystack_public_key',
+        'paystack_secret_key',
+        'paystack_url',
+        'paystack_email',
+    ];
 }

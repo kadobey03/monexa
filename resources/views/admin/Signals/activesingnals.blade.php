@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Aktif Sinyaller'])
+@extends('layouts.admin', ['title' => __('admin.signals.active_signals')])
 
 @section('content')
 <div class="space-y-6">
@@ -10,8 +10,8 @@
             </div>
         </div>
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Aktif Sinyaller</h1>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Kullanıcı sinyal yatırımlarını görüntüleyin ve yönetin</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.signals.active_signals') }}</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('admin.signals.active_signals_subtitle') }}</p>
         </div>
     </div>
 
@@ -21,7 +21,7 @@
     <!-- Signals Table -->
     <div class="bg-white dark:bg-admin-800 rounded-lg shadow-sm border border-gray-200 dark:border-admin-700 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Tüm Sinyaller</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.signals.all_signals') }}</h3>
         </div>
         
         <div class="overflow-x-auto">
@@ -29,31 +29,31 @@
                 <thead class="bg-gray-50 dark:bg-admin-900">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Müşteri Adı
+                            {{ __('admin.signals.customer_name') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Varlık
+                            {{ __('admin.signals.asset') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Sinyal Durumu
+                            {{ __('admin.signals.signal_status') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            İşlem Tipi
+                            {{ __('admin.signals.order_type') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Sinyal Adı
+                            {{ __('admin.signals.signal_name') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Yatırım Tutarı
+                            {{ __('admin.signals.investment_amount') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Son Kullanım
+                            {{ __('admin.signals.expiration') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            Başlangıç Tarihi
+                            {{ __('admin.signals.start_date') }}
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            İşlemler
+                            {{ __('admin.signals.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -119,8 +119,8 @@
                                                 @click="open = !open"
                                                 @click.away="open = false"
                                                 class="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-admin-600 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                                            İşlemler
-                                            <x-heroicon name="chevron-down" class="ml-2 h-4 w-4" />
+                                           {{ __('admin.signals.actions') }}
+                                           <x-heroicon name="chevron-down" class="ml-2 h-4 w-4" />
                                         </button>
                                     </div>
 
@@ -135,23 +135,23 @@
                                          style="display: none;">
                                         <div class="py-1">
                                             <a href="{{ route('deletesignal', $signal->id) }}"
-                                               onclick="return confirm('Bu sinyali silmek istediğinizden emin misiniz?')"
+                                               onclick="return confirm('{{ __('admin.signals.confirm_delete') }}')"
                                                class="flex items-center px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
                                                 <x-heroicon name="trash-2" class="mr-3 h-4 w-4" />
-                                                Sinyali Sil
+                                                {{ __('admin.signals.delete_signal') }}
                                             </a>
                                             
                                             @if ($signal->status == 'ongoing')
                                                 <a href="{{ route('signalmarkas', ['id' => $signal->id, 'status' => 'expired']) }}"
                                                    class="flex items-center px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
                                                     <x-heroicon name="clock-x" class="mr-3 h-4 w-4" />
-                                                    Süresi Dolmuş Olarak İşaretle
+                                                    {{ __('admin.signals.mark_expired') }}
                                                 </a>
                                             @else
                                                 <a href="{{ route('signalmarkas', ['id' => $signal->id, 'status' => 'ongoing']) }}"
                                                    class="flex items-center px-4 py-2 text-sm text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20">
                                                     <x-heroicon name="play-circle" class="mr-3 h-4 w-4" />
-                                                    Aktif Olarak İşaretle
+                                                    {{ __('admin.signals.mark_active') }}
                                                 </a>
                                             @endif
                                         </div>
@@ -164,8 +164,8 @@
                             <td colspan="9" class="px-6 py-12 text-center">
                                 <div class="flex flex-col items-center">
                                     <x-heroicon name="activity" class="h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
-                                    <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">Aktif Sinyal Bulunamadı</h3>
-                                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Henüz hiç aktif sinyal yok.</p>
+                                    <h3 class="text-lg font-medium text-gray-500 dark:text-gray-400">{{ __('admin.signals.no_active_signals') }}</h3>
+                                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">{{ __('admin.signals.no_active_signals_subtitle') }}</p>
                                 </div>
                             </td>
                         </tr>

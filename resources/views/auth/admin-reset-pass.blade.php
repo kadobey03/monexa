@@ -1,5 +1,5 @@
 @extends('layouts.guest1')
-@section('title', 'Yönetici Şifre Sıfırlama - Güvenli Kurtarma')
+@section('title', '{{ __('auth.admin.reset.page_title') }}')
 @section('content')
 
 <!-- Admin Password Reset Interface -->
@@ -21,14 +21,14 @@
                 <!-- Admin Badge -->
                 <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-4">
                     <x-heroicon name="shield-exclamation" class="w-4 h-4 text-red-400" />
-                    <span class="text-red-300 text-sm font-bold">Yönetici Kurtarma</span>
+                    <span class="text-red-300 text-sm font-bold">{{ __('auth.admin.reset.admin_recovery_badge') }}</span>
                 </div>
 
                 <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">
-                    Yönetici Şifresini Sıfırla
+                    {{ __('auth.admin.reset.main_title') }}
                 </h1>
                 <p class="text-gray-400 text-sm md:text-base">
-                    Yönetimsel erişim için güvenli şifre kurtarma
+                    {{ __('auth.admin.reset.subtitle') }}
                 </p>
             </div>
 
@@ -38,7 +38,7 @@
                     <div class="flex items-start gap-3">
                         <x-heroicon name="check-circle" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
-                            <p class="text-green-300 font-bold mb-1">Başarı</p>
+                            <p class="text-green-300 font-bold mb-1">{{ __('auth.admin.reset.success') }}</p>
                             <p class="text-gray-300">{{ session('status') }}</p>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                     <div class="flex items-start gap-3">
                         <x-heroicon name="information-circle" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                         <div class="text-sm">
-                            <p class="text-blue-300 font-bold mb-1">Bilgi</p>
+                            <p class="text-blue-300 font-bold mb-1">{{ __('auth.admin.reset.info') }}</p>
                             <p class="text-gray-300">{{ Session::get('message') }}</p>
                         </div>
                     </div>
@@ -62,9 +62,9 @@
                 <div class="flex items-start gap-3">
                     <x-heroicon name="exclamation-triangle" class="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                     <div class="text-sm">
-                        <p class="text-yellow-300 font-bold mb-1">Güvenlik Bildirimi</p>
+                        <p class="text-yellow-300 font-bold mb-1">{{ __('auth.admin.reset.security_notice_title') }}</p>
                         <p class="text-gray-300">
-                            Kayıtlı yönetici e-posta adresinize gönderilen token ile e-posta ve yeni şifrenizi kullanarak yönetici kimlik bilgilerinizi sıfırlayın.
+                            {{ __('auth.admin.reset.security_instructions') }}
                         </p>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                 <!-- Email Address -->
                 <div class="space-y-2">
                     <label for="email" class="block text-sm font-bold text-gray-200">
-                        Yönetici E-posta Adresi
+                        {{ __('auth.admin.reset.admin_email') }}
                     </label>
                     <div class="relative">
                         <input
@@ -85,7 +85,7 @@
                             id="email"
                             name="email"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200"
-                            placeholder="admin@bluetrade.com"
+                            placeholder="{{ __('auth.admin.reset.admin_email_placeholder') }}"
                             autocomplete="email"
                             required
                         >
@@ -104,7 +104,7 @@
                 <!-- Security Token -->
                 <div class="space-y-2">
                     <label for="token" class="block text-sm font-bold text-gray-200">
-                        Güvenlik Token
+                        {{ __('auth.admin.reset.security_token') }}
                     </label>
                     <div class="relative">
                         <input
@@ -112,7 +112,7 @@
                             id="token"
                             name="token"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200 text-center font-mono tracking-wider"
-                            placeholder="6 haneli token girin"
+                            placeholder="{{ __('auth.admin.reset.token_placeholder') }}"
                             maxlength="6"
                             pattern="[0-9]{6}"
                             autocomplete="one-time-code"
@@ -128,13 +128,13 @@
                             <span>{{ $message }}</span>
                         </div>
                     @enderror
-                    <p class="text-xs text-gray-500">6 haneli güvenlik token için yönetici e-postanızı kontrol edin</p>
+                    <p class="text-xs text-gray-500">{{ __('auth.admin.reset.token_help') }}</p>
                 </div>
 
                 <!-- New Password -->
                 <div class="space-y-2">
                     <label for="password" class="block text-sm font-bold text-gray-200">
-                        Yeni Şifre
+                        {{ __('auth.admin.reset.new_password') }}
                     </label>
                     <div class="relative">
                         <input
@@ -143,7 +143,7 @@
                             autocomplete="new-password"
                             name="password"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200 pr-12"
-                            placeholder="Güçlü bir şifre oluşturun"
+                            placeholder="{{ __('auth.admin.reset.strong_password_placeholder') }}"
                             autocomplete="new-password"
                             required
                         >
@@ -166,7 +166,7 @@
                 <!-- Confirm Password -->
                 <div class="space-y-2">
                     <label for="password_confirmation" class="block text-sm font-bold text-gray-200">
-                        Yeni Şifreyi Onayla
+                        {{ __('auth.admin.reset.confirm_password') }}
                     </label>
                     <div class="relative">
                         <input
@@ -175,7 +175,7 @@
                             autocomplete="new-password"
                             name="password_confirmation"
                             class="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none transition-all duration-200 pr-12"
-                            placeholder="Şifrenizi onaylayın"
+                            placeholder="{{ __('auth.admin.reset.confirm_password_placeholder') }}"
                             autocomplete="new-password"
                             required
                         >
@@ -193,24 +193,24 @@
                 <div class="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
                     <h4 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
                         <x-heroicon name="shield-check" class="w-4 h-4 text-green-400" />
-                        Şifre Gereksinimleri
+                        {{ __('auth.admin.reset.password_requirements') }}
                     </h4>
                     <ul class="text-gray-300 text-xs space-y-1">
                         <li class="flex items-start gap-2">
                             <span class="text-green-400 mt-1">•</span>
-                            Minimum 8 karakter uzunluğunda
+                            {{ __('auth.admin.reset.min_8_chars') }}
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-400 mt-1">•</span>
-                            Büyük ve küçük harfleri dahil edin
+                            {{ __('auth.admin.reset.include_mixed_case') }}
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-400 mt-1">•</span>
-                            En az bir sayı dahil edin
+                            {{ __('auth.admin.reset.include_number') }}
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-400 mt-1">•</span>
-                            En az bir özel karakter dahil edin
+                            {{ __('auth.admin.reset.include_special_char') }}
                         </li>
                     </ul>
                 </div>
@@ -222,7 +222,7 @@
                 >
                     <span class="flex items-center justify-center gap-2">
                         <x-heroicon name="shield-check" class="w-5 h-5" />
-                        Yönetici Şifresini Sıfırla
+                        {{ __('auth.admin.reset.reset_admin_password') }}
                     </span>
                 </button>
             </form>
@@ -232,26 +232,26 @@
                 <a href="{{ route('adminlogin') }}"
                    class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors duration-200">
                     <x-heroicon name="arrow-left" class="w-4 h-4" />
-                    Yönetici Girişine Geri Dön
+                    {{ __('auth.admin.reset.back_to_admin_login') }}
                 </a>
             </div>
 
             <!-- Security Features -->
             <div class="mt-8 pt-6 border-t border-gray-700">
                 <div class="text-center">
-                    <p class="text-xs text-gray-500 mb-2">Kurumsal düzeyde yönetici güvenliği</p>
+                    <p class="text-xs text-gray-500 mb-2">{{ __('auth.admin.reset.enterprise_security') }}</p>
                     <div class="flex items-center justify-center gap-4 text-gray-600">
                         <span class="flex items-center gap-1">
                             <x-heroicon name="shield-check" class="w-3 h-3" />
-                            <span class="text-xs">Sadece Yönetici</span>
+                            <span class="text-xs">{{ __('auth.admin.reset.admin_only') }}</span>
                         </span>
                         <span class="flex items-center gap-1">
                             <x-heroicon name="lock-closed" class="w-3 h-3" />
-                            <span class="text-xs">Token Doğrulandı</span>
+                            <span class="text-xs">{{ __('auth.admin.reset.token_verified') }}</span>
                         </span>
                         <span class="flex items-center gap-1">
                             <x-heroicon name="eye-slash" class="w-3 h-3" />
-                            <span class="text-xs">Güvenli Sıfırlama</span>
+                            <span class="text-xs">{{ __('auth.admin.reset.secure_reset') }}</span>
                         </span>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title', 'Yatırımlar')
+@section('title', __('home.investment.title'))
 
 @inject('content', 'App\Http\Controllers\FrontController')
 @section('content')
@@ -53,14 +53,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
                 <div class="inline-block px-3 py-1 mb-6 text-xs font-semibold tracking-wider text-emerald-400 uppercase bg-emerald-900 bg-opacity-30 rounded-full">
-                    Güvenli Yatırım Platformu
+                    {{ __('home.investment.secure_platform') }}
                 </div>
                 <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl mb-4">
-                    <span class="block">İLE GÜVENİLİR YATIRIM</span>
+                    <span class="block">{{ __('home.investment.reliable_investment') }}</span>
                     <span class="block text-emerald-400">{{$settings->site_name}}</span>
                 </h1>
                 <p class="mt-3 text-xl font-medium text-emerald-400 mb-6">
-                    GET LIFETIME INCOME
+                    {{ __('home.investment.lifetime_income') }}
                 </p>
                 <p class="text-base text-gray-300 sm:text-lg lg:text-base xl:text-lg max-w-xl">
                     {{$settings->site_name}} geliştiricileri benzersiz bir kripto para robotu oluşturdu. İşlemler üzerinde günlük kâr üretirken Bitcoin'in değerini tahmin eder. Robot, piyasanın herhangi bir aşamasında fayda sağlayabilir: hem büyüme hem düşüş.
@@ -70,13 +70,13 @@
                 </p>
                 <div class="mt-8 flex flex-wrap gap-4">
                     <a href="#calculator" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-emerald-400 hover:bg-emerald-500 transition duration-300">
-                        Kârı Hesapla
+                        {{ __('home.investment.calculate_profit') }}
                         <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                         </svg>
                     </a>
                     <a href="#investment-plans" class="inline-flex items-center px-6 py-3 border border-gray-700 text-base font-medium rounded-md text-gray-300 bg-transparent hover:bg-gray-800 transition duration-300">
-                        Yatırım Planları
+                        {{ __('home.investment.investment_plans') }}
                     </a>
                 </div>
             </div>
@@ -86,11 +86,11 @@
                     <div class="relative bg-gray-800 bg-opacity-80 backdrop-blur-sm p-6 rounded-lg border border-gray-700">
                         <div class="flex justify-between items-center mb-6">
                             <div>
-                                <span class="text-gray-400 text-sm">Yatırım Genel Bakışı</span>
-                                <h3 class="text-xl font-bold text-white">Akıllı Ticaret Robotu</h3>
+                                <span class="text-gray-400 text-sm">{{ __('home.investment.overview') }}</span>
+                                <h3 class="text-xl font-bold text-white">{{ __('home.investment.smart_robot') }}</h3>
                             </div>
                             <div class="text-right">
-                                <span class="text-emerald-400 text-xl font-bold">AI Güçlü</span>
+                                <span class="text-emerald-400 text-xl font-bold">{{ __('home.investment.ai_powered') }}</span>
                             </div>
                         </div>
 
@@ -126,15 +126,15 @@
                         <!-- Stats -->
                         <div class="grid grid-cols-3 gap-2 mt-4">
                             <div class="bg-gray-900 bg-opacity-50 p-2 rounded">
-                                <div class="text-xs text-gray-400">Günlük Getiri</div>
+                                <div class="text-xs text-gray-400">{{ __('home.investment.daily_return') }}</div>
                                 <div class="text-sm text-white">1.8% - 3.3%</div>
                             </div>
                             <div class="bg-gray-900 bg-opacity-50 p-2 rounded">
-                                <div class="text-xs text-gray-400">Minimum Yatırım</div>
+                                <div class="text-xs text-gray-400">{{ __('home.investment.minimum_investment') }}</div>
                                 <div class="text-sm text-white">10 USD</div>
                             </div>
                             <div class="bg-gray-900 bg-opacity-50 p-2 rounded">
-                                <div class="text-xs text-gray-400">Otomasyon</div>
+                                <div class="text-xs text-gray-400">{{ __('home.investment.automation') }}</div>
                                 <div class="text-sm text-white">100%</div>
                             </div>
                         </div>
@@ -150,10 +150,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-emerald-400 uppercase bg-emerald-900 bg-opacity-30 rounded-full">
-                Tekliflerimiz
+                {{ __('home.investment.our_offers') }}
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Yatırım Teklifleri</span>
+                <span class="block">{{ __('home.investment.investment_offers') }}</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
                 {{$settings->site_name}} şirketimizin her yatırımcısının para kazanmasını sağlar
@@ -179,12 +179,12 @@
                             </div>
                             <div>
                                 <h3 class="text-lg font-bold text-white">{{ $plan->name }}</h3>
-                                <p class="text-sm text-gray-400">Yatırım Planı</p>
+                                <p class="text-sm text-gray-400">{{ __('home.investment.investment_plan') }}</p>
                             </div>
                         </div>
                         <div class="text-right">
                             <div class="text-3xl font-bold text-emerald-400">1.8<span class="text-xl">%</span></div>
-                            <p class="text-sm text-emerald-300">Günlük Getiri</p>
+                            <p class="text-sm text-emerald-300">{{ __('home.investment.daily_return') }}</p>
                         </div>
                     </div>
 
@@ -194,19 +194,19 @@
                     <!-- Plan details -->
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Yatırım Aralığı:</span>
+                            <span class="text-gray-400">{{ __('home.investment.investment_range') }}:</span>
                             <span class="text-white font-medium">1000 - 5000 USD</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Ödeme Sıklığı:</span>
-                            <span class="text-white font-medium">Günlük</span>
+                            <span class="text-gray-400">{{ __('home.investment.payment_frequency') }}:</span>
+                            <span class="text-white font-medium">{{ __('common.periods.daily') }}</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Sermaye İade:</span>
-                            <span class="text-white font-medium">Dahil</span>
+                            <span class="text-gray-400">{{ __('home.investment.capital_return') }}:</span>
+                            <span class="text-white font-medium">{{ __('common.status.included') }}</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-gray-400">Otomasyon:</span>
+                            <span class="text-gray-400">{{ __('home.investment.automation') }}:</span>
                             <span class="text-white font-medium">100%</span>
                         </div>
                     </div>
@@ -214,7 +214,7 @@
                     <!-- CTA Button -->
                     <div class="mt-6">
                         <a href="#calculator" class="block w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg text-center transition duration-300">
-                            Şimdi Yatır
+                            {{ __('home.investment.invest_now') }}
                         </a>
                     </div>
                 </div>
@@ -232,7 +232,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-white">GENEL KOMİSYONLAR</h3>
+                            <h3 class="text-xl font-bold text-white">{{ __('home.investment.general_commissions') }}</h3>
                         </div>
                         <p class="text-gray-300">
                             Bu komisyonlar platformun çalışması için {{$settings->site_name}} tarafından alınır. Yatırımcılarımızın aldığı kâr ile ilgili değildir.
@@ -249,19 +249,19 @@
                                     @click="activeTab = 'Starting'"
                                     :class="{'text-emerald-400 border-emerald-400': activeTab === 'Starting', 'text-gray-400 border-transparent hover:text-gray-300': activeTab !== 'Starting'}"
                                     class="px-4 py-2 font-medium border-b-2 transition-all duration-200 whitespace-nowrap focus:outline-none">
-                                    Başlangıç Planı
+                                    {{ __('home.investment.starter_plan') }}
                                 </button>
                                 <button
                                     @click="activeTab = 'Standard'"
                                     :class="{'text-emerald-400 border-emerald-400': activeTab === 'Standard', 'text-gray-400 border-transparent hover:text-gray-300': activeTab !== 'Standard'}"
                                     class="px-4 py-2 font-medium border-b-2 transition-all duration-200 whitespace-nowrap focus:outline-none">
-                                    Standart Plan
+                                    {{ __('home.investment.standard_plan') }}
                                 </button>
                                 <button
                                     @click="activeTab = 'Premium'"
                                     :class="{'text-emerald-400 border-emerald-400': activeTab === 'Premium', 'text-gray-400 border-transparent hover:text-gray-300': activeTab !== 'Premium'}"
                                     class="px-4 py-2 font-medium border-b-2 transition-all duration-200 whitespace-nowrap focus:outline-none">
-                                    Premium Plan
+                                    {{ __('home.investment.premium_plan') }}
                                 </button>
                             </div>
 
@@ -276,7 +276,7 @@
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <h4 class="text-lg font-medium text-white">ŞİRKET KOMİSYONU</h4>
+                                        <h4 class="text-lg font-medium text-white">{{ __('home.investment.company_commission') }}</h4>
                                         <p class="mt-2 text-base text-gray-300">
                                             <span class="text-emerald-400 font-semibold">0.5%</span> robot tarafından alınan kârdan. Bu komisyon tüm {{$settings->site_name}} yapısının kazançlarını gösterir, yani her çalışan.
                                         </p>
@@ -293,7 +293,7 @@
                                         </div>
                                     </div>
                                     <div class="ml-4">
-                                        <h4 class="text-lg font-medium text-white">İDARİ KOMİSYON</h4>
+                                        <h4 class="text-lg font-medium text-white">{{ __('home.investment.admin_commission') }}</h4>
                                         <p class="mt-2 text-base text-gray-300">
                                             <span class="text-emerald-400 font-semibold">0.5%</span> robot ve şirketin tamamının teknik desteği için. Bu komisyon şirketin geliştirme ve pazarlama giderlerini içerir.
                                         </p>
@@ -381,21 +381,21 @@
             <div class="relative bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-sm rounded-xl p-8 border border-gray-700">
                 <div class="text-center mb-8">
                     <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-emerald-400 uppercase bg-emerald-900 bg-opacity-30 rounded-full">
-                        Kâr Tahmini
+                        {{ __('home.investment.profit_estimate') }}
                     </div>
-                    <h3 class="text-2xl font-bold text-white">Yatırım Dönüşlerinizi Hesaplayın</h3>
-                    <p class="mt-2 text-gray-300">Tam olarak ne kadar kazanabileceğinizi görün</p>
+                    <h3 class="text-2xl font-bold text-white">{{ __('home.investment.calculate_returns') }}</h3>
+                    <p class="mt-2 text-gray-300">{{ __('home.investment.see_earnings') }}</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" x-data="{ showCalculator: true }">
                     <div class="space-y-6">
                         <div>
-                            <label for="selectid" class="block text-sm font-medium text-gray-400 mb-2">Yatırım Planı</label>
+                            <label for="selectid" class="block text-sm font-medium text-gray-400 mb-2">{{ __('home.investment.investment_plan') }}</label>
                             <div class="relative">
                                 <select id="selectid" class="block w-full pl-4 pr-10 py-3 text-base bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 appearance-none">
-                                    <option value="2" data-percent="1.8">Başlangıç (Günlük %1.8)</option>
-                                    <option value="3" data-percent="2.5">Standart (Günlük %2.5)</option>
-                                    <option value="4" data-percent="3.3">Premium (Günlük %3.3)</option>
+                                    <option value="2" data-percent="1.8">{{ __('home.investment.starter_plan') }} ({{ __('home.investment.daily_percent', ['percent' => '1.8']) }})</option>
+                                    <option value="3" data-percent="2.5">{{ __('home.investment.standard_plan') }} ({{ __('home.investment.daily_percent', ['percent' => '2.5']) }})</option>
+                                    <option value="4" data-percent="3.3">{{ __('home.investment.premium_plan') }} ({{ __('home.investment.daily_percent', ['percent' => '3.3']) }})</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
                                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -406,7 +406,7 @@
                         </div>
 
                         <div>
-                            <label for="sum" class="block text-sm font-medium text-gray-400 mb-2">Yatırım Tutarı (USD)</label>
+                            <label for="sum" class="block text-sm font-medium text-gray-400 mb-2">{{ __('home.investment.investment_amount') }} (USD)</label>
                             <div class="relative">
                                 <input id="sum" type="number" class="block w-full pl-4 pr-20 py-3 text-base bg-gray-900 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" value="100">
                                 <div class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-400 bg-gray-700 rounded-r-lg">
@@ -418,18 +418,18 @@
 
                         <div class="pt-4">
                             <a href="login" class="block w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg text-center transition duration-300">
-                                Şimdi Yatırım Yapmaya Başla
+                                {{ __('home.investment.start_investing_now') }}
                             </a>
                         </div>
                     </div>
 
                     <div class="bg-gray-900 rounded-xl p-6">
-                        <h4 class="text-lg font-medium text-white mb-6">Tahmini Dönüşler</h4>
+                        <h4 class="text-lg font-medium text-white mb-6">{{ __('home.investment.estimated_returns') }}</h4>
 
                         <div class="grid grid-cols-1 divide-y divide-gray-700">
                             <div class="py-4 flex justify-between items-center">
                                 <div>
-                                    <p class="text-sm text-gray-400">Günlük Gelir</p>
+                                    <p class="text-sm text-gray-400">{{ __('home.investment.daily_income') }}</p>
                                     <p id="daily" class="text-xl font-bold text-white">-</p>
                                 </div>
                                 <div class="w-12 h-12 bg-emerald-900 bg-opacity-30 rounded-full flex items-center justify-center">
@@ -441,7 +441,7 @@
 
                             <div class="py-4 flex justify-between items-center">
                                 <div>
-                                    <p class="text-sm text-gray-400">Haftalık Gelir</p>
+                                    <p class="text-sm text-gray-400">{{ __('home.investment.weekly_income') }}</p>
                                     <p id="weekly" class="text-xl font-bold text-white">-</p>
                                 </div>
                                 <div class="w-12 h-12 bg-blue-900 bg-opacity-30 rounded-full flex items-center justify-center">
@@ -453,7 +453,7 @@
 
                             <div class="py-4 flex justify-between items-center">
                                 <div>
-                                    <p class="text-sm text-gray-400">Aylık Gelir</p>
+                                    <p class="text-sm text-gray-400">{{ __('home.investment.monthly_income') }}</p>
                                     <p id="mountly" class="text-xl font-bold text-white">-</p>
                                 </div>
                                 <div class="w-12 h-12 bg-purple-900 bg-opacity-30 rounded-full flex items-center justify-center">
@@ -625,9 +625,9 @@ var percent 	= [0.033];
     <div class="container mx-auto px-4 relative">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full mb-4">
-                Yatırım Süreci
+                {{ __('home.investment.investment_process') }}
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Yatırım Yapmaya Başlamak İçin Basit Adımlar</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">{{ __('home.investment.simple_steps_to_start') }}</h2>
             <p class="max-w-3xl mx-auto text-gray-300">
                 Verimli, hızlı ve basit olacak şekilde kolaylaştırılmış bir yatırım süreci tasarladık. Yatırım yolculuğunuza başlamak için bu basit adımları takip edin.
             </p>
@@ -641,7 +641,7 @@ var percent 	= [0.033];
                     <div class="flex items-center justify-center w-16 h-16 bg-blue-900 bg-opacity-50 rounded-full mb-6 mx-auto">
                         <span class="text-2xl font-bold text-blue-400">1</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Kayıt</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">{{ __('auth.register.title') }}</h3>
                     <p class="text-gray-300 text-center">
                         Kayıt butonuna tıklayın. Saniyeler içinde ÜCRETSİZ bir {{$settings->site_name}} hesabı oluşturmak için detaylarınızı doldurun.
                     </p>
@@ -659,7 +659,7 @@ var percent 	= [0.033];
                     <div class="flex items-center justify-center w-16 h-16 bg-emerald-900 bg-opacity-50 rounded-full mb-6 mx-auto">
                         <span class="text-2xl font-bold text-emerald-400">2</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Yatırım Planı Seç</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">{{ __('home.investment.select_plan') }}</h3>
                     <p class="text-gray-300 text-center">
                         Finansal hedeflerinize uygun çeşitli yatırım planları sunuyoruz. Okuduktan sonra, bir depozito yapın.
                     </p>
@@ -677,7 +677,7 @@ var percent 	= [0.033];
                     <div class="flex items-center justify-center w-16 h-16 bg-blue-900 bg-opacity-50 rounded-full mb-6 mx-auto">
                         <span class="text-2xl font-bold text-blue-400">3</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Kazanç Elde Etmeye Başla</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">{{ __('home.investment.start_earning') }}</h3>
                     <p class="text-gray-300 text-center">
                         Depozito yaptıktan sonra, günlük kârı gerçek zamanlı olarak biriktirerek sermayenizin büyümesini izleyin.
                     </p>
@@ -691,7 +691,7 @@ var percent 	= [0.033];
 
         <div class="mt-12 text-center">
             <a href="register" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
-                <span>Yolculuğunuza Şimdi Başlayın</span>
+                <span>{{ __('home.investment.start_journey_now') }}</span>
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
@@ -701,7 +701,7 @@ var percent 	= [0.033];
 </section>            <!---->
             <section class="text-columns">
               <div class="container">
-                <h1 class="page-intro__title" id="classs"style="color: #69e2b0;">TİCARET İÇİN BENZERSİZ TİCARET ROBOTU</h1>
+                <h1 class="page-intro__title" id="classs"style="color: #69e2b0;">{{ __('home.investment.unique_trading_robot') }}</h1>
                 <div class="typography">
                   <p>TİCARET İÇİN BENZERSİZ TİCARET ROBOTU{{$settings->site_name}} robotu, kripto para piyasasının büyüme ve düşüş aşamalarında kâr elde etmek için benzersiz bir ticaret aracıdır. İşlemler kullanıcı müdahalesi olmadan yönetilir. Robotun çalışması tamamen otomatikleştirilmiştir ve kullanım hatalarını içeremez. Robot, Bitcoin döviz kurunu üretir, böylece şirkete fayda sağlar. {{$settings->site_name}} ile işbirliğinin ana koşulu, gelecekte yatırım kârı elde etmek için aktif bir depozitonun bulunmasıdır.</p>
                 </div>
@@ -727,9 +727,9 @@ var percent 	= [0.033];
     <div class="container mx-auto px-4 relative">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full mb-4">
-                Gelişmiş Teknoloji
+                {{ __('home.investment.advanced_technology') }}
             </div>
-            <h2 class="text-3xl md:text-4xl font-bold text-emerald-400 mb-4">En İyi {{$settings->site_name}} Tüccarları</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-emerald-400 mb-4">{{ __('home.investment.best_traders', ['siteName' => $settings->site_name]) }}</h2>
             <p class="max-w-3xl mx-auto text-gray-300">
                 Şirketimizde kripto para piyasalarının zengin deneyimi ve derin anlayışı ile en iyi kripto para geliştiricileri çalışıyor. {{$settings->site_name}}'ı dünya standartlarında gelişmişliğe yükselttiler.
             </p>
@@ -745,7 +745,7 @@ var percent 	= [0.033];
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Benzersiz Ticaret Botu</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">{{ __('home.investment.unique_trading_bot') }}</h3>
                     <p class="text-gray-300 text-center">
                         {{$settings->site_name}} profesyonelleri ekibi, yükseliş veya düşüş olsun her piyasa aşamasında kâr üreten benzersiz bir ticaret robotu oluşturdu.
                     </p>
@@ -761,7 +761,7 @@ var percent 	= [0.033];
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Stabil ve Otomatik Yatırım</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">{{ __('home.investment.stable_automatic_investment') }}</h3>
                     <p class="text-gray-300 text-center">
                         Robot insan hatasından bağımsız olarak çalışır, tüm yatırımları güvenilir ve müşterilerimiz için tamamen güvenli kılar.
                     </p>
@@ -777,7 +777,7 @@ var percent 	= [0.033];
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3 text-center">Uzman Yönetimi</h3>
+                    <h3 class="text-xl font-bold text-white mb-3 text-center">{{ __('home.investment.expert_management') }}</h3>
                     <p class="text-gray-300 text-center">
                         Yüksek profesyonel {{$settings->site_name}} ekibi tüm ticaret süreçlerini 7/24 kontrol eder. Yatırdıktan sonra sermayenizin gerçek zamanlı büyümesini izleyin.
                     </p>
@@ -789,7 +789,7 @@ var percent 	= [0.033];
                 {{$settings->site_name}} uzmanları platformun stabil çalışmasını sağlamak için 7/24 çalışır. Ticaret robotumuz maksimum verimliliği sağlar ve ticaret işlemlerindeki insan faktörünü en aza indirir.
             </p>
             <a href="login" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
-                <span>BİZİMLE YATIRIM YAPIN VE SABİT GELİR ELDE EDİN</span>
+                <span>{{ __('home.investment.invest_with_us') }}</span>
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                 </svg>
@@ -856,9 +856,9 @@ var percent 	= [0.033];
             <!-- Payment Info -->
             <div class="order-1 md:order-2">
                 <div class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full mb-4">
-                    Basit İşlemler
+                    {{ __('home.investment.simple_transactions') }}
                 </div>
-                <h2 class="text-3xl font-bold text-white mb-4">Ödeme Sistemleri</h2>
+                <h2 class="text-3xl font-bold text-white mb-4">{{ __('home.investment.payment_systems') }}</h2>
                 <p class="text-gray-300 mb-4">
                     {{$settings->site_name}} rahatınız için geniş bir ödeme sistemi yelpazesini destekler.
                 </p>
@@ -868,7 +868,7 @@ var percent 	= [0.033];
                     </p>
                 </div>
                 <a href="login" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-500 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
-                    <span>ŞİMDİ YATIRIM YAPMAYA BAŞLA</span>
+                    <span>{{ __('home.investment.start_investing_now') }}</span>
                     <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                     </svg>

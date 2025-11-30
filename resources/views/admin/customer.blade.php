@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Üye Takip Sistemi'])
+@extends('layouts.admin', ['title' => __('admin.customers.member_tracking_system')])
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
@@ -10,8 +10,8 @@
                         <x-heroicon name="users" class="w-8 h-8 text-white" />
                     </div>
                     <div>
-                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Üye Takip Sistemi</h1>
-                        <p class="text-gray-600 dark:text-gray-400 mt-1">Tüm sistem üyelerini görüntüleyin ve yönetin</p>
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.customers.member_tracking_system') }}</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.customers.view_manage_members') }}</p>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                             <div class="relative z-10">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-blue-100 text-sm font-medium">Toplam Üye</p>
+                                        <p class="text-blue-100 text-sm font-medium">{{ __('admin.customers.total_members') }}</p>
                                         <p class="text-2xl font-bold mt-1">{{ $users->count() }}</p>
                                     </div>
                                     <div class="p-3 bg-white/20 rounded-full">
@@ -53,7 +53,7 @@
                             <div class="relative z-10">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-green-100 text-sm font-medium">Aktif Üyeler</p>
+                                        <p class="text-green-100 text-sm font-medium">{{ __('admin.customers.active_members') }}</p>
                                         <p class="text-2xl font-bold mt-1">{{ $users->where('status', 'active')->count() }}</p>
                                     </div>
                                     <div class="p-3 bg-white/20 rounded-full">
@@ -73,7 +73,7 @@
                             <div class="relative z-10">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-purple-100 text-sm font-medium">Toplam Bakiye</p>
+                                        <p class="text-purple-100 text-sm font-medium">{{ __('admin.accounts.total_balance') }}</p>
                                         <p class="text-2xl font-bold mt-1">${{ number_format($users->sum('account_bal'), 2) }}</p>
                                     </div>
                                     <div class="p-3 bg-white/20 rounded-full">
@@ -93,7 +93,7 @@
                             <div class="relative z-10">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <p class="text-orange-100 text-sm font-medium">Planlı Üyeler</p>
+                                        <p class="text-orange-100 text-sm font-medium">{{ __('admin.customers.members_with_plans') }}</p>
                                         <p class="text-2xl font-bold mt-1">{{ $users->whereNotNull('plan')->count() }}</p>
                                     </div>
                                     <div class="p-3 bg-white/20 rounded-full">
@@ -112,19 +112,19 @@
                 <!-- Table Header -->
                 <div class="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-admin-700 dark:to-admin-600 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 lg:mb-0">Üye Listesi</h2>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4 lg:mb-0">{{ __('admin.customers.member_list') }}</h2>
                             <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                                 <div class="relative">
-                                <input type="text" id="searchInput" placeholder="Üye ara..."
+                                <input type="text" id="searchInput" placeholder="{{ __('admin.filters.search_member') }}"
                                        class="w-full sm:w-64 pl-10 pr-4 py-2 border border-gray-300 dark:border-admin-600 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <x-heroicon name="magnifying-glass" class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
                                 </div>
                                 <div class="relative">
                                 <select id="statusFilter" class="appearance-none bg-white dark:bg-admin-700 border border-gray-300 dark:border-admin-600 rounded-lg px-4 py-2 pr-8 text-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                        <option value="all">Tüm Durumlar</option>
-                                        <option value="active">Aktif</option>
-                                        <option value="blocked">Engellenmiş</option>
-                                        <option value="pending">Beklemede</option>
+                                        <option value="all">{{ __('admin.filters.all_statuses') }}</option>
+                                        <option value="active">{{ __('admin.status.active') }}</option>
+                                        <option value="blocked">{{ __('admin.status.blocked') }}</option>
+                                        <option value="pending">{{ __('admin.status.pending') }}</option>
                                     </select>
                                 <x-heroicon name="chevron-down" class="absolute right-2 top-2.5 h-4 w-4 text-gray-400" />
                                 </div>
@@ -137,14 +137,14 @@
                         <table id="customerTable" class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Üye</th>
-                                    <th scope="col" class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Bakiye</th>
-                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">İletişim</th>
-                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan</th>
-                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durum</th>
-                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kayıt Tarihi</th>
-                                    <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('admin.users.id') }}</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('admin.users.member') }}</th>
+                                    <th scope="col" class="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('admin.accounts.balance') }}</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('admin.users.contact') }}</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('admin.investments.plan') }}</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('admin.users.status') }}</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('admin.users.registration_date') }}</th>
+                                    <th scope="col" class="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('admin.actions.operations') }}</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -184,7 +184,7 @@
                                                     <svg class="w-4 h-4 mr-1 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                                         <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
                                                     </svg>
-                                                    {{ $user->phone_number ?: 'Yok' }}
+                                                    {{ $user->phone_number ?: __('admin.general.none') }}
                                                 </span>
                                             </div>
                                         </td>
@@ -200,7 +200,7 @@
                                                 </span>
                                             @else
                                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-600">
-                                                    Plan Yok
+                                                    {{ __('admin.investments.no_plan') }}
                                                 </span>
                                             @endif
                                         </td>
@@ -212,14 +212,14 @@
                                                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                                     </svg>
-                                                    Aktif
+                                                    {{ __('admin.status.active') }}
                                                 </span>
                                             @elseif ($user->status == 'blocked')
                                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                                                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd"></path>
                                                     </svg>
-                                                    Engellenmiş
+                                                    {{ __('admin.status.blocked') }}
                                                 </span>
                                             @else
                                                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
@@ -251,7 +251,7 @@
                                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                                 </svg>
-                                                Düzenle
+                                                {{ __('admin.actions.edit') }}
                                             </button>
                                         </td>
                                     </tr>
@@ -264,8 +264,8 @@
                                                         <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
                                                     </svg>
                                                 </div>
-                                                <h3 class="text-lg font-medium text-gray-900 mb-2">Henüz Üye Bulunmuyor</h3>
-                                                <p class="text-gray-500">Üyeler kayıt olduğunda burada görünecektir.</p>
+                                                <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('admin.customers.no_members_yet') }}</h3>
+                                                <p class="text-gray-500">{{ __('admin.customers.members_appear_here') }}</p>
                                             </div>
                                         </td>
                                     </tr>
@@ -291,7 +291,7 @@
                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold">Kullanıcı Durumunu Düzenle</h3>
+                            <h3 class="text-xl font-bold">{{ __('admin.actions.edit_user_status') }}</h3>
                         </div>
                         <button onclick="closeEditModal({{ $user->id }})"
                                 class="text-white/80 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10">
@@ -319,11 +319,11 @@
                     <form method="post" action="{{ route('updateuser') }}" class="space-y-4">
                         @csrf
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Kullanıcı Durumu</label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">{{ __('admin.users.user_status') }}</label>
                             <textarea name="userupdate" 
                                       rows="4" 
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 resize-none" 
-                                      placeholder="Kullanıcı durum notunu buraya girin..." 
+                                      placeholder="{{ __('admin.forms.enter_status_note') }}"
                                       required>{{ $user->userupdate }}</textarea>
                         </div>
                         
@@ -336,11 +336,11 @@
                                 <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                 </svg>
-                                Kaydet
+                                {{ __('admin.actions.save') }}
                             </button>
                             <button type="button" onclick="closeEditModal({{ $user->id }})"
                                     class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                                İptal
+                                {{ __('admin.actions.cancel') }}
                             </button>
                         </div>
                     </form>
@@ -442,6 +442,6 @@
             }
         });
         
-        console.log('Customer management page loaded successfully with Tailwind CSS');
+        console.log('{{ __('admin.notifications.page_loaded_successfully') }}');
     </script>
 @endsection

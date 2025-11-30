@@ -10,8 +10,8 @@
                     </svg>
                 </div>
                 <div class="text-left">
-                    <h2 class="text-2xl font-bold text-gray-900">Yeni Tema Yükle</h2>
-                    <p class="text-gray-600 mt-1">Yeni temanız yükleme başarılı olduğunda kullanıcı paneline uygulanacak</p>
+                    <h2 class="text-2xl font-bold text-gray-900">{{ __('admin.settings.app.theme.upload_new_theme') }}</h2>
+                    <p class="text-gray-600 mt-1">{{ __('admin.settings.app.theme.upload_description') }}</p>
                 </div>
             </div>
             
@@ -31,8 +31,8 @@
                                 </div>
                                 <div class="text-center">
                                     <label for="theme-file" class="cursor-pointer">
-                                        <span class="text-lg font-medium text-gray-900">Tema dosyasını seçin</span>
-                                        <p class="text-sm text-gray-500 mt-1">ZIP formatında tema dosyası yükleyin</p>
+                                        <span class="text-lg font-medium text-gray-900">{{ __('admin.settings.app.theme.select_theme_file') }}</span>
+                                        <p class="text-sm text-gray-500 mt-1">{{ __('admin.settings.app.theme.upload_zip_format') }}</p>
                                     </label>
                                     <input type="file" name='theme' id="theme-file" class="hidden" accept=".zip" required>
                                 </div>
@@ -49,7 +49,7 @@
                                 </svg>
                             </div>
                             <div class="flex-1">
-                                <p class="text-sm font-medium text-green-800">Seçilen dosya:</p>
+                                <p class="text-sm font-medium text-green-800">{{ __('admin.settings.app.theme.selected_file') }}</p>
                                 <p class="text-sm text-green-600" id="file-name"></p>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                             <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                             </svg>
-                            <span id="btn-text">Temayı Yükle</span>
+                            <span id="btn-text">{{ __('admin.settings.app.theme.upload_theme') }}</span>
                         </button>
                     </div>
                 </form>
@@ -97,8 +97,8 @@
                 <div class="flex items-center justify-center space-x-4">
                     <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                     <div class="text-center">
-                        <p class="text-lg font-semibold text-blue-900">Tema Yükleniyor...</p>
-                        <p class="text-sm text-blue-600 mt-1">Lütfen bekleyin, tema yüklenirken sayfayı yenilemeyin</p>
+                        <p class="text-lg font-semibold text-blue-900">{{ __('admin.settings.app.theme.uploading_theme') }}</p>
+                        <p class="text-sm text-blue-600 mt-1">{{ __('admin.settings.app.theme.upload_warning') }}</p>
                     </div>
                 </div>
                 
@@ -120,7 +120,7 @@
                     <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z" clip-rule="evenodd"></path>
                 </svg>
             </div>
-            <h2 class="text-xl font-bold text-gray-900">Mevcut Temalar</h2>
+            <h2 class="text-xl font-bold text-gray-900">{{ __('admin.settings.app.theme.current_themes') }}</h2>
         </div>
         
         <!-- Livewire Component for Theme Display -->
@@ -153,7 +153,7 @@
         themeForm.addEventListener('submit', function(e) {
             // Disable button and show loading
             themeBtn.disabled = true;
-            btnText.textContent = 'Yükleniyor...';
+            btnText.textContent = '{{ __('admin.settings.app.theme.uploading') }}';
             
             // Show loading indicator
             loadingDiv.classList.remove('hidden');
@@ -163,7 +163,7 @@
                 <svg class="w-5 h-5 mr-2 animate-spin" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
                 </svg>
-                Yükleniyor...
+                {{ __('admin.settings.app.theme.uploading') }}
             `;
         });
         
@@ -213,7 +213,7 @@
                     const event = new Event('change', { bubbles: true });
                     fileInput.dispatchEvent(event);
                 } else {
-                    alert('Lütfen sadece ZIP dosyalarını yükleyin.');
+                    alert('{{ __('admin.settings.app.theme.only_zip_files') }}');
                 }
             }
         }

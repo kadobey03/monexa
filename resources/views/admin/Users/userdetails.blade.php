@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Kullanıcı Detayları - ' . $user->name])
+@extends('layouts.admin', ['title' => __('admin.users.user_details_title') . ' - ' . $user->name])
 
 @section('content')
 <div class="space-y-6">
@@ -6,20 +6,20 @@
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $user->name }}</h1>
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Kullanıcı detay bilgileri ve hesap yönetimi</p>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ __('admin.users.user_details_description') }}</p>
         </div>
         <div class="flex items-center space-x-3">
             <a href="{{ route('manageusers') }}"
                class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:bg-admin-700 dark:border-admin-600 dark:text-gray-300 dark:hover:bg-admin-600">
                 <x-heroicon name="arrow-left" class="h-4 w-4 mr-2" />
-                Geri
+                {{ __('admin.actions.back') }}
             </a>
             
             <!-- Actions Dropdown -->
             <div class="relative" id="actionsDropdown">
                 <button onclick="toggleActionsDropdown()"
                         class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
-                    İşlemler
+                    {{ __('admin.actions.actions') }}
                     <x-heroicon name="chevron-down" class="ml-2 h-4 w-4" />
                 </button>
                 
@@ -29,20 +29,20 @@
                         <a href="{{ route('loginactivity', $user->id) }}"
                            class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="clock" class="w-4 h-4 mr-3" />
-                            Giriş Aktivitesi
+                            {{ __('admin.activities.login_activity') }}
                         </a>
                         
                         @if ($user->status == null || $user->status == 'blocked' || $user->status == 'banned' || $user->status == 'disabled')
                             <a href="{{ url('admin/dashboard/uunblock') }}/{{ $user->id }}"
                                class="flex items-center px-4 py-2 text-sm text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20">
                                 <x-heroicon name="lock-open" class="w-4 h-4 mr-3" />
-                                Yasağı Kaldır / Etkinleştir
+                                {{ __('admin.actions.unblock_activate') }}
                             </a>
                         @else
                             <a href="{{ url('admin/dashboard/uublock') }}/{{ $user->id }}"
                                class="flex items-center px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
                                 <x-heroicon name="ban" class="w-4 h-4 mr-3" />
-                                Yasakla / Devre Dışı Bırak
+                                {{ __('admin.actions.block_disable') }}
                             </a>
                         @endif
                         
@@ -50,7 +50,7 @@
                             <a href="{{ url('admin/dashboard/email-verify') }}/{{ $user->id }}"
                                class="flex items-center px-4 py-2 text-sm text-blue-700 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20">
                                 <x-heroicon name="mail-check" class="w-4 h-4 mr-3" />
-                                E-postayı Doğrula
+                                {{ __('admin.actions.verify_email') }}
                             </a>
                         @endif
                         
@@ -59,25 +59,25 @@
                         <button onclick="openTopupModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="credit-card" class="w-4 h-4 mr-3" />
-                            Kredi/Debit
+                            {{ __('admin.actions.credit_debit') }}
                         </button>
                         
                         <button onclick="openEditModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="user-pen" class="w-4 h-4 mr-3" />
-                            Kullanıcı Düzenle
+                            {{ __('admin.actions.edit_user') }}
                         </button>
                         
                         <button onclick="openTradingModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="arrow-trending-up" class="w-4 h-4 mr-3" />
-                            Manuel İşlem Yap
+                            {{ __('admin.actions.manual_trade') }}
                         </button>
                         
                         <button onclick="openSignalModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="radio" class="w-4 h-4 mr-3" />
-                            Sinyal Oluştur
+                            {{ __('admin.actions.create_signal') }}
                         </button>
                         
                         <div class="border-t border-gray-200 dark:border-admin-600 my-1"></div>
@@ -85,31 +85,31 @@
                         <button onclick="openEmailModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="envelope" class="w-4 h-4 mr-3" />
-                            E-posta Gönder
+                            {{ __('admin.actions.send_email') }}
                         </button>
                         
                         <button onclick="openNotifyModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="bell" class="w-4 h-4 mr-3" />
-                            Bildirim Gönder
+                            {{ __('admin.actions.send_notification') }}
                         </button>
                         
                         <button onclick="openTaxModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="calculator" class="w-4 h-4 mr-3" />
-                            Kullanıcı Vergisi
+                            {{ __('admin.actions.user_tax') }}
                         </button>
                         
                         <button onclick="openWithdrawalCodeModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="key" class="w-4 h-4 mr-3" />
-                            Para Çekme Kodu
+                            {{ __('admin.actions.withdrawal_code') }}
                         </button>
                         
                         <button onclick="openTradesModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="hash" class="w-4 h-4 mr-3" />
-                            İşlem Sayısı Belirle
+                            {{ __('admin.actions.set_trade_count') }}
                         </button>
                         
                         <div class="border-t border-gray-200 dark:border-admin-600 my-1"></div>
@@ -117,26 +117,26 @@
                         <button onclick="openSwitchUserModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-admin-700">
                             <x-heroicon name="user-switch" class="w-4 h-4 mr-3" />
-                            Kullanıcı Hesabına Geç
+                            {{ __('admin.actions.switch_to_user') }}
                         </button>
                         
                         <button onclick="openResetPasswordModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-orange-700 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20">
                             <x-heroicon name="key-round" class="w-4 h-4 mr-3" />
-                            Şifreyi Sıfırla
+                            {{ __('admin.actions.reset_password') }}
                         </button>
                         
                         <a href="{{ url('admin/dashboard/clearacct') }}/{{ $user->id }}"
-                           onclick="return confirm('{{ $user->name }} kullanıcısının hesabını temizlemek istediğinizden emin misiniz?')"
+                           onclick="return confirm('{{ __('admin.modals.confirm_clear_account', ['name' => $user->name]) }}')"
                            class="flex items-center px-4 py-2 text-sm text-yellow-700 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-900/20">
                             <x-heroicon name="eraser" class="w-4 h-4 mr-3" />
-                            Hesabı Temizle
+                            {{ __('admin.actions.clear_account') }}
                         </a>
                         
                         <button onclick="openDeleteModal()"
                                 class="flex items-center w-full px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
                             <x-heroicon name="user-minus" class="w-4 h-4 mr-3" />
-                            Hesabı Sil
+                            {{ __('admin.actions.delete_account') }}
                         </button>
                     </div>
                 </div>
@@ -159,7 +159,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Hesap Bakiyesi</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.accounts.balance') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $user->currency }}{{ number_format($user->account_bal, 2, '.', ',') }}</p>
                 </div>
             </div>
@@ -174,7 +174,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Kâr</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.investments.profit') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $user->currency }}{{ number_format($user->roi, 2, '.', ',') }}</p>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                     </div>
                 </div>
                 <div class="ml-4">
-                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Bonus</p>
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('admin.accounts.bonus') }}</p>
                     <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ $user->currency }}{{ number_format($user->bonus, 2, '.', ',') }}</p>
                 </div>
             </div>
@@ -201,7 +201,7 @@
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
                 <x-heroicon name="activity" class="h-5 w-5 mr-2" />
-                Müşteri İşlemleri
+                {{ __('admin.customers.transactions') }}
             </h2>
         </div>
         <div class="p-6">
@@ -209,13 +209,13 @@
                 <a href="{{ route('user.plans', $user->id) }}"
                    class="inline-flex items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                     <x-heroicon name="eye" class="w-5 h-5 mr-2" />
-                    İşlemleri Görüntüle
+                    {{ __('admin.actions.view_transactions') }}
                 </a>
             @else
                 <div class="text-center py-12">
                     <x-heroicon name="clipboard-x" class="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                    <h3 class="text-gray-500 dark:text-gray-400 text-lg font-medium">Henüz İşlem Yok</h3>
-                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Bu kullanıcı henüz hiç işlem yapmamış</p>
+                    <h3 class="text-gray-500 dark:text-gray-400 text-lg font-medium">{{ __('admin.users.no_transactions_yet') }}</h3>
+                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">{{ __('admin.users.no_transactions_description') }}</p>
                 </div>
             @endif
         </div>
@@ -236,16 +236,16 @@
                     </div>
                 @endif
             </div>
-            <h3 class="text-gray-600 dark:text-gray-300 font-medium mb-2">KYC Durumu</h3>
+            <h3 class="text-gray-600 dark:text-gray-300 font-medium mb-2">{{ __('admin.customers.kyc_status') }}</h3>
             @if ($user->account_verify == 'Verified')
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
                     <x-heroicon name="check" class="w-3 h-3 mr-1" />
-                    Doğrulanmış
+                    {{ __('admin.status.verified') }}
                 </span>
             @else
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
                     <x-heroicon name="x-mark" class="w-3 h-3 mr-1" />
-                    Doğrulanmamış
+                    {{ __('admin.status.unverified') }}
                 </span>
             @endif
         </div>
@@ -263,16 +263,16 @@
                     </div>
                 @endif
             </div>
-            <h3 class="text-gray-600 dark:text-gray-300 font-medium mb-2">İşlem Modu</h3>
+            <h3 class="text-gray-600 dark:text-gray-300 font-medium mb-2">{{ __('admin.investments.trade_mode') }}</h3>
             @if ($user->tradetype == 'Loss' || $user->trade_mode == null)
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
                     <x-heroicon name="arrow-trending-down" class="w-3 h-3 mr-1" />
-                    Loss
+                    {{ __('admin.investments.loss') }}
                 </span>
             @else
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
                     <x-heroicon name="arrow-trending-up" class="w-3 h-3 mr-1" />
-                    Profit
+                    {{ __('admin.investments.profit') }}
                 </span>
             @endif
         </div>
@@ -294,7 +294,7 @@
                     </div>
                 @endif
             </div>
-            <h3 class="text-gray-600 dark:text-gray-300 font-medium mb-2">Hesap Durumu</h3>
+            <h3 class="text-gray-600 dark:text-gray-300 font-medium mb-2">{{ __('admin.accounts.status') }}</h3>
             @if (in_array($user->status, ['blocked', 'banned', 'disabled']))
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
                     <x-heroicon name="x-circle" class="w-3 h-3 mr-1" />
@@ -303,12 +303,12 @@
             @elseif ($user->status == 'active')
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
                     <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
-                    Aktif
+                    {{ __('admin.status.active') }}
                 </span>
             @else
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
                     <x-heroicon name="question-mark-circle" class="w-3 h-3 mr-1" />
-                    Beklemede
+                    {{ __('admin.status.pending') }}
                 </span>
             @endif
         </div>
@@ -319,7 +319,7 @@
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
                 <x-heroicon name="user" class="h-5 w-5 mr-2" />
-                Kullanıcı Bilgileri
+                {{ __('admin.users.user_information') }}
             </h2>
         </div>
         <div class="p-6">
@@ -332,7 +332,7 @@
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Ad Soyad</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">{{ __('admin.forms.full_name') }}</p>
                             <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->name }}</p>
                         </div>
                     </div>
@@ -346,7 +346,7 @@
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">E-posta Adresi</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">{{ __('admin.forms.email') }}</p>
                             <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->email }}</p>
                         </div>
                     </div>
@@ -360,9 +360,9 @@
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Cep Telefonu</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">{{ __('admin.forms.phone') }}</p>
                             <div class="flex items-center justify-between">
-                                <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->phone ?? 'Belirtilmemiş' }}</p>
+                                <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->phone ?? __('admin.forms.not_specified') }}</p>
                                 @if($user->phone)
                                     <div class="flex items-center space-x-2 ml-3">
                                         <!-- Arama Butonu -->
@@ -370,7 +370,7 @@
                                            class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200"
                                            title="Telefon ile ara">
                                             <x-heroicon name="phone" class="w-4 h-4 mr-1" />
-                                            Ara
+                                            {{ __('admin.actions.call') }}
                                         </a>
                                         
                                         <!-- WhatsApp Butonu -->
@@ -398,8 +398,8 @@
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Doğum Tarihi</p>
-                            <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->dob ?? 'Belirtilmemiş' }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">{{ __('admin.forms.date_of_birth') }}</p>
+                            <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->dob ?? __('admin.forms.not_specified') }}</p>
                         </div>
                     </div>
                 </div>
@@ -412,8 +412,8 @@
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Uyruk</p>
-                            <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->country ?? 'Belirtilmemiş' }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">{{ __('admin.forms.country') }}</p>
+                            <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ $user->country ?? __('admin.forms.not_specified') }}</p>
                         </div>
                     </div>
                 </div>
@@ -426,11 +426,11 @@
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Atanan Admin</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">{{ __('admin.users.assigned_admin') }}</p>
                             <div class="mt-1">
                                 <select onchange="updateAssignedAdmin(this.value)"
                                         class="w-full text-sm font-semibold bg-transparent border-none text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 rounded-md">
-                                    <option value="">Admin Seç...</option>
+                                    <option value="">{{ __('admin.forms.select_admin') }}</option>
                                     @if(isset($availableAdmins))
                                         @foreach($availableAdmins as $admin)
                                             <option value="{{ $admin['id'] }}" {{ ($user->assign_to == $admin['id']) ? 'selected' : '' }}>
@@ -452,11 +452,11 @@
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Lead Durumu</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">{{ __('admin.customers.lead_status') }}</p>
                             <div class="mt-1">
                                 <select onchange="updateLeadStatus(this.value)"
                                         class="w-full text-sm font-semibold bg-transparent border-none text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 rounded-md">
-                                    <option value="">Durum Seç...</option>
+                                    <option value="">{{ __('admin.forms.select_status') }}</option>
                                     @if(isset($leadStatuses))
                                         @foreach($leadStatuses as $status)
                                             <option value="{{ $status['value'] }}" {{ ($user->lead_status == $status['value']) ? 'selected' : '' }}>
@@ -478,7 +478,7 @@
                             </div>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">Kayıt Tarihi</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-300">{{ __('admin.forms.registration_date') }}</p>
                             <p class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i') }}</p>
                         </div>
                     </div>
@@ -492,12 +492,12 @@
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700 flex items-center justify-between">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
                 <x-heroicon name="document-text" class="h-5 w-5 mr-2" />
-                Admin Notları
+                {{ __('admin.forms.admin_notes') }}
             </h2>
             <button onclick="openAddNoteModal()"
                     class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                 <x-heroicon name="plus" class="w-4 h-4 mr-2" />
-                Yeni Not Ekle
+                {{ __('admin.actions.add_new_note') }}
             </button>
         </div>
         <div class="p-6">
@@ -521,7 +521,7 @@
                                     <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">{{ $note->note_content }}</p>
                                     <div class="flex items-center text-xs text-gray-500 dark:text-gray-400">
                                         <x-heroicon name="user" class="w-3 h-3 mr-1" />
-                                        <span class="mr-3">{{ $note->admin ? $note->admin->getFullName() : 'Bilinmeyen Admin' }}</span>
+                                        <span class="mr-3">{{ $note->admin ? $note->admin->getFullName() : __('admin.forms.unknown_admin') }}</span>
                                         <x-heroicon name="clock" class="w-3 h-3 mr-1" />
                                         <span class="mr-3">{{ $note->created_at->format('d/m/Y H:i') }}</span>
                                         @if($note->reminder_date)
@@ -534,12 +534,12 @@
                                     @if($note->admin_id == Auth::guard('admin')->id())
                                         <button onclick="openEditNoteModal({{ $note->id }})"
                                                 class="text-{{ $note->note_color ?? 'blue' }}-600 hover:text-{{ $note->note_color ?? 'blue' }}-800 dark:text-{{ $note->note_color ?? 'blue' }}-400 dark:hover:text-{{ $note->note_color ?? 'blue' }}-300"
-                                                title="Notu Düzenle">
+                                                title="{{ __('admin.actions.edit_note') }}">
                                             <x-heroicon name="pencil" class="w-4 h-4" />
                                         </button>
                                         <button onclick="deleteNote({{ $note->id }})"
                                                 class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
-                                                title="Notu Sil">
+                                                title="{{ __('admin.actions.delete_note') }}">
                                             <x-heroicon name="trash" class="w-4 h-4" />
                                         </button>
                                     @endif
@@ -551,12 +551,12 @@
             @else
                 <div class="text-center py-12">
                     <x-heroicon name="document-text" class="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                    <h3 class="text-gray-500 dark:text-gray-400 text-lg font-medium">Henüz Not Yok</h3>
-                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">Bu kullanıcı için henüz hiç admin notu eklenmemiş</p>
+                    <h3 class="text-gray-500 dark:text-gray-400 text-lg font-medium">{{ __('admin.forms.no_notes_yet') }}</h3>
+                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">{{ __('admin.forms.no_notes_description') }}</p>
                     <button onclick="openAddNoteModal()"
                             class="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-admin-800">
                         <x-heroicon name="plus" class="w-4 h-4 mr-2" />
-                        İlk Notu Ekle
+                        {{ __('admin.actions.add_first_note') }}
                     </button>
                 </div>
             @endif
@@ -810,20 +810,20 @@ function validateNoteForm(formId) {
     
     // Başlık kontrolü
     if (!title) {
-        errors.push('Not başlığı gereklidir');
+        errors.push('{{ __("admin.validation.note_title_required") }}');
     } else if (title.length < 3) {
-        errors.push('Not başlığı en az 3 karakter olmalıdır');
+        errors.push('{{ __("admin.validation.note_title_min_length") }}');
     } else if (title.length > 100) {
-        errors.push('Not başlığı en fazla 100 karakter olmalıdır');
+        errors.push('{{ __("admin.validation.note_title_max_length") }}');
     }
     
     // İçerik kontrolü
     if (!content) {
-        errors.push('Not içeriği gereklidir');
+        errors.push('{{ __("admin.validation.note_content_required") }}');
     } else if (content.length < 10) {
-        errors.push('Not içeriği en az 10 karakter olmalıdır');
+        errors.push('{{ __("admin.validation.note_content_min_length") }}');
     } else if (content.length > 1000) {
-        errors.push('Not içeriği en fazla 1000 karakter olmalıdır');
+        errors.push('{{ __("admin.validation.note_content_max_length") }}');
     }
     
     // Hatırlatıcı tarihi kontrolü
@@ -832,12 +832,12 @@ function validateNoteForm(formId) {
         const selectedDate = new Date(reminderDate);
         const now = new Date();
         if (selectedDate <= now) {
-            errors.push('Hatırlatıcı tarihi gelecekte bir tarih olmalıdır');
+            errors.push('{{ __("admin.validation.reminder_date_future") }}');
         }
     }
     
     if (errors.length > 0) {
-        alert('Lütfen aşağıdaki hataları düzeltin:\n\n• ' + errors.join('\n• '));
+        alert('{{ __("admin.validation.please_fix_errors") }}:\n\n• ' + errors.join('\n• '));
         return false;
     }
     
@@ -851,12 +851,12 @@ function setupCharacterCounters() {
     titleInputs.forEach(input => {
         const counter = document.createElement('div');
         counter.className = 'text-xs text-gray-500 dark:text-gray-400 mt-1';
-        counter.textContent = '0/100 karakter';
+        counter.textContent = '0/100 {{ __("admin.forms.characters") }}';
         input.parentNode.appendChild(counter);
         
         input.addEventListener('input', function() {
             const length = this.value.length;
-            counter.textContent = `${length}/100 karakter`;
+            counter.textContent = `${length}/100 {{ __("admin.forms.characters") }}`;
             counter.className = length > 100 ? 'text-xs text-red-500 mt-1' : 'text-xs text-gray-500 dark:text-gray-400 mt-1';
         });
     });
@@ -866,12 +866,12 @@ function setupCharacterCounters() {
     contentInputs.forEach(input => {
         const counter = document.createElement('div');
         counter.className = 'text-xs text-gray-500 dark:text-gray-400 mt-1';
-        counter.textContent = '0/1000 karakter';
+        counter.textContent = '0/1000 {{ __("admin.forms.characters") }}';
         input.parentNode.appendChild(counter);
         
         input.addEventListener('input', function() {
             const length = this.value.length;
-            counter.textContent = `${length}/1000 karakter`;
+            counter.textContent = `${length}/1000 {{ __("admin.forms.characters") }}`;
             counter.className = length > 1000 ? 'text-xs text-red-500 mt-1' : 'text-xs text-gray-500 dark:text-gray-400 mt-1';
         });
     });
@@ -915,13 +915,13 @@ window.openEditNoteModal = function(noteId) {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Not bilgileri alınırken hata oluştu');
+            alert('{{ __("admin.notifications.error_loading_note") }}');
         });
 };
 
 // Note silme fonksiyonu
 window.deleteNote = function(noteId) {
-    if (confirm('Bu notu silmek istediğinizden emin misiniz?')) {
+    if (confirm('{{ __("admin.modals.confirm_delete_note") }}')) {
         fetch(`/admin/dashboard/users/{{ $user->id }}/notes/${noteId}`, {
             method: 'DELETE',
             headers: {
@@ -945,14 +945,14 @@ window.deleteNote = function(noteId) {
                     location.reload(); // Sayfayı yenile empty state'i göstermek için
                 }
                 
-                alert('Not başarıyla silindi');
+                alert('{{ __("admin.notifications.note_deleted_successfully") }}');
             } else {
-                alert(data.message || 'Not silinirken hata oluştu');
+                alert(data.message || '{{ __("admin.notifications.error_deleting_note") }}');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Not silinirken hata oluştu');
+            alert('{{ __("admin.notifications.error_deleting_note") }}');
         });
     }
 };
@@ -969,7 +969,7 @@ window.submitAddNote = function() {
     
     // Button'u disable et ve loading state göster
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Kaydediliyor...';
+    submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>{{ __("admin.actions.saving") }}...';
     
     const formData = new FormData(form);
     
@@ -989,7 +989,7 @@ window.submitAddNote = function() {
             // Success mesajı göster
             const successMsg = document.createElement('div');
             successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-            successMsg.textContent = 'Not başarıyla eklendi!';
+            successMsg.textContent = '{{ __("admin.notifications.note_added_successfully") }}';
             document.body.appendChild(successMsg);
             
             // 3 saniye sonra mesajı kaldır
@@ -999,17 +999,17 @@ window.submitAddNote = function() {
             
             location.reload(); // Sayfayı yenile yeni notu göstermek için
         } else {
-            alert(data.message || 'Not eklenirken hata oluştu');
+            alert(data.message || '{{ __("admin.notifications.error_adding_note") }}');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Not eklenirken hata oluştu');
+        alert('{{ __("admin.notifications.error_adding_note") }}');
     })
     .finally(() => {
         // Button'u tekrar enable et
         submitBtn.disabled = false;
-        submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>Notu Kaydet';
+        submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>{{ __("admin.actions.save_note") }}';
     });
 };
 
@@ -1026,7 +1026,7 @@ window.submitEditNote = function() {
     
     // Button'u disable et ve loading state göster
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Güncelleniyor...';
+    submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>{{ __("admin.actions.updating") }}...';
     
     const formData = new FormData(form);
     
@@ -1046,7 +1046,7 @@ window.submitEditNote = function() {
             // Success mesajı göster
             const successMsg = document.createElement('div');
             successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-            successMsg.textContent = 'Not başarıyla güncellendi!';
+            successMsg.textContent = '{{ __("admin.notifications.note_updated_successfully") }}';
             document.body.appendChild(successMsg);
             
             // 3 saniye sonra mesajı kaldır
@@ -1056,24 +1056,24 @@ window.submitEditNote = function() {
             
             location.reload(); // Sayfayı yenile güncellenen notu göstermek için
         } else {
-            alert(data.message || 'Not güncellenirken hata oluştu');
+            alert(data.message || '{{ __("admin.notifications.error_updating_note") }}');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Not güncellenirken hata oluştu');
+        alert('{{ __("admin.notifications.error_updating_note") }}');
     })
     .finally(() => {
         // Button'u tekrar enable et
         submitBtn.disabled = false;
-        submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"></path></svg>Değişiklikleri Kaydet';
+        submitBtn.innerHTML = '<svg class="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"></path></svg>{{ __("admin.actions.save_changes") }}';
     });
 };
 
 // WhatsApp fonksiyonu
 window.openWhatsApp = function(phoneNumber) {
     if (!phoneNumber) {
-        alert('Telefon numarası bulunamadı');
+        alert('{{ __("admin.notifications.phone_number_not_found") }}');
         return;
     }
     
@@ -1088,7 +1088,7 @@ window.openWhatsApp = function(phoneNumber) {
     }
     
     // WhatsApp URL'ini oluştur
-    const message = encodeURIComponent('Merhaba, Monexa Finance ekibinden size ulaşıyorum.');
+    const message = encodeURIComponent('{{ __("admin.messages.whatsapp_default_message") }}');
     const whatsappUrl = `https://wa.me/${cleanPhone}?text=${message}`;
     
     // Yeni pencerede aç
@@ -1101,7 +1101,7 @@ window.updateAssignedAdmin = function(adminId) {
         return; // Boş seçim yapıldıysa işlem yapma
     }
     
-    if (!confirm('Bu kullanıcıyı seçilen admin\'e atamak istediğinizden emin misiniz?')) {
+    if (!confirm('{{ __("admin.modals.confirm_assign_admin") }}')) {
         // Kullanıcı iptal ederse dropdown'ı eski değere döndür
         const dropdown = document.querySelector('[onchange="updateAssignedAdmin(this.value)"]');
         dropdown.value = '{{ $user->assign_to ?? "" }}';
@@ -1130,21 +1130,21 @@ window.updateAssignedAdmin = function(adminId) {
             // Success mesajı göster
             const successMsg = document.createElement('div');
             successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-            successMsg.textContent = 'Admin başarıyla atandı!';
+            successMsg.textContent = '{{ __("admin.notifications.admin_assigned_successfully") }}';
             document.body.appendChild(successMsg);
             
             setTimeout(() => {
                 successMsg.remove();
             }, 3000);
         } else {
-            alert(data.message || 'Admin ataması yapılırken hata oluştu');
+            alert(data.message || '{{ __("admin.notifications.error_assigning_admin") }}');
             // Hata durumunda dropdown'ı eski değere döndür
             dropdown.value = '{{ $user->assign_to ?? "" }}';
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Admin ataması yapılırken hata oluştu');
+        alert('{{ __("admin.notifications.error_assigning_admin") }}');
         // Hata durumunda dropdown'ı eski değere döndür
         dropdown.value = '{{ $user->assign_to ?? "" }}';
     })
@@ -1160,7 +1160,7 @@ window.updateLeadStatus = function(statusValue) {
         return; // Boş seçim yapıldıysa işlem yapma
     }
     
-    if (!confirm('Bu kullanıcının lead durumunu güncellemek istediğinizden emin misiniz?')) {
+    if (!confirm('{{ __("admin.modals.confirm_update_lead_status") }}')) {
         // Kullanıcı iptal ederse dropdown'ı eski değere döndür
         const dropdown = document.querySelector('[onchange="updateLeadStatus(this.value)"]');
         dropdown.value = '{{ $user->lead_status ?? "" }}';
@@ -1189,21 +1189,21 @@ window.updateLeadStatus = function(statusValue) {
             // Success mesajı göster
             const successMsg = document.createElement('div');
             successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-            successMsg.textContent = 'Lead durumu başarıyla güncellendi!';
+            successMsg.textContent = '{{ __("admin.notifications.lead_status_updated_successfully") }}';
             document.body.appendChild(successMsg);
             
             setTimeout(() => {
                 successMsg.remove();
             }, 3000);
         } else {
-            alert(data.message || 'Lead durumu güncellenirken hata oluştu');
+            alert(data.message || '{{ __("admin.notifications.error_updating_lead_status") }}');
             // Hata durumunda dropdown'ı eski değere döndür
             dropdown.value = '{{ $user->lead_status ?? "" }}';
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Lead durumu güncellenirken hata oluştu');
+        alert('{{ __("admin.notifications.error_updating_lead_status") }}');
         // Hata durumunda dropdown'ı eski değere döndür
         dropdown.value = '{{ $user->lead_status ?? "" }}';
     })

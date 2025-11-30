@@ -4,21 +4,19 @@
         @method('PUT')
         <div class="row">
             <div class="mb-2 col-md-6">
-                <h5 class="">Registration/Welcome Bonus({{ $settings->currency }})</h5>
+                <h5 class="">{{ __('admin.settings.bonus.registration_bonus') }}({{ $settings->currency }})</h5>
                 <input type="text" class="form-control  " name="signup_bonus" value="{{ $settings->signup_bonus }}"
                     required>
-                <small class="">New registration bonus gets added to new users account.</small>
+                <small class="">{{ __('admin.settings.bonus.registration_bonus_description') }}</small>
             </div>
             <div class="mb-2 col-md-6">
-                <h5 class="">Deposit Bonus(%)</h5>
+                <h5 class="">{{ __('admin.settings.bonus.deposit_bonus') }}</h5>
                 <input type="text" class="form-control  " name="deposit_bonus" value="{{ $settings->deposit_bonus }}"
                     required>
-                <small class="">You can specify bonus amount for users deposit. The system calculates the
-                    percantage amount you specified with the amount of the users deposit and adds it as a bonus(For
-                    every deposit).</small>
+                <small class="">{{ __('admin.settings.bonus.deposit_bonus_description') }}</small>
             </div>
             <div class="mb-2 col-md-12">
-                <input type="submit" class="px-5 btn btn-primary btn-lg" value="Update">
+                <input type="submit" class="px-5 btn btn-primary btn-lg" value="{{ __('admin.settings.common.update_button') }}">
                 <input type="hidden" name="id" value="1">
             </div>
         </div>

@@ -1,4 +1,4 @@
-@extends('layouts.master', ['layoutType' => 'admin', 'title' => 'Kullanıcı Yönetimi'])
+@extends('layouts.master', ['layoutType' => 'admin', 'title' => __('admin.users.title')])
 
 @section('content')
 <div class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900 min-h-screen">
@@ -10,8 +10,8 @@
                     <x-heroicon name="users" class="w-8 h-8 text-white" />
                 </div>
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Kullanıcı Yönetimi</h1>
-                    <p class="text-gray-600 dark:text-gray-400 mt-1">Sisteminizde kayıtlı tüm kullanıcıları görüntüleyin ve yönetin</p>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.users.title') }}</h1>
+                    <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.users.manage_description') }}</p>
                 </div>
             </div>
         </div>

@@ -29,7 +29,7 @@ class ErrorBoundary extends Component
     public function handleError($errorData)
     {
         $this->hasError = true;
-        $this->error = $errorData['message'] ?? 'An error occurred';
+        $this->error = $errorData['message'] ?? __('livewire.error_boundary.general_error');
         $this->errorInfo = $errorData;
         
         // Log error for monitoring
@@ -45,7 +45,7 @@ class ErrorBoundary extends Component
     public function retryOperation()
     {
         if ($this->retryCount >= $this->maxRetries) {
-            $this->addError('maxRetries', 'Maximum retry attempts reached');
+            $this->addError('maxRetries', __('livewire.error_boundary.max_retries_reached'));
             return;
         }
 
@@ -102,24 +102,24 @@ class ErrorBoundary extends Component
         
         return match($errorType) {
             'network' => [
-                'tr' => ['İnternet bağlantınızı kontrol edin', 'Sayfayı yenilemeyi deneyin'],
-                'en' => ['Check your internet connection', 'Try refreshing the page']
+                'tr' => [__('livewire.error_boundary.check_internet_connection'), __('livewire.error_boundary.try_refresh_page')],
+                'en' => [__('livewire.error_boundary.check_internet_connection'), __('livewire.error_boundary.try_refresh_page')]
             ],
             'financial' => [
-                'tr' => ['Bakiyenizi kontrol edin', 'Farklı bir ödeme yöntemi deneyin'],
-                'en' => ['Check your balance', 'Try a different payment method']
+                'tr' => [__('livewire.error_boundary.check_balance'), __('livewire.error_boundary.try_different_payment')],
+                'en' => [__('livewire.error_boundary.check_balance'), __('livewire.error_boundary.try_different_payment')]
             ],
             'authentication' => [
-                'tr' => ['Tekrar giriş yapmayı deneyin', 'Parolanızı sıfırlayın'],
-                'en' => ['Try logging in again', 'Reset your password']
+                'tr' => [__('livewire.error_boundary.try_login_again'), __('livewire.error_boundary.reset_password')],
+                'en' => [__('livewire.error_boundary.try_login_again'), __('livewire.error_boundary.reset_password')]
             ],
             'validation' => [
-                'tr' => ['Form bilgilerinizi kontrol edin', 'Gerekli alanları doldurun'],
-                'en' => ['Check your form information', 'Fill in required fields']
+                'tr' => [__('livewire.error_boundary.check_form_info'), __('livewire.error_boundary.fill_required_fields')],
+                'en' => [__('livewire.error_boundary.check_form_info'), __('livewire.error_boundary.fill_required_fields')]
             ],
             default => [
-                'tr' => ['Sayfayı yenileyin', 'Destek ekibi ile iletişime geçin'],
-                'en' => ['Refresh the page', 'Contact support team']
+                'tr' => [__('livewire.error_boundary.refresh_page'), __('livewire.error_boundary.contact_support')],
+                'en' => [__('livewire.error_boundary.refresh_page'), __('livewire.error_boundary.contact_support')]
             ]
         };
     }

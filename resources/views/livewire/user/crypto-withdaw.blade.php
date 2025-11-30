@@ -1,24 +1,23 @@
 <div>
     <x-layout.card
-        title="Crypto Withdrawal"
-        subtitle="Withdraw funds to your Binance account">
+        :title="__('user.financial.withdrawal.crypto_title')"
+        :subtitle="__('user.financial.withdrawal.crypto_subtitle')">
 
         <x-slot name="header">
             <x-financial.balance-card
                 :balance="$user->account_bal"
                 :currency="$currency"
-                label="Current Balance" />
+                :label="__('user.financial.balance.current')" />
         </x-slot>
 
         <!-- Warning Alert -->
         <x-ui.alert type="warning" :dismissable="true">
-            <x-slot name="title">Binance Account Required</x-slot>
-            Our automatic USDT payment is powered by Binance. To receive your funds, ensure you have a Binance account
-            registered with the same email address as your platform account.
-            <a href="https://www.binance.com/en" target="_blank" class="btn-link font-semibold">Create an account</a>
-            if you don't have one.
+            <x-slot name="title">{{ __('user.financial.withdrawal.binance_required') }}</x-slot>
+            {{ __('user.financial.withdrawal.binance_description') }}
+            <a href="https://www.binance.com/en" target="_blank" class="btn-link font-semibold">{{ __('user.financial.withdrawal.create_account') }}</a>
+            {{ __('user.financial.withdrawal.create_account_suffix') }}
             <strong class="block mt-2">
-                NOTE: Do not proceed if you don't have a Binance account or use a different email address to avoid losing your funds.
+                {{ __('user.financial.withdrawal.warning_note') }}
             </strong>
         </x-ui.alert>
 
@@ -27,11 +26,11 @@
                 <x-forms.financial-input
                     wire:model="amount"
                     name="amount"
-                    label="Withdrawal Amount"
+                    :label="__('user.financial.amount.withdrawal')"
                     :currency="$currency"
                     :min="0.01"
                     :error="$errors->first('amount')"
-                    placeholder="Enter amount to withdraw"
+                    :placeholder="__('user.financial.amount.withdrawal_placeholder')"
                     required />
 
                 @if ($user->sendotpemail == 'Yes')
@@ -39,13 +38,13 @@
                         <x-forms.input
                             wire:model="otpCode"
                             name="otpCode"
-                            label="Enter OTP"
+                            :label="__('user.security.otp.enter_label')"
                             :error="$errors->first('otpCode')"
-                            placeholder="Enter OTP code"
+                            :placeholder="__('user.security.otp.enter_placeholder')"
                             required>
                             <x-slot name="hint">
                                 <span class="text-sm text-text-secondary">
-                                    OTP will be sent to your email when requested
+                                    {{ __('user.security.otp.email_hint') }}
                                 </span>
                             </x-slot>
                         </x-forms.input>
@@ -61,7 +60,7 @@
                             <x-slot name="prefix">
                                 <x-ui.icon name="envelope" class="w-4 h-4" />
                             </x-slot>
-                            Request OTP
+                            {{ __('user.security.otp.request_button') }}
                         </x-ui.button>
                     </div>
                 @endif
@@ -71,7 +70,7 @@
                         type="button"
                         variant="secondary"
                         wire:click="$reset">
-                        Reset
+                        {{ __('common.buttons.reset') }}
                     </x-ui.button>
 
                     <x-ui.button
@@ -79,7 +78,7 @@
                         variant="primary"
                         :loading="$processing"
                         :disabled="$processing">
-                        Complete Withdrawal
+                        {{ __('user.financial.withdrawal.complete_button') }}
                     </x-ui.button>
                 </div>
             </div>

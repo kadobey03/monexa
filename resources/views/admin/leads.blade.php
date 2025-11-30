@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Lead Yönetimi'])
+@extends('layouts.admin', ['title' => __('admin.leads.lead_management')])
 
 @section('content')
 <div class="min-h-screen bg-gray-50 py-8">
@@ -12,28 +12,28 @@
                             <svg class="w-8 h-8 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"></path>
                             </svg>
-                            Lead Yönetimi
+                            {{ __('admin.leads.lead_management') }}
                         </h1>
-                        <p class="text-gray-600 mt-1">Toplam: <span id="total-leads" class="font-semibold text-blue-600">-</span> lead</p>
+                        <p class="text-gray-600 mt-1">{{ __('admin.leads.total') }}: <span id="total-leads" class="font-semibold text-blue-600">-</span> {{ __('admin.leads.lead') }}</p>
                     </div>
                     <div class="flex space-x-3">
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="refresh-btn">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                             </svg>
-                            Yenile
+                            {{ __('admin.leads.refresh') }}
                         </button>
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200" id="export-excel-btn">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
                             </svg>
-                            Excel
+                            {{ __('admin.leads.excel') }}
                         </button>
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm" id="add-lead-btn">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
-                            Yeni Lead Ekle
+                            {{ __('admin.leads.add_new_lead') }}
                         </button>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-500">Toplam Lead</div>
+                        <div class="text-sm font-medium text-gray-500">{{ __('admin.leads.total_lead') }}</div>
                         <div class="text-lg font-semibold text-gray-900" id="stat-total">-</div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-500">Atanmamış</div>
+                        <div class="text-sm font-medium text-gray-500">{{ __('admin.leads.unassigned') }}</div>
                         <div class="text-lg font-semibold text-gray-900" id="stat-unassigned">-</div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-500">Bu Hafta</div>
+                        <div class="text-sm font-medium text-gray-500">{{ __('admin.leads.this_week') }}</div>
                         <div class="text-lg font-semibold text-gray-900" id="stat-weekly">-</div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                         </div>
                     </div>
                     <div class="ml-3">
-                        <div class="text-sm font-medium text-gray-500">Yüksek Puan</div>
+                        <div class="text-sm font-medium text-gray-500">{{ __('admin.leads.high_score') }}</div>
                         <div class="text-lg font-semibold text-gray-900" id="stat-high-score">-</div>
                     </div>
                 </div>

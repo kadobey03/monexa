@@ -29,9 +29,23 @@ require __DIR__ . '/botman.php';
 
 
 // Language Routes
-Route::post('/change-language', [LanguageController::class, 'changeLanguage'])->name('change.language');
-Route::get('/language/{locale}', [LanguageController::class, 'switchLanguage'])->name('language.switch');
-Route::get('/current-language', [LanguageController::class, 'getCurrentLanguage'])->name('current.language');
+Route::post('/language/switch', [LanguageController::class, 'switch'])->name('language.switch');
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.change');
+Route::get('/api/languages', [LanguageController::class, 'getAvailableLanguages'])->name('api.languages');
+Route::post('/api/language/switch', [LanguageController::class, 'switchAjax'])->name('api.language.switch');
+
+// Debug Route for Language Testing
+Route::get('/debug-locale', function() {
+    return response()->json([
+        'success' => true,
+        'current_locale' => app()->getLocale(),
+        'session_locale' => session('locale'),
+        'config_locale' => config('app.locale'),
+        'supported_locales' => ['tr', 'ru'],
+        'session_id' => session()->getId(),
+        'timestamp' => now()
+    ]);
+})->name('debug.locale');
 
 
 

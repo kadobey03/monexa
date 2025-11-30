@@ -31,27 +31,27 @@ class TransferController extends Controller
         if (!Hash::check($request->password, $sender->password)) {
             return response()->json([
                 'status' => 419,
-                'message' => 'Incorrect Password',
+                'message' => __('api.security.current_password_incorrect'),
             ]);
         }
 
         if ($sender->email == $receiver->email) {
             return response()->json([
                 'status' => 419,
-                'message' => 'You cannot send funds to yourself',
+                'message' => __('api.financial.transfer_self_error'),
             ]);
         }
         if (!$receiver) {
             return response()->json([
                 'status' => 419,
-                'message' => 'No user with this email address exist',
+                'message' => __('api.validation.user_not_found'),
             ]);
         }
 
         if ($sender->account_bal < $todeduct) {
             return response()->json([
                 'status' => 419,
-                'message' => 'Insufficient Funds',
+                'message' => __('api.financial.insufficient_balance'),
             ]);
         }
 
@@ -90,7 +90,7 @@ class TransferController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'Transfer Completed, Refreshing page',
+            'message' => __('api.financial.transfer_successful'),
         ]);
     }
 

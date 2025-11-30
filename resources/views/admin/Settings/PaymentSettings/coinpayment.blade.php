@@ -1,8 +1,8 @@
 <div class="space-y-8">
     <!-- Header -->
     <div>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Coinpayment Ayarları</h2>
-        <p class="text-gray-600 dark:text-gray-400 mt-1">Coinpayment API entegrasyonunu yapılandırın</p>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.payment_settings.coinpayment.title') }}</h2>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.payment_settings.coinpayment.subtitle') }}</p>
     </div>
 
     <!-- Main Form -->
@@ -16,8 +16,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold text-white">Coinpayment API Yapılandırması</h3>
-                    <p class="text-yellow-100 mt-1">Kripto para ödemelerini otomatikleştirmek için gerekli bilgileri girin</p>
+                    <h3 class="text-xl font-bold text-white">{{ __('admin.payment_settings.coinpayment.api_configuration') }}</h3>
+                    <p class="text-yellow-100 mt-1">{{ __('admin.payment_settings.coinpayment.api_description') }}</p>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                             </svg>
                         </div>
-                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">API Anahtarları</h4>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.payment_settings.coinpayment.api_keys') }}</h4>
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -46,13 +46,13 @@
                                     <svg class="w-4 h-4 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path>
                                     </svg>
-                                    Public Key
+                                    {{ __('admin.payment_settings.coinpayment.public_key') }}
                                 </span>
                             </label>
-                            <input type="text" name="cp_p_key" value="{{ $cpd->cp_p_key }}" required 
-                                   class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm" 
-                                   placeholder="Coinpayment Public Key'inizi girin">
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Coinpayment hesabınızdan alacağınız public key</p>
+                            <input type="text" name="cp_p_key" value="{{ $cpd->cp_p_key ?? '' }}" required
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm"
+                                   placeholder="{{ __('admin.payment_settings.coinpayment.public_key_placeholder') }}">
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.coinpayment.public_key_help') }}</p>
                         </div>
                         
                         <div class="space-y-2">
@@ -61,13 +61,13 @@
                                     <svg class="w-4 h-4 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
                                     </svg>
-                                    Private Key
+                                    {{ __('admin.payment_settings.coinpayment.private_key') }}
                                 </span>
                             </label>
-                            <input type="password" name="cp_pv_key" value="{{ $cpd->cp_pv_key }}" required 
-                                   class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm" 
-                                   placeholder="Coinpayment Private Key'inizi girin">
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Güvenlik nedeniyle gizlenmiş. Coinpayment hesabınızdan alacağınız private key</p>
+                            <input type="password" name="cp_pv_key" value="{{ $cpd->cp_pv_key ?? '' }}" required
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm"
+                                   placeholder="{{ __('admin.payment_settings.coinpayment.private_key_placeholder') }}">
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.coinpayment.private_key_help') }}</p>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                         </div>
-                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Merchant Bilgileri</h4>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.payment_settings.coinpayment.merchant_info') }}</h4>
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -90,13 +90,13 @@
                                     <svg class="w-4 h-4 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                     </svg>
-                                    Merchant ID
+                                    {{ __('admin.payment_settings.coinpayment.merchant_id') }}
                                 </span>
                             </label>
-                            <input type="text" name="cp_m_id" value="{{ $cpd->cp_m_id }}" required 
-                                   class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm" 
-                                   placeholder="Merchant ID'nizi girin">
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Coinpayment hesabınızda bulunan benzersiz merchant kimliği</p>
+                            <input type="text" name="cp_m_id" value="{{ $cpd->cp_m_id ?? '' }}" required
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm"
+                                   placeholder="{{ __('admin.payment_settings.coinpayment.merchant_id_placeholder') }}">
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.coinpayment.merchant_id_help') }}</p>
                         </div>
                         
                         <div class="space-y-2">
@@ -106,13 +106,13 @@
                                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                                     </svg>
-                                    Debug E-posta
+                                    {{ __('admin.payment_settings.coinpayment.debug_email') }}
                                 </span>
                             </label>
-                            <input type="email" name="cp_debug_email" value="{{ $cpd->cp_debug_email }}" required 
-                                   class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400" 
-                                   placeholder="debug@example.com">
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Coinpayment hata bildirimleri bu adrese gönderilir</p>
+                            <input type="email" name="cp_debug_email" value="{{ $cpd->cp_debug_email ?? '' }}" required
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400"
+                                   placeholder="{{ __('admin.payment_settings.coinpayment.debug_email_placeholder') }}">
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.payment_settings.coinpayment.debug_email_help') }}</p>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                             </svg>
                         </div>
-                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">IPN Güvenlik Ayarları</h4>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('admin.payment_settings.coinpayment.ipn_security') }}</h4>
                     </div>
                     
                     <div class="space-y-2">
@@ -134,12 +134,12 @@
                                 <svg class="w-4 h-4 mr-2 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd"></path>
                                 </svg>
-                                IPN Secret Key
+                                {{ __('admin.payment_settings.coinpayment.ipn_secret') }}
                             </span>
                         </label>
-                        <input type="password" name="cp_ipn_secret" value="{{ $cpd->cp_ipn_secret }}" required 
-                               class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm" 
-                               placeholder="IPN Secret Key'inizi girin">
+                        <input type="password" name="cp_ipn_secret" value="{{ $cpd->cp_ipn_secret ?? '' }}" required
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-all duration-200 placeholder-gray-400 font-mono text-sm"
+                               placeholder="{{ __('admin.payment_settings.coinpayment.ipn_secret_placeholder') }}">
                         <div class="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4 mt-3">
                             <div class="flex">
                                 <svg class="w-5 h-5 text-purple-400 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
@@ -147,9 +147,8 @@
                                 </svg>
                                 <div>
                                     <p class="text-sm text-purple-700 dark:text-purple-300">
-                                        <strong>IPN Secret Key Nedir?</strong><br>
-                                        Instant Payment Notification (IPN) gizli anahtarı, ödeme bildirimlerinin güvenliğini sağlar. 
-                                        Bu anahtar, Coinpayment'tan gelen bildirimlerin gerçek olduğunu doğrular ve güvenliğinizi artırır.
+                                        <strong>{{ __('admin.payment_settings.coinpayment.ipn_what_is') }}</strong><br>
+                                        {{ __('admin.payment_settings.coinpayment.ipn_description') }}
                                     </p>
                                 </div>
                             </div>
@@ -164,12 +163,12 @@
                             <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                         </svg>
                         <div>
-                            <h4 class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">Önemli Bilgiler</h4>
+                            <h4 class="text-sm font-medium text-amber-800 dark:text-amber-200 mb-2">{{ __('admin.payment_settings.coinpayment.important_info') }}</h4>
                             <ul class="text-xs text-amber-700 dark:text-amber-300 space-y-1">
-                                <li>• Bu bilgileri Coinpayment hesabınızın API ayarlar bölümünden alabilirsiniz</li>
-                                <li>• API anahtarlarınızı asla üçüncü şahıslarla paylaşmayın</li>
-                                <li>• Testnet ve mainnet için farklı API anahtarları kullanmanız gerekebilir</li>
-                                <li>• IPN URL'inizi Coinpayment hesabınızda doğru şekilde yapılandırın</li>
+                                <li>• {{ __('admin.payment_settings.coinpayment.note_1') }}</li>
+                                <li>• {{ __('admin.payment_settings.coinpayment.note_2') }}</li>
+                                <li>• {{ __('admin.payment_settings.coinpayment.note_3') }}</li>
+                                <li>• {{ __('admin.payment_settings.coinpayment.note_4') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -181,7 +180,7 @@
                         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                         </svg>
-                        <span id="coinpayButtonText">Ayarları Kaydet</span>
+                        <span id="coinpayButtonText">{{ __('admin.payment_settings.actions.save') }}</span>
                     </button>
                 </div>
             </form>
@@ -206,7 +205,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Kaydediliyor...
+                    {{ __('admin.payment_settings.actions.saving') }}...
                 `;
                 
                 // The form handler is already defined in the parent component

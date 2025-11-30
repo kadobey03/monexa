@@ -67,21 +67,21 @@
                     class="space-y-6"
                 >
                     <div class="inline-block px-3 py-1 mb-2 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                        Global Markets
+                        {{ __('home.forex.global_markets') }}
                     </div>
                     <h1 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
-                        <span class="block">Forex</span>
-                        <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-green-400">Foreign Exchange Market</span>
+                        <span class="block">{{ __('home.forex.title') }}</span>
+                        <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-green-400">{{ __('home.forex.foreign_exchange_market') }}</span>
                     </h1>
                     <p class="mt-3 text-lg text-gray-300 max-w-2xl">
-                        The foreign exchange market is a global decentralized or over-the-counter market for the trading of currencies. This market determines foreign exchange rates for every currency. It includes all aspects of buying, selling and exchanging currencies at current or determined prices.
+                        {{ __('home.forex.description') }}
                     </p>
                     <div class="flex flex-wrap gap-4 mt-6">
                         <a href="#forex-markets" class="px-6 py-3 text-base font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200">
-                            Explore Markets
+                            {{ __('home.forex.explore_markets') }}
                         </a>
                         <a href="/register" class="px-6 py-3 text-base font-medium text-gray-300 bg-gray-800 border border-gray-700 rounded-lg shadow-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200">
-                            Start Trading
+                            {{ __('home.forex.start_trading') }}
                         </a>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                                     </div>
                                     <div>
                                         <h3 class="text-lg font-bold text-white">EUR/USD</h3>
-                                        <p class="text-sm text-gray-400">Euro / US Dollar</p>
+                                        <p class="text-sm text-gray-400">{{ __('home.forex.euro_us_dollar') }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
@@ -130,7 +130,7 @@
                                     </div>
                                     <div>
                                         <h3 class="text-lg font-bold text-white">GBP/USD</h3>
-                                        <p class="text-sm text-gray-400">British Pound / US Dollar</p>
+                                        <p class="text-sm text-gray-400">{{ __('home.forex.gbp_us_dollar') }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
@@ -164,13 +164,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Major Currency Pairs
+                {{ __('home.forex.major_currency_pairs') }}
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Market Overview</span>
+                <span class="block">{{ __('home.forex.market_overview') }}</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                Track performance across major currency pairs with real-time data and live spreads
+                {{ __('home.forex.track_performance') }}
             </p>
         </div>
 
@@ -186,7 +186,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                         </svg>
                     </div>
-                    <h3 class="text-base font-bold text-white">Major</h3>
+                    <h3 class="text-base font-bold text-white">{{ __('home.forex.major') }}</h3>
                 </div>
                 <p class="text-gray-400 text-xs">EUR/USD, GBP/USD, USD/JPY, USD/CHF</p>
             </div>
@@ -201,7 +201,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-base font-bold text-white">Minor</h3>
+                    <h3 class="text-base font-bold text-white">{{ __('home.forex.minor') }}</h3>
                 </div>
                 <p class="text-gray-400 text-xs">EUR/GBP, EUR/CHF, GBP/JPY, EUR/JPY</p>
             </div>
@@ -216,7 +216,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
                         </svg>
                     </div>
-                    <h3 class="text-base font-bold text-white">Exotic</h3>
+                    <h3 class="text-base font-bold text-white">{{ __('home.forex.exotic') }}</h3>
                 </div>
                 <p class="text-gray-400 text-xs">USD/TRY, USD/ZAR, EUR/HUF, USD/MXN</p>
             </div>
@@ -231,7 +231,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-base font-bold text-white">Australasian</h3>
+                    <h3 class="text-base font-bold text-white">{{ __('home.forex.australasian') }}</h3>
                 </div>
                 <p class="text-gray-400 text-xs">AUD/USD, NZD/USD, AUD/NZD, AUD/JPY</p>
             </div>
@@ -246,7 +246,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </div>
-                    <h3 class="text-base font-bold text-white">Scandinavian</h3>
+                    <h3 class="text-base font-bold text-white">{{ __('home.forex.scandinavian') }}</h3>
                 </div>
                 <p class="text-gray-400 text-xs">EUR/NOK, EUR/SEK, USD/NOK, USD/SEK</p>
             </div>
@@ -255,7 +255,7 @@
         <!-- Forex Markets Table -->
         <div id="forex-markets" class="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-xl border border-gray-700 overflow-hidden shadow-lg">
             <div class="p-6 border-b border-gray-700">
-                <h3 class="text-xl font-bold text-white">Forex - Spreads & Trading Conditions</h3>
+                <h3 class="text-xl font-bold text-white">{{ __('home.forex.spreads_trading_conditions') }}</h3>
             </div>
 
             <!-- Search and Filter Controls -->
@@ -271,7 +271,7 @@
                     </select>
                 </div>
                 <div class="relative w-full md:w-64">
-                    <input type="text" class="search-box w-full bg-gray-900 border border-gray-700 rounded-lg py-2 px-4 pl-10 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Search all instruments">
+                    <input type="text" class="search-box w-full bg-gray-900 border border-gray-700 rounded-lg py-2 px-4 pl-10 text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="{{ __('home.forex.search_instruments') }}">
                     <svg class="absolute left-3 top-2.5 h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
@@ -286,12 +286,12 @@
 
                 <table id="tt-spreads-6023e30e3ba10" class="w-full text-sm text-left text-gray-300"><thead class="text-xs uppercase bg-gray-800 text-gray-400">
                         <tr>
-                            <th class="px-6 py-3 symbol">Symbol</th>
-                            <th class="px-6 py-3 category">Category</th>
-                            <th class="px-6 py-3 leverage">Leverage</th>
-                            <th class="px-6 py-3 lot_size">Lot Size</th>
-                            <th class="px-6 py-3 min_lot_size">Min Lot Size</th>
-                            <th class="px-6 py-3 commission">Commission</th>
+                            <th class="px-6 py-3 symbol">{{ __('home.forex.symbol') }}</th>
+                            <th class="px-6 py-3 category">{{ __('home.forex.category') }}</th>
+                            <th class="px-6 py-3 leverage">{{ __('home.forex.leverage') }}</th>
+                            <th class="px-6 py-3 lot_size">{{ __('home.forex.lot_size') }}</th>
+                            <th class="px-6 py-3 min_lot_size">{{ __('home.forex.min_lot_size') }}</th>
+                            <th class="px-6 py-3 commission">{{ __('home.forex.commission') }}</th>
                         </tr>
                     </thead>
                     <tbody class="bg-gray-900 divide-y divide-gray-800">
@@ -323,13 +323,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Why Trade Forex
+                {{ __('home.forex.why_trade_forex') }}
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Advanced Forex Trading Features</span>
+                <span class="block">{{ __('home.forex.advanced_features') }}</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                Discover the advantages of forex trading on our platform
+                {{ __('home.forex.discover_advantages') }}
             </p>
         </div>
 
@@ -341,8 +341,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Competitive Spreads</h3>
-                <p class="text-gray-300">Trade with some of the tightest spreads in the industry across major, minor, and exotic currency pairs, providing cost-effective trading opportunities.</p>
+                <h3 class="text-xl font-bold text-white mb-3">{{ __('home.forex.competitive_spreads') }}</h3>
+                <p class="text-gray-300">{{ __('home.forex.competitive_spreads_desc') }}</p>
             </div>
 
             <!-- Feature 2 -->
@@ -352,8 +352,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Powerful Leverage</h3>
-                <p class="text-gray-300">Access up to 1:500 leverage to maximize your trading potential and capitalize on even the smallest price movements in the forex market.</p>
+                <h3 class="text-xl font-bold text-white mb-3">{{ __('home.forex.powerful_leverage') }}</h3>
+                <p class="text-gray-300">{{ __('home.forex.powerful_leverage_desc') }}</p>
             </div>
 
             <!-- Feature 3 -->
@@ -363,8 +363,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3">Advanced Risk Management</h3>
-                <p class="text-gray-300">Utilize stop loss, take profit, and guaranteed stop loss orders to protect your positions and manage risk effectively in volatile market conditions.</p>
+                <h3 class="text-xl font-bold text-white mb-3">{{ __('home.forex.risk_management') }}</h3>
+                <p class="text-gray-300">{{ __('home.forex.risk_management_desc') }}</p>
             </div>
         </div>
     </div>
@@ -380,7 +380,7 @@
             "ordering": false,
             "searching": true,
             "language": {
-                "zeroRecords": "No matching records found"
+                "zeroRecords": "{{ __('home.forex.no_records_found') }}"
             },
             "columnDefs": [{
                 targets: ['category', 'sub_category'],
@@ -459,13 +459,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Advanced Tools
+                {{ __('home.forex.advanced_tools') }}
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">Professional Forex Trading Tools</span>
+                <span class="block">{{ __('home.forex.professional_tools') }}</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                Take advantage of our cutting-edge tools designed for forex traders
+                {{ __('home.forex.cutting_edge_tools') }}
             </p>
         </div>
 
@@ -482,9 +482,9 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-lg font-medium text-white">Real-time Market Analysis</h3>
+                            <h3 class="text-lg font-medium text-white">{{ __('home.forex.realtime_analysis') }}</h3>
                             <p class="mt-2 text-base text-gray-300">
-                                Access in-depth market analysis with real-time data feeds, economic calendars, and market news to make informed trading decisions.
+                                {{ __('home.forex.realtime_analysis_desc') }}
                             </p>
                         </div>
                     </div>
@@ -499,9 +499,9 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-lg font-medium text-white">Economic Calendar</h3>
+                            <h3 class="text-lg font-medium text-white">{{ __('home.forex.economic_calendar') }}</h3>
                             <p class="mt-2 text-base text-gray-300">
-                                Stay updated with upcoming economic events and announcements that impact currency markets with our comprehensive economic calendar.
+                                {{ __('home.forex.economic_calendar_desc') }}
                             </p>
                         </div>
                     </div>
@@ -517,9 +517,9 @@
                             </div>
                         </div>
                         <div class="ml-4">
-                            <h3 class="text-lg font-medium text-white">Advanced Charts</h3>
+                            <h3 class="text-lg font-medium text-white">{{ __('home.forex.advanced_charts') }}</h3>
                             <p class="mt-2 text-base text-gray-300">
-                                Utilize our sophisticated charting tools with over 50 technical indicators and drawing tools to analyze market trends and patterns.
+                                {{ __('home.forex.advanced_charts_desc') }}
                             </p>
                         </div>
                     </div>
@@ -622,11 +622,11 @@
 
                     <div class="mt-6 grid grid-cols-2 gap-4">
                         <div class="bg-gray-800 bg-opacity-70 p-4 rounded-lg">
-                            <p class="text-xs font-medium text-gray-400 uppercase">Currency Pair</p>
+                            <p class="text-xs font-medium text-gray-400 uppercase">{{ __('home.forex.currency_pair') }}</p>
                             <p class="text-lg font-semibold text-white">EUR/USD</p>
                         </div>
                         <div class="bg-gray-800 bg-opacity-70 p-4 rounded-lg">
-                            <p class="text-xs font-medium text-gray-400 uppercase">Current Rate</p>
+                            <p class="text-xs font-medium text-gray-400 uppercase">{{ __('home.forex.current_rate') }}</p>
                             <p class="text-lg font-semibold text-green-400">1.2145</p>
                         </div>
                     </div>
@@ -641,13 +641,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-400 uppercase bg-blue-900 bg-opacity-30 rounded-full">
-                Start Trading
+                {{ __('home.forex.start_trading') }}
             </div>
             <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
-                <span class="block">How to Start Trading Forex</span>
+                <span class="block">{{ __('home.forex.how_to_start') }}</span>
             </h2>
             <p class="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">
-                Begin your forex trading journey in just a few simple steps
+                {{ __('home.forex.begin_journey') }}
             </p>
         </div>
 
@@ -659,11 +659,11 @@
                     <div class="w-12 h-12 bg-blue-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
                         <span class="text-2xl font-bold text-white">1</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Create an Account</h3>
-                    <p class="text-gray-300">Sign up for a trading account in minutes with a simple verification process.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">{{ __('home.forex.create_account') }}</h3>
+                    <p class="text-gray-300">{{ __('home.forex.create_account_desc') }}</p>
                     <div class="mt-6">
                         <a href="#" class="px-5 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg hover:from-blue-500 hover:to-indigo-500 transition duration-300 ease-in-out transform hover:scale-105">
-                            Register Now
+                            {{ __('home.forex.register_now') }}
                         </a>
                     </div>
                 </div>
@@ -676,11 +676,11 @@
                     <div class="w-12 h-12 bg-blue-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
                         <span class="text-2xl font-bold text-white">2</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Fund Your Account</h3>
-                    <p class="text-gray-300">Deposit funds using various payment methods including credit/debit cards, bank transfers, or e-wallets.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">{{ __('home.forex.fund_account') }}</h3>
+                    <p class="text-gray-300">{{ __('home.forex.fund_account_desc') }}</p>
                     <div class="mt-6">
                         <a href="#" class="px-5 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg hover:from-blue-500 hover:to-indigo-500 transition duration-300 ease-in-out transform hover:scale-105">
-                            Deposit Options
+                            {{ __('home.forex.deposit_options') }}
                         </a>
                     </div>
                 </div>
@@ -693,11 +693,11 @@
                     <div class="w-12 h-12 bg-blue-600 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
                         <span class="text-2xl font-bold text-white">3</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Start Trading</h3>
-                    <p class="text-gray-300">Begin trading on our user-friendly platform with access to a wide range of forex currency pairs.</p>
+                    <h3 class="text-xl font-bold text-white mb-3">{{ __('home.forex.start_trading') }}</h3>
+                    <p class="text-gray-300">{{ __('home.forex.start_trading_desc') }}</p>
                     <div class="mt-6">
                         <a href="#" class="px-5 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg hover:from-blue-500 hover:to-indigo-500 transition duration-300 ease-in-out transform hover:scale-105">
-                            Start Now
+                            {{ __('home.forex.start_now') }}
                         </a>
                     </div>
                 </div>
@@ -707,13 +707,13 @@
         <div class="mt-12 bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 rounded-xl p-8 backdrop-blur-sm">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
-                    <h3 class="text-2xl font-bold text-white mb-4">Try Our Demo Account</h3>
+                    <h3 class="text-2xl font-bold text-white mb-4">{{ __('home.forex.demo_account') }}</h3>
                     <p class="text-gray-300 mb-6">
-                        Practice forex trading with our risk-free demo account loaded with virtual funds. Test strategies, explore platform features, and gain confidence before trading with real money.
+                        {{ __('home.forex.demo_account_desc') }}
                     </p>
                     <div>
                         <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                            Open Demo Account
+                            {{ __('home.forex.open_demo') }}
                             <svg class="ml-2 -mr-1 w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
@@ -729,20 +729,20 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
                                 </svg>
                             </div>
-                            <h4 class="text-xl font-bold text-white mb-2">Risk-Free Practice</h4>
-                            <p class="text-gray-300">$50,000 in virtual funds to test your trading strategies</p>
+                            <h4 class="text-xl font-bold text-white mb-2">{{ __('home.forex.risk_free_practice') }}</h4>
+                            <p class="text-gray-300">{{ __('home.forex.virtual_funds') }}</p>
                             <div class="mt-4 flex justify-center space-x-3">
                                 <div class="flex items-center">
                                     <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                     </svg>
-                                    <span class="ml-2 text-sm text-gray-300">Real-time data</span>
+                                    <span class="ml-2 text-sm text-gray-300">{{ __('home.forex.realtime_data') }}</span>
                                 </div>
                                 <div class="flex items-center">
                                     <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                     </svg>
-                                    <span class="ml-2 text-sm text-gray-300">All features</span>
+                                    <span class="ml-2 text-sm text-gray-300">{{ __('home.forex.all_features') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -786,7 +786,7 @@
     <div class="container mx-auto px-4 relative z-10">
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-                Trade What You Want, <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">When You Want</span>
+                {{ __('home.forex.trade_what_you_want') }} <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">{{ __('home.forex.when_you_want') }}</span>
             </h2>
             <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-emerald-400 mx-auto"></div>
         </div>
@@ -886,18 +886,18 @@
             <div class="relative px-6 py-12 sm:py-16 sm:px-12 lg:px-16">
                 <div class="md:ml-auto md:w-1/2 md:pl-10">
                     <div class="text-base max-w-prose mx-auto lg:max-w-none">
-                        <span class="text-sm font-semibold text-white uppercase tracking-wider">Ready to trade?</span>
-                        <h2 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">Start Your Forex Trading Journey</h2>
+                        <span class="text-sm font-semibold text-white uppercase tracking-wider">{{ __('home.forex.ready_to_trade') }}</span>
+                        <h2 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">{{ __('home.forex.start_journey') }}</h2>
                     </div>
                     <div class="mt-6 prose prose-indigo prose-lg text-white">
-                        <p>Join thousands of traders worldwide who trust our platform for their forex trading needs. Get started with a free demo account or open a real trading account today.</p>
+                        <p>{{ __('home.forex.join_traders') }}</p>
                     </div>
                     <div class="mt-8 flex space-x-4">
                         <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-600 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-indigo-600">
-                            Create Account
+                            {{ __('home.forex.create_account') }}
                         </a>
                         <a href="#" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-800 bg-opacity-60 hover:bg-opacity-70 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Learn More
+                            {{ __('common.buttons.learn_more') }}
                         </a>
                     </div>
                 </div>

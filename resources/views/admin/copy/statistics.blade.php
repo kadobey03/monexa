@@ -6,23 +6,23 @@
     <div class="flex items-center justify-between mb-8">
         <div>
             <nav class="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-2">
-                <a href="{{ route('admin.copy.index') }}" class="hover:text-gray-900 dark:hover:text-white">Copy Trading</a>
+                <a href="{{ route('admin.copy.index') }}" class="hover:text-gray-900 dark:hover:text-white">{{ __('admin.copy.copy_trading') }}</a>
                 <x-heroicon name="chevron-right" class="w-4 h-4 mx-2" />
-                <span class="text-gray-900 dark:text-white">Statistics</span>
+                <span class="text-gray-900 dark:text-white">{{ __('admin.copy.statistics') }}</span>
             </nav>
             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $title }}</h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">Overview of copy trading system performance and metrics</p>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('admin.copy.overview_performance_metrics') }}</p>
         </div>
         <div class="flex gap-3">
             <a href="{{ route('admin.copy.active-trades') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg font-medium hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors">
                 <x-heroicon name="activity" class="w-4 h-4" />
-                Active Trades
+                {{ __('admin.copy.active_trades') }}
             </a>
             <a href="{{ route('admin.copy.index') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                 <x-heroicon name="arrow-left" class="w-4 h-4" />
-                Back to List
+                {{ __('admin.copy.back_to_list') }}
             </a>
         </div>
     </div>
@@ -33,9 +33,9 @@
         <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg text-white p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-blue-100 text-sm font-medium">Total Experts</p>
+                    <p class="text-blue-100 text-sm font-medium">{{ __('admin.copy.total_experts') }}</p>
                     <p class="text-3xl font-bold">{{ $statistics['total_experts'] }}</p>
-                    <p class="text-blue-100 text-xs mt-1">{{ $statistics['active_experts'] }} active</p>
+                    <p class="text-blue-100 text-xs mt-1">{{ $statistics['active_experts'] }} {{ __('admin.copy.active') }}</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
                     <x-heroicon name="users" class="w-8 h-8" />
@@ -47,9 +47,9 @@
         <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg text-white p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-green-100 text-sm font-medium">Total Copiers</p>
+                    <p class="text-green-100 text-sm font-medium">{{ __('admin.copy.total_copiers') }}</p>
                     <p class="text-3xl font-bold">{{ $statistics['total_copiers'] }}</p>
-                    <p class="text-green-100 text-xs mt-1">{{ $statistics['active_copiers'] }} currently active</p>
+                    <p class="text-green-100 text-xs mt-1">{{ $statistics['active_copiers'] }} {{ __('admin.copy.currently_active') }}</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
                     <x-heroicon name="copy" class="w-8 h-8" />
@@ -61,9 +61,9 @@
         <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-lg text-white p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-purple-100 text-sm font-medium">Total Volume</p>
+                    <p class="text-purple-100 text-sm font-medium">{{ __('admin.copy.total_volume') }}</p>
                     <p class="text-3xl font-bold">${{ number_format($statistics['total_volume'], 0) }}</p>
-                    <p class="text-purple-100 text-xs mt-1">All time copied amount</p>
+                    <p class="text-purple-100 text-xs mt-1">{{ __('admin.copy.all_time_copied_amount') }}</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
                     <x-heroicon name="currency-dollar" class="w-8 h-8" />
@@ -75,9 +75,9 @@
         <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl shadow-lg text-white p-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-orange-100 text-sm font-medium">Active Volume</p>
+                    <p class="text-orange-100 text-sm font-medium">{{ __('admin.copy.active_volume') }}</p>
                     <p class="text-3xl font-bold">${{ number_format($statistics['active_volume'], 0) }}</p>
-                    <p class="text-orange-100 text-xs mt-1">Currently being copied</p>
+                    <p class="text-orange-100 text-xs mt-1">{{ __('admin.copy.currently_being_copied') }}</p>
                 </div>
                 <div class="bg-white/20 rounded-lg p-3">
                     <x-heroicon name="arrow-trending-up" class="w-8 h-8" />
@@ -90,8 +90,8 @@
         <!-- Top Performing Experts -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
             <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Top Performing Experts</h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Based on total profit percentage</p>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.copy.top_performing_experts') }}</h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('admin.copy.based_on_profit_percentage') }}</p>
             </div>
             <div class="p-6">
                 @if($top_experts->count() > 0)
@@ -113,12 +113,12 @@
                                     @endif
                                     <div>
                                         <h3 class="font-semibold text-gray-900 dark:text-white">{{ $expert->name }}</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ $expert->activeCopiers()->count() }} active copiers</p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ $expert->activeCopiers()->count() }} {{ __('admin.copy.active_copiers') }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
                                     <div class="text-lg font-bold text-green-600 dark:text-green-400">+{{ number_format((float)$expert->total_profit, 1) }}%</div>
-                                    <div class="text-sm text-gray-600 dark:text-gray-400">{{ $expert->win_rate }}% win rate</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">{{ $expert->win_rate }}% {{ __('admin.copy.win_rate') }}</div>
                                 </div>
                             </div>
                         @endforeach
@@ -128,7 +128,7 @@
                         <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
                             <x-heroicon name="arrow-trending-up" class="w-8 h-8 text-gray-400" />
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">No expert performance data available</p>
+                        <p class="text-gray-600 dark:text-gray-400">{{ __('admin.copy.no_expert_performance_data') }}</p>
                     </div>
                 @endif
             </div>
@@ -137,8 +137,8 @@
         <!-- Most Popular Experts -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
             <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Most Popular Experts</h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Based on number of active copiers</p>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.copy.most_popular_experts') }}</h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('admin.copy.based_on_active_copiers') }}</p>
             </div>
             <div class="p-6">
                 @if($popular_experts->count() > 0)
@@ -160,12 +160,12 @@
                                     @endif
                                     <div>
                                         <h3 class="font-semibold text-gray-900 dark:text-white">{{ $expert->name }}</h3>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ $expert->followers }} total followers</p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ $expert->followers }} {{ __('admin.copy.total_followers') }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
                                     <div class="text-lg font-bold text-blue-600 dark:text-blue-400">{{ $expert->active_copiers_count }}</div>
-                                    <div class="text-sm text-gray-600 dark:text-gray-400">active copiers</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-400">{{ __('admin.copy.active_copiers') }}</div>
                                 </div>
                             </div>
                         @endforeach
@@ -175,7 +175,7 @@
                         <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
                             <x-heroicon name="users" class="w-8 h-8 text-gray-400" />
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">No popularity data available</p>
+                        <p class="text-gray-600 dark:text-gray-400">{{ __('admin.copy.no_popularity_data') }}</p>
                     </div>
                 @endif
             </div>
@@ -186,8 +186,8 @@
     <div class="mt-8">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
             <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Recent Copy Trading Activity</h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Latest copy trading transactions and updates</p>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ __('admin.copy.recent_activity') }}</h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('admin.copy.latest_transactions_updates') }}</p>
             </div>
             <div class="p-6">
                 @if($recent_activity->count() > 0)
@@ -213,14 +213,14 @@
                                             @if($activity->user)
                                                 {{ $activity->user->name }}
                                             @else
-                                                Unknown User
+                                                {{ __('admin.copy.unknown_user') }}
                                             @endif
                                         </h3>
                                         <p class="text-sm text-gray-600 dark:text-gray-400">
                                             @if($activity->active === 'yes')
-                                                Started copying {{ $activity->expert ? $activity->expert->name : 'Unknown Expert' }}
+                                                {{ __('admin.copy.started_copying') }} {{ $activity->expert ? $activity->expert->name : __('admin.copy.unknown_expert') }}
                                             @else
-                                                Stopped copying {{ $activity->expert ? $activity->expert->name : 'Unknown Expert' }}
+                                                {{ __('admin.copy.stopped_copying') }} {{ $activity->expert ? $activity->expert->name : __('admin.copy.unknown_expert') }}
                                             @endif
                                         </p>
                                     </div>
@@ -237,7 +237,7 @@
                         <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
                             <x-heroicon name="activity" class="w-8 h-8 text-gray-400" />
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">No recent copy trading activity</p>
+                        <p class="text-gray-600 dark:text-gray-400">{{ __('admin.copy.no_recent_activity') }}</p>
                     </div>
                 @endif
             </div>

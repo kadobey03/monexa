@@ -108,6 +108,6 @@ class TopupController extends Controller
             ]);
         
         }
-        return redirect()->back()->with('success', 'Action Successful!');
+        return redirect()->back()->with('success', __('admin.messages.action_successful'));
     }
 }

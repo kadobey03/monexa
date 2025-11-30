@@ -33,6 +33,6 @@ class WelcomeEmail extends Mailable
     {
         $settings = Settings::find(1);
 
-        return $this->markdown('emails.welcome')->subject("Welcome to $settings->site_name");
+        return $this->markdown('emails.welcome')->subject(__('mail.subjects.welcome', ['siteName' => $settings->site_name]));
     }
 }

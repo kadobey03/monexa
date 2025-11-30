@@ -79,6 +79,13 @@ return [
             'lock_connection' => 'default',
         ],
 
+        'translation' => [
+            'driver' => 'redis',
+            'connection' => 'translation',
+            'lock_connection' => 'default',
+            'prefix' => env('TRANSLATION_CACHE_PREFIX', 'monexa_trans'),
+        ],
+
         'dynamodb' => [
             'driver' => 'dynamodb',
             'key' => env('AWS_ACCESS_KEY_ID'),

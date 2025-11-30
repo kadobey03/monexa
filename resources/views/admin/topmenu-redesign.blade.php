@@ -48,7 +48,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <span class="logo-text ms-2 fs-5 fw-bold d-none d-md-block {{ $text_class }}">
-                            {{ $settings->site_name }} <span class="text-primary">Admin</span>
+                            {{ $settings->site_name }} <span class="text-primary">{{ __('admin.topmenu.admin_panel') }}</span>
                         </span>
                     </div>
                 </a>
@@ -63,7 +63,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         </span>
                         <input type="search"
                                class="form-control border-0 {{ $theme == 'dark' ? 'bg-slate-800' : 'bg-slate-100' }} rounded-pill"
-                               placeholder="Search users, transactions, or settings..."
+                               placeholder="{{ __('admin.topmenu.search_placeholder_full') }}"
                                aria-label="Search">
                     </div>
                 </form>
@@ -85,28 +85,28 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             class="btn btn-sm btn-outline-primary dropdown-toggle"
                             data-bs-toggle="dropdown"
                             aria-expanded="false">
-                        <i class="fas fa-plus me-1"></i> Quick Action
+                        <i class="fas fa-plus me-1"></i> {{ __('admin.topmenu.quick_actions') }}
                     </button>
                     <ul class="dropdown-menu {{ $theme == 'dark' ? 'dropdown-menu-dark' : '' }} shadow">
                         <li>
                             <a class="dropdown-item" href="{{ route('manageusers') }}">
-                                <i class="fas fa-user-plus me-2"></i> Add User
+                                <i class="fas fa-user-plus me-2"></i> {{ __('admin.topmenu.actions.add_user') }}
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{ url('/admin/dashboard/mdeposits') }}">
-                                <i class="fas fa-money-bill me-2"></i> New Deposit
+                                <i class="fas fa-money-bill me-2"></i> {{ __('admin.topmenu.actions.new_deposit') }}
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{ url('/admin/dashboard/mwithdrawals') }}">
-                                <i class="fas fa-hand-holding-usd me-2"></i> Process Withdrawal
+                                <i class="fas fa-hand-holding-usd me-2"></i> {{ __('admin.topmenu.actions.process_withdrawal') }}
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item" href="{{ route('admin.send.message.form') }}">
-                                <i class="fas fa-envelope me-2"></i> Send Message
+                                <i class="fas fa-envelope me-2"></i> {{ __('admin.topmenu.actions.send_message') }}
                             </a>
                         </li>
                     </ul>
@@ -138,8 +138,8 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                          x-transition:leave-end="opacity-0 scale-95">
 
                         <div class="d-flex align-items-center justify-content-between p-3 border-bottom {{ $border_class }}">
-                            <h6 class="mb-0 fw-semibold {{ $text_class }}">Notifications</h6>
-                            <a href="{{ route('admin.notifications') }}" class="text-decoration-none small">View All</a>
+                            <h6 class="mb-0 fw-semibold {{ $text_class }}">{{ __('admin.topmenu.notifications') }}</h6>
+                            <a href="{{ route('admin.notifications') }}" class="text-decoration-none small">{{ __('admin.topmenu.view_all_notifications') }}</a>
                         </div>
 
                         <div class="notifications-container">
@@ -164,7 +164,7 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                             @else
                                 <div class="p-4 text-center text-muted">
                                     <i class="fas fa-bell-slash mb-3 d-block" style="font-size: 1.5rem;"></i>
-                                    <p class="mb-0">No new notifications</p>
+                                    <p class="mb-0">{{ __('admin.topmenu.no_notifications') }}</p>
                                 </div>
                             @endif
                         </div>
@@ -215,15 +215,15 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                         <div class="dropdown-divider d-sm-none"></div>
 
                         <a class="dropdown-item" href="{{ url('/admin/dashboard/profile') }}">
-                            <i class="fas fa-user me-2"></i> My Profile
+                            <i class="fas fa-user me-2"></i> {{ __('admin.profile.dropdown.account_settings') }}
                         </a>
                         <a class="dropdown-item" href="{{ url('/admin/dashboard/appsettingshow') }}">
-                            <i class="fas fa-cog me-2"></i> Settings
+                            <i class="fas fa-cog me-2"></i> {{ __('admin.topmenu.settings') }}
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('adminlogout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                            <i class="fas fa-sign-out-alt me-2"></i> {{ __('admin.profile.dropdown.logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('adminlogout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}

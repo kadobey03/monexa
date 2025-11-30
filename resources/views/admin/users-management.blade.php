@@ -13,17 +13,17 @@
                 <div class="flex-1">
                     <h1 class="text-3xl font-bold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} flex items-center">
                         <i class="fas fa-users text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mr-4 text-4xl"></i>
-                        Kullanıcı Yönetimi
+                        {{ __('admin.users.user_management') }}
                     </h1>
                     <p class="mt-2 text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
-                        Platform kullanıcılarını görüntüle, düzenle ve yönet
+                        {{ __('admin.users.view_edit_manage_users') }}
                     </p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <div class="bg-admin-200 {{ $isDark ? 'dark:bg-admin-700' : '' }} px-4 py-2 rounded-full">
                         <span class="text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} font-semibold">
                             <i class="fas fa-user-check mr-2"></i>
-                            {{ $user_count ?? 0 }} Toplam Kullanıcı
+                            {{ $user_count ?? 0 }} {{ __('admin.users.total_users') }}
                         </span>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">Toplam</p>
+                        <p class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.users.total') }}</p>
                         <p class="text-3xl font-bold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $user_count ?? 0 }}</p>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">Aktif</p>
+                        <p class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.status.active') }}</p>
                         <p class="text-3xl font-bold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $active_users ?? 0 }}</p>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">Bekleyen</p>
+                        <p class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.status.pending') }}</p>
                         <p class="text-3xl font-bold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $pending_verification ?? 0 }}</p>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <div class="ml-4">
-                        <p class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">Engellenen</p>
+                        <p class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.status.blocked') }}</p>
                         <p class="text-3xl font-bold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $blocked_users ?? 0 }}</p>
                     </div>
                 </div>
@@ -107,10 +107,10 @@
                         </div>
                         <div>
                             <h3 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
-                                Gelişmiş Filtreleme
+                                {{ __('admin.filters.advanced_filtering') }}
                             </h3>
                             <p class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
-                                Kullanıcıları status, admin, tarih aralığı ile filtreleyin
+                                {{ __('admin.filters.filter_users_by_status_admin_date') }}
                             </p>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                     @if($activeFilters > 0)
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-admin-100 text-admin-800 {{ $isDark ? 'dark:bg-admin-700 dark:text-admin-200' : '' }}">
                             <i class="fas fa-filter mr-1"></i>
-                            {{ $activeFilters }} Aktif Filtre
+                            {{ $activeFilters }} {{ __('admin.filters.active_filters') }}
                         </span>
                     @endif
                 </div>
@@ -134,10 +134,10 @@
                     <div class="lg:col-span-1">
                         <label class="block text-xs font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
                             <i class="fas fa-flag text-admin-500 mr-1"></i>
-                            LEAD STATUS
+                            {{ __('admin.users.lead_status') }}
                         </label>
                         <select name="status" class="w-full text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
-                            <option value="">Tüm Durumlar</option>
+                            <option value="">{{ __('admin.filters.all_statuses') }}</option>
                             @if(isset($leadStatuses) && $leadStatuses->count() > 0)
                                 @foreach($leadStatuses as $status)
                                     <option value="{{ $status->name }}" {{ request('status') == $status->name ? 'selected' : '' }}>
@@ -145,11 +145,11 @@
                                     </option>
                                 @endforeach
                             @else
-                                <option value="new" {{ request('status') == 'new' ? 'selected' : '' }}>Yeni</option>
-                                <option value="contacted" {{ request('status') == 'contacted' ? 'selected' : '' }}>İletişimde</option>
-                                <option value="qualified" {{ request('status') == 'qualified' ? 'selected' : '' }}>Nitelikli</option>
-                                <option value="converted" {{ request('status') == 'converted' ? 'selected' : '' }}>Dönüştürülmüş</option>
-                                <option value="lost" {{ request('status') == 'lost' ? 'selected' : '' }}>Kayıp</option>
+                                <option value="new" {{ request('status') == 'new' ? 'selected' : '' }}>{{ __('admin.status.new') }}</option>
+                                <option value="contacted" {{ request('status') == 'contacted' ? 'selected' : '' }}>{{ __('admin.status.contacted') }}</option>
+                                <option value="qualified" {{ request('status') == 'qualified' ? 'selected' : '' }}>{{ __('admin.status.qualified') }}</option>
+                                <option value="converted" {{ request('status') == 'converted' ? 'selected' : '' }}>{{ __('admin.status.converted') }}</option>
+                                <option value="lost" {{ request('status') == 'lost' ? 'selected' : '' }}>{{ __('admin.status.lost') }}</option>
                             @endif
                         </select>
                     </div>
@@ -158,10 +158,10 @@
                     <div class="lg:col-span-1">
                         <label class="block text-xs font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
                             <i class="fas fa-user-tie text-admin-500 mr-1"></i>
-                            ASSIGNED ADMIN
+                            {{ __('admin.users.assigned_admin') }}
                         </label>
                         <select name="admin" class="w-full text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
-                            <option value="">Tüm Adminler</option>
+                            <option value="">{{ __('admin.filters.all_admins') }}</option>
                             @if(isset($admins) && $admins->count() > 0)
                                 @foreach($admins as $admin)
                                     <option value="{{ is_array($admin) ? $admin['id'] : $admin->id }}" {{ request('admin') == (is_array($admin) ? $admin['id'] : $admin->id) ? 'selected' : '' }}>
@@ -176,7 +176,7 @@
                     <div class="lg:col-span-1">
                         <label class="block text-xs font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
                             <i class="fas fa-calendar text-admin-500 mr-1"></i>
-                            BAŞLANGIÇ TARİHİ
+                            {{ __('admin.filters.start_date') }}
                         </label>
                         <input type="date" name="date_from" value="{{ request('date_from') }}"
                                class="w-full text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
@@ -186,7 +186,7 @@
                     <div class="lg:col-span-1">
                         <label class="block text-xs font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
                             <i class="fas fa-calendar text-admin-500 mr-1"></i>
-                            BİTİŞ TARİHİ
+                            {{ __('admin.filters.end_date') }}
                         </label>
                         <input type="date" name="date_to" value="{{ request('date_to') }}"
                                class="w-full text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
@@ -197,13 +197,13 @@
                         <button type="submit"
                                 class="inline-flex items-center px-4 py-2.5 bg-admin-600 hover:bg-admin-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
                             <i class="fas fa-search mr-2"></i>
-                            Filtrele
+                            {{ __('admin.actions.filter') }}
                         </button>
                         
                         <a href="{{ route('manageusers') }}"
                            class="inline-flex items-center px-4 py-2.5 bg-admin-100 hover:bg-admin-200 {{ $isDark ? 'dark:bg-admin-700 dark:hover:bg-admin-600' : '' }} text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} font-medium rounded-lg shadow-sm transition-colors duration-200">
                             <i class="fas fa-times mr-2"></i>
-                            Temizle
+                            {{ __('admin.actions.clear') }}
                         </a>
                     </div>
 
@@ -214,7 +214,7 @@
                     <div class="mt-4 pt-4 border-t border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }}">
                         <div class="flex items-center space-x-4 flex-wrap">
                             <span class="text-xs font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
-                                Aktif Filtreler:
+                                {{ __('admin.filters.active_filters') }}:
                             </span>
                             
                             @if(request('status'))
@@ -231,13 +231,13 @@
                             
                             @if(request('date_from'))
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 {{ $isDark ? 'dark:bg-yellow-800 dark:text-yellow-100' : '' }}">
-                                    Başlangıç: {{ \Carbon\Carbon::parse(request('date_from'))->format('d.m.Y') }}
+                                    {{ __('admin.filters.start') }}: {{ \Carbon\Carbon::parse(request('date_from'))->format('d.m.Y') }}
                                 </span>
                             @endif
                             
                             @if(request('date_to'))
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 {{ $isDark ? 'dark:bg-purple-800 dark:text-purple-100' : '' }}">
-                                    Bitiş: {{ \Carbon\Carbon::parse(request('date_to'))->format('d.m.Y') }}
+                                    {{ __('admin.filters.end') }}: {{ \Carbon\Carbon::parse(request('date_to'))->format('d.m.Y') }}
                                 </span>
                             @endif
                         </div>
@@ -255,26 +255,26 @@
                 <!-- Users Table Header Enhancement -->
                 <div class="flex justify-between items-center mb-4">
                     <div>
-                        <h3 class="text-lg font-medium text-white">Kullanıcı Listesi</h3>
+                        <h3 class="text-lg font-medium text-white">{{ __('admin.users.user_list') }}</h3>
                         <div class="text-sm text-admin-200">
                             @if(isset($users))
                                 @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                                    {{ $users->total() }} kullanıcı bulundu
+                                    {{ $users->total() }} {{ __('admin.users.users_found') }}
                                     @if(request()->hasAny(['status', 'admin', 'date_from', 'date_to']))
                                         <span class="text-admin-300">
-                                            <i class="fas fa-filter ml-1 mr-1"></i>(filtrelenmiş)
+                                            <i class="fas fa-filter ml-1 mr-1"></i>({{ __('admin.filters.filtered') }})
                                         </span>
                                     @endif
                                 @else
-                                    {{ $users->count() }} kullanıcı gösteriliyor
+                                    {{ $users->count() }} {{ __('admin.users.users_showing') }}
                                     @if(request()->hasAny(['status', 'admin', 'date_from', 'date_to']))
                                         <span class="text-admin-300">
-                                            <i class="fas fa-filter ml-1 mr-1"></i>(filtrelenmiş)
+                                            <i class="fas fa-filter ml-1 mr-1"></i>({{ __('admin.filters.filtered') }})
                                         </span>
                                     @endif
                                 @endif
                             @else
-                                0 kullanıcı gösteriliyor
+                                0 {{ __('admin.users.users_showing') }}
                             @endif
                         </div>
                     </div>
@@ -290,7 +290,7 @@
                             <input type="search"
                                    id="user-search"
                                    class="block w-full pl-10 pr-12 py-3 border border-admin-400 rounded-lg bg-white/90 placeholder-admin-500 focus:outline-none focus:ring-2 focus:ring-admin-300 focus:border-transparent text-sm font-medium text-admin-900"
-                                   placeholder="🔍 İsim, e-posta veya telefon ile ara..."
+                                   placeholder="🔍 {{ __('admin.filters.search_by_name_email_phone') }}"
                                    onkeyup="filterTable()"
                                    autocomplete="off">
                         </div>
@@ -300,15 +300,15 @@
                     <div class="flex items-center space-x-3">
                         <a href="{{ route('admin.users.import') }}"
                            class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
-                            <i class="fas fa-upload mr-2"></i>Kullanıcı İçe Aktar
+                            <i class="fas fa-upload mr-2"></i>{{ __('admin.users.import_users') }}
                         </a>
                         <button onclick="exportUsers()"
                                 class="inline-flex items-center px-4 py-2 bg-admin-500 hover:bg-admin-600 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
-                            <i class="fas fa-download mr-2"></i>Dışa Aktar
+                            <i class="fas fa-download mr-2"></i>{{ __('admin.actions.export') }}
                         </button>
                         <button onclick="openAddUserModal()"
                                 class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
-                            <i class="fas fa-user-plus mr-2"></i>Yeni Kullanıcı
+                            <i class="fas fa-user-plus mr-2"></i>{{ __('admin.users.new_user') }}
                         </button>
                     </div>
                 </div>
@@ -328,55 +328,55 @@
                             <th scope="col" class="w-44 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center space-x-2">
                                     <i class="fas fa-user text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">Kullanıcı</span>
+                                    <span class="font-bold">{{ __('admin.users.user') }}</span>
                                 </div>
                             </th>
                             <th scope="col" class="w-36 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center space-x-2">
                                     <i class="fas fa-envelope text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">Email</span>
+                                    <span class="font-bold">{{ __('admin.users.email') }}</span>
                                 </div>
                             </th>
                             <th scope="col" class="w-28 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center space-x-2">
                                     <i class="fas fa-phone text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">Telefon</span>
+                                    <span class="font-bold">{{ __('admin.users.phone') }}</span>
                                 </div>
                             </th>
                             <th scope="col" class="w-28 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center space-x-2">
                                     <i class="fas fa-calendar text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">Tarih</span>
+                                    <span class="font-bold">{{ __('admin.users.date') }}</span>
                                 </div>
                             </th>
                             <th scope="col" class="w-36 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center justify-center space-x-2">
                                     <i class="fas fa-flag text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">Lead Status</span>
+                                    <span class="font-bold">{{ __('admin.users.lead_status') }}</span>
                                 </div>
                             </th>
                             <th scope="col" class="w-36 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center justify-center space-x-2">
                                     <i class="fas fa-user-tie text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">Admin</span>
+                                    <span class="font-bold">{{ __('admin.users.admin') }}</span>
                                 </div>
                             </th>
                             <th scope="col" class="w-32 px-4 py-4 text-left text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center space-x-2">
                                     <i class="fas fa-external-link-alt text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">UTM Kaynak</span>
+                                    <span class="font-bold">{{ __('admin.users.utm_source') }}</span>
                                 </div>
                             </th>
                             <th scope="col" class="w-24 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center justify-center space-x-2">
                                     <i class="fas fa-toggle-on text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">Durum</span>
+                                    <span class="font-bold">{{ __('admin.users.status') }}</span>
                                 </div>
                             </th>
                             <th scope="col" class="w-28 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center justify-center space-x-2">
                                     <i class="fas fa-cogs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">İşlemler</span>
+                                    <span class="font-bold">{{ __('admin.actions.operations') }}</span>
                                 </div>
                             </th>
                         </tr>
@@ -404,8 +404,8 @@
                                             </div>
                                         </div>
                                         <div class="min-w-0 flex-1">
-                                            <div class="text-sm font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} truncate" title="{{ $user->name ?? 'Ad Soyad Yok' }}">
-                                                {{ Str::limit($user->name ?? 'Ad Soyad Yok', 25) }}
+                                            <div class="text-sm font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} truncate" title="{{ $user->name ?? __('admin.users.no_name') }}">
+                                                {{ Str::limit($user->name ?? __('admin.users.no_name'), 25) }}
                                             </div>
                                             <div class="text-xs text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} font-medium">
                                                 <i class="fas fa-hashtag mr-1"></i>{{ $user->id }}
@@ -421,11 +421,11 @@
                                     </div>
                                     @if($user->email_verified_at)
                                         <div class="text-xs text-green-600 font-medium mt-1">
-                                            <i class="fas fa-check-circle mr-1"></i>Doğrulandı
+                                            <i class="fas fa-check-circle mr-1"></i>{{ __('admin.users.verified') }}
                                         </div>
                                     @else
                                         <div class="text-xs text-amber-600 font-medium mt-1">
-                                            <i class="fas fa-exclamation-triangle mr-1"></i>Bekliyor
+                                            <i class="fas fa-exclamation-triangle mr-1"></i>{{ __('admin.status.pending') }}
                                         </div>
                                     @endif
                                 </td>
@@ -462,11 +462,11 @@
                                                     </option>
                                                 @endforeach
                                             @else
-                                                <option value="new" {{ ($user->lead_status == 'new' || !$user->lead_status) ? 'selected' : '' }}>Yeni</option>
-                                                <option value="contacted" {{ ($user->lead_status == 'contacted') ? 'selected' : '' }}>İletişimde</option>
-                                                <option value="qualified" {{ ($user->lead_status == 'qualified') ? 'selected' : '' }}>Nitelikli</option>
-                                                <option value="converted" {{ ($user->lead_status == 'converted') ? 'selected' : '' }}>Dönüştürülmüş</option>
-                                                <option value="lost" {{ ($user->lead_status == 'lost') ? 'selected' : '' }}>Kayıp</option>
+                                                <option value="new" {{ ($user->lead_status == 'new' || !$user->lead_status) ? 'selected' : '' }}>{{ __('admin.status.new') }}</option>
+                                                <option value="contacted" {{ ($user->lead_status == 'contacted') ? 'selected' : '' }}>{{ __('admin.status.contacted') }}</option>
+                                                <option value="qualified" {{ ($user->lead_status == 'qualified') ? 'selected' : '' }}>{{ __('admin.status.qualified') }}</option>
+                                                <option value="converted" {{ ($user->lead_status == 'converted') ? 'selected' : '' }}>{{ __('admin.status.converted') }}</option>
+                                                <option value="lost" {{ ($user->lead_status == 'lost') ? 'selected' : '' }}>{{ __('admin.status.lost') }}</option>
                                             @endif
                                         </select>
                                     </div>
@@ -478,7 +478,7 @@
                                         <select onchange="updateAssignedAdmin({{ $user->id }}, this.value)"
                                                 class="px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-sm font-medium focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} shadow-sm transition-all duration-200">
                                             @if(isset($admins) && $admins->count() > 0)
-                                                <option value="" {{ !$user->assign_to ? 'selected' : '' }}>Atanmamış</option>
+                                                <option value="" {{ !$user->assign_to ? 'selected' : '' }}>{{ __('admin.users.unassigned') }}</option>
                                                 @foreach($admins as $admin)
                                                     <option value="{{ is_array($admin) ? $admin['id'] : $admin->id }}"
                                                             {{ ($user->assign_to == (is_array($admin) ? $admin['id'] : $admin->id)) ? 'selected' : '' }}>
@@ -486,7 +486,7 @@
                                                     </option>
                                                 @endforeach
                                             @else
-                                                <option value="" selected>Atanmamış</option>
+                                                <option value="" selected>{{ __('admin.users.unassigned') }}</option>
                                             @endif
                                         </select>
                                     </div>
@@ -499,20 +499,20 @@
                                             @if($user->utm_source_display)
                                                 <div class="text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} font-medium flex items-center">
                                                     <i class="fas fa-external-link-alt text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} mr-2 text-xs"></i>
-                                                    <span class="text-xs">Kaynak:</span>
+                                                    <span class="text-xs">{{ __('admin.users.source') }}:</span>
                                                     <span class="ml-1 px-2 py-0.5 bg-blue-100 text-blue-800 {{ $isDark ? 'dark:bg-blue-800 dark:text-blue-100' : '' }} rounded text-xs font-semibold">{{ Str::limit($user->utm_source_display, 12) }}</span>
                                                 </div>
                                             @endif
                                             @if($user->utm_campaign_display)
                                                 <div class="text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} font-medium flex items-center">
                                                     <i class="fas fa-bullhorn text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} mr-2 text-xs"></i>
-                                                    <span class="text-xs">Kampanya:</span>
+                                                    <span class="text-xs">{{ __('admin.users.campaign') }}:</span>
                                                     <span class="ml-1 px-2 py-0.5 bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }} rounded text-xs font-semibold">{{ Str::limit($user->utm_campaign_display, 10) }}</span>
                                                 </div>
                                             @endif
                                         @else
                                             <div class="text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }} text-xs italic">
-                                                UTM bilgisi yok
+                                                {{ __('admin.users.no_utm_info') }}
                                             </div>
                                         @endif
                                     </div>
@@ -524,25 +524,25 @@
                                         @case('active')
                                             <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-green-100 text-green-800 {{ $isDark ? 'dark:bg-green-800 dark:text-green-100' : '' }} shadow-sm border border-green-200 {{ $isDark ? 'dark:border-green-700' : '' }}">
                                                 <i class="fas fa-check-circle mr-2"></i>
-                                                Aktif
+                                                {{ __('admin.status.active') }}
                                             </span>
                                             @break
                                         @case('blocked')
                                             <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-red-100 text-red-800 {{ $isDark ? 'dark:bg-red-800 dark:text-red-100' : '' }} shadow-sm border border-red-200 {{ $isDark ? 'dark:border-red-700' : '' }}">
                                                 <i class="fas fa-times-circle mr-2"></i>
-                                                Engelli
+                                                {{ __('admin.status.blocked') }}
                                             </span>
                                             @break
                                         @case('pending')
                                             <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800 {{ $isDark ? 'dark:bg-yellow-800 dark:text-yellow-100' : '' }} shadow-sm border border-yellow-200 {{ $isDark ? 'dark:border-yellow-700' : '' }}">
                                                 <i class="fas fa-clock mr-2"></i>
-                                                Bekliyor
+                                                {{ __('admin.status.pending') }}
                                             </span>
                                             @break
                                         @default
                                             <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold bg-gray-100 text-gray-800 {{ $isDark ? 'dark:bg-gray-700 dark:text-gray-200' : '' }} shadow-sm border border-gray-200 {{ $isDark ? 'dark:border-gray-600' : '' }}">
                                                 <i class="fas fa-question-circle mr-2"></i>
-                                                Belirsiz
+                                                {{ __('admin.status.unknown') }}
                                             </span>
                                     @endswitch
                                 </td>
@@ -552,24 +552,24 @@
                                     <div class="flex items-center justify-center space-x-2">
                                         <button onclick="viewUser({{ $user->id }})"
                                                 class="p-2 rounded-lg text-admin-600 hover:bg-admin-100 {{ $isDark ? 'dark:text-admin-400 dark:hover:bg-admin-700' : '' }} transition-all duration-200 hover:shadow-md hover:scale-110"
-                                                title="Görüntüle">
+                                                title="{{ __('admin.actions.view') }}">
                                             <i class="fas fa-eye text-sm"></i>
                                         </button>
                                         <button onclick="editUser({{ $user->id }})"
                                                 class="p-2 rounded-lg text-blue-600 hover:bg-blue-100 {{ $isDark ? 'dark:text-blue-400 dark:hover:bg-blue-800' : '' }} transition-all duration-200 hover:shadow-md hover:scale-110"
-                                                title="Düzenle">
+                                                title="{{ __('admin.actions.edit') }}">
                                             <i class="fas fa-edit text-sm"></i>
                                         </button>
                                         @if($user->status == 'active')
                                             <button onclick="blockUser({{ $user->id }})"
                                                     class="p-2 rounded-lg text-red-600 hover:bg-red-100 {{ $isDark ? 'dark:text-red-400 dark:hover:bg-red-800' : '' }} transition-all duration-200 hover:shadow-md hover:scale-110"
-                                                    title="Engelle">
+                                                    title="{{ __('admin.actions.block') }}">
                                                 <i class="fas fa-ban text-sm"></i>
                                             </button>
                                         @else
                                             <button onclick="unblockUser({{ $user->id }})"
                                                     class="p-2 rounded-lg text-green-600 hover:bg-green-100 {{ $isDark ? 'dark:text-green-400 dark:hover:bg-green-800' : '' }} transition-all duration-200 hover:shadow-md hover:scale-110"
-                                                    title="Aktifleştir">
+                                                    title="{{ __('admin.actions.activate') }}">
                                                 <i class="fas fa-check text-sm"></i>
                                             </button>
                                         @endif
@@ -585,22 +585,22 @@
                                         </div>
                                         <div class="text-center space-y-2">
                                             <h3 class="text-xl font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
-                                                Kullanıcı Bulunamadı
+                                                {{ __('admin.users.user_not_found') }}
                                             </h3>
                                             <p class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} leading-relaxed">
-                                                Henüz hiç kullanıcı eklenmemiş veya arama kriterlerinize uygun kullanıcı bulunamadı.
+                                                {{ __('admin.users.no_users_added_or_found') }}
                                             </p>
                                         </div>
                                         <div class="flex items-center space-x-3 mt-6">
                                             <button onclick="openAddUserModal()"
                                                     class="inline-flex items-center px-4 py-2 bg-admin-600 hover:bg-admin-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-200">
                                                 <i class="fas fa-user-plus mr-2"></i>
-                                                Yeni Kullanıcı Ekle
+                                                {{ __('admin.users.add_new_user') }}
                                             </button>
                                             <a href="{{ route('manageusers') }}"
                                                class="inline-flex items-center px-4 py-2 text-admin-600 hover:text-admin-700 text-sm font-medium transition-colors duration-200">
                                                 <i class="fas fa-refresh mr-2"></i>
-                                                Filtreleri Temizle
+                                                {{ __('admin.filters.clear_filters') }}
                                             </a>
                                         </div>
                                     </div>
@@ -622,28 +622,28 @@
                             @if(isset($users))
                                 @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
                                     <p>
-                                        Gösterilen: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->firstItem() ?? 0 }}</span>
+                                        {{ __('admin.pagination.showing') }}: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->firstItem() ?? 0 }}</span>
                                         - <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->lastItem() ?? 0 }}</span>
-                                        / Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->total() }}</span> kayıt
+                                        / {{ __('admin.pagination.total') }}: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->total() }}</span> {{ __('admin.pagination.records') }}
                                     </p>
                                 @else
-                                    <p>Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->count() }}</span> kayıt gösteriliyor (Filtresiz Tümü)</p>
+                                    <p>{{ __('admin.pagination.total') }}: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ $users->count() }}</span> {{ __('admin.pagination.showing_all_unfiltered') }}</p>
                                 @endif
                             @else
-                                <p>Toplam: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">0</span> kayıt gösteriliyor</p>
+                                <p>{{ __('admin.pagination.total') }}: <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">0</span> {{ __('admin.pagination.records_showing') }}</p>
                             @endif
                         </div>
 
                         <!-- Per Page Selector -->
                         <div class="flex items-center space-x-2">
-                            <label for="per_page" class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">Sayfa başı:</label>
+                            <label for="per_page" class="text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.pagination.per_page') }}:</label>
                             <select name="per_page" id="per_page" onchange="changePerPage(this.value)"
                                     class="text-sm border-admin-300 {{ $isDark ? 'dark:border-admin-600 dark:bg-admin-700' : '' }} rounded-md focus:border-indigo-500 focus:ring-indigo-500 bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
                                 <option value="25" {{ request('per_page', 25) == 25 ? 'selected' : '' }}>25</option>
                                 <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
                                 <option value="75" {{ request('per_page') == 75 ? 'selected' : '' }}>75</option>
                                 <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
-                                <option value="all" {{ request('per_page') == 'all' ? 'selected' : '' }}>Hepsini Göster</option>
+                                <option value="all" {{ request('per_page') == 'all' ? 'selected' : '' }}>{{ __('admin.pagination.show_all') }}</option>
                             </select>
                         </div>
                     </div>
@@ -668,12 +668,12 @@
                             <i class="fas fa-users text-white text-sm"></i>
                         </div>
                         <span class="text-white font-medium text-sm">
-                            <span id="selected-count" class="text-yellow-300 font-bold">0</span> seçildi
+                            <span id="selected-count" class="text-yellow-300 font-bold">0</span> {{ __('admin.actions.selected') }}
                         </span>
                     </div>
                     <button onclick="updateBulkActions()"
                             class="text-white hover:text-red-300 transition-colors p-1 rounded"
-                            title="Kapat">
+                            title="{{ __('admin.actions.close') }}">
                         <i class="fas fa-times text-sm"></i>
                     </button>
                 </div>
@@ -685,34 +685,34 @@
                     <button onclick="bulkActivate()"
                             class="flex items-center justify-center px-3 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
                         <i class="fas fa-check mr-1"></i>
-                        <span class="hidden sm:inline">Aktifleştir</span>
-                        <span class="sm:hidden">Aktif</span>
+                        <span class="hidden sm:inline">{{ __('admin.actions.activate') }}</span>
+                        <span class="sm:hidden">{{ __('admin.status.active') }}</span>
                     </button>
                     <button onclick="bulkBlock()"
                             class="flex items-center justify-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
                         <i class="fas fa-ban mr-1"></i>
-                        <span class="hidden sm:inline">Engelle</span>
-                        <span class="sm:hidden">Engel</span>
+                        <span class="hidden sm:inline">{{ __('admin.actions.block') }}</span>
+                        <span class="sm:hidden">{{ __('admin.actions.block_short') }}</span>
                     </button>
                 </div>
                 <div class="grid grid-cols-2 gap-2 mb-2">
                     <button onclick="bulkUpdateLeadStatus()"
                             class="flex items-center justify-center px-3 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
                         <i class="fas fa-flag mr-1"></i>
-                        <span class="hidden sm:inline">Status</span>
-                        <span class="sm:hidden">St.</span>
+                        <span class="hidden sm:inline">{{ __('admin.users.status') }}</span>
+                        <span class="sm:hidden">{{ __('admin.users.status_short') }}</span>
                     </button>
                     <button onclick="bulkAssignAdmin()"
                             class="flex items-center justify-center px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
                         <i class="fas fa-user-tie mr-1"></i>
-                        <span class="hidden sm:inline">Admin</span>
-                        <span class="sm:hidden">Ad.</span>
+                        <span class="hidden sm:inline">{{ __('admin.users.admin') }}</span>
+                        <span class="sm:hidden">{{ __('admin.users.admin_short') }}</span>
                     </button>
                 </div>
                 <div class="grid grid-cols-1 gap-2">
                     <button onclick="exportSelected()"
                             class="flex items-center justify-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
-                        <i class="fas fa-download mr-2"></i>Dışa Aktar
+                        <i class="fas fa-download mr-2"></i>{{ __('admin.actions.export') }}
                     </button>
                 </div>
             </div>
@@ -771,7 +771,7 @@
             <div class="modal-content bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-xl shadow-xl w-full max-w-2xl transform transition-all duration-300 opacity-0 scale-95">
                 
                 <div class="flex items-center justify-between px-6 py-4 border-b border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }}">
-                    <h3 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">Yeni Kullanıcı Ekle</h3>
+                    <h3 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.users.add_new_user') }}</h3>
                     <button onclick="closeAddUserModal()" class="p-2 hover:bg-admin-100 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} rounded-lg transition-colors">
                         <i class="fas fa-times text-admin-500"></i>
                     </button>
@@ -782,13 +782,13 @@
                         
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div class="space-y-2">
-                                <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">Ad Soyad</label>
+                                <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">{{ __('admin.forms.full_name') }}</label>
                                 <input type="text" name="name" required
                                        class="block w-full px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} placeholder-admin-500 focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent">
                             </div>
                             
                             <div class="space-y-2">
-                                <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">E-posta</label>
+                                <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">{{ __('admin.users.email') }}</label>
                                 <input type="email" name="email" required
                                        class="block w-full px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} placeholder-admin-500 focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent">
                             </div>
@@ -796,30 +796,30 @@
 
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                             <div class="space-y-2">
-                                <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">Telefon</label>
+                                <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">{{ __('admin.users.phone') }}</label>
                                 <input type="tel" name="phone"
                                        class="block w-full px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} placeholder-admin-500 focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent">
                             </div>
                             
                             <div class="space-y-2">
-                                <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">Rol</label>
+                                <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">{{ __('admin.users.role') }}</label>
                                 <select name="role"
                                         class="block w-full px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent">
-                                    <option value="user">Kullanıcı</option>
-                                    <option value="premium">Premium</option>
-                                    <option value="vip">VIP</option>
+                                    <option value="user">{{ __('admin.users.user') }}</option>
+                                    <option value="premium">{{ __('admin.users.premium') }}</option>
+                                    <option value="vip">{{ __('admin.users.vip') }}</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="space-y-2">
-                            <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">Şifre</label>
+                            <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">{{ __('admin.forms.password') }}</label>
                             <input type="password" name="password" required
                                    class="block w-full px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} placeholder-admin-500 focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent">
                         </div>
 
                         <div class="space-y-2">
-                            <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">Şifre Tekrar</label>
+                            <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">{{ __('admin.forms.password_confirmation') }}</label>
                             <input type="password" name="password_confirmation" required
                                    class="block w-full px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} placeholder-admin-500 focus:outline-none focus:ring-2 focus:ring-admin-500 focus:border-transparent">
                         </div>
@@ -829,12 +829,12 @@
                     <div class="flex items-center justify-end space-x-3 px-6 py-4 border-t border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }}">
                         <button type="button" onclick="closeAddUserModal()"
                                 class="px-4 py-2 text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} hover:bg-admin-100 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} rounded-lg transition-colors">
-                            İptal
+                            {{ __('admin.actions.cancel') }}
                         </button>
                         <button type="submit"
                                 class="inline-flex items-center px-4 py-2 bg-admin-600 hover:bg-admin-700 text-white font-medium rounded-lg shadow-sm transition-colors">
                             <i class="fas fa-user-plus mr-2"></i>
-                            Kullanıcı Ekle
+                            {{ __('admin.users.add_user') }}
                         </button>
                     </div>
                 </form>
@@ -859,10 +859,10 @@
                         </div>
                         <div>
                             <h3 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
-                                Admin Ataması
+                                {{ __('admin.users.admin_assignment') }}
                             </h3>
                             <p class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
-                                <span id="modal-selected-count" class="font-medium text-purple-600">0</span> kullanıcı seçildi
+                                <span id="modal-selected-count" class="font-medium text-purple-600">0</span> {{ __('admin.users.users_selected') }}
                             </p>
                         </div>
                     </div>
@@ -879,11 +879,11 @@
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
                                 <i class="fas fa-user-tie text-purple-500 mr-2"></i>
-                                Admin Seçimi
+                                {{ __('admin.users.admin_selection') }}
                             </label>
                             <select id="admin-select"
                                     class="block w-full px-4 py-3 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-                                <option value="">Atamayı kaldır (Atanmamış)</option>
+                                <option value="">{{ __('admin.users.remove_assignment') }} ({{ __('admin.users.unassigned') }})</option>
                                 @if(isset($admins) && $admins->count() > 0)
                                     @foreach($admins as $admin)
                                         <option value="{{ is_array($admin) ? $admin['id'] : $admin->id }}">
@@ -899,11 +899,11 @@
                             <div class="flex items-center space-x-2 mb-2">
                                 <i class="fas fa-users text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }}"></i>
                                 <span class="text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
-                                    Seçili Kullanıcılar
+                                    {{ __('admin.users.selected_users') }}
                                 </span>
                             </div>
                             <div id="selected-users-preview" class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} max-h-20 overflow-y-auto">
-                                <!-- Bu alan JavaScript ile doldurulacak -->
+                                <!-- {{ __('admin.forms.js_will_fill') }} -->
                             </div>
                         </div>
 
@@ -912,7 +912,7 @@
                             <div class="flex items-start space-x-2">
                                 <i class="fas fa-exclamation-triangle text-yellow-600 mt-0.5"></i>
                                 <div class="text-sm text-yellow-800 {{ $isDark ? 'dark:text-yellow-200' : '' }}">
-                                    <strong>Dikkat:</strong> Bu işlem seçili tüm kullanıcıların admin atamasını değiştirecek ve geçmişe dönük kayıt oluşturacaktır.
+                                    <strong>{{ __('admin.notifications.attention') }}:</strong> {{ __('admin.notifications.admin_assignment_warning') }}
                                 </div>
                             </div>
                         </div>
@@ -924,13 +924,13 @@
                     <button type="button"
                             onclick="closeAdminAssignModal()"
                             class="px-4 py-2 text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} hover:bg-admin-100 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} rounded-lg transition-colors font-medium">
-                        İptal
+                        {{ __('admin.actions.cancel') }}
                     </button>
                     <button type="button"
                             onclick="submitAdminAssignment()"
                             class="inline-flex items-center px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
                         <i class="fas fa-user-tie mr-2"></i>
-                        Admin Ata
+                        {{ __('admin.actions.assign_admin') }}
                     </button>
                 </div>
             </div>
@@ -954,10 +954,10 @@
                         </div>
                         <div>
                             <h3 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">
-                                Toplu Status Değişimi
+                                {{ __('admin.users.bulk_status_change') }}
                             </h3>
                             <p class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
-                                <span id="status-modal-selected-count" class="font-medium text-orange-600">0</span> kullanıcı seçildi
+                                <span id="status-modal-selected-count" class="font-medium text-orange-600">0</span> {{ __('admin.users.users_selected') }}
                             </p>
                         </div>
                     </div>
@@ -974,11 +974,11 @@
                         <div class="space-y-2">
                             <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
                                 <i class="fas fa-flag text-orange-500 mr-2"></i>
-                                Yeni Lead Status
+                                {{ __('admin.users.new_lead_status') }}
                             </label>
                             <select id="status-select"
                                     class="block w-full px-4 py-3 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                                <option value="">Lütfen status seçin</option>
+                                <option value="">{{ __('admin.forms.please_select_status') }}</option>
                                 @if(isset($leadStatuses) && $leadStatuses->count() > 0)
                                     @foreach($leadStatuses as $status)
                                         <option value="{{ $status->name }}"
@@ -987,11 +987,11 @@
                                         </option>
                                     @endforeach
                                 @else
-                                    <option value="new">Yeni</option>
-                                    <option value="contacted">İletişimde</option>
-                                    <option value="qualified">Nitelikli</option>
-                                    <option value="converted">Dönüştürülmüş</option>
-                                    <option value="lost">Kayıp</option>
+                                    <option value="new">{{ __('admin.status.new') }}</option>
+                                    <option value="contacted">{{ __('admin.status.contacted') }}</option>
+                                    <option value="qualified">{{ __('admin.status.qualified') }}</option>
+                                    <option value="converted">{{ __('admin.status.converted') }}</option>
+                                    <option value="lost">{{ __('admin.status.lost') }}</option>
                                 @endif
                             </select>
                         </div>
@@ -1001,11 +1001,11 @@
                             <div class="flex items-center space-x-2 mb-2">
                                 <i class="fas fa-users text-admin-500 {{ $isDark ? 'dark:text-admin-400' : '' }}"></i>
                                 <span class="text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
-                                    Seçili Kullanıcılar
+                                    {{ __('admin.users.selected_users') }}
                                 </span>
                             </div>
                             <div id="status-selected-users-preview" class="text-sm text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} max-h-20 overflow-y-auto">
-                                <!-- Bu alan JavaScript ile doldurulacak -->
+                                <!-- {{ __('admin.forms.js_will_fill') }} -->
                             </div>
                         </div>
 
@@ -1014,7 +1014,7 @@
                             <div class="flex items-start space-x-2">
                                 <i class="fas fa-exclamation-triangle text-orange-600 mt-0.5"></i>
                                 <div class="text-sm text-orange-800 {{ $isDark ? 'dark:text-orange-200' : '' }}">
-                                    <strong>Dikkat:</strong> Bu işlem seçili tüm kullanıcıların lead status'unu değiştirecek ve sistem kayıt tutacaktır.
+                                    <strong>{{ __('admin.notifications.attention') }}:</strong> {{ __('admin.notifications.status_change_warning') }}
                                 </div>
                             </div>
                         </div>
@@ -1026,13 +1026,13 @@
                     <button type="button"
                             onclick="closeStatusChangeModal()"
                             class="px-4 py-2 text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} hover:bg-admin-100 {{ $isDark ? 'dark:hover:bg-admin-700' : '' }} rounded-lg transition-colors font-medium">
-                        İptal
+                        {{ __('admin.actions.cancel') }}
                     </button>
                     <button type="button"
                             onclick="submitStatusChange()"
                             class="inline-flex items-center px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg shadow-sm transition-all duration-200 hover:shadow-md">
                         <i class="fas fa-flag mr-2"></i>
-                        Status Değiştir
+                        {{ __('admin.actions.change_status') }}
                     </button>
                 </div>
             </div>
@@ -1093,13 +1093,13 @@ function editUser(userId) {
 }
 
 function blockUser(userId) {
-    if (confirm('Bu kullanıcıyı engellemek istediğinizden emin misiniz?')) {
+    if (confirm('{{ __('admin.users.confirm_block_user') }}')) {
         window.location.href = `/admin/dashboard/uublock/${userId}`;
     }
 }
 
 function unblockUser(userId) {
-    if (confirm('Bu kullanıcının engellemesini kaldırmak istediğinizden emin misiniz?')) {
+    if (confirm('{{ __('admin.users.confirm_unblock_user') }}')) {
         window.location.href = `/admin/dashboard/uublock/${userId}`;
     }
 }
@@ -1108,11 +1108,11 @@ function unblockUser(userId) {
 function bulkActivate() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        showNotification('{{ __('admin.users.please_select_user') }}', 'error');
         return;
     }
     
-    if (confirm(`${selectedUsers.length} kullanıcıyı aktifleştirmek istediğinizden emin misiniz?`)) {
+    if (confirm(`${selectedUsers.length} {{ __('admin.users.confirm_activate_users') }}`)) {
         bulkUpdateUserStatus(selectedUsers, 'active', 'aktifleştir');
     }
 }
@@ -1120,11 +1120,11 @@ function bulkActivate() {
 function bulkBlock() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        showNotification('{{ __('admin.users.please_select_user') }}', 'error');
         return;
     }
     
-    if (confirm(`${selectedUsers.length} kullanıcıyı engellemek istediğinizden emin misiniz?`)) {
+    if (confirm(`${selectedUsers.length} {{ __('admin.users.confirm_block_users') }}`)) {
         bulkUpdateUserStatus(selectedUsers, 'blocked', 'engelle');
     }
 }
@@ -1134,7 +1134,7 @@ function bulkUpdateUserStatus(userIds, status, actionName) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     
     // Loading göster
-    showNotification(`${userIds.length} kullanıcı ${actionName} işlemi başlatılıyor...`, 'info');
+    showNotification(`${userIds.length} {{ __('admin.users.user_action_starting', ['action' => '${actionName}']) }}`, 'info');
     
     fetch('{{ route("admin.manageusers.bulk-status") }}', {
         method: 'POST',
@@ -1162,12 +1162,12 @@ function bulkUpdateUserStatus(userIds, status, actionName) {
                 window.location.reload();
             }, 2000);
         } else {
-            showNotification(data.message || `${actionName} işlemi başarısız oldu.`, 'error');
+            showNotification(data.message || `${actionName} {{ __('admin.users.action_failed') }}`, 'error');
         }
     })
     .catch(error => {
         console.error('Bulk operation error:', error);
-        showNotification(`${actionName} işlemi sırasında bir hata oluştu: ${error.message}`, 'error');
+        showNotification(`${actionName} {{ __('admin.users.action_error', ['error' => '${error.message}']) }}`, 'error');
     });
 }
 
@@ -1192,21 +1192,21 @@ function exportUsers() {
     });
     
     // Loading göster
-    showNotification('Excel dosyası hazırlanıyor... Lütfen bekleyin.', 'info');
+    showNotification('{{ __('admin.users.excel_preparing') }}', 'info');
     
     // Export işlemini başlat
     window.location.href = exportUrl.toString();
     
     // Success message (dosya indirilmeye başladığında)
     setTimeout(() => {
-        showNotification('Excel dosyası başarıyla oluşturuldu ve indirilmeye başlandı.', 'success');
+        showNotification('{{ __('admin.users.excel_created_successfully') }}', 'success');
     }, 1000);
 }
 
 function exportSelected() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        showNotification('{{ __('admin.users.please_select_user') }}', 'error');
         return;
     }
     
@@ -1262,7 +1262,7 @@ function exportSelected() {
     typeInput.value = 'selected';
     form.appendChild(typeInput);
     
-    showNotification(`${selectedUsers.length} seçili kullanıcı için Excel dosyası hazırlanıyor...`, 'info');
+    showNotification(`${selectedUsers.length} {{ __('admin.users.excel_preparing_for_selected') }}`, 'info');
     
     // Form'u DOM'a ekle ve submit et
     document.body.appendChild(form);
@@ -1270,7 +1270,7 @@ function exportSelected() {
     document.body.removeChild(form);
     
     setTimeout(() => {
-        showNotification('Seçili kullanıcılar için Excel dosyası başarıyla oluşturuldu.', 'success');
+        showNotification('{{ __('admin.users.excel_created_for_selected') }}', 'success');
     }, 1000);
 }
 
@@ -1278,7 +1278,7 @@ function exportSelected() {
 function bulkAssignAdmin() {
     const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
     if (selectedUsers.length === 0) {
-        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        showNotification('{{ __('admin.users.please_select_user') }}', 'error');
         return;
     }
     
@@ -1335,7 +1335,7 @@ function updateSelectedUsersPreview(selectedUserIds) {
         userPreview.innerHTML = userNames.join(', ');
     } else {
         const displayNames = userNames.slice(0, 2).join(', ');
-        userPreview.innerHTML = `${displayNames} ve ${userNames.length - 2} kişi daha...`;
+        userPreview.innerHTML = `${displayNames} {{ __('admin.users.and_more_people', ['count' => '${userNames.length - 2}']) }}`;
     }
 }
 
@@ -1344,7 +1344,7 @@ function submitAdminAssignment() {
     const selectedAdmin = document.getElementById('admin-select').value;
     
     if (selectedUsers.length === 0) {
-        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        showNotification('{{ __('admin.users.please_select_user') }}', 'error');
         return;
     }
     
@@ -1460,7 +1460,7 @@ function updateStatusSelectedUsersPreview(selectedUserIds) {
         userPreview.innerHTML = userNames.join(', ');
     } else {
         const displayNames = userNames.slice(0, 2).join(', ');
-        userPreview.innerHTML = `${displayNames} ve ${userNames.length - 2} kişi daha...`;
+        userPreview.innerHTML = `${displayNames} {{ __('admin.users.and_more_people', ['count' => '${userNames.length - 2}']) }}`;
     }
 }
 
@@ -1469,12 +1469,12 @@ function submitStatusChange() {
     const selectedStatus = document.getElementById('status-select').value;
     
     if (selectedUsers.length === 0) {
-        showNotification('Lütfen en az bir kullanıcı seçin.', 'error');
+        showNotification('{{ __('admin.users.please_select_user') }}', 'error');
         return;
     }
     
     if (!selectedStatus.trim()) {
-        showNotification('Lütfen bir lead status seçin.', 'error');
+        showNotification('{{ __('admin.users.please_select_lead_status') }}', 'error');
         return;
     }
     
@@ -1489,7 +1489,7 @@ function submitStatusChange() {
 function bulkChangeLeadStatus(userIds, newStatus) {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     
-    showNotification(`${userIds.length} kullanıcının lead status'u "${newStatus}" olarak değiştiriliyor...`, 'info');
+    showNotification(`${userIds.length} {{ __('admin.users.changing_lead_status', ['status' => '"${newStatus}"']) }}`, 'info');
     
     fetch('{{ route("admin.manageusers.bulk-status") }}', {
         method: 'POST',
@@ -1517,12 +1517,12 @@ function bulkChangeLeadStatus(userIds, newStatus) {
                 window.location.reload();
             }, 2000);
         } else {
-            showNotification(data.message || 'Lead status değişimi başarısız oldu.', 'error');
+            showNotification(data.message || '{{ __('admin.users.lead_status_change_failed') }}', 'error');
         }
     })
     .catch(error => {
         console.error('Bulk status change error:', error);
-        showNotification(`Lead status değişimi sırasında bir hata oluştu: ${error.message}`, 'error');
+        showNotification(`{{ __('admin.users.lead_status_change_error', ['error' => '${error.message}']) }}`, 'error');
     });
 }
 
@@ -1590,15 +1590,15 @@ function updateLeadStatus(userId, newStatus) {
     .then(data => {
         if (data.success) {
             // Show success message
-            showNotification('Lead status başarıyla güncellendi.', 'success');
+            showNotification('{{ __('admin.users.lead_status_updated_successfully') }}', 'success');
         } else {
-            showNotification(data.message || 'Bir hata oluştu.', 'error');
+            showNotification(data.message || '{{ __('admin.users.an_error_occurred') }}', 'error');
             location.reload();
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('Bir hata oluştu.', 'error');
+        showNotification('{{ __('admin.users.an_error_occurred') }}', 'error');
         location.reload();
     });
 }
@@ -1622,15 +1622,15 @@ function updateAssignedAdmin(userId, adminId) {
     .then(data => {
         if (data.success) {
             // Show success message
-            showNotification('Admin ataması başarıyla güncellendi!', 'success');
+            showNotification('{{ __('admin.users.admin_assignment_updated_successfully') }}', 'success');
         } else {
-            showNotification(data.message || 'Bir hata oluştu.', 'error');
+            showNotification(data.message || '{{ __('admin.users.an_error_occurred') }}', 'error');
             location.reload();
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        showNotification('Bir hata oluştu.', 'error');
+        showNotification('{{ __('admin.users.an_error_occurred') }}', 'error');
         location.reload();
     });
 }

@@ -134,7 +134,7 @@
              {{$settings->site_name}}
             </span>
             <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">
-              Profesyonel Ticaret
+              {{ __('user.sidebar.professional_trading') }}
             </div>
           </div>
         </a>
@@ -159,7 +159,7 @@
       <!-- Center Section: Account Balance (Desktop) -->
       <div class="hidden md:flex items-center space-x-6">
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 px-4 py-2 rounded-lg border border-blue-100 dark:border-blue-800">
-          <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Hesap Bakiyesi</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">{{ __('user.sidebar.account_balance') }}</div>
           <div class="text-lg font-bold text-gray-900 dark:text-white">
             {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
           </div>
@@ -174,7 +174,7 @@
           <button id="quick-actions-btn"
                   class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-all duration-200">
             <x-heroicon name="zap" class="w-4 h-4" />
-            <span>Hızlı İşlem</span>
+            <span>{{ __('user.sidebar.quick_actions') }}</span>
             <x-heroicon name="chevron-down" class="w-4 h-4" id="quick-actions-chevron" />
           </button>
 
@@ -182,15 +182,15 @@
             <div class="p-2">
               <a href="{{ route('deposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <x-heroicon name="plus-circle" class="w-4 h-4 mr-3 text-green-500" />
-                Para Yatırma
+                {{ __('user.sidebar.deposits') }}
               </a>
               <a href="{{ route('withdrawalsdeposits') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <x-heroicon name="minus-circle" class="w-4 h-4 mr-3 text-red-500" />
-                Para Çekme
+                {{ __('user.sidebar.withdrawals') }}
               </a>
               <a href="{{ route('trade.index') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <x-heroicon name="trending-up" class="w-4 h-4 mr-3 text-blue-500" />
-                Piyasa İşlemleri
+                {{ __('user.sidebar.market_trading') }}
               </a>
             </div>
           </div>
@@ -216,7 +216,7 @@
           <div id="notifications-menu" class="absolute right-0 sm:right-0 sm:left-auto left-1/2 sm:transform-none transform -translate-x-1/2 mt-2 w-80 max-w-[90vw] bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-20 js-hidden">
             <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
               <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
-                Bildirimler
+                {{ __('user.sidebar.notifications') }}
                 @if($unreadCount > 0)
                   <span class="ml-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-500 rounded-full">
                     {{ $unreadCount }}
@@ -266,15 +266,15 @@
                   <div class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 mb-4">
                     <x-heroicon name="bell-off" class="h-6 w-6" />
                   </div>
-                  <p class="text-sm text-gray-600 dark:text-gray-400">Bildirim yok</p>
-                      <p class="mt-1 text-xs text-gray-500 dark:text-gray-500">Bir şey olduğunda size haber vereceğiz</p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('user.sidebar.no_notifications') }}</p>
+                      <p class="mt-1 text-xs text-gray-500 dark:text-gray-500">{{ __('user.sidebar.notification_message') }}</p>
                 </div>
               @endforelse
             </div>
 
             @if(count($notifications) > 0)
               <div class="px-4 py-3 border-t border-gray-200 dark:border-gray-700 text-center">
-                <a href="{{ route('notifications') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">Tüm bildirimleri görüntüle</a>
+                <a href="{{ route('notifications') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">{{ __('user.sidebar.view_all_notifications') }}</a>
               </div>
             @endif
           </div>
@@ -303,7 +303,7 @@
                   {{ auth()->user()->name }}
                 </div>
                 <div class="text-xs text-gray-500 dark:text-gray-400">
-                  Ticaret Hesabı
+                  {{ __('user.sidebar.trading_account') }}
                 </div>
               </div>
             </div>
@@ -333,22 +333,22 @@
             <div class="p-2">
               <a href="{{ route('profile') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <x-heroicon name="user" class="w-4 h-4 mr-3" />
-                Profil Ayarları
+                {{ __('user.sidebar.profile_settings') }}
               </a>
               <a href="{{ route('accounthistory') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <x-heroicon name="receipt" class="w-4 h-4 mr-3" />
-                Hesap Geçmişi
+                {{ __('user.sidebar.account_history') }}
               </a>
               <a href="{{ route('support') }}" class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md">
                 <x-heroicon name="help-circle" class="w-4 h-4 mr-3" />
-                Destek Merkezi
+                {{ __('user.sidebar.support_center') }}
               </a>
               <div class="border-t border-gray-200 dark:border-gray-600 my-2"></div>
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="w-full flex items-center px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md">
                   <x-heroicon name="log-out" class="w-4 h-4 mr-3" />
-                  Çıkış Yap
+                  {{ __('user.sidebar.logout') }}
                 </button>
               </form>
             </div>
@@ -383,7 +383,7 @@
         </div>
       </div>
       <div class="md:hidden">
-        <div class="text-gray-500 dark:text-gray-400">Balance:</div>
+        <div class="text-gray-500 dark:text-gray-400">{{ __('user.sidebar.balance') }}:</div>
         <div class="font-semibold text-gray-900 dark:text-white">
           {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
         </div>
@@ -416,7 +416,7 @@
                     {{ auth()->user()->name }}
                 </h2>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                    Hesap Bakiyesi: {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
+                    {{ __('user.sidebar.account_balance') }}: {{ Auth::user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
                 </p>
             </div>
         </div>
@@ -425,10 +425,10 @@
     <!-- Live Market Prices -->
     <div class="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20">
         <div class="flex items-center justify-between mb-3">
-            <h3 class="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Live Market</h3>
+            <h3 class="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">{{ __('user.sidebar.live_market') }}</h3>
             <span class="flex items-center text-xs text-green-600 dark:text-green-400">
                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
-                <span class="font-medium">Canlı</span>
+                <span class="font-medium">{{ __('user.sidebar.live') }}</span>
             </span>
         </div>
         <div class="space-y-2">
@@ -448,28 +448,28 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <x-heroicon name="layout-dashboard" class="w-4 h-4" />
-                <span>Genel Bakış</span>
+                <span>{{ __('user.sidebar.overview') }}</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('dashboard') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="layout-dashboard" class="w-5 h-5 mr-3" />
-                        Ana Sayfa
+                        {{ __('user.sidebar.dashboard') }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('accounthistory') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('accounthistory') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="receipt" class="w-5 h-5 mr-3" />
-                        Hesap Özeti
+                        {{ __('user.sidebar.account_summary') }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('tradinghistory') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('tradinghistory') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="activity" class="w-5 h-5 mr-3" />
-                        İşlem Geçmişi
+                        {{ __('user.sidebar.transaction_history') }}
                     </a>
                 </li>
             </ul>
@@ -483,21 +483,21 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <x-heroicon name="wallet" class="w-4 h-4" />
-                <span>Cüzdan ve Fonlar</span>
+                <span>{{ __('user.sidebar.wallet_funds') }}</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('deposits') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('deposits') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="plus-circle" class="w-5 h-5 mr-3" />
-                        Para Yatırma
+                        {{ __('user.sidebar.deposits') }}
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('withdrawalsdeposits') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('withdrawalsdeposits') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="minus-circle" class="w-5 h-5 mr-3" />
-                        Para Çekme
+                        {{ __('user.sidebar.withdrawals') }}
                     </a>
                 </li>
                 {{-- <li>
@@ -515,7 +515,7 @@
                     <a href="/dashboard/trade"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('dashboard.trade') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="zap" class="w-5 h-5 mr-3" />
-                        İşlem Yap
+                        {{ __('user.sidebar.make_trade') }}
                     </a>
                 </li>
                 </ul>
@@ -525,14 +525,14 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <x-heroicon name="user-circle" class="w-4 h-4" />
-                <span>Hesap Yönetimi</span>
+                <span>{{ __('user.sidebar.account_management') }}</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('profile') }}"
                        class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('profile') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="user" class="w-5 h-5 mr-3" />
-                        Profil Ayarları
+                        {{ __('user.sidebar.profile_settings') }}
                     </a>
                 </li>
                 @if(isset($settings->enable_kyc) && $settings->enable_kyc === 'yes')
@@ -541,7 +541,7 @@
                         <!-- Verified Status -->
                         <div class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800">
                             <x-heroicon name="shield-check" class="w-5 h-5 mr-3 text-green-600 dark:text-green-400" />
-                            <span class="font-medium text-green-700 dark:text-green-300">Hesap Doğrulandı</span>
+                            <span class="font-medium text-green-700 dark:text-green-300">{{ __('user.sidebar.account_verified') }}</span>
                         </div>
                     @else
                         <!-- KYC Dropdown -->
@@ -549,7 +549,7 @@
                             <button id="kyc-toggle-btn"
                                     class="flex items-center w-full px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200 {{ request()->routeIs('account.verify') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                                 <x-heroicon name="shield-alert" class="w-5 h-5 mr-3" />
-                                <span class="flex-1 text-left">Kimlik Doğrulama</span>
+                                <span class="flex-1 text-left">{{ __('user.sidebar.kyc_verification') }}</span>
                                 <x-heroicon name="chevron-down" id="kyc-chevron"
                                    class="w-4 h-4 transition-transform duration-200" />
                             </button>
@@ -558,25 +558,25 @@
                             <div id="kyc-dropdown" class="mt-2 ml-8 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm js-hidden">
 
                                 <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-3">
-                                    Kimlik Doğrulama
+                                    {{ __('user.sidebar.kyc_verification') }}
                                 </h4>
 
                                 @if(Auth::user()->account_verify === 'Under review')
                                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                                                        Doğrulamanız inceleniyor
+                                                        {{ __('user.sidebar.kyc_under_review') }}
                                                     </p>
                                                     <div class="flex items-center text-xs text-yellow-600 dark:text-yellow-400">
                                                         <x-heroicon name="clock" class="w-3 h-3 mr-1" />
-                                                        <span>İşleniyor</span>
+                                                        <span>{{ __('user.sidebar.processing') }}</span>
                                                     </div>
                                                 @else
                                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                                                        Tüm ticaret özelliklerini kullanmak için kimlik doğrulaması tamamlayın
+                                                        {{ __('user.sidebar.kyc_required_message') }}
                                                     </p>
                                                     <a href="{{ route('account.verify') }}"
                                                        class="inline-flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200">
                                                         <x-heroicon name="shield-check" class="w-4 h-4" />
-                                                        <span>Şimdi Doğrula</span>
+                                                        <span>{{ __('user.sidebar.verify_now') }}</span>
                                                     </a>
                                 @endif
                             </div>
@@ -591,17 +591,17 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <x-heroicon name="trending-up" class="w-4 h-4" />
-                <span>Büyüme ve Ödüller</span>
+                <span>{{ __('user.sidebar.growth_rewards') }}</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('referuser') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('referuser') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="users" class="w-5 h-5 mr-3" />
-                        Tavsiye Programı
+                        {{ __('user.sidebar.referral_program') }}
                         <span class="ml-auto px-2 py-0.5 text-xs font-medium text-white bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full">{{$settings->referral_commission}}%</span>
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            Tavsiyelerden {{$settings->referral_commission}}% komisyon kazanın
+                            {{ __('user.sidebar.earn_commission', ['percentage' => $settings->referral_commission]) }}
                         </div>
                     </a>
                 </li>
@@ -612,16 +612,16 @@
         <div class="space-y-2">
             <div class="flex items-center gap-2 px-2 mt-6 text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">
                 <x-heroicon name="help-circle" class="w-4 h-4" />
-                <span>Destek ve Yardım</span>
+                <span>{{ __('user.sidebar.support_help') }}</span>
             </div>
             <ul class="space-y-1">
                 <li>
                     <a href="{{ route('support') }}"
                        class="group relative flex items-center px-3 py-2 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-150 {{ request()->routeIs('support') ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 font-medium' : '' }}">
                         <x-heroicon name="headphones" class="w-5 h-5 mr-3" />
-                        Destek Merkezi
+                        {{ __('user.sidebar.support_center') }}
                         <div class="hidden group-hover:block absolute left-full ml-2 px-2 py-1 bg-gray-900 text-xs text-white rounded whitespace-nowrap">
-                            Destek ekibimizden yardım alın
+                            {{ __('user.sidebar.get_help_message') }}
                         </div>
                     </a>
                 </li>
@@ -637,7 +637,7 @@
                     <button type="submit"
                             class="flex items-center w-full px-3 py-2 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/50 transition-colors duration-150">
                         <x-heroicon name="log-out" class="w-5 h-5 mr-3" />
-                        <span>Çıkış Yap</span>
+                        <span>{{ __('user.sidebar.logout') }}</span>
                     </button>
                 </form>
             </div>
@@ -682,7 +682,7 @@
              {{ request()->routeIs('deposits')
                 ? 'text-blue-600 dark:text-blue-400'
                 : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-             transition-colors duration-300">Yatırma</span>
+             transition-colors duration-300">{{ __('user.sidebar.deposits') }}</span>
     </a>
 
     <a href="{{ route('profile') }}"
@@ -701,7 +701,7 @@
              {{ request()->routeIs('profile')
                 ? 'text-blue-600 dark:text-blue-400'
                 : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-             transition-colors duration-300">Profil</span>
+             transition-colors duration-300">{{ __('user.sidebar.profile') }}</span>
     </a>
 
     <a href="{{ route('trade.index') }}"
@@ -720,14 +720,14 @@
              {{ request()->routeIs('trade.index')
                 ? 'text-blue-600 dark:text-blue-400'
                 : 'text-gray-500 group-hover:text-blue-600 dark:text-gray-400 dark:group-hover:text-blue-400' }}
-             transition-colors duration-300">İşlem Aç</span>
+             transition-colors duration-300">{{ __('user.sidebar.open_trade') }}</span>
     </a>
 <a href="{{ route('support') }}"
    class="flex flex-col items-center
           {{ request()->routeIs('support') ? 'text-blue-600 font-semibold' : 'text-gray-500' }}
           hover:text-blue-600">
   <x-heroicon name="life-buoy" class="w-6 h-6" />
-  <span class="text-xs mt-1">Destek</span>
+  <span class="text-xs mt-1">{{ __('user.sidebar.support') }}</span>
 </a>
 
 
@@ -736,7 +736,7 @@
    class="flex flex-col items-center
           {{ request()->routeIs('dashboard') ? 'text-blue-600' : 'text-gray-500' }} hover:text-blue-600">
  <x-heroicon name="home" class="w-6 h-6 transition-colors duration-200" />
-  <span class="text-xs mt-1">Anasayfa</span>
+  <span class="text-xs mt-1">{{ __('user.sidebar.homepage') }}</span>
 </a>
   </div>
 
@@ -770,7 +770,7 @@
                           transition-colors duration-200 group">
           <x-heroicon name="users" class="w-5 h-5 mr-3 text-orange-400
                                       group-hover:scale-110 transition-transform duration-300" />
-          <span class="font-medium">Arkadaş Tavsiye Et</span>
+          <span class="font-medium">{{ __('user.sidebar.invite_friend') }}</span>
           <span class="ml-auto text-xs font-bold text-orange-400">+{{$settings->referral_commission}}%</span>
         </a>
 
@@ -779,7 +779,7 @@
                                                transition-colors duration-200 group">
           <x-heroicon name="life-buoy" class="w-5 h-5 mr-3 text-cyan-400
                                            group-hover:scale-110 transition-transform duration-300" />
-          <span class="font-medium">Destek</span>
+          <span class="font-medium">{{ __('user.sidebar.support') }}</span>
         </a>
 
       </div>
@@ -1332,15 +1332,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response && response.status === 419) {
                     if (typeof Swal !== 'undefined') {
                         Swal.fire({
-                            title: 'Oturum Süresi Doldu',
-                            text: 'Sayfayı yeniden yüklemek için tamam\'a tıklayın.',
+                            title: '{{ __("auth.session_expired") }}',
+                            text: '{{ __("auth.session_expired_message") }}',
                             icon: 'warning',
-                            confirmButtonText: 'Tamam'
+                            confirmButtonText: '{{ __("common.buttons.ok") }}'
                         }).then(() => {
                             window.location.reload();
                         });
                     } else {
-                        if (confirm('Oturum süresi doldu. Sayfayı yeniden yüklemek istiyor musunuz?')) {
+                        if (confirm('{{ __("auth.session_expired_confirm") }}')) {
                             window.location.reload();
                         }
                     }
@@ -1367,7 +1367,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 @yield('scripts')
-@include('layouts.lang')
 @include('layouts.livechat')
 </body>
 </html>

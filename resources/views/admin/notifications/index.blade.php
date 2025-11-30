@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin Bildirimleri - Monexa</title>
+    <title>{{ __('admin.notifications.admin_notifications') }} - Monexa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -33,26 +33,26 @@
                 <div class="flex flex-col h-0 flex-1">
                     <!-- Logo -->
                     <div class="flex items-center h-16 flex-shrink-0 px-4 bg-primary-600">
-                        <h1 class="text-xl font-bold text-white">Monexa Admin</h1>
+                        <h1 class="text-xl font-bold text-white">{{ __('admin.notifications.monexa_admin') }}</h1>
                     </div>
                     
                     <!-- Navigation -->
                     <nav class="flex-1 px-2 py-4 bg-white space-y-1">
                         <a href="/admin/dashboard" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
                             <i class="fas fa-tachometer-alt mr-3 text-gray-400 group-hover:text-gray-500"></i>
-                            Dashboard
+                            {{ __('admin.notifications.dashboard') }}
                         </a>
                         <a href="/admin/users" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
                             <i class="fas fa-users mr-3 text-gray-400 group-hover:text-gray-500"></i>
-                            Kullanıcılar
+                            {{ __('admin.notifications.users') }}
                         </a>
                         <a href="/admin/notifications" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md bg-primary-100 text-primary-700">
                             <i class="fas fa-bell mr-3 text-primary-500"></i>
-                            Bildirimler
+                            {{ __('admin.notifications.notifications') }}
                         </a>
                         <a href="/admin/leads" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
                             <i class="fas fa-chart-line mr-3 text-gray-400 group-hover:text-gray-500"></i>
-                            Leads
+                            {{ __('admin.notifications.leads') }}
                         </a>
                     </nav>
                 </div>
@@ -79,7 +79,7 @@
                                 <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
                                     <i class="fas fa-search h-5 w-5"></i>
                                 </div>
-                                <input id="search-field" class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent" placeholder="Bildirimler ara..." type="search">
+                                <input id="search-field" class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent" placeholder="{{ __('admin.notifications.search_notifications') }}" type="search">
                             </div>
                         </div>
                     </div>
@@ -108,14 +108,14 @@
                             <div class="flex-1 min-w-0">
                                 <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
                                     <i class="fas fa-bell mr-3 text-primary-600"></i>
-                                    Bildirim Yönetimi
+                                    {{ __('admin.notifications.notification_management') }}
                                 </h2>
-                                <p class="mt-1 text-gray-500">Sistem bildirimlerini görüntüleyin ve yönetin</p>
+                                <p class="mt-1 text-gray-500">{{ __('admin.notifications.view_and_manage_notifications') }}</p>
                             </div>
                             <div class="mt-4 flex md:mt-0 md:ml-4">
                                 <button type="button" onclick="markAllAsRead()" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition duration-200">
                                     <i class="fas fa-check-double mr-2"></i>
-                                    Tümünü Okundu İşaretle
+                                    {{ __('admin.notifications.mark_all_as_read') }}
                                 </button>
                             </div>
                         </div>
@@ -169,7 +169,7 @@
                                         </div>
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
-                                                <dt class="text-sm font-medium text-gray-500 truncate">Toplam Bildirim</dt>
+                                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.notifications.total_notifications') }}</dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $notifications->total() }}</dd>
                                             </dl>
                                         </div>
@@ -187,7 +187,7 @@
                                         </div>
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
-                                                <dt class="text-sm font-medium text-gray-500 truncate">Okunmuş</dt>
+                                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.notifications.read') }}</dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $notifications->where('is_read', true)->count() }}</dd>
                                             </dl>
                                         </div>
@@ -205,7 +205,7 @@
                                         </div>
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
-                                                <dt class="text-sm font-medium text-gray-500 truncate">Okunmamış</dt>
+                                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.notifications.unread') }}</dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $notifications->where('is_read', false)->count() }}</dd>
                                             </dl>
                                         </div>
@@ -223,7 +223,7 @@
                                         </div>
                                         <div class="ml-5 w-0 flex-1">
                                             <dl>
-                                                <dt class="text-sm font-medium text-gray-500 truncate">Bugün</dt>
+                                                <dt class="text-sm font-medium text-gray-500 truncate">{{ __('admin.notifications.today') }}</dt>
                                                 <dd class="text-lg font-medium text-gray-900">{{ $notifications->where('created_at', '>=', now()->startOfDay())->count() }}</dd>
                                             </dl>
                                         </div>
@@ -237,20 +237,20 @@
                             <div class="px-4 py-5 sm:px-6">
                                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                                     <div class="mb-4 sm:mb-0">
-                                        <h3 class="text-lg leading-6 font-medium text-gray-900">Bildirimleri Filtrele</h3>
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('admin.notifications.filter_notifications') }}</h3>
                                     </div>
                                     <div class="flex flex-col sm:flex-row gap-3">
                                         <select id="filter-type" class="block rounded-md border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
-                                            <option value="all">Tüm Tipler</option>
-                                            <option value="info">Bilgi</option>
-                                            <option value="success">Başarılı</option>
-                                            <option value="warning">Uyarı</option>
-                                            <option value="danger">Önemli</option>
+                                            <option value="all">{{ __('admin.notifications.all_types') }}</option>
+                                            <option value="info">{{ __('admin.notifications.info') }}</option>
+                                            <option value="success">{{ __('admin.notifications.success') }}</option>
+                                            <option value="warning">{{ __('admin.notifications.warning') }}</option>
+                                            <option value="danger">{{ __('admin.notifications.important') }}</option>
                                         </select>
                                         <select id="filter-status" class="block rounded-md border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
-                                            <option value="all">Tüm Durumlar</option>
-                                            <option value="read">Okunmuş</option>
-                                            <option value="unread">Okunmamış</option>
+                                            <option value="all">{{ __('admin.notifications.all_statuses') }}</option>
+                                            <option value="read">{{ __('admin.notifications.read') }}</option>
+                                            <option value="unread">{{ __('admin.notifications.unread') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -292,7 +292,7 @@
                                                                 @endphp
                                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $config[0] }} {{ $config[1] }}">
                                                                     <i class="{{ $config[2] }} mr-1"></i>
-                                                                    {{ ucfirst($notification->type === 'danger' ? 'Önemli' : ($notification->type === 'warning' ? 'Uyarı' : ($notification->type === 'success' ? 'Başarılı' : 'Bilgi'))) }}
+                                                                    {{ ucfirst($notification->type === 'danger' ? __('admin.notifications.important') : ($notification->type === 'warning' ? __('admin.notifications.warning') : ($notification->type === 'success' ? __('admin.notifications.success') : __('admin.notifications.info')))) }}
                                                                 </span>
                                                                 <span class="text-xs text-gray-500">
                                                                     {{ $notification->created_at->diffForHumans() }}
@@ -304,12 +304,12 @@
                                                         @if(!$notification->is_read)
                                                             <button type="button" onclick="markAsRead({{ $notification->id }})" class="inline-flex items-center px-3 py-1 border border-transparent text-xs leading-4 font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200">
                                                                 <i class="fas fa-check mr-1"></i>
-                                                                Okundu
+                                                                {{ __('admin.notifications.mark_read') }}
                                                             </button>
                                                         @endif
                                                         <button type="button" onclick="deleteNotification({{ $notification->id }})" class="inline-flex items-center px-3 py-1 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-200">
                                                             <i class="fas fa-trash mr-1"></i>
-                                                            Sil
+                                                            {{ __('admin.notifications.delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -327,12 +327,12 @@
                                     <div class="mx-auto h-24 w-24 text-gray-400">
                                         <i class="fas fa-bell-slash text-6xl"></i>
                                     </div>
-                                    <h3 class="mt-4 text-lg font-medium text-gray-900">Bildirim bulunamadı</h3>
-                                    <p class="mt-2 text-sm text-gray-500">Henüz hiç bildirim almadınız.</p>
+                                    <h3 class="mt-4 text-lg font-medium text-gray-900">{{ __('admin.notifications.no_notifications_found') }}</h3>
+                                    <p class="mt-2 text-sm text-gray-500">{{ __('admin.notifications.no_notifications_received_yet') }}</p>
                                     <div class="mt-6">
                                         <button type="button" onclick="location.href='{{ route('admin.send.message') }}'" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                                             <i class="fas fa-plus mr-2"></i>
-                                            Yeni Mesaj Gönder
+                                            {{ __('admin.notifications.send_new_message') }}
                                         </button>
                                     </div>
                                 </div>
@@ -349,7 +349,7 @@
         <div class="bg-white rounded-lg p-6 shadow-xl">
             <div class="flex items-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mr-3"></div>
-                <span class="text-gray-700">İşleniyor...</span>
+                <span class="text-gray-700">{{ __('admin.notifications.processing') }}</span>
             </div>
         </div>
     </div>
@@ -361,16 +361,16 @@
                 <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
                     <i class="fas fa-exclamation-triangle text-red-600"></i>
                 </div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">Bildirimi Sil</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">{{ __('admin.notifications.delete_notification') }}</h3>
                 <div class="mt-2 px-7 py-3">
-                    <p class="text-sm text-gray-500">Bu bildirimi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</p>
+                    <p class="text-sm text-gray-500">{{ __('admin.notifications.delete_confirmation') }}</p>
                 </div>
                 <div class="items-center px-4 py-3">
                     <button id="confirm-delete" class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-24 mr-2 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
-                        Sil
+                        {{ __('admin.notifications.delete') }}
                     </button>
                     <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-24 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                        İptal
+                        {{ __('admin.notifications.cancel') }}
                     </button>
                 </div>
             </div>
@@ -438,14 +438,14 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showToast('error', 'Bildirim okundu olarak işaretlenirken hata oluştu');
+                showToast('error', '{{ __('admin.notifications.error_marking_as_read') }}');
             } finally {
                 hideLoading();
             }
         }
 
         async function markAllAsRead() {
-            if (!confirm('Tüm bildirimleri okundu olarak işaretlemek istediğinizden emin misiniz?')) {
+            if (!confirm('{{ __('admin.notifications.confirm_mark_all_as_read') }}')) {
                 return;
             }
 
@@ -466,7 +466,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                showToast('error', 'Bildirimler işaretlenirken hata oluştu');
+                showToast('error', '{{ __('admin.notifications.error_marking_notifications') }}');
             } finally {
                 hideLoading();
             }
@@ -493,7 +493,7 @@
                 window.location.href = `{{ url('admin/deletenotification') }}/${currentDeleteId}`;
             } catch (error) {
                 console.error('Error:', error);
-                showToast('error', 'Bildirim silinirken hata oluştu');
+                showToast('error', '{{ __('admin.notifications.error_deleting_notification') }}');
                 hideLoading();
             }
         });

@@ -1,15 +1,15 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
 
-# {{ $demo->sender }}'a hoş geldiniz!
-Kayıt işleminiz başarılı ve sizi {{ $demo->sender }} topluluğuna katılmanızdan gerçekten heyecanlıyız! <br>
+# {{ __('mail.demo.welcome_title', ['siteName' => $demo->sender]) }}
+{{ __('mail.demo.registration_success', ['siteName' => $demo->sender]) }} <br>
 
-<p style="font-size:12px">Sistem tarafından oluşturulan şifreniz: <strong>{{ $demo->password }}</strong></p><br>
-<p style="font-size:12px">Lütfen bu şifreyi tercih ettiğiniz bir şifreye değiştirin.</p><br>
+<p style="font-size:12px">{{ __('mail.demo.generated_password_label') }} <strong>{{ $demo->password }}</strong></p><br>
+<p style="font-size:12px">{{ __('mail.demo.change_password_instruction') }}</p><br>
 
-Herhangi bir yardıma ihtiyacınız olursa, bizimle iletişime geçmekten çekinmeyin <br> {{ $demo->contact_email }} <br><br>
+{{ __('mail.demo.help_contact_message') }} <br> {{ $demo->contact_email }} <br><br>
 
-Saygılarımla,<br>
+{{ __('mail.footer.regards') }},<br>
 {{ $demo->sender }}.
 @endcomponent
 {{-- blade-formatter-disable --}}

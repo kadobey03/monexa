@@ -7,13 +7,13 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Profil Ayarları</h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-2">Hesap bilgilerinizi ve güvenlik tercihlerinizi yönetin</p>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('user.profile.settings_title') }}</h1>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('user.profile.settings_description') }}</p>
             </div>
             <a href="{{ route('dashboard') }}"
                class="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
                 <x-heroicon name="arrow-left" class="w-5 h-5" />
-                Back to Dashboard
+                {{ __('user.profile.back_to_dashboard') }}
             </a>
         </div>
 
@@ -28,13 +28,13 @@
                 <li class="inline-flex items-center">
                     <a href="{{ route('dashboard') }}" class="inline-flex items-center text-sm text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">
                         <x-heroicon name="home" class="w-4 h-4 mr-2" />
-                        Ana Sayfa
+                        {{ __('user.profile.breadcrumb_home') }}
                     </a>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
                         <x-heroicon name="chevron-right" class="w-4 h-4 text-gray-400 mx-1" />
-                        <span class="text-sm text-gray-500 dark:text-gray-400">Profil</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ __('user.profile.breadcrumb_profile') }}</span>
                     </div>
                 </li>
             </ol>
@@ -64,11 +64,11 @@
                 <div class="flex px-6">
                     <button onclick="setActiveTab('per')" id="perTab" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors border-b-2 border-blue-500 text-blue-600 dark:text-blue-400">
                         <x-heroicon name="user" class="w-5 h-5" />
-                        <span>Kişisel Bilgiler</span>
+                        <span>{{ __('user.profile.tab_personal_info') }}</span>
                     </button>
                     <button onclick="setActiveTab('pas')" id="pasTab" class="py-4 px-4 font-medium text-sm focus:outline-none flex items-center gap-2 transition-colors text-gray-300 dark:text-gray-400">
                         <x-heroicon name="lock-closed" class="w-5 h-5" />
-                        <span>Güvenlik</span>
+                        <span>{{ __('user.profile.tab_security') }}</span>
                     </button>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                             </div>
                             <div class="ml-3">
                                 <p class="text-sm text-blue-700 dark:text-blue-400">
-                                    Kişisel bilgileriniz deneyiminizi kişiselleştirmemize yardımcı olur. Lütfen tüm ayrıntıların doğru ve güncel olduğundan emin olun.
+                                    {{ __('user.profile.personal_info_help') }}
                                 </p>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="ml-3">
                                 <p class="text-sm text-indigo-700 dark:text-indigo-400">
-                                    Strong passwords help protect your account. Use a unique password that includes numbers, letters, and special characters.
+                                    {{ __('user.profile.security_help') }}
                                 </p>
                             </div>
                         </div>
@@ -116,8 +116,8 @@
                     <x-heroicon name="activity" class="w-6 h-6 text-green-600 dark:text-green-400" />
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold text-white dark:text-white">Son Aktiviteler</h2>
-                    <p class="text-sm text-gray-300 dark:text-gray-400">Hesabınızdaki son işlemler</p>
+                    <h2 class="text-xl font-bold text-white dark:text-white">{{ __('user.profile.recent_activities') }}</h2>
+                    <p class="text-sm text-gray-300 dark:text-gray-400">{{ __('user.profile.recent_activities_desc') }}</p>
                 </div>
             </div>
 
@@ -127,8 +127,8 @@
                         <x-heroicon name="arrow-right-on-rectangle" class="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-white dark:text-white">Hesap Girişi</p>
-                        <p class="text-xs text-gray-300 dark:text-gray-400">Son giriş {{ request()->ip() }}</p>
+                        <p class="text-sm font-medium text-white dark:text-white">{{ __('user.profile.activity_login') }}</p>
+                        <p class="text-xs text-gray-300 dark:text-gray-400">{{ __('user.profile.activity_last_login') }} {{ request()->ip() }}</p>
                     </div>
                     <div class="text-right">
                         <p class="text-xs font-medium text-gray-300 dark:text-gray-400">{{ \Carbon\Carbon::now()->subMinutes(rand(5, 120))->diffForHumans() }}</p>
@@ -140,8 +140,8 @@
                         <x-heroicon name="cog-6-tooth" class="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm font-medium text-white dark:text-white">Profil Güncellendi</p>
-                        <p class="text-xs text-gray-300 dark:text-gray-400">Profil bilgilerinizi güncellediniz</p>
+                        <p class="text-sm font-medium text-white dark:text-white">{{ __('user.profile.activity_profile_updated') }}</p>
+                        <p class="text-xs text-gray-300 dark:text-gray-400">{{ __('user.profile.activity_profile_updated_desc') }}</p>
                     </div>
                     <div class="text-right">
                         <p class="text-xs font-medium text-gray-300 dark:text-gray-400">
@@ -232,7 +232,6 @@
                 }
             },
 
-            ,
 
             addBackgroundPattern() {
                 const style = document.createElement('style');

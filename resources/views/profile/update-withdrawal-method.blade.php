@@ -10,59 +10,59 @@
                     <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mr-3">
                         🏦
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Banka Transfer Bilgileri</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('user.profile.withdrawal.bank_transfer_info') }}</h3>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            🏛️ Banka Adı
+                            {{ __('user.profile.withdrawal.bank_name') }}
                         </label>
                         <input
                             type="text"
                             name="bank_name"
                             value="{{ Auth::user()->bank_name }}"
                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors"
-                            placeholder="Banka adını girin"
+                            placeholder="{{ __('user.profile.withdrawal.bank_name_placeholder') }}"
                         >
                     </div>
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            👤 Hesap Sahibi
+                            {{ __('user.profile.withdrawal.account_holder') }}
                         </label>
                         <input
                             type="text"
                             name="account_name"
                             value="{{ Auth::user()->account_name }}"
                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors"
-                            placeholder="Hesap sahibinin adı"
+                            placeholder="{{ __('user.profile.withdrawal.account_holder_placeholder') }}"
                         >
                     </div>
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            🔢 Hesap Numarası
+                            {{ __('user.profile.withdrawal.account_number') }}
                         </label>
                         <input
                             type="text"
                             name="account_no"
                             value="{{ Auth::user()->account_number }}"
                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors"
-                            placeholder="Hesap numarası"
+                            placeholder="{{ __('user.profile.withdrawal.account_number_placeholder') }}"
                         >
                     </div>
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            🔗 Swift Kodu
+                            {{ __('user.profile.withdrawal.swift_code') }}
                         </label>
                         <input
                             type="text"
                             name="swiftcode"
                             value="{{ Auth::user()->swift_code }}"
                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors"
-                            placeholder="SWIFT kodu"
+                            placeholder="{{ __('user.profile.withdrawal.swift_code_placeholder') }}"
                         >
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                 <div class="w-8 h-8 bg-orange-100 dark:bg-orange-900/20 rounded-lg flex items-center justify-center mr-3">
                     ₿
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Kripto Para Cüzdan Adresleri</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('user.profile.withdrawal.crypto_wallets') }}</h3>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -89,10 +89,10 @@
                             name="btc_address"
                             value="{{ Auth::user()->btc_address }}"
                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors font-mono text-sm"
-                            placeholder="Bitcoin cüzdan adresi"
+                            placeholder="{{ __('user.profile.withdrawal.btc_placeholder') }}"
                         >
                         <p class="mt-2 text-xs text-gray-600 dark:text-gray-400">
-                            💡 Bitcoin adresinizi girin, bu adres para çekme işlemlerinde kullanılacak
+                            {{ __('user.profile.withdrawal.btc_hint') }}
                         </p>
                     </div>
                 @endif
@@ -107,10 +107,10 @@
                             name="eth_address"
                             value="{{ Auth::user()->eth_address }}"
                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors font-mono text-sm"
-                            placeholder="Ethereum cüzdan adresi"
+                            placeholder="{{ __('user.profile.withdrawal.eth_placeholder') }}"
                         >
                         <p class="mt-2 text-xs text-gray-600 dark:text-gray-400">
-                            💡 Ethereum adresinizi girin, bu adres para çekme işlemlerinde kullanılacak
+                            {{ __('user.profile.withdrawal.eth_hint') }}
                         </p>
                     </div>
                 @endif
@@ -125,10 +125,10 @@
                             name="ltc_address"
                             value="{{ Auth::user()->ltc_address }}"
                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors font-mono text-sm"
-                            placeholder="Litecoin cüzdan adresi"
+                            placeholder="{{ __('user.profile.withdrawal.ltc_placeholder') }}"
                         >
                         <p class="mt-2 text-xs text-gray-600 dark:text-gray-400">
-                            💡 Litecoin adresinizi girin, bu adres para çekme işlemlerinde kullanılacak
+                            {{ __('user.profile.withdrawal.ltc_hint') }}
                         </p>
                     </div>
                 @endif
@@ -143,10 +143,10 @@
                             name="usdt_address"
                             value="{{ Auth::user()->usdt_address }}"
                             class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-colors font-mono text-sm"
-                            placeholder="USDT.TRC20 cüzdan adresi"
+                            placeholder="{{ __('user.profile.withdrawal.usdt_placeholder') }}"
                         >
                         <p class="mt-2 text-xs text-gray-600 dark:text-gray-400">
-                            💡 USDT.TRC20 cüzdan adresinizi girin, bu adres para çekme işlemlerinde kullanılacak
+                            {{ __('user.profile.withdrawal.usdt_hint') }}
                         </p>
                     </div>
                 @endif
@@ -162,9 +162,9 @@
                     </svg>
                 </div>
                 <div>
-                    <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200">🔒 Güvenlik Bildirimi</h4>
+                    <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200">{{ __('common.security.notice_title') }}</h4>
                     <p class="text-sm text-blue-700 dark:text-blue-300 mt-1">
-                        Cüzdan adreslerinizi doğru girdiğinizden emin olun. Yanlış adreslere gönderilen fonlar geri alınamaz.
+                        {{ __('user.profile.withdrawal.security_warning') }}
                     </p>
                 </div>
             </div>
@@ -185,7 +185,7 @@
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span x-text="loading ? 'Kaydediliyor...' : 'Kaydet'"></span>
+                <span x-text="loading ? '{{ __('common.buttons.saving') }}' : '{{ __('common.buttons.save') }}'"></span>
             </button>
         </div>
     </form>
@@ -221,11 +221,11 @@ function withdrawalForm() {
                 if (data.status === 200) {
                     this.showNotification('success', data.success);
                 } else {
-                    this.showNotification('error', data.message || 'Bir hata oluştu');
+                    this.showNotification('error', data.message || '{{ __('common.messages.error_occurred') }}');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                this.showNotification('error', 'Sunucuya bağlanırken bir hata oluştu');
+                this.showNotification('error', '{{ __('common.messages.connection_error') }}');
             } finally {
                 this.loading = false;
             }

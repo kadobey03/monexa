@@ -23,12 +23,12 @@
                     <!-- Welcome Badge -->
                     <div class="mb-6 inline-flex items-center rounded-full bg-white/20 px-4 py-2 text-sm font-medium backdrop-blur-sm">
                         <x-heroicon name="shield-check" class="mr-2 h-4 w-4" />
-                        Yönetim Paneli
+                        {{ __('admin.common.admin_panel') }}
                     </div>
                     
                     <!-- Title -->
                     <h1 class="mb-4 text-4xl font-bold lg:text-5xl">
-                        Hoş Geldiniz!
+                        {{ __('admin.dashboard.welcome_message') }}
                     </h1>
                     
                     <!-- Greeting -->
@@ -58,7 +58,7 @@
                             <div class="rounded-xl bg-emerald-500 p-2">
                                 <x-heroicon name="arrow-trending-up" class="h-5 w-5 text-white" />
                             </div>
-                            <span class="font-semibold">Yatırımlar</span>
+                            <span class="font-semibold">{{ __('admin.navigation.deposits') }}</span>
                         </div>
                         <x-heroicon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>
@@ -69,7 +69,7 @@
                             <div class="rounded-xl bg-rose-500 p-2">
                                 <x-heroicon name="arrow-trending-down" class="h-5 w-5 text-white" />
                             </div>
-                            <span class="font-semibold">Çekimler</span>
+                            <span class="font-semibold">{{ __('admin.navigation.withdrawals') }}</span>
                         </div>
                         <x-heroicon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>
@@ -80,7 +80,7 @@
                             <div class="rounded-xl bg-blue-500 p-2">
                                 <x-heroicon name="users" class="h-5 w-5 text-white" />
                             </div>
-                            <span class="font-semibold">Kullanıcılar</span>
+                            <span class="font-semibold">{{ __('admin.navigation.users') }}</span>
                         </div>
                         <x-heroicon name="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </a>
@@ -102,11 +102,11 @@
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 animate-pulse rounded-full bg-emerald-500"></div>
-                        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400">Aktif</span>
+                        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400">{{ __('admin.dashboard.active') }}</span>
                     </div>
                 </div>
                 
-                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">Toplam Yatırımlar</h3>
+                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">{{ __('admin.dashboard.total_deposits') }}</h3>
                 <p class="mb-3 text-3xl font-bold text-admin-900 dark:text-admin-100">
                     @foreach ($total_deposited as $deposited)
                         @if (!empty($deposited->count))
@@ -119,7 +119,7 @@
                 
                 <div class="flex items-center text-xs text-admin-500 dark:text-admin-400">
                     <x-heroicon name="calendar-days" class="mr-1 h-3 w-3" />
-                    Tüm zamanlar toplamı
+                    {{ __('admin.dashboard.all_time_total') }}
                 </div>
             </div>
         </div>
@@ -134,11 +134,11 @@
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 animate-bounce rounded-full bg-amber-500"></div>
-                        <span class="text-xs font-medium text-amber-600 dark:text-amber-400">Bekliyor</span>
+                        <span class="text-xs font-medium text-amber-600 dark:text-amber-400">{{ __('admin.dashboard.pending') }}</span>
                     </div>
                 </div>
                 
-                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">Bekleyen Yatırımlar</h3>
+                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">{{ __('admin.dashboard.pending_deposits') }}</h3>
                 <p class="mb-3 text-3xl font-bold text-admin-900 dark:text-admin-100">
                     @foreach ($pending_deposited as $deposited)
                         @if (!empty($deposited->count))
@@ -151,7 +151,7 @@
                 
                 <div class="flex items-center text-xs text-admin-500 dark:text-admin-400">
                     <x-heroicon name="exclamation-triangle" class="mr-1 h-3 w-3" />
-                    Onay bekliyor
+                    {{ __('admin.dashboard.awaiting_approval') }}
                 </div>
             </div>
         </div>
@@ -166,11 +166,11 @@
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 rounded-full bg-rose-500"></div>
-                        <span class="text-xs font-medium text-rose-600 dark:text-rose-400">Tamamlandı</span>
+                        <span class="text-xs font-medium text-rose-600 dark:text-rose-400">{{ __('admin.dashboard.completed') }}</span>
                     </div>
                 </div>
                 
-                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">Toplam Çekimler</h3>
+                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">{{ __('admin.dashboard.total_withdrawals') }}</h3>
                 <p class="mb-3 text-3xl font-bold text-admin-900 dark:text-admin-100">
                     @foreach ($total_withdrawn as $deposited)
                         @if (!empty($deposited->count))
@@ -183,7 +183,7 @@
                 
                 <div class="flex items-center text-xs text-admin-500 dark:text-admin-400">
                     <x-heroicon name="check-circle" class="mr-1 h-3 w-3" />
-                    Tamamlanan işlemler
+                    {{ __('admin.dashboard.completed_transactions') }}
                 </div>
             </div>
         </div>
@@ -198,11 +198,11 @@
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 animate-pulse rounded-full bg-blue-500"></div>
-                        <span class="text-xs font-medium text-blue-600 dark:text-blue-400">İşleniyor</span>
+                        <span class="text-xs font-medium text-blue-600 dark:text-blue-400">{{ __('admin.dashboard.processing') }}</span>
                     </div>
                 </div>
                 
-                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">Bekleyen Çekimler</h3>
+                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">{{ __('admin.dashboard.pending_withdrawals') }}</h3>
                 <p class="mb-3 text-3xl font-bold text-admin-900 dark:text-admin-100">
                     @foreach ($pending_withdrawn as $deposited)
                         @if (!empty($deposited->count))
@@ -215,7 +215,7 @@
                 
                 <div class="flex items-center text-xs text-admin-500 dark:text-admin-400">
                     <x-heroicon name="clock" class="mr-1 h-3 w-3" />
-                    İnceleniyor
+                    {{ __('admin.dashboard.under_review') }}
                 </div>
             </div>
         </div>
@@ -232,12 +232,12 @@
                         <x-heroicon name="users" class="h-6 w-6 text-purple-600 dark:text-purple-400" />
                     </div>
                     <span class="rounded-full bg-purple-100 dark:bg-purple-900/20 px-3 py-1 text-xs font-semibold text-purple-700 dark:text-purple-300">
-                        Toplam
+                        {{ __('admin.dashboard.total') }}
                     </span>
                 </div>
-                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">Toplam Kullanıcılar</h3>
+                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">{{ __('admin.dashboard.total_users') }}</h3>
                 <p class="mb-3 text-2xl font-bold text-admin-900 dark:text-admin-100">{{ number_format($user_count) }}</p>
-                <p class="text-xs text-admin-500 dark:text-admin-400">Kayıtlı tüm kullanıcılar</p>
+                <p class="text-xs text-admin-500 dark:text-admin-400">{{ __('admin.dashboard.all_registered_users') }}</p>
             </div>
         </div>
 
@@ -251,12 +251,12 @@
                     </div>
                     <div class="flex items-center space-x-1">
                         <div class="h-2 w-2 animate-pulse rounded-full bg-emerald-500"></div>
-                        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400">Çevrimiçi</span>
+                        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400">{{ __('admin.dashboard.online') }}</span>
                     </div>
                 </div>
-                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">Aktif Kullanıcılar</h3>
+                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">{{ __('admin.dashboard.active_users') }}</h3>
                 <p class="mb-3 text-2xl font-bold text-admin-900 dark:text-admin-100">{{ $activeusers }}</p>
-                <p class="text-xs text-admin-500 dark:text-admin-400">Şu anda aktif</p>
+                <p class="text-xs text-admin-500 dark:text-admin-400">{{ __('admin.dashboard.currently_active') }}</p>
             </div>
         </div>
 
@@ -269,12 +269,12 @@
                         <x-heroicon name="user-minus" class="h-6 w-6 text-rose-600 dark:text-rose-400" />
                     </div>
                     <span class="rounded-full bg-rose-100 dark:bg-rose-900/20 px-3 py-1 text-xs font-semibold text-rose-700 dark:text-rose-300">
-                        Engelli
+                        {{ __('admin.dashboard.blocked') }}
                     </span>
                 </div>
-                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">Engellenen Kullanıcılar</h3>
+                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">{{ __('admin.dashboard.blocked_users') }}</h3>
                 <p class="mb-3 text-2xl font-bold text-admin-900 dark:text-admin-100">{{ $blockeusers }}</p>
-                <p class="text-xs text-admin-500 dark:text-admin-400">Askıya alınmış hesaplar</p>
+                <p class="text-xs text-admin-500 dark:text-admin-400">{{ __('admin.dashboard.suspended') }}</p>
             </div>
         </div>
 
@@ -287,12 +287,12 @@
                         <x-heroicon name="briefcase" class="h-6 w-6 text-amber-600 dark:text-amber-400" />
                     </div>
                     <span class="rounded-full bg-amber-100 dark:bg-amber-900/20 px-3 py-1 text-xs font-semibold text-amber-700 dark:text-amber-300">
-                        Planlar
+                        {{ __('admin.dashboard.plans') }}
                     </span>
                 </div>
-                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">Yatırım Planları</h3>
+                <h3 class="mb-2 text-sm font-semibold text-admin-600 dark:text-admin-400">{{ __('admin.dashboard.investment_plans') }}</h3>
                 <p class="mb-3 text-2xl font-bold text-admin-900 dark:text-admin-100">{{ $plans }}</p>
-                <p class="text-xs text-admin-500 dark:text-admin-400">Mevcut planlar</p>
+                <p class="text-xs text-admin-500 dark:text-admin-400">{{ __('admin.dashboard.active_plan') }}</p>
             </div>
         </div>
     </div>
@@ -307,21 +307,21 @@
                         <div class="mr-4 flex h-8 w-8 items-center justify-center rounded-xl bg-primary-600">
                             <x-heroicon name="bar-chart-3" class="h-5 w-5 text-white" />
                         </div>
-                        Gelişmiş Sistem Analitiği
+                        {{ __('admin.dashboard.advanced_system_analytics') }}
                     </h2>
-                    <p class="mt-2 text-admin-600 dark:text-admin-400">Kapsamlı finansal performans analizi ve trend görünümü</p>
+                    <p class="mt-2 text-admin-600 dark:text-admin-400">{{ __('admin.dashboard.comprehensive_financial_analysis') }}</p>
                 </div>
                 
                 <!-- Period Selector -->
                 <div class="inline-flex rounded-2xl bg-white dark:bg-admin-800 p-1 shadow-sm border border-admin-200 dark:border-admin-700" role="group">
                     <button type="button" class="rounded-xl bg-primary-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all duration-200">
-                        Bu Ay
+                        {{ __('admin.dashboard.this_month') }}
                     </button>
                     <button type="button" class="px-4 py-2 text-sm font-medium text-admin-500 hover:bg-admin-100 dark:hover:bg-admin-700 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200">
-                        Bu Hafta
+                        {{ __('admin.dashboard.this_week') }}
                     </button>
                     <button type="button" class="px-4 py-2 text-sm font-medium text-admin-500 hover:bg-admin-100 dark:hover:bg-admin-700 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200">
-                        Bu Yıl
+                        {{ __('admin.dashboard.this_year') }}
                     </button>
                 </div>
             </div>
@@ -337,19 +337,19 @@
             <div class="grid grid-cols-2 gap-6 lg:grid-cols-4">
                 <div class="rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20 p-6 text-center">
                     <div class="text-2xl font-bold text-emerald-800 dark:text-emerald-200">{{ $settings->currency }}{{ number_format($chart_pdepsoit, 2) }}</div>
-                    <div class="mt-1 text-sm font-medium text-emerald-600 dark:text-emerald-300">Toplam Yatırımlar</div>
+                    <div class="mt-1 text-sm font-medium text-emerald-600 dark:text-emerald-300">{{ __('admin.dashboard.total_deposits') }}</div>
                 </div>
                 <div class="rounded-2xl bg-gradient-to-br from-rose-50 to-rose-100 dark:from-rose-900/20 dark:to-rose-800/20 p-6 text-center">
                     <div class="text-2xl font-bold text-rose-800 dark:text-rose-200">{{ $settings->currency }}{{ number_format($chart_pwithdraw, 2) }}</div>
-                    <div class="mt-1 text-sm font-medium text-rose-600 dark:text-rose-300">Toplam Çekimler</div>
+                    <div class="mt-1 text-sm font-medium text-rose-600 dark:text-rose-300">{{ __('admin.dashboard.total_withdrawals') }}</div>
                 </div>
                 <div class="rounded-2xl bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 p-6 text-center">
                     <div class="text-2xl font-bold text-amber-800 dark:text-amber-200">{{ $settings->currency }}{{ number_format($chart_pendepsoit, 2) }}</div>
-                    <div class="mt-1 text-sm font-medium text-amber-600 dark:text-amber-300">Bekleyen Yatırımlar</div>
+                    <div class="mt-1 text-sm font-medium text-amber-600 dark:text-amber-300">{{ __('admin.dashboard.pending_deposits') }}</div>
                 </div>
                 <div class="rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 text-center">
                     <div class="text-2xl font-bold text-blue-800 dark:text-blue-200">{{ $settings->currency }}{{ number_format($chart_trans, 2) }}</div>
-                    <div class="mt-1 text-sm font-medium text-blue-600 dark:text-blue-300">Toplam İşlemler</div>
+                    <div class="mt-1 text-sm font-medium text-blue-600 dark:text-blue-300">{{ __('admin.dashboard.total_transactions') }}</div>
                 </div>
             </div>
         </div>
@@ -420,7 +420,7 @@ async function initializeChart() {
         new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Toplam Yatırımlar', 'Bekleyen Yatırımlar', 'Toplam Çekimler', 'Bekleyen Çekimler', 'Toplam İşlemler'],
+                labels: ['{{ __('admin.dashboard.total_deposits') }}', '{{ __('admin.dashboard.pending_deposits') }}', '{{ __('admin.dashboard.total_withdrawals') }}', '{{ __('admin.dashboard.pending_withdrawals') }}', '{{ __('admin.dashboard.total_transactions') }}'],
                 datasets: [{
                     data: chartData,
                     backgroundColor: [

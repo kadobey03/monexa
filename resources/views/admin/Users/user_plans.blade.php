@@ -13,11 +13,11 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
         <div class="content ">
             <div class="page-inner">
                 <div class="mt-2 mb-4">
-                    <h1 class="title1  d-inline"> {{ $user->name }} Clients Trades</h1>
+                    <h1 class="title1  d-inline">{{ __('admin.investments.client_trades_for', ['name' => $user->name]) }}</h1>
                     <div class="d-inline">
                         <div class="float-right btn-group">
                             <a class="btn btn-primary btn-sm" href="{{ route('viewuser', $user->id) }}"> <i
-                                    class="fa fa-arrow-left"></i> back</a>
+                                    class="fa fa-arrow-left"></i> {{ __('admin.actions.back') }}</a>
                         </div>
                     </div>
                 </div>
@@ -31,16 +31,16 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                     <thead>
                                         <tr>
                                             {{-- <th>Client name</th> --}}
-                                            <th>Assets</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th>Leverage</th>
-                                            <th>Trade Type</th>
-                                            <th>Duration</th>
-                                            <th>Created on</th>
-                                            <th>Expire At</th>
-                                            <th>Profit/Loss</th>
-                                            <th>Option</th>
+                                            <th>{{ __('admin.investments.assets') }}</th>
+                                            <th>{{ __('admin.investments.amount') }}</th>
+                                            <th>{{ __('admin.investments.status') }}</th>
+                                            <th>{{ __('admin.investments.leverage') }}</th>
+                                            <th>{{ __('admin.investments.trade_type') }}</th>
+                                            <th>{{ __('admin.investments.duration') }}</th>
+                                            <th>{{ __('admin.investments.created_on') }}</th>
+                                            <th>{{ __('admin.investments.expire_at') }}</th>
+                                            <th>{{ __('admin.investments.profit_loss') }}</th>
+                                            <th>{{ __('admin.actions.option') }}</th>
                                             
                                         </tr>
                                     </thead>
@@ -52,19 +52,19 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 <td>{{ $user->currency }}{{ number_format($plan->amount) }}</td>
                                                 <td>
                                                     @if ($plan->active == 'yes')
-                                                        <span class="badge badge-success">{{ $plan->active }}</span>
+                                                        <span class="badge badge-success">{{ __('admin.status.active') }}</span>
                                                     @else
-                                                        <span class="badge badge-danger">{{ $plan->active }}</span>
+                                                        <span class="badge badge-danger">{{ __('admin.status.inactive') }}</span>
                                                     @endif
                                                 </td>
                                                 <td>1:{{ $plan->leverage }}</td>
                                                 @if($plan->type=='Buy')
                                                 <td >
-                                                    <span class='badge badge-success'>{{ $plan->type }}</span>
+                                                    <span class='badge badge-success'>{{ __('admin.investments.buy') }}</span>
                                                 </td>
                                                 @else
                                                 <td>
-                                                    <span class="badge badge-danger">{{ $plan->type }}</span>
+                                                    <span class="badge badge-danger">{{ __('admin.investments.sell') }}</span>
                                                 </td>
                                                    
                                                 @endif
@@ -79,23 +79,23 @@ if (Auth('admin')->User()->dashboard_style == 'light') {
                                                 
                                                     @if ($plan->active == 'yes')
                                                     <a href="{{ route('markprofit', $plan->id) }}"
-                                                        class="m-1 btn btn-success btn-sm"> Mark as Profit</a>
+                                                        class="m-1 btn btn-success btn-sm">{{ __('admin.actions.mark_as_profit') }}</a>
                                                         <a href="{{ route('markloss', $plan->id) }}"
-                                                            class="m-1 btn btn-danger btn-sm"> Mark as loss</a>
+                                                            class="m-1 btn btn-danger btn-sm">{{ __('admin.actions.mark_as_loss') }}</a>
                                                             @endif
                                             </td>
                                                 <td>
                                                     
                                                     @if ($plan->active == 'yes')
                                                         <a href="{{ route('markas', ['id' => $plan->id, 'status' => 'expired']) }}"
-                                                            class="m-1 btn btn-danger btn-sm">Mark as expired</a>
+                                                            class="m-1 btn btn-danger btn-sm">{{ __('admin.actions.mark_as_expired') }}</a>
                                                     @else
                                                         <a href="{{ route('markas', ['id' => $plan->id, 'status' => 'yes']) }}"
-                                                            class="m-1 btn btn-success btn-sm">Mark as active</a>
+                                                            class="m-1 btn btn-success btn-sm">{{ __('admin.actions.mark_as_active') }}</a>
                                                     @endif
 
                                                     <a href="{{ route('deleteplan', $plan->id) }}"
-                                                        class="m-1 btn btn-info btn-sm"> Delete Trade</a>  
+                                                        class="m-1 btn btn-info btn-sm">{{ __('admin.actions.delete_trade') }}</a>
                                                 </td>
 
                                             

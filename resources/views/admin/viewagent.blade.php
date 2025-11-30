@@ -1,24 +1,24 @@
-@extends('layouts.admin', ['title' => 'Agent Müşterileri - ' . $agent->name])
+@extends('layouts.admin', ['title' => __('admin.agents.agent_customers') . ' - ' . $agent->name])
 
 @section('content')
 <div class="space-y-6">
     <!-- Page Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Agent Müşterileri</h1>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('admin.agents.agent_customers') }}</h1>
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                <span class="font-medium text-blue-600 dark:text-blue-400">{{ $agent->name }}</span> agent'inin müşteri listesi
+                <span class="font-medium text-blue-600 dark:text-blue-400">{{ $agent->name }}</span> {{ __('admin.agents.agent_customer_list') }}
             </p>
         </div>
         <div class="flex items-center space-x-4">
             <div class="flex items-center space-x-2">
                 <x-heroicon name="users" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                <span class="text-sm text-gray-500 dark:text-gray-400">{{ count($ag_r) }} Müşteri</span>
+                <span class="text-sm text-gray-500 dark:text-gray-400">{{ count($ag_r) }} {{ count($ag_r) == 1 ? __('admin.customers.customer') : __('admin.customers.customers') }}</span>
             </div>
             <a href="{{ url()->previous() }}"
                class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 dark:bg-admin-700 dark:border-admin-600 dark:text-gray-300 dark:hover:bg-admin-600">
                 <x-heroicon name="arrow-left" class="h-4 w-4 mr-2" />
-                Geri
+                {{ __('admin.actions.back') }}
             </a>
         </div>
     </div>
@@ -56,14 +56,14 @@
             </div>
             <div class="ml-4">
                 <h3 class="text-lg font-semibold text-blue-900 dark:text-blue-100">{{ $agent->name }}</h3>
-                <p class="text-blue-700 dark:text-blue-300">Agent • {{ count($ag_r) }} Aktif Müşteri</p>
+                <p class="text-blue-700 dark:text-blue-300">{{ __('admin.agents.agent') }} • {{ count($ag_r) }} {{ __('admin.customers.active_customers') }}</p>
             </div>
             <div class="ml-auto">
                 <div class="text-right">
                     <div class="text-2xl font-bold text-blue-900 dark:text-blue-100">
                         ${{ number_format($ag_r->sum('account_bal'), 2) }}
                     </div>
-                    <div class="text-sm text-blue-600 dark:text-blue-400">Toplam Kazanç</div>
+                    <div class="text-sm text-blue-600 dark:text-blue-400">{{ __('admin.agents.total_earnings') }}</div>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
         <div class="px-6 py-4 border-b border-gray-200 dark:border-admin-700">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
                 <x-heroicon name="users" class="h-5 w-5 mr-2" />
-                Müşteri Listesi
+                {{ __('admin.customers.customer_list') }}
             </h2>
         </div>
 
@@ -84,16 +84,16 @@
                     <thead class="bg-gray-50 dark:bg-admin-900">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Müşteri Adı
+                                {{ __('admin.customers.customer_name') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Yatırım Planı
+                                {{ __('admin.investments.investment_plan') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Durum
+                                {{ __('admin.users.status') }}
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                                Kazançlar
+                                {{ __('admin.investments.earnings') }}
                             </th>
                         </tr>
                     </thead>
@@ -121,7 +121,7 @@
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300">
                                             <x-heroicon name="minus" class="w-3 h-3 mr-1" />
-                                            Plan Atanmamış
+                                            {{ __('admin.investments.no_plan_assigned') }}
                                         </span>
                                     @endif
                                 </td>
@@ -129,12 +129,12 @@
                                     @if($client->status == 'active')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
                                             <x-heroicon name="check-circle" class="w-3 h-3 mr-1" />
-                                            Aktif
+                                            {{ __('admin.status.active') }}
                                         </span>
                                     @elseif($client->status == 'pending')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
                                             <x-heroicon name="clock" class="w-3 h-3 mr-1" />
-                                            Beklemede
+                                            {{ __('admin.status.pending') }}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300">
@@ -156,8 +156,8 @@
                                 <td colspan="4" class="px-6 py-12 text-center">
                                     <div class="flex flex-col items-center">
                                         <x-heroicon name="users" class="h-12 w-12 text-gray-400 mb-4" />
-                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white">Henüz müşteri yok</h3>
-                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Bu agent'in henüz atanmış müşterisi bulunmamaktadır.</p>
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white">{{ __('admin.customers.no_customers_yet') }}</h3>
+                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('admin.agents.no_assigned_customers') }}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -172,14 +172,14 @@
             <div class="px-6 py-4 border-t border-gray-200 dark:border-admin-700">
                 <div class="flex items-center justify-between text-sm">
                     <div class="text-gray-500 dark:text-gray-400">
-                        Toplam {{ count($ag_r) }} müşteri gösteriliyor
+                        {{ __('admin.pagination.total') }} {{ count($ag_r) }} {{ count($ag_r) == 1 ? __('admin.customers.customer_showing') : __('admin.customers.customers_showing') }}
                     </div>
                     <div class="flex items-center space-x-4">
                         <div class="text-gray-500 dark:text-gray-400">
-                            Ortalama bakiye: <span class="font-semibold text-gray-900 dark:text-white">${{ number_format($ag_r->avg('account_bal'), 2) }}</span>
+                            {{ __('admin.users.average_balance') }}: <span class="font-semibold text-gray-900 dark:text-white">${{ number_format($ag_r->avg('account_bal'), 2) }}</span>
                         </div>
                         <div class="text-gray-500 dark:text-gray-400">
-                            Toplam: <span class="font-semibold text-green-600 dark:text-green-400">${{ number_format($ag_r->sum('account_bal'), 2) }}</span>
+                            {{ __('admin.users.total') }}: <span class="font-semibold text-green-600 dark:text-green-400">${{ number_format($ag_r->sum('account_bal'), 2) }}</span>
                         </div>
                     </div>
                 </div>

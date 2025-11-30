@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Yeni Görev Oluştur'])
+@extends('layouts.admin', ['title' => __('admin.tasks.create_new_title')])
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
@@ -10,8 +10,8 @@
                         <x-heroicon name="clipboard-list" class="w-8 h-8 text-white" />
                     </div>
                     <div>
-                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Yeni Görev Oluştur</h1>
-                        <p class="text-gray-600 dark:text-gray-400 mt-1">Sistemde yeni görev tanımlayın ve yöneticiye atayın</p>
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.tasks.create_new_title') }}</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.tasks.create_description') }}</p>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-6 text-white">
                         <div class="flex items-center">
                             <x-heroicon name="plus-circle" class="w-6 h-6 mr-3" />
-                            <h2 class="text-xl font-bold">Görev Bilgileri</h2>
+                            <h2 class="text-xl font-bold">{{ __('admin.tasks.modal.task_info') }}</h2>
                         </div>
                     </div>
                     
@@ -48,13 +48,13 @@
                                         <x-heroicon name="type" class="w-5 h-5 text-white" />
                                     </div>
                                     <div>
-                                        <h6 class="text-blue-700 dark:text-blue-300 font-semibold mb-1">Görev Başlığı</h6>
-                                        <p class="text-blue-600 dark:text-blue-400 text-sm">Görev için açıklayıcı başlık</p>
+                                        <h6 class="text-blue-700 dark:text-blue-300 font-semibold mb-1">{{ __('admin.tasks.form.task_title') }}</h6>
+                                        <p class="text-blue-600 dark:text-blue-400 text-sm">{{ __('admin.tasks.desc.task_title') }}</p>
                                     </div>
                                 </div>
                                 <input type="text" name="tasktitle"
                                        class="w-full px-4 py-3 border border-blue-200 dark:border-blue-700 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                       placeholder="Görev başlığını buraya yazın..." required>
+                                       placeholder="{{ __('admin.tasks.placeholder.task_title') }}" required>
                             </div>
                                         </div>
 
@@ -68,13 +68,13 @@
                                         <x-heroicon name="user-check" class="w-5 h-5 text-white" />
                                     </div>
                                     <div>
-                                        <h6 class="text-green-700 dark:text-green-300 font-semibold mb-1">Sorumlu Yönetici</h6>
-                                        <p class="text-green-600 dark:text-green-400 text-sm">Görev atanacak yönetici</p>
+                                        <h6 class="text-green-700 dark:text-green-300 font-semibold mb-1">{{ __('admin.tasks.form.responsible_manager') }}</h6>
+                                        <p class="text-green-600 dark:text-green-400 text-sm">{{ __('admin.tasks.desc.responsible_manager') }}</p>
                                     </div>
                                 </div>
                                 <select name="delegation"
                                         class="w-full px-4 py-3 border border-green-200 dark:border-green-700 bg-white dark:bg-admin-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200" required>
-                                    <option value="" disabled selected>Yönetici seçin...</option>
+                                    <option value="" disabled selected>{{ __('admin.tasks.placeholder.select_manager') }}</option>
                                     @foreach ($admin as $user)
                                         <option value="{{ $user->id }}">{{ $user->firstName }} {{ $user->lastName }}</option>
                                     @endforeach
@@ -90,11 +90,11 @@
                                                 <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mr-3">
                                                     <i class="fas fa-align-left text-white text-sm"></i>
                                                 </div>
-                                                Görev Açıklaması
+                                                {{ __('admin.tasks.form.task_description') }}
                                             </label>
                                             <textarea name="note" rows="5"
                                                       class="w-full px-4 py-3 border border-purple-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm resize-none"
-                                                      placeholder="Görev ile ilgili detaylı açıklamayı buraya yazın..." required></textarea>
+                                                      placeholder="{{ __('admin.tasks.placeholder.task_description') }}" required></textarea>
                                         </div>
                                     </div>
 
@@ -105,8 +105,8 @@
                                                     <i class="fas fa-play text-white"></i>
                                                 </div>
                                                 <div>
-                                                    <h6 class="text-green-700 font-semibold">Başlangıç Tarihi</h6>
-                                                    <small class="text-green-600">Görev başlangıç zamanı</small>
+                                                    <h6 class="text-green-700 font-semibold">{{ __('admin.tasks.form.start_date') }}</h6>
+                                                    <small class="text-green-600">{{ __('admin.tasks.desc.start_date') }}</small>
                                                 </div>
                                             </div>
                                             <input type="date" name="start_date"
@@ -119,8 +119,8 @@
                                                     <i class="fas fa-stop text-white"></i>
                                                 </div>
                                                 <div>
-                                                    <h6 class="text-red-700 font-semibold">Bitiş Tarihi</h6>
-                                                    <small class="text-red-600">Görev bitiş zamanı</small>
+                                                    <h6 class="text-red-700 font-semibold">{{ __('admin.tasks.form.end_date') }}</h6>
+                                                    <small class="text-red-600">{{ __('admin.tasks.desc.end_date') }}</small>
                                                 </div>
                                             </div>
                                             <input type="date" name="end_date"
@@ -135,17 +135,17 @@
                                                     <i class="fas fa-exclamation-triangle text-white"></i>
                                                 </div>
                                                 <div>
-                                                    <h6 class="text-amber-700 font-semibold">Öncelik Seviyesi</h6>
-                                                    <small class="text-amber-600">Görevin aciliyet derecesi</small>
+                                                    <h6 class="text-amber-700 font-semibold">{{ __('admin.tasks.form.priority_level') }}</h6>
+                                                    <small class="text-amber-600">{{ __('admin.tasks.desc.priority') }}</small>
                                                 </div>
                                             </div>
                                             <select name="priority"
                                                     class="w-full px-4 py-3 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200 bg-white/70 backdrop-blur-sm" required>
-                                                <option value="" disabled selected>Öncelik seviyesi seçin...</option>
-                                                <option value="Hemen" class="bg-red-50 text-red-700">🚨 Hemen - Kritik</option>
-                                                <option value="Yüksek" class="bg-orange-50 text-orange-700">🔥 Yüksek - Acil</option>
-                                                <option value="Orta" class="bg-yellow-50 text-yellow-700">⚡ Orta - Normal</option>
-                                                <option value="Düşük" class="bg-green-50 text-green-700">⏰ Düşük - Ertelenebilir</option>
+                                                <option value="" disabled selected>{{ __('admin.tasks.placeholder.select_priority') }}</option>
+                                                <option value="Hemen" class="bg-red-50 text-red-700">{{ __('admin.tasks.priority.immediately') }}</option>
+                                                <option value="Yüksek" class="bg-orange-50 text-orange-700">{{ __('admin.tasks.priority.high') }}</option>
+                                                <option value="Orta" class="bg-yellow-50 text-yellow-700">{{ __('admin.tasks.priority.medium') }}</option>
+                                                <option value="Düşük" class="bg-green-50 text-green-700">{{ __('admin.tasks.priority.low') }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <button type="submit" class="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 inline-flex items-center">
                                             <i class="fas fa-paper-plane mr-2"></i>
-                                            Görev Oluştur
+                                            {{ __('admin.tasks.button.create_task') }}
                                         </button>
                                     </div>
 

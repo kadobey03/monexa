@@ -1,65 +1,65 @@
 {{-- blade-formatter-disable --}}
 @component('mail::message')
-# Para Yatırma Onayı - {{$foramin  ? 'Yönetici Bildirimi' : 'Ticaret Yolculuğunuza Hoş Geldiniz'}}
+# {{ __('mail.headers.deposit_success', ['type' => $foramin ? __('mail.admin.notification') : __('mail.headers.welcome_trading')]) }}
 
 @if ($foramin)
-## İdari Uyarı: Yeni Para Yatırma Alındı
+## {{ __('mail.admin.deposit_alert') }}
 
-Sayın Yönetici,
+{{ __('mail.admin.dear_admin') }},
 
-Yeni bir para yatırmanın başarıyla alındığını bildirmekten memnuniyet duyuyoruz:
+{{ __('mail.admin.deposit_received_notification') }}:
 
-**Para Yatırma Detayları:**
-- **Müşteri:** {{$user->name}}
-- **Miktar:** {{$user->currency}}{{number_format($deposit->amount, 2)}}
-- **Durum:** {{$deposit->status}}
-- **Tarih:** {{now()->format('F j, Y \a\t g:i A')}}
+**{{ __('mail.financial.deposit_details') }}:**
+- **{{ __('mail.admin.customer') }}:** {{$user->name}}
+- **{{ __('mail.financial.amount') }}:** {{$user->currency}}{{number_format($deposit->amount, 2)}}
+- **{{ __('mail.financial.status') }}:** {{$deposit->status}}
+- **{{ __('mail.admin.date') }}:** {{now()->format('F j, Y \a\t g:i A')}}
 
 @if($deposit->status != "Processed")
-**Eylem Gerekli:** Lütfen yönetici panosu aracılığıyla bu para yatırmayı inceleyin ve işleyin.
+**{{ __('mail.admin.action_required') }}:** {{ __('mail.admin.review_deposit') }}
 
 @component('mail::button', ['url' => config('app.url').'/admin/dashboard'])
-Para Yatırmayı İşle
+{{ __('mail.actions.process_deposit') }}
 @endcomponent
 @else
-Bu para yatırma otomatik olarak işlendi ve müşterinin hesabına yatırıldı.
+{{ __('mail.admin.deposit_auto_processed') }}
 @endif
 
 @else
-## Sayın {{$user->name}},
+## {{ __('mail.salutation.dear_user', ['name' => $user->name]) }},
 
 @if ($deposit->status == 'Processed')
-**Tebrikler! Para yatırmanız başarıyla işlendi.**
+**{{ __('mail.financial.deposit_processed') }}**
 
-**{{$user->currency}}{{number_format($deposit->amount, 2)}}** tutarındaki para yatırmanızın alındığını ve işlendiğini doğrulamaktan memnuniyet duyuyoruz. Ticaret hesabınıza tam tutar yatırıldı.
+{{ __('mail.financial.deposit_amount_received', ['currency' => $user->currency, 'amount' => number_format($deposit->amount, 2)]) }} {{ __('mail.financial.full_amount_credited') }}
 
-**Sonraki Ne?**
-- Fonlarınız artık ticaret için kullanılabilir
-- Gelişmiş ticaret araçlarımızı ve analizlerimizi keşfedin
-- Bugün yatırım portföyünüzü oluşturmaya başlayın
+**{{ __('mail.investment.next_steps') }}**
+- {{ __('mail.financial.funds_available_trading') }}
+- {{ __('mail.investment.explore_trading_tools') }}
+- {{ __('mail.investment.start_portfolio_today') }}
 
 @component('mail::button', ['url' => config('app.url').'/dashboard'])
-Şimdi Ticaret Başlat
+{{ __('mail.actions.start_trading') }}
 @endcomponent
 
-**Yatırım Fırsatları Bekliyor:**
-- Kopya Ticaret özelliğimizle başarılı tüccarları kopyalayın
-- Gerçek zamanlı piyasa verilerine ve gelişmiş grafiklere erişin
-- Algoritmik ticaret araçlarımızdan yararlanın
+**{{ __('mail.investment.opportunities_awaiting') }}:**
+- {{ __('mail.investment.copy_successful_traders') }}
+- {{ __('mail.investment.realtime_market_data') }}
+- {{ __('mail.investment.algorithmic_trading_tools') }}
 
 @else
-**Para yatırmanız işleniyor - Bizi seçtiğiniz için teşekkür ederiz!**
+**{{ __('mail.financial.deposit_processing') }}**
 
-**{{$user->currency}}{{number_format($deposit->amount, 2)}}** tutarındaki para yatırmanızı başarıyla aldık. Finans ekibimiz şu anda işleminizi inceliyor ve doğruluyor.
+{{ __('mail.financial.deposit_received_amount', ['currency' => $user->currency, 'amount' => number_format($deposit->amount, 2)]) }} {{ __('mail.financial.team_reviewing') }}
 
-**İşleme Durumu:** İnceleme Altında
-**Beklenen İşleme Süresi:** 1-3 iş saati
+**{{ __('mail.financial.processing_status') }}:** {{ __('mail.financial.under_review') }}
+**{{ __('mail.financial.expected_processing_time') }}:** {{ __('mail.financial.processing_timeframe') }}
 
 
-Para yatırmanız doğrulandıktan ve ticaret hesabınıza yatırıldıktan sonra anında bir bildirim alacaksınız.
+{{ __('mail.financial.notification_after_verification') }}
 
 @component('mail::panel')
-**Güvenlik Bildirimi:** Fonlarınızın işleme süresi boyunca güvenli ve güvende olmasını sağlamak için banka düzeyinde güvenlik protokolleri kullanıyoruz.
+**{{ __('mail.security.security_notice') }}:** {{ __('mail.security.bank_level_protocols') }}
 @endcomponent
 
 @endif
@@ -67,19 +67,19 @@ Para yatırmanız doğrulandıktan ve ticaret hesabınıza yatırıldıktan sonr
 
 ---
 
-**Yardıma İhtiyacınız Var mı?**
-Herhangi bir sorunuzda size yardımcı olmak için özel destek ekibimiz 7/24 hazır.
+**{{ __('mail.support.need_help') }}**
+{{ __('mail.support.dedicated_team_available') }}
 
 @component('mail::button', ['url' => config('app.url').'/support', 'color' => 'success'])
-Desteğe Başvurun
+{{ __('mail.actions.contact_support') }}
 @endcomponent
 
-Saygılarımla,<br>
-**{{config('app.name')}} Ekibi**<br>
-*Güvenilir Ticaret Ortağınız*
+{{ __('mail.footer.regards') }},<br>
+**{{ __('mail.footer.team', ['siteName' => config('app.name')]) }}**<br>
+*{{ __('mail.footer.trusted_trading_partner') }}*
 
 @component('mail::subcopy')
-Bu, {{config('app.name')}}'dan otomatik bir mesajdır. Güvenlik amacıyla, lütfen bu e-postayı kimseyle paylaşmayın. Bu para yatırmayı başlatmadıysanız, lütfen destek ekibimizle hemen iletişime geçin.
+{{ __('mail.footer.auto_generated', ['siteName' => config('app.name')]) }} {{ __('mail.security.do_not_share_email') }} {{ __('mail.security.contact_support_if_not_initiated') }}
 @endcomponent
 
 @endcomponent

@@ -8,7 +8,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
     $bg = 'dark';
 }
 ?>
-@extends('layouts.admin', ['title' => 'Ödeme Ayarları'])
+@extends('layouts.admin', ['title' => __('admin.payment_settings.title')])
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
@@ -23,8 +23,8 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Ödeme Ayarları</h1>
-                            <p class="text-gray-600 dark:text-gray-400 mt-1">Ödeme yöntemlerini ve tercihlerini yapılandırın</p>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.payment_settings.title') }}</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.payment_settings.subtitle') }}</p>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                                 </svg>
-                                <span>Ödeme Yöntemleri</span>
+                                <span>{{ __('admin.payment_settings.tabs.payment_methods') }}</span>
                             </div>
                         </button>
                         
@@ -58,7 +58,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
-                                <span>Ödeme Tercihleri</span>
+                                <span>{{ __('admin.payment_settings.tabs.preferences') }}</span>
                             </div>
                         </button>
                         
@@ -67,7 +67,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <span>Coinpayment</span>
+                                <span>{{ __('admin.payment_settings.tabs.coinpayment') }}</span>
                             </div>
                         </button>
                         
@@ -76,7 +76,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
                                 </svg>
-                                <span>Gateway'ler</span>
+                                <span>{{ __('admin.payment_settings.tabs.gateways') }}</span>
                             </div>
                         </button>
                         
@@ -85,7 +85,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                                 </svg>
-                                <span>Transfer</span>
+                                <span>{{ __('admin.payment_settings.tabs.transfers') }}</span>
                             </div>
                         </button>
                     </nav>
@@ -187,7 +187,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                İşleniyor...
+                                {{ __('admin.payment_settings.processing') }}...
                             </span>
                         `;
                     }
@@ -205,13 +205,13 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                         const result = await response.json();
                         
                         if (result.status === 200) {
-                            showNotification('success', 'Başarılı', result.success);
+                            showNotification('success', '{{ __('admin.payment_settings.success') }}', result.success);
                         } else {
-                            showNotification('error', 'Hata', result.message || 'Bir hata oluştu');
+                            showNotification('error', '{{ __('admin.payment_settings.error') }}', result.message || '{{ __('admin.payment_settings.error_occurred') }}');
                         }
                     } catch (error) {
                         console.error('Error:', error);
-                        showNotification('error', 'Hata', 'Bağlantı hatası oluştu');
+                        showNotification('error', '{{ __('admin.payment_settings.error') }}', '{{ __('admin.payment_settings.connection_error') }}');
                     } finally {
                         if (submitButton) {
                             submitButton.disabled = false;
@@ -238,7 +238,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                İşleniyor...
+                                {{ __('admin.payment_settings.processing') }}...
                             </span>
                         `;
                     }
@@ -256,13 +256,13 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                         const result = await response.json();
                         
                         if (result.status === 200) {
-                            showNotification('success', 'Başarılı', result.success);
+                            showNotification('success', '{{ __('admin.payment_settings.success') }}', result.success);
                         } else {
-                            showNotification('error', 'Hata', result.message || 'Bir hata oluştu');
+                            showNotification('error', '{{ __('admin.payment_settings.error') }}', result.message || '{{ __('admin.payment_settings.error_occurred') }}');
                         }
                     } catch (error) {
                         console.error('Error:', error);
-                        showNotification('error', 'Hata', 'Bağlantı hatası oluştu');
+                        showNotification('error', '{{ __('admin.payment_settings.error') }}', '{{ __('admin.payment_settings.connection_error') }}');
                     } finally {
                         if (submitButton) {
                             submitButton.disabled = false;
@@ -289,7 +289,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                İşleniyor...
+                                {{ __('admin.payment_settings.processing') }}...
                             </span>
                         `;
                     }
@@ -307,13 +307,13 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                         const result = await response.json();
                         
                         if (result.status === 200) {
-                            showNotification('success', 'Başarılı', result.success);
+                            showNotification('success', '{{ __('admin.payment_settings.success') }}', result.success);
                         } else {
-                            showNotification('error', 'Hata', result.message || 'Bir hata oluştu');
+                            showNotification('error', '{{ __('admin.payment_settings.error') }}', result.message || '{{ __('admin.payment_settings.error_occurred') }}');
                         }
                     } catch (error) {
                         console.error('Error:', error);
-                        showNotification('error', 'Hata', 'Bağlantı hatası oluştu');
+                        showNotification('error', '{{ __('admin.payment_settings.error') }}', '{{ __('admin.payment_settings.connection_error') }}');
                     } finally {
                         if (submitButton) {
                             submitButton.disabled = false;
@@ -340,7 +340,7 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
-                                İşleniyor...
+                                {{ __('admin.payment_settings.processing') }}...
                             </span>
                         `;
                     }
@@ -358,13 +358,13 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
                         const result = await response.json();
                         
                         if (result.status === 200) {
-                            showNotification('success', 'Başarılı', result.success);
+                            showNotification('success', '{{ __('admin.payment_settings.success') }}', result.success);
                         } else {
-                            showNotification('error', 'Hata', result.message || 'Bir hata oluştu');
+                            showNotification('error', '{{ __('admin.payment_settings.error') }}', result.message || '{{ __('admin.payment_settings.error_occurred') }}');
                         }
                     } catch (error) {
                         console.error('Error:', error);
-                        showNotification('error', 'Hata', 'Bağlantı hatası oluştu');
+                        showNotification('error', '{{ __('admin.payment_settings.error') }}', '{{ __('admin.payment_settings.connection_error') }}');
                     } finally {
                         if (submitButton) {
                             submitButton.disabled = false;

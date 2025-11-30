@@ -59,7 +59,7 @@
                     <div class="flex items-center space-x-2 px-3 py-1.5 bg-gradient-to-r from-emerald-600/10 to-green-600/10 rounded-xl">
                         <div class="flex items-center space-x-1.5">
                             <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
-                            <span class="text-xs font-medium text-emerald-300">Piyasa Açık</span>
+                            <span class="text-xs font-medium text-emerald-300">{{ __('user.dashboard.market_open') }}</span>
                         </div>
                         <div class="w-px h-3 bg-emerald-500/30"></div>
                         <div class="text-xs text-slate-300">
@@ -74,7 +74,7 @@
                                 <x-heroicon name="wallet" class="w-3 h-3 text-blue-400" />
                             </div>
                             <div>
-                                <div class="text-xs text-slate-400 uppercase tracking-wider font-medium">Hesap Bakiyesi</div>
+                                <div class="text-xs text-slate-400 uppercase tracking-wider font-medium">{{ __('user.dashboard.account_balance') }}</div>
                                 <div class="text-sm font-bold text-white">
                                     {{ auth()->user()->currency }}{{ number_format(auth()->user()->account_bal, 2) }}
                                 </div>
@@ -106,7 +106,7 @@
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center space-x-2">
                                         <x-heroicon name="bell" class="w-5 h-5 text-yellow-400" />
-                                        <h3 class="text-lg font-semibold text-white">Bildirimler</h3>
+                                        <h3 class="text-lg font-semibold text-white">{{ __('user.dashboard.notifications') }}</h3>
                                         @if($unreadCount > 0)
                                             <span class="px-2 py-0.5 text-xs font-medium bg-red-500 text-white rounded-full">{{ $unreadCount }}</span>
                                         @endif
@@ -115,7 +115,7 @@
                                         @if($unreadCount > 0)
                                             <button onclick="markAllAsRead()"
                                                     class="text-xs text-blue-400 hover:text-blue-300 transition-colors duration-200">
-                                                Hepsini Okundu İşaretle
+                                                {{ __('user.dashboard.mark_all_read') }}
                                             </button>
                                         @endif
                                     </div>
@@ -160,7 +160,7 @@
                                                     @if(!$notification->is_read)
                                                         <button onclick="markAsRead({{ $notification->id }})"
                                                                 class="text-xs text-blue-400 hover:text-blue-300 transition-colors duration-200">
-                                                            Okundu İşaretle
+                                                            {{ __('user.dashboard.mark_as_read') }}
                                                         </button>
                                                     @endif
                                                 </div>
@@ -172,8 +172,8 @@
                                         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-700/50 flex items-center justify-center">
                                             <x-heroicon name="bell-slash" class="w-8 h-8 text-slate-400" />
                                         </div>
-                                        <h3 class="text-sm font-medium text-slate-300 mb-1">Henüz bildirim yok</h3>
-                                        <p class="text-xs text-slate-400">Yeni bildirimler burada görünecek</p>
+                                        <h3 class="text-sm font-medium text-slate-300 mb-1">{{ __('user.dashboard.no_notifications_yet') }}</h3>
+                                        <p class="text-xs text-slate-400">{{ __('user.dashboard.new_notifications_here') }}</p>
                                     </div>
                                 @endforelse
                             </div>
@@ -183,7 +183,7 @@
                                 <div class="p-3 bg-slate-700/30">
                                     <a href="#" onclick="showAllNotifications()"
                                        class="block w-full text-center text-sm text-blue-400 hover:text-blue-300 transition-colors duration-200">
-                                        Tüm Bildirimleri Görüntüle
+                                        {{ __('user.dashboard.view_all_notifications') }}
                                     </a>
                                 </div>
                             @endif
@@ -196,7 +196,7 @@
                     <button onclick="toggleQuickActions()"
                             class="group flex items-center space-x-1.5 px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-purple-600/20 rounded-xl transition-all duration-200">
                         <x-heroicon name="bolt" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                        <span class="hidden lg:block">Hızlı İşlem</span>
+                        <span class="hidden lg:block">{{ __('user.dashboard.quick_actions') }}</span>
                         <x-heroicon name="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform duration-200" />
                     </button>
 
@@ -207,8 +207,8 @@
                                     <x-heroicon name="arrow-down-circle" class="w-4 h-4 text-emerald-400" />
                                 </div>
                                 <div>
-                                    <div class="font-medium">Para Yatırma</div>
-                                    <div class="text-xs text-slate-400">Hesabınıza para ekleyin</div>
+                                    <div class="font-medium">{{ __('user.dashboard.deposit') }}</div>
+                                    <div class="text-xs text-slate-400">{{ __('user.dashboard.deposit_desc') }}</div>
                                 </div>
                             </a>
                             <a href="{{ route('withdrawalsdeposits') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-red-600/20 hover:to-pink-600/20 rounded-xl transition-all duration-200">
@@ -216,8 +216,8 @@
                                     <x-heroicon name="arrow-up-circle" class="w-4 h-4 text-red-400" />
                                 </div>
                                 <div>
-                                    <div class="font-medium">Para Çekme</div>
-                                    <div class="text-xs text-slate-400">Kazançlarınızı çekin</div>
+                                    <div class="font-medium">{{ __('user.dashboard.withdrawal') }}</div>
+                                    <div class="text-xs text-slate-400">{{ __('user.dashboard.withdrawal_desc') }}</div>
                                 </div>
                             </a>
                             <a href="{{ route('trade.index') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-yellow-600/20 hover:to-orange-600/20 rounded-xl transition-all duration-200">
@@ -225,9 +225,56 @@
                                     <x-heroicon name="bolt" class="w-4 h-4 text-yellow-400" />
                                 </div>
                                 <div>
-                                    <div class="font-medium">Canlı İşlem</div>
-                                    <div class="text-xs text-slate-400">Piyasada işlem yapın</div>
+                                    <div class="font-medium">{{ __('user.dashboard.live_trading') }}</div>
+                                    <div class="text-xs text-slate-400">{{ __('user.dashboard.live_trading_desc') }}</div>
                                 </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Switcher -->
+                <div class="relative">
+                    <button onclick="toggleLanguageDropdown()"
+                            class="group flex items-center space-x-2 px-3 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-emerald-600/20 hover:to-teal-600/20 rounded-xl transition-all duration-200">
+                        <x-heroicon name="language" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+                        <span class="hidden lg:block">
+                            @if(session('locale') === 'ru')
+                                {{ __('navigation.language_russian') }}
+                            @else
+                                {{ __('navigation.language_turkish') }}
+                            @endif
+                        </span>
+                        <x-heroicon name="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform duration-200" />
+                    </button>
+
+                    <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-48 max-w-[calc(100vw-2rem)] bg-gradient-to-b from-slate-800 to-slate-900 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-2xl backdrop-blur-xl z-30">
+                        <div class="p-2">
+                            <a href="{{ route('language.change', 'tr') }}"
+                               class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-emerald-600/20 hover:to-teal-600/20 rounded-xl transition-all duration-200 {{ session('locale', 'tr') === 'tr' ? 'bg-emerald-600/10 text-emerald-300' : '' }}">
+                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/20 flex items-center justify-center mr-3 group-hover:from-red-500/30 group-hover:to-red-600/30 transition-all duration-200">
+                                    <span class="text-xs font-bold">🇹🇷</span>
+                                </div>
+                                <div>
+                                    <div class="font-medium">{{ __('navigation.language_turkish') }}</div>
+                                    <div class="text-xs text-slate-400">Türkçe</div>
+                                </div>
+                                @if(session('locale', 'tr') === 'tr')
+                                    <x-heroicon name="check" class="w-4 h-4 text-emerald-400 ml-auto" />
+                                @endif
+                            </a>
+                            <a href="{{ route('language.change', 'ru') }}"
+                               class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-indigo-600/20 rounded-xl transition-all duration-200 {{ session('locale') === 'ru' ? 'bg-blue-600/10 text-blue-300' : '' }}">
+                                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center mr-3 group-hover:from-blue-500/30 group-hover:to-blue-600/30 transition-all duration-200">
+                                    <span class="text-xs font-bold">🇷🇺</span>
+                                </div>
+                                <div>
+                                    <div class="font-medium">{{ __('navigation.language_russian') }}</div>
+                                    <div class="text-xs text-slate-400">Русский</div>
+                                </div>
+                                @if(session('locale') === 'ru')
+                                    <x-heroicon name="check" class="w-4 h-4 text-blue-400 ml-auto" />
+                                @endif
                             </a>
                         </div>
                     </div>
@@ -296,19 +343,19 @@
                                     <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center mr-3 group-hover:from-purple-500/30 group-hover:to-pink-600/30 transition-all duration-200">
                                         <x-heroicon name="user-circle" class="w-4 h-4 text-purple-400" />
                                     </div>
-                                    Profil Ayarları
+                                    {{ __('user.dashboard.profile_settings') }}
                                 </a>
                                 <a href="{{ route('accounthistory') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-indigo-600/20 rounded-xl transition-all duration-200">
                                     <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-600/20 flex items-center justify-center mr-3 group-hover:from-blue-500/30 group-hover:to-indigo-600/30 transition-all duration-200">
                                         <x-heroicon name="document-chart-bar" class="w-4 h-4 text-blue-400" />
                                     </div>
-                                    Hesap Geçmişi
+                                    {{ __('user.dashboard.account_history') }}
                                 </a>
                                 <a href="{{ route('support') }}" class="group flex items-center px-4 py-3 text-sm text-slate-300 hover:text-white hover:bg-gradient-to-r hover:from-cyan-600/20 hover:to-blue-600/20 rounded-xl transition-all duration-200">
                                     <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center mr-3 group-hover:from-cyan-500/30 group-hover:to-blue-600/30 transition-all duration-200">
                                         <x-heroicon name="chat-bubble-left-ellipsis" class="w-4 h-4 text-cyan-400" />
                                     </div>
-                                    Destek Merkezi
+                                    {{ __('user.dashboard.support_center') }}
                                 </a>
                                 
                                 <div class="border-t border-slate-700/50 dark:border-gray-600 my-2"></div>
@@ -319,7 +366,7 @@
                                         <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-red-500/20 to-pink-600/20 flex items-center justify-center mr-3 group-hover:from-red-500/30 group-hover:to-pink-600/30 transition-all duration-200">
                                             <x-heroicon name="arrow-right-on-rectangle" class="w-4 h-4 text-red-400" />
                                         </div>
-                                        Güvenli Çıkış
+                                        {{ __('user.dashboard.secure_logout') }}
                                     </button>
                                 </form>
                             </div>
@@ -337,7 +384,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Quick Actions Dropdown
     window.toggleQuickActions = function() {
         const dropdown = document.getElementById('quickActionsDropdown');
-        const otherDropdowns = ['profileDropdown', 'notificationsDropdown'];
+        const otherDropdowns = ['profileDropdown', 'notificationsDropdown', 'languageDropdown'];
+        
+        // Close other dropdowns
+        otherDropdowns.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) element.classList.add('hidden');
+        });
+        
+        dropdown.classList.toggle('hidden');
+    };
+
+    // Language Dropdown
+    window.toggleLanguageDropdown = function() {
+        const dropdown = document.getElementById('languageDropdown');
+        const otherDropdowns = ['quickActionsDropdown', 'notificationsDropdown', 'profileDropdown'];
         
         // Close other dropdowns
         otherDropdowns.forEach(id => {
@@ -351,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Profile Dropdown
     window.toggleProfileDropdown = function() {
         const dropdown = document.getElementById('profileDropdown');
-        const otherDropdowns = ['quickActionsDropdown', 'notificationsDropdown'];
+        const otherDropdowns = ['quickActionsDropdown', 'notificationsDropdown', 'languageDropdown'];
         
         // Close other dropdowns
         otherDropdowns.forEach(id => {
@@ -365,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Notifications Dropdown
     window.toggleNotifications = function() {
         const dropdown = document.getElementById('notificationsDropdown');
-        const otherDropdowns = ['quickActionsDropdown', 'profileDropdown'];
+        const otherDropdowns = ['quickActionsDropdown', 'profileDropdown', 'languageDropdown'];
         
         // Close other dropdowns
         otherDropdowns.forEach(id => {
@@ -429,18 +490,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Enhanced click away functionality
     document.addEventListener('click', function(event) {
-        const dropdowns = ['quickActionsDropdown', 'profileDropdown', 'notificationsDropdown'];
+        const dropdowns = ['quickActionsDropdown', 'profileDropdown', 'notificationsDropdown', 'languageDropdown'];
         const toggleButtons = [
             'button[onclick="toggleQuickActions()"]',
             'button[onclick="toggleProfileDropdown()"]',
-            'button[onclick="toggleNotifications()"]'
+            'button[onclick="toggleNotifications()"]',
+            'button[onclick="toggleLanguageDropdown()"]'
         ];
         
         dropdowns.forEach((dropdownId, index) => {
             const dropdown = document.getElementById(dropdownId);
             const button = document.querySelector(toggleButtons[index]);
             
-            if (dropdown && !dropdown.contains(event.target) && 
+            if (dropdown && !dropdown.contains(event.target) &&
                 (!button || !button.contains(event.target))) {
                 dropdown.classList.add('hidden');
             }
@@ -472,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = '';
             
             // Close all dropdowns on resize
-            const dropdowns = ['quickActionsDropdown', 'profileDropdown', 'notificationsDropdown'];
+            const dropdowns = ['quickActionsDropdown', 'profileDropdown', 'notificationsDropdown', 'languageDropdown'];
             dropdowns.forEach(id => {
                 const element = document.getElementById(id);
                 if (element) element.classList.add('hidden');
@@ -485,7 +547,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ESC key support for closing dropdowns
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            const dropdowns = ['quickActionsDropdown', 'profileDropdown', 'notificationsDropdown'];
+            const dropdowns = ['quickActionsDropdown', 'profileDropdown', 'notificationsDropdown', 'languageDropdown'];
             dropdowns.forEach(id => {
                 const element = document.getElementById(id);
                 if (element) element.classList.add('hidden');
@@ -596,7 +658,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const originalToggleFunctions = {
         toggleNotifications: window.toggleNotifications,
         toggleQuickActions: window.toggleQuickActions,
-        toggleProfileDropdown: window.toggleProfileDropdown
+        toggleProfileDropdown: window.toggleProfileDropdown,
+        toggleLanguageDropdown: window.toggleLanguageDropdown
     };
 
     window.toggleNotifications = function() {
@@ -611,6 +674,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.toggleProfileDropdown = function() {
         originalToggleFunctions.toggleProfileDropdown();
+        setTimeout(adjustDropdownPositions, 10);
+    };
+
+    window.toggleLanguageDropdown = function() {
+        originalToggleFunctions.toggleLanguageDropdown();
         setTimeout(adjustDropdownPositions, 10);
     };
 

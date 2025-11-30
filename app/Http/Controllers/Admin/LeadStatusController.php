@@ -16,7 +16,7 @@ class LeadStatusController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (auth('admin')->check() && auth('admin')->user()->type !== 'Super Admin') {
-                abort(403, 'Bu sayfaya erişim yetkiniz bulunmamaktadır.');
+                abort(403, __('admin.messages.access_denied'));
             }
             return $next($request);
         });
@@ -35,7 +35,7 @@ class LeadStatusController extends Controller
         }
         
         return view('admin.leads.statuses.index', [
-            'title' => 'Lead Status Yönetimi',
+            'title' => __('admin.titles.lead_status_management'),
             'statuses' => $statuses
         ]);
     }
@@ -52,8 +52,8 @@ class LeadStatusController extends Controller
             'description' => 'nullable|string|max:1000',
             'sort_order' => 'required|integer|min:0'
         ], [
-            'name.regex' => 'Status adı sadece küçük harf ve alt çizgi içerebilir.',
-            'color.regex' => 'Renk geçerli bir hex kodu olmalıdır (örn: #ff0000).',
+            'name.regex' => __('admin.validation.status_name_format'),
+            'color.regex' => __('admin.validation.color_hex_format'),
         ]);
 
         // Check if sort_order already exists and adjust
@@ -67,7 +67,7 @@ class LeadStatusController extends Controller
         LeadStatus::create($request->all());
 
         return redirect()->route('admin.lead-statuses.index')
-                        ->with('success', 'Yeni lead status başarıyla oluşturuldu.');
+                        ->with('success', __('admin.messages.lead_status_created'));
     }
 
     /**
@@ -89,8 +89,8 @@ class LeadStatusController extends Controller
             'sort_order' => 'required|integer|min:0',
             'is_active' => 'boolean'
         ], [
-            'name.regex' => 'Status adı sadece küçük harf ve alt çizgi içerebilir.',
-            'color.regex' => 'Renk geçerli bir hex kodu olmalıdır (örn: #ff0000).',
+            'name.regex' => __('admin.validation.status_name_format'),
+            'color.regex' => __('admin.validation.color_hex_format'),
         ]);
 
         // Handle sort order changes
@@ -116,7 +116,7 @@ class LeadStatusController extends Controller
         $leadStatus->update($request->all());
 
         return redirect()->route('admin.lead-statuses.index')
-                        ->with('success', 'Lead status başarıyla güncellendi.');
+                        ->with('success', __('admin.messages.lead_status_updated'));
     }
 
     /**
@@ -127,13 +127,13 @@ class LeadStatusController extends Controller
         // Check if status is being used by any users
         if ($leadStatus->users()->count() > 0) {
             return redirect()->route('admin.lead-statuses.index')
-                           ->with('error', 'Bu status kullanan kullanıcılar bulunduğu için silinemez.');
+                           ->with('error', __('admin.messages.status_in_use_cannot_delete'));
         }
 
         // Prevent deletion of default statuses
         if (in_array($leadStatus->name, ['new', 'converted', 'lost'])) {
             return redirect()->route('admin.lead-statuses.index')
-                           ->with('error', 'Sistem varsayılan statusleri silinemez.');
+                           ->with('error', __('admin.messages.default_status_cannot_delete'));
         }
 
         $sortOrder = $leadStatus->sort_order;
@@ -144,7 +144,7 @@ class LeadStatusController extends Controller
                  ->decrement('sort_order');
 
         return redirect()->route('admin.lead-statuses.index')
-                        ->with('success', 'Lead status başarıyla silindi.');
+                        ->with('success', __('admin.messages.lead_status_deleted'));
     }
 
     /**
@@ -155,14 +155,14 @@ class LeadStatusController extends Controller
         // Prevent deactivating critical statuses
         if (in_array($leadStatus->name, ['new', 'converted', 'lost']) && $leadStatus->is_active) {
             return redirect()->route('admin.lead-statuses.index')
-                           ->with('error', 'Sistem kritik statusleri deaktif edilemez.');
+                           ->with('error', __('admin.messages.critical_status_cannot_deactivate'));
         }
 
         $leadStatus->update(['is_active' => !$leadStatus->is_active]);
 
-        $status = $leadStatus->is_active ? 'aktif' : 'pasif';
+        $status = $leadStatus->is_active ? __('admin.status.active') : __('admin.status.inactive');
         return redirect()->route('admin.lead-statuses.index')
-                        ->with('success', "Lead status başarıyla {$status} hale getirildi.");
+                        ->with('success', __('admin.messages.status_toggled', ['status' => $status]));
     }
 
     /**
@@ -193,7 +193,7 @@ class LeadStatusController extends Controller
         }
 
         return redirect()->route('admin.lead-statuses.index')
-                        ->with('success', 'Sıralama güncellendi.');
+                        ->with('success', __('admin.messages.order_updated'));
     }
 
     /**
@@ -215,6 +215,6 @@ class LeadStatusController extends Controller
         }
 
         return redirect()->route('admin.lead-statuses.index')
-                        ->with('success', 'Sıralama güncellendi.');
+                        ->with('success', __('admin.messages.order_updated'));
     }
 }

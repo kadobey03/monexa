@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Sinyal Yönetimi'])
+@extends('layouts.admin', ['title' => __('admin.signals.management_title')])
 
 @section('content')
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-admin-900 dark:via-admin-800 dark:to-admin-900">
@@ -11,15 +11,15 @@
                             <x-heroicon name="arrow-trending-up" class="w-8 h-8 text-white" />
                         </div>
                         <div>
-                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Sinyal Yönetimi</h1>
-                            <p class="text-gray-600 dark:text-gray-400 mt-1">Trading sinyallerini oluşturun ve yönetin</p>
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ __('admin.signals.management_title') }}</h1>
+                            <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('admin.signals.management_subtitle') }}</p>
                         </div>
                     </div>
                     <div>
                         <a href="{{ route('newsignal') }}"
                            class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-500 to-teal-600 hover:from-green-600 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1">
                             <x-heroicon name="plus" class="w-5 h-5 mr-2" />
-                            Yeni Sinyal Ekle
+                            {{ __('admin.signals.add_new') }}
                         </a>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                         </div>
                         <div>
                             <div class="text-2xl font-bold text-gray-900 dark:text-white">{{ $signals->count() }}</div>
-                            <div class="text-gray-500 dark:text-gray-400 text-sm">Toplam Sinyal</div>
+                            <div class="text-gray-500 dark:text-gray-400 text-sm">{{ __('admin.signals.total_signals') }}</div>
                         </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                             <div class="text-2xl font-bold text-gray-900 dark:text-white">
                                     {{ $signals->where('increment_amount', '>', 0)->count() }}
                                 </div>
-                            <div class="text-gray-500 dark:text-gray-400 text-sm">Aktif Sinyal</div>
+                            <div class="text-gray-500 dark:text-gray-400 text-sm">{{ __('admin.signals.active_signals') }}</div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                                 <div class="text-2xl font-bold text-gray-900">
                                     {{ number_format($signals->avg('increment_amount'), 1) }}%
                                 </div>
-                                <div class="text-gray-500 text-sm">Ortalama Getiri</div>
+                                <div class="text-gray-500 text-sm">{{ __('admin.signals.average_return') }}</div>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                                 <div class="text-2xl font-bold text-gray-900">
                                     {{ $settings->currency }}{{ number_format($signals->avg('price')) }}
                                 </div>
-                                <div class="text-gray-500 text-sm">Ortalama Fiyat</div>
+                                <div class="text-gray-500 text-sm">{{ __('admin.signals.average_price') }}</div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                                                     @endif
                                                 </div>
                                                 <h3 class="text-xl font-bold mb-2">{{ $signal->name }}</h3>
-                                                <p class="text-white/80">Trading Sinyali</p>
+                                                <p class="text-white/80">{{ __('admin.signals.trading_signal') }}</p>
                                             </div>
                                         </div>
 
@@ -125,7 +125,7 @@
                                                     <span class="text-lg text-gray-500">{{ $settings->currency }}</span>
                                                     {{ number_format($signal->price) }}
                                                 </div>
-                                                <div class="text-sm text-gray-500">Sinyal Fiyatı</div>
+                                                <div class="text-sm text-gray-500">{{ __('admin.signals.signal_price') }}</div>
                                             </div>
 
                                             <!-- Features -->
@@ -133,7 +133,7 @@
                                                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                                     <div class="flex items-center">
                                                         <i class="fas fa-dollar-sign text-green-500 mr-3"></i>
-                                                        <span class="font-medium text-gray-700">Fiyat</span>
+                                                        <span class="font-medium text-gray-700">{{ __('admin.signals.price') }}</span>
                                                     </div>
                                                     <span class="font-bold text-gray-900">
                                                         {{ $settings->currency }}{{ number_format($signal->price) }}
@@ -143,7 +143,7 @@
                                                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                                     <div class="flex items-center">
                                                         <i class="fas fa-percentage text-blue-500 mr-3"></i>
-                                                        <span class="font-medium text-gray-700">Getiri Oranı</span>
+                                                        <span class="font-medium text-gray-700">{{ __('admin.signals.return_rate') }}</span>
                                                     </div>
                                                     <span class="font-bold text-green-600">
                                                         {{ $signal->increment_amount }}%
@@ -156,12 +156,12 @@
                                                 <a href="{{ route('editsignal', $signal->id) }}"
                                                    class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-100 text-blue-700 font-semibold rounded-lg hover:bg-blue-200 transition-colors duration-200">
                                                     <i class="fas fa-edit mr-2"></i>
-                                                    Düzenle
+                                                    {{ __('admin.signals.edit') }}
                                                 </a>
                                                 <button onclick="deleteSignal({{ $signal->id }})"
                                                         class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-red-100 text-red-700 font-semibold rounded-lg hover:bg-red-200 transition-colors duration-200">
                                                     <i class="fas fa-trash mr-2"></i>
-                                                    Sil
+                                                    {{ __('admin.signals.delete') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -174,14 +174,14 @@
                             <div class="w-32 h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-8">
                                 <i class="fas fa-chart-line text-6xl text-gray-400"></i>
                             </div>
-                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Henüz sinyal oluşturulmamış</h3>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ __('admin.signals.no_signals_created') }}</h3>
                             <p class="text-gray-500 mb-8 max-w-md mx-auto">
-                                İlk trading sinyalinizi oluşturmak için aşağıdaki butona tıklayın ve kullanıcılarınıza değerli trading sinyalleri sunmaya başlayın.
+                                {{ __('admin.signals.first_signal_description') }}
                             </p>
                             <a href="{{ route('newsignal') }}"
                                class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-500 to-teal-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                                 <i class="fas fa-plus mr-3"></i>
-                                İlk Sinyali Oluştur
+                                {{ __('admin.signals.create_first_signal') }}
                             </a>
                         </div>
                 @endforelse
@@ -191,7 +191,7 @@
 
     <script>
         function deleteSignal(id) {
-            if (confirm('Bu sinyali silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+            if (confirm('{{ __('admin.signals.delete_irreversible') }}')) {
                 window.location.href = `{{ url('admin/dashboard/trashsignal') }}/${id}`;
             }
         }

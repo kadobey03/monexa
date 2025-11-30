@@ -296,6 +296,10 @@ class ModernNotificationManager {
             return confirm(`${title}\n\n${text}`);
         }
 
+        // Use translation system for button texts
+        const confirmText = typeof window.__ === 'function' ? window.__('success.confirm') : 'Evet';
+        const cancelText = typeof window.__ === 'function' ? window.__('errors.cancel') : 'İptal';
+
         const result = await window.Swal.fire({
             title: title,
             text: text,
@@ -303,8 +307,8 @@ class ModernNotificationManager {
             showCancelButton: true,
             confirmButtonColor: '#3b82f6',
             cancelButtonColor: '#6b7280',
-            confirmButtonText: 'Evet',
-            cancelButtonText: 'İptal',
+            confirmButtonText: confirmText,
+            cancelButtonText: cancelText,
             reverseButtons: true,
             ...options
         });
@@ -318,11 +322,14 @@ class ModernNotificationManager {
             return alert(`${title}\n\n${text}`);
         }
 
+        // Use translation system for button text
+        const okText = typeof window.__ === 'function' ? window.__('success.ok') : 'Tamam';
+
         return await window.Swal.fire({
             title: title,
             text: text,
             icon: type,
-            confirmButtonText: 'Tamam',
+            confirmButtonText: okText,
             ...options
         });
     }
@@ -377,14 +384,61 @@ class ModernNotificationManager {
 // Create singleton instance
 const NotificationManager = new ModernNotificationManager();
 
-// Global convenience functions
-window.showToast = (message, type = 'info', options = {}) => NotificationManager.show(message, type, options);
-window.showSuccess = (message, options = {}) => NotificationManager.success(message, options);
-window.showError = (message, options = {}) => NotificationManager.error(message, options);
-window.showWarning = (message, options = {}) => NotificationManager.warning(message, options);
-window.showInfo = (message, options = {}) => NotificationManager.info(message, options);
-window.confirmAction = (title, text, options = {}) => NotificationManager.confirm(title, text, options);
-window.showAlert = (title, text, type = 'info', options = {}) => NotificationManager.alert(title, text, type, options);
+// Enhanced global convenience functions with translation support
+window.showToast = (messageOrKey, type = 'info', options = {}, params = {}) => {
+    const message = (typeof messageOrKey === 'string' && messageOrKey.includes('.') && typeof window.__ === 'function')
+        ? window.__(messageOrKey, params)
+        : messageOrKey;
+    return NotificationManager.show(message, type, options);
+};
+
+window.showSuccess = (messageOrKey, options = {}, params = {}) => {
+    const message = (typeof messageOrKey === 'string' && messageOrKey.includes('.') && typeof window.__ === 'function')
+        ? window.__(messageOrKey, params)
+        : messageOrKey;
+    return NotificationManager.success(message, options);
+};
+
+window.showError = (messageOrKey, options = {}, params = {}) => {
+    const message = (typeof messageOrKey === 'string' && messageOrKey.includes('.') && typeof window.__ === 'function')
+        ? window.__(messageOrKey, params)
+        : messageOrKey;
+    return NotificationManager.error(message, options);
+};
+
+window.showWarning = (messageOrKey, options = {}, params = {}) => {
+    const message = (typeof messageOrKey === 'string' && messageOrKey.includes('.') && typeof window.__ === 'function')
+        ? window.__(messageOrKey, params)
+        : messageOrKey;
+    return NotificationManager.warning(message, options);
+};
+
+window.showInfo = (messageOrKey, options = {}, params = {}) => {
+    const message = (typeof messageOrKey === 'string' && messageOrKey.includes('.') && typeof window.__ === 'function')
+        ? window.__(messageOrKey, params)
+        : messageOrKey;
+    return NotificationManager.info(message, options);
+};
+
+window.confirmAction = (titleOrKey, textOrKey, options = {}, params = {}) => {
+    const title = (typeof titleOrKey === 'string' && titleOrKey.includes('.') && typeof window.__ === 'function')
+        ? window.__(titleOrKey, params)
+        : titleOrKey;
+    const text = (typeof textOrKey === 'string' && textOrKey.includes('.') && typeof window.__ === 'function')
+        ? window.__(textOrKey, params)
+        : textOrKey;
+    return NotificationManager.confirm(title, text, options);
+};
+
+window.showAlert = (titleOrKey, textOrKey, type = 'info', options = {}, params = {}) => {
+    const title = (typeof titleOrKey === 'string' && titleOrKey.includes('.') && typeof window.__ === 'function')
+        ? window.__(titleOrKey, params)
+        : titleOrKey;
+    const text = (typeof textOrKey === 'string' && textOrKey.includes('.') && typeof window.__ === 'function')
+        ? window.__(textOrKey, params)
+        : textOrKey;
+    return NotificationManager.alert(title, text, type, options);
+};
 
 export { NotificationManager };
 export default NotificationManager;

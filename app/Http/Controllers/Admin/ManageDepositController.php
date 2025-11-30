@@ -23,7 +23,7 @@ class ManageDepositController extends Controller
         $deposit = Deposit::where('id', $id)->first();
         Storage::disk('public')->delete($deposit->proof);
         Deposit::where('id', $id)->delete();
-        return redirect()->back()->with('success', 'Deposit history has been deleted!');
+        return redirect()->back()->with('success', __('admin.deposits.deleted_successfully'));
     }
 
     //process deposits
@@ -37,7 +37,7 @@ class ManageDepositController extends Controller
                //update deposits
         Deposit::where('id',$id)
         ->update([
-        'status' => 'Processed',
+        'status' => __('admin.deposits.status.processed'),
     ]);
 
 
@@ -54,7 +54,7 @@ class ManageDepositController extends Controller
             User::where('id',$user->id)
             ->update([
                 'account_bal' => $user->account_bal + $deposit->amount,
-                'cstatus' => 'Customer',
+                'cstatus' => __('admin.users.status.customer'),
 
             ]);
 
@@ -66,7 +66,7 @@ class ManageDepositController extends Controller
         User::where('id',$user->id)
             ->update([
 
-                'cstatus' => 'Customer',
+                'cstatus' => __('admin.users.status.customer'),
                 'signals'=> $deposit->signals ?? "$user->signals",
                 'signal_status' =>'off',
                  'plan_status'  =>'off' ,
@@ -87,9 +87,9 @@ class ManageDepositController extends Controller
                 //create history
                 Tp_Transaction::create([
                     'user' => $user->ref_by,
-                    'plan' => "Credit",
+                    'plan' => __('admin.transactions.credit'),
                     'amount'=>$earnings,
-                    'type'=>"Ref_bonus",
+                    'type'=> __('admin.transactions.ref_bonus'),
                 ]);
 
                 //credit commission to ancestors
@@ -102,7 +102,7 @@ class ManageDepositController extends Controller
      $deposit = Deposit::where('id', $id)->first();
             //Send confirmation email to user regarding his deposit and it's successful.
             try {
-                Mail::to($user->email)->send(new DepositStatus($deposit, $user,'Your Deposit have been Confirmed', false));
+                Mail::to($user->email)->send(new DepositStatus($deposit, $user, __('emails.deposit_confirmed'), false));
             } catch (\Exception $e) {
                 \Log::error('Failed to send deposit confirmation email to user from admin. User: ' . $user->name . ' (' . $user->email . '), Deposit ID: ' . $deposit->id . ', Amount: ' . $deposit->amount . '. Error: ' . $e->getMessage());
             }
@@ -110,7 +110,7 @@ class ManageDepositController extends Controller
         }
 
 
-        return redirect()->back()->with('success', 'Action Sucessful!');
+        return redirect()->back()->with('success', __('admin.messages.action_successful'));
     }
 
 
@@ -120,7 +120,7 @@ class ManageDepositController extends Controller
 
         return view('admin.Deposits.depositimg', [
             'deposit' => $deposit,
-            'title' => 'View Deposit Screenshot',
+            'title' => __('admin.deposits.view_screenshot'),
             'settings' => Settings::where('id', '=', '1')->first(),
         ]);
     }
@@ -149,9 +149,9 @@ class ManageDepositController extends Controller
                     //create history
                     Tp_Transaction::create([
                         'user' => $entry->id,
-                        'plan' => "Credit",
+                        'plan' => __('admin.transactions.credit'),
                         'amount' => $earnings,
-                        'type' => "Ref_bonus",
+                        'type' => __('admin.transactions.ref_bonus'),
                     ]);
                 } elseif ($level == 2) {
                     $earnings = $settings->referral_commission2 * $deposit_amount / 100;
@@ -165,9 +165,9 @@ class ManageDepositController extends Controller
                     //create history
                     Tp_Transaction::create([
                         'user' => $entry->id,
-                        'plan' => "Credit",
+                        'plan' => __('admin.transactions.credit'),
                         'amount' => $earnings,
-                        'type' => "Ref_bonus",
+                        'type' => __('admin.transactions.ref_bonus'),
                     ]);
                 } elseif ($level == 3) {
                     $earnings = $settings->referral_commission3 * $deposit_amount / 100;
@@ -181,9 +181,9 @@ class ManageDepositController extends Controller
                     //create history
                     Tp_Transaction::create([
                         'user' => $entry->id,
-                        'plan' => "Credit",
+                        'plan' => __('admin.transactions.credit'),
                         'amount' => $earnings,
-                        'type' => "Ref_bonus",
+                        'type' => __('admin.transactions.ref_bonus'),
                     ]);
                 } elseif ($level == 4) {
                     $earnings = $settings->referral_commission4 * $deposit_amount / 100;
@@ -197,9 +197,9 @@ class ManageDepositController extends Controller
                     //create history
                     Tp_Transaction::create([
                         'user' => $entry->id,
-                        'plan' => "Credit",
+                        'plan' => __('admin.transactions.credit'),
                         'amount' => $earnings,
-                        'type' => "Ref_bonus",
+                        'type' => __('admin.transactions.ref_bonus'),
                     ]);
                 } elseif ($level == 5) {
                     $earnings = $settings->referral_commission5 * $deposit_amount / 100;
@@ -213,9 +213,9 @@ class ManageDepositController extends Controller
                     //create history
                     Tp_Transaction::create([
                         'user' => $entry->id,
-                        'plan' => "Credit",
+                        'plan' => __('admin.transactions.credit'),
                         'amount' => $earnings,
-                        'type' => "Ref_bonus",
+                        'type' => __('admin.transactions.ref_bonus'),
                     ]);
                 }
 
@@ -276,8 +276,14 @@ class ManageDepositController extends Controller
         // Create admin notification about deposit edit
         $notificationService->createAdminNotification(
             \Illuminate\Support\Facades\Auth::guard('admin')->id(),
-            'Deposit Details Updated',
-            "Deposit request #{$deposit->id} for user {$user->name} has been updated. Amount: {$user->currency}{$request->amount}, Status: {$request->status}",
+            __('admin.deposits.details_updated_title'),
+            __('admin.deposits.details_updated_message', [
+                'id' => $deposit->id,
+                'user' => $user->name,
+                'currency' => $user->currency,
+                'amount' => $request->amount,
+                'status' => $request->status
+            ]),
             'info',
             $deposit->id,
             'App\\Models\\Deposit'
@@ -287,8 +293,11 @@ class ManageDepositController extends Controller
         if ($oldStatus !== 'Processed' && $request->status === 'Processed') {
             $notificationService->createUserNotification(
                 $user->id,
-                'Deposit Approved',
-                "Your deposit of {$user->currency}{$request->amount} has been approved and processed.",
+                __('notifications.deposit_approved_title'),
+                __('notifications.deposit_approved_message', [
+                    'currency' => $user->currency,
+                    'amount' => $request->amount
+                ]),
                 'success',
                 $deposit->id,
                 'App\\Models\\Deposit'
@@ -299,14 +308,17 @@ class ManageDepositController extends Controller
         if ($oldStatus !== 'Rejected' && $request->status === 'Rejected') {
             $notificationService->createUserNotification(
                 $user->id,
-                'Deposit Rejected',
-                "Your deposit of {$user->currency}{$request->amount} has been rejected.",
+                __('notifications.deposit_rejected_title'),
+                __('notifications.deposit_rejected_message', [
+                    'currency' => $user->currency,
+                    'amount' => $request->amount
+                ]),
                 'danger',
                 $deposit->id,
                 'App\\Models\\Deposit'
             );
         }
 
-        return redirect()->back()->with('success', 'Deposit details updated successfully!');
+        return redirect()->back()->with('success', __('admin.deposits.updated_successfully'));
     }
 }

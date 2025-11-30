@@ -16,22 +16,22 @@
                         <a href="{{ route('manageusers') }}" 
                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} hover:text-admin-700 {{ $isDark ? 'dark:hover:text-admin-300' : '' }} transition-colors">
                             <i class="fas fa-arrow-left mr-2"></i>
-                            Kullanıcı Yönetimine Dön
+                            {{ __('admin.import.back_to_user_management') }}
                         </a>
                     </div>
                     <h1 class="text-3xl font-bold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} flex items-center">
                         <i class="fas fa-file-excel text-green-600 mr-4 text-4xl"></i>
-                        Kullanıcı İçe Aktarma
+                        {{ __('admin.import.title') }}
                     </h1>
                     <p class="mt-2 text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">
-                        Excel/CSV dosyasından toplu kullanıcı verilerini sisteme aktarın
+                        {{ __('admin.import.description') }}
                     </p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <div class="bg-admin-200 {{ $isDark ? 'dark:bg-admin-700' : '' }} px-4 py-2 rounded-full">
                         <span class="text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} font-semibold">
                             <i class="fas fa-upload mr-2"></i>
-                            Gelişmiş İçe Aktarma
+                            {{ __('admin.import.advanced_import') }}
                         </span>
                     </div>
                 </div>
@@ -46,17 +46,17 @@
             <div class="flex items-center justify-center space-x-8">
                 <div id="step-1-indicator" class="flex items-center step-indicator active">
                     <div class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">1</div>
-                    <span class="ml-3 text-sm font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">Dosya Seçimi</span>
+                    <span class="ml-3 text-sm font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.step_file_selection') }}</span>
                 </div>
                 <div class="w-16 h-1 bg-admin-200 {{ $isDark ? 'dark:bg-admin-700' : '' }} rounded"></div>
                 <div id="step-2-indicator" class="flex items-center step-indicator">
                     <div class="w-10 h-10 bg-admin-300 {{ $isDark ? 'dark:bg-admin-600' : '' }} text-admin-600 {{ $isDark ? 'dark:text-admin-300' : '' }} rounded-full flex items-center justify-center font-bold">2</div>
-                    <span class="ml-3 text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">Sütun Eşleştirme</span>
+                    <span class="ml-3 text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.import.step_column_mapping') }}</span>
                 </div>
                 <div class="w-16 h-1 bg-admin-200 {{ $isDark ? 'dark:bg-admin-700' : '' }} rounded"></div>
                 <div id="step-3-indicator" class="flex items-center step-indicator">
                     <div class="w-10 h-10 bg-admin-300 {{ $isDark ? 'dark:bg-admin-600' : '' }} text-admin-600 {{ $isDark ? 'dark:text-admin-300' : '' }} rounded-full flex items-center justify-center font-bold">3</div>
-                    <span class="ml-3 text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">İçe Aktarma</span>
+                    <span class="ml-3 text-sm font-medium text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.import.step_import') }}</span>
                 </div>
             </div>
         </div>
@@ -65,8 +65,8 @@
         <div id="step-1" class="step-content">
             <div class="bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-xl shadow-lg border border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }} overflow-hidden">
                 <div class="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-5">
-                    <h3 class="text-lg font-medium text-white mb-2">1. Adım: Excel/CSV Dosyası Seçin</h3>
-                    <p class="text-blue-100 text-sm">Kullanıcı verilerini içeren Excel (.xlsx, .xls) veya CSV dosyasını yükleyin</p>
+                    <h3 class="text-lg font-medium text-white mb-2">{{ __('admin.import.step1_title') }}</h3>
+                    <p class="text-blue-100 text-sm">{{ __('admin.import.step1_description') }}</p>
                 </div>
 
                 <div class="p-8">
@@ -80,16 +80,16 @@
                         <div id="upload-placeholder">
                             <i class="fas fa-cloud-upload-alt text-6xl text-admin-400 {{ $isDark ? 'dark:text-admin-500' : '' }} mb-4"></i>
                             <h4 class="text-xl font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-2">
-                                Dosyayı buraya sürükleyip bırakın
+                                {{ __('admin.import.drag_drop_here') }}
                             </h4>
                             <p class="text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mb-4">
-                                veya dosya seçmek için tıklayın
+                                {{ __('admin.import.or_click_to_select') }}
                             </p>
                             <input type="file" id="file-input" class="hidden" accept=".xlsx,.xls,.csv" onchange="handleFileSelect(event)">
                             <button type="button" onclick="document.getElementById('file-input').click()" 
                                     class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
                                 <i class="fas fa-folder-open mr-2"></i>
-                                Dosya Seç
+                                {{ __('admin.import.select_file') }}
                             </button>
                         </div>
 
@@ -115,12 +115,12 @@
                         <div class="flex items-start space-x-3">
                             <i class="fas fa-info-circle text-blue-600 mt-1"></i>
                             <div>
-                                <h5 class="font-semibold text-blue-900 {{ $isDark ? 'dark:text-blue-100' : '' }} mb-2">Desteklenen Dosya Formatları</h5>
+                                <h5 class="font-semibold text-blue-900 {{ $isDark ? 'dark:text-blue-100' : '' }} mb-2">{{ __('admin.import.supported_formats') }}</h5>
                                 <ul class="text-sm text-blue-800 {{ $isDark ? 'dark:text-blue-200' : '' }} space-y-1">
-                                    <li>• <strong>Excel:</strong> .xlsx, .xls formatları</li>
-                                    <li>• <strong>CSV:</strong> .csv formatı (UTF-8 kodlaması önerilir)</li>
-                                    <li>• <strong>Maksimum Dosya Boyutu:</strong> 10 MB</li>
-                                    <li>• <strong>Maksimum Satır Sayısı:</strong> 5,000 kullanıcı</li>
+                                    <li>• <strong>{{ __('admin.import.excel_format') }}:</strong> {{ __('admin.import.excel_extensions') }}</li>
+                                    <li>• <strong>{{ __('admin.import.csv_format') }}:</strong> {{ __('admin.import.csv_encoding') }}</li>
+                                    <li>• <strong>{{ __('admin.import.max_file_size') }}:</strong> {{ __('admin.import.file_size_limit') }}</li>
+                                    <li>• <strong>{{ __('admin.import.max_rows') }}:</strong> {{ __('admin.import.row_limit') }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -132,16 +132,16 @@
                             <div class="flex items-start space-x-3">
                                 <i class="fas fa-download text-green-600 mt-1"></i>
                                 <div>
-                                    <h5 class="font-semibold text-green-900 {{ $isDark ? 'dark:text-green-100' : '' }} mb-1">Örnek Şablon İndir</h5>
+                                    <h5 class="font-semibold text-green-900 {{ $isDark ? 'dark:text-green-100' : '' }} mb-1">{{ __('admin.import.download_template') }}</h5>
                                     <p class="text-sm text-green-800 {{ $isDark ? 'dark:text-green-200' : '' }}">
-                                        Doğru format için örnek Excel şablonunu indirin
+                                        {{ __('admin.import.template_description') }}
                                     </p>
                                 </div>
                             </div>
                             <a href="{{ route('downlddoc') }}" 
                                class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-200">
                                 <i class="fas fa-download mr-2"></i>
-                                Şablon İndir
+                                {{ __('admin.import.download_template_button') }}
                             </a>
                         </div>
                     </div>
@@ -150,7 +150,7 @@
                     <div class="mt-8 flex justify-end">
                         <button type="button" id="next-to-step-2" onclick="goToStep(2)" disabled
                                 class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-admin-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
-                            Devam Et: Sütun Eşleştirme
+                            {{ __('admin.import.continue_column_mapping') }}
                             <i class="fas fa-arrow-right ml-2"></i>
                         </button>
                     </div>
@@ -162,8 +162,8 @@
         <div id="step-2" class="step-content hidden">
             <div class="bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-xl shadow-lg border border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }} overflow-hidden">
                 <div class="bg-gradient-to-r from-orange-600 to-orange-700 px-6 py-5">
-                    <h3 class="text-lg font-medium text-white mb-2">2. Adım: Sütun Eşleştirme</h3>
-                    <p class="text-orange-100 text-sm">Excel dosyanızdaki sütunları sistem alanlarıyla eşleştirin</p>
+                    <h3 class="text-lg font-medium text-white mb-2">{{ __('admin.import.step2_title') }}</h3>
+                    <p class="text-orange-100 text-sm">{{ __('admin.import.step2_description') }}</p>
                 </div>
 
                 <div class="p-8">
@@ -171,7 +171,7 @@
                     <div class="mb-8">
                         <h4 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-4">
                             <i class="fas fa-table mr-2 text-orange-600"></i>
-                            Dosya Önizleme (İlk 5 Satır)
+                            {{ __('admin.import.file_preview') }}
                         </h4>
                         <div class="overflow-x-auto bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }} rounded-lg border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }}">
                             <table id="preview-table" class="min-w-full divide-y divide-admin-200 {{ $isDark ? 'dark:divide-admin-600' : '' }}">
@@ -189,95 +189,95 @@
                     <div class="mb-8">
                         <h4 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-4">
                             <i class="fas fa-link mr-2 text-orange-600"></i>
-                            Sütun Eşleştirme
+                            {{ __('admin.import.column_mapping_title') }}
                         </h4>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div>
-                                <h5 class="font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-3">Excel Sütunları</h5>
+                                <h5 class="font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-3">{{ __('admin.import.excel_columns') }}</h5>
                                 <div id="excel-columns" class="space-y-2">
                                     <!-- Bu kısım JavaScript ile doldurulacak -->
                                 </div>
                             </div>
                             <div>
-                                <h5 class="font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-3">Sistem Alanları</h5>
+                                <h5 class="font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-3">{{ __('admin.import.system_fields') }}</h5>
                                 <div id="system-fields" class="space-y-2">
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="name">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">Ad Soyad</span>
-                                            <span class="text-xs text-red-600 font-semibold">ZORUNLU</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_full_name') }}</span>
+                                            <span class="text-xs text-red-600 font-semibold">{{ __('admin.import.required') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Kullanıcının tam adı</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_full_name_desc') }}</p>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="email">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">E-posta</span>
-                                            <span class="text-xs text-red-600 font-semibold">ZORUNLU</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_email') }}</span>
+                                            <span class="text-xs text-red-600 font-semibold">{{ __('admin.import.required') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">E-posta adresi</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_email_desc') }}</p>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="phone">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">Telefon</span>
-                                            <span class="text-xs text-blue-600 font-semibold">İSTEĞE BAĞLI</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_phone') }}</span>
+                                            <span class="text-xs text-blue-600 font-semibold">{{ __('admin.import.optional') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Telefon numarası</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_phone_desc') }}</p>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="country">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">Ülke</span>
-                                            <span class="text-xs text-blue-600 font-semibold">İSTEĞE BAĞLI</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_country') }}</span>
+                                            <span class="text-xs text-blue-600 font-semibold">{{ __('admin.import.optional') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Ülke bilgisi</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_country_desc') }}</p>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="username">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">Kullanıcı Adı</span>
-                                            <span class="text-xs text-blue-600 font-semibold">İSTEĞE BAĞLI</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_username') }}</span>
+                                            <span class="text-xs text-blue-600 font-semibold">{{ __('admin.import.optional') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Otomatik oluşturulur</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_username_desc') }}</p>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="estimated_value">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">Tahmini Değer</span>
-                                            <span class="text-xs text-blue-600 font-semibold">İSTEĞE BAĞLI</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_estimated_value') }}</span>
+                                            <span class="text-xs text-blue-600 font-semibold">{{ __('admin.import.optional') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Lead değeri (sayısal)</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_estimated_value_desc') }}</p>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="utm_source">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">UTM Source</span>
-                                            <span class="text-xs text-blue-600 font-semibold">İSTEĞE BAĞLI</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_utm_source') }}</span>
+                                            <span class="text-xs text-blue-600 font-semibold">{{ __('admin.import.optional') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Trafik kaynağı</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_utm_source_desc') }}</p>
                                         <div class="mt-2">
-                                            <input type="text" id="manual-utm-source" placeholder="Elle girin (opsiyonel)"
+                                            <input type="text" id="manual-utm-source" placeholder="{{ __('admin.import.enter_manually_optional') }}"
                                                    class="w-full px-2 py-1 text-xs border border-admin-300 {{ $isDark ? 'dark:border-admin-500' : '' }} rounded bg-white {{ $isDark ? 'dark:bg-admin-600' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-1 focus:ring-blue-500">
                                         </div>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="utm_campaign">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">UTM Campaign</span>
-                                            <span class="text-xs text-blue-600 font-semibold">İSTEĞE BAĞLI</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_utm_campaign') }}</span>
+                                            <span class="text-xs text-blue-600 font-semibold">{{ __('admin.import.optional') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Kampanya adı</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_utm_campaign_desc') }}</p>
                                         <div class="mt-2">
-                                            <input type="text" id="manual-utm-campaign" placeholder="Elle girin (opsiyonel)"
+                                            <input type="text" id="manual-utm-campaign" placeholder="{{ __('admin.import.enter_manually_optional') }}"
                                                    class="w-full px-2 py-1 text-xs border border-admin-300 {{ $isDark ? 'dark:border-admin-500' : '' }} rounded bg-white {{ $isDark ? 'dark:bg-admin-600' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-1 focus:ring-blue-500">
                                         </div>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="first_name">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">Ad (Ayrı)</span>
-                                            <span class="text-xs text-purple-600 font-semibold">BİRLEŞTİRİLECEK</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_first_name') }}</span>
+                                            <span class="text-xs text-purple-600 font-semibold">{{ __('admin.import.will_be_merged') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Sadece isim - soyad ile birleştirilir</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_first_name_desc') }}</p>
                                     </div>
                                     <div class="system-field p-3 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }}" data-field="last_name">
                                         <div class="flex items-center justify-between">
-                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">Soyad (Ayrı)</span>
-                                            <span class="text-xs text-purple-600 font-semibold">BİRLEŞTİRİLECEK</span>
+                                            <span class="font-medium text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">{{ __('admin.import.field_last_name') }}</span>
+                                            <span class="text-xs text-purple-600 font-semibold">{{ __('admin.import.will_be_merged') }}</span>
                                         </div>
-                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">Sadece soyisim - ad ile birleştirilir</p>
+                                        <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} mt-1">{{ __('admin.import.field_last_name_desc') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -288,11 +288,11 @@
                     <div class="mb-8">
                         <h4 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-4">
                             <i class="fas fa-check-circle mr-2 text-green-600"></i>
-                            Eşleştirme Özeti
+                            {{ __('admin.import.mapping_summary') }}
                         </h4>
                         <div id="mapping-summary" class="bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }} rounded-lg p-4 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }}">
                             <p class="text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-center">
-                                Henüz eşleştirme yapılmadı. Sütunları sürükleyerek eşleştirin.
+                                {{ __('admin.import.no_mapping_done') }}
                             </p>
                         </div>
                     </div>
@@ -302,11 +302,11 @@
                         <button type="button" onclick="goToStep(1)" 
                                 class="inline-flex items-center px-6 py-3 bg-admin-600 hover:bg-admin-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
                             <i class="fas fa-arrow-left mr-2"></i>
-                            Geri: Dosya Seçimi
+                            {{ __('admin.import.back_file_selection') }}
                         </button>
                         <button type="button" id="next-to-step-3" onclick="goToStep(3)" disabled
                                 class="inline-flex items-center px-6 py-3 bg-orange-600 hover:bg-orange-700 disabled:bg-admin-300 disabled:cursor-not-allowed text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
-                            Devam Et: İçe Aktarma
+                            {{ __('admin.import.continue_import') }}
                             <i class="fas fa-arrow-right ml-2"></i>
                         </button>
                     </div>
@@ -318,8 +318,8 @@
         <div id="step-3" class="step-content hidden">
             <div class="bg-white {{ $isDark ? 'dark:bg-admin-800' : '' }} rounded-xl shadow-lg border border-admin-200 {{ $isDark ? 'dark:border-admin-700' : '' }} overflow-hidden">
                 <div class="bg-gradient-to-r from-green-600 to-green-700 px-6 py-5">
-                    <h3 class="text-lg font-medium text-white mb-2">3. Adım: İçe Aktarma İşlemi</h3>
-                    <p class="text-green-100 text-sm">Kullanıcı verilerini sisteme aktarın</p>
+                    <h3 class="text-lg font-medium text-white mb-2">{{ __('admin.import.step3_title') }}</h3>
+                    <p class="text-green-100 text-sm">{{ __('admin.import.step3_description') }}</p>
                 </div>
 
                 <div class="p-8">
@@ -327,7 +327,7 @@
                     <div class="mb-8">
                         <h4 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-4">
                             <i class="fas fa-cog mr-2 text-green-600"></i>
-                            İçe Aktarma Ayarları
+                            {{ __('admin.import.import_settings') }}
                         </h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-4">
@@ -336,11 +336,11 @@
                                         <input type="checkbox" id="skip-duplicates" checked 
                                                class="w-4 h-4 text-blue-600 border-admin-300 rounded focus:ring-blue-500">
                                         <span class="text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
-                                            Mevcut e-postaları atla
+                                            {{ __('admin.import.skip_duplicate_emails') }}
                                         </span>
                                     </label>
                                     <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} ml-7">
-                                        Sistemde zaten bulunan e-posta adreslerini atla
+                                        {{ __('admin.import.skip_duplicate_emails_desc') }}
                                     </p>
                                 </div>
                                 <div>
@@ -348,18 +348,18 @@
                                         <input type="checkbox" id="send-welcome-email" 
                                                class="w-4 h-4 text-blue-600 border-admin-300 rounded focus:ring-blue-500">
                                         <span class="text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">
-                                            Hoş geldiniz e-postası gönder
+                                            {{ __('admin.import.send_welcome_email') }}
                                         </span>
                                     </label>
                                     <p class="text-xs text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} ml-7">
-                                        Yeni kullanıcılara hoş geldiniz e-postası gönder
+                                        {{ __('admin.import.send_welcome_email_desc') }}
                                     </p>
                                 </div>
                             </div>
                             <div class="space-y-4">
                                 <div>
                                     <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
-                                        Varsayılan Lead Status
+                                        {{ __('admin.import.default_lead_status') }}
                                     </label>
                                     <select id="default-lead-status"
                                             class="block w-full px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
@@ -370,14 +370,14 @@
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }} mb-2">
-                                        Batch Boyutu
+                                        {{ __('admin.import.batch_size') }}
                                     </label>
                                     <select id="batch-size" 
                                             class="block w-full px-3 py-2 border border-admin-300 {{ $isDark ? 'dark:border-admin-600' : '' }} rounded-lg bg-white {{ $isDark ? 'dark:bg-admin-700' : '' }} text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                                        <option value="50">50 kayıt</option>
-                                        <option value="100" selected>100 kayıt</option>
-                                        <option value="250">250 kayıt</option>
-                                        <option value="500">500 kayıt</option>
+                                        <option value="50">{{ __('admin.import.records_50') }}</option>
+                                        <option value="100" selected>{{ __('admin.import.records_100') }}</option>
+                                        <option value="250">{{ __('admin.import.records_250') }}</option>
+                                        <option value="500">{{ __('admin.import.records_500') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -388,7 +388,7 @@
                     <div class="mb-8">
                         <h4 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-4">
                             <i class="fas fa-info-circle mr-2 text-blue-600"></i>
-                            İçe Aktarma Özeti
+                            {{ __('admin.import.import_summary_title') }}
                         </h4>
                         <div id="import-summary" class="bg-blue-50 {{ $isDark ? 'dark:bg-blue-900/20' : '' }} border border-blue-200 {{ $isDark ? 'dark:border-blue-700' : '' }} rounded-lg p-4">
                             <!-- Bu kısım JavaScript ile doldurulacak -->
@@ -399,11 +399,11 @@
                     <div id="import-progress" class="hidden mb-8">
                         <h4 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-4">
                             <i class="fas fa-spinner fa-spin mr-2 text-green-600"></i>
-                            İçe Aktarma İlerlemesi
+                            {{ __('admin.import.import_progress_title') }}
                         </h4>
                         <div class="bg-admin-50 {{ $isDark ? 'dark:bg-admin-700' : '' }} rounded-lg p-4 border border-admin-200 {{ $isDark ? 'dark:border-admin-600' : '' }}">
                             <div class="flex items-center justify-between mb-2">
-                                <span class="text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">İlerleme</span>
+                                <span class="text-sm font-medium text-admin-700 {{ $isDark ? 'dark:text-admin-300' : '' }}">{{ __('admin.import.progress') }}</span>
                                 <span id="progress-percentage" class="text-sm font-bold text-green-600">0%</span>
                             </div>
                             <div class="w-full bg-admin-200 {{ $isDark ? 'dark:bg-admin-600' : '' }} rounded-full h-2">
@@ -412,15 +412,15 @@
                             </div>
                             <div class="mt-4 space-y-2">
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">İşlenen:</span>
+                                    <span class="text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.import.processed') }}:</span>
                                     <span id="processed-count" class="font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }}">0</span>
                                 </div>
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">Başarılı:</span>
+                                    <span class="text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.import.successful') }}:</span>
                                     <span id="success-count" class="font-semibold text-green-600">0</span>
                                 </div>
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">Hatalı:</span>
+                                    <span class="text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }}">{{ __('admin.import.errors') }}:</span>
                                     <span id="error-count" class="font-semibold text-red-600">0</span>
                                 </div>
                             </div>
@@ -431,7 +431,7 @@
                     <div id="import-results" class="hidden mb-8">
                         <h4 class="text-lg font-semibold text-admin-900 {{ $isDark ? 'dark:text-admin-100' : '' }} mb-4">
                             <i class="fas fa-check-circle mr-2 text-green-600"></i>
-                            İçe Aktarma Sonuçları
+                            {{ __('admin.import.import_results_title') }}
                         </h4>
                         <div id="results-content" class="space-y-4">
                             <!-- Bu kısım JavaScript ile doldurulacak -->
@@ -443,18 +443,18 @@
                         <button type="button" onclick="goToStep(2)" 
                                 class="inline-flex items-center px-6 py-3 bg-admin-600 hover:bg-admin-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
                             <i class="fas fa-arrow-left mr-2"></i>
-                            Geri: Sütun Eşleştirme
+                            {{ __('admin.import.back_column_mapping') }}
                         </button>
                         <div class="space-x-3">
                             <button type="button" id="start-import" onclick="startImport()" 
                                     class="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
                                 <i class="fas fa-play mr-2"></i>
-                                İçe Aktarmayı Başlat
+                                {{ __('admin.import.start_import') }}
                             </button>
                             <button type="button" id="finish-import" onclick="finishImport()" style="display: none;"
                                     class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200">
                                 <i class="fas fa-check mr-2"></i>
-                                Tamamla
+                                {{ __('admin.import.complete') }}
                             </button>
                         </div>
                     </div>
@@ -561,12 +561,12 @@ function processFile(file) {
     const maxSize = 10 * 1024 * 1024; // 10MB
     
     if (!allowedTypes.includes(file.type) && !file.name.match(/\.(xlsx|xls|csv)$/i)) {
-        showNotification('Desteklenmeyen dosya formatı. Lütfen Excel (.xlsx, .xls) veya CSV dosyası seçin.', 'error');
+        showNotification('{{ __("admin.import.unsupported_format_error") }}', 'error');
         return;
     }
     
     if (file.size > maxSize) {
-        showNotification('Dosya boyutu çok büyük. Maksimum 10MB dosya yükleyebilirsiniz.', 'error');
+        showNotification('{{ __("admin.import.file_size_error") }}', 'error');
         return;
     }
     
@@ -579,7 +579,7 @@ function processFile(file) {
     document.getElementById('file-size').textContent = formatFileSize(file.size);
     document.getElementById('next-to-step-2').disabled = false;
     
-    showNotification('Dosya başarıyla yüklendi!', 'success');
+    showNotification('{{ __("admin.import.file_uploaded_success") }}', 'success');
 }
 
 function removeFile() {
@@ -619,7 +619,7 @@ function parseExcelFile() {
             excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
             
             if (excelData.length === 0) {
-                showNotification('Excel dosyası boş görünüyor.', 'error');
+                showNotification('{{ __("admin.import.empty_file_error") }}', 'error');
                 return;
             }
             
@@ -628,7 +628,7 @@ function parseExcelFile() {
             
         } catch (error) {
             console.error('Excel parsing error:', error);
-            showNotification('Excel dosyası okunurken hata oluştu: ' + error.message, 'error');
+            showNotification('{{ __("admin.import.excel_parse_error") }}: ' + error.message, 'error');
         }
     };
     
@@ -637,9 +637,9 @@ function parseExcelFile() {
 
 function showHeaderDetectionDialog() {
     const firstRowData = excelData[0].map(cell => String(cell || '').substring(0, 15)).join(' | ');
-    const secondRowData = excelData[1] ? excelData[1].map(cell => String(cell || '').substring(0, 15)).join(' | ') : 'Yok';
+    const secondRowData = excelData[1] ? excelData[1].map(cell => String(cell || '').substring(0, 15)).join(' | ') : '{{ __("admin.import.no_data") }}';
     
-    if (confirm(`Excel dosyasının ilk satırı başlık mı?\n\n1. Satır: ${firstRowData}\n2. Satır: ${secondRowData}\n\n"OK" = İlk satır başlık\n"Cancel" = İlk satır veri`)) {
+    if (confirm(`{{ __("admin.import.header_detection_question") }}\n\n{{ __("admin.import.first_row") }}: ${firstRowData}\n{{ __("admin.import.second_row") }}: ${secondRowData}\n\n{{ __("admin.import.ok_header") }}\n{{ __("admin.import.cancel_data") }}`)) {
         hasHeaderRow = true;
     } else {
         hasHeaderRow = false;
@@ -675,7 +675,7 @@ function displayExcelPreview() {
         if (hasHeaderRow && headerData[index]) {
             th.textContent = headerData[index];
         } else {
-            th.textContent = `Sütun ${index + 1}`;
+            th.textContent = `{{ __("admin.import.column") }} ${index + 1}`;
         }
         headerRow.appendChild(th);
     }
@@ -717,12 +717,12 @@ function createColumnMapping() {
         if (hasHeaderRow && excelData[0][index]) {
             columnName = excelData[0][index];
         } else {
-            columnName = `Sütun ${index + 1}`;
+            columnName = `{{ __("admin.import.column") }} ${index + 1}`;
         }
         div.dataset.columnName = columnName;
         
         // Get sample data from first data row
-        let sampleData = 'Veri yok';
+        let sampleData = '{{ __("admin.import.no_data") }}';
         if (excelData[dataStartIndex] && excelData[dataStartIndex][index]) {
             sampleData = String(excelData[dataStartIndex][index]).substring(0, 20) + '...';
         }
@@ -733,7 +733,7 @@ function createColumnMapping() {
                 <i class="fas fa-grip-vertical text-admin-400 ${isDarkMode ? 'dark:text-admin-500' : ''}"></i>
             </div>
             <p class="text-xs text-admin-600 ${isDarkMode ? 'dark:text-admin-400' : ''} mt-1">
-                Örnek: ${sampleData}
+                {{ __("admin.import.sample") }}: ${sampleData}
             </p>
         `;
         
@@ -797,7 +797,7 @@ function updateMappingUI(systemField, columnName) {
         mappedIndicator.className = 'mapped-indicator mt-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-semibold';
         systemField.appendChild(mappedIndicator);
     }
-    mappedIndicator.innerHTML = `<i class="fas fa-link mr-1"></i>Eşleştirildi: ${columnName}`;
+    mappedIndicator.innerHTML = `<i class="fas fa-link mr-1"></i>{{ __("admin.import.mapped") }}: ${columnName}`;
 }
 
 function updateMappingSummary() {
@@ -806,7 +806,7 @@ function updateMappingSummary() {
     if (Object.keys(columnMappings).length === 0) {
         summaryContainer.innerHTML = `
             <p class="text-admin-600 ${isDarkMode ? 'dark:text-admin-400' : ''} text-center">
-                Henüz eşleştirme yapılmadı. Sütunları sürükleyerek eşleştirin.
+                {{ __("admin.import.no_mapping_done") }}
             </p>
         `;
         return;
@@ -816,16 +816,16 @@ function updateMappingSummary() {
     
     Object.entries(columnMappings).forEach(([field, mapping]) => {
         const fieldNames = {
-            'name': 'Ad Soyad',
-            'email': 'E-posta',
-            'phone': 'Telefon',
-            'country': 'Ülke',
-            'username': 'Kullanıcı Adı',
-            'estimated_value': 'Tahmini Değer',
-            'utm_source': 'UTM Source',
-            'utm_campaign': 'UTM Campaign',
-            'first_name': 'Ad (Ayrı)',
-            'last_name': 'Soyad (Ayrı)'
+            'name': '{{ __("admin.import.field_full_name") }}',
+            'email': '{{ __("admin.import.field_email") }}',
+            'phone': '{{ __("admin.import.field_phone") }}',
+            'country': '{{ __("admin.import.field_country") }}',
+            'username': '{{ __("admin.import.field_username") }}',
+            'estimated_value': '{{ __("admin.import.field_estimated_value") }}',
+            'utm_source': '{{ __("admin.import.field_utm_source") }}',
+            'utm_campaign': '{{ __("admin.import.field_utm_campaign") }}',
+            'first_name': '{{ __("admin.import.field_first_name") }}',
+            'last_name': '{{ __("admin.import.field_last_name") }}'
         };
         
         summaryHTML += `
@@ -853,20 +853,20 @@ function checkRequiredMappings() {
     if (mappedRequired.length === requiredFields.length && nameRequirementMet) {
         nextButton.disabled = false;
         if (hasFirstAndLastName && !hasName) {
-            showNotification('Ad ve Soyad alanları birleştirilerek "Ad Soyad" alanı oluşturulacak.', 'info');
+            showNotification('{{ __("admin.import.name_fields_will_be_merged") }}', 'info');
         } else {
-            showNotification('Zorunlu alanlar eşleştirildi. Devam edebilirsiniz.', 'success');
+            showNotification('{{ __("admin.import.required_fields_mapped") }}', 'success');
         }
     } else {
         nextButton.disabled = true;
         let missingMessage = '';
         if (mappedRequired.length < requiredFields.length) {
             const missingFields = requiredFields.filter(field => !columnMappings[field]);
-            missingMessage = `Zorunlu alanlar eksik: ${missingFields.join(', ')}`;
+            missingMessage = `{{ __("admin.import.missing_required_fields") }}: ${missingFields.join(', ')}`;
         }
         if (!nameRequirementMet) {
             if (missingMessage) missingMessage += ' ve ';
-            missingMessage += 'Ad Soyad alanı veya Ad+Soyad (ayrı) alanları gerekli';
+            missingMessage += '{{ __("admin.import.name_field_required") }}';
         }
         showNotification(missingMessage, 'warning');
     }
@@ -887,15 +887,15 @@ function updateImportSummary() {
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div class="text-center">
                 <div class="text-2xl font-bold text-blue-600">${totalRows}</div>
-                <div class="text-sm text-admin-600 ${isDarkMode ? 'dark:text-admin-400' : ''}">Toplam Kayıt</div>
+                <div class="text-sm text-admin-600 ${isDarkMode ? 'dark:text-admin-400' : ''}">{{ __("admin.import.total_records") }}</div>
             </div>
             <div class="text-center">
                 <div class="text-2xl font-bold text-green-600">${mappedFields}</div>
-                <div class="text-sm text-admin-600 ${isDarkMode ? 'dark:text-admin-400' : ''}">Eşleştirilen Alan</div>
+                <div class="text-sm text-admin-600 ${isDarkMode ? 'dark:text-admin-400' : ''}">{{ __("admin.import.mapped_fields") }}</div>
             </div>
             <div class="text-center">
-                <div class="text-2xl font-bold text-orange-600">${Object.keys(columnMappings).includes('email') ? 'Hazır' : 'Eksik'}</div>
-                <div class="text-sm text-admin-600 ${isDarkMode ? 'dark:text-admin-400' : ''}">Durum</div>
+                <div class="text-2xl font-bold text-orange-600">${Object.keys(columnMappings).includes('email') ? '{{ __("admin.import.ready") }}' : '{{ __("admin.import.missing") }}'}</div>
+                <div class="text-sm text-admin-600 ${isDarkMode ? 'dark:text-admin-400' : ''}">{{ __("admin.import.status") }}</div>
             </div>
         </div>
     `;
@@ -904,12 +904,12 @@ function updateImportSummary() {
         summaryHTML += `
             <div class="mt-4 p-3 bg-blue-50 ${isDarkMode ? 'dark:bg-blue-900/20' : ''} border border-blue-200 ${isDarkMode ? 'dark:border-blue-700' : ''} rounded-lg">
                 <h5 class="font-semibold text-blue-900 ${isDarkMode ? 'dark:text-blue-100' : ''} mb-2">
-                    <i class="fas fa-info-circle mr-2"></i>Manuel UTM Değerleri
+                    <i class="fas fa-info-circle mr-2"></i>{{ __("admin.import.manual_utm_values") }}
                 </h5>
                 <div class="text-sm text-blue-800 ${isDarkMode ? 'dark:text-blue-200' : ''}">
                     ${manualUtmSource ? `<div>UTM Source: <strong>${manualUtmSource}</strong></div>` : ''}
                     ${manualUtmCampaign ? `<div>UTM Campaign: <strong>${manualUtmCampaign}</strong></div>` : ''}
-                    <div class="mt-1 text-xs">Bu değerler tüm kayıtlara uygulanacak</div>
+                    <div class="mt-1 text-xs">{{ __("admin.import.values_applied_to_all") }}</div>
                 </div>
             </div>
         `;
@@ -920,12 +920,12 @@ function updateImportSummary() {
 
 function startImport() {
     if (!uploadedFile || excelData.length === 0) {
-        showNotification('Önce bir dosya yükleyin.', 'error');
+        showNotification('{{ __("admin.import.upload_file_first") }}', 'error');
         return;
     }
     
     if (!columnMappings.email) {
-        showNotification('E-posta alanı zorunludur.', 'error');
+        showNotification('{{ __("admin.import.email_field_required") }}', 'error');
         return;
     }
     
@@ -933,7 +933,7 @@ function startImport() {
     const hasName = columnMappings['name'];
     const hasFirstAndLastName = columnMappings['first_name'] && columnMappings['last_name'];
     if (!hasName && !hasFirstAndLastName) {
-        showNotification('Ad Soyad alanı veya Ad+Soyad (ayrı) alanları zorunludur.', 'error');
+        showNotification('{{ __("admin.import.name_fields_required") }}', 'error');
         return;
     }
     
@@ -981,13 +981,13 @@ function processImport(importData) {
             showImportResults(data.results);
             document.getElementById('finish-import').style.display = 'inline-flex';
         } else {
-            showNotification('İçe aktarma hatası: ' + data.message, 'error');
+            showNotification('{{ __("admin.import.import_error") }}: ' + data.message, 'error');
             document.getElementById('start-import').style.display = 'inline-flex';
         }
     })
     .catch(error => {
         console.error('Import error:', error);
-        showNotification('İçe aktarma sırasında hata oluştu.', 'error');
+        showNotification('{{ __("admin.import.import_process_error") }}', 'error');
         document.getElementById('start-import').style.display = 'inline-flex';
     });
 }
@@ -1012,8 +1012,8 @@ function showImportResults(results) {
                 <div class="flex items-center">
                     <i class="fas fa-check-circle text-green-600 mr-3"></i>
                     <div>
-                        <h5 class="font-semibold text-green-900 ${isDarkMode ? 'dark:text-green-100' : ''}">${results.imported} kullanıcı başarıyla içe aktarıldı</h5>
-                        <p class="text-sm text-green-800 ${isDarkMode ? 'dark:text-green-200' : ''}">Tüm kullanıcılar sisteme kaydedildi ve varsayılan şifreler oluşturuldu.</p>
+                        <h5 class="font-semibold text-green-900 ${isDarkMode ? 'dark:text-green-100' : ''}">${results.imported} {{ __("admin.import.users_imported_successfully") }}</h5>
+                        <p class="text-sm text-green-800 ${isDarkMode ? 'dark:text-green-200' : ''}">{{ __("admin.import.users_saved_with_passwords") }}</p>
                     </div>
                 </div>
             </div>
@@ -1027,18 +1027,18 @@ function showImportResults(results) {
                     <div class="flex items-center">
                         <i class="fas fa-copy text-orange-600 mr-3"></i>
                         <div>
-                            <h5 class="font-semibold text-orange-900 ${isDarkMode ? 'dark:text-orange-100' : ''}">${results.duplicates} duplicate kullanıcı tespit edildi</h5>
-                            <p class="text-sm text-orange-800 ${isDarkMode ? 'dark:text-orange-200' : ''}">E-posta veya telefon numarası sistemde zaten mevcut olan kayıtlar atlandı.</p>
+                            <h5 class="font-semibold text-orange-900 ${isDarkMode ? 'dark:text-orange-100' : ''}">${results.duplicates} {{ __("admin.import.duplicate_users_detected") }}</h5>
+                            <p class="text-sm text-orange-800 ${isDarkMode ? 'dark:text-orange-200' : ''}">{{ __("admin.import.duplicate_records_skipped") }}</p>
                             ${results.duplicateDetails && results.duplicateDetails.length > 0 ? `
                                 <div class="mt-2 max-h-24 overflow-y-auto">
                                     ${results.duplicateDetails.slice(0, 3).map(dup => `
                                         <div class="text-xs text-orange-700 ${isDarkMode ? 'dark:text-orange-300' : ''} mb-1">
-                                            Satır ${dup.row}: ${dup.email} (${dup.type})
+                                            {{ __("admin.import.row") }} ${dup.row}: ${dup.email} (${dup.type})
                                         </div>
                                     `).join('')}
                                     ${results.duplicateDetails.length > 3 ? `
                                         <div class="text-xs text-orange-600 ${isDarkMode ? 'dark:text-orange-400' : ''} font-semibold">
-                                            ... ve ${results.duplicateDetails.length - 3} kayıt daha
+                                            ... {{ __("admin.import.and_more_records", {count: results.duplicateDetails.length - 3}) }}
                                         </div>
                                     ` : ''}
                                 </div>
@@ -1049,7 +1049,7 @@ function showImportResults(results) {
                         <a href="${results.duplicateFile.url}"
                            class="inline-flex items-center px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded-lg shadow-sm transition-colors duration-200">
                             <i class="fas fa-download mr-2"></i>
-                            Duplicate Excel İndir
+                            {{ __("admin.import.download_duplicate_excel") }}
                         </a>
                     ` : ''}
                 </div>
@@ -1063,8 +1063,8 @@ function showImportResults(results) {
                 <div class="flex items-center">
                     <i class="fas fa-exclamation-triangle text-yellow-600 mr-3"></i>
                     <div>
-                        <h5 class="font-semibold text-yellow-900 ${isDarkMode ? 'dark:text-yellow-100' : ''}">${results.skipped} kayıt atlandı</h5>
-                        <p class="text-sm text-yellow-800 ${isDarkMode ? 'dark:text-yellow-200' : ''}">Çeşitli nedenlerle işlenemeyen kayıtlar.</p>
+                        <h5 class="font-semibold text-yellow-900 ${isDarkMode ? 'dark:text-yellow-100' : ''}">${results.skipped} {{ __("admin.import.records_skipped") }}</h5>
+                        <p class="text-sm text-yellow-800 ${isDarkMode ? 'dark:text-yellow-200' : ''}">{{ __("admin.import.records_skipped_reason") }}</p>
                     </div>
                 </div>
             </div>
@@ -1077,11 +1077,11 @@ function showImportResults(results) {
                 <div class="flex items-start">
                     <i class="fas fa-exclamation-circle text-red-600 mr-3 mt-1"></i>
                     <div class="flex-1">
-                        <h5 class="font-semibold text-red-900 ${isDarkMode ? 'dark:text-red-100' : ''} mb-2">${results.errors} kayıtta hata oluştu</h5>
+                        <h5 class="font-semibold text-red-900 ${isDarkMode ? 'dark:text-red-100' : ''} mb-2">${results.errors} {{ __("admin.import.records_with_errors") }}</h5>
                         <div class="max-h-32 overflow-y-auto">
                             ${results.errorDetails.slice(0, 5).map(error => `
                                 <div class="text-sm text-red-800 ${isDarkMode ? 'dark:text-red-200' : ''} mb-1">
-                                    Satır ${error.row}: ${error.errors.join(', ')}
+                                    {{ __("admin.import.row") }} ${error.row}: ${error.errors.join(', ')}
                                 </div>
                             `).join('')}
                         </div>
