@@ -12,15 +12,33 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('settings', function (Blueprint $table) {
-            $table->string('timezone', 50)->nullable()->default('UTC')->after('contact_email');
-            $table->string('install_type')->nullable()->after('timezone');
-            $table->string('merchant_key')->nullable()->after('install_type');
-            $table->string('welcome_message')->nullable()->after('merchant_key');
-            $table->string('whatsapp')->nullable()->after('welcome_message');
-            $table->string('twak')->nullable()->after('whatsapp');
-            $table->string('tido')->nullable()->after('twak');
-            $table->string('trading_winrate')->nullable()->after('tido');
-            $table->string('usertheme')->nullable()->after('trading_winrate');
+            if (!Schema::hasColumn('settings', 'timezone')) {
+                $table->string('timezone', 50)->nullable()->default('UTC')->after('contact_email');
+            }
+            if (!Schema::hasColumn('settings', 'install_type')) {
+                $table->string('install_type')->nullable()->after('timezone');
+            }
+            if (!Schema::hasColumn('settings', 'merchant_key')) {
+                $table->string('merchant_key')->nullable()->after('install_type');
+            }
+            if (!Schema::hasColumn('settings', 'welcome_message')) {
+                $table->string('welcome_message')->nullable()->after('merchant_key');
+            }
+            if (!Schema::hasColumn('settings', 'whatsapp')) {
+                $table->string('whatsapp')->nullable()->after('welcome_message');
+            }
+            if (!Schema::hasColumn('settings', 'twak')) {
+                $table->string('twak')->nullable()->after('whatsapp');
+            }
+            if (!Schema::hasColumn('settings', 'tido')) {
+                $table->string('tido')->nullable()->after('twak');
+            }
+            if (!Schema::hasColumn('settings', 'trading_winrate')) {
+                $table->string('trading_winrate')->nullable()->after('tido');
+            }
+            if (!Schema::hasColumn('settings', 'usertheme')) {
+                $table->string('usertheme')->nullable()->after('trading_winrate');
+            }
         });
     }
 
