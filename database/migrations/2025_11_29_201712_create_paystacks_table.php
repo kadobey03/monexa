@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('paystacks', function (Blueprint $table) {
-            $table->id();
-            $table->string('paystack_public_key')->nullable();
-            $table->string('paystack_secret_key')->nullable();
-            $table->string('paystack_url')->nullable();
-            $table->string('paystack_email')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('paystacks')) {
+            Schema::create('paystacks', function (Blueprint $table) {
+                $table->id();
+                $table->string('paystack_public_key')->nullable();
+                $table->string('paystack_secret_key')->nullable();
+                $table->string('paystack_url')->nullable();
+                $table->string('paystack_email')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

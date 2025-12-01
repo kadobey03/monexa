@@ -168,7 +168,26 @@
                 toggleMobileMenu();
             }
         });
+
+        // Language change function
+        function changeLanguage(lang) {
+            // Add language switching logic here
+            if (lang === 'tr') {
+                // Switch to Turkish
+                console.log('Switching to Turkish');
+                // You can add actual language switching logic here
+            } else if (lang === 'ru') {
+                // Switch to Russian
+                console.log('Switching to Russian');
+                // You can add actual language switching logic here
+            }
+            // Close dropdown after selection
+            closeDropdown('language-dropdown');
+        }
     </script>
+
+    <!-- Flag Icons CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@6.6.6/css/flag-icons.min.css">
 
 </head>
 
@@ -329,36 +348,36 @@
 
                     <!-- Right Navigation -->
                     <div class="hidden md:flex items-center space-x-4">
-                        <!-- Platform Icons -->
-                        <div class="flex items-center space-x-2">
-                            <a href="#"
-                               class="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-800 rounded-md transition-colors duration-200"
-                               aria-label="Desktop Version">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"/>
+                        <!-- Language Selector -->
+                        <div class="relative dropdown-container">
+                            <button onclick="toggleDropdown('language-dropdown')"
+                                    class="group inline-flex items-center px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg transition-all duration-200 border border-gray-600 hover:border-gray-500">
+                                <span class="fi fi-tr mr-3 text-lg"></span>
+                                <span class="hidden lg:inline mr-2">Türkçe</span>
+                                <span class="lg:hidden mr-2">TR</span>
+                                <svg class="ml-1 h-4 w-4 text-gray-400 group-hover:text-gray-300 transition-colors duration-200"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 20 20"
+                                     fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
-                            </a>
-                            <a href="#"
-                               class="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-800 rounded-md transition-colors duration-200"
-                               aria-label="Windows App">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M3 4a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4zM9 3a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V3zM9 9a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V9z"/>
-                                </svg>
-                            </a>
-                            <a href="#"
-                               class="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-800 rounded-md transition-colors duration-200"
-                               aria-label="Android App">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M8 2a1 1 0 000 2h4a1 1 0 100-2H8zM5 5a1 1 0 000 2h10a1 1 0 100-2H5zM3 9a1 1 0 100 2h14a1 1 0 100-2H3zM3 14a1 1 0 100 2h14a1 1 0 100-2H3z"/>
-                                </svg>
-                            </a>
-                            <a href="#"
-                               class="p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-800 rounded-md transition-colors duration-200"
-                               aria-label="iOS App">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M17 2a1 1 0 011 1v1h1a2 2 0 012 2v11a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 112 0v1h6V3a1 1 0 011-1zM5 8v10h10V8H5zm2 3a1 1 0 100-2 1 1 0 000 2zm4 0a1 1 0 100-2 1 1 0 000 2z"/>
-                                </svg>
-                            </a>
+                            </button>
+                            <div id="language-dropdown"
+                                 class="absolute right-0 mt-2 w-40 rounded-lg shadow-xl bg-gray-800 border border-gray-700 py-2 opacity-0 scale-95 invisible transition-all duration-200 transform-gpu dropdown-menu z-50">
+                                <a href="#" onclick="changeLanguage('tr')"
+                                   class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
+                                    <span class="fi fi-tr mr-3 text-lg"></span>
+                                    <span>Türkçe</span>
+                                    <svg class="ml-auto h-4 w-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </a>
+                                <a href="#" onclick="changeLanguage('ru')"
+                                   class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200">
+                                    <span class="fi fi-ru mr-3 text-lg"></span>
+                                    <span>Русский</span>
+                                </a>
+                            </div>
                         </div>
 
                         <!-- Auth Buttons -->
