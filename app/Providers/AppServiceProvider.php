@@ -83,6 +83,14 @@ class AppServiceProvider extends ServiceProvider
             View::share('terms', $terms);
             View::share('moresettings', $moreset);
             View::share('mod', $settings->modules ?? null);
+            
+            // Admin count for sidebar
+            try {
+                $activeManagers = \App\Models\Admin::where('status', 'Active')->count();
+                View::share('activeManagers', $activeManagers);
+            } catch (\Exception $e) {
+                View::share('activeManagers', 0);
+            }
         } catch (\Exception $e) {
             // Database might not be ready during migrations or initial setup
             // Create fallback settings object instead of null

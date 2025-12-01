@@ -46,7 +46,7 @@
                            name="firstName" 
                            value="{{ old('firstName') }}"
                            required
-                           class="admin-input w-full @error('firstName') border-red-500 @enderror"
+                           class="w-full px-4 py-3 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-admin-400 dark:placeholder-admin-500 @error('firstName') border-red-500 @enderror"
                            placeholder="Adı girin">
                     @error('firstName')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -63,7 +63,7 @@
                            name="lastName" 
                            value="{{ old('lastName') }}"
                            required
-                           class="admin-input w-full @error('lastName') border-red-500 @enderror"
+                           class="w-full px-4 py-3 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-admin-400 dark:placeholder-admin-500 @error('lastName') border-red-500 @enderror"
                            placeholder="Soyadı girin">
                     @error('lastName')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -80,7 +80,7 @@
                            name="email" 
                            value="{{ old('email') }}"
                            required
-                           class="admin-input w-full @error('email') border-red-500 @enderror"
+                           class="w-full px-4 py-3 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-admin-400 dark:placeholder-admin-500 @error('email') border-red-500 @enderror"
                            placeholder="ornek@email.com">
                     @error('email')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -96,60 +96,15 @@
                     <input type="text" 
                            name="phone" 
                            value="{{ old('phone') }}"
-                           class="admin-input w-full @error('phone') border-red-500 @enderror"
+                           class="w-full px-4 py-3 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-admin-400 dark:placeholder-admin-500 @error('phone') border-red-500 @enderror"
                            placeholder="+90 555 123 45 67">
                     @error('phone')
                         <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror
                 </div>
                 
-                <!-- Employee ID -->
-                <div>
-                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <x-heroicon name="id-card" class="w-4 h-4 inline mr-1" />
-                        Çalışan ID
-                    </label>
-                    <input type="text" 
-                           name="employee_id" 
-                           value="{{ old('employee_id') }}"
-                           class="admin-input w-full @error('employee_id') border-red-500 @enderror"
-                           placeholder="EMP001">
-                    @error('employee_id')
-                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <!-- Position -->
-                <div>
-                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <x-heroicon name="briefcase" class="w-4 h-4 inline mr-1" />
-                        Pozisyon
-                    </label>
-                    <input type="text" 
-                           name="position" 
-                           value="{{ old('position') }}"
-                           class="admin-input w-full @error('position') border-red-500 @enderror"
-                           placeholder="Kıdemli Satış Uzmanı">
-                    @error('position')
-                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                    @enderror
-                </div>
             </div>
             
-            <!-- Bio -->
-            <div class="mt-6">
-                <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                    <x-heroicon name="file-text" class="w-4 h-4 inline mr-1" />
-                    Kısa Biografi
-                </label>
-                <textarea name="bio" 
-                          rows="3"
-                          class="admin-input w-full @error('bio') border-red-500 @enderror"
-                          placeholder="Kısaca kendinizi tanıtın...">{{ old('bio') }}</textarea>
-                @error('bio')
-                    <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                @enderror
-            </div>
             
             <!-- Avatar Upload -->
             <div class="mt-6">
@@ -171,7 +126,7 @@
                                name="avatar" 
                                id="avatarInput"
                                accept="image/*"
-                               class="admin-input w-full @error('avatar') border-red-500 @enderror">
+                               class="w-full px-4 py-3 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-admin-600 dark:file:text-admin-200 @error('avatar') border-red-500 @enderror">
                         <p class="text-xs text-admin-500 mt-1">JPG, PNG, GIF formatında maksimum 2MB</p>
                         @error('avatar')
                             <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
@@ -200,7 +155,7 @@
                     <select name="role_id" 
                             id="roleSelect"
                             required
-                            class="admin-input w-full @error('role_id') border-red-500 @enderror">
+                            class="w-full px-4 py-3 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 @error('role_id') border-red-500 @enderror">
                         <option value="">Rol seçin</option>
                         @foreach($roles as $role)
                             <option value="{{ $role->id }}" 
@@ -228,7 +183,7 @@
                         Süpervizör
                     </label>
                     <select name="supervisor_id" 
-                            class="admin-input w-full @error('supervisor_id') border-red-500 @enderror">
+                            class="w-full px-4 py-3 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 @error('supervisor_id') border-red-500 @enderror">
                         <option value="">Süpervizör seçin (isteğe bağlı)</option>
                         @foreach($supervisors as $supervisor)
                             <option value="{{ $supervisor->id }}" 
@@ -253,7 +208,7 @@
                     </label>
                     <select name="department" 
                             required
-                            class="admin-input w-full @error('department') border-red-500 @enderror">
+                            class="w-full px-4 py-3 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 @error('department') border-red-500 @enderror">
                         <option value="">Departman seçin</option>
                         @foreach($departments as $key => $dept)
                             <option value="{{ $key }}" {{ old('department') == $key ? 'selected' : '' }}>
@@ -273,7 +228,7 @@
                         Yönetici Grubu
                     </label>
                     <select name="admin_group_id" 
-                            class="admin-input w-full @error('admin_group_id') border-red-500 @enderror">
+                            class="w-full px-4 py-3 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 @error('admin_group_id') border-red-500 @enderror">
                         <option value="">Grup seçin (isteğe bağlı)</option>
                         @foreach($adminGroups as $group)
                             <option value="{{ $group->id }}" {{ old('admin_group_id') == $group->id ? 'selected' : '' }}>
@@ -288,82 +243,6 @@
             </div>
         </div>
 
-        <!-- Performance & Goals -->
-        <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700 mt-6">
-            <div class="flex items-center space-x-3 mb-6">
-                <div class="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg flex items-center justify-center">
-                    <x-heroicon name="view-finder" class="w-4 h-4 text-white" />
-                </div>
-                <h2 class="text-xl font-bold text-admin-900 dark:text-white">Performans ve Hedefler</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Monthly Target -->
-                <div>
-                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <x-heroicon name="view-finder" class="w-4 h-4 inline mr-1" />
-                        Aylık Hedef
-                    </label>
-                    <div class="relative">
-                        <input type="number" 
-                               name="monthly_target" 
-                               value="{{ old('monthly_target') }}"
-                               step="0.01"
-                               min="0"
-                               class="admin-input w-full pl-8 @error('monthly_target') border-red-500 @enderror"
-                               placeholder="10000">
-                        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-admin-400">₺</span>
-                    </div>
-                    @error('monthly_target')
-                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <!-- Max Leads Per Day -->
-                <div>
-                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <x-heroicon name="users" class="w-4 h-4 inline mr-1" />
-                        Günlük Max Lead
-                    </label>
-                    <input type="number" 
-                           name="max_leads_per_day" 
-                           value="{{ old('max_leads_per_day', 50) }}"
-                           min="1"
-                           max="500"
-                           class="admin-input w-full @error('max_leads_per_day') border-red-500 @enderror"
-                           placeholder="50">
-                    @error('max_leads_per_day')
-                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <!-- Time Zone -->
-                <div>
-                    <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
-                        <x-heroicon name="clock" class="w-4 h-4 inline mr-1" />
-                        Saat Dilimi
-                    </label>
-                    <select name="time_zone" 
-                            class="admin-input w-full @error('time_zone') border-red-500 @enderror">
-                        <option value="Europe/Istanbul" {{ old('time_zone', 'Europe/Istanbul') == 'Europe/Istanbul' ? 'selected' : '' }}>
-                            İstanbul (UTC+3)
-                        </option>
-                        <option value="UTC" {{ old('time_zone') == 'UTC' ? 'selected' : '' }}>
-                            UTC (UTC+0)
-                        </option>
-                        <option value="Europe/London" {{ old('time_zone') == 'Europe/London' ? 'selected' : '' }}>
-                            Londra (UTC+0/+1)
-                        </option>
-                        <option value="America/New_York" {{ old('time_zone') == 'America/New_York' ? 'selected' : '' }}>
-                            New York (UTC-5/-4)
-                        </option>
-                    </select>
-                    @error('time_zone')
-                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
-                    @enderror
-                </div>
-            </div>
-        </div>
 
         <!-- Security -->
         <div class="bg-white dark:bg-admin-800 rounded-2xl shadow-elegant dark:shadow-glass-dark p-6 border border-admin-200 dark:border-admin-700 mt-6">
@@ -386,7 +265,7 @@
                                name="password" 
                                id="passwordInput"
                                required
-                               class="admin-input w-full pr-10 @error('password') border-red-500 @enderror"
+                               class="w-full px-4 py-3 pr-10 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-admin-400 dark:placeholder-admin-500 @error('password') border-red-500 @enderror"
                                placeholder="En az 8 karakter">
                         <button type="button" 
                                 id="togglePassword"
@@ -421,7 +300,7 @@
                                name="password_confirmation" 
                                id="passwordConfirmationInput"
                                required
-                               class="admin-input w-full pr-10 @error('password_confirmation') border-red-500 @enderror"
+                               class="w-full px-4 py-3 pr-10 border border-admin-300 dark:border-admin-600 dark:bg-admin-700 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 placeholder-admin-400 dark:placeholder-admin-500 @error('password_confirmation') border-red-500 @enderror"
                                placeholder="Şifrenizi tekrar girin">
                         <button type="button" 
                                 id="togglePasswordConfirmation"

@@ -28,12 +28,12 @@
                     
                     <!-- Title -->
                     <h1 class="mb-4 text-4xl font-bold lg:text-5xl">
-                        {{ __('admin.dashboard.welcome_message') }}
+                        {{ __('admin.dashboard.welcome_message', ['name' => Auth('admin')->user()->firstName . ' ' . Auth('admin')->user()->lastName]) }}
                     </h1>
                     
-                    <!-- Greeting -->
-                    <p class="mb-4 text-xl text-primary-100">
-                        {{ Auth('admin')->user()->firstName }} {{ Auth('admin')->user()->lastName }}
+                    <!-- Additional info if needed -->
+                    <p class="mb-4 text-xl text-primary-100 opacity-90">
+                        {{ __('admin.dashboard.control_panel') }}
                     </p>
                     
                     <!-- Date Time -->

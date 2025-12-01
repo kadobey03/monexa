@@ -560,6 +560,32 @@ class AdminAppSettingsPhrasesSeeder extends Seeder
                     'tr' => 'Kaydet',
                     'ru' => 'Сохранить',
                 ],
+
+                // Communication Integration Settings
+                'admin.settings.app.webinfo.telegram_link' => [
+                    'tr' => 'Telegram Linki',
+                    'ru' => 'Ссылка Telegram',
+                ],
+                'admin.settings.app.webinfo.telegram_link_placeholder' => [
+                    'tr' => 'https://t.me/yourtelegram',
+                    'ru' => 'https://t.me/yourtelegram',
+                ],
+                'admin.settings.app.webinfo.tawk_to_code' => [
+                    'tr' => 'Tawk.to Widget Kodu',
+                    'ru' => 'Код виджета Tawk.to',
+                ],
+                'admin.settings.app.webinfo.tawk_to_code_placeholder' => [
+                    'tr' => 'Tawk.to widget kodunuzu buraya yapıştırın',
+                    'ru' => 'Вставьте сюда код виджета Tawk.to',
+                ],
+                'admin.settings.app.webinfo.tawk_to_help' => [
+                    'tr' => 'Tawk.to admin panelinden aldığınız widget kodunu buraya yapıştırın. Bu kod canlı sohbet özelliğini etkinleştirecektir.',
+                    'ru' => 'Вставьте код виджета, полученный из панели администратора Tawk.to. Этот код активирует функцию живого чата.',
+                ],
+                'admin.settings.app.webinfo.communication_integrations' => [
+                    'tr' => 'İletişim Entegrasyonları',
+                    'ru' => 'Интеграции связи',
+                ],
             ];
 
             foreach ($phrases as $key => $translations) {

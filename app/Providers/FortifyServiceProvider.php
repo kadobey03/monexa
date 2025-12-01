@@ -38,52 +38,8 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
-        // Login validation - Production'da güvenli çalışması için özel validation ekleyelim
-        Fortify::authenticateUsing(function (Request $request) {
-            try {
-                // Validation rules
-                $request->validate([
-                    'email' => ['required', 'email'],
-                    'password' => ['required', 'string']
-                ], [
-                    'email.required' => 'E-posta adresi gereklidir.',
-                    'email.email' => 'Geçerli bir e-posta adresi giriniz.',
-                    'password.required' => 'Şifre gereklidir.',
-                ]);
-
-                $user = \App\Models\User::where('email', $request->email)->first();
-
-                if ($user && \Hash::check($request->password, $user->password)) {
-                    // Kullanıcı banned kontrolü
-                    if ($user->status === 'blocked' || $user->status === 'banned') {
-                        throw \Illuminate\Validation\ValidationException::withMessages([
-                            'email' => ['Hesabınız askıya alınmıştır. Lütfen destek ekibi ile iletişime geçin.']
-                        ]);
-                    }
-                    
-                    return $user;
-                }
-
-                // Hatalı credentials için validation exception
-                throw \Illuminate\Validation\ValidationException::withMessages([
-                    'email' => ['E-posta adresi veya şifre hatalı.']
-                ]);
-
-            } catch (\Illuminate\Validation\ValidationException $e) {
-                throw $e;
-            } catch (\Exception $e) {
-                // Production'da beklenmeyen hatalar için fallback
-                \Log::error('Login error: ' . $e->getMessage(), [
-                    'email' => $request->email,
-                    'ip' => $request->ip(),
-                    'user_agent' => $request->userAgent()
-                ]);
-                
-                throw \Illuminate\Validation\ValidationException::withMessages([
-                    'email' => ['Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyiniz.']
-                ]);
-            }
-        });
+        // Login authentication handled by custom LoginController
+        // @see App\Http\Controllers\Auth\LoginController
         
         RateLimiter::for('login', function (Request $request) {
             return Limit::perMinute(5)->by($request->email.$request->ip());

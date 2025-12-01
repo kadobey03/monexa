@@ -187,7 +187,7 @@
                     <div id="language-dropdown"
                          class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                         <div class="py-2">
-                            <a href="{{ route('language.switch', 'tr') }}"
+                            <a href="{{ route('language.change', 'tr') }}"
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ Session::get('locale', 'tr') === 'tr' ? 'bg-indigo-50 text-indigo-600' : '' }}">
                                 <span class="flag-icon w-4 h-4 mr-3 rounded">🇹🇷</span>
                                 {{ __('admin.topmenu.language.turkish') }}
@@ -195,7 +195,7 @@
                                     <i class="fas fa-check ml-auto text-indigo-600"></i>
                                 @endif
                             </a>
-                            <a href="{{ route('language.switch', 'ru') }}"
+                            <a href="{{ route('language.change', 'ru') }}"
                                class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200 {{ Session::get('locale', 'tr') === 'ru' ? 'bg-indigo-50 text-indigo-600' : '' }}">
                                 <span class="flag-icon w-4 h-4 mr-3 rounded">🇷🇺</span>
                                 {{ __('admin.topmenu.language.russian') }}

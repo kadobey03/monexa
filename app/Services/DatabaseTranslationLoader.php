@@ -73,24 +73,12 @@ class DatabaseTranslationLoader implements Loader
             // Language ID mapping: tr=1, ru=2, en=3
             $languageId = $locale === 'tr' ? 1 : ($locale === 'ru' ? 2 : 3);
             
-            // DEBUG LOG - Translation Loading
-            logger()->info("🔄 DatabaseTranslationLoader STARTED", [
-                'locale' => $locale,
-                'group' => $group,
-                'language_id' => $languageId,
-                'cache_key' => $key
-            ]);
-            
             // Database'den grup ile başlayan tüm key'leri yükle
+            // Not: Laravel'in group parametresi ile Phrase.group field'ı farklı olabilir
+            // Key pattern'e göre arama yap, group field'ını yoksay
             $phrases = \App\Models\Phrase::with(['translations' => function($query) use ($languageId) {
                 $query->where('language_id', $languageId);
             }])->where('key', 'LIKE', $group . '.%')->get();
-            
-            // DEBUG LOG - Query Results
-            logger()->info("🔄 DatabaseTranslationLoader PHRASES FOUND", [
-                'total_phrases' => $phrases->count(),
-                'phrases_with_translations' => $phrases->filter(function($p) { return $p->translations->isNotEmpty(); })->count()
-            ]);
             
             // Laravel'in beklediği nested array formatına çevir
             $result = [];
@@ -103,23 +91,8 @@ class DatabaseTranslationLoader implements Loader
                     
                     // Nested array formatına çevir
                     $this->setNestedArrayValue($result, $keyWithoutGroup, $translation);
-                    
-                    // DEBUG LOG - Sample translations
-                    if(count($result) <= 3) {
-                        logger()->info("🔄 DatabaseTranslationLoader SAMPLE TRANSLATION", [
-                            'full_key' => $phrase->key,
-                            'nested_key' => $keyWithoutGroup,
-                            'translation' => $translation
-                        ]);
-                    }
                 }
             }
-            
-            // DEBUG LOG - Final Result
-            logger()->info("🔄 DatabaseTranslationLoader COMPLETED", [
-                'result_count' => count($result),
-                'first_keys' => array_slice(array_keys($result), 0, 5)
-            ]);
             
             // Cache'e kaydet
             $this->loaded[$key] = $result;
@@ -290,24 +263,25 @@ class DatabaseTranslationLoader implements Loader
         $keys = explode('.', $key);
         $current = &$array;
 
-        foreach ($keys as $k) {
-            if (!isset($current[$k]) || !is_array($current[$k])) {
+        // Son key hariç tüm key'ler için nested array yaratma
+        for ($i = 0; $i < count($keys) - 1; $i++) {
+            $k = $keys[$i];
+            
+            // CRITICAL FIX: Eğer key zaten string bir değere sahipse ve nested path geliyorsa,
+            // bu bir çakışma durumudur. Örnek: deposits.status = "Durum" varken
+            // deposits.status.processed geliyor. Bu durumda string değeri koruyoruz.
+            if (!isset($current[$k])) {
                 $current[$k] = [];
+            } elseif (!is_array($current[$k])) {
+                // String değer var, ama nested path geliyor - bu çakışma durumu
+                // String değeri koruyoruz ve nested path'i atlıyoruz
+                return; // Çakışma durumunda işlemi durdur
             }
             $current = &$current[$k];
         }
 
-        // Son seviyede değeri ata
-        if (count($keys) > 1) {
-            $lastKey = array_pop($keys);
-            $current = &$array;
-            foreach ($keys as $k) {
-                $current = &$current[$k];
-            }
-            $current[$lastKey] = $value;
-        } else {
-            // Tek seviye key (nokta yok)
-            $array[$key] = $value;
-        }
+        // Son key'e değeri ata
+        $lastKey = end($keys);
+        $current[$lastKey] = $value;
     }
 }

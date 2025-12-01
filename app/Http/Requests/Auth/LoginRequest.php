@@ -195,7 +195,7 @@ class LoginRequest extends FormRequest
         if (!$user) {
             $this->logSecurityEvent('email_not_found');
             throw ValidationException::withMessages([
-                'email' => ['Bu e-posta adresi ile kayıtlı bir hesap bulunamadı. Kayıt olmak için üye ol sekmesini kullanın.'],
+                'email' => ['Bu e-posta adresiyle kayıtlı bir hesabımız bulunmamaktadır. <a href="' . route('register') . '" class="text-blue-600 hover:text-blue-500 underline font-semibold">Hemen hesap oluşturun</a>.'],
             ]);
         }
 
@@ -234,10 +234,16 @@ class LoginRequest extends FormRequest
             $this->logSecurityEvent('wrong_password');
             $this->incrementFailedAttempts($user);
             
-            $remainingAttempts = max(0, 5 - ($user->failed_login_attempts ?? 0));
-            throw ValidationException::withMessages([
-                'password' => ["Şifreniz hatalı. Kalan deneme hakkınız: {$remainingAttempts}. Şifremi unuttum seçeneğini kullanabilirsiniz."],
-            ]);
+            $remainingAttempts = max(0, 3 - ($user->failed_login_attempts ?? 0));
+            if ($remainingAttempts > 0) {
+                throw ValidationException::withMessages([
+                    'email' => ["Şifreniz yanlış! Kalan deneme hakkınız: {$remainingAttempts}"],
+                ]);
+            } else {
+                throw ValidationException::withMessages([
+                    'email' => ['Şifreniz 3 kez yanlış girildi. Hesabınız 15 dakika boyunca kilitlendi. Lütfen daha sonra tekrar deneyin.'],
+                ]);
+            }
         }
 
         // Bu noktaya gelinmemesi gerekir
@@ -257,9 +263,9 @@ class LoginRequest extends FormRequest
             'failed_login_attempts' => $attempts,
         ];
 
-        // 5 başarısız denemeden sonra hesabı kilitle
-        if ($attempts >= 5) {
-            $updateData['locked_until'] = now()->addMinutes(30);
+        // 3 başarısız denemeden sonra hesabı 15 dakika kilitle
+        if ($attempts >= 3) {
+            $updateData['locked_until'] = now()->addMinutes(15);
             $this->logSecurityEvent('account_auto_locked', [
                 'failed_attempts' => $attempts,
                 'locked_until' => $updateData['locked_until'],

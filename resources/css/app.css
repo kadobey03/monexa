@@ -26,3 +26,59 @@
 .form-input {
   @apply w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500;
 }
+
+.admin-input {
+  @apply w-full px-3 py-2.5 border border-admin-200 bg-white text-admin-900 rounded-lg shadow-sm transition-colors duration-200;
+  @apply placeholder:text-admin-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
+  @apply disabled:bg-admin-50 disabled:text-admin-400 disabled:cursor-not-allowed;
+}
+
+/* Dark mode styles with !important to override conflicting styles */
+.dark .admin-input {
+  background-color: #1e293b !important;  /* admin-800 */
+  border-color: #334155 !important;      /* admin-700 */
+  color: #f1f5f9 !important;            /* admin-100 */
+}
+
+.dark .admin-input::placeholder {
+  color: #64748b !important;            /* admin-500 */
+}
+
+.dark .admin-input:focus {
+  ring-color: rgba(96, 165, 250, 0.5) !important;  /* primary-400 with opacity */
+  border-color: #60a5fa !important;     /* primary-400 */
+}
+
+.admin-input:hover:not(:disabled) {
+  @apply border-admin-300;
+}
+
+.dark .admin-input:hover:not(:disabled) {
+  border-color: #475569 !important;     /* admin-600 */
+}
+
+.admin-input.error {
+  @apply border-red-500 bg-red-50 text-red-900 focus:ring-red-500 focus:border-red-500;
+}
+
+.dark .admin-input.error {
+  border-color: #f87171 !important;     /* red-400 */
+  background-color: rgba(127, 29, 29, 0.2) !important;  /* red-900/20 */
+  color: #fef2f2 !important;            /* red-100 */
+}
+
+.dark .admin-input:disabled {
+  background-color: #0f172a !important; /* admin-900 */
+  color: #475569 !important;            /* admin-600 */
+}
+
+/* Icon visibility fix for dark mode */
+.dark .admin-input + .absolute svg,
+.dark .admin-input ~ .absolute svg {
+  color: #94a3b8 !important;            /* admin-400 */
+}
+
+.dark .admin-input:focus + .absolute svg,
+.dark .admin-input:focus ~ .absolute svg {
+  color: #60a5fa !important;            /* primary-400 */
+}

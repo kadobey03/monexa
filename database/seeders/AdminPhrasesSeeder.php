@@ -119,6 +119,10 @@ class AdminPhrasesSeeder extends Seeder
                 ],
 
                 // Admin Dashboard
+                'admin.dashboard.title' => [
+                    'tr' => 'Kontrol Paneli',
+                    'ru' => 'Панель управления'
+                ],
                 'admin.dashboard.welcome' => [
                     'tr' => 'Hoş Geldiniz!',
                     'ru' => 'Добро пожаловать!'
@@ -354,6 +358,62 @@ class AdminPhrasesSeeder extends Seeder
                 'admin.notifications.info' => [
                     'tr' => 'Bilgi',
                     'ru' => 'Информация'
+                ],
+
+                // Additional requested phrases
+                'admin.common.search_users' => [
+                    'tr' => 'Kullanıcı Ara',
+                    'ru' => 'Поиск пользователей'
+                ],
+                'admin.profile.account_settings' => [
+                    'tr' => 'Hesap Ayarları',
+                    'ru' => 'Настройки аккаунта'
+                ],
+                'admin.common.language_selection' => [
+                    'tr' => 'Dil Seçimi',
+                    'ru' => 'Выбор языка'
+                ],
+                'admin.notifications.login' => [
+                    'tr' => 'Giriş Bildirimi',
+                    'ru' => 'Уведомление о входе'
+                ],
+                'admin.common.new' => [
+                    'tr' => 'Yeni',
+                    'ru' => 'Новый'
+                ],
+                'admin.profile.logout' => [
+                    'tr' => 'Çıkış Yap',
+                    'ru' => 'Выйти'
+                ],
+
+                // User management phrases
+                'admin.users.status' => [
+                    'tr' => 'Durum',
+                    'ru' => 'Статус'
+                ],
+                'admin.actions.operations' => [
+                    'tr' => 'İşlemler',
+                    'ru' => 'Операции'
+                ],
+
+                // Admin Top Menu Language Phrases
+                'admin.topmenu.language.turkish' => [
+                    'tr' => 'Türkçe',
+                    'ru' => 'Турецкий'
+                ],
+                'admin.topmenu.language.russian' => [
+                    'tr' => 'Rusça',
+                    'ru' => 'Русский'
+                ],
+                'admin.topmenu.language.english' => [
+                    'tr' => 'İngilizce',
+                    'ru' => 'Английский'
+                ],
+
+                // Common Messages
+                'common.language_changed' => [
+                    'tr' => 'Dil başarıyla değiştirildi',
+                    'ru' => 'Язык успешно изменен'
                 ],
             ];
 

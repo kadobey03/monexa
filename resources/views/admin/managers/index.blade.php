@@ -12,8 +12,8 @@
                         <x-heroicon name="user-cog" class="w-6 h-6 text-white" />
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-admin-900 dark:text-white">Yöneticiler</h1>
-                        <p class="text-admin-600 dark:text-admin-400">Yönetici hesaplarını görüntüle ve yönet</p>
+                        <h1 class="text-2xl font-bold text-admin-900 dark:text-white">{{ phrase('admin.managers.title') }}</h1>
+                        <p class="text-admin-600 dark:text-admin-400">{{ phrase('admin.managers.subtitle') }}</p>
                     </div>
                 </div>
             </div>
@@ -23,14 +23,14 @@
                 <a href="{{ route('admin.managers.create') }}" 
                    class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium rounded-xl transition-all duration-200 shadow-lg hover:shadow-green-500/25">
                     <x-heroicon name="user-plus" class="w-4 h-4 mr-2" />
-                    Yeni Yönetici
+                    {{ phrase('admin.managers.add_manager') }}
                 </a>
                 
                 <!-- Export Button -->
                 <button type="button" id="exportButton"
                         class="inline-flex items-center px-4 py-2 bg-admin-100 dark:bg-admin-700 hover:bg-admin-200 dark:hover:bg-admin-600 text-admin-700 dark:text-admin-300 font-medium rounded-xl transition-all duration-200">
                     <x-heroicon name="arrow-down-tray" class="w-4 h-4 mr-2" />
-                    Dışa Aktar
+                    {{ phrase('admin.managers.export') }}
                 </button>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">Toplam Yönetici</p>
+                        <p class="text-sm text-blue-600 dark:text-blue-400 font-medium">{{ phrase('admin.managers.stats.total') }}</p>
                         <p class="text-2xl font-bold text-blue-900 dark:text-blue-100">{{ $stats['total_admins'] }}</p>
                     </div>
                     <x-heroicon name="users" class="w-8 h-8 text-blue-500" />
@@ -50,7 +50,7 @@
             <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl p-4 border border-green-200 dark:border-green-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-green-600 dark:text-green-400 font-medium">Aktif</p>
+                        <p class="text-sm text-green-600 dark:text-green-400 font-medium">{{ phrase('admin.managers.stats.active') }}</p>
                         <p class="text-2xl font-bold text-green-900 dark:text-green-100">{{ $stats['active_admins'] }}</p>
                     </div>
                     <x-heroicon name="user-check" class="w-8 h-8 text-green-500" />
@@ -60,7 +60,7 @@
             <div class="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20 rounded-xl p-4 border border-amber-200 dark:border-amber-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-amber-600 dark:text-amber-400 font-medium">Müsait</p>
+                        <p class="text-sm text-amber-600 dark:text-amber-400 font-medium">{{ phrase('admin.managers.stats.available') }}</p>
                         <p class="text-2xl font-bold text-amber-900 dark:text-amber-100">{{ $stats['available_admins'] }}</p>
                     </div>
                     <x-heroicon name="clock" class="w-8 h-8 text-amber-500" />
@@ -70,7 +70,7 @@
             <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-xl p-4 border border-purple-200 dark:border-purple-800">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-purple-600 dark:text-purple-400 font-medium">Yüksek Performans</p>
+                        <p class="text-sm text-purple-600 dark:text-purple-400 font-medium">{{ phrase('admin.managers.stats.high_performance') }}</p>
                         <p class="text-2xl font-bold text-purple-900 dark:text-purple-100">{{ $stats['high_performers'] }}</p>
                     </div>
                     <x-heroicon name="arrow-trending-up" class="w-8 h-8 text-purple-500" />
@@ -87,13 +87,13 @@
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                         <x-heroicon name="magnifying-glass" class="w-4 h-4 inline mr-1" />
-                        Arama
+                        {{ phrase('admin.managers.filters.search') }}
                     </label>
                     <input type="text" 
                            name="search" 
                            id="searchInput"
                            value="{{ request('search') }}"
-                           placeholder="Ad, email, çalışan ID..."
+                           placeholder="{{ phrase('admin.managers.search.placeholder') }}"
                            class="admin-input w-full">
                 </div>
                 
@@ -101,12 +101,12 @@
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                         <x-heroicon name="shield-check" class="w-4 h-4 inline mr-1" />
-                        Rol
+                        {{ phrase('admin.managers.labels.role') }}
                     </label>
                     <select name="role_id" 
                             id="roleFilter"
                             class="admin-input w-full">
-                        <option value="">Tüm Roller</option>
+                        <option value="">{{ phrase('admin.managers.filters.all_roles') }}</option>
                         @foreach($roles as $role)
                             <option value="{{ $role->id }}" {{ request('role_id') == $role->id ? 'selected' : '' }}>
                                 {{ $role->display_name }}
@@ -119,12 +119,12 @@
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                         <x-heroicon name="building" class="w-4 h-4 inline mr-1" />
-                        Departman
+                        {{ phrase('admin.managers.labels.department') }}
                     </label>
                     <select name="department" 
                             id="departmentFilter"
                             class="admin-input w-full">
-                        <option value="">Tüm Departmanlar</option>
+                        <option value="">{{ phrase('admin.managers.filters.all_departments') }}</option>
                         @foreach($departments as $dept)
                             <option value="{{ $dept }}" {{ request('department') == $dept ? 'selected' : '' }}>
                                 {{ ucfirst($dept) }}
@@ -137,15 +137,15 @@
                 <div>
                     <label class="block text-sm font-medium text-admin-700 dark:text-admin-300 mb-2">
                         <x-heroicon name="activity" class="w-4 h-4 inline mr-1" />
-                        Durum
+                        {{ phrase('admin.managers.labels.status') }}
                     </label>
                     <select name="status" 
                             id="statusFilter"
                             class="admin-input w-full">
-                        <option value="">Tüm Durumlar</option>
-                        <option value="{{ \App\Models\Admin::STATUS_ACTIVE }}" {{ request('status') == \App\Models\Admin::STATUS_ACTIVE ? 'selected' : '' }}>Aktif</option>
-                        <option value="{{ \App\Models\Admin::STATUS_INACTIVE }}" {{ request('status') == \App\Models\Admin::STATUS_INACTIVE ? 'selected' : '' }}>Pasif</option>
-                        <option value="{{ \App\Models\Admin::STATUS_SUSPENDED }}" {{ request('status') == \App\Models\Admin::STATUS_SUSPENDED ? 'selected' : '' }}>Askıya Alınmış</option>
+                        <option value="">{{ phrase('admin.managers.labels.all_statuses') }}</option>
+                        <option value="{{ \App\Models\Admin::STATUS_ACTIVE }}" {{ request('status') == \App\Models\Admin::STATUS_ACTIVE ? 'selected' : '' }}>{{ phrase('admin.managers.status.active') }}</option>
+                        <option value="{{ \App\Models\Admin::STATUS_INACTIVE }}" {{ request('status') == \App\Models\Admin::STATUS_INACTIVE ? 'selected' : '' }}>{{ phrase('admin.managers.status.inactive') }}</option>
+                        <option value="{{ \App\Models\Admin::STATUS_SUSPENDED }}" {{ request('status') == \App\Models\Admin::STATUS_SUSPENDED ? 'selected' : '' }}>{{ phrase('admin.managers.status.suspended') }}</option>
                     </select>
                 </div>
             </div>
@@ -155,24 +155,24 @@
                     <!-- Clear Filters -->
                     <a href="{{ route('admin.managers.index') }}" 
                        class="text-sm text-admin-500 hover:text-admin-700 dark:hover:text-admin-300">
-                        Filtreleri Temizle
+                        {{ phrase('admin.managers.filters.clear') }}
                     </a>
                     
                     <!-- Results Count -->
                     <span class="text-sm text-admin-600 dark:text-admin-400">
-                        {{ $admins->total() }} sonuç bulundu
+                        {{ $admins->total() }} {{ phrase('admin.managers.results_found') }}
                     </span>
                 </div>
                 
                 <!-- Bulk Actions -->
                 <div class="flex items-center space-x-3 hidden" id="bulkActionsContainer">
-                    <span class="text-sm text-admin-600 dark:text-admin-400" id="selectedCount">0 seçili</span>
+                    <span class="text-sm text-admin-600 dark:text-admin-400" id="selectedCount">0 {{ phrase('admin.managers.labels.selected') }}</span>
                     
                     <div class="relative">
                         <button type="button" id="bulkActionsButton"
                                 class="inline-flex items-center px-3 py-1.5 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium rounded-lg hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors">
                             <x-heroicon name="cog-6-tooth" class="w-4 h-4 mr-1" />
-                            Toplu İşlem
+                            {{ phrase('admin.managers.labels.bulk_actions') }}
                             <x-heroicon name="chevron-down" class="w-3 h-3 ml-1" />
                         </button>
                         
@@ -180,15 +180,15 @@
                              class="absolute right-0 mt-2 w-48 bg-white dark:bg-admin-800 rounded-xl shadow-elegant border border-admin-200 dark:border-admin-700 py-2 z-10 hidden">
                             <button type="button" data-action="activate" class="bulk-action-btn w-full px-4 py-2 text-left text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                                 <x-heroicon name="play" class="w-4 h-4 inline mr-2 text-green-500" />
-                                Aktifleştir
+                                {{ phrase('admin.managers.actions.activate') }}
                             </button>
                             <button type="button" data-action="deactivate" class="bulk-action-btn w-full px-4 py-2 text-left text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                                 <x-heroicon name="pause" class="w-4 h-4 inline mr-2 text-amber-500" />
-                                Devre Dışı Bırak
+                                {{ phrase('admin.managers.labels.deactivate') }}
                             </button>
                             <button type="button" data-action="delete" class="bulk-action-btn w-full px-4 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
                                 <x-heroicon name="trash-2" class="w-4 h-4 inline mr-2" />
-                                Sil
+                                {{ phrase('admin.managers.labels.delete') }}
                             </button>
                         </div>
                     </div>
@@ -211,17 +211,17 @@
                         <th class="px-6 py-4 text-left text-xs font-medium text-admin-500 uppercase tracking-wider">
                             <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'firstName', 'sort_direction' => request('sort_direction') === 'asc' ? 'desc' : 'asc']) }}" 
                                class="flex items-center space-x-1 hover:text-admin-700 dark:hover:text-admin-300">
-                                <span>Yönetici</span>
+                                <span>{{ phrase('admin.managers.labels.manager') }}</span>
                                 @if(request('sort_by') === 'firstName')
                                     <x-heroicon name="question-mark-circle" class="w-4 h-4" />
                                 @endif
                             </a>
                         </th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-admin-500 uppercase tracking-wider">Rol & Departman</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-admin-500 uppercase tracking-wider">{{ phrase('admin.managers.labels.role_department') }}</th>
                         <th class="px-6 py-4 text-left text-xs font-medium text-admin-500 uppercase tracking-wider">
                             <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'hierarchy_level', 'sort_direction' => request('sort_direction') === 'asc' ? 'desc' : 'asc']) }}" 
                                class="flex items-center space-x-1 hover:text-admin-700 dark:hover:text-admin-300">
-                                <span>Hiyerarşi</span>
+                                <span>{{ phrase('admin.managers.labels.hierarchy') }}</span>
                                 @if(request('sort_by') === 'hierarchy_level')
                                     <x-heroicon name="question-mark-circle" class="w-4 h-4" />
                                 @endif
@@ -230,14 +230,14 @@
                         <th class="px-6 py-4 text-left text-xs font-medium text-admin-500 uppercase tracking-wider">
                             <a href="{{ request()->fullUrlWithQuery(['sort_by' => 'current_performance', 'sort_direction' => request('sort_direction') === 'asc' ? 'desc' : 'asc']) }}" 
                                class="flex items-center space-x-1 hover:text-admin-700 dark:hover:text-admin-300">
-                                <span>Performans</span>
+                                <span>{{ phrase('admin.managers.labels.performance') }}</span>
                                 @if(request('sort_by') === 'current_performance')
                                     <x-heroicon name="question-mark-circle" class="w-4 h-4" />
                                 @endif
                             </a>
                         </th>
-                        <th class="px-6 py-4 text-left text-xs font-medium text-admin-500 uppercase tracking-wider">Durum</th>
-                        <th class="px-6 py-4 text-right text-xs font-medium text-admin-500 uppercase tracking-wider">İşlemler</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-admin-500 uppercase tracking-wider">{{ phrase('admin.managers.labels.status') }}</th>
+                        <th class="px-6 py-4 text-right text-xs font-medium text-admin-500 uppercase tracking-wider">{{ phrase('admin.managers.labels.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-admin-200 dark:divide-admin-700">
@@ -269,9 +269,9 @@
                                             {{ $admin->getFullName() }}
                                         </p>
                                         @if($admin->is_available)
-                                            <span class="w-2 h-2 bg-green-400 rounded-full" title="Müsait"></span>
+                                            <span class="w-2 h-2 bg-green-400 rounded-full" title="{{ phrase('admin.managers.status.available') }}"></span>
                                         @else
-                                            <span class="w-2 h-2 bg-gray-400 rounded-full" title="Meşgul"></span>
+                                            <span class="w-2 h-2 bg-gray-400 rounded-full" title="{{ phrase('admin.managers.labels.busy') }}"></span>
                                         @endif
                                     </div>
                                     <p class="text-xs text-admin-500 truncate">{{ $admin->email }}</p>
@@ -290,7 +290,7 @@
                                         {{ $admin->role->display_name }}
                                     </span>
                                 @else
-                                    <span class="text-admin-400">Rol atanmamış</span>
+                                    <span class="text-admin-400">{{ phrase('admin.managers.labels.no_role') }}</span>
                                 @endif
                             </div>
                             @if($admin->department)
@@ -302,14 +302,14 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center space-x-2">
                                 <span class="text-sm text-admin-600 dark:text-admin-400">
-                                    Seviye {{ $admin->hierarchy_level }}
+                                    {{ phrase('admin.managers.labels.level') }} {{ $admin->hierarchy_level }}
                                 </span>
                                 @if($admin->supervisor)
-                                    <x-heroicon name="arrow-up" class="w-3 h-3 text-admin-400" title="Rapor Veriyor: {{ $admin->supervisor->getFullName() }}" />
+                                    <x-heroicon name="arrow-up" class="w-3 h-3 text-admin-400" title="{{ phrase('admin.managers.labels.reports_to') }}: {{ $admin->supervisor->getFullName() }}" />
                                 @endif
                             </div>
                             <div class="text-xs text-admin-500">
-                                {{ $admin->subordinates_count }} alt çalışan
+                                {{ $admin->subordinates_count }} {{ phrase('admin.managers.labels.subordinates') }}
                             </div>
                         </td>
                         
@@ -318,7 +318,7 @@
                             <div class="flex items-center space-x-3">
                                 <div class="flex-1">
                                     <div class="flex items-center justify-between text-xs mb-1">
-                                        <span class="text-admin-600 dark:text-admin-400">Performans</span>
+                                        <span class="text-admin-600 dark:text-admin-400">{{ phrase('admin.managers.labels.performance') }}</span>
                                         <span class="font-medium text-admin-900 dark:text-white">{{ number_format($admin->current_performance, 1) }}%</span>
                                     </div>
                                     <div class="w-full bg-admin-200 dark:bg-admin-700 rounded-full h-1.5">
@@ -341,9 +341,9 @@
                                     'Suspended' => 'red',
                                 ];
                                 $statusLabels = [
-                                    'Active' => 'Aktif',
-                                    'Inactive' => 'Pasif', 
-                                    'Suspended' => 'Askıya Alınmış',
+                                    'Active' => phrase('admin.managers.status.active'),
+                                    'Inactive' => phrase('admin.managers.status.inactive'),
+                                    'Suspended' => phrase('admin.managers.status.suspended'),
                                 ];
                                 $color = $statusColors[$admin->status] ?? 'gray';
                             @endphp
@@ -364,7 +364,7 @@
                                 @if($currentAdmin->canManageAdmin($admin))
                                     <button class="text-admin-400 hover:text-amber-500 transition-colors edit-admin-btn"
                                             data-admin-id="{{ $admin->id }}"
-                                            title="Düzenle">
+                                            title="{{ phrase('admin.managers.actions.edit') }}">
                                         <x-heroicon name="edit" class="w-4 h-4" />
                                     </button>
                                 @endif
@@ -380,13 +380,13 @@
                                             <a href="{{ route('admin.managers.deactivate', $admin) }}" 
                                                class="block px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                                                 <x-heroicon name="pause" class="w-4 h-4 inline mr-2 text-amber-500" />
-                                                Devre Dışı Bırak
+                                                {{ phrase('admin.managers.labels.deactivate') }}
                                             </a>
                                         @else
                                             <a href="{{ route('admin.managers.activate', $admin) }}" 
                                                class="block px-4 py-2 text-sm text-admin-700 dark:text-admin-300 hover:bg-admin-100 dark:hover:bg-admin-700 transition-colors">
                                                 <x-heroicon name="play" class="w-4 h-4 inline mr-2 text-green-500" />
-                                                Aktifleştir
+                                                {{ phrase('admin.managers.actions.activate') }}
                                             </a>
                                         @endif
                                         
@@ -395,7 +395,7 @@
                                                     data-admin-id="{{ $admin->id }}"
                                                     data-admin-name="{{ $admin->getFullName() }}">
                                                 <x-heroicon name="key" class="w-4 h-4 inline mr-2 text-purple-500" />
-                                                Şifre Sıfırla
+                                                {{ phrase('admin.managers.actions.reset_password') }}
                                             </button>
                                         @endif
                                         
@@ -404,7 +404,7 @@
                                                     data-admin-id="{{ $admin->id }}"
                                                     data-admin-name="{{ $admin->getFullName() }}">
                                                 <x-heroicon name="trash-2" class="w-4 h-4 inline mr-2" />
-                                                Sil
+                                                {{ phrase('admin.managers.labels.delete') }}
                                             </button>
                                         @endif
                                     </div>
@@ -417,8 +417,8 @@
                         <td colspan="7" class="px-6 py-12 text-center text-admin-500">
                             <div class="flex flex-col items-center space-y-3">
                                 <x-heroicon name="users-x" class="w-12 h-12 text-admin-400" />
-                                <p class="text-lg font-medium">Yönetici bulunamadı</p>
-                                <p class="text-sm">Arama kriterlerinizi değiştirmeyi deneyin</p>
+                                <p class="text-lg font-medium">{{ phrase('admin.managers.no_results.title') }}</p>
+                                <p class="text-sm">{{ phrase('admin.managers.no_results.message') }}</p>
                             </div>
                         </td>
                     </tr>
@@ -444,7 +444,7 @@
             <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
                 <div class="bg-amber-600 dark:bg-amber-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                     <h4 class="text-lg font-semibold text-white flex items-center">
-                        <x-heroicon name="user-pen" class="h-5 w-5 mr-2" />Yönetici Düzenle
+                        <x-heroicon name="user-pen" class="h-5 w-5 mr-2" />{{ phrase('admin.managers.modals.edit_title') }}
                     </h4>
                     <button class="absolute top-4 right-4 text-white hover:text-gray-200 modal-close-btn">
                         <x-heroicon name="x-mark" class="h-5 w-5" />
@@ -457,7 +457,7 @@
                             <!-- First Name -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <x-heroicon name="user" class="h-4 w-4 inline mr-2 text-amber-600" />Ad *
+                                    <x-heroicon name="user" class="h-4 w-4 inline mr-2 text-amber-600" />{{ phrase('admin.managers.fields.first_name') }} *
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                        type="text" name="firstName" id="edit-firstName" required>
@@ -466,7 +466,7 @@
                             <!-- Last Name -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <x-heroicon name="user-circle" class="h-4 w-4 inline mr-2 text-amber-600" />Soyad *
+                                    <x-heroicon name="user-circle" class="h-4 w-4 inline mr-2 text-amber-600" />{{ phrase('admin.managers.fields.last_name') }} *
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                        type="text" name="lastName" id="edit-lastName" required>
@@ -475,7 +475,7 @@
                             <!-- Email -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <x-heroicon name="envelope" class="h-4 w-4 inline mr-2 text-amber-600" />E-posta *
+                                    <x-heroicon name="envelope" class="h-4 w-4 inline mr-2 text-amber-600" />{{ phrase('admin.managers.fields.email') }} *
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                        type="email" name="email" id="edit-email" required>
@@ -484,7 +484,7 @@
                             <!-- Phone -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <x-heroicon name="phone" class="h-4 w-4 inline mr-2 text-amber-600" />Telefon
+                                    <x-heroicon name="phone" class="h-4 w-4 inline mr-2 text-amber-600" />{{ phrase('admin.managers.fields.phone') }}
                                 </label>
                                 <input class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                        type="tel" name="phone" id="edit-phone">
@@ -493,11 +493,11 @@
                             <!-- Role -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <x-heroicon name="shield-check" class="h-4 w-4 inline mr-2 text-amber-600" />Rol
+                                    <x-heroicon name="shield-check" class="h-4 w-4 inline mr-2 text-amber-600" />{{ phrase('admin.managers.fields.role') }}
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                         name="role_id" id="edit-role_id">
-                                    <option value="">Rol Seçin</option>
+                                    <option value="">{{ phrase('admin.managers.labels.select_role') }}</option>
                                     @foreach($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->display_name }}</option>
                                     @endforeach
@@ -507,11 +507,11 @@
                             <!-- Supervisor -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <x-heroicon name="user-check" class="h-4 w-4 inline mr-2 text-amber-600" />Süpervizör
+                                    <x-heroicon name="user-check" class="h-4 w-4 inline mr-2 text-amber-600" />{{ phrase('admin.managers.fields.supervisor') }}
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                         name="supervisor_id" id="edit-supervisor_id">
-                                    <option value="">Süpervizör Seçin</option>
+                                    <option value="">{{ phrase('admin.managers.labels.select_supervisor') }}</option>
                                     @foreach($supervisors as $supervisor)
                                         <option value="{{ $supervisor->id }}">{{ $supervisor->getFullName() }}</option>
                                     @endforeach
@@ -521,11 +521,11 @@
                             <!-- Department -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <x-heroicon name="building" class="h-4 w-4 inline mr-2 text-amber-600" />Departman
+                                    <x-heroicon name="building" class="h-4 w-4 inline mr-2 text-amber-600" />{{ phrase('admin.managers.fields.department') }}
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                         name="department" id="edit-department">
-                                    <option value="">Departman Seçin</option>
+                                    <option value="">{{ phrase('admin.managers.labels.select_department') }}</option>
                                     @foreach($departments as $dept)
                                         <option value="{{ $dept }}">{{ ucfirst($dept) }}</option>
                                     @endforeach
@@ -535,20 +535,20 @@
                             <!-- Status -->
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                    <x-heroicon name="activity" class="h-4 w-4 inline mr-2 text-amber-600" />Durum
+                                    <x-heroicon name="activity" class="h-4 w-4 inline mr-2 text-amber-600" />{{ phrase('admin.managers.fields.status') }}
                                 </label>
                                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 dark:bg-admin-700 dark:text-white"
                                         name="status" id="edit-status">
-                                    <option value="{{ \App\Models\Admin::STATUS_ACTIVE }}">Aktif</option>
-                                    <option value="{{ \App\Models\Admin::STATUS_INACTIVE }}">Pasif</option>
-                                    <option value="{{ \App\Models\Admin::STATUS_SUSPENDED }}">Askıya Alınmış</option>
+                                    <option value="{{ \App\Models\Admin::STATUS_ACTIVE }}">{{ phrase('admin.managers.status.active') }}</option>
+                                    <option value="{{ \App\Models\Admin::STATUS_INACTIVE }}">{{ phrase('admin.managers.status.inactive') }}</option>
+                                    <option value="{{ \App\Models\Admin::STATUS_SUSPENDED }}">{{ phrase('admin.managers.status.suspended') }}</option>
                                 </select>
                             </div>
                         </div>
                         
                         <div class="mt-6">
                             <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-                                <x-heroicon name="save" class="h-4 w-4 mr-2" />Yönetici Bilgilerini Güncelle
+                                <x-heroicon name="save" class="h-4 w-4 mr-2" />{{ phrase('admin.managers.buttons.update') }}
                             </button>
                         </div>
                     </form>
@@ -566,7 +566,7 @@
             <div class="inline-block align-bottom bg-white dark:bg-admin-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-purple-600 dark:bg-purple-700 px-6 py-4 border-b border-gray-200 dark:border-admin-600">
                     <h4 class="text-lg font-semibold text-white flex items-center">
-                        <x-heroicon name="key" class="h-5 w-5 mr-2" />Şifre Sıfırla
+                        <x-heroicon name="key" class="h-5 w-5 mr-2" />{{ phrase('admin.managers.modals.reset_password_title') }}
                     </h4>
                     <button class="absolute top-4 right-4 text-white hover:text-gray-200 modal-close-btn">
                         <x-heroicon name="x-mark" class="h-5 w-5" />
@@ -580,7 +580,7 @@
                             </div>
                             <div>
                                 <p class="text-lg font-medium text-admin-900 dark:text-white" id="reset-admin-name"></p>
-                                <p class="text-sm text-admin-500">için yeni şifre oluşturuluyor</p>
+                                <p class="text-sm text-admin-500">{{ phrase('admin.managers.labels.new_password_generating') }}</p>
                             </div>
                         </div>
                         
@@ -588,9 +588,9 @@
                             <div class="flex">
                                 <x-heroicon name="information-circle" class="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 mr-3" />
                                 <div class="text-sm">
-                                    <h4 class="font-medium text-amber-800 dark:text-amber-300 mb-1">Güvenlik Bilgisi</h4>
+                                    <h4 class="font-medium text-amber-800 dark:text-amber-300 mb-1">{{ phrase('admin.managers.labels.security_info') }}</h4>
                                     <p class="text-amber-700 dark:text-amber-400">
-                                        Sistem otomatik olarak güçlü bir şifre oluşturacak. Yeni şifre aşağıda görüntülenecektir.
+                                        {{ phrase('admin.managers.labels.security_message') }}
                                     </p>
                                 </div>
                             </div>
@@ -602,8 +602,8 @@
                                 <div class="flex items-center space-x-3">
                                     <x-heroicon name="check-circle" class="w-5 h-5 text-green-600 dark:text-green-400" />
                                     <div>
-                                        <p class="font-medium text-green-800 dark:text-green-300">Yeni Şifre Oluşturuldu</p>
-                                        <p class="text-sm text-green-700 dark:text-green-400">Şifre başarıyla güncellendi.</p>
+                                        <p class="font-medium text-green-800 dark:text-green-300">{{ phrase('admin.managers.labels.new_password_created') }}</p>
+                                        <p class="text-sm text-green-700 dark:text-green-400">{{ phrase('admin.managers.labels.password_updated') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -611,7 +611,7 @@
                                 <div class="flex items-center justify-between">
                                     <code class="text-sm font-mono text-admin-900 dark:text-white" id="newPassword"></code>
                                     <button id="copyPasswordBtn" class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200">
-                                        <x-heroicon name="copy" class="w-4 h-4 inline mr-1" />Kopyala
+                                        <x-heroicon name="copy" class="w-4 h-4 inline mr-1" />{{ phrase('admin.managers.buttons.copy') }}
                                     </button>
                                 </div>
                             </div>
@@ -621,11 +621,11 @@
                     <div class="flex items-center space-x-3">
                         <button id="generatePasswordBtn"
                                 class="flex-1 flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                            <x-heroicon name="arrow-path" class="h-4 w-4 mr-2" />Yeni Şifre Oluştur
+                            <x-heroicon name="arrow-path" class="h-4 w-4 mr-2" />{{ phrase('admin.managers.buttons.generate_password') }}
                         </button>
                         
                         <button class="px-4 py-2 border border-gray-300 dark:border-admin-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-admin-300 bg-white dark:bg-admin-700 hover:bg-gray-50 dark:hover:bg-admin-600 modal-close-btn">
-                            İptal
+                            {{ phrase('admin.managers.buttons.cancel') }}
                         </button>
                     </div>
                 </div>
@@ -819,7 +819,7 @@ class ManagersIndex {
         
         if (this.selectedAdmins.length > 0) {
             bulkActionsContainer.classList.remove('hidden');
-            selectedCount.textContent = `${this.selectedAdmins.length} seçili`;
+            selectedCount.textContent = `${this.selectedAdmins.length} {{ phrase('admin.managers.labels.selected') }}`;
         } else {
             bulkActionsContainer.classList.add('hidden');
         }
@@ -1019,14 +1019,14 @@ class ManagersIndex {
     
     deleteAdmin(id, name) {
         Swal.fire({
-            title: 'Yönetici Sil',
+            title: '{{ phrase('admin.managers.confirmations.delete_title') }}',
             text: `${name} adlı yöneticiyi kalıcı olarak silmek istediğinizden emin misiniz?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#dc2626',
             cancelButtonColor: '#6b7280',
-            confirmButtonText: 'Evet, Sil',
-            cancelButtonText: 'İptal'
+            confirmButtonText: '{{ phrase('admin.managers.buttons.yes_delete') }}',
+            cancelButtonText: '{{ phrase('admin.managers.buttons.cancel') }}'
         }).then((result) => {
             if (result.isConfirmed) {
                 const form = document.createElement('form');

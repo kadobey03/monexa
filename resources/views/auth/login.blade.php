@@ -44,11 +44,11 @@
                     <x-heroicon name="exclamation-circle" class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
                     <div class="text-sm text-red-800 dark:text-red-200">
                         @if ($errors->count() === 1)
-                            {{ $errors->first() }}
+                            {!! $errors->first() !!}
                         @else
                             <ul class="list-disc list-inside space-y-1">
                                 @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                    <li>{!! $error !!}</li>
                                 @endforeach
                             </ul>
                         @endif
@@ -69,8 +69,29 @@
             </div>
         @endif
 
+        <!-- Success Message (Hidden by default) -->
+        <div id="success-message" class="hidden mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-xl">
+            <div class="flex items-center gap-3">
+                <x-heroicon name="check-circle" class="h-5 w-5 text-green-600 dark:text-green-400" />
+                <div class="text-sm text-green-800 dark:text-green-200">
+                    <div id="success-text"></div>
+                    <div class="text-xs mt-1 opacity-75">{{ __('auth.login.redirecting_message') }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ajax Error Message Container (Hidden by default) -->
+        <div id="ajax-error-message" class="hidden mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-700 rounded-xl">
+            <div class="flex items-start gap-3">
+                <x-heroicon name="exclamation-circle" class="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                <div class="text-sm text-red-800 dark:text-red-200">
+                    <div id="ajax-error-text"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Login Form -->
-        <form action="{{ route('login') }}" method="post" class="space-y-6">
+        <form id="login-form" action="{{ route('login') }}" method="post" class="space-y-6">
             @csrf
 
             <!-- Email Field -->
@@ -126,10 +147,11 @@
             </div>
 
             <!-- Login Button -->
-            <button type="submit"
-                    class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                <x-heroicon name="arrow-right-on-rectangle" class="h-4 w-4" />
-                {{ __('auth.login.login_button') }}
+            <button type="submit" id="login-btn"
+                    class="w-full flex justify-center items-center gap-2 py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                <x-heroicon name="arrow-right-on-rectangle" class="h-4 w-4" id="login-icon" />
+                <span class="hidden animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" id="loading-spinner"></span>
+                <span id="login-text">{{ __('auth.login.login_button') }}</span>
             </button>
         </form>
 
@@ -158,7 +180,98 @@
             field.type = 'password';
             // Heroicon: eye icon changed to eye;
         }
+    }
 
+    function showSuccessMessage(message) {
+        const successDiv = document.getElementById('success-message');
+        const successText = document.getElementById('success-text');
+        const errorDivs = document.querySelectorAll('[class*="bg-red-50"]');
+        
+        // Hide any existing error messages
+        errorDivs.forEach(div => div.classList.add('hidden'));
+        
+        // Show success message
+        successText.innerHTML = message;
+        successDiv.classList.remove('hidden');
+        
+        // Scroll to top to show message
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function clearErrorMessages() {
+        // Hide all error containers
+        const ajaxErrorDiv = document.getElementById('ajax-error-message');
+        const serverErrorDivs = document.querySelectorAll('[class*="bg-red-50"]');
+        
+        ajaxErrorDiv.classList.add('hidden');
+        serverErrorDivs.forEach(div => {
+            if (div.id !== 'ajax-error-message') {
+                div.classList.add('hidden');
+            }
+        });
+    }
+
+    function showErrorMessages(errors) {
+        // Hide success message
+        const successDiv = document.getElementById('success-message');
+        const ajaxErrorDiv = document.getElementById('ajax-error-message');
+        const ajaxErrorText = document.getElementById('ajax-error-text');
+        
+        successDiv.classList.add('hidden');
+        
+        // Build error messages HTML
+        let errorHtml = '';
+        
+        if (typeof errors === 'object' && errors !== null) {
+            const errorCount = Object.keys(errors).length;
+            
+            if (errorCount === 1) {
+                // Single error
+                const fieldErrors = Object.values(errors)[0];
+                if (Array.isArray(fieldErrors) && fieldErrors.length > 0) {
+                    errorHtml = fieldErrors[0];
+                }
+            } else {
+                // Multiple errors
+                errorHtml = '<ul class="list-disc list-inside space-y-1">';
+                Object.values(errors).forEach(fieldErrors => {
+                    if (Array.isArray(fieldErrors)) {
+                        fieldErrors.forEach(error => {
+                            errorHtml += `<li>${error}</li>`;
+                        });
+                    }
+                });
+                errorHtml += '</ul>';
+            }
+        } else if (typeof errors === 'string') {
+            errorHtml = errors;
+        }
+        
+        // Show error message
+        ajaxErrorText.innerHTML = errorHtml;
+        ajaxErrorDiv.classList.remove('hidden');
+        
+        // Scroll to top to show error
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setLoadingState(isLoading) {
+        const btn = document.getElementById('login-btn');
+        const icon = document.getElementById('login-icon');
+        const spinner = document.getElementById('loading-spinner');
+        const text = document.getElementById('login-text');
+        
+        if (isLoading) {
+            btn.disabled = true;
+            icon.classList.add('hidden');
+            spinner.classList.remove('hidden');
+            text.textContent = '{{ __("auth.login.loading_text") }}';
+        } else {
+            btn.disabled = false;
+            icon.classList.remove('hidden');
+            spinner.classList.add('hidden');
+            text.textContent = '{{ __("auth.login.login_button") }}';
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -167,6 +280,55 @@
         if (emailField) {
             emailField.focus();
         }
+
+        // Ajax form submission
+        const form = document.getElementById('login-form');
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Clear previous error messages
+            clearErrorMessages();
+            setLoadingState(true);
+            
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    // Success - show message and redirect after 3 seconds
+                    showSuccessMessage(data.message);
+                    
+                    setTimeout(() => {
+                        window.location.href = data.redirect_url;
+                    }, 3000);
+                } else {
+                    // Handle errors
+                    setLoadingState(false);
+                    if (data && data.errors) {
+                        showErrorMessages(data.errors);
+                    } else if (data && data.message) {
+                        showErrorMessages({ general: [data.message] });
+                    } else {
+                        showErrorMessages({ general: ['{{ __("auth.ajax.general_error") }}'] });
+                    }
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                setLoadingState(false);
+                showErrorMessages({ general: ['{{ __("auth.ajax.connection_error") }}'] });
+            }
+        });
     });
 </script>
 

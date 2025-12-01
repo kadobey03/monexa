@@ -2,7 +2,7 @@
   <section class="relative gradient-hero wave-bg pt-10 md:pt-16 pb-14 overflow-hidden">
     <!-- Decorative background behind headline -->
     <div class="pointer-events-none absolute inset-0 -z-10">
-      <img src="https://images.unsplash.com/photo-1644991287959-0f87cd9a8060?q=80&w=2000&auto=format&fit=crop" alt="background" class="absolute inset-0 w-full h-full object-cover opacity-10" />
+      <img src="https://img.freepik.com/premium-photo/bull-market-stock-index-colorful-price-spike-upward_1190272-3919.jpg?semt=ais_hybrid&w=740&q=80" alt="background" class="absolute inset-0 w-full h-full object-cover opacity-10" />
       <div class="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-emerald-500/15 blur-3xl"></div>
       <div class="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl"></div>
     </div>

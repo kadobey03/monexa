@@ -44,7 +44,12 @@ class HierarchyController extends Controller
                            ->sort()
                            ->values();
 
-        $roles = Role::active()->orderBy('hierarchy_level')->orderBy('display_name')->get();
+        $roles = Role::active()
+                    ->whereNotNull('name')
+                    ->whereNotNull('hierarchy_level')
+                    ->orderBy('hierarchy_level')
+                    ->orderBy('display_name')
+                    ->get();
         $allRoles = $roles; // For matrix view
         $adminGroups = AdminGroup::where('is_active', true)->orderBy('name')->get();
 
@@ -421,6 +426,54 @@ class HierarchyController extends Controller
                 'message' => 'İşlem sırasında bir hata oluştu.'
             ], 500);
         }
+    }
+
+    /**
+     * AJAX: Rol detayları getir
+     */
+    public function getRoleDetails($id)
+    {
+        $currentAdmin = Auth::guard('admin')->user();
+        $role = Role::with(['parentRole', 'childRoles', 'permissions'])
+                   ->withCount(['admins'])
+                   ->findOrFail($id);
+
+        // Permission check - basic role viewing
+        if (!$currentAdmin->isSuperAdmin() && !$currentAdmin->role->canManage($role)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Bu rolün detaylarını görme yetkiniz yok.'
+            ], 403);
+        }
+
+        return response()->json([
+            'success' => true,
+            'role' => [
+                'id' => $role->id,
+                'name' => $role->name,
+                'display_name' => $role->display_name,
+                'description' => $role->description,
+                'hierarchy_level' => $role->hierarchy_level,
+                'is_active' => $role->is_active,
+                'users_count' => $role->admins_count,
+                'permissions_count' => $role->permissions()->wherePivot('is_granted', true)->count(),
+                'parent_roles' => $role->parentRole ? collect([$role->parentRole])->map(function($parent) {
+                    return [
+                        'id' => $parent->id,
+                        'display_name' => $parent->display_name,
+                        'hierarchy_level' => $parent->hierarchy_level,
+                    ];
+                }) : collect([]),
+                'child_roles' => $role->childRoles->map(function($child) {
+                    return [
+                        'id' => $child->id,
+                        'display_name' => $child->display_name,
+                        'hierarchy_level' => $child->hierarchy_level,
+                    ];
+                }),
+                'permissions' => $role->permissions()->wherePivot('is_granted', true)->get(['name', 'display_name']),
+            ]
+        ]);
     }
 
     /**
@@ -813,11 +866,22 @@ class HierarchyController extends Controller
     {
         $tree = [];
         
-        // Group roles by hierarchy level
-        $rolesByLevel = $roles->groupBy('hierarchy_level');
+        // Filter out null roles and group by hierarchy level
+        $filteredRoles = $roles->filter(function ($role) {
+            return $role !== null && $role instanceof Role;
+        });
+        
+        $rolesByLevel = $filteredRoles->groupBy('hierarchy_level');
         
         foreach ($rolesByLevel as $level => $levelRoles) {
-            $tree[$level] = $levelRoles;
+            // Double check - filter out any remaining null values
+            $validRoles = $levelRoles->filter(function ($role) {
+                return $role !== null && $role instanceof Role;
+            });
+            
+            if ($validRoles->isNotEmpty()) {
+                $tree[$level] = $validRoles;
+            }
         }
 
         return $tree;
@@ -839,13 +903,22 @@ class HierarchyController extends Controller
             $rolesByLevel = $admins->groupBy('role.hierarchy_level');
             
             foreach ($rolesByLevel as $level => $levelAdmins) {
-                $roles = $levelAdmins->pluck('role')->unique('id');
-                $levels[$level] = $roles;
+                // Filter out admins with null roles
+                $validAdmins = $levelAdmins->filter(function ($admin) {
+                    return $admin->role !== null && $admin->role instanceof Role;
+                });
+                
+                if ($validAdmins->isNotEmpty()) {
+                    $roles = $validAdmins->pluck('role')->unique('id')->filter();
+                    $levels[$level] = $roles;
+                }
             }
 
             $hierarchy[$departmentName] = [
                 'total_users' => $admins->count(),
-                'total_roles' => $admins->pluck('role.id')->unique()->count(),
+                'total_roles' => $admins->filter(function ($admin) {
+                    return $admin->role !== null;
+                })->pluck('role.id')->unique()->count(),
                 'levels' => $levels
             ];
         }

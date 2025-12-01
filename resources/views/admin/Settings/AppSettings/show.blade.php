@@ -31,8 +31,6 @@ if ($adminUser && $adminUser->dashboard_style == 'light') {
             
             <!-- Alert Messages -->
             <div class="px-4 sm:px-6 lg:px-8 pt-4">
-                <x-danger-alert />
-                <x-success-alert />
                 @if (count($errors) > 0)
                     <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded-r-lg">
                         <div class="flex">

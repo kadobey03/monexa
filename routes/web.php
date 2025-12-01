@@ -27,6 +27,10 @@ require __DIR__ . '/user/web.php';
 require __DIR__ . '/user/plan-routes.php';
 require __DIR__ . '/botman.php';
 
+// Authentication Routes - Override Fortify defaults
+Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
+Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 // Language Routes
 Route::post('/language/switch', [LanguageController::class, 'switch'])->name('language.switch');

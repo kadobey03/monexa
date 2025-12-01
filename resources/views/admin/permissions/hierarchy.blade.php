@@ -264,6 +264,7 @@
                                     
                                     <div class="ml-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                         @foreach($roles as $role)
+                                            @if($role)
                                             <div class="flex items-center space-x-3 p-4 bg-admin-50 dark:bg-admin-700/50 rounded-xl border border-admin-200 dark:border-admin-600">
                                                 <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
                                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -271,7 +272,7 @@
                                                     </svg>
                                                 </div>
                                                 <div class="flex-1">
-                                                    <h4 class="font-medium text-admin-900 dark:text-white">{{ $role->display_name ?? $role->name }}</h4>
+                                                    <h4 class="font-medium text-admin-900 dark:text-white">{{ $role->display_name ?? $role->name ?? 'Rol Adı Yok' }}</h4>
                                                     <p class="text-sm text-admin-600 dark:text-admin-400">{{ $role->users_count ?? 0 }} {{ __('admin.permissions.hierarchy.user_count') }}</p>
                                                 </div>
                                                 <a href="{{ route('admin.permissions.role-permissions', $role) }}"
@@ -281,6 +282,7 @@
                                                     </svg>
                                                 </a>
                                             </div>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>

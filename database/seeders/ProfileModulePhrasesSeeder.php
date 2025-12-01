@@ -160,6 +160,106 @@ class ProfileModulePhrasesSeeder extends Seeder
             'admin.topmenu.language.russian' => [
                 'tr' => 'Русский',
                 'ru' => 'Русский'
+            ],
+            
+            // Password Change Page - Şifre Değiştirme Sayfası
+            'admin.profile.password.change_title' => [
+                'tr' => 'Şifre Değiştir',
+                'ru' => 'Сменить пароль'
+            ],
+            'admin.profile.password.change_description' => [
+                'tr' => 'Hesap güvenliğiniz için güçlü bir şifre belirleyin',
+                'ru' => 'Выберите надежный пароль для безопасности вашего аккаунта'
+            ],
+            'admin.profile.password.security_title' => [
+                'tr' => 'Şifre Güvenliği',
+                'ru' => 'Безопасность пароля'
+            ],
+            'admin.profile.password.current_password' => [
+                'tr' => 'Mevcut Şifre',
+                'ru' => 'Текущий пароль'
+            ],
+            'admin.profile.password.new_password' => [
+                'tr' => 'Yeni Şifre',
+                'ru' => 'Новый пароль'
+            ],
+            'admin.profile.password.confirm_password' => [
+                'tr' => 'Şifre Tekrarı',
+                'ru' => 'Подтверждение пароля'
+            ],
+            'admin.profile.password.clear_button' => [
+                'tr' => 'Temizle',
+                'ru' => 'Очистить'
+            ],
+            'admin.profile.password.update_button' => [
+                'tr' => 'Şifreyi Güncelle',
+                'ru' => 'Обновить пароль'
+            ],
+            'admin.profile.password.updating_button' => [
+                'tr' => 'Güncelleniyor...',
+                'ru' => 'Обновляется...'
+            ],
+            
+            // Password Form Placeholders - Şifre Form Placeholder'ları
+            'admin.profile.password.current_password_placeholder' => [
+                'tr' => 'Mevcut şifrenizi girin',
+                'ru' => 'Введите текущий пароль'
+            ],
+            'admin.profile.password.new_password_placeholder' => [
+                'tr' => 'Yeni şifrenizi girin',
+                'ru' => 'Введите новый пароль'
+            ],
+            'admin.profile.password.confirm_password_placeholder' => [
+                'tr' => 'Yeni şifrenizi tekrar girin',
+                'ru' => 'Повторите новый пароль'
+            ],
+            
+            // Password Strength Indicators - Şifre Gücü Göstergeleri
+            'admin.profile.password.strength_title' => [
+                'tr' => 'Şifre Gücü',
+                'ru' => 'Сила пароля'
+            ],
+            'admin.profile.password.strength_weak' => [
+                'tr' => 'Zayıf',
+                'ru' => 'Слабый'
+            ],
+            'admin.profile.password.strength_medium' => [
+                'tr' => 'Orta',
+                'ru' => 'Средний'
+            ],
+            'admin.profile.password.strength_strong' => [
+                'tr' => 'Güçlü',
+                'ru' => 'Сильный'
+            ],
+            
+            // Password Requirements - Şifre Gereksinimleri
+            'admin.profile.password.requirements_title' => [
+                'tr' => 'Güvenli Şifre Gereksinimleri',
+                'ru' => 'Требования к безопасному паролю'
+            ],
+            'admin.profile.password.requirement_length' => [
+                'tr' => 'En az 8 karakter',
+                'ru' => 'Минимум 8 символов'
+            ],
+            'admin.profile.password.requirement_uppercase' => [
+                'tr' => 'Büyük harf (A-Z)',
+                'ru' => 'Заглавная буква (A-Z)'
+            ],
+            'admin.profile.password.requirement_lowercase' => [
+                'tr' => 'Küçük harf (a-z)',
+                'ru' => 'Строчная буква (a-z)'
+            ],
+            'admin.profile.password.requirement_number' => [
+                'tr' => 'Rakam (0-9)',
+                'ru' => 'Цифра (0-9)'
+            ],
+            'admin.profile.password.requirement_special' => [
+                'tr' => 'Özel karakter (!@#$%)',
+                'ru' => 'Спецсимвол (!@#$%)'
+            ],
+            'admin.profile.password.requirement_match' => [
+                'tr' => 'Şifreler eşleşmeli',
+                'ru' => 'Пароли должны совпадать'
             ]
         ];
 

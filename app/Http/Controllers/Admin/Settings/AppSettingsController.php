@@ -42,13 +42,19 @@ class AppSettingsController extends Controller
         $this->validate($request, [
             'logo' => 'mimes:jpg,jpeg,png|max:500|image',
             'favicon' => 'mimes:jpg,jpeg,png,ico|max:500',
+            'telegram' => 'nullable|string|regex:/^[a-zA-Z0-9_]+$/|max:50',
+            'whatsapp' => 'nullable|string|max:20',
+            'tawk_to' => 'nullable|string|max:2000',
+            'tido' => 'nullable|string|max:100',
         ]);
 
         $settings = Settings::where('id', '=', '1')->first();
 
         if ($request->hasfile('logo')) {
             $file = $request->file('logo');
-            Storage::disk('public')->delete($settings->logo);
+            if ($settings->logo) {
+                Storage::disk('public')->delete($settings->logo);
+            }
             $path = $file->store('photos', 'public');
         } else {
             $path  = $settings->logo;
@@ -56,7 +62,9 @@ class AppSettingsController extends Controller
 
         if ($request->hasfile('favicon')) {
             $favfile = $request->file('favicon');
-            Storage::disk('public')->delete($settings->favicon);
+            if ($settings->favicon) {
+                Storage::disk('public')->delete($settings->favicon);
+            }
             $pathfav = $favfile->store('photos', 'public');
         } else {
             $pathfav = $settings->favicon;
@@ -78,17 +86,15 @@ class AppSettingsController extends Controller
                 'site_address' => $request['site_address'],
                 'welcome_message' => $request->welcome_message,
                 'whatsapp' => $request->whatsapp,
+                'telegram' => $request->telegram,
                 'twak' => $request->twak,
                 'tido' => $request->tido,
                 'trading_winrate' => $request->trading_winrate,
                 'usertheme' => $request->usertheme,
             ]);
 
-        $moreset = SettingsCont::find(1);
-        $moreset->purchase_code = $request->purchase_code;
-        $moreset->save();
 
-        return redirect()->back()->with('success', 'Settings Saved successfully. Visit our website https://codesremedy.com/ for more scripts.');
+        return redirect()->back()->with('success', 'Başarılı');
     }
 
 
@@ -121,7 +127,7 @@ class AppSettingsController extends Controller
             'redirect_url' => $request->redirect_url,
             'should_cancel_plan' => $request->should_cancel_plan,
         ]);
-        return response()->json(['status' => 200, 'success' => 'Settings Saved successfully. Visit our website https://codesremedy.com/ for more scripts.']);
+        return response()->json(['status' => 200, 'success' => 'Başarılı']);
     }
 
     // Update email preference
@@ -143,7 +149,7 @@ class AppSettingsController extends Controller
                 'capt_secret' => $request['capt_secret'],
                 'capt_sitekey' => $request['capt_sitekey'],
             ]);
-        return response()->json(['status' => 200, 'success' => 'Settings Saved successfully. Visit our website https://codesremedy.com/ for more scripts.']);
+        return response()->json(['status' => 200, 'success' => 'Başarılı']);
         //return redirect()->back()->with('message', 'Action Sucessful');
     }
 }

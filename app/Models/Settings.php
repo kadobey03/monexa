@@ -23,7 +23,26 @@ class Settings extends Model
         'withdrawal_option',
         'return_capital',
         'should_cancel_plan',
-        'modules'
+        'modules',
+        // Yeni eklenen alanlar
+        'timezone',
+        'install_type',
+        'merchant_key',
+        'welcome_message',
+        'whatsapp',
+        'telegram',
+        'twak',
+        'tido',
+        'trading_winrate',
+        'usertheme',
+        // Controller'da kullanılan diğer alanlar
+        'newupdate',
+        'description',
+        'keywords',
+        'logo',
+        'favicon',
+        'tawk_to',
+        'site_address'
     ];
 
     protected $casts = [

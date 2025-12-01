@@ -167,9 +167,8 @@
                 <div class="flex items-center space-x-2">
                     @php
                         $totalManagers = \App\Models\Admin::where('type', '!=', 'Super Admin')->count();
-                        $activeManagers = \App\Models\Admin::where('type', '!=', 'Super Admin')->where('status', 1)->count();
                     @endphp
-                    <span class="text-xs bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-2 py-0.5 rounded-full font-medium">{{ $activeManagers }}</span>
+                    <span class="text-xs bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-2 py-0.5 rounded-full font-medium">{{ $totalManagers }}</span>
                     <x-heroicon name="chevron-down" class="w-4 h-4 transition-transform" id="managersMenuChevron" />
                 </div>
             </button>
@@ -190,17 +189,6 @@
                     <span>{{ __('admin.navigation.hierarchy_view') }}</span>
                     <x-heroicon name="git-branch" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </a>
-                
-                <!-- Legacy Routes (Backward Compatibility) -->
-                <div class="pt-2 border-t border-admin-200 dark:border-admin-700 mt-2">
-                    <p class="text-xs text-admin-400 dark:text-admin-500 px-4 mb-1 font-medium">{{ __('admin.navigation.legacy_system') }}</p>
-                    <a href="{{ url('/admin/dashboard/addmanager') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
-                        {{ __('admin.navigation.old_add_manager') }}
-                    </a>
-                    <a href="{{ route('admin.managers.index') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
-                        {{ __('admin.navigation.old_managers_modern') }}
-                    </a>
-                </div>
             </div>
         </div>
 

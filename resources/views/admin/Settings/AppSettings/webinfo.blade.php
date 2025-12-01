@@ -70,8 +70,23 @@
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.telegram_link') }}</label>
+                        <input name="telegram" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" type="text" value="{{ $settings->telegram }}" placeholder="yourtelegram">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            <i class="fas fa-info-circle"></i> Sadece kullanıcı adınızı girin (örn: username). Link otomatik oluşturulacak.
+                        </p>
+                    </div>
+                    <div class="space-y-2">
                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.tido_livechat_id') }}</label>
                         <input name="tido" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" type="text" value="{{ $settings->tido }}" placeholder="Tido ID'nizi girin">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.tawk_to_code') }}</label>
+                        <textarea name="tawk_to" class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 placeholder-gray-400" rows="3" placeholder="Tawk.to widget kodunuzu buraya yapıştırın">{{ $settings->tawk_to }}</textarea>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('admin.settings.app.webinfo.tawk_to_help') }}</p>
                     </div>
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300">{{ __('admin.settings.app.webinfo.establishment_year') }}</label>

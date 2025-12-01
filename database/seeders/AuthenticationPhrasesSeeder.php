@@ -351,6 +351,32 @@ class AuthenticationPhrasesSeeder extends Seeder
                 'tr' => 'Lisanslı ve düzenlenmiş ticaret platformu',
                 'ru' => 'Лицензированная и регулируемая торговая платформа',
             ],
+
+            // Auth Error Messages (Laravel Auth Keys)
+            'auth.failed' => [
+                'tr' => 'Bu bilgiler kayıtlarımızla eşleşmiyor.',
+                'ru' => 'Эти учетные данные не соответствуют нашим записям.',
+            ],
+            'auth.password' => [
+                'tr' => 'Girdiğiniz şifre yanlış.',
+                'ru' => 'Введенный пароль неверен.',
+            ],
+            'auth.throttle' => [
+                'tr' => 'Çok fazla giriş denemesi yapıldı. Lütfen :seconds saniye sonra tekrar deneyin.',
+                'ru' => 'Слишком много попыток входа. Пожалуйста, попробуйте еще раз через :seconds секунд.',
+            ],
+            'auth.email_not_exists' => [
+                'tr' => 'Bu e-posta adresi ile kayıtlı hesap bulunamadı. Kayıt olmak için tıklayın.',
+                'ru' => 'Учетная запись с этим адресом электронной почты не найдена. Нажмите, чтобы зарегистрироваться.',
+            ],
+            'auth.account_locked' => [
+                'tr' => 'Hesabınız çok fazla başarısız giriş denemesi nedeniyle :minutes dakika boyunca kilitlenmiştir.',
+                'ru' => 'Ваша учетная запись заблокирована на :minutes минут из-за слишком большого количества неудачных попыток входа.',
+            ],
+            'auth.registration_suggestion' => [
+                'tr' => 'Bu e-posta adresi kayıtlı değil. Hesap oluşturmak ister misiniz?',
+                'ru' => 'Этот адрес электронной почты не зарегистрирован. Хотите создать учетную запись?',
+            ],
         ];
 
         foreach ($phrases as $key => $translations) {

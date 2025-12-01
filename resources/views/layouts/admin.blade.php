@@ -326,16 +326,6 @@
                             <x-heroicon name="git-branch" class="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                         </a>
                         
-                        <!-- Legacy Routes (Backward Compatibility) -->
-                        <div class="pt-2 border-t border-admin-200 dark:border-admin-700 mt-2">
-                            <p class="text-xs text-admin-400 dark:text-admin-500 px-4 mb-1 font-medium">{{ __('admin.navigation.legacy_system') }}</p>
-                            <a href="{{ url('/admin/dashboard/addmanager') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
-                                {{ __('admin.navigation.old_add_manager') }}
-                            </a>
-                            <a href="{{ route('admin.managers.index') }}" class="block px-4 py-2 text-sm text-admin-500 dark:text-admin-500 hover:text-admin-600 dark:hover:text-admin-400 hover:bg-admin-50 dark:hover:bg-admin-800 rounded-lg transition-colors">
-                                {{ __('admin.navigation.old_managers_modern') }}
-                            </a>
-                        </div>
                     </div>
                 </div>
 
@@ -540,7 +530,7 @@
                             <!-- Language Options -->
                             <div class="p-2">
                                 <!-- Turkish -->
-                                <a href="{{ route('language.switch', 'tr') }}"
+                                <a href="{{ route('language.change', 'tr') }}"
                                    class="flex items-center px-3 py-2.5 text-sm hover:bg-admin-50 dark:hover:bg-admin-700/50 rounded-lg transition-colors group {{ $currentLocale === 'tr' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : 'text-admin-700 dark:text-admin-300' }}">
                                     <span class="text-lg mr-3">🇹🇷</span>
                                     <div class="flex-1">
@@ -553,7 +543,7 @@
                                 </a>
 
                                 <!-- Russian -->
-                                <a href="{{ route('language.switch', 'ru') }}"
+                                <a href="{{ route('language.change', 'ru') }}"
                                    class="flex items-center px-3 py-2.5 text-sm hover:bg-admin-50 dark:hover:bg-admin-700/50 rounded-lg transition-colors group {{ $currentLocale === 'ru' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300' : 'text-admin-700 dark:text-admin-300' }}">
                                     <span class="text-lg mr-3">🇷🇺</span>
                                     <div class="flex-1">
@@ -1394,5 +1384,6 @@
 
     <!-- Application Scripts -->
     <!-- Already loaded by Vite directive above -->
+
 </body>
 </html>

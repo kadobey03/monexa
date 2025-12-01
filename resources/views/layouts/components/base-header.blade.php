@@ -14,70 +14,54 @@
                 </a>
             </div>
 
-            <!-- Main Navigation -->
-            <nav class="hidden md:flex space-x-8">
-                <a href="{{ route('home') }}" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">{{ __('nav.home') }}</a>
-                <a href="{{ route('cryptocurrencies') }}" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">{{ __('nav.crypto') }}</a>
-                <a href="{{ route('forex') }}" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">{{ __('nav.forex') }}</a>
-                <a href="{{ route('shares') }}" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">{{ __('nav.shares') }}</a>
-                <a href="{{ route('about') }}" class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">{{ __('nav.about') }}</a>
-            </nav>
-
-            <!-- Right Navigation -->
-            <div class="hidden md:flex items-center space-x-4">
+            <!-- Right Navigation - Only Language Switcher -->
+            <div class="flex items-center space-x-4">
                 <!-- Language Switcher (Modern Style) -->
                 <div class="relative">
                     <button onclick="toggleLanguageDropdown()"
-                            class="group flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-xl transition-all duration-200">
-                        <x-heroicon name="language" class="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                        <span>
+                            class="group flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-xl transition-all duration-200 border border-gray-700 hover:border-gray-600">
+                        <x-heroicon name="language" class="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+                        <span class="hidden sm:inline">
                             @if(session('locale') === 'ru')
                                 {{ __('navigation.language_russian') }}
                             @else
                                 {{ __('navigation.language_turkish') }}
                             @endif
                         </span>
-                        <x-heroicon name="chevron-down" class="w-3 h-3 group-hover:rotate-180 transition-transform duration-200" />
+                        <x-heroicon name="chevron-down" class="w-4 h-4 group-hover:rotate-180 transition-transform duration-200" />
                     </button>
 
-                    <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-48 bg-gray-800 rounded-2xl shadow-2xl backdrop-blur-xl z-30 border border-gray-700">
+                    <div id="languageDropdown" class="hidden absolute right-0 mt-2 w-56 bg-gray-800 rounded-2xl shadow-2xl backdrop-blur-xl z-30 border border-gray-700">
                         <div class="p-2">
-                            <a href="{{ route('language.switch', 'tr') }}"
-                               class="group flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl transition-all duration-200 {{ session('locale', 'tr') === 'tr' ? 'bg-gray-700 text-white' : '' }}">
-                                <div class="w-8 h-8 rounded-xl bg-red-600/20 flex items-center justify-center mr-3 group-hover:bg-red-600/30 transition-all duration-200">
-                                    <span class="text-xs font-bold">🇹🇷</span>
+                            <a href="{{ route('language.change', 'tr') }}"
+                               class="group flex items-center px-4 py-4 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl transition-all duration-200 {{ session('locale', 'tr') === 'tr' ? 'bg-gray-700 text-white' : '' }}">
+                                <div class="w-10 h-10 rounded-xl bg-red-600/20 flex items-center justify-center mr-3 group-hover:bg-red-600/30 transition-all duration-200">
+                                    <span class="text-lg">🇹🇷</span>
                                 </div>
                                 <div>
-                                    <div class="font-medium">{{ __('navigation.language_turkish') }}</div>
+                                    <div class="font-semibold">{{ __('navigation.language_turkish') }}</div>
                                     <div class="text-xs text-gray-400">Türkçe</div>
                                 </div>
                                 @if(session('locale', 'tr') === 'tr')
-                                    <x-heroicon name="check" class="w-4 h-4 text-green-400 ml-auto" />
+                                    <x-heroicon name="check" class="w-5 h-5 text-emerald-400 ml-auto" />
                                 @endif
                             </a>
-                            <a href="{{ route('language.switch', 'ru') }}"
-                               class="group flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl transition-all duration-200 {{ session('locale') === 'ru' ? 'bg-gray-700 text-white' : '' }}">
-                                <div class="w-8 h-8 rounded-xl bg-blue-600/20 flex items-center justify-center mr-3 group-hover:bg-blue-600/30 transition-all duration-200">
-                                    <span class="text-xs font-bold">🇷🇺</span>
+                            <a href="{{ route('language.change', 'ru') }}"
+                               class="group flex items-center px-4 py-4 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded-xl transition-all duration-200 {{ session('locale') === 'ru' ? 'bg-gray-700 text-white' : '' }}">
+                                <div class="w-10 h-10 rounded-xl bg-blue-600/20 flex items-center justify-center mr-3 group-hover:bg-blue-600/30 transition-all duration-200">
+                                    <span class="text-lg">🇷🇺</span>
                                 </div>
                                 <div>
-                                    <div class="font-medium">{{ __('navigation.language_russian') }}</div>
+                                    <div class="font-semibold">{{ __('navigation.language_russian') }}</div>
                                     <div class="text-xs text-gray-400">Русский</div>
                                 </div>
                                 @if(session('locale') === 'ru')
-                                    <x-heroicon name="check" class="w-4 h-4 text-blue-400 ml-auto" />
+                                    <x-heroicon name="check" class="w-5 h-5 text-blue-400 ml-auto" />
                                 @endif
                             </a>
                         </div>
                     </div>
                 </div>
-                
-                <a href="{{ route('login') }}" class="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                    {{ __('auth.login.title') }}
-                </a>
-                <a href="{{ route('register') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                    {{ __('auth.register.title') }}
-                </a>
             </div>
 
             <!-- Mobile menu button -->

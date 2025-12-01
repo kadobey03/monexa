@@ -370,7 +370,7 @@
                             <th scope="col" class="w-24 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
                                 <div class="flex items-center justify-center space-x-2">
                                     <i class="fas fa-toggle-on text-admin-600 {{ $isDark ? 'dark:text-admin-400' : '' }} text-sm"></i>
-                                    <span class="font-bold">{{ __('admin.users.status') }}</span>
+                                    <span class="font-bold">{{ __('admin.users.status_short') }}</span>
                                 </div>
                             </th>
                             <th scope="col" class="w-28 px-4 py-4 text-center text-sm font-semibold text-admin-800 {{ $isDark ? 'dark:text-admin-200' : '' }} uppercase tracking-wide">
@@ -699,7 +699,7 @@
                     <button onclick="bulkUpdateLeadStatus()"
                             class="flex items-center justify-center px-3 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-all duration-200 text-xs font-medium shadow-sm hover:shadow-md transform hover:scale-105">
                         <i class="fas fa-flag mr-1"></i>
-                        <span class="hidden sm:inline">{{ __('admin.users.status') }}</span>
+                        <span class="hidden sm:inline">{{ __('admin.users.status_short') }}</span>
                         <span class="sm:hidden">{{ __('admin.users.status_short') }}</span>
                     </button>
                     <button onclick="bulkAssignAdmin()"

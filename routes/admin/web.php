@@ -128,8 +128,6 @@ Route::middleware([\App\Http\Middleware\SetLocale::class, 'web', 'isadmin', '2fa
         Route::get('dashboard/mwithdrawals', 'mwithdrawals')->name('mwithdrawals');
         Route::get('dashboard/mdeposits', 'mdeposits')->name('mdeposits');
         Route::get('dashboard/agents',  'agents')->name('agents');
-        Route::get('dashboard/addmanager', 'addmanager')->name('addmanager');
-        Route::get('dashboard/madmin', [AdminManagerController::class, 'index'])->name('madmin');
         Route::get('dashboard/msubtrade', 'msubtrade')->name('msubtrade');
         Route::get('dashboard/settings', 'settings')->name('settings');
         Route::get('dashboard/frontpage', 'frontpage')->name('frontpage');
@@ -144,6 +142,12 @@ Route::middleware([\App\Http\Middleware\SetLocale::class, 'web', 'isadmin', '2fa
         
         // Assigned admin güncelleme route'u
         Route::post('dashboard/users/{id}/update-assigned-admin', 'updateAssignedAdmin')->name('updateAssignedAdmin');
+    });
+
+    Route::controller(ManageAdminController::class)->group(function () {
+        Route::post('dashboard/updateadminprofile', 'updateadminprofile')->name('upadprofile');
+        Route::get('dashboard/adminchangepassword', 'adminchangepassword')->name('adminchangepassword');
+        Route::post('dashboard/adminupdatepass', 'adminupdatepass')->name('adminupdatepass');
     });
 
     Route::controller(KycController::class)->group(function () {
@@ -269,19 +273,6 @@ Route::middleware([\App\Http\Middleware\SetLocale::class, 'web', 'isadmin', '2fa
     //     Route::get('dashboard/deletewdmethod/{id}', 'deletewdmethod');
     // });
 
-    Route::controller(ManageAdminController::class)->group(function () {
-        Route::get('dashboard/unblock/{id}', 'unblockadmin');
-        Route::get('dashboard/ublock/{id}', 'blockadmin');
-        Route::get('dashboard/deleletadmin/{id}', 'deleteadminacnt')->name('deleteadminacnt');
-        Route::post('dashboard/editadmin', 'editadmin')->name('editadmin');
-        Route::get('dashboard/adminchangepassword', 'adminchangepassword');
-        Route::post('dashboard/adminupdatepass', 'adminupdatepass')->name('adminupdatepass');
-        Route::get('dashboard/resetadpwd/{id}', 'resetadpwd')->name('resetadpwd');
-        Route::post('dashboard/sendmail', 'sendmail')->name('sendmailtoadmin');
-        Route::post('dashboard/changestyle', 'changestyle')->name('changestyle');
-        Route::post('dashboard/saveadmin', 'saveadmin');
-        Route::post('dashboard/update-profile', 'updateadminprofile')->name('upadprofile');
-    });
 
     Route::controller(FrontendController::class)->group(function () {
         // This Route is for frontpage editing
@@ -679,6 +670,9 @@ Route::middleware([\App\Http\Middleware\SetLocale::class, 'web', 'isadmin', '2fa
             Route::get('/export/png', 'exportChart')->name('export.png');
             Route::get('/search', 'search')->name('search');
         });
+        
+        // Role Details AJAX Endpoint (for hierarchy page)
+        Route::get('roles/{id}/data', [HierarchyController::class, 'getRoleDetails'])->name('admin.roles.data');
     });
 });
 
