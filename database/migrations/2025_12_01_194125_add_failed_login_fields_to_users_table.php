@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('failed_login_attempts')->default(0)->after('remember_token');
-            $table->timestamp('locked_until')->nullable()->after('failed_login_attempts');
+            if (!Schema::hasColumn('users', 'failed_login_attempts')) {
+                $table->integer('failed_login_attempts')->default(0)->after('remember_token');
+            }
+            if (!Schema::hasColumn('users', 'locked_until')) {
+                $table->timestamp('locked_until')->nullable()->after('failed_login_attempts');
+            }
         });
     }
 

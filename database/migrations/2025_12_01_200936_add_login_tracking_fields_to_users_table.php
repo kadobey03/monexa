@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->timestamp('last_login_at')->nullable()->after('updated_at');
-            $table->string('last_login_ip', 45)->nullable()->after('last_login_at');
+            if (!Schema::hasColumn('users', 'last_login_at')) {
+                $table->timestamp('last_login_at')->nullable()->after('updated_at');
+            }
+            if (!Schema::hasColumn('users', 'last_login_ip')) {
+                $table->string('last_login_ip', 45)->nullable()->after('last_login_at');
+            }
         });
     }
 
