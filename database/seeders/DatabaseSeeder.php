@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            SettingsSeeder::class,
+            // SettingsSeeder::class, // Disabled - causing scurrency column error in production
             
             // === USER MANAGEMENT PHRASES SEEDERS ===
             UserManagementPhrasesSeeder::class,           // 480 phrases - Ana user management terimleri
